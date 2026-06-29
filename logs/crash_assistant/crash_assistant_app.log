@@ -179,3 +179,4 @@ NVIDIA GeForce RTX 3050 Laptop GPU/PCIe/SSE2
 [2026-06-29 16:18:11.095] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: Reading finished in 19 ms
 [2026-06-29 16:18:11.251] [INFO] [LogAnalysisScripts]: Running script: log_analysis/example.jexl
 [2026-06-29 16:18:13.481] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: Analysis finished in 2437 ms
+[2026-06-29 16:18:30.029] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: Crash Assistant closed.
