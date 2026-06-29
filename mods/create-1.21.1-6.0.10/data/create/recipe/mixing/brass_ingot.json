@@ -1,0 +1,21 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "tag": "c:ingots/copper"
+    },
+    {
+      "tag": "c:ingots/zinc"
+    },
+    {
+      "fluid": "minecraft:lava",
+      "count": 200
+    }
+  ],
+  "results": [
+    {
+      "count": 2,
+      "id": "kubejs:molten_brass"
+    }
+  ]
+}

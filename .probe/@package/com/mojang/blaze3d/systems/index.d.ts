@@ -1,0 +1,188 @@
+import { $ShaderInstance } from "@package/net/minecraft/client/renderer";
+import { $RenderCall_ } from "@package/com/mojang/blaze3d/pipeline";
+import { $CallbackInfo } from "@package/org/spongepowered/asm/mixin/injection/callback";
+import { $AutoStorageIndexBufferExtension } from "@package/foundry/veil/ext";
+import { $GlStateManager$SourceFactor_, $GlStateManager$LogicOp_, $GlStateManager$DestFactor_ } from "@package/com/mojang/blaze3d/platform";
+import { $ByteBuffer, $IntBuffer, $FloatBuffer } from "@package/java/nio";
+import { $TimeSource$NanoTimeSource } from "@package/net/minecraft/util";
+import { $RenderSystemAccessor } from "@package/net/createmod/ponder/mixin/client/accessor";
+import { $Consumer_, $Supplier_ } from "@package/java/util/function";
+import { $GlStateBackup } from "@package/net/neoforged/neoforge/client";
+import { $ResourceLocation_ } from "@package/net/minecraft/resources";
+import { $Tesselator, $VertexFormat$IndexType, $VertexSorting, $VertexFormat$Mode_, $VertexSorting_ } from "@package/com/mojang/blaze3d/vertex";
+import { $GLFWErrorCallbackI_ } from "@package/org/lwjgl/glfw";
+import { $Runnable_ } from "@package/java/lang";
+import { $FogShape_, $FogShape } from "@package/com/mojang/blaze3d/shaders";
+import { $Matrix4fStack, $Matrix4f, $Vector3f } from "@package/org/joml";
+
+declare module "@package/com/mojang/blaze3d/systems" {
+    export class $RenderSystem$AutoStorageIndexBuffer$IndexGenerator {
+    }
+    export interface $RenderSystem$AutoStorageIndexBuffer$IndexGenerator {
+    }
+    /**
+     * Values that may be interpreted as {@link $RenderSystem$AutoStorageIndexBuffer$IndexGenerator}.
+     */
+    export type $RenderSystem$AutoStorageIndexBuffer$IndexGenerator_ = (() => void);
+    export class $RenderSystem$AutoStorageIndexBuffer implements $AutoStorageIndexBufferExtension {
+        type(): $VertexFormat$IndexType;
+        bind(index: number): void;
+        handler$bbd000$veil$nameBuffer(arg0: $CallbackInfo): void;
+        veil$ensureStorage(index: number): void;
+        veil$getBuffer(): number;
+        hasStorage(index: number): boolean;
+    }
+    export class $RenderSystem implements $RenderSystemAccessor {
+        static setShader(shaderSupplier: $Supplier_<$ShaderInstance>): void;
+        static blendFunc(sourceFactor: $GlStateManager$SourceFactor_, destFactor: $GlStateManager$DestFactor_): void;
+        static blendFunc(shaderTexture: number, textureId: number): void;
+        static isOnRenderThread(): boolean;
+        static replayQueue(): void;
+        static applyModelViewMatrix(): void;
+        static maxSupportedTextureSize(): number;
+        static beginInitialization(): void;
+        static finishInitialization(): void;
+        static glDeleteVertexArrays(texture: number): void;
+        static bindTexture(texture: number): void;
+        static assertOnRenderThreadOrInit(): void;
+        static isOnRenderThreadOrInit(): boolean;
+        static enableDepthTest(): void;
+        static disableDepthTest(): void;
+        static glGenVertexArrays(bufferIdConsumer: $Consumer_<number>): void;
+        static glBindBuffer(shaderTexture: number, textureId: number): void;
+        static glDeleteBuffers(texture: number): void;
+        static glBufferData(target: number, data: $ByteBuffer, usage: number): void;
+        static glGenBuffers(bufferIdConsumer: $Consumer_<number>): void;
+        static glUniform1i(shaderTexture: number, textureId: number): void;
+        static clear(mask: number, checkError: boolean): void;
+        static getString(name: number, consumer: $Consumer_<string>): void;
+        static initRenderThread(): void;
+        static activeTexture(texture: number): void;
+        static setProjectionMatrix(projectionMatrix: $Matrix4f, vertexSorting: $VertexSorting_): void;
+        static viewport(sourceFactor: number, destFactor: number, sourceFactorAlpha: number, destFactorAlpha: number): void;
+        static depthMask(flag: boolean): void;
+        static glBindVertexArray(texture: number): void;
+        static setShaderGlintAlpha(depth: number): void;
+        static setShaderGlintAlpha(shaderLineWidth: number): void;
+        static getBackendDescription(): string;
+        static enablePolygonOffset(): void;
+        static disableColorLogicOp(): void;
+        static disablePolygonOffset(): void;
+        static recordRenderCall(renderCall: $RenderCall_): void;
+        static enableScissor(sourceFactor: number, destFactor: number, sourceFactorAlpha: number, destFactorAlpha: number): void;
+        static disableScissor(): void;
+        static getShaderColor(): number[];
+        static initBackendSystem(): $TimeSource$NanoTimeSource;
+        static setupDefaultState(sourceFactor: number, destFactor: number, sourceFactorAlpha: number, destFactorAlpha: number): void;
+        static setErrorCallback(callback: $GLFWErrorCallbackI_): void;
+        static initRenderer(mask: number, checkError: boolean): void;
+        static limitDisplayFPS(texture: number): void;
+        static getModelViewStack(): $Matrix4fStack;
+        static getCapsString(): string;
+        static getApiDescription(): string;
+        static getShader(): $ShaderInstance;
+        static lineWidth(shaderLineWidth: number): void;
+        static disableBlend(): void;
+        static enableBlend(): void;
+        static setShaderColor(red: number, green: number, blue: number, alpha: number): void;
+        static setShaderTexture(shaderTexture: number, textureId: $ResourceLocation_): void;
+        static setShaderTexture(shaderTexture: number, textureId: number): void;
+        static getModelViewMatrix(): $Matrix4f;
+        static defaultBlendFunc(): void;
+        static disableCull(): void;
+        static getProjectionMatrix(): $Matrix4f;
+        static getShaderGlintAlpha(): number;
+        static assertOnRenderThread(): void;
+        static setupGuiFlatDiffuseLighting(lightingVector0: $Vector3f, lightingVector1: $Vector3f): void;
+        static getShaderFogStart(): number;
+        static getShaderLineWidth(): number;
+        static getShaderFogColor(): number[];
+        static getShaderFogShape(): $FogShape;
+        static setupShaderLights(instance: $ShaderInstance): void;
+        static getShaderGameTime(): number;
+        static getTextureMatrix(): $Matrix4f;
+        static getShaderTexture(shaderTexture: number): number;
+        static getShaderFogEnd(): number;
+        static setupOverlayColor(shaderTexture: number, textureId: number): void;
+        static clearStencil(texture: number): void;
+        static texParameter(mode: number, count: number, type: number): void;
+        static setShaderFogColor(red: number, green: number, blue: number): void;
+        static setShaderFogColor(red: number, green: number, blue: number, alpha: number): void;
+        static stencilFunc(mode: number, count: number, type: number): void;
+        static setShaderFogShape(shaderFogShape: $FogShape_): void;
+        static setShaderLights(lightingVector0: $Vector3f, lightingVector1: $Vector3f): void;
+        static setShaderFogEnd(shaderLineWidth: number): void;
+        static deleteTexture(texture: number): void;
+        static renderCrosshair(texture: number): void;
+        static drawElements(mode: number, count: number, type: number): void;
+        static glUniformMatrix3(location: number, transpose: boolean, value: $FloatBuffer): void;
+        static stencilMask(texture: number): void;
+        static glUniformMatrix4(location: number, transpose: boolean, value: $FloatBuffer): void;
+        static polygonMode(shaderTexture: number, textureId: number): void;
+        static setShaderFogStart(shaderLineWidth: number): void;
+        static glUniformMatrix2(location: number, transpose: boolean, value: $FloatBuffer): void;
+        static blendEquation(texture: number): void;
+        static setShaderGameTime(tickTime: number, arg1: number): void;
+        static restoreGlState(arg0: $GlStateBackup): void;
+        static _setShaderTexture(shaderTexture: number, textureId: number): void;
+        static _setShaderTexture(shaderTexture: number, textureId: $ResourceLocation_): void;
+        static backupGlState(arg0: $GlStateBackup): void;
+        static getVertexSorting(): $VertexSorting;
+        static enableCull(): void;
+        static pixelStore(shaderTexture: number, textureId: number): void;
+        static readPixels(x: number, y: number, width: number, height: number, format: number, type: number, pixels: $ByteBuffer): void;
+        static catnip$getShaderLightDirections$ponder_$md$942995$2(): $Vector3f[];
+        static teardownOverlayColor(): void;
+        static bindTextureForSetup(texture: number): void;
+        static renderThreadTesselator(): $Tesselator;
+        static getSequentialBuffer(formatMode: $VertexFormat$Mode_): $RenderSystem$AutoStorageIndexBuffer;
+        static isFrozenAtPollEvents(): boolean;
+        static setupLevelDiffuseLighting(lightingVector0: $Vector3f, lightingVector1: $Vector3f): void;
+        static setupGui3DDiffuseLighting(lightingVector0: $Vector3f, lightingVector1: $Vector3f): void;
+        static backupProjectionMatrix(): void;
+        static restoreProjectionMatrix(): void;
+        static colorMask(red: boolean, green: boolean, blue: boolean, alpha: boolean): void;
+        static depthFunc(texture: number): void;
+        static flipFrame(windowId: number): void;
+        static clearDepth(depth: number): void;
+        static stencilOp(mode: number, count: number, type: number): void;
+        static clearColor(red: number, green: number, blue: number, alpha: number): void;
+        static glUniform3(location: number, value: $IntBuffer): void;
+        static glUniform3(location: number, value: $FloatBuffer): void;
+        static glUniform1(location: number, value: $FloatBuffer): void;
+        static glUniform1(location: number, value: $IntBuffer): void;
+        static glUniform2(location: number, value: $FloatBuffer): void;
+        static glUniform2(location: number, value: $IntBuffer): void;
+        static glUniform4(location: number, value: $FloatBuffer): void;
+        static glUniform4(location: number, value: $IntBuffer): void;
+        /**
+         * @deprecated
+         */
+        static runAsFancy(fancyRunnable: $Runnable_): void;
+        static logicOp(op: $GlStateManager$LogicOp_): void;
+        static setTextureMatrix(textureMatrix: $Matrix4f): void;
+        static resetTextureMatrix(): void;
+        static polygonOffset(factor: number, units: number): void;
+        static enableColorLogicOp(): void;
+        static blendFuncSeparate(sourceFactor: number, destFactor: number, sourceFactorAlpha: number, destFactorAlpha: number): void;
+        static blendFuncSeparate(sourceFactor: $GlStateManager$SourceFactor_, destFactor: $GlStateManager$DestFactor_, sourceFactorAlpha: $GlStateManager$SourceFactor_, destFactorAlpha: $GlStateManager$DestFactor_): void;
+        static savedProjectionMatrix: $Matrix4f;
+        static shaderTextures: number[];
+        static modelViewStack: $Matrix4fStack;
+        static modelViewMatrix: $Matrix4f;
+        static savedVertexSorting: $VertexSorting;
+        static shaderLightDirections: $Vector3f[];
+        static shaderGameTime: number;
+        constructor();
+        static get onRenderThread(): boolean;
+        static get onRenderThreadOrInit(): boolean;
+        static get backendDescription(): string;
+        static set errorCallback(value: $GLFWErrorCallbackI_);
+        static get capsString(): string;
+        static get apiDescription(): string;
+        static get shaderLineWidth(): number;
+        static set upShaderLights(value: $ShaderInstance);
+        static get vertexSorting(): $VertexSorting;
+        static get frozenAtPollEvents(): boolean;
+    }
+}

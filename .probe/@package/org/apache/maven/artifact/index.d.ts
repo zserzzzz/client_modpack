@@ -1,0 +1,87 @@
+import { $File_, $File } from "@package/java/io";
+import { $VersionRange, $ArtifactVersion } from "@package/org/apache/maven/artifact/versioning";
+import { $ArtifactRepository } from "@package/org/apache/maven/artifact/repository";
+import { $ArtifactHandler } from "@package/org/apache/maven/artifact/handler";
+import { $List, $List_, $Collection } from "@package/java/util";
+import { $Pattern } from "@package/java/util/regex";
+import { $Comparable } from "@package/java/lang";
+import { $ArtifactMetadata } from "@package/org/apache/maven/artifact/metadata";
+import { $ArtifactFilter_, $ArtifactFilter } from "@package/org/apache/maven/artifact/resolver/filter";
+export * as repository from "@package/org/apache/maven/artifact/repository";
+export * as versioning from "@package/org/apache/maven/artifact/versioning";
+export * as handler from "@package/org/apache/maven/artifact/handler";
+export * as metadata from "@package/org/apache/maven/artifact/metadata";
+export * as resolver from "@package/org/apache/maven/artifact/resolver";
+
+declare module "@package/org/apache/maven/artifact" {
+    export class $Artifact {
+        static VERSION_FILE_PATTERN: $Pattern;
+        static SCOPE_RUNTIME: string;
+        static SCOPE_TEST: string;
+        static SCOPE_RUNTIME_PLUS_SYSTEM: string;
+        static SCOPE_IMPORT: string;
+        static SCOPE_PROVIDED: string;
+        static RELEASE_VERSION: string;
+        static SCOPE_SYSTEM: string;
+        static SNAPSHOT_VERSION: string;
+        static SCOPE_COMPILE: string;
+        static SCOPE_COMPILE_PLUS_RUNTIME: string;
+        static LATEST_VERSION: string;
+    }
+    export interface $Artifact extends $Comparable<$Artifact> {
+        getGroupId(): string;
+        setVersion(arg0: string): void;
+        isOptional(): boolean;
+        getId(): string;
+        getType(): string;
+        getScope(): string;
+        isResolved(): boolean;
+        setRelease(arg0: boolean): void;
+        getFile(): $File;
+        getVersion(): string;
+        getSelectedVersion(): $ArtifactVersion;
+        isSnapshot(): boolean;
+        getVersionRange(): $VersionRange;
+        setFile(arg0: $File_): void;
+        getRepository(): $ArtifactRepository;
+        setScope(arg0: string): void;
+        getArtifactId(): string;
+        getDependencyTrail(): $List<string>;
+        getClassifier(): string;
+        isSelectedVersionKnown(): boolean;
+        setGroupId(arg0: string): void;
+        isRelease(): boolean;
+        hasClassifier(): boolean;
+        getBaseVersion(): string;
+        addMetadata(arg0: $ArtifactMetadata): void;
+        setBaseVersion(arg0: string): void;
+        getDownloadUrl(): string;
+        setRepository(arg0: $ArtifactRepository): void;
+        setDownloadUrl(arg0: string): void;
+        getMetadataList(): $Collection<$ArtifactMetadata>;
+        updateVersion(arg0: string, arg1: $ArtifactRepository): void;
+        setOptional(arg0: boolean): void;
+        setResolvedVersion(arg0: string): void;
+        setDependencyTrail(arg0: $List_<string>): void;
+        setResolved(arg0: boolean): void;
+        setVersionRange(arg0: $VersionRange): void;
+        getArtifactHandler(): $ArtifactHandler;
+        selectVersion(arg0: string): void;
+        setArtifactHandler(arg0: $ArtifactHandler): void;
+        setArtifactId(arg0: string): void;
+        getDependencyConflictId(): string;
+        setDependencyFilter(arg0: $ArtifactFilter_): void;
+        getDependencyFilter(): $ArtifactFilter;
+        setAvailableVersions(arg0: $List_<$ArtifactVersion>): void;
+        getAvailableVersions(): $List<$ArtifactVersion>;
+        get id(): string;
+        get type(): string;
+        get selectedVersion(): $ArtifactVersion;
+        get snapshot(): boolean;
+        get classifier(): string;
+        get selectedVersionKnown(): boolean;
+        get metadataList(): $Collection<$ArtifactMetadata>;
+        set resolvedVersion(value: string);
+        get dependencyConflictId(): string;
+    }
+}

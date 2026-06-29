@@ -1,0 +1,16 @@
+[14:00:28] [INIT] KubeJS 2101.7.2-build.368; MC 2101 NeoForge
+[14:00:28] [INIT] Loaded plugins:
+[14:00:28] [INIT] - dev.latvian.mods.kubejs.plugin.builtin.BuiltinKubeJSPlugin
+[14:00:28] [INIT] - dev.latvian.mods.kubejs.plugin.builtin.BuiltinKubeJSClientPlugin
+[14:00:28] [INIT] - dev.latvian.mods.kubejs.integration.architectury.ArchitecturyIntegration
+[14:00:28] [INIT] - com.jesz.createdieselgenerators.compat.kubejs.CDGKubeJSPlugin
+[14:00:28] [INIT] - io.github.mortuusars.exposure.neoforge.integration.kubejs.ExposureKubeJSPlugin
+[14:00:28] [INIT] - net.liopyu.entityjs.EntityJSPlugin
+[14:00:28] [INIT] - com.sunekaer.sdrp.neoforge.kubejs.SDRPKubeJSIntegration
+[14:00:28] [INIT] - moe.wolfgirl.probejs.plugin.ProbeJSKJSPlugin
+[14:00:28] [INIT] - com.almostreliable.ponderjs.KubePlugin
+[14:00:28] [INIT] - dev.latvian.mods.kubejs.create.KubeJSCreatePlugin
+[14:00:28] [INIT] - pie.ilikepiefoo.AdditionsPlugin
+[14:00:28] [INFO] Loaded script server_scripts:main.js in 0.001 s
+[14:00:28] [INFO] Loaded 1/1 KubeJS server scripts in 0.023 s with 0 errors and 0 warnings
+[14:00:33] [INFO] Server resource reload complete!

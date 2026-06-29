@@ -8,9 +8,9 @@ StartupEvents.registry('fluid', event => {
         .displayName('Molten Brass')
         .tint(Color.WHITE)
         .type(type => type
-            .renderType(3)
+            .renderType(2)
             .stillTexture('kubejs:fluid/molten_brass_still')
             .flowingTexture('kubejs:fluid/molten_brass_flow')
-            .fallDistanceModifier(0)
+            .fallDistanceModifier(2)
         )
 })

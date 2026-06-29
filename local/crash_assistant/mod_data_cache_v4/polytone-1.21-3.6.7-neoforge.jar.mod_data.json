@@ -1,0 +1,1 @@
+{"jarName":"polytone-1.21-3.6.7-neoforge.jar","modId":"polytone","name":"Polytone","version":"1.21-3.6.7","mixinConfigs":["polytone.mixins.json","polytone-common.mixins.json"],"jarJarMods":[{"jarName":"exp4j-0.4.8.jar","mixinConfigs":[],"jarJarMods":[],"pathFromJarJar":"/META-INF/jars/"}],"curseForgeHash":3308897024,"modrinthHash":"55d182326fb89466f857c38d8d6cfdeb3cf90066"}

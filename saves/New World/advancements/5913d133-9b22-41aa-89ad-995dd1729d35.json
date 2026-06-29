@@ -1,0 +1,77 @@
+{
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:plains": "2026-06-29 12:39:36 +0100"
+    },
+    "done": false
+  },
+  "minecraft:recipes/decorations/crafting_table": {
+    "criteria": {
+      "unlock_right_away": "2026-06-29 12:39:40 +0100"
+    },
+    "done": true
+  },
+  "create:root": {
+    "criteria": {
+      "0": "2026-06-29 12:43:53 +0100"
+    },
+    "done": true
+  },
+  "simulated:root": {
+    "criteria": {
+      "0": "2026-06-29 12:43:53 +0100"
+    },
+    "done": true
+  },
+  "aeronautics:root": {
+    "criteria": {
+      "0": "2026-06-29 12:43:53 +0100"
+    },
+    "done": true
+  },
+  "numismatics:root": {
+    "criteria": {
+      "0": "2026-06-29 12:43:53 +0100"
+    },
+    "done": true
+  },
+  "exposure:recipes/decorations/lightroom": {
+    "criteria": {
+      "has_developed_film": "2026-06-29 12:43:53 +0100"
+    },
+    "done": true
+  },
+  "analogaudio:recipe/speaker": {
+    "criteria": {
+      "has_wool": "2026-06-29 12:43:53 +0100"
+    },
+    "done": true
+  },
+  "create_connected:root": {
+    "criteria": {
+      "0": "2026-06-29 12:43:53 +0100"
+    },
+    "done": true
+  },
+  "farmersdelight:main/root": {
+    "criteria": {
+      "seeds": "2026-06-29 12:43:53 +0100"
+    },
+    "done": true
+  },
+  "moredelight:main/get_cooked_rice_with": {
+    "criteria": {
+      "cooked_rice_with_milk_cream_and_chicken_cuts": "2026-06-29 12:43:53 +0100",
+      "cooked_rice_with_milk_cream_and_beef": "2026-06-29 12:43:53 +0100",
+      "cooked_rice_with_milk_cream_and_porkchop": "2026-06-29 12:43:53 +0100"
+    },
+    "done": true
+  },
+  "moredelight:main/root": {
+    "criteria": {
+      "seeds": "2026-06-29 12:43:53 +0100"
+    },
+    "done": true
+  },
+  "DataVersion": 3955
+}

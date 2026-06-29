@@ -1,6 +1,6 @@
 {
   "animation_settings": {
-    "animation": false,
+    "animation": true,
     "water": true,
     "lava": true,
     "fire": true,

@@ -2,7 +2,9 @@
     "probejs.fullScanMods": [
         "minecraft",
         "kubejs",
-        "neoforge"
+        "neoforge",
+        "create",
+        "kubejs_create"
     ],
     "probejs.newGame": false
 }

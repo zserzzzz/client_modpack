@@ -1,0 +1,61 @@
+import { $BuiltInConfigChannelPermissions } from "@package/xaero/lib/common/permission/config/channel";
+import { $ConfigOptionManager } from "@package/xaero/lib/common/config/option";
+import { $SingleConfigManager } from "@package/xaero/lib/common/config/single";
+import { $ConfigProfileManagerIO } from "@package/xaero/lib/common/config/profile/io";
+import { $ClientConfigManager } from "@package/xaero/lib/client/config";
+import { $ClientConfigChannelSynchronizer } from "@package/xaero/lib/client/config/sync";
+import { $Config } from "@package/xaero/lib/common/config";
+import { $ConfigOptionUITypeManager } from "@package/xaero/lib/client/config/option/ui";
+import { $ResourceLocation } from "@package/net/minecraft/resources";
+import { $SingleConfigManagerIO } from "@package/xaero/lib/common/config/single/io";
+import { $IConfigChannelClientRegistryHandler } from "@package/xaero/lib/client/config/channel/register/handler";
+import { $Logger } from "@package/org/apache/logging/log4j";
+import { $IConfigChannelCommonRegistryHandler } from "@package/xaero/lib/common/config/channel/register/handler";
+import { $ServerConfigChannelSynchronizer } from "@package/xaero/lib/common/config/server/sync";
+import { $ServerConfigManager } from "@package/xaero/lib/common/config/server";
+import { $ClientConfigOptionManager } from "@package/xaero/lib/client/config/option";
+export * as register from "@package/xaero/lib/common/config/channel/register";
+
+declare module "@package/xaero/lib/common/config/channel" {
+    export class $ConfigChannel {
+        getServerConfigSynchronizer(): $ServerConfigChannelSynchronizer;
+        getId(): $ResourceLocation;
+        getConfigOptionUITypeManager(): $ConfigOptionUITypeManager;
+        getClientConfigSynchronizer(): $ClientConfigChannelSynchronizer;
+        getServerConfigManager(): $ServerConfigManager;
+        getPrimaryCommonConfigManagerIO(): $SingleConfigManagerIO<$Config>;
+        getCommonRegistryHandler(): $IConfigChannelCommonRegistryHandler;
+        getClientRegistryHandler(): $IConfigChannelClientRegistryHandler;
+        getConfigOptionManager(): $ConfigOptionManager;
+        freezeOptionManagers(): void;
+        getBuiltInPermissions(): $BuiltInConfigChannelPermissions;
+        getServerConfigProfileIO(): $ConfigProfileManagerIO;
+        getPrimaryCommonConfigOptionManager(): $ConfigOptionManager;
+        getPrimaryClientConfigOptionManager(): $ClientConfigOptionManager;
+        postLoad(): void;
+        getPrimaryClientConfigManagerIO(): $SingleConfigManagerIO<$Config>;
+        setBuiltInPermissions(arg0: $BuiltInConfigChannelPermissions): void;
+        getClientConfigManager(): $ClientConfigManager;
+        getClientConfigProfileIO(): $ConfigProfileManagerIO;
+        getPrimaryCommonConfigManager(): $SingleConfigManager<$Config>;
+        getPrimaryClientConfigManager(): $SingleConfigManager<$Config>;
+        logger: $Logger;
+        get serverConfigSynchronizer(): $ServerConfigChannelSynchronizer;
+        get id(): $ResourceLocation;
+        get configOptionUITypeManager(): $ConfigOptionUITypeManager;
+        get clientConfigSynchronizer(): $ClientConfigChannelSynchronizer;
+        get serverConfigManager(): $ServerConfigManager;
+        get primaryCommonConfigManagerIO(): $SingleConfigManagerIO<$Config>;
+        get commonRegistryHandler(): $IConfigChannelCommonRegistryHandler;
+        get clientRegistryHandler(): $IConfigChannelClientRegistryHandler;
+        get configOptionManager(): $ConfigOptionManager;
+        get serverConfigProfileIO(): $ConfigProfileManagerIO;
+        get primaryCommonConfigOptionManager(): $ConfigOptionManager;
+        get primaryClientConfigOptionManager(): $ClientConfigOptionManager;
+        get primaryClientConfigManagerIO(): $SingleConfigManagerIO<$Config>;
+        get clientConfigManager(): $ClientConfigManager;
+        get clientConfigProfileIO(): $ConfigProfileManagerIO;
+        get primaryCommonConfigManager(): $SingleConfigManager<$Config>;
+        get primaryClientConfigManager(): $SingleConfigManager<$Config>;
+    }
+}

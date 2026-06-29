@@ -1,0 +1,38 @@
+{
+  "favorites": [],
+  "lookup_history": [
+    {
+      "type": "fluid",
+      "id": "kubejs:molten_brass",
+      "amount": 0
+    },
+    "item:create:brass_sheet",
+    "item:create:brass_ingot",
+    "item:create:brass_nugget",
+    "item:create:brass_hand",
+    "item:createdieselgenerators:burner",
+    "item:minecraft:crafting_table",
+    "item:kubejs:molten_brass_bucket",
+    "item:createbigcannons:molten_bronze_bucket",
+    {
+      "type": "fluid",
+      "id": "createdieselgenerators:crude_oil",
+      "amount": 100
+    },
+    {
+      "type": "fluid",
+      "id": "createdieselgenerators:gasoline",
+      "amount": 0
+    },
+    "item:createdieselgenerators:gasoline_bucket",
+    "item:createbigcannons:gas_mask"
+  ],
+  "craft_history": [],
+  "recipe_defaults": {
+    "added": [],
+    "tags": {},
+    "resolutions": {},
+    "disabled": []
+  },
+  "hidden_stacks": []
+}

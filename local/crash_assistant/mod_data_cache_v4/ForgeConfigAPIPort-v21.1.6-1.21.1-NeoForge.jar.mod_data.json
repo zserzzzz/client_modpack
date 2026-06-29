@@ -1,0 +1,1 @@
+{"jarName":"ForgeConfigAPIPort-v21.1.6-1.21.1-NeoForge.jar","modId":"forgeconfigapiport","name":"Forge Config API Port","version":"21.1.6","mixinConfigs":["forgeconfigapiport.neoforge.mixins.json","forgeconfigapiport.common.mixins.json"],"jarJarMods":[],"curseForgeHash":858109102,"modrinthHash":"14f2dd9f43254b8c06af04b6f0c8ae5192f658b5"}
