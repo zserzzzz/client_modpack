@@ -25,11 +25,11 @@ declare module "@package/com/simibubi/create/api/event" {
         get graphMergedFrom(): $TrackGraph;
     }
     export class $PipeCollisionEvent$Spill extends $PipeCollisionEvent {
-        getWorldFluid(): $Fluid;
         getPipeFluid(): $Fluid;
+        getWorldFluid(): $Fluid;
         constructor(arg0: $Level_, arg1: $BlockPos_, arg2: $Fluid_, arg3: $Fluid_, arg4: $BlockState_);
-        get worldFluid(): $Fluid;
         get pipeFluid(): $Fluid;
+        get worldFluid(): $Fluid;
     }
     export class $PipeCollisionEvent extends $Event {
         getState(): $BlockState;

@@ -33,27 +33,27 @@ import { $RegisterCapabilitiesEvent } from "@package/net/neoforged/neoforge/capa
 
 declare module "@package/com/simibubi/create/content/logistics/packagePort/postbox" {
     export class $PostboxBlock extends $HorizontalDirectionalBlock implements $IBE<$PostboxBlockEntity>, $IWrenchable, $ProperWaterloggedBlock {
-        getBlockEntityType(): $BlockEntityType<$PostboxBlockEntity>;
         getColor(): $DyeColor;
         getBlockEntityClass(): $Class<$PostboxBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$PostboxBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$PostboxBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$PostboxBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($PostboxBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$PostboxBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $PostboxBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$PostboxBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($PostboxBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$PostboxBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
-        fluidState(arg0: $BlockState_): $FluidState;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         updateWater(arg0: $LevelAccessor, arg1: $BlockState_, arg2: $BlockPos_): void;
+        fluidState(arg0: $BlockState_): $FluidState;
+        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -86,13 +86,13 @@ declare module "@package/com/simibubi/create/content/logistics/packagePort/postb
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties, arg1: $DyeColor_);
-        get blockEntityType(): $BlockEntityType<$PostboxBlockEntity>;
         get color(): $DyeColor;
         get blockEntityClass(): $Class<$PostboxBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$PostboxBlockEntity>;
     }
     export class $PostboxBlockEntity extends $PackagePortBlockEntity {
-        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
         spawnParticles(): void;
+        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
         acceptsPackages: boolean;
         flag: $LerpedFloat;
         level: $Level;

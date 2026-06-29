@@ -22,8 +22,8 @@ import { $LootTable } from "@package/net/minecraft/world/level/storage/loot";
 declare module "@package/com/simibubi/create/content/decoration/encasing" {
     export class $CasingBlock extends $Block implements $IWrenchable {
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -71,16 +71,16 @@ declare module "@package/com/simibubi/create/content/decoration/encasing" {
         constructor(arg0: $CTSpriteShiftEntry);
     }
     export class $EncasingRegistry {
-        static addVariantTo<B extends $Block, P, E extends $Block>(arg0: $Supplier_<E>): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
         static getVariants(arg0: $Block_): $List<$Block>;
+        static addVariantTo<B extends $Block, P, E extends $Block>(arg0: $Supplier_<E>): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
         static addVariant<B extends $Block, E extends $Block, P>(arg0: B, arg1: E): void;
         constructor();
     }
     export class $EncasableBlock {
     }
     export interface $EncasableBlock {
-        tryEncase(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $ItemStack_, arg4: $Player, arg5: $InteractionHand_, arg6: $BlockHitResult): $ItemInteractionResult;
         playEncaseSound(arg0: $Level_, arg1: $BlockPos_): void;
+        tryEncase(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $ItemStack_, arg4: $Player, arg5: $InteractionHand_, arg6: $BlockHitResult): $ItemInteractionResult;
     }
     export class $EncasedBlock {
     }

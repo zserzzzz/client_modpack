@@ -34,9 +34,9 @@ declare module "@package/net/minecraft/client/gui/screens/telemetry" {
         constructor(lastScreen: $Screen, options: $Options);
     }
     export class $TelemetryEventWidget extends $AbstractScrollWidget {
-        updateLayout(): void;
         onOptInChanged(optIn: boolean): void;
         setOnScrolledListener(onScrolledListener: $DoubleConsumer_ | null): void;
+        updateLayout(): void;
         packedFGColor: number;
         static UNSET_FG_COLOR: number;
         visible: boolean;
@@ -57,5 +57,5 @@ declare module "@package/net/minecraft/client/gui/screens/telemetry" {
     /**
      * Values that may be interpreted as {@link $TelemetryEventWidget$Content}.
      */
-    export type $TelemetryEventWidget$Content_ = { narration?: $Component_, container?: $Layout,  } | [narration?: $Component_, container?: $Layout, ];
+    export type $TelemetryEventWidget$Content_ = { container?: $Layout, narration?: $Component_,  } | [container?: $Layout, narration?: $Component_, ];
 }

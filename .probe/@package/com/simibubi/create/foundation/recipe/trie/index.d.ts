@@ -44,12 +44,12 @@ declare module "@package/com/simibubi/create/foundation/recipe/trie" {
     export class $IntArrayTrie<V> {
         insert(arg0: number[], arg1: V): void;
         lookup(arg0: $IntSet): $List<V>;
-        getNodeCount(): number;
         getMaxDepth(): number;
+        getNodeCount(): number;
         getValueCount(): number;
         constructor();
-        get nodeCount(): number;
         get maxDepth(): number;
+        get nodeCount(): number;
         get valueCount(): number;
     }
     export class $RecipeTrieFinder {

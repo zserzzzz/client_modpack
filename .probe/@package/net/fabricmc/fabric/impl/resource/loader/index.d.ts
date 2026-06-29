@@ -31,8 +31,8 @@ declare module "@package/net/fabricmc/fabric/impl/resource/loader" {
     export class $FabricResourcePackProfile {
     }
     export interface $FabricResourcePackProfile {
-        fabric_isHidden(): boolean;
-        fabric_parentsEnabled(arg0: $Set_<string>): boolean;
         fabric_setParentsPredicate(arg0: $Predicate_<$Set<string>>): void;
+        fabric_parentsEnabled(arg0: $Set_<string>): boolean;
+        fabric_isHidden(): boolean;
     }
 }

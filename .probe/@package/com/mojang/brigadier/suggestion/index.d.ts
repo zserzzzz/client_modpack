@@ -11,11 +11,11 @@ declare module "@package/com/mojang/brigadier/suggestion" {
         build(): $Suggestions;
         getRemaining(): string;
         getStart(): number;
-        suggest(arg0: string, arg1: $Message_): $SuggestionsBuilder;
-        suggest(arg0: number): $SuggestionsBuilder;
-        suggest(arg0: number, arg1: $Message_): $SuggestionsBuilder;
-        suggest(arg0: string): $SuggestionsBuilder;
         getRemainingLowerCase(): string;
+        suggest(arg0: number, arg1: $Message_): $SuggestionsBuilder;
+        suggest(arg0: number): $SuggestionsBuilder;
+        suggest(arg0: string, arg1: $Message_): $SuggestionsBuilder;
+        suggest(arg0: string): $SuggestionsBuilder;
         restart(): $SuggestionsBuilder;
         buildFuture(): $CompletableFuture<$Suggestions>;
         createOffset(arg0: number): $SuggestionsBuilder;
@@ -27,15 +27,15 @@ declare module "@package/com/mojang/brigadier/suggestion" {
         get remainingLowerCase(): string;
     }
     export class $Suggestions {
+        getList(): $List<$Suggestion>;
         isEmpty(): boolean;
         static merge(arg0: string, arg1: $Collection_<$Suggestions>): $Suggestions;
         static empty(): $CompletableFuture<$Suggestions>;
         static create(arg0: string, arg1: $Collection_<$Suggestion>): $Suggestions;
         getRange(): $StringRange;
-        getList(): $List<$Suggestion>;
         constructor(arg0: $StringRange, arg1: $List_<$Suggestion>);
-        get range(): $StringRange;
         get list(): $List<$Suggestion>;
+        get range(): $StringRange;
     }
     export class $SuggestionProvider<S> {
     }

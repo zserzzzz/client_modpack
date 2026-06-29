@@ -4,11 +4,11 @@ declare module "@package/dev/tr7zw/entityculling/versionless/access" {
     }
     export interface $Cullable {
         setTimeout(): void;
-        isOutOfCamera(): boolean;
-        isForcedVisible(): boolean;
         setOutOfCamera(arg0: boolean): void;
-        setCulled(arg0: boolean): void;
+        isForcedVisible(): boolean;
+        isOutOfCamera(): boolean;
         isCulled(): boolean;
+        setCulled(arg0: boolean): void;
         get forcedVisible(): boolean;
     }
 }

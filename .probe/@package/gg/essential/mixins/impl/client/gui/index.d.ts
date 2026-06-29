@@ -12,19 +12,19 @@ import { $UDrawContext } from "@package/gg/essential/util";
 declare module "@package/gg/essential/mixins/impl/client/gui" {
     export class $GuiDragDropEntryHandler<E extends $ObjectSelectionList$Entry<E>> {
         close(list: $List_<never>, otherList: $List_<never>): void;
-        setPendingDraggedEntryState(entry: E, originalContainer: $List_<E>, mouseXOffset: number, mouseYOffset: number, originalIndex: number, mouseX: number, mouseY: number, mustReturnToOriginalList: boolean): void;
-        isDraggingEntry(): boolean;
-        placeDraggedEntryAtIndicatorOrReleaseToOrigin(list: $List_<E>, otherList: $List_<E>, dataChangeReflector: $GuiDragDropEntryHandler$DataChangeReflector_<E>, setSelected: $TriConsumer_<boolean, E, number>): void;
-        revertDraggedEntryToOriginalContainer(list: $List_<never>, otherList: $List_<never>): void;
-        getDragCenterPos(): $GuiDragDropEntryHandler$ScreenPosition;
-        isThisListTheDragOrigin(list: $List_<E>): boolean;
-        static initResourcePackIndicator(screen: $PackSelectionScreen): $TransferableSelectionList$PackEntry;
-        placeIndicatorInListAtIndex(list: $List_<E>, index: number, otherList: $List_<E>, immovableEntryCountStart: number, immovableEntryCountEnd: number): void;
         scrollIfDraggingNearTopOrBottom(yPos: number, list: $AbstractSelectionList<any>): void;
         drawDraggedEntryWithinBounds(event: $GuiDrawScreenEvent, width: number, height: number, padUIBlockWidth: number, padEntryRenderWidth: number, xBound: number, yBound: number, x2Bound: number, y2Bound: number): void;
+        placeIndicatorInListAtIndex(list: $List_<E>, index: number, otherList: $List_<E>, immovableEntryCountStart: number, immovableEntryCountEnd: number): void;
         placeIndicatorWhenOutsideOfLists(list: $List_<never>, otherList: $List_<never>): void;
-        static initServerIndicator(screen: $JoinMultiplayerScreen, list: $ServerSelectionList): $ServerSelectionList$Entry;
+        isDraggingEntry(): boolean;
         handleIndicatorForNonReorderingList(listThatWontReorder: $List_<E>, otherList: $List_<E>): void;
+        isThisListTheDragOrigin(list: $List_<E>): boolean;
+        static initResourcePackIndicator(screen: $PackSelectionScreen): $TransferableSelectionList$PackEntry;
+        getDragCenterPos(): $GuiDragDropEntryHandler$ScreenPosition;
+        static initServerIndicator(screen: $JoinMultiplayerScreen, list: $ServerSelectionList): $ServerSelectionList$Entry;
+        revertDraggedEntryToOriginalContainer(list: $List_<never>, otherList: $List_<never>): void;
+        placeDraggedEntryAtIndicatorOrReleaseToOrigin(list: $List_<E>, otherList: $List_<E>, dataChangeReflector: $GuiDragDropEntryHandler$DataChangeReflector_<E>, setSelected: $TriConsumer_<boolean, E, number>): void;
+        setPendingDraggedEntryState(entry: E, originalContainer: $List_<E>, mouseXOffset: number, mouseYOffset: number, originalIndex: number, mouseX: number, mouseY: number, mustReturnToOriginalList: boolean): void;
         processDeltaTimeForScrolling(): void;
         isIndicatorEntry(entry: $Object): boolean;
         runForDataChange: $Runnable;

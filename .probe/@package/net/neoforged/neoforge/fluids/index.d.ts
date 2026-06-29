@@ -12,7 +12,7 @@ import { $RegistryFriendlyByteBuf } from "@package/net/minecraft/network";
 import { $StateDefinition, $BlockState_, $BlockState } from "@package/net/minecraft/world/level/block/state";
 import { $GameProfile } from "@package/com/mojang/authlib";
 import { $RecipeMatchContext } from "@package/dev/latvian/mods/kubejs/recipe/filter";
-import { $DataComponentType, $PatchedDataComponentMap, $DataComponentHolder_, $DataComponentHolder, $DataComponentType_, $DataComponentMap, $DataComponentMap_, $DataComponentPatch_, $DataComponentPatch } from "@package/net/minecraft/core/component";
+import { $DataComponentType, $DataComponentHolder_, $DataComponentHolder, $DataComponentType_, $DataComponentMap, $DataComponentMap_, $DataComponentPatch_, $DataComponentPatch } from "@package/net/minecraft/core/component";
 import { $IModBusEvent } from "@package/net/neoforged/fml/event";
 import { $SoundAction, $MutableDataComponentHolder } from "@package/net/neoforged/neoforge/common";
 import { $Item, $Rarity, $Rarity_, $Item$TooltipContext, $TooltipFlag, $DyeColor_, $ItemStack_, $ItemStack } from "@package/net/minecraft/world/item";
@@ -106,14 +106,14 @@ declare module "@package/net/neoforged/neoforge/fluids" {
         is(fluid: $Fluid_): boolean;
         is(predicate: $Predicate_<$Holder<$Fluid>>): boolean;
         is(holder: $Holder_<$Fluid>): boolean;
+        getAmount(): number;
         getComponents(): $DataComponentMap;
+        getFluidType(): $FluidType;
+        getFluid(): $Fluid;
+        isSameFluid(other: $FluidStack_): boolean;
+        getFluidHolder(): $Holder<$Fluid>;
         isSameFluidSameComponents(content: $SimpleFluidContent): boolean;
         isSameFluidSameComponents(other: $FluidStack_): boolean;
-        getFluidType(): $FluidType;
-        getFluidHolder(): $Holder<$Fluid>;
-        getFluid(): $Fluid;
-        getAmount(): number;
-        isSameFluid(other: $FluidStack_): boolean;
         get<T>(component: $DataComponentType_<T>): T;
         getOrDefault<T>(component: $DataComponentType_<T>, defaultValue: T): T;
         has(component: $DataComponentType_<never>): boolean;
@@ -126,11 +126,11 @@ declare module "@package/net/neoforged/neoforge/fluids" {
         static EMPTY: $SimpleFluidContent;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $SimpleFluidContent>;
         get empty(): boolean;
+        get amount(): number;
         get components(): $DataComponentMap;
         get fluidType(): $FluidType;
-        get fluidHolder(): $Holder<$Fluid>;
         get fluid(): $Fluid;
-        get amount(): number;
+        get fluidHolder(): $Holder<$Fluid>;
     }
     /**
      * An interface which performs an interaction for a source.
@@ -149,19 +149,18 @@ declare module "@package/net/neoforged/neoforge/fluids" {
     export type $FluidInteractionRegistry$FluidInteraction_ = ((arg0: $Level, arg1: $BlockPos, arg2: $BlockPos, arg3: $FluidState) => void);
     export class $FluidUtil {
         /**
-         * Used to handle the common case of a player holding a fluid item and right-clicking on a fluid handler.
-         * First it tries to fill the item from the handler,
-         * if that action fails then it tries to drain the item into the handler.
-         * Automatically updates the item in the player's hand and stashes any extra items created.
+         * Helper method to get an `IFluidHandlerItem` for an itemStack.
+         * 
+         * The itemStack passed in here WILL be modified, the `IFluidHandlerItem` acts on it directly.
+         * Some `IFluidHandlerItem` will change the item entirely, always use `IFluidHandlerItem#getContainer()`
+         * after using the fluid handler to get the resulting item back.
+         * 
+         * Note that the itemStack MUST have a stackSize of 1 if you want to fill or drain it.
+         * You can't fill or drain multiple items at once, if you do then liquid is multiplied or destroyed.
+         * 
+         * Vanilla buckets will be converted to universal buckets if they are enabled.
          */
-        static interactWithFluidHandler(player: $Player, hand: $InteractionHand_, handler: $IFluidHandler): boolean;
-        /**
-         * Used to handle the common case of a player holding a fluid item and right-clicking on a fluid handler block.
-         * First it tries to fill the item from the block,
-         * if that action fails then it tries to drain the item into the block.
-         * Automatically updates the item in the player's hand and stashes any extra items created.
-         */
-        static interactWithFluidHandler(player: $Player, hand: $InteractionHand_, level: $Level_, pos: $BlockPos_, side: $Direction_): boolean;
+        static getFluidContained(itemStack: $ItemStack_): ($FluidStack) | undefined;
         /**
          * Helper method to get an IFluidHandler for at a block position.
          */
@@ -180,18 +179,35 @@ declare module "@package/net/neoforged/neoforge/fluids" {
          */
         static getFluidHandler(itemStack: $ItemStack_): ($IFluidHandlerItem) | undefined;
         /**
-         * Helper method to get an `IFluidHandlerItem` for an itemStack.
-         * 
-         * The itemStack passed in here WILL be modified, the `IFluidHandlerItem` acts on it directly.
-         * Some `IFluidHandlerItem` will change the item entirely, always use `IFluidHandlerItem#getContainer()`
-         * after using the fluid handler to get the resulting item back.
-         * 
-         * Note that the itemStack MUST have a stackSize of 1 if you want to fill or drain it.
-         * You can't fill or drain multiple items at once, if you do then liquid is multiplied or destroyed.
-         * 
-         * Vanilla buckets will be converted to universal buckets if they are enabled.
+         * Takes an Fluid Container Item and tries to fill it from the given tank.
+         * If the player is in creative mode, the container will not be modified on success, and no additional items created.
+         * If the input itemstack has a stacksize > 1 it will stow the filled container in the given inventory.
+         * If the inventory does not accept it, it will be given to the player or dropped at the players feet.
+         * If player is null in this case, the action will be aborted.
          */
-        static getFluidContained(itemStack: $ItemStack_): ($FluidStack) | undefined;
+        static tryEmptyContainerAndStow(container: $ItemStack_, fluidSource: $IFluidHandler, inventory: $IItemHandler, maxAmount: number, player: $Player, doFill: boolean): $FluidActionResult;
+        /**
+         * Takes an Fluid Container Item and tries to fill it from the given tank.
+         * If the player is in creative mode, the container will not be modified on success, and no additional items created.
+         * If the input itemstack has a stacksize > 1 it will stow the filled container in the given inventory.
+         * If the inventory does not accept it, it will be given to the player or dropped at the players feet.
+         * If player is null in this case, the action will be aborted.
+         */
+        static tryFillContainerAndStow(container: $ItemStack_, fluidSource: $IFluidHandler, inventory: $IItemHandler, maxAmount: number, player: $Player, doFill: boolean): $FluidActionResult;
+        /**
+         * Tries to place a fluid resource into the level as a block and drains the fluidSource.
+         * Makes a fluid emptying or vaporization sound when successful.
+         * Honors the amount of fluid contained by the used container.
+         * Checks if water-like fluids should vaporize like in the nether.
+         * 
+         * Modeled after `BucketItem#emptyContents(Player, Level, BlockPos, BlockHitResult)`
+         */
+        static tryPlaceFluid(player: $Player, level: $Level_, hand: $InteractionHand_, pos: $BlockPos_, fluidSource: $IFluidHandler, resource: $FluidStack_): boolean;
+        /**
+         * ItemStack version of `#tryPlaceFluid(Player, Level, InteractionHand, BlockPos, IFluidHandler, FluidStack)`.
+         * Use the returned `FluidActionResult` to update the container ItemStack.
+         */
+        static tryPlaceFluid(player: $Player, level: $Level_, hand: $InteractionHand_, pos: $BlockPos_, container: $ItemStack_, resource: $FluidStack_): $FluidActionResult;
         /**
          * Fill a destination fluid handler from a source fluid handler using a specific fluid.
          * To specify a max amount to transfer instead of specific fluid, use `#tryFluidTransfer(IFluidHandler, IFluidHandler, int, boolean)`
@@ -205,53 +221,37 @@ declare module "@package/net/neoforged/neoforge/fluids" {
          */
         static tryFluidTransfer(fluidDestination: $IFluidHandler, fluidSource: $IFluidHandler, maxAmount: number, doTransfer: boolean): $FluidStack;
         /**
-         * ItemStack version of `#tryPlaceFluid(Player, Level, InteractionHand, BlockPos, IFluidHandler, FluidStack)`.
-         * Use the returned `FluidActionResult` to update the container ItemStack.
+         * Used to handle the common case of a player holding a fluid item and right-clicking on a fluid handler block.
+         * First it tries to fill the item from the block,
+         * if that action fails then it tries to drain the item into the block.
+         * Automatically updates the item in the player's hand and stashes any extra items created.
          */
-        static tryPlaceFluid(player: $Player, level: $Level_, hand: $InteractionHand_, pos: $BlockPos_, container: $ItemStack_, resource: $FluidStack_): $FluidActionResult;
+        static interactWithFluidHandler(player: $Player, hand: $InteractionHand_, level: $Level_, pos: $BlockPos_, side: $Direction_): boolean;
         /**
-         * Tries to place a fluid resource into the level as a block and drains the fluidSource.
-         * Makes a fluid emptying or vaporization sound when successful.
-         * Honors the amount of fluid contained by the used container.
-         * Checks if water-like fluids should vaporize like in the nether.
-         * 
-         * Modeled after `BucketItem#emptyContents(Player, Level, BlockPos, BlockHitResult)`
+         * Used to handle the common case of a player holding a fluid item and right-clicking on a fluid handler.
+         * First it tries to fill the item from the handler,
+         * if that action fails then it tries to drain the item into the handler.
+         * Automatically updates the item in the player's hand and stashes any extra items created.
          */
-        static tryPlaceFluid(player: $Player, level: $Level_, hand: $InteractionHand_, pos: $BlockPos_, fluidSource: $IFluidHandler, resource: $FluidStack_): boolean;
+        static interactWithFluidHandler(player: $Player, hand: $InteractionHand_, handler: $IFluidHandler): boolean;
         static getFilledBucket(fluidStack: $FluidStack_): $ItemStack;
-        /**
-         * Takes an Fluid Container Item and tries to fill it from the given tank.
-         * If the player is in creative mode, the container will not be modified on success, and no additional items created.
-         * If the input itemstack has a stacksize > 1 it will stow the filled container in the given inventory.
-         * If the inventory does not accept it, it will be given to the player or dropped at the players feet.
-         * If player is null in this case, the action will be aborted.
-         */
-        static tryFillContainerAndStow(container: $ItemStack_, fluidSource: $IFluidHandler, inventory: $IItemHandler, maxAmount: number, player: $Player, doFill: boolean): $FluidActionResult;
-        /**
-         * Takes an Fluid Container Item and tries to fill it from the given tank.
-         * If the player is in creative mode, the container will not be modified on success, and no additional items created.
-         * If the input itemstack has a stacksize > 1 it will stow the filled container in the given inventory.
-         * If the inventory does not accept it, it will be given to the player or dropped at the players feet.
-         * If player is null in this case, the action will be aborted.
-         */
-        static tryEmptyContainerAndStow(container: $ItemStack_, fluidSource: $IFluidHandler, inventory: $IItemHandler, maxAmount: number, player: $Player, doFill: boolean): $FluidActionResult;
-        /**
-         * Attempts to pick up a fluid in the level and put it in an empty container item.
-         */
-        static tryPickUpFluid(emptyContainer: $ItemStack_, playerIn: $Player, level: $Level_, pos: $BlockPos_, side: $Direction_): $FluidActionResult;
-        /**
-         * Fill a container from the given fluidSource.
-         */
-        static tryEmptyContainer(container: $ItemStack_, fluidSource: $IFluidHandler, maxAmount: number, player: $Player, doFill: boolean): $FluidActionResult;
-        /**
-         * Fill a container from the given fluidSource.
-         */
-        static tryFillContainer(container: $ItemStack_, fluidSource: $IFluidHandler, maxAmount: number, player: $Player, doFill: boolean): $FluidActionResult;
         /**
          * Destroys a block when a fluid is placed in the same position.
          * Modeled after `BucketItem#emptyContents(Player, Level, BlockPos, BlockHitResult)`
          */
         static destroyBlockOnFluidPlacement(level: $Level_, pos: $BlockPos_): void;
+        /**
+         * Fill a container from the given fluidSource.
+         */
+        static tryFillContainer(container: $ItemStack_, fluidSource: $IFluidHandler, maxAmount: number, player: $Player, doFill: boolean): $FluidActionResult;
+        /**
+         * Fill a container from the given fluidSource.
+         */
+        static tryEmptyContainer(container: $ItemStack_, fluidSource: $IFluidHandler, maxAmount: number, player: $Player, doFill: boolean): $FluidActionResult;
+        /**
+         * Attempts to pick up a fluid in the level and put it in an empty container item.
+         */
+        static tryPickUpFluid(emptyContainer: $ItemStack_, playerIn: $Player, level: $Level_, pos: $BlockPos_, side: $Direction_): $FluidActionResult;
     }
     /**
      * An interface which tests whether a source fluid can interact with its
@@ -287,6 +287,7 @@ declare module "@package/net/neoforged/neoforge/fluids" {
      * Most methods in this class are adapted from `ItemStack`.
      */
     export class $FluidStack implements $MutableDataComponentHolder, $FluidStackKJS {
+        getComponentsPatch(): $DataComponentPatch;
         isEmpty(): boolean;
         /**
          * Checks if the two fluid stacks are equal. This checks the fluid, amount, and components.
@@ -312,15 +313,15 @@ declare module "@package/net/neoforged/neoforge/fluids" {
          * Creates a copy of this stack with `0` amount.
          */
         copy(): $FluidStack;
-        is(holderSet: $HolderSet_<$Fluid>): boolean;
-        is(holder: $Holder_<$Fluid>): boolean;
-        is(holderPredicate: $Predicate_<$Holder<$Fluid>>): boolean;
         /**
          * Check if the fluid type of this stack is equal to the given fluid type.
          */
         is(fluidType: $FluidType_): boolean;
         is(tag: $TagKey_<$Fluid>): boolean;
         is(fluid: $Fluid_): boolean;
+        is(holderPredicate: $Predicate_<$Holder<$Fluid>>): boolean;
+        is(holder: $Holder_<$Fluid>): boolean;
+        is(holderSet: $HolderSet_<$Fluid>): boolean;
         /**
          * Sets the amount of this stack.
          */
@@ -331,82 +332,64 @@ declare module "@package/net/neoforged/neoforge/fluids" {
          */
         getDisplayName(): $Component;
         /**
-         * Sets the amount of this stack.
+         * Tries to parse a fluid stack, defaulting to `#EMPTY` on parsing failure.
          */
-        limitSize(amount: number): void;
-        /**
-         * Sets the amount of this stack.
-         */
-        shrink(amount: number): void;
-        getComponentsPatch(): $DataComponentPatch;
-        /**
-         * Splits off a stack of the given amount of this stack and reduces this stack by the amount.
-         */
-        copyWithAmount(amount: number): $FluidStack;
-        /**
-         * Returns the description id of this stack.
-         */
-        getDescriptionId(): string;
-        getComponents(): $PatchedDataComponentMap;
-        /**
-         * A standard codec for fluid stacks that always deserializes with a fixed amount,
-         * and does not accept empty stacks.
-         * 
-         * Fluid equivalent of `ItemStack#SINGLE_ITEM_CODEC`.
-         */
-        static fixedAmountCodec(amount: number): $Codec<$FluidStack>;
-        getTags(): $Stream<$TagKey<$Fluid>>;
-        /**
-         * Returns the hover name of this stack.
-         */
-        getHoverName(): $Component;
+        static parseOptional(lookupProvider: $HolderLookup$Provider, tag: $CompoundTag_): $FluidStack;
         /**
          * Creates a copy of this stack with `0` amount.
          */
         copyAndClear(): $FluidStack;
         /**
-         * Checks if the two fluid stacks are equal. This checks the fluid, amount, and components.
+         * Sets the amount of this stack.
          */
-        static isSameFluidSameComponents(first: $FluidStack_, second: $FluidStack_): boolean;
+        limitSize(amount: number): void;
+        /**
+         * @deprecated
+         * Returns the description id of this stack.
+         */
+        getTranslationKey(): string;
+        /**
+         * Returns the description id of this stack.
+         */
+        getDescriptionId(): string;
+        /**
+         * Returns the amount of this stack.
+         */
+        getAmount(): number;
+        getTags(): $Stream<$TagKey<$Fluid>>;
+        /**
+         * Sets the amount of this stack.
+         */
+        shrink(amount: number): void;
+        /**
+         * Saves this stack to a new tag.
+         */
+        saveOptional(lookupProvider: $HolderLookup$Provider): $Tag;
+        isComponentsPatchEmpty(): boolean;
+        /**
+         * Returns the hover name of this stack.
+         */
+        getHoverName(): $Component;
         /**
          * Returns the fluid type of this stack.
          */
         getFluidType(): $FluidType;
-        getFluidHolder(): $Holder<$Fluid>;
-        /**
-         * @deprecated
-         * Determines if the fluid and the components are equal. This does not check amounts.
-         */
-        containsFluid(other: $FluidStack_): boolean;
-        /**
-         * @deprecated
-         * Determines if the fluid and the components are equal. This does not check amounts.
-         */
-        isFluidEqual(other: $FluidStack_): boolean;
-        /**
-         * @deprecated
-         * Determines if the FluidIDs and components are equal compared to a container item stack. This does not check amounts.
-         */
-        isFluidEqual(other: $ItemStack_): boolean;
         /**
          * Returns the fluid in this stack, or `Fluids#EMPTY` if this stack is empty.
          */
         getFluid(): $Fluid;
         /**
-         * Returns the amount of this stack.
+         * Sets the amount of this stack.
          */
-        getAmount(): number;
-        isComponentsPatchEmpty(): boolean;
+        setAmount(amount: number): void;
+        /**
+         * Splits off a stack of the given amount of this stack and reduces this stack by the amount.
+         */
+        copyWithAmount(amount: number): $FluidStack;
         /**
          * Checks if the two fluid stacks are equal. This checks the fluid, amount, and components.
          */
         static isSameFluid(first: $FluidStack_, second: $FluidStack_): boolean;
-        static lenientOtionalFieldOf(fieldName: string): $MapCodec<$FluidStack>;
-        /**
-         * @deprecated
-         * Determines if the fluid and the components are equal. This does not check amounts.
-         */
-        isFluidStackIdentical(other: $FluidStack_): boolean;
         /**
          * Hashes the fluid and components of this stack, ignoring the amount.
          */
@@ -417,22 +400,38 @@ declare module "@package/net/neoforged/neoforge/fluids" {
          */
         static areFluidStackTagsEqual(first: $FluidStack_, second: $FluidStack_): boolean;
         /**
-         * Sets the amount of this stack.
+         * @deprecated
+         * Determines if the fluid and the components are equal. This does not check amounts.
          */
-        setAmount(amount: number): void;
+        isFluidStackIdentical(other: $FluidStack_): boolean;
+        static lenientOtionalFieldOf(fieldName: string): $MapCodec<$FluidStack>;
+        /**
+         * A standard codec for fluid stacks that always deserializes with a fixed amount,
+         * and does not accept empty stacks.
+         * 
+         * Fluid equivalent of `ItemStack#SINGLE_ITEM_CODEC`.
+         */
+        static fixedAmountCodec(amount: number): $Codec<$FluidStack>;
         /**
          * @deprecated
-         * Returns the description id of this stack.
+         * Determines if the fluid and the components are equal. This does not check amounts.
          */
-        getTranslationKey(): string;
+        containsFluid(other: $FluidStack_): boolean;
         /**
-         * Tries to parse a fluid stack, defaulting to `#EMPTY` on parsing failure.
+         * @deprecated
+         * Determines if the FluidIDs and components are equal compared to a container item stack. This does not check amounts.
          */
-        static parseOptional(lookupProvider: $HolderLookup$Provider, tag: $CompoundTag_): $FluidStack;
+        isFluidEqual(other: $ItemStack_): boolean;
         /**
-         * Saves this stack to a new tag.
+         * @deprecated
+         * Determines if the fluid and the components are equal. This does not check amounts.
          */
-        saveOptional(lookupProvider: $HolderLookup$Provider): $Tag;
+        isFluidEqual(other: $FluidStack_): boolean;
+        getFluidHolder(): $Holder<$Fluid>;
+        /**
+         * Checks if the two fluid stacks are equal. This checks the fluid, amount, and components.
+         */
+        static isSameFluidSameComponents(first: $FluidStack_, second: $FluidStack_): boolean;
         update<T>(arg0: $DataComponentType_<T>, arg1: T, arg2: $UnaryOperator_<T>): T;
         update<T>(arg0: $Supplier_<$DataComponentType<T>>, arg1: T, arg2: $UnaryOperator_<T>): T;
         update<T, U>(arg0: $Supplier_<$DataComponentType<T>>, arg1: T, arg2: U, arg3: $BiFunction_<T, U, T>): T;
@@ -442,14 +441,19 @@ declare module "@package/net/neoforged/neoforge/fluids" {
         getCodec(): $Codec<never>;
         matches(cx: $RecipeMatchContext, s: $FluidStack_, exact: boolean): boolean;
         matches(cx: $RecipeMatchContext, ingredient: $FluidIngredient_, exact: boolean): boolean;
-        kjs$getWebIconURL(ops: $DynamicOps<$Tag_>, size: number): $RelativeURL;
-        kjs$isEmpty(): boolean;
-        specialEquals(o: $Object, shallow: boolean): boolean;
-        kjs$getKey(): $ResourceKey<$Fluid>;
         /**
-         * Creates a copy of this stack with `0` amount.
+         * Returns the fluid in this stack, or `Fluids#EMPTY` if this stack is empty.
          */
-        kjs$self(): $FluidStack;
+        kjs$getFluid(): $Fluid;
+        /**
+         * Returns the amount of this stack.
+         */
+        kjs$getAmount(): number;
+        kjs$asHolder(): $Holder<$Fluid>;
+        replaceThisWith(cx: $RecipeScriptContext, arg1: $Object): $Object;
+        kjs$getRegistry(): $Registry<$Fluid>;
+        kjs$getRegistryId(): $ResourceKey<$Registry<$Fluid>>;
+        kjs$getIdLocation(): $ResourceLocation;
         /**
          * Returns the description id of this stack.
          */
@@ -459,109 +463,105 @@ declare module "@package/net/neoforged/neoforge/fluids" {
          */
         kjs$getMod(): string;
         kjs$copy(amount: number): $FluidLike;
+        specialEquals(o: $Object, shallow: boolean): boolean;
+        kjs$isEmpty(): boolean;
+        kjs$getWebIconURL(ops: $DynamicOps<$Tag_>, size: number): $RelativeURL;
         /**
          * Determines if the fluid and the components are equal. This does not check amounts.
          */
         kjs$equalsIgnoringCount(other: $FluidStack_): boolean;
-        kjs$getIdLocation(): $ResourceLocation;
-        replaceThisWith(cx: $RecipeScriptContext, arg1: $Object): $Object;
-        kjs$getRegistry(): $Registry<$Fluid>;
-        kjs$getRegistryId(): $ResourceKey<$Registry<$Fluid>>;
-        kjs$asHolder(): $Holder<$Fluid>;
         /**
-         * Returns the fluid in this stack, or `Fluids#EMPTY` if this stack is empty.
+         * Creates a copy of this stack with `0` amount.
          */
-        kjs$getFluid(): $Fluid;
-        /**
-         * Returns the amount of this stack.
-         */
-        kjs$getAmount(): number;
+        kjs$self(): $FluidStack;
+        kjs$getKey(): $ResourceKey<$Fluid>;
         has(component: $DataComponentType_<never>): boolean;
-        patch(components: $DataComponentPatch_): $ComponentFunctions;
         getComponentMap(): $DataComponentMap;
+        patch(components: $DataComponentPatch_): $ComponentFunctions;
         getComponentHolder(): $MutableDataComponentHolder;
-        toNBT(): $Tag;
         toJson(): $JsonElement;
-        hasTag(tag: $ResourceLocation_): boolean;
-        getTagKeys(): $List<$TagKey<$Fluid>>;
+        toNBT(): $Tag;
         getTags(): $List<$ResourceLocation>;
+        getTagKeys(): $List<$TagKey<$Fluid>>;
+        hasTag(tag: $ResourceLocation_): boolean;
         has(type: $Supplier_<$DataComponentType<never>>): boolean;
         addToTooltip<T extends $TooltipProvider>(type: $DataComponentType_<T>, context: $Item$TooltipContext, adder: $Consumer_<$Component>, flag: $TooltipFlag): void;
         addToTooltip<T extends $TooltipProvider>(type: $Supplier_<$DataComponentType<T>>, context: $Item$TooltipContext, adder: $Consumer_<$Component>, flag: $TooltipFlag): void;
-        setDyedColor(color: $KubeColor_): void;
-        setCustomData(tag: $CompoundTag_): void;
-        setLore(lines: $List_<$Component_>): void;
-        setLore(lines: $List_<$Component_>, styledLines: $List_<$Component_>): void;
-        setLockCode(lock: string): void;
-        setPotionId(potion: $Holder_<$Potion>): void;
-        setRarity(rarity: $Rarity_): void;
-        setBaseColor(color: $DyeColor_): void;
-        getCustomData(): $CompoundTag;
-        setEntityData(tag: $CompoundTag_): void;
-        /**
-         * Returns the hover name of this stack.
-         */
-        getCustomName(): $Component;
-        setProfile(profile: $GameProfile): void;
-        setProfile(name: string, uuid: $UUID_): void;
-        setUnit(component: $DataComponentType_<$Unit_>): $ComponentFunctions;
-        setCustomName(name: $Component_): void;
-        setBlockStateProperties(properties: $Map_<string, string>): void;
-        setAdditionalTooltipHidden(): void;
-        setDyedColorWithTooltip(color: $KubeColor_): void;
-        remove(type: $DataComponentType_<never>): $ComponentFunctions;
-        getComponentString(): string;
-        setTooltipHidden(): void;
-        resetComponents(): $ComponentFunctions;
-        setGlintOverride(override: boolean): void;
         setPotionContents(contents: $PotionContents_): void;
+        setContainerLootTable(lootTable: $ResourceKey_<$LootTable>): void;
+        setContainerLootTable(lootTable: $ResourceKey_<$LootTable>, seed: number): void;
+        resetComponents(): $ComponentFunctions;
         /**
          * Sets the amount of this stack.
          */
         setCustomModelData(amount: number): void;
-        setContainerLootTable(lootTable: $ResourceKey_<$LootTable>): void;
-        setContainerLootTable(lootTable: $ResourceKey_<$LootTable>, seed: number): void;
+        getComponentString(): string;
+        setTooltipHidden(): void;
+        setGlintOverride(override: boolean): void;
+        setPotionId(potion: $Holder_<$Potion>): void;
+        setDyedColor(color: $KubeColor_): void;
+        setLockCode(lock: string): void;
+        setBaseColor(color: $DyeColor_): void;
+        setProfile(profile: $GameProfile): void;
+        setProfile(name: string, uuid: $UUID_): void;
+        setEntityData(tag: $CompoundTag_): void;
+        setRarity(rarity: $Rarity_): void;
+        setCustomName(name: $Component_): void;
+        /**
+         * Returns the hover name of this stack.
+         */
+        getCustomName(): $Component;
+        setLore(lines: $List_<$Component_>, styledLines: $List_<$Component_>): void;
+        setLore(lines: $List_<$Component_>): void;
+        getCustomData(): $CompoundTag;
+        setUnit(component: $DataComponentType_<$Unit_>): $ComponentFunctions;
+        setCustomData(tag: $CompoundTag_): void;
+        setAdditionalTooltipHidden(): void;
+        setDyedColorWithTooltip(color: $KubeColor_): void;
+        setBlockStateProperties(properties: $Map_<string, string>): void;
+        remove(type: $DataComponentType_<never>): $ComponentFunctions;
+        getComponents(): $DataComponentMap;
         static CODEC: $Codec<$FluidStack>;
         static FLUID_NON_EMPTY_CODEC: $Codec<$Holder<$Fluid>>;
         static OPTIONAL_CODEC: $Codec<$FluidStack>;
         static OPTIONAL_STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $FluidStack>;
         static EMPTY: $FluidStack;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $FluidStack>;
-        constructor(fluid: $Holder_<$Fluid>, amount: number, patch: $DataComponentPatch_);
-        constructor(fluid: $Holder_<$Fluid>, amount: number);
         constructor(fluid: $Fluid_, amount: number);
+        constructor(fluid: $Holder_<$Fluid>, amount: number);
+        constructor(fluid: $Holder_<$Fluid>, amount: number, patch: $DataComponentPatch_);
         get<T extends keyof DataComponentTypes.OutputMap>(type: T): DataComponentTypes.OutputMap[T] | null;
         getOrDefault<T extends keyof DataComponentTypes.OutputMap>(type: T, _default: DataComponentTypes.OutputMap[T]): DataComponentTypes.OutputMap[T];
         set(components: $DataComponentMap_): this;
         set<T extends keyof DataComponentTypes.InputMap>(type: T, data: DataComponentTypes.InputMap[T]): this;
+        get componentsPatch(): $DataComponentPatch;
         get empty(): boolean;
         get displayName(): $Component;
-        get componentsPatch(): $DataComponentPatch;
+        get translationKey(): string;
         get descriptionId(): string;
-        get components(): $PatchedDataComponentMap;
+        get componentsPatchEmpty(): boolean;
         get hoverName(): $Component;
         get fluidType(): $FluidType;
-        get fluidHolder(): $Holder<$Fluid>;
         get fluid(): $Fluid;
-        get componentsPatchEmpty(): boolean;
-        get translationKey(): string;
+        get fluidHolder(): $Holder<$Fluid>;
         get codec(): $Codec<never>;
         get componentMap(): $DataComponentMap;
         get componentHolder(): $MutableDataComponentHolder;
         get tagKeys(): $List<$TagKey<$Fluid>>;
-        set dyedColor(value: $KubeColor_);
-        set lockCode(value: string);
-        set potionId(value: $Holder_<$Potion>);
-        set rarity(value: $Rarity_);
-        set baseColor(value: $DyeColor_);
-        set entityData(value: $CompoundTag_);
-        set unit(value: $DataComponentType_<$Unit_>);
-        set blockStateProperties(value: $Map_<string, string>);
-        set dyedColorWithTooltip(value: $KubeColor_);
-        get componentString(): string;
-        set glintOverride(value: boolean);
         set potionContents(value: $PotionContents_);
         set customModelData(value: number);
+        get componentString(): string;
+        set glintOverride(value: boolean);
+        set potionId(value: $Holder_<$Potion>);
+        set dyedColor(value: $KubeColor_);
+        set lockCode(value: string);
+        set baseColor(value: $DyeColor_);
+        set entityData(value: $CompoundTag_);
+        set rarity(value: $Rarity_);
+        set unit(value: $DataComponentType_<$Unit_>);
+        set dyedColorWithTooltip(value: $KubeColor_);
+        set blockStateProperties(value: $Map_<string, string>);
+        get components(): $DataComponentMap;
     }
     /**
      * Values that may be interpreted as {@link $FluidStack}.
@@ -608,6 +608,12 @@ declare module "@package/net/neoforged/neoforge/fluids" {
      */
     export class $FluidType {
         /**
+         * Performs how an entity moves when within the fluid. If using custom
+         * movement logic, the method should return `true`. Otherwise, the
+         * movement logic will default to water.
+         */
+        move(state: $FluidState, entity: $LivingEntity, movementVector: $Vec3_, gravity: number): boolean;
+        /**
          * Returns the component representing the name of the fluid type.
          */
         getDescription(stack: $FluidStack_): $Component;
@@ -615,12 +621,6 @@ declare module "@package/net/neoforged/neoforge/fluids" {
          * Returns the component representing the name of the fluid type.
          */
         getDescription(): $Component;
-        /**
-         * Performs how an entity moves when within the fluid. If using custom
-         * movement logic, the method should return `true`. Otherwise, the
-         * movement logic will default to water.
-         */
-        move(state: $FluidState, entity: $LivingEntity, movementVector: $Vec3_, gravity: number): boolean;
         /**
          * Returns the identifier representing the name of the fluid.
          * If no identifier was specified, then the identifier will be defaulted
@@ -638,37 +638,173 @@ declare module "@package/net/neoforged/neoforge/fluids" {
          */
         getBucket(stack: $FluidStack_): $ItemStack;
         /**
-         * Returns whether the fluid type represents air.
+         * Returns the associated `BlockState` for a `FluidState`.
          */
-        isAir(): boolean;
+        getBlockForFluidState(getter: $BlockAndTintGetter, pos: $BlockPos_, state: $FluidState): $BlockState;
         /**
-         * @deprecated
+         * Returns the `FluidState` when a `FluidStack` is trying to
+         * place it.
          */
-        initializeClient(consumer: $Consumer_<$IClientFluidTypeExtensions>): void;
+        getStateForPlacement(getter: $BlockAndTintGetter, pos: $BlockPos_, stack: $FluidStack_): $FluidState;
         /**
-         * Returns whether the block can be extinguished by this fluid.
+         * Returns how much the fluid should scale the damage done to a falling
+         * entity when hitting the ground per tick.
+         * 
+         * Implementation: If the entity is in many fluids, the smallest modifier
+         * is applied.
          */
-        canExtinguish(state: $FluidState, getter: $BlockGetter, pos: $BlockPos_): boolean;
+        getFallDistanceModifier(entity: $Entity): number;
         /**
-         * Returns whether the fluid can push an entity.
+         * Returns whether the entity can ride in this vehicle under the fluid.
          */
-        canExtinguish(entity: $Entity): boolean;
+        canRideVehicleUnder(vehicle: $Entity, rider: $Entity): boolean;
         /**
-         * Returns how much the velocity of the fluid should be scaled by
-         * when applied to an entity.
+         * Gets the path type of the adjacent fluid to a pathfinding entity.
+         * Path types with a negative malus are not traversable for the entity.
+         * Pathfinding entities will favor paths consisting of a lower malus.
+         * When `null`, uses vanilla behavior.
          */
-        motionScale(entity: $Entity): number;
+        getAdjacentBlockPathType(state: $FluidState, level: $BlockGetter, pos: $BlockPos_, mob: $Mob, originalType: $PathType_): $PathType;
         /**
-         * Returns whether the fluid can push an entity.
+         * Determines if this fluid should be vaporized when placed into a level.
+         * 
+         * Note: Fluids that can turn lava into obsidian should vaporize within
+         * the nether to preserve the intentions of vanilla.
          */
-        canPushEntity(entity: $Entity): boolean;
+        isVaporizedOnPlacement(level: $Level_, pos: $BlockPos_, stack: $FluidStack_): boolean;
         /**
          * Returns the light level emitted by the fluid.
          * 
          * Note: This should be a value between `[0,15]`. If not specified, the
          * light level is `0` as most fluids do not emit light.
          */
-        getTemperature(stack: $FluidStack_): number;
+        getLightLevel(state: $FluidState, getter: $BlockAndTintGetter, pos: $BlockPos_): number;
+        /**
+         * Returns the light level emitted by the fluid.
+         * 
+         * Note: This should be a value between `[0,15]`. If not specified, the
+         * light level is `0` as most fluids do not emit light.
+         */
+        getLightLevel(stack: $FluidStack_): number;
+        /**
+         * Returns the light level emitted by the fluid.
+         * 
+         * Note: This should be a value between `[0,15]`. If not specified, the
+         * light level is `0` as most fluids do not emit light.
+         * 
+         * Implementation: This is used by the bucket model to determine whether the fluid
+         * should render full-bright when `applyFluidLuminosity` is `true`.
+         */
+        getLightLevel(): number;
+        /**
+         * @deprecated
+         */
+        initializeClient(consumer: $Consumer_<$IClientFluidTypeExtensions>): void;
+        /**
+         * Returns a sound to play when a certain action is performed. If no
+         * sound is present, then the sound will be `null`.
+         */
+        getSound(action: $SoundAction): $SoundEvent;
+        /**
+         * Returns a sound to play when a certain action is performed at a
+         * position. If no sound is present, then the sound will be `null`.
+         */
+        getSound(player: $Player, getter: $BlockGetter, pos: $BlockPos_, action: $SoundAction): $SoundEvent;
+        /**
+         * Returns a sound to play when a certain action is performed. If no
+         * sound is present, then the sound will be `null`.
+         */
+        getSound(stack: $FluidStack_, action: $SoundAction): $SoundEvent;
+        /**
+         * Returns a sound to play when a certain action is performed by the
+         * entity in the fluid. If no sound is present, then the sound will be
+         * `null`.
+         */
+        getSound(entity: $Entity, action: $SoundAction): $SoundEvent;
+        /**
+         * Returns whether the fluid can push an entity.
+         */
+        canSwim(entity: $Entity): boolean;
+        /**
+         * Returns the light level emitted by the fluid.
+         * 
+         * Note: This should be a value between `[0,15]`. If not specified, the
+         * light level is `0` as most fluids do not emit light.
+         */
+        getDensity(stack: $FluidStack_): number;
+        /**
+         * Returns the light level emitted by the fluid.
+         * 
+         * Note: This should be a value between `[0,15]`. If not specified, the
+         * light level is `0` as most fluids do not emit light.
+         */
+        getDensity(state: $FluidState, getter: $BlockAndTintGetter, pos: $BlockPos_): number;
+        /**
+         * Returns the light level emitted by the fluid.
+         * 
+         * Note: This should be a value between `[0,15]`. If not specified, the
+         * light level is `0` as most fluids do not emit light.
+         * 
+         * Implementation: This is used by the bucket model to determine whether the fluid
+         * should render full-bright when `applyFluidLuminosity` is `true`.
+         */
+        getDensity(): number;
+        /**
+         * Returns the rarity of the fluid.
+         * 
+         * Note: If not specified, the rarity of the fluid is `Rarity#COMMON`.
+         */
+        getRarity(stack: $FluidStack_): $Rarity;
+        /**
+         * Returns the rarity of the fluid.
+         * 
+         * Note: If not specified, the rarity of the fluid is `Rarity#COMMON`.
+         */
+        getRarity(): $Rarity;
+        /**
+         * Returns whether the fluid can create a source.
+         */
+        canHydrate(stack: $FluidStack_): boolean;
+        /**
+         * Returns whether the fluid can push an entity.
+         */
+        canHydrate(entity: $Entity): boolean;
+        /**
+         * Returns whether the block can be hydrated by a fluid.
+         * 
+         * Hydration is an arbitrary word which depends on the block.
+         * 
+         * - A farmland has moisture
+         * - A sponge can soak up the liquid
+         * - A coral can live
+         */
+        canHydrate(state: $FluidState, getter: $BlockGetter, pos: $BlockPos_, source: $BlockState_, sourcePos: $BlockPos_): boolean;
+        /**
+         * Returns whether the entity can drown in the fluid.
+         */
+        canDrownIn(entity: $LivingEntity): boolean;
+        /**
+         * Returns whether the fluid type represents air.
+         */
+        isVanilla(): boolean;
+        /**
+         * Performs an action when a fluid can be vaporized when placed into a level.
+         * 
+         * Note: The fluid will already have been drained from the stack.
+         */
+        onVaporize(player: $Player, level: $Level_, pos: $BlockPos_, stack: $FluidStack_): void;
+        /**
+         * Returns whether the fluid type represents air.
+         */
+        isAir(): boolean;
+        /**
+         * Returns whether the boat can be used on the fluid.
+         */
+        supportsBoating(boat: $Boat): boolean;
+        /**
+         * Returns whether the boat can be used on the fluid.
+         */
+        supportsBoating(state: $FluidState, boat: $Boat): boolean;
         /**
          * Returns the light level emitted by the fluid.
          * 
@@ -685,86 +821,39 @@ declare module "@package/net/neoforged/neoforge/fluids" {
          * Note: This should be a value between `[0,15]`. If not specified, the
          * light level is `0` as most fluids do not emit light.
          */
+        getTemperature(stack: $FluidStack_): number;
+        /**
+         * Returns the light level emitted by the fluid.
+         * 
+         * Note: This should be a value between `[0,15]`. If not specified, the
+         * light level is `0` as most fluids do not emit light.
+         */
         getTemperature(state: $FluidState, getter: $BlockAndTintGetter, pos: $BlockPos_): number;
-        /**
-         * Returns whether the fluid can create a source.
-         */
-        canConvertToSource(state: $FluidState, reader: $LevelReader, pos: $BlockPos_): boolean;
-        /**
-         * Returns whether the fluid can create a source.
-         */
-        canConvertToSource(stack: $FluidStack_): boolean;
-        /**
-         * Returns whether the boat can be used on the fluid.
-         */
-        supportsBoating(state: $FluidState, boat: $Boat): boolean;
-        /**
-         * Returns whether the boat can be used on the fluid.
-         */
-        supportsBoating(boat: $Boat): boolean;
-        /**
-         * Returns whether the fluid type represents air.
-         */
-        isLighterThanAir(): boolean;
-        /**
-         * Returns whether the fluid can be placed in the level.
-         */
-        canBePlacedInLevel(getter: $BlockAndTintGetter, pos: $BlockPos_, state: $FluidState): boolean;
-        /**
-         * Returns whether the fluid can be placed in the level.
-         */
-        canBePlacedInLevel(getter: $BlockAndTintGetter, pos: $BlockPos_, stack: $FluidStack_): boolean;
         /**
          * Gets the path type of this fluid when an entity is pathfinding. When
          * `null`, uses vanilla behavior.
          */
         getBlockPathType(state: $FluidState, level: $BlockGetter, pos: $BlockPos_, mob: $Mob, canFluidLog: boolean): $PathType;
+        /**
+         * Returns whether the fluid can be placed in the level.
+         */
+        canBePlacedInLevel(getter: $BlockAndTintGetter, pos: $BlockPos_, stack: $FluidStack_): boolean;
+        /**
+         * Returns whether the fluid can be placed in the level.
+         */
+        canBePlacedInLevel(getter: $BlockAndTintGetter, pos: $BlockPos_, state: $FluidState): boolean;
         getDripInfo(): $FluidType$DripstoneDripInfo;
         /**
-         * Performs what to do when an item is in a fluid.
+         * Returns whether the fluid type represents air.
          */
-        setItemMovement(entity: $ItemEntity): void;
+        isLighterThanAir(): boolean;
         /**
          * Returns the light level emitted by the fluid.
          * 
          * Note: This should be a value between `[0,15]`. If not specified, the
          * light level is `0` as most fluids do not emit light.
          */
-        getLightLevel(stack: $FluidStack_): number;
-        /**
-         * Returns the light level emitted by the fluid.
-         * 
-         * Note: This should be a value between `[0,15]`. If not specified, the
-         * light level is `0` as most fluids do not emit light.
-         */
-        getLightLevel(state: $FluidState, getter: $BlockAndTintGetter, pos: $BlockPos_): number;
-        /**
-         * Returns the light level emitted by the fluid.
-         * 
-         * Note: This should be a value between `[0,15]`. If not specified, the
-         * light level is `0` as most fluids do not emit light.
-         * 
-         * Implementation: This is used by the bucket model to determine whether the fluid
-         * should render full-bright when `applyFluidLuminosity` is `true`.
-         */
-        getLightLevel(): number;
-        /**
-         * Returns whether a fluid above a pointed dripstone block can successfully fill a cauldron below.
-         * 
-         * If this will return `true`, this method will also do 3 things:
-         * 
-         * - Set the cauldron below to the proper filled state as defined by the FluidType's `DripstoneDripInfo`
-         * - Send the BLOCK_CHANGE `GameEvent`
-         * - Play a sound as defined by the FluidType's `DripstoneDripInfo`
-         */
-        handleCauldronDrip(fluid: $Fluid_, level: $Level_, cauldronPos: $BlockPos_): boolean;
-        /**
-         * Returns the light level emitted by the fluid.
-         * 
-         * Note: This should be a value between `[0,15]`. If not specified, the
-         * light level is `0` as most fluids do not emit light.
-         */
-        getViscosity(stack: $FluidStack_): number;
+        getViscosity(state: $FluidState, getter: $BlockAndTintGetter, pos: $BlockPos_): number;
         /**
          * Returns the light level emitted by the fluid.
          * 
@@ -781,143 +870,54 @@ declare module "@package/net/neoforged/neoforge/fluids" {
          * Note: This should be a value between `[0,15]`. If not specified, the
          * light level is `0` as most fluids do not emit light.
          */
-        getViscosity(state: $FluidState, getter: $BlockAndTintGetter, pos: $BlockPos_): number;
+        getViscosity(stack: $FluidStack_): number;
         /**
-         * Returns whether the fluid type represents air.
+         * Returns whether the block can be extinguished by this fluid.
          */
-        isVanilla(): boolean;
-        /**
-         * Returns the light level emitted by the fluid.
-         * 
-         * Note: This should be a value between `[0,15]`. If not specified, the
-         * light level is `0` as most fluids do not emit light.
-         * 
-         * Implementation: This is used by the bucket model to determine whether the fluid
-         * should render full-bright when `applyFluidLuminosity` is `true`.
-         */
-        getDensity(): number;
-        /**
-         * Returns the light level emitted by the fluid.
-         * 
-         * Note: This should be a value between `[0,15]`. If not specified, the
-         * light level is `0` as most fluids do not emit light.
-         */
-        getDensity(stack: $FluidStack_): number;
-        /**
-         * Returns the light level emitted by the fluid.
-         * 
-         * Note: This should be a value between `[0,15]`. If not specified, the
-         * light level is `0` as most fluids do not emit light.
-         */
-        getDensity(state: $FluidState, getter: $BlockAndTintGetter, pos: $BlockPos_): number;
+        canExtinguish(state: $FluidState, getter: $BlockGetter, pos: $BlockPos_): boolean;
         /**
          * Returns whether the fluid can push an entity.
          */
-        canHydrate(entity: $Entity): boolean;
+        canExtinguish(entity: $Entity): boolean;
         /**
-         * Returns whether the block can be hydrated by a fluid.
-         * 
-         * Hydration is an arbitrary word which depends on the block.
-         * 
-         * - A farmland has moisture
-         * - A sponge can soak up the liquid
-         * - A coral can live
+         * Performs what to do when an item is in a fluid.
          */
-        canHydrate(state: $FluidState, getter: $BlockGetter, pos: $BlockPos_, source: $BlockState_, sourcePos: $BlockPos_): boolean;
+        setItemMovement(entity: $ItemEntity): void;
+        /**
+         * Returns whether a fluid above a pointed dripstone block can successfully fill a cauldron below.
+         * 
+         * If this will return `true`, this method will also do 3 things:
+         * 
+         * - Set the cauldron below to the proper filled state as defined by the FluidType's `DripstoneDripInfo`
+         * - Send the BLOCK_CHANGE `GameEvent`
+         * - Play a sound as defined by the FluidType's `DripstoneDripInfo`
+         */
+        handleCauldronDrip(fluid: $Fluid_, level: $Level_, cauldronPos: $BlockPos_): boolean;
+        /**
+         * Returns whether the fluid can push an entity.
+         */
+        canPushEntity(entity: $Entity): boolean;
+        /**
+         * Returns how much the velocity of the fluid should be scaled by
+         * when applied to an entity.
+         */
+        motionScale(entity: $Entity): number;
         /**
          * Returns whether the fluid can create a source.
          */
-        canHydrate(stack: $FluidStack_): boolean;
+        canConvertToSource(state: $FluidState, reader: $LevelReader, pos: $BlockPos_): boolean;
         /**
-         * Returns whether the fluid can push an entity.
+         * Returns whether the fluid can create a source.
          */
-        canSwim(entity: $Entity): boolean;
-        /**
-         * Returns the rarity of the fluid.
-         * 
-         * Note: If not specified, the rarity of the fluid is `Rarity#COMMON`.
-         */
-        getRarity(stack: $FluidStack_): $Rarity;
-        /**
-         * Returns the rarity of the fluid.
-         * 
-         * Note: If not specified, the rarity of the fluid is `Rarity#COMMON`.
-         */
-        getRarity(): $Rarity;
-        /**
-         * Returns whether the entity can drown in the fluid.
-         */
-        canDrownIn(entity: $LivingEntity): boolean;
-        /**
-         * Performs an action when a fluid can be vaporized when placed into a level.
-         * 
-         * Note: The fluid will already have been drained from the stack.
-         */
-        onVaporize(player: $Player, level: $Level_, pos: $BlockPos_, stack: $FluidStack_): void;
-        /**
-         * Returns a sound to play when a certain action is performed. If no
-         * sound is present, then the sound will be `null`.
-         */
-        getSound(action: $SoundAction): $SoundEvent;
-        /**
-         * Returns a sound to play when a certain action is performed at a
-         * position. If no sound is present, then the sound will be `null`.
-         */
-        getSound(player: $Player, getter: $BlockGetter, pos: $BlockPos_, action: $SoundAction): $SoundEvent;
-        /**
-         * Returns a sound to play when a certain action is performed by the
-         * entity in the fluid. If no sound is present, then the sound will be
-         * `null`.
-         */
-        getSound(entity: $Entity, action: $SoundAction): $SoundEvent;
-        /**
-         * Returns a sound to play when a certain action is performed. If no
-         * sound is present, then the sound will be `null`.
-         */
-        getSound(stack: $FluidStack_, action: $SoundAction): $SoundEvent;
-        /**
-         * Returns how much the fluid should scale the damage done to a falling
-         * entity when hitting the ground per tick.
-         * 
-         * Implementation: If the entity is in many fluids, the smallest modifier
-         * is applied.
-         */
-        getFallDistanceModifier(entity: $Entity): number;
-        /**
-         * Returns the associated `BlockState` for a `FluidState`.
-         */
-        getBlockForFluidState(getter: $BlockAndTintGetter, pos: $BlockPos_, state: $FluidState): $BlockState;
-        /**
-         * Returns the `FluidState` when a `FluidStack` is trying to
-         * place it.
-         */
-        getStateForPlacement(getter: $BlockAndTintGetter, pos: $BlockPos_, stack: $FluidStack_): $FluidState;
-        /**
-         * Determines if this fluid should be vaporized when placed into a level.
-         * 
-         * Note: Fluids that can turn lava into obsidian should vaporize within
-         * the nether to preserve the intentions of vanilla.
-         */
-        isVaporizedOnPlacement(level: $Level_, pos: $BlockPos_, stack: $FluidStack_): boolean;
-        /**
-         * Returns whether the entity can ride in this vehicle under the fluid.
-         */
-        canRideVehicleUnder(vehicle: $Entity, rider: $Entity): boolean;
-        /**
-         * Gets the path type of the adjacent fluid to a pathfinding entity.
-         * Path types with a negative malus are not traversable for the entity.
-         * Pathfinding entities will favor paths consisting of a lower malus.
-         * When `null`, uses vanilla behavior.
-         */
-        getAdjacentBlockPathType(state: $FluidState, level: $BlockGetter, pos: $BlockPos_, mob: $Mob, originalType: $PathType_): $PathType;
+        canConvertToSource(stack: $FluidStack_): boolean;
         static SIZE: $Lazy<number>;
         static BUCKET_VOLUME: number;
         constructor(arg0: $FluidType$Properties);
-        get air(): boolean;
-        get lighterThanAir(): boolean;
-        get dripInfo(): $FluidType$DripstoneDripInfo;
-        set itemMovement(value: $ItemEntity);
         get vanilla(): boolean;
+        get air(): boolean;
+        get dripInfo(): $FluidType$DripstoneDripInfo;
+        get lighterThanAir(): boolean;
+        set itemMovement(value: $ItemEntity);
     }
     /**
      * Values that may be interpreted as {@link $FluidType}.
@@ -947,20 +947,20 @@ declare module "@package/net/neoforged/neoforge/fluids" {
      * - `#totalAmount` defines how much fluid (in millibuckets) there is in one level of the cauldron.
      */
     export class $CauldronFluidContent {
-        static init(): void;
         /**
          * Return the current level of the cauldron given its block state, or 0 if it's an empty cauldron.
          */
         currentLevel(state: $BlockState_): number;
-        /**
-         * Get the cauldron fluid content for a fluid, or `null` if no cauldron was registered for that fluid (yet).
-         */
-        static getForFluid(fluid: $Fluid_): $CauldronFluidContent;
-        static registerCapabilities(event: $RegisterCapabilitiesEvent): void;
+        static init(): void;
         /**
          * Get the cauldron fluid content for a cauldron block, or `null` if none was registered (yet).
          */
         static getForBlock(block: $Block_): $CauldronFluidContent;
+        static registerCapabilities(event: $RegisterCapabilitiesEvent): void;
+        /**
+         * Get the cauldron fluid content for a fluid, or `null` if no cauldron was registered for that fluid (yet).
+         */
+        static getForFluid(fluid: $Fluid_): $CauldronFluidContent;
         maxLevel: number;
         totalAmount: number;
         levelProperty: $IntegerProperty;
@@ -993,10 +993,10 @@ declare module "@package/net/neoforged/neoforge/fluids" {
          * Note: Only the first interaction check that succeeds will occur.
          */
         static canInteract(level: $Level_, pos: $BlockPos_): boolean;
+        static getInteractions$create_$md$c99f8a$0(): $Map<any, any>;
         static addInteraction(arg0: $FluidType_, arg1: $FluidInteractionRegistry$InteractionInformation_): void;
-        static getInteractions$create_$md$942995$0(): $Map<any, any>;
         constructor();
-        static get interactions$create_$md$942995$0(): $Map<any, any>;
+        static get interactions$create_$md$c99f8a$0(): $Map<any, any>;
     }
     export class $BaseFlowingFluid$Flowing extends $BaseFlowingFluid {
         static FLUID_STATE_REGISTRY: $IdMapper<$FluidState>;
@@ -1018,33 +1018,33 @@ declare module "@package/net/neoforged/neoforge/fluids" {
      */
     export class $FluidType$Properties {
         static create(): $FluidType$Properties;
+        lightLevel(arg0: number): $FluidType$Properties;
         addDripstoneDripping(arg0: number, arg1: $ParticleOptions_, arg2: $Block_, arg3: $SoundEvent_): $FluidType$Properties;
-        density(arg0: number): $FluidType$Properties;
-        sound(arg0: $SoundAction, arg1: $SoundEvent_): $FluidType$Properties;
-        descriptionId(arg0: string): $FluidType$Properties;
-        temperature(arg0: number): $FluidType$Properties;
-        canExtinguish(arg0: boolean): $FluidType$Properties;
-        motionScale(arg0: number): $FluidType$Properties;
-        canPushEntity(arg0: boolean): $FluidType$Properties;
-        canConvertToSource(arg0: boolean): $FluidType$Properties;
-        supportsBoating(arg0: boolean): $FluidType$Properties;
-        adjacentPathType(arg0: $PathType_): $FluidType$Properties;
         rarity(arg0: $Rarity_): $FluidType$Properties;
+        density(arg0: number): $FluidType$Properties;
+        fallDistanceModifier(arg0: number): $FluidType$Properties;
+        temperature(arg0: number): $FluidType$Properties;
+        descriptionId(arg0: string): $FluidType$Properties;
+        canSwim(arg0: boolean): $FluidType$Properties;
         pathType(arg0: $PathType_): $FluidType$Properties;
         canHydrate(arg0: boolean): $FluidType$Properties;
-        lightLevel(arg0: number): $FluidType$Properties;
-        canSwim(arg0: boolean): $FluidType$Properties;
-        canDrown(arg0: boolean): $FluidType$Properties;
         viscosity(arg0: number): $FluidType$Properties;
-        fallDistanceModifier(arg0: number): $FluidType$Properties;
+        canDrown(arg0: boolean): $FluidType$Properties;
+        sound(arg0: $SoundAction, arg1: $SoundEvent_): $FluidType$Properties;
+        supportsBoating(arg0: boolean): $FluidType$Properties;
+        adjacentPathType(arg0: $PathType_): $FluidType$Properties;
+        canExtinguish(arg0: boolean): $FluidType$Properties;
+        canPushEntity(arg0: boolean): $FluidType$Properties;
+        motionScale(arg0: number): $FluidType$Properties;
+        canConvertToSource(arg0: boolean): $FluidType$Properties;
     }
     export class $BaseFlowingFluid$Properties {
-        bucket(arg0: $Supplier_<$Item>): $BaseFlowingFluid$Properties;
-        block(arg0: $Supplier_<$LiquidBlock>): $BaseFlowingFluid$Properties;
-        explosionResistance(arg0: number): $BaseFlowingFluid$Properties;
-        slopeFindDistance(arg0: number): $BaseFlowingFluid$Properties;
-        levelDecreasePerBlock(arg0: number): $BaseFlowingFluid$Properties;
         tickRate(arg0: number): $BaseFlowingFluid$Properties;
+        explosionResistance(arg0: number): $BaseFlowingFluid$Properties;
+        block(arg0: $Supplier_<$LiquidBlock>): $BaseFlowingFluid$Properties;
+        bucket(arg0: $Supplier_<$Item>): $BaseFlowingFluid$Properties;
+        levelDecreasePerBlock(arg0: number): $BaseFlowingFluid$Properties;
+        slopeFindDistance(arg0: number): $BaseFlowingFluid$Properties;
         constructor(fluidType: $Supplier_<$FluidType>, still: $Supplier_<$Fluid>, flowing: $Supplier_<$Fluid>);
     }
     /**
@@ -1057,8 +1057,8 @@ declare module "@package/net/neoforged/neoforge/fluids" {
      * for example the action succeeded and the resulting item was consumed.
      */
     export class $FluidActionResult {
-        getResult(): $ItemStack;
         isSuccess(): boolean;
+        getResult(): $ItemStack;
         result: $ItemStack;
         success: boolean;
         static FAILURE: $FluidActionResult;

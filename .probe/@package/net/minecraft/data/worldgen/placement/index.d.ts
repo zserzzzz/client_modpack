@@ -27,17 +27,17 @@ declare module "@package/net/minecraft/data/worldgen/placement" {
         constructor();
     }
     export class $PlacementUtils {
-        static onlyWhenEmpty<FC extends $FeatureConfiguration, F extends $Feature<FC>>(feature: F, config: FC): $Holder<$PlacedFeature>;
+        static isEmpty(): $PlacementFilter;
+        static register(context: $BootstrapContext<$PlacedFeature_>, key: $ResourceKey_<$PlacedFeature>, configuredFeature: $Holder_<$ConfiguredFeature<never, never>>, ...placements: $PlacementModifier[]): void;
+        static register(context: $BootstrapContext<$PlacedFeature_>, key: $ResourceKey_<$PlacedFeature>, configuredFeature: $Holder_<$ConfiguredFeature<never, never>>, placements: $List_<$PlacementModifier>): void;
+        static bootstrap(context: $BootstrapContext<$PlacedFeature_>): void;
         static inlinePlaced<FC extends $FeatureConfiguration, F extends $Feature<FC>>(feature: F, config: FC, ...placements: $PlacementModifier[]): $Holder<$PlacedFeature>;
         static inlinePlaced(feature: $Holder_<$ConfiguredFeature<never, never>>, ...placements: $PlacementModifier[]): $Holder<$PlacedFeature>;
-        static filteredByBlockSurvival(block: $Block_): $BlockPredicateFilter;
-        static isEmpty(): $PlacementFilter;
-        static register(context: $BootstrapContext<$PlacedFeature_>, key: $ResourceKey_<$PlacedFeature>, configuredFeature: $Holder_<$ConfiguredFeature<never, never>>, placements: $List_<$PlacementModifier>): void;
-        static register(context: $BootstrapContext<$PlacedFeature_>, key: $ResourceKey_<$PlacedFeature>, configuredFeature: $Holder_<$ConfiguredFeature<never, never>>, ...placements: $PlacementModifier[]): void;
-        static bootstrap(context: $BootstrapContext<$PlacedFeature_>): void;
+        static onlyWhenEmpty<FC extends $FeatureConfiguration, F extends $Feature<FC>>(feature: F, config: FC): $Holder<$PlacedFeature>;
         static filtered<FC extends $FeatureConfiguration, F extends $Feature<FC>>(feature: F, config: FC, predicate: $BlockPredicate): $Holder<$PlacedFeature>;
         static createKey(key: string): $ResourceKey<$PlacedFeature>;
         static countExtra(baseValue: number, chance: number, addedAmount: number): $PlacementModifier;
+        static filteredByBlockSurvival(block: $Block_): $BlockPredicateFilter;
         static RANGE_8_8: $PlacementModifier;
         static FULL_RANGE: $PlacementModifier;
         static RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT: $PlacementModifier;

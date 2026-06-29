@@ -15,8 +15,8 @@ declare module "@package/net/fabricmc/fabric/impl/transfer/item" {
     export class $SpecialLogicInventory {
     }
     export interface $SpecialLogicInventory {
-        fabric_onFinalCommit(arg0: number, arg1: $ItemStack_, arg2: $ItemStack_): void;
         fabric_onTransfer(arg0: number, arg1: $TransactionContext): void;
         fabric_setSuppress(arg0: boolean): void;
+        fabric_onFinalCommit(arg0: number, arg1: $ItemStack_, arg2: $ItemStack_): void;
     }
 }

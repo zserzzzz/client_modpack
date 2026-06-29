@@ -14,49 +14,49 @@ export * as event from "@package/net/neoforged/fml/event";
 
 declare module "@package/net/neoforged/fml" {
     export class $ModContainer {
+        registerConfig(arg0: $ModConfig$Type_, arg1: $IConfigSpec): void;
+        registerConfig(arg0: $ModConfig$Type_, arg1: $IConfigSpec, arg2: string): void;
+        getModId(): string;
+        getNamespace(): string;
         registerExtensionPoint<T extends $IExtensionPoint>(arg0: $Class<T>, arg1: T): void;
         registerExtensionPoint<T extends $IExtensionPoint>(arg0: $Class<T>, arg1: $Supplier_<T>): void;
-        getModId(): string;
-        getEventBus(): $IEventBus;
         getCustomExtension<T extends $IExtensionPoint>(arg0: $Class<T>): (T) | undefined;
         acceptEvent<T extends $Event>(arg0: $EventPriority_, arg1: T): void;
         acceptEvent<T extends $Event>(arg0: T): void;
-        registerConfig(arg0: $ModConfig$Type_, arg1: $IConfigSpec, arg2: string): void;
-        registerConfig(arg0: $ModConfig$Type_, arg1: $IConfigSpec): void;
-        getNamespace(): string;
+        getEventBus(): $IEventBus;
         getModInfo(): $IModInfo;
         constructor(arg0: $IModInfo);
         get modId(): string;
-        get eventBus(): $IEventBus;
         get namespace(): string;
+        get eventBus(): $IEventBus;
         get modInfo(): $IModInfo;
     }
     export class $ModLoadingIssue extends $Record {
-        withSeverity(arg0: $ModLoadingIssue$Severity_): $ModLoadingIssue;
-        withCause(arg0: $Throwable): $ModLoadingIssue;
-        translationKey(): string;
         affectedPath(): $Path;
+        translationKey(): string;
+        affectedModFile(): $IModFile;
+        translationArgs(): $List<$Object>;
+        withAffectedMod(arg0: $IModInfo): $ModLoadingIssue;
+        withAffectedPath(arg0: $Path_): $ModLoadingIssue;
+        affectedMod(): $IModInfo;
         cause(): $Throwable;
         static error(arg0: string, ...arg1: $Object[]): $ModLoadingIssue;
         static warning(arg0: string, ...arg1: $Object[]): $ModLoadingIssue;
         severity(): $ModLoadingIssue$Severity;
-        withAffectedMod(arg0: $IModInfo): $ModLoadingIssue;
-        withAffectedPath(arg0: $Path_): $ModLoadingIssue;
-        affectedModFile(): $IModFile;
-        translationArgs(): $List<$Object>;
-        affectedMod(): $IModInfo;
         withAffectedModFile(arg0: $IModFile): $ModLoadingIssue;
+        withSeverity(arg0: $ModLoadingIssue$Severity_): $ModLoadingIssue;
+        withCause(arg0: $Throwable): $ModLoadingIssue;
         constructor(arg0: $ModLoadingIssue$Severity_, arg1: string, arg2: $List_<$Object>);
         constructor(severity: $ModLoadingIssue$Severity_, translationKey: string, translationArgs: $List_<$Object>, cause: $Throwable, affectedPath: $Path_, affectedModFile: $IModFile, affectedMod: $IModInfo);
     }
     /**
      * Values that may be interpreted as {@link $ModLoadingIssue}.
      */
-    export type $ModLoadingIssue_ = { affectedPath?: $Path_, affectedMod?: $IModInfo, cause?: $Throwable, translationKey?: string, translationArgs?: $List_<$Object>, severity?: $ModLoadingIssue$Severity_, affectedModFile?: $IModFile,  } | [affectedPath?: $Path_, affectedMod?: $IModInfo, cause?: $Throwable, translationKey?: string, translationArgs?: $List_<$Object>, severity?: $ModLoadingIssue$Severity_, affectedModFile?: $IModFile, ];
+    export type $ModLoadingIssue_ = { affectedModFile?: $IModFile, affectedPath?: $Path_, affectedMod?: $IModInfo, cause?: $Throwable, translationKey?: string, translationArgs?: $List_<$Object>, severity?: $ModLoadingIssue$Severity_,  } | [affectedModFile?: $IModFile, affectedPath?: $Path_, affectedMod?: $IModInfo, cause?: $Throwable, translationKey?: string, translationArgs?: $List_<$Object>, severity?: $ModLoadingIssue$Severity_, ];
     export class $DeferredWorkQueue {
-        enqueueWork(arg0: $ModContainer, arg1: $Runnable_): $CompletableFuture<void>;
-        enqueueWork<T>(arg0: $ModContainer, arg1: $Supplier_<T>): $CompletableFuture<T>;
         runTasks(): void;
+        enqueueWork<T>(arg0: $ModContainer, arg1: $Supplier_<T>): $CompletableFuture<T>;
+        enqueueWork(arg0: $ModContainer, arg1: $Runnable_): $CompletableFuture<void>;
         constructor(arg0: string);
     }
     export class $InterModComms$IMCMessage extends $Record {
@@ -74,18 +74,18 @@ declare module "@package/net/neoforged/fml" {
         /**
          * @deprecated
          */
-        getSenderModId(): string;
+        getMessageSupplier<T>(): $Supplier<T>;
         senderModId(): string;
         /**
          * @deprecated
          */
-        getMessageSupplier<T>(): $Supplier<T>;
+        getSenderModId(): string;
         constructor(senderModId: string, modId: string, method: string, messageSupplier: $Supplier_<never>);
     }
     /**
      * Values that may be interpreted as {@link $InterModComms$IMCMessage}.
      */
-    export type $InterModComms$IMCMessage_ = { method?: string, senderModId?: string, modId?: string, messageSupplier?: $Supplier_<never>,  } | [method?: string, senderModId?: string, modId?: string, messageSupplier?: $Supplier_<never>, ];
+    export type $InterModComms$IMCMessage_ = { messageSupplier?: $Supplier_<never>, method?: string, senderModId?: string, modId?: string,  } | [messageSupplier?: $Supplier_<never>, method?: string, senderModId?: string, modId?: string, ];
     export class $LogicalSide extends $Enum<$LogicalSide> {
         static values(): $LogicalSide[];
         static valueOf(arg0: string): $LogicalSide;
@@ -117,9 +117,9 @@ declare module "@package/net/neoforged/fml" {
     export class $VersionChecker$Status extends $Enum<$VersionChecker$Status> {
         static values(): $VersionChecker$Status[];
         static valueOf(arg0: string): $VersionChecker$Status;
+        shouldDraw(): boolean;
         isAnimated(): boolean;
         getSheetOffset(): number;
-        shouldDraw(): boolean;
         static FAILED: $VersionChecker$Status;
         static AHEAD: $VersionChecker$Status;
         static BETA_OUTDATED: $VersionChecker$Status;
@@ -145,11 +145,11 @@ declare module "@package/net/neoforged/fml" {
      */
     export type $ModLoadingIssue$Severity_ = "warning" | "error";
     export class $ModLoadingContext {
-        registerExtensionPoint<T extends $IExtensionPoint>(arg0: $Class<T>, arg1: $Supplier_<T>): void;
         static get(): $ModLoadingContext;
+        getActiveNamespace(): string;
+        registerExtensionPoint<T extends $IExtensionPoint>(arg0: $Class<T>, arg1: $Supplier_<T>): void;
         setActiveContainer(arg0: $ModContainer): void;
         getActiveContainer(): $ModContainer;
-        getActiveNamespace(): string;
         constructor();
         get activeNamespace(): string;
     }

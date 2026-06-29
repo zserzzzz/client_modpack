@@ -18,16 +18,16 @@ declare module "@package/de/z0rdak/yawp/platform/event" {
     }
     export class $NeoForgeRegionEvent$Rename extends $NeoForgeRegionEvent {
         getOldName(): string;
-        static asCommonEvent(arg0: $NeoForgeRegionEvent$Rename): $RegionEvent$Rename;
-        getNewName(): string;
         setNewName(arg0: string): void;
+        getNewName(): string;
+        static asCommonEvent(arg0: $NeoForgeRegionEvent$Rename): $RegionEvent$Rename;
         constructor(arg0: $IMarkableRegion, arg1: string, arg2: string, arg3: $ServerPlayer);
         constructor(arg0: $RegionEvent$Rename);
         get oldName(): string;
     }
     export class $NeoForgeFlagEvent$Remove extends $NeoForgeFlagEvent implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(arg0: $ServerPlayer, arg1: $IProtectedRegion, arg2: $IFlag);
         constructor(arg0: $FlagEvent$Remove);
     }
@@ -35,12 +35,12 @@ declare module "@package/de/z0rdak/yawp/platform/event" {
         getFlag(): $IFlag;
         getResponsible(): $IProtectedRegion;
         setFlagState(arg0: $FlagState_): void;
-        getFlagCheck(): $NeoForgeFlagCheckRequest;
         getFlagState(): $FlagState;
-        static asNonEvent(arg0: $NeoForgeFlagCheckResult): $FlagCheckResult;
+        getFlagCheck(): $NeoForgeFlagCheckRequest;
         static asEvent(arg0: $FlagCheckResult): $NeoForgeFlagCheckResult;
-        setCanceled(arg0: boolean): void;
+        static asNonEvent(arg0: $NeoForgeFlagCheckResult): $FlagCheckResult;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(arg0: $NeoForgeFlagCheckRequest, arg1: $FlagState_, arg2: $IProtectedRegion | null, arg3: $IFlag | null);
         get flag(): $IFlag;
         get responsible(): $IProtectedRegion;
@@ -49,10 +49,10 @@ declare module "@package/de/z0rdak/yawp/platform/event" {
     export class $NeoForgeFlagEvent$UpdateFlagMessage extends $NeoForgeFlagEvent implements $ICancellableEvent {
         getNewMsg(): string;
         setNewMsg(arg0: string): void;
-        static asNonEvent(arg0: $FlagEvent$UpdateFlagMessage): $FlagEvent$UpdateFlagMessage;
         static asEvent(arg0: $FlagEvent$UpdateFlagMessage): $FlagEvent$UpdateFlagMessage;
-        setCanceled(arg0: boolean): void;
+        static asNonEvent(arg0: $FlagEvent$UpdateFlagMessage): $FlagEvent$UpdateFlagMessage;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(arg0: $ServerPlayer, arg1: $IProtectedRegion, arg2: $IFlag, arg3: string);
         constructor(arg0: $FlagEvent$UpdateFlagMessage);
     }
@@ -74,10 +74,10 @@ declare module "@package/de/z0rdak/yawp/platform/event" {
     }
     export class $NeoForgeRegionEvent$UpdateArea extends $NeoForgeRegionEvent {
         setMarkedArea(arg0: $IMarkableArea): void;
-        static asCommonEvent(arg0: $NeoForgeRegionEvent$UpdateArea): $RegionEvent$UpdateArea;
         getMarkedArea(): $IMarkableArea;
-        static asNonEvent(arg0: $NeoForgeRegionEvent$UpdateArea): $RegionEvent$UpdateArea;
+        static asCommonEvent(arg0: $NeoForgeRegionEvent$UpdateArea): $RegionEvent$UpdateArea;
         static asEvent(arg0: $RegionEvent$UpdateArea): $NeoForgeRegionEvent$UpdateArea;
+        static asNonEvent(arg0: $NeoForgeRegionEvent$UpdateArea): $RegionEvent$UpdateArea;
         constructor(arg0: $IMarkableRegion, arg1: $IMarkableArea, arg2: $ServerPlayer);
         constructor(arg0: $RegionEvent$UpdateArea);
     }
@@ -90,35 +90,35 @@ declare module "@package/de/z0rdak/yawp/platform/event" {
         constructor(arg0: $IMarkableRegion, arg1: $ServerPlayer, arg2: $BlockPos_, arg3: $BlockPos_);
     }
     export class $NeoForgeFlagEvent$Add extends $NeoForgeFlagEvent implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(arg0: $ServerPlayer, arg1: $IProtectedRegion, arg2: $IFlag);
         constructor(arg0: $FlagEvent$Add);
     }
     export class $NeoForgeFlagCheckRequest extends $Event implements $ICancellableEvent {
-        getDimension(): $ResourceKey<$Level>;
         getId(): string;
         getTarget(): $BlockPos;
+        getDimension(): $ResourceKey<$Level>;
         getPlayer(): $Player;
         getRegionFlag(): $RegionFlag;
         static asNonEvent(arg0: $NeoForgeFlagCheckRequest): $FlagCheckRequest;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(arg0: $BlockPos_, arg1: $RegionFlag_, arg2: $ResourceKey_<$Level>);
         constructor(arg0: $BlockPos_, arg1: $RegionFlag_, arg2: $ResourceKey_<$Level>, arg3: $Player | null, arg4: string);
         constructor(arg0: $FlagCheckRequest);
         constructor(arg0: $BlockPos_, arg1: $RegionFlag_, arg2: $ResourceKey_<$Level>, arg3: $Player | null);
-        get dimension(): $ResourceKey<$Level>;
         get id(): string;
         get target(): $BlockPos;
+        get dimension(): $ResourceKey<$Level>;
         get player(): $Player;
         get regionFlag(): $RegionFlag;
     }
     export class $NeoForgeRegionEvent extends $Event implements $ICancellableEvent {
         getRegion(): $IMarkableRegion;
         getPlayer(): $ServerPlayer;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         get region(): $IMarkableRegion;
         get player(): $ServerPlayer;
     }

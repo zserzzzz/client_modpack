@@ -29,15 +29,15 @@ import { $RegisterCapabilitiesEvent } from "@package/net/neoforged/neoforge/capa
 
 declare module "@package/com/simibubi/create/content/kinetics/speedController" {
     export class $SpeedControllerBlock extends $HorizontalAxisKineticBlock implements $IBE<$SpeedControllerBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$SpeedControllerBlockEntity>;
         getBlockEntityClass(): $Class<$SpeedControllerBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$SpeedControllerBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$SpeedControllerBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SpeedControllerBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($SpeedControllerBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SpeedControllerBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $SpeedControllerBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$SpeedControllerBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($SpeedControllerBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SpeedControllerBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -68,25 +68,25 @@ declare module "@package/com/simibubi/create/content/kinetics/speedController" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$SpeedControllerBlockEntity>;
         get blockEntityClass(): $Class<$SpeedControllerBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$SpeedControllerBlockEntity>;
     }
     export class $SpeedControllerRenderer extends $SmartBlockEntityRenderer<$SpeedControllerBlockEntity> {
         constructor(arg0: $BlockEntityRendererProvider$Context);
     }
     export class $SpeedControllerBlock$PlacementHelper implements $IPlacementHelper {
         getOffset(arg0: $Player, arg1: $Level_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockHitResult, arg5: $ItemStack_): $PlacementOffset;
-        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
-        matchesState(arg0: $BlockState_): boolean;
-        displayGhost(arg0: $PlacementOffset): void;
         matchesItem(arg0: $ItemStack_): boolean;
+        matchesState(arg0: $BlockState_): boolean;
+        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
+        displayGhost(arg0: $PlacementOffset): void;
     }
     export class $SpeedControllerBlockEntity$ControllerValueBoxTransform extends $ValueBoxTransform$Sided {
     }
     export class $SpeedControllerBlockEntity extends $KineticBlockEntity {
         static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
-        updateBracket(): void;
         static getDesiredOutputSpeed(arg0: $KineticBlockEntity, arg1: $KineticBlockEntity, arg2: boolean): number;
+        updateBracket(): void;
         static getConveyedSpeed(arg0: $KineticBlockEntity, arg1: $KineticBlockEntity, arg2: boolean): number;
         targetSpeed: $ScrollValueBehaviour;
         level: $Level;

@@ -99,15 +99,15 @@ declare module "@package/net/minecraft/world/level/levelgen/feature/trunkplacers
     }
     export class $TrunkPlacer {
         type(): $TrunkPlacerType<never>;
-        placeLogIfFree(level: $LevelSimulatedReader, blockSetter: $BiConsumer_<$BlockPos, $BlockState>, random: $RandomSource, pos: $BlockPos$MutableBlockPos, config: $TreeConfiguration): void;
         static trunkPlacerParts<P extends $TrunkPlacer>(instance: $RecordCodecBuilder$Instance<P>): $Products$P3<$RecordCodecBuilder$Mu<P>, number, number, number>;
-        validTreePos(level: $LevelSimulatedReader, pos: $BlockPos_): boolean;
         getTreeHeight(random: $RandomSource): number;
-        placeLog(level: $LevelSimulatedReader, blockSetter: $BiConsumer_<$BlockPos, $BlockState>, random: $RandomSource, pos: $BlockPos_, config: $TreeConfiguration, propertySetter: $Function_<$BlockState, $BlockState>): boolean;
-        placeLog(level: $LevelSimulatedReader, blockSetter: $BiConsumer_<$BlockPos, $BlockState>, random: $RandomSource, pos: $BlockPos_, config: $TreeConfiguration): boolean;
+        placeLogIfFree(level: $LevelSimulatedReader, blockSetter: $BiConsumer_<$BlockPos, $BlockState>, random: $RandomSource, pos: $BlockPos$MutableBlockPos, config: $TreeConfiguration): void;
+        validTreePos(level: $LevelSimulatedReader, pos: $BlockPos_): boolean;
+        isFree(level: $LevelSimulatedReader, pos: $BlockPos_): boolean;
         static setDirtAt(level: $LevelSimulatedReader, blockSetter: $BiConsumer_<$BlockPos, $BlockState>, random: $RandomSource, pos: $BlockPos_, config: $TreeConfiguration): void;
         placeTrunk(level: $LevelSimulatedReader, blockSetter: $BiConsumer_<$BlockPos, $BlockState>, random: $RandomSource, freeTreeHeight: number, pos: $BlockPos_, config: $TreeConfiguration): $List<$FoliagePlacer$FoliageAttachment>;
-        isFree(level: $LevelSimulatedReader, pos: $BlockPos_): boolean;
+        placeLog(level: $LevelSimulatedReader, blockSetter: $BiConsumer_<$BlockPos, $BlockState>, random: $RandomSource, pos: $BlockPos_, config: $TreeConfiguration, propertySetter: $Function_<$BlockState, $BlockState>): boolean;
+        placeLog(level: $LevelSimulatedReader, blockSetter: $BiConsumer_<$BlockPos, $BlockState>, random: $RandomSource, pos: $BlockPos_, config: $TreeConfiguration): boolean;
         static CODEC: $Codec<$TrunkPlacer>;
         static MAX_HEIGHT: number;
         baseHeight: number;

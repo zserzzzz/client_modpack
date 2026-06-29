@@ -48,23 +48,17 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         and<T extends $Entity>(arg0: $EntityType_<T>, arg1: $SpawnPlacements$SpawnPredicate_<T>): void;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -72,17 +66,23 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(arg0: $RegisterSpawnPlacementsEvent);
     }
     export class $BuildBrainProviderEventJS<T extends $LivingEntity> implements $KubeEvent {
@@ -96,23 +96,17 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         addMemory(arg0: $MemoryModuleType_<never>): void;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -120,17 +114,23 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor();
     }
     export class $AttributeCreationEventJS implements $KubeEvent {
@@ -151,23 +151,17 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         getAllTypes(): $List<$EntityType<$LivingEntity>>;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -175,34 +169,28 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(arg0: $EntityAttributeCreationEvent);
         get map(): $Map<$EntityType<$LivingEntity>, $AttributeSupplier>;
         get allTypes(): $List<$EntityType<$LivingEntity>>;
     }
     export class $AddGoalTargetsEventJS<T extends $Mob> extends $GoalEventJS<T> {
-        /**
-         * Remove a goal from the entity via class reference.
-         * 
-         * Example of usage:
-         * =====================================
-         * let $PanicGoal = Java.loadClass("net.minecraft.world.entity.ai.goal.PanicGoal")
-         * builder.removeGoal($PanicGoal)
-         * =====================================
-         * 
-         * @param goal The goal class to remove
-         */
-        removeGoal(arg0: $Class<$Goal>): void;
         /**
          * Remove all goals.
          * 
@@ -214,6 +202,15 @@ declare module "@package/net/liopyu/entityjs/events" {
          * @param goal The goal to remove
          */
         removeAllGoals(): void;
+        /**
+         * Adds s `HurtByTargetGoal` to the entity, only applicable to **pathfinder** mobs
+         * 
+         * @param priority The priority of the goal
+         * @param toIgnoreDamage The classes that damage should be ignored from
+         * @param alertOthers If other mobs should be alerted when this mob is damaged
+         * @param toIgnoreAlert The entity classes that should not be alerted
+         */
+        hurtByTarget(arg0: number, arg1: $List_<$Class<never>>, arg2: boolean, arg3: $List_<$Class<never>>): void;
         /**
          * Remove all goals fitting the specified predicate. Returns a boolean
          * 
@@ -236,31 +233,33 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         ownerHurtByTarget(arg0: number): void;
         /**
-         * Adds s `HurtByTargetGoal` to the entity, only applicable to **pathfinder** mobs
-         * 
-         * @param priority The priority of the goal
-         * @param toIgnoreDamage The classes that damage should be ignored from
-         * @param alertOthers If other mobs should be alerted when this mob is damaged
-         * @param toIgnoreAlert The entity classes that should not be alerted
-         */
-        hurtByTarget(arg0: number, arg1: $List_<$Class<never>>, arg2: boolean, arg3: $List_<$Class<never>>): void;
-        /**
-         * Enables the addition of arbitrary goals to an entity
-         * 
-         * It is the responsibility of the user to ensure the goal is
-         * compatible with the entity
+         * Remove a goal from the entity via class reference.
          * 
          * Example of usage:
          * =====================================
-         * builder.arbitraryTargetGoal(3, entity -> new $DefendVillageTargetGoal(entity))
+         * let $PanicGoal = Java.loadClass("net.minecraft.world.entity.ai.goal.PanicGoal")
+         * builder.removeGoal($PanicGoal)
          * =====================================
          * 
-         * Note in the example the entity must be an instance of IronGolem
+         * @param goal The goal class to remove
+         */
+        removeGoal(arg0: $Class<$Goal>): void;
+        /**
+         * Adds a `NonTameRandomTargetGoal` to the entity, only applicable to **tamable** mobs
          * 
          * @param priority The priority of the goal
-         * @param goalSupplier The goal supplier, a function that takes a Mob and returns a Goal
+         * @param targetClass The entity class that should be targeted
+         * @param mustSee If the mob must have line of sight at all times
+         * @param targetConditions The conditions under which the targeted entity will be targeted, may be null
          */
-        arbitraryTargetGoal(arg0: number, arg1: $Function_<T, $Goal>): void;
+        nonTameRandomTarget<E extends $LivingEntity>(arg0: number, arg1: $Class<E>, arg2: boolean, arg3: $Predicate_<$LivingEntity>): void;
+        /**
+         * Adds a `ResetUniversalAngerTargetGoal` to the entity, only applicable to **neutral** mobs
+         * 
+         * @param priority The priority of the goal
+         * @param alertOthersOfSameType If other mobs of the same type should be alerted
+         */
+        resetUniversalAngerTarget<E extends $Mob>(arg0: number, arg1: boolean): void;
         /**
          * Adds a `NearestAttackableTargetGoal` to the entity
          * 
@@ -285,24 +284,36 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         nearestAttackableTarget<E extends $LivingEntity>(arg0: number, arg1: $Class<E>, arg2: number, arg3: boolean, arg4: boolean, arg5: $Predicate_<$LivingEntity>, arg6: $AABB_): void;
         /**
-         * Adds a `NonTameRandomTargetGoal` to the entity, only applicable to **tamable** mobs
+         * Enables the addition of arbitrary goals to an entity
+         * 
+         * It is the responsibility of the user to ensure the goal is
+         * compatible with the entity
+         * 
+         * Example of usage:
+         * =====================================
+         * builder.arbitraryTargetGoal(3, entity -> new $DefendVillageTargetGoal(entity))
+         * =====================================
+         * 
+         * Note in the example the entity must be an instance of IronGolem
          * 
          * @param priority The priority of the goal
-         * @param targetClass The entity class that should be targeted
-         * @param mustSee If the mob must have line of sight at all times
-         * @param targetConditions The conditions under which the targeted entity will be targeted, may be null
+         * @param goalSupplier The goal supplier, a function that takes a Mob and returns a Goal
          */
-        nonTameRandomTarget<E extends $LivingEntity>(arg0: number, arg1: $Class<E>, arg2: boolean, arg3: $Predicate_<$LivingEntity>): void;
-        /**
-         * Adds a `ResetUniversalAngerTargetGoal` to the entity, only applicable to **neutral** mobs
-         * 
-         * @param priority The priority of the goal
-         * @param alertOthersOfSameType If other mobs of the same type should be alerted
-         */
-        resetUniversalAngerTarget<E extends $Mob>(arg0: number, arg1: boolean): void;
+        arbitraryTargetGoal(arg0: number, arg1: $Function_<T, $Goal>): void;
         constructor(arg0: T, arg1: $GoalSelector);
     }
     export class $AddGoalSelectorsEventJS<T extends $Mob> extends $GoalEventJS<T> {
+        /**
+         * Remove all goals.
+         * 
+         * Example of usage:
+         * =====================================
+         * builder.removeAllGoals()
+         * =====================================
+         * 
+         * @param goal The goal to remove
+         */
+        removeAllGoals(): void;
         /**
          * Adds a `PanicGoal` to the entity, only applicable to **pathfinder** mobs
          * 
@@ -311,14 +322,172 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         panic(arg0: number, arg1: number): void;
         /**
-         * Adds a `UseItemGoal` to the entity
+         * Adds a `MeleeAttackGoal` to the entity, only applicable to **pathfinder** mobs
          * 
          * @param priority The priority of the goal
-         * @param itemToUse The item that will be used
-         * @param soundEvent The registry name of a sound event that should play when the item is used, may be null to indicate not sound event should play
-         * @param canUseSelector Determines when the item may be used
+         * @param speedModifier Sets the speed at which the mob should try to move
+         * @param followTargetEventIfNotSeen Determines if the entity should follow the target even if it doesn't see it
          */
-        useItem(arg0: number, arg1: $ItemStack_, arg2: $ResourceLocation_, arg3: $Predicate_<T>): void;
+        meleeAttack(arg0: number, arg1: number, arg2: boolean): void;
+        /**
+         * Adds a `FollowParentGoal` to the entity, only applicable to **animal** mobs
+         * 
+         * @param priority The priority of the goal
+         * @param speedModifier Sets the speed at which the mob should try to move
+         */
+        followParent(arg0: number, arg1: number): void;
+        /**
+         * Adds a `LeapAtTargetGoal` to the entity
+         * 
+         * @param priority The priority of the goal
+         * @param deltaY Sets the delta movement of the animal in the y-axis
+         */
+        leapAtTarget(arg0: number, arg1: number): void;
+        /**
+         * Adds a `AvoidEntityGoal` to the entity, only applicable to **pathfinder** mobs
+         * 
+         * @param priority The priority of the goal
+         * @param entityClassToAvoid The class of entity to avoid
+         * @param avoidPredicate The conditions under which an entity will be avoided
+         * @param maxDist The maximum distance from a entity the mob will detect and flee from it
+         * @param walkSpeedModifier Modifies the mob's speed when avoiding an entity
+         * @param sprintSpeedModifier Modifies the mob's speed when avoiding an entity at close range
+         * @param onAvoidEntityPredicate An additional predicate for entity avoidance
+         */
+        avoidEntity<E extends $LivingEntity>(arg0: number, arg1: $Class<E>, arg2: $Predicate_<$LivingEntity>, arg3: number, arg4: number, arg5: number, arg6: $Predicate_<$LivingEntity>): void;
+        /**
+         * Adds a `RandomLookAroundGoal` to the entity
+         * 
+         * @param priority The priority of the goal
+         */
+        randomLookAround(arg0: number): void;
+        /**
+         * Adds a `MoveTowardsTargetGoal` to the entity, only applicable to **pathfinder** mobs
+         * 
+         * @param priority The priority of the goal
+         * @param speedModifier Sets the speed at which the mob should try to move
+         * @param distanceWithin The distance the target must be within to move towards it
+         */
+        moveTowardsTarget(arg0: number, arg1: number, arg2: number): void;
+        /**
+         * Adds a `RestrictSunGoal` to the entity, only applicable to **pathfinder** mobs
+         * 
+         * @param priority The priority of the goal
+         */
+        restrictSun(arg0: number): void;
+        /**
+         * Adds a `MoveBackToVillageGoal` to the entity, only applicable to **pathfinder** mobs
+         * 
+         * @param priority The priority of the goal
+         * @param speedModifier Sets the speed at which the mob should try to move
+         * @param checkNoActionTime Determines if the mob's noActionTime property should be checked
+         */
+        moveBackToVillage(arg0: number, arg1: number, arg2: boolean): void;
+        /**
+         * Adds a `TryFindWaterGoal` to the entity, only applicable to **pathfinder** mobs
+         * 
+         * @param priority The priority of the goal
+         */
+        tryFindWater(arg0: number): void;
+        /**
+         * Adds a `RandomStrollGoal` to the entity, only applicable to **pathfinder** mobs
+         * 
+         * @param priority The priority of the goal
+         * @param speedModifier Sets the speed at which the mob should try to move
+         * @param interval Sets the interval at which the goal will be 'refreshed, any values below 1 will be 1.'
+         * @param checkNoActionTime Determines if the mob's noActionTime property should be checked
+         */
+        randomStroll(arg0: number, arg1: number, arg2: number, arg3: boolean): void;
+        /**
+         * Adds a `RandomSwimmingGoal` to the entity, only applicable to **pathfinder** mobs
+         * 
+         * @param priority The priority of the goal
+         * @param speedModifier Sets the speed at which the mob should try to move
+         * @param interval Sets the interval at which the goal will be refreshed
+         */
+        randomSwimming(arg0: number, arg1: number, arg2: number): void;
+        /**
+         * Adds a `MoveThroughVillageGoal` to the entity, only applicable to **pathfinder** mobs
+         * 
+         * @param priority The priority of the goal
+         * @param speedModifier Sets the speed at which the mob should try to move
+         * @param onlyAtNight If this goal should only apply at night
+         * @param distanceToPoi The minimum distance to a poi the mob must be to have it be considered 'visited'
+         * @param canDealWithDoors If doors can be opened to navigate as part of this goal
+         */
+        moveThroughVillage(arg0: number, arg1: number, arg2: boolean, arg3: number, arg4: $Supplier_<boolean>): void;
+        /**
+         * Adds a `RangedAttackGoal` to the entity, only applicable to **ranged attack** mobs
+         * 
+         * @param priority The priority of the goal
+         * @param speedModifier Sets the speed at which the mob should try to move
+         * @param attackIntervalMin The minimum interval between attacks
+         * @param attackIntervalMax The maximum interval between attacks
+         * @param attackRadius The maximum distance something can be attacked from
+         */
+        rangedAttack<E extends $Mob>(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number): void;
+        /**
+         * Enables the addition of arbitrary goals to an entity
+         * 
+         * It is the responsibility of the user to ensure the goal is
+         * compatible with the entity
+         * 
+         * Example of usage:
+         * =====================================
+         * builder.arbitraryGoal(3, entity -> new $PathFindToRaidGoal(entity))
+         * =====================================
+         * 
+         * Note in the example the entity must be an instance of Raider
+         * 
+         * @param priority The priority of the goal
+         * @param goalSupplier The goal supplier, a function that takes a Mob and returns a Goal
+         */
+        arbitraryGoal(arg0: number, arg1: $Function_<T, $Goal>): void;
+        /**
+         * Remove all goals fitting the specified predicate. Returns a boolean
+         * 
+         * Example of usage:
+         * =====================================
+         * let $PanicGoal = Java.loadClass("net.minecraft.world.entity.ai.goal.PanicGoal")
+         * e.removeGoals(context => {
+         *     const { goal, entity } = context
+         *     return goal.getClass() == $PanicGoal
+         * })
+         * =====================================
+         * 
+         * @param goalFunction A function to remove goals with entity & available goals as arguments
+         */
+        removeGoals(arg0: $Function_<$ContextUtils$GoalContext, boolean>): void;
+        /**
+         * Adds a `FollowOwnerGoal` to the entity, only applicable to **tamable** mobs
+         * 
+         * @param priority The priority of the goal
+         * @param speedModifier Sets the speed at which the mob should try to move
+         * @param startDistance The distance away from the owner the mob will start moving
+         * @param stopDistance The distance away from the owner the mob will stop moving
+         */
+        followOwner(arg0: number, arg1: number, arg2: number, arg3: number): void;
+        /**
+         * Adds a `OcelotAttackGoal` to the entity
+         * 
+         * @param priority The priority of the goal
+         */
+        ocelotAttack(arg0: number): void;
+        /**
+         * Adds a `SitWhenOrderedToGoal` to the entity, only applicable to **tamable** mobs
+         * 
+         * @param priority The priority of the goal
+         */
+        sitWhenOrdered(arg0: number): void;
+        /**
+         * Adds a `RemoveBlockGoal` to the entity, only applicable to **pathfinder** mobs
+         * 
+         * @param priority The priority of the goal
+         * @param block The registry name of a block, the block to be removed
+         * @param speedModifier Sets the speed at which the mob should try to move
+         * @param verticalSearchRange The vertical range the mob will search for the block
+         */
+        removeBlock(arg0: number, arg1: $ResourceLocation_, arg2: number, arg3: number): void;
         /**
          * Adds a `BreedGoal` to the entity, only applicable to **animal** mobs
          * 
@@ -340,183 +509,14 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         removeGoal(arg0: $Class<$Goal>): void;
         /**
-         * Adds a `RemoveBlockGoal` to the entity, only applicable to **pathfinder** mobs
+         * Adds a `UseItemGoal` to the entity
          * 
          * @param priority The priority of the goal
-         * @param block The registry name of a block, the block to be removed
-         * @param speedModifier Sets the speed at which the mob should try to move
-         * @param verticalSearchRange The vertical range the mob will search for the block
+         * @param itemToUse The item that will be used
+         * @param soundEvent The registry name of a sound event that should play when the item is used, may be null to indicate not sound event should play
+         * @param canUseSelector Determines when the item may be used
          */
-        removeBlock(arg0: number, arg1: $ResourceLocation_, arg2: number, arg3: number): void;
-        /**
-         * Remove all goals.
-         * 
-         * Example of usage:
-         * =====================================
-         * builder.removeAllGoals()
-         * =====================================
-         * 
-         * @param goal The goal to remove
-         */
-        removeAllGoals(): void;
-        /**
-         * Remove all goals fitting the specified predicate. Returns a boolean
-         * 
-         * Example of usage:
-         * =====================================
-         * let $PanicGoal = Java.loadClass("net.minecraft.world.entity.ai.goal.PanicGoal")
-         * e.removeGoals(context => {
-         *     const { goal, entity } = context
-         *     return goal.getClass() == $PanicGoal
-         * })
-         * =====================================
-         * 
-         * @param goalFunction A function to remove goals with entity & available goals as arguments
-         */
-        removeGoals(arg0: $Function_<$ContextUtils$GoalContext, boolean>): void;
-        /**
-         * Enables the addition of arbitrary goals to an entity
-         * 
-         * It is the responsibility of the user to ensure the goal is
-         * compatible with the entity
-         * 
-         * Example of usage:
-         * =====================================
-         * builder.arbitraryGoal(3, entity -> new $PathFindToRaidGoal(entity))
-         * =====================================
-         * 
-         * Note in the example the entity must be an instance of Raider
-         * 
-         * @param priority The priority of the goal
-         * @param goalSupplier The goal supplier, a function that takes a Mob and returns a Goal
-         */
-        arbitraryGoal(arg0: number, arg1: $Function_<T, $Goal>): void;
-        /**
-         * Adds a `MoveBackToVillageGoal` to the entity, only applicable to **pathfinder** mobs
-         * 
-         * @param priority The priority of the goal
-         * @param speedModifier Sets the speed at which the mob should try to move
-         * @param checkNoActionTime Determines if the mob's noActionTime property should be checked
-         */
-        moveBackToVillage(arg0: number, arg1: number, arg2: boolean): void;
-        /**
-         * Adds a `MoveThroughVillageGoal` to the entity, only applicable to **pathfinder** mobs
-         * 
-         * @param priority The priority of the goal
-         * @param speedModifier Sets the speed at which the mob should try to move
-         * @param onlyAtNight If this goal should only apply at night
-         * @param distanceToPoi The minimum distance to a poi the mob must be to have it be considered 'visited'
-         * @param canDealWithDoors If doors can be opened to navigate as part of this goal
-         */
-        moveThroughVillage(arg0: number, arg1: number, arg2: boolean, arg3: number, arg4: $Supplier_<boolean>): void;
-        /**
-         * Adds a `FollowOwnerGoal` to the entity, only applicable to **tamable** mobs
-         * 
-         * @param priority The priority of the goal
-         * @param speedModifier Sets the speed at which the mob should try to move
-         * @param startDistance The distance away from the owner the mob will start moving
-         * @param stopDistance The distance away from the owner the mob will stop moving
-         */
-        followOwner(arg0: number, arg1: number, arg2: number, arg3: number): void;
-        /**
-         * Adds a `MoveTowardsTargetGoal` to the entity, only applicable to **pathfinder** mobs
-         * 
-         * @param priority The priority of the goal
-         * @param speedModifier Sets the speed at which the mob should try to move
-         * @param distanceWithin The distance the target must be within to move towards it
-         */
-        moveTowardsTarget(arg0: number, arg1: number, arg2: number): void;
-        /**
-         * Adds a `AvoidEntityGoal` to the entity, only applicable to **pathfinder** mobs
-         * 
-         * @param priority The priority of the goal
-         * @param entityClassToAvoid The class of entity to avoid
-         * @param avoidPredicate The conditions under which an entity will be avoided
-         * @param maxDist The maximum distance from a entity the mob will detect and flee from it
-         * @param walkSpeedModifier Modifies the mob's speed when avoiding an entity
-         * @param sprintSpeedModifier Modifies the mob's speed when avoiding an entity at close range
-         * @param onAvoidEntityPredicate An additional predicate for entity avoidance
-         */
-        avoidEntity<E extends $LivingEntity>(arg0: number, arg1: $Class<E>, arg2: $Predicate_<$LivingEntity>, arg3: number, arg4: number, arg5: number, arg6: $Predicate_<$LivingEntity>): void;
-        /**
-         * Adds a `LeapAtTargetGoal` to the entity
-         * 
-         * @param priority The priority of the goal
-         * @param deltaY Sets the delta movement of the animal in the y-axis
-         */
-        leapAtTarget(arg0: number, arg1: number): void;
-        /**
-         * Adds a `MeleeAttackGoal` to the entity, only applicable to **pathfinder** mobs
-         * 
-         * @param priority The priority of the goal
-         * @param speedModifier Sets the speed at which the mob should try to move
-         * @param followTargetEventIfNotSeen Determines if the entity should follow the target even if it doesn't see it
-         */
-        meleeAttack(arg0: number, arg1: number, arg2: boolean): void;
-        /**
-         * Adds a `FollowParentGoal` to the entity, only applicable to **animal** mobs
-         * 
-         * @param priority The priority of the goal
-         * @param speedModifier Sets the speed at which the mob should try to move
-         */
-        followParent(arg0: number, arg1: number): void;
-        /**
-         * Adds a `RandomStrollGoal` to the entity, only applicable to **pathfinder** mobs
-         * 
-         * @param priority The priority of the goal
-         * @param speedModifier Sets the speed at which the mob should try to move
-         * @param interval Sets the interval at which the goal will be 'refreshed, any values below 1 will be 1.'
-         * @param checkNoActionTime Determines if the mob's noActionTime property should be checked
-         */
-        randomStroll(arg0: number, arg1: number, arg2: number, arg3: boolean): void;
-        /**
-         * Adds a `OcelotAttackGoal` to the entity
-         * 
-         * @param priority The priority of the goal
-         */
-        ocelotAttack(arg0: number): void;
-        /**
-         * Adds a `RangedAttackGoal` to the entity, only applicable to **ranged attack** mobs
-         * 
-         * @param priority The priority of the goal
-         * @param speedModifier Sets the speed at which the mob should try to move
-         * @param attackIntervalMin The minimum interval between attacks
-         * @param attackIntervalMax The maximum interval between attacks
-         * @param attackRadius The maximum distance something can be attacked from
-         */
-        rangedAttack<E extends $Mob>(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number): void;
-        /**
-         * Adds a `RestrictSunGoal` to the entity, only applicable to **pathfinder** mobs
-         * 
-         * @param priority The priority of the goal
-         */
-        restrictSun(arg0: number): void;
-        /**
-         * Adds a `SitWhenOrderedToGoal` to the entity, only applicable to **tamable** mobs
-         * 
-         * @param priority The priority of the goal
-         */
-        sitWhenOrdered(arg0: number): void;
-        /**
-         * Adds a `RandomSwimmingGoal` to the entity, only applicable to **pathfinder** mobs
-         * 
-         * @param priority The priority of the goal
-         * @param speedModifier Sets the speed at which the mob should try to move
-         * @param interval Sets the interval at which the goal will be refreshed
-         */
-        randomSwimming(arg0: number, arg1: number, arg2: number): void;
-        /**
-         * Adds a `RandomLookAroundGoal` to the entity
-         * 
-         * @param priority The priority of the goal
-         */
-        randomLookAround(arg0: number): void;
-        /**
-         * Adds a `TryFindWaterGoal` to the entity, only applicable to **pathfinder** mobs
-         * 
-         * @param priority The priority of the goal
-         */
-        tryFindWater(arg0: number): void;
+        useItem(arg0: number, arg1: $ItemStack_, arg2: $ResourceLocation_, arg3: $Predicate_<T>): void;
         /**
          * Adds a `LookAtPlayerGoal` to the entity
          * 
@@ -528,26 +528,47 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         lookAtEntity<E extends $LivingEntity>(arg0: number, arg1: $Class<E>, arg2: number, arg3: number, arg4: boolean): void;
         /**
-         * Adds a `BreathAirGoal` to the entity, only applicable to **pathfinder** mobs
-         * 
-         * @param priority The priority of the goal
-         */
-        breathAir(arg0: number): void;
-        /**
-         * Adds a `TemptGoal` to the entity, only applicable to **pathfinder** mobs
+         * Adds a `MoveTowardsRestrictionGoal` to the entity, only applicable to **pathfinder** mobs
          * 
          * @param priority The priority of the goal
          * @param speedModifier Sets the speed at which the mob should try to move
-         * @param temptItems The ingredient that determines what items tempt the mob
-         * @param canScare If the mob can be scared by getting to close to the tempter
          */
-        tempt(arg0: number, arg1: number, arg2: $Ingredient_, arg3: boolean): void;
+        moveTowardsRestriction(arg0: number, arg1: number): void;
         /**
-         * Adds a `FloatGoal` to the entity
+         * Adds a `WaterAvoidRandomStrollingGoal` to the entity, only applicable to **pathfinder** mobs
+         * 
+         * @param priority The priority of the goal
+         * @param speedModifier Sets the speed at which the mob should try to move
+         * @param probability The probability, in the range [0, 1], that the entity picks a new position
+         */
+        waterAvoidingRandomStroll(arg0: number, arg1: number, arg2: number): void;
+        /**
+         * Adds a `StrollThroughVillageGoal` to the entity, only applicable to **pathfinder** mobs
+         * 
+         * @param priority The priority of the goal
+         * @param interval Sets how often the goal 'refreshes'
+         */
+        strollThroughVillage(arg0: number, arg1: number): void;
+        /**
+         * Adds a `RunAroundLikeCrazyGoal` to the entity, only applicable to **horse** mobs
+         * 
+         * @param priority The priority of the goal
+         * @param speedModifier Sets the speed at which the mob should try to move
+         */
+        horseRunAroundLikeCrazy(arg0: number, arg1: number): void;
+        /**
+         * Adds a `WaterAvoidingRandomFlyingGoal` to the entity, only applicable to **pathfinder** mobs
+         * 
+         * @param priority The priority of the goal
+         * @param speedModifier Sets the speed at which the mob should try to move
+         */
+        waterAvoidingRandomFlying(arg0: number, arg1: number): void;
+        /**
+         * Adds a `ClimbOnTopOfPowderSnowGoal` to the entity
          * 
          * @param priority The priority of the goal
          */
-        floatSwim(arg0: number): void;
+        climbOnTopOfPowderedSnow(arg0: number): void;
         /**
          * Adds a custom goal to the entity
          * 
@@ -563,11 +584,19 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         customGoal(arg0: string, arg1: number, arg2: $Predicate_<T>, arg3: $Predicate_<T>, arg4: boolean, arg5: $Consumer_<T>, arg6: $Consumer_<T>, arg7: boolean, arg8: $Consumer_<T>): void;
         /**
-         * Adds a `FollowBoatGoal` to the entity, only applicable to **pathfinder** mobs
+         * Adds a `BreakDoorGoal` to the entity
+         * 
+         * @param priority The priority of the goal
+         * @param doorBreakTime The time it takes to break a door, limited to 240 ticks
+         * @param validDifficulties Determines what difficulties are valid for the goal
+         */
+        breakDoor(arg0: number, arg1: number, arg2: $Predicate_<$Difficulty>): void;
+        /**
+         * Adds a `BreathAirGoal` to the entity, only applicable to **pathfinder** mobs
          * 
          * @param priority The priority of the goal
          */
-        followBoat(arg0: number): void;
+        breathAir(arg0: number): void;
         /**
          * Adds a `FleeSunGoal` to the entity, only applicable to **pathfinder** mobs
          * 
@@ -576,18 +605,39 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         fleeSun(arg0: number, arg1: number): void;
         /**
-         * Adds a `OpenDoorGoal` to the entity
+         * Adds a `FollowBoatGoal` to the entity, only applicable to **pathfinder** mobs
          * 
          * @param priority The priority of the goal
-         * @param closeDoor If the entity should also close doors
          */
-        openDoor(arg0: number, arg1: boolean): void;
+        followBoat(arg0: number): void;
         /**
          * Adds a `EatBlockGoal` to the entity
          * 
          * @param priority The priority of the goal
          */
         eatGrass(arg0: number): void;
+        /**
+         * Adds a `FloatGoal` to the entity
+         * 
+         * @param priority The priority of the goal
+         */
+        floatSwim(arg0: number): void;
+        /**
+         * Adds a `TemptGoal` to the entity, only applicable to **pathfinder** mobs
+         * 
+         * @param priority The priority of the goal
+         * @param speedModifier Sets the speed at which the mob should try to move
+         * @param temptItems The ingredient that determines what items tempt the mob
+         * @param canScare If the mob can be scared by getting to close to the tempter
+         */
+        tempt(arg0: number, arg1: number, arg2: $Ingredient_, arg3: boolean): void;
+        /**
+         * Adds a `OpenDoorGoal` to the entity
+         * 
+         * @param priority The priority of the goal
+         * @param closeDoor If the entity should also close doors
+         */
+        openDoor(arg0: number, arg1: boolean): void;
         /**
          * Adds a `FollowMobGoal` to the entity
          * 
@@ -597,59 +647,10 @@ declare module "@package/net/liopyu/entityjs/events" {
          * @param areaSize The distance away from the mob, that will be searched for mobs to follow
          */
         followMob(arg0: number, arg1: number, arg2: number, arg3: number): void;
-        /**
-         * Adds a `BreakDoorGoal` to the entity
-         * 
-         * @param priority The priority of the goal
-         * @param doorBreakTime The time it takes to break a door, limited to 240 ticks
-         * @param validDifficulties Determines what difficulties are valid for the goal
-         */
-        breakDoor(arg0: number, arg1: number, arg2: $Predicate_<$Difficulty>): void;
-        /**
-         * Adds a `ClimbOnTopOfPowderSnowGoal` to the entity
-         * 
-         * @param priority The priority of the goal
-         */
-        climbOnTopOfPowderedSnow(arg0: number): void;
-        /**
-         * Adds a `WaterAvoidRandomStrollingGoal` to the entity, only applicable to **pathfinder** mobs
-         * 
-         * @param priority The priority of the goal
-         * @param speedModifier Sets the speed at which the mob should try to move
-         * @param probability The probability, in the range [0, 1], that the entity picks a new position
-         */
-        waterAvoidingRandomStroll(arg0: number, arg1: number, arg2: number): void;
-        /**
-         * Adds a `RunAroundLikeCrazyGoal` to the entity, only applicable to **horse** mobs
-         * 
-         * @param priority The priority of the goal
-         * @param speedModifier Sets the speed at which the mob should try to move
-         */
-        horseRunAroundLikeCrazy(arg0: number, arg1: number): void;
-        /**
-         * Adds a `MoveTowardsRestrictionGoal` to the entity, only applicable to **pathfinder** mobs
-         * 
-         * @param priority The priority of the goal
-         * @param speedModifier Sets the speed at which the mob should try to move
-         */
-        moveTowardsRestriction(arg0: number, arg1: number): void;
-        /**
-         * Adds a `StrollThroughVillageGoal` to the entity, only applicable to **pathfinder** mobs
-         * 
-         * @param priority The priority of the goal
-         * @param interval Sets how often the goal 'refreshes'
-         */
-        strollThroughVillage(arg0: number, arg1: number): void;
-        /**
-         * Adds a `WaterAvoidingRandomFlyingGoal` to the entity, only applicable to **pathfinder** mobs
-         * 
-         * @param priority The priority of the goal
-         * @param speedModifier Sets the speed at which the mob should try to move
-         */
-        waterAvoidingRandomFlying(arg0: number, arg1: number): void;
         constructor(arg0: T, arg1: $GoalSelector);
     }
     export class $EntityModificationEventJS implements $KubeEvent {
+        static getOrCreate(arg0: $EntityType_<never>, arg1: $Entity): $EntityModificationEventJS;
         /**
          * Entity type modification event. Allows modification of methods for any existing entity. 
          *  
@@ -676,14 +677,7 @@ declare module "@package/net/liopyu/entityjs/events" {
          * @param modifyBuilder A consumer to modify the entity type.
          */
         modify(arg0: $EntityType_<never>, arg1: $Consumer_<$ModifyEntityBuilder>): void;
-        static getOrCreate(arg0: $EntityType_<never>, arg1: $Entity): $EntityModificationEventJS;
         determineModificationType(arg0: $EntityType_<never>, arg1: $Entity): $ModifyEntityBuilder;
-        /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -691,11 +685,11 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -703,40 +697,40 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         static eventMap: $Map<$EntityType<never>, $EntityModificationEventJS>;
         static createCustomMap: $Map<$ResourceLocation, $Consumer<$ModifyEntityBuilder>>;
     }
     export class $GoalEventJS<T extends $Mob> implements $KubeEvent {
         getEntity(): $Mob;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -744,30 +738,30 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(arg0: T, arg1: $GoalSelector);
         get entity(): $Mob;
     }
     export class $BuildBrainEventJS<T extends $LivingEntity> implements $KubeEvent {
         addActivity(arg0: $Activity_, arg1: number, arg2: $List_<$Behavior<$LivingEntity>>): void;
-        idleActivity(arg0: number, arg1: $List_<$Behavior<$LivingEntity>>): void;
         coreActivity(arg0: number, arg1: $List_<$Behavior<$LivingEntity>>): void;
-        /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
+        idleActivity(arg0: number, arg1: $List_<$Behavior<$LivingEntity>>): void;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -775,11 +769,11 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -787,17 +781,23 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         behaviors: $Behaviors;
         constructor(arg0: $Brain<T>);
     }
@@ -820,23 +820,17 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         removeSpawn(arg0: $EntityType_<never>, arg1: $List_<string>): void;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -844,17 +838,23 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor();
     }
     export class $ModifyAttributeEventJS$AttributeModificationHelper extends $Record {
@@ -895,6 +895,10 @@ declare module "@package/net/liopyu/entityjs/events" {
     }
     export class $ModifyAttributeEventJS implements $KubeEvent {
         /**
+         * Returns a list of all attributes the given entity type has by default
+         */
+        getAttributes(arg0: $EntityType_<$LivingEntity>): $List<$Attribute>;
+        /**
          * Modifies the given entity type's attributes
          * 
          * @param entityType The entity type whose default attributes are to be modified
@@ -902,19 +906,9 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         modify(arg0: $EntityType_<$LivingEntity>, arg1: $Consumer_<$ModifyAttributeEventJS$AttributeModificationHelper>): void;
         /**
-         * Returns a list of all attributes the given entity type has by default
-         */
-        getAttributes(arg0: $EntityType_<$LivingEntity>): $List<$Attribute>;
-        /**
          * Returns a list of all entity types that can have their attributes modified by this event
          */
         getAllTypes(): $List<$EntityType<$LivingEntity>>;
-        /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -922,11 +916,11 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -934,17 +928,23 @@ declare module "@package/net/liopyu/entityjs/events" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(arg0: $EntityAttributeModificationEvent);
         get allTypes(): $List<$EntityType<$LivingEntity>>;
     }

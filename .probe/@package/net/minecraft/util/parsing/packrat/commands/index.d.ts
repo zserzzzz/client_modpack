@@ -29,16 +29,16 @@ declare module "@package/net/minecraft/util/parsing/packrat/commands" {
         static INSTANCE: $Rule<$StringReader, $ResourceLocation>;
     }
     export class $StringReaderTerms {
-        static character(value: string): $Term<$StringReader>;
         static word(value: string): $Term<$StringReader>;
+        static character(value: string): $Term<$StringReader>;
     }
     export interface $StringReaderTerms {
     }
     export class $ResourceSuggestion {
     }
     export interface $ResourceSuggestion extends $SuggestionSupplier<$StringReader> {
-        possibleResources(): $Stream<$ResourceLocation>;
         possibleValues(arg0: $ParseState<$StringReader>): $Stream<string>;
+        possibleResources(): $Stream<$ResourceLocation>;
     }
     /**
      * Values that may be interpreted as {@link $ResourceSuggestion}.
@@ -55,7 +55,7 @@ declare module "@package/net/minecraft/util/parsing/packrat/commands" {
     /**
      * Values that may be interpreted as {@link $Grammar}.
      */
-    export type $Grammar_<T> = { rules?: $Dictionary<$StringReader>, top?: $Atom_<any>,  } | [rules?: $Dictionary<$StringReader>, top?: $Atom_<any>, ];
+    export type $Grammar_<T> = { top?: $Atom_<any>, rules?: $Dictionary<$StringReader>,  } | [top?: $Atom_<any>, rules?: $Dictionary<$StringReader>, ];
     export class $StringReaderTerms$TerminalWord extends $Record implements $Term<$StringReader> {
         value(): string;
         parse(arg0: $ParseState<$StringReader>, arg1: $Scope, arg2: $Control_): boolean;

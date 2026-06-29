@@ -15,28 +15,28 @@ declare module "@package/net/mehvahdjukaar/polytone/colormap" {
     export class $IColorGetter {
     }
     export interface $IColorGetter extends $BlockColor, $ItemColor {
-        needsToFillTexture(): boolean;
-        sampleColor(arg0: $BlockState_, arg1: $BlockPos_, arg2: $Biome_, arg3: $ItemStack_): number;
         makeConcurrent(): $IColorGetter;
+        sampleColor(arg0: $BlockState_, arg1: $BlockPos_, arg2: $Biome_, arg3: $ItemStack_): number;
+        needsToFillTexture(): boolean;
     }
     export class $Colormap implements $IColorGetter, $ColorResolver {
+        static simple(xGetter: $IColormapNumberProvider_, yGetter: $IColormapNumberProvider_): $Colormap;
         static createDefTriangle(): $Colormap;
         static createDamage(): $Colormap;
-        acceptTexture(image: $ArrayImage_): void;
-        needsToFillTexture(): boolean;
+        static createDefSquare(): $Colormap;
         static createFixed(): $Colormap;
         static createBiomeId(): $Colormap;
-        getTargetTexture(def: $ResourceLocation_): $ResourceLocation;
         sampleColor(state: $BlockState_, pos: $BlockPos_, biome: $Biome_, item: $ItemStack_): number;
-        static createDefSquare(): $Colormap;
-        makeConcurrent(): $Colormap;
         static createTimeStrip(): $Colormap;
-        getColor(itemStack: $ItemStack_, i: number): number;
-        getColor(state: $BlockState_, level: $BlockAndTintGetter, pos: $BlockPos_, i: number): number;
+        acceptTexture(image: $ArrayImage_): void;
+        needsToFillTexture(): boolean;
+        getTargetTexture(def: $ResourceLocation_): $ResourceLocation;
         getColor(biome: $Biome_, x: number, z: number): number;
-        static simple(xGetter: $IColormapNumberProvider_, yGetter: $IColormapNumberProvider_): $Colormap;
+        getColor(state: $BlockState_, level: $BlockAndTintGetter, pos: $BlockPos_, i: number): number;
+        getColor(itemStack: $ItemStack_, i: number): number;
         calculateBlendedColor(level: $Level_, pos: $BlockPos_): number;
         setExplicitTargetTexture(imageTarget: $ResourceLocation_): void;
+        makeConcurrent(): $IColorGetter;
         static SINGLE_COLOR_CODEC: $Codec<$IColorGetter>;
         static CODEC: $Codec<$IColorGetter>;
         static DIRECT_REFERENCE_OR_EXPRESSION: $Codec<$IColorGetter>;
@@ -45,11 +45,11 @@ declare module "@package/net/mehvahdjukaar/polytone/colormap" {
         set explicitTargetTexture(value: $ResourceLocation_);
     }
     export class $ColormapExpressionProvider extends $PolytoneExpression implements $IColormapNumberProvider {
-        createConcurrent(): $ColormapExpressionProvider;
         getValue(state: $BlockState_, pos: $BlockPos_, biome: $Biome_, mapper: $BiomeIdMapper_, stack: $ItemStack_): number;
-        usesBiome(): boolean;
+        createConcurrent(): $ColormapExpressionProvider;
         usesPos(): boolean;
         usesState(): boolean;
+        usesBiome(): boolean;
         static CODEC: $Codec<$ColormapExpressionProvider>;
     }
     export class $IColormapNumberProvider {
@@ -67,11 +67,11 @@ declare module "@package/net/mehvahdjukaar/polytone/colormap" {
         static SEASON: $IColormapNumberProvider;
     }
     export interface $IColormapNumberProvider {
-        createConcurrent(): $IColormapNumberProvider;
         getValue(arg0: $BlockState_, arg1: $BlockPos_, arg2: $Biome_, arg3: $BiomeIdMapper_, arg4: $ItemStack_): number;
-        usesBiome(): boolean;
+        createConcurrent(): $IColormapNumberProvider;
         usesPos(): boolean;
         usesState(): boolean;
+        usesBiome(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $IColormapNumberProvider}.

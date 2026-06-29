@@ -31,15 +31,15 @@ import { $Vector3d } from "@package/org/joml";
 
 declare module "@package/com/simibubi/create/content/kinetics/flywheel" {
     export class $FlywheelBlock extends $RotatedPillarKineticBlock implements $IBE<$FlywheelBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$FlywheelBlockEntity>;
         getBlockEntityClass(): $Class<$FlywheelBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$FlywheelBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$FlywheelBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FlywheelBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($FlywheelBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FlywheelBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $FlywheelBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$FlywheelBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($FlywheelBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FlywheelBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -70,8 +70,8 @@ declare module "@package/com/simibubi/create/content/kinetics/flywheel" {
         hasCollision: boolean;
         static AXIS: $EnumProperty<$Direction$Axis>;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$FlywheelBlockEntity>;
         get blockEntityClass(): $Class<$FlywheelBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$FlywheelBlockEntity>;
     }
     export class $FlywheelRenderer extends $KineticBlockEntityRenderer<$FlywheelBlockEntity> {
         static KINETIC_BLOCK: $SuperByteBufferCache$Compartment<$BlockState>;
@@ -80,11 +80,11 @@ declare module "@package/com/simibubi/create/content/kinetics/flywheel" {
     }
     export class $FlywheelBlockEntity extends $KineticBlockEntity implements $BlockEntitySubLevelReactionWheel {
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
-        handler$clj000$aeronautics$read(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean, arg3: $CallbackInfo, arg4: $LocalBooleanRef): void;
-        handler$glg002$sable$write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean, arg3: $CallbackInfo): void;
         handler$glg005$sable$tick(arg0: $CallbackInfo): void;
-        sable$getAngularVelocity(arg0: $Vector3d): void;
         handler$glg002$sable$read(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean, arg3: $CallbackInfo): void;
+        sable$getAngularVelocity(arg0: $Vector3d): void;
+        handler$glg002$sable$write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean, arg3: $CallbackInfo): void;
+        handler$clj000$aeronautics$read(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean, arg3: $CallbackInfo, arg4: $LocalBooleanRef): void;
         sequenceContext: $SequencedGearshiftBlockEntity$SequenceContext;
         networkDirty: boolean;
         worldPosition: $BlockPos;

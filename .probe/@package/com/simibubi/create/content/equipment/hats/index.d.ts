@@ -14,9 +14,9 @@ declare module "@package/com/simibubi/create/content/equipment/hats" {
         constructor(arg0: $RenderLayerParent<T, M>);
     }
     export class $EntityHats {
-        static shouldRenderTrainHat(arg0: $LivingEntity): boolean;
-        static getHatFor(arg0: $LivingEntity): $PartialModel;
         static getLogisticsHatFor(arg0: $LivingEntity): $PartialModel;
+        static getHatFor(arg0: $LivingEntity): $PartialModel;
+        static shouldRenderTrainHat(arg0: $LivingEntity): boolean;
         constructor();
     }
 }

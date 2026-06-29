@@ -24,14 +24,15 @@ import { $EntityTickList, $PersistentEntitySectionManager } from "@package/net/m
 
 declare module "@package/net/createmod/catnip/levelWrappers" {
     export class $SchematicLevel extends $WrappedLevel implements $ServerLevelAccessor, $SchematicLevelAccessor, $SchematicLevelExtension {
-        setBounds(arg0: $BoundingBox): void;
         getBounds(): $BoundingBox;
-        getRenderedBlockEntities(): $Iterable<$BlockEntity>;
+        getLevel(): $ServerLevel;
         getBlockEntities(): $Iterable<$BlockEntity>;
+        setBounds(arg0: $BoundingBox): void;
         sable$getSubLevels(): $List<any>;
         getBlockMap(): $Map<$BlockPos, $BlockState>;
-        getAllPositions(): $Set<$BlockPos>;
         getEntityList(): $List<$Entity>;
+        getAllPositions(): $Set<$BlockPos>;
+        getRenderedBlockEntities(): $Iterable<$BlockEntity>;
         addFreshEntityWithPassengers(arg0: $Entity): void;
         self(): $EntityGetter;
         restoringBlockSnapshots: boolean;
@@ -64,11 +65,12 @@ declare module "@package/net/createmod/catnip/levelWrappers" {
         captureBlockSnapshots: boolean;
         constructor(arg0: $Level_);
         constructor(arg0: $BlockPos_, arg1: $Level_);
-        get renderedBlockEntities(): $Iterable<$BlockEntity>;
+        get level(): $ServerLevel;
         get blockEntities(): $Iterable<$BlockEntity>;
         get blockMap(): $Map<$BlockPos, $BlockState>;
-        get allPositions(): $Set<$BlockPos>;
         get entityList(): $List<$Entity>;
+        get allPositions(): $Set<$BlockPos>;
+        get renderedBlockEntities(): $Iterable<$BlockEntity>;
     }
     export class $WrappedServerLevel extends $ServerLevel {
         self(): $EntityGetter;
@@ -197,17 +199,17 @@ declare module "@package/net/createmod/catnip/levelWrappers" {
     export class $SchematicLevelAccessor {
     }
     export interface $SchematicLevelAccessor extends $LevelAccessor {
-        setBounds(arg0: $BoundingBox): void;
         getBounds(): $BoundingBox;
-        getRenderedBlockEntities(): $Iterable<$BlockEntity>;
         getBlockEntities(): $Iterable<$BlockEntity>;
+        setBounds(arg0: $BoundingBox): void;
         getBlockMap(): $Map<$BlockPos, $BlockState>;
-        getAllPositions(): $Set<$BlockPos>;
         getEntityList(): $List<$Entity>;
-        get renderedBlockEntities(): $Iterable<$BlockEntity>;
+        getAllPositions(): $Set<$BlockPos>;
+        getRenderedBlockEntities(): $Iterable<$BlockEntity>;
         get blockEntities(): $Iterable<$BlockEntity>;
         get blockMap(): $Map<$BlockPos, $BlockState>;
-        get allPositions(): $Set<$BlockPos>;
         get entityList(): $List<$Entity>;
+        get allPositions(): $Set<$BlockPos>;
+        get renderedBlockEntities(): $Iterable<$BlockEntity>;
     }
 }

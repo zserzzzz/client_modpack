@@ -18,15 +18,15 @@ import { $BeltTunnelBlockEntity } from "@package/com/simibubi/create/content/log
 
 declare module "@package/com/simibubi/create/content/kinetics/belt/transport" {
     export class $BeltMovementHandler {
-        static transportEntity(arg0: $BeltBlockEntity, arg1: $Entity, arg2: $BeltMovementHandler$TransportedEntityInfo): void;
         static canBeTransported(arg0: $Entity): boolean;
+        static transportEntity(arg0: $BeltBlockEntity, arg1: $Entity, arg2: $BeltMovementHandler$TransportedEntityInfo): void;
         static isRidingOrBeingRiddenBy(arg0: $Entity, arg1: $Entity): boolean;
         static shouldIgnoreBlocking(arg0: $Entity, arg1: $Entity): boolean;
         constructor();
     }
     export class $BeltTunnelInteractionHandler {
-        static getTunnelOnPosition(arg0: $Level_, arg1: $BlockPos_): $BeltTunnelBlockEntity;
         static flapTunnel(arg0: $BeltInventory, arg1: number, arg2: $Direction_, arg3: boolean): void;
+        static getTunnelOnPosition(arg0: $Level_, arg1: $BlockPos_): $BeltTunnelBlockEntity;
         static flapTunnelsAndCheckIfStuck(arg0: $BeltInventory, arg1: $TransportedItemStack, arg2: number): boolean;
         static stuckAtTunnel(arg0: $BeltInventory, arg1: number, arg2: $ItemStack_, arg3: $Direction_): boolean;
         constructor();
@@ -64,14 +64,14 @@ declare module "@package/com/simibubi/create/content/kinetics/belt/transport" {
         read(arg0: $CompoundTag_, arg1: $HolderLookup$Provider): void;
         tick(): void;
         addItem(arg0: $TransportedItemStack): void;
-        applyToEachWithin(arg0: number, arg1: number, arg2: $Function_<$TransportedItemStack, $TransportedItemStackHandlerBehaviour$TransportedResult>): void;
-        canInsertAtFromSide(arg0: number, arg1: $Direction_): boolean;
         getTransportedItems(): $List<$TransportedItemStack>;
-        ejectAll(): void;
+        canInsertAtFromSide(arg0: number, arg1: $Direction_): boolean;
+        applyToEachWithin(arg0: number, arg1: number, arg2: $Function_<$TransportedItemStack, $TransportedItemStackHandlerBehaviour$TransportedResult>): void;
         eject(arg0: $TransportedItemStack): void;
+        ejectAll(): void;
         getLazyClientItem(): $TransportedItemStack;
-        canInsertAt(arg0: number): boolean;
         getStackAtOffset(arg0: number): $TransportedItemStack;
+        canInsertAt(arg0: number): boolean;
         constructor(arg0: $BeltBlockEntity);
         get transportedItems(): $List<$TransportedItemStack>;
         get lazyClientItem(): $TransportedItemStack;
@@ -87,46 +87,46 @@ declare module "@package/com/simibubi/create/content/kinetics/belt/transport" {
         constructor();
     }
     export class $ItemHandlerBeltSegment implements $IItemHandler {
+        getStackInSlot(arg0: number): $ItemStack;
+        getSlots(): number;
+        insertItem(arg0: number, arg1: $ItemStack_, arg2: boolean): $ItemStack;
+        extractItem(arg0: number, arg1: number, arg2: boolean): $ItemStack;
         getSlotLimit(arg0: number): number;
         isItemValid(arg0: number, arg1: $ItemStack_): boolean;
-        extractItem(arg0: number, arg1: number, arg2: boolean): $ItemStack;
-        getSlots(): number;
-        getStackInSlot(arg0: number): $ItemStack;
-        insertItem(arg0: number, arg1: $ItemStack_, arg2: boolean): $ItemStack;
-        kjs$isMutable(): boolean;
         kjs$setStackInSlot(slot: number, stack: $ItemStack_): void;
-        kjs$self(): $IItemHandler;
+        kjs$isMutable(): boolean;
         kjs$getBlock(level: $Level_): $LevelBlock;
-        getHeight(): number;
-        insertItem(stack: $ItemStack_, simulate: boolean): $ItemStack;
+        kjs$self(): $IItemHandler;
         setChanged(): void;
+        insertItem(stack: $ItemStack_, simulate: boolean): $ItemStack;
         asContainer(): $Container;
-        countNonEmpty(): number;
         countNonEmpty(match: $ItemPredicate_): number;
-        getWidth(): number;
-        isEmpty(): boolean;
-        count(): number;
-        count(match: $ItemPredicate_): number;
-        find(match: $ItemPredicate_): number;
-        find(): number;
+        countNonEmpty(): number;
+        getHeight(): number;
+        getAllItems(): $List<$ItemStack>;
         clear(match: $ItemPredicate_): void;
         clear(): void;
-        getAllItems(): $List<$ItemStack>;
+        find(match: $ItemPredicate_): number;
+        find(): number;
+        count(): number;
+        count(match: $ItemPredicate_): number;
+        isEmpty(): boolean;
+        getWidth(): number;
         insertItem(slot: number, stack: $ItemStack_, simulate: boolean): $ItemStack;
-        extractItem(slot: number, amount: number, simulate: boolean): $ItemStack;
-        isItemValid(slot: number, stack: $ItemStack_): boolean;
         getStackInSlot(slot: number): $ItemStack;
+        isItemValid(slot: number, stack: $ItemStack_): boolean;
+        extractItem(slot: number, amount: number, simulate: boolean): $ItemStack;
         getSlotLimit(slot: number): number;
         getSlots(): number;
         constructor(arg0: $BeltInventory, arg1: number);
         get height(): number;
-        get width(): number;
-        get empty(): boolean;
         get allItems(): $List<$ItemStack>;
+        get empty(): boolean;
+        get width(): number;
     }
     export class $BeltMovementHandler$TransportedEntityInfo {
-        refresh(arg0: $BlockPos_, arg1: $BlockState_): void;
         tick(): $BeltMovementHandler$TransportedEntityInfo;
+        refresh(arg0: $BlockPos_, arg1: $BlockState_): void;
         getTicksSinceLastCollision(): number;
         constructor(arg0: $BlockPos_, arg1: $BlockState_);
         get ticksSinceLastCollision(): number;

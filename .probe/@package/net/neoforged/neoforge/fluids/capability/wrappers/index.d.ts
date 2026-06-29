@@ -14,29 +14,29 @@ declare module "@package/net/neoforged/neoforge/fluids/capability/wrappers" {
      * Swaps between empty bucket and filled bucket of the correct type.
      */
     export class $FluidBucketWrapper implements $IFluidHandlerItem {
-        getTanks(): number;
         drain(arg0: number, arg1: $IFluidHandler$FluidAction_): $FluidStack;
         drain(arg0: $FluidStack_, arg1: $IFluidHandler$FluidAction_): $FluidStack;
         fill(arg0: $FluidStack_, arg1: $IFluidHandler$FluidAction_): number;
-        getContainer(): $ItemStack;
-        getFluidInTank(tank: number): $FluidStack;
         getTankCapacity(tank: number): number;
         isFluidValid(tank: number, stack: $FluidStack_): boolean;
+        getContainer(): $ItemStack;
         getFluid(): $FluidStack;
+        getFluidInTank(tank: number): $FluidStack;
+        getTanks(): number;
         canFillFluidType(fluid: $FluidStack_): boolean;
         constructor(container: $ItemStack_);
-        get tanks(): number;
         get container(): $ItemStack;
         get fluid(): $FluidStack;
+        get tanks(): number;
     }
     export class $CauldronWrapper implements $IFluidHandler {
-        getTanks(): number;
         drain(arg0: $FluidStack_, arg1: $IFluidHandler$FluidAction_): $FluidStack;
         drain(arg0: number, arg1: $IFluidHandler$FluidAction_): $FluidStack;
         fill(arg0: $FluidStack_, arg1: $IFluidHandler$FluidAction_): number;
-        getFluidInTank(tank: number): $FluidStack;
         getTankCapacity(tank: number): number;
         isFluidValid(tank: number, stack: $FluidStack_): boolean;
+        getFluidInTank(tank: number): $FluidStack;
+        getTanks(): number;
         constructor(level: $Level_, pos: $BlockPos_);
         get tanks(): number;
     }
@@ -52,13 +52,13 @@ declare module "@package/net/neoforged/neoforge/fluids/capability/wrappers" {
         constructor(state: $BlockState_, world: $Level_, blockPos: $BlockPos_);
     }
     export class $BucketPickupHandlerWrapper implements $IFluidHandler {
-        getTanks(): number;
-        drain(arg0: number, arg1: $IFluidHandler$FluidAction_): $FluidStack;
         drain(arg0: $FluidStack_, arg1: $IFluidHandler$FluidAction_): $FluidStack;
+        drain(arg0: number, arg1: $IFluidHandler$FluidAction_): $FluidStack;
         fill(arg0: $FluidStack_, arg1: $IFluidHandler$FluidAction_): number;
-        getFluidInTank(tank: number): $FluidStack;
         getTankCapacity(tank: number): number;
         isFluidValid(tank: number, stack: $FluidStack_): boolean;
+        getFluidInTank(tank: number): $FluidStack;
+        getTanks(): number;
         constructor(player: $Player, bucketPickupHandler: $BucketPickup, world: $Level_, blockPos: $BlockPos_);
         get tanks(): number;
     }

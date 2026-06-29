@@ -3,7 +3,7 @@ declare module "@package/dev/engine_room/flywheel/api/vertex" {
     export class $VertexList {
     }
     export interface $VertexList {
-        light(arg0: number): number;
+        overlay(arg0: number): number;
         isEmpty(): boolean;
         b(arg0: number): number;
         x(arg0: number): number;
@@ -18,16 +18,16 @@ declare module "@package/dev/engine_room/flywheel/api/vertex" {
         y(arg0: number): number;
         normalX(arg0: number): number;
         normalY(arg0: number): number;
-        writeAll(dst: $MutableVertexList): void;
         normalZ(arg0: number): number;
-        overlay(arg0: number): number;
+        light(arg0: number): number;
+        writeAll(dst: $MutableVertexList): void;
         vertexCount(): number;
         get empty(): boolean;
     }
     export class $MutableVertexList {
     }
     export interface $MutableVertexList extends $VertexList {
-        light(arg0: number, arg1: number): void;
+        overlay(arg0: number, arg1: number): void;
         b(arg0: number, arg1: number): void;
         x(arg0: number, arg1: number): void;
         a(arg0: number, arg1: number): void;
@@ -40,6 +40,6 @@ declare module "@package/dev/engine_room/flywheel/api/vertex" {
         normalX(arg0: number, arg1: number): void;
         normalY(arg0: number, arg1: number): void;
         normalZ(arg0: number, arg1: number): void;
-        overlay(arg0: number, arg1: number): void;
+        light(arg0: number, arg1: number): void;
     }
 }

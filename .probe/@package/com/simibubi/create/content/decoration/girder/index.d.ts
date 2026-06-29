@@ -27,7 +27,7 @@ import { $UseOnContext } from "@package/net/minecraft/world/item/context";
 import { $IWrenchable } from "@package/com/simibubi/create/content/equipment/wrench";
 import { $PlacementOffset, $IPlacementHelper } from "@package/net/createmod/catnip/placement";
 import { $ResourceKey } from "@package/net/minecraft/resources";
-import { $Block_, $Block$BlockStatePairKey, $SimpleWaterloggedBlock, $SoundType, $Block } from "@package/net/minecraft/world/level/block";
+import { $Block_, $Block$BlockStatePairKey, $SoundType, $SimpleWaterloggedBlock, $Block } from "@package/net/minecraft/world/level/block";
 import { $BlockHitResult } from "@package/net/minecraft/world/phys";
 import { $BlockEntityTicker, $BlockEntityType, $BlockEntityType_, $BlockEntity } from "@package/net/minecraft/world/level/block/entity";
 
@@ -37,31 +37,31 @@ declare module "@package/com/simibubi/create/content/decoration/girder" {
     }
     export class $GirderPlacementHelper implements $IPlacementHelper {
         getOffset(arg0: $Player, arg1: $Level_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockHitResult): $PlacementOffset;
-        getStatePredicate(): $Predicate<$BlockState>;
         getItemPredicate(): $Predicate<$ItemStack>;
+        getStatePredicate(): $Predicate<$BlockState>;
         getOffset(arg0: $Player, arg1: $Level_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockHitResult, arg5: $ItemStack_): $PlacementOffset;
-        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
-        matchesState(arg0: $BlockState_): boolean;
-        displayGhost(arg0: $PlacementOffset): void;
         matchesItem(arg0: $ItemStack_): boolean;
+        matchesState(arg0: $BlockState_): boolean;
+        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
+        displayGhost(arg0: $PlacementOffset): void;
         constructor();
-        get statePredicate(): $Predicate<$BlockState>;
         get itemPredicate(): $Predicate<$ItemStack>;
+        get statePredicate(): $Predicate<$BlockState>;
     }
     export class $GirderEncasedShaftBlock extends $HorizontalAxisKineticBlock implements $IBE<$KineticBlockEntity>, $SimpleWaterloggedBlock, $IWrenchable, $SpecialBlockItemRequirement {
-        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
-        getBlockEntityType(): $BlockEntityType<$KineticBlockEntity>;
         getBlockEntityClass(): $Class<$KineticBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$KineticBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$KineticBlockEntity>;
+        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$KineticBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($KineticBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$KineticBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $KineticBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$KineticBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($KineticBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$KineticBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
@@ -96,8 +96,8 @@ declare module "@package/com/simibubi/create/content/decoration/girder" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$KineticBlockEntity>;
         get blockEntityClass(): $Class<$KineticBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$KineticBlockEntity>;
     }
     export class $GirderBlockStateGenerator {
         static blockState(arg0: $DataGenContext<$Block_, $GirderBlock>, arg1: $RegistrateBlockstateProvider): void;
@@ -124,18 +124,18 @@ declare module "@package/com/simibubi/create/content/decoration/girder" {
     export class $GirderBlock extends $Block implements $SimpleWaterloggedBlock, $IWrenchable {
         static isConnected(arg0: $BlockAndTintGetter, arg1: $BlockPos_, arg2: $BlockState_, arg3: $Direction_): boolean;
         static updateState(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $Direction_): $BlockState;
-        static updateVerticalProperty(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $Property<boolean>, arg4: $BlockState_, arg5: $Direction_): $BlockState;
-        static isZGirder(arg0: $BlockState_): boolean;
         static isGirder(arg0: $BlockState_): boolean;
+        static isZGirder(arg0: $BlockState_): boolean;
         static isXGirder(arg0: $BlockState_): boolean;
-        static isFacingBracket(arg0: $BlockAndTintGetter, arg1: $BlockPos_, arg2: $Direction_): boolean;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
+        static updateVerticalProperty(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $Property<boolean>, arg4: $BlockState_, arg5: $Direction_): $BlockState;
+        static isFacingBracket(arg0: $BlockAndTintGetter, arg1: $BlockPos_, arg2: $Direction_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;

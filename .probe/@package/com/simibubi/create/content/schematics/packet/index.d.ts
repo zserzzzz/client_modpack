@@ -28,12 +28,12 @@ declare module "@package/com/simibubi/create/content/schematics/packet" {
      */
     export type $SchematicPlacePacket_ = { stack?: $ItemStack_,  } | [stack?: $ItemStack_, ];
     export class $SchematicSyncPacket extends $Record implements $ServerboundPacketPayload {
+        mirror(): $Mirror;
         slot(): number;
         handle(arg0: $ServerPlayer): void;
         anchor(): $BlockPos;
         rotation(): $Rotation;
         getTypeProvider(): $BasePacketPayload$PacketTypeProvider;
-        mirror(): $Mirror;
         deployed(): boolean;
         type(): $CustomPacketPayload$Type<$CustomPacketPayload>;
         toVanillaClientbound(): $ClientboundCustomPayloadPacket;
@@ -46,7 +46,7 @@ declare module "@package/com/simibubi/create/content/schematics/packet" {
     /**
      * Values that may be interpreted as {@link $SchematicSyncPacket}.
      */
-    export type $SchematicSyncPacket_ = { mirror?: $Mirror_, slot?: number, anchor?: $BlockPos_, rotation?: $Rotation_, deployed?: boolean,  } | [mirror?: $Mirror_, slot?: number, anchor?: $BlockPos_, rotation?: $Rotation_, deployed?: boolean, ];
+    export type $SchematicSyncPacket_ = { deployed?: boolean, mirror?: $Mirror_, slot?: number, anchor?: $BlockPos_, rotation?: $Rotation_,  } | [deployed?: boolean, mirror?: $Mirror_, slot?: number, anchor?: $BlockPos_, rotation?: $Rotation_, ];
     export class $SchematicUploadPacket extends $Record implements $ServerboundPacketPayload {
         size(): number;
         static begin(arg0: string, arg1: number): $SchematicUploadPacket;
@@ -70,7 +70,7 @@ declare module "@package/com/simibubi/create/content/schematics/packet" {
     /**
      * Values that may be interpreted as {@link $SchematicUploadPacket}.
      */
-    export type $SchematicUploadPacket_ = { size?: number, schematic?: string, code?: number, data?: number[],  } | [size?: number, schematic?: string, code?: number, data?: number[], ];
+    export type $SchematicUploadPacket_ = { data?: number[], size?: number, schematic?: string, code?: number,  } | [data?: number[], size?: number, schematic?: string, code?: number, ];
     export class $InstantSchematicPacket extends $Record implements $ServerboundPacketPayload {
         name(): string;
         bounds(): $BlockPos;
@@ -87,5 +87,5 @@ declare module "@package/com/simibubi/create/content/schematics/packet" {
     /**
      * Values that may be interpreted as {@link $InstantSchematicPacket}.
      */
-    export type $InstantSchematicPacket_ = { bounds?: $BlockPos_, name?: string, origin?: $BlockPos_,  } | [bounds?: $BlockPos_, name?: string, origin?: $BlockPos_, ];
+    export type $InstantSchematicPacket_ = { origin?: $BlockPos_, bounds?: $BlockPos_, name?: string,  } | [origin?: $BlockPos_, bounds?: $BlockPos_, name?: string, ];
 }

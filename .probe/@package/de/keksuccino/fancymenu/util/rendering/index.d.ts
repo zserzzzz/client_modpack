@@ -16,39 +16,39 @@ declare module "@package/de/keksuccino/fancymenu/util/rendering" {
         get inputHeight(): number;
     }
     export class $DrawableColor {
-        getColorIntWithAlpha(arg0: number): number;
         static of(arg0: number, arg1: number, arg2: number, arg3: number): $DrawableColor;
         static of(arg0: number): $DrawableColor;
         static of(arg0: string): $DrawableColor;
         static of(arg0: $Color): $DrawableColor;
         static of(arg0: number, arg1: number, arg2: number): $DrawableColor;
         copy(): $DrawableColor;
-        getColor(): $Color;
-        getColorInt(): number;
+        getColorIntWithAlpha(arg0: number): number;
         resetShaderColor(arg0: $GuiGraphics): void;
-        getAsFloats(): $DrawableColor$FloatColor;
+        getColorInt(): number;
+        getColor(): $Color;
+        static ofHtml(arg0: string): $DrawableColor;
+        getHex(): string;
         setAsShaderColor(arg0: $GuiGraphics): void;
         setAsShaderColor(arg0: $GuiGraphics, arg1: number): void;
-        getHex(): string;
-        static ofHtml(arg0: string): $DrawableColor;
+        getAsFloats(): $DrawableColor$FloatColor;
         static WHITE: $DrawableColor;
         static BLACK: $DrawableColor;
         static FULLY_TRANSPARENT: $DrawableColor;
         static EMPTY: $DrawableColor;
-        get color(): $Color;
         get colorInt(): number;
-        get asFloats(): $DrawableColor$FloatColor;
+        get color(): $Color;
         get hex(): string;
+        get asFloats(): $DrawableColor$FloatColor;
     }
     export class $DrawableColor$FloatColor extends $Record {
         red(): number;
-        alpha(): number;
         blue(): number;
         green(): number;
+        alpha(): number;
         constructor(red: number, green: number, blue: number, alpha: number);
     }
     /**
      * Values that may be interpreted as {@link $DrawableColor$FloatColor}.
      */
-    export type $DrawableColor$FloatColor_ = { red?: number, alpha?: number, green?: number, blue?: number,  } | [red?: number, alpha?: number, green?: number, blue?: number, ];
+    export type $DrawableColor$FloatColor_ = { green?: number, blue?: number, red?: number, alpha?: number,  } | [green?: number, blue?: number, red?: number, alpha?: number, ];
 }

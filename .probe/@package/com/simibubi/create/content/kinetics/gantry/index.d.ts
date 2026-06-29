@@ -22,9 +22,9 @@ import { $BlockEntityType, $BlockEntityTicker, $BlockEntityType_, $BlockEntity }
 
 declare module "@package/com/simibubi/create/content/kinetics/gantry" {
     export class $GantryShaftBlockEntity extends $KineticBlockEntity {
-        canAssembleOn(): boolean;
-        checkAttachedCarriageBlocks(): void;
         getPinionMovementSpeed(): number;
+        checkAttachedCarriageBlocks(): void;
+        canAssembleOn(): boolean;
         sequenceContext: $SequencedGearshiftBlockEntity$SequenceContext;
         networkDirty: boolean;
         worldPosition: $BlockPos;
@@ -58,15 +58,15 @@ declare module "@package/com/simibubi/create/content/kinetics/gantry" {
         constructor();
     }
     export class $GantryShaftBlock extends $DirectionalKineticBlock implements $IBE<$GantryShaftBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$GantryShaftBlockEntity>;
         getBlockEntityClass(): $Class<$GantryShaftBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$GantryShaftBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$GantryShaftBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$GantryShaftBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($GantryShaftBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$GantryShaftBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $GantryShaftBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$GantryShaftBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($GantryShaftBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$GantryShaftBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -99,7 +99,7 @@ declare module "@package/com/simibubi/create/content/kinetics/gantry" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$GantryShaftBlockEntity>;
         get blockEntityClass(): $Class<$GantryShaftBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$GantryShaftBlockEntity>;
     }
 }

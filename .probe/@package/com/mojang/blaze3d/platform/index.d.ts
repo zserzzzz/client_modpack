@@ -63,215 +63,215 @@ declare module "@package/com/mojang/blaze3d/platform" {
         srcAlpha: number;
     }
     export class $GlStateManager implements $GlStateManagerAccessor {
-        static _clear(mask: number, checkError: boolean): void;
+        static glGetProgrami(program: number, pname: number): number;
         static glBlendFuncSeparate(srcFactor: number, dstFactor: number, srcFactorAlpha: number, dstFactorAlpha: number): void;
-        static glCheckFramebufferStatus(pname: number): number;
         static glGetProgramInfoLog(program: number, maxLength: number): string;
-        static glActiveTexture(texture: number): void;
-        static glGenRenderbuffers(): number;
-        static glGenFramebuffers(): number;
+        static glCheckFramebufferStatus(pname: number): number;
         static glCreateProgram(): number;
-        static glDeleteShader(texture: number): void;
         static glCreateShader(pname: number): number;
-        static glAttachShader(sourceFactor: number, destFactor: number): void;
+        static glDeleteShader(texture: number): void;
         static glDeleteProgram(texture: number): void;
         static glShaderSource(shader: number, shaderData: $List_<string>): void;
-        static glCompileShader(texture: number): void;
+        static glAttachShader(sourceFactor: number, destFactor: number): void;
         static glLinkProgram(texture: number): void;
+        static glCompileShader(texture: number): void;
         static glGetShaderInfoLog(program: number, maxLength: number): string;
-        static _getActiveTexture(): number;
-        static _activeTexture(texture: number): void;
-        static upload(level: number, xOffset: number, yOffset: number, width: number, height: number, format: $NativeImage$Format_, pixels: $IntBuffer, output: $Consumer_<$IntBuffer>): void;
-        static glGetProgrami(program: number, pname: number): number;
         static glGetShaderi(program: number, pname: number): number;
-        static _glUnmapBuffer(texture: number): void;
-        static _glMapBuffer(target: number, access: number): $ByteBuffer;
-        static _glFramebufferTexture2D(target: number, attachment: number, texTarget: number, texture: number, level: number): void;
-        static _glDeleteFramebuffers(texture: number): void;
-        static _bindTexture(texture: number): void;
-        static _texParameter(func: number, ref: number, mask: number): void;
-        static _texParameter(target: number, parameterName: number, parameter: number): void;
-        static _clearColor(red: number, green: number, blue: number, alpha: number): void;
-        static _getError(): number;
-        static setupGuiFlatDiffuseLighting(lightingVector1: $Vector3f, lightingVector2: $Vector3f): void;
-        static _blendFuncSeparate(srcFactor: number, dstFactor: number, srcFactorAlpha: number, dstFactorAlpha: number): void;
-        static _enableCull(): void;
-        static _glBindBuffer(sourceFactor: number, destFactor: number): void;
-        static _enableBlend(): void;
-        static _disableBlend(): void;
-        static _blendEquation(texture: number): void;
-        static _enableDepthTest(): void;
-        static _glUniform1(location: number, value: $IntBuffer): void;
-        static _glUniform1(location: number, value: $FloatBuffer): void;
-        static _disableCull(): void;
-        static _stencilFunc(func: number, ref: number, mask: number): void;
-        static _clearStencil(texture: number): void;
-        static _scissorBox(srcFactor: number, dstFactor: number, srcFactorAlpha: number, dstFactorAlpha: number): void;
-        static _glDeleteBuffers(texture: number): void;
-        static _glUniform4(location: number, value: $FloatBuffer): void;
-        static _glUniform4(location: number, value: $IntBuffer): void;
-        static _deleteTexture(texture: number): void;
-        static _polygonOffset(factor: number, units: number): void;
-        static _clearDepth(depth: number): void;
-        static _readPixels(x: number, y: number, width: number, height: number, format: number, type: number, pixels: $ByteBuffer): void;
-        static _readPixels(x: number, y: number, width: number, height: number, format: number, type: number, pixels: number): void;
-        static _glUniform1i(sourceFactor: number, destFactor: number): void;
-        static _glUniform3(location: number, value: $IntBuffer): void;
-        static _glUniform3(location: number, value: $FloatBuffer): void;
-        static _enableScissorTest(): void;
-        static _polygonMode(sourceFactor: number, destFactor: number): void;
-        static _pixelStore(sourceFactor: number, destFactor: number): void;
-        static _texImage2D(target: number, level: number, internalFormat: number, width: number, height: number, border: number, format: number, type: number, pixels: $IntBuffer | null): void;
-        static _getInteger(pname: number): number;
-        static _glUniform2(location: number, value: $IntBuffer): void;
-        static _glUniform2(location: number, value: $FloatBuffer): void;
-        static _glUniformMatrix3(location: number, transpose: boolean, value: $FloatBuffer): void;
-        static _glBufferData(target: number, data: $ByteBuffer, usage: number): void;
-        static _glBufferData(target: number, size: number, arg2: number): void;
-        static _glUniformMatrix4(location: number, transpose: boolean, value: $FloatBuffer): void;
-        static _stencilMask(texture: number): void;
-        static _drawElements(mode: number, count: number, type: number, indices: number): void;
-        static _glGenBuffers(): number;
-        static _glBindVertexArray(texture: number): void;
-        static _glUniformMatrix2(location: number, transpose: boolean, value: $FloatBuffer): void;
-        static _glGenVertexArrays(): number;
-        static _disableDepthTest(): void;
-        static _glBindFramebuffer(sourceFactor: number, destFactor: number): void;
+        static glGenRenderbuffers(): number;
+        static glGenFramebuffers(): number;
         static _backupGlState(arg0: $GlStateBackup): void;
         static _restoreGlState(arg0: $GlStateBackup): void;
+        static _glBindFramebuffer(sourceFactor: number, destFactor: number): void;
+        static setupLevelDiffuseLighting(lightingVector1: $Vector3f, lightingVector2: $Vector3f, matrix: $Matrix4f): void;
+        static setupGui3DDiffuseLighting(lightingVector1: $Vector3f, lightingVector2: $Vector3f): void;
+        static getCOLOR_MASK$iris_$md$c99f8a$1(): $GlStateManager$ColorMask;
+        static getActiveTexture$iris_$md$c99f8a$3(): number;
+        static getTEXTURES$iris_$md$c99f8a$4(): $GlStateManager$TextureState[];
+        static _getError(): number;
+        static _clear(mask: number, checkError: boolean): void;
+        static upload(level: number, xOffset: number, yOffset: number, width: number, height: number, format: $NativeImage$Format_, pixels: $IntBuffer, output: $Consumer_<$IntBuffer>): void;
+        static _disableScissorTest(): void;
+        static _enablePolygonOffset(): void;
+        static _disableVertexAttribArray(texture: number): void;
+        static _vertexAttribIPointer(tex: number, level: number, format: number, type: number, pixels: number): void;
+        static _disablePolygonOffset(): void;
+        static _enableColorLogicOp(): void;
+        static _disableColorLogicOp(): void;
+        static _getTexLevelParameter(target: number, level: number, parameterName: number): number;
+        static _glDeleteVertexArrays(texture: number): void;
+        static _vertexAttribPointer(index: number, size: number, type: number, normalized: boolean, stride: number, pointer: number): void;
+        static _enableVertexAttribArray(texture: number): void;
+        static _clearColor(red: number, green: number, blue: number, alpha: number): void;
+        static _depthFunc(texture: number): void;
+        static _blendFunc(sourceFactor: number, destFactor: number): void;
+        static _depthMask(flag: boolean): void;
+        static _logicOp(texture: number): void;
+        static _stencilOp(func: number, ref: number, mask: number): void;
+        static _viewport(srcFactor: number, dstFactor: number, srcFactorAlpha: number, dstFactorAlpha: number): void;
+        static _colorMask(red: boolean, green: boolean, blue: boolean, alpha: boolean): void;
+        static _getString(name: number): string;
+        static _texParameter(func: number, ref: number, mask: number): void;
+        static _texParameter(target: number, parameterName: number, parameter: number): void;
+        static _bindTexture(texture: number): void;
+        static _texSubImage2D(target: number, level: number, xOffset: number, yOffset: number, width: number, height: number, format: number, type: number, pixels: number): void;
         static _getTexImage(tex: number, level: number, format: number, type: number, pixels: number): void;
         static _genTexture(): number;
         static _genTextures(textures: number[]): void;
         static _deleteTextures(textures: number[]): void;
-        static _texSubImage2D(target: number, level: number, xOffset: number, yOffset: number, width: number, height: number, format: number, type: number, pixels: number): void;
         static _glDrawPixels(tex: number, level: number, format: number, type: number, pixels: number): void;
-        static _vertexAttribIPointer(tex: number, level: number, format: number, type: number, pixels: number): void;
-        static _vertexAttribPointer(index: number, size: number, type: number, normalized: boolean, stride: number, pointer: number): void;
-        static _disableVertexAttribArray(texture: number): void;
-        static _enableVertexAttribArray(texture: number): void;
-        static _glDeleteVertexArrays(texture: number): void;
-        static _enablePolygonOffset(): void;
-        static setupLevelDiffuseLighting(lightingVector1: $Vector3f, lightingVector2: $Vector3f, matrix: $Matrix4f): void;
-        static _disableScissorTest(): void;
-        static setupGui3DDiffuseLighting(lightingVector1: $Vector3f, lightingVector2: $Vector3f): void;
-        static _disableColorLogicOp(): void;
-        static _enableColorLogicOp(): void;
-        static _disablePolygonOffset(): void;
-        static _getTexLevelParameter(target: number, level: number, parameterName: number): number;
-        static _logicOp(texture: number): void;
-        static _viewport(srcFactor: number, dstFactor: number, srcFactorAlpha: number, dstFactorAlpha: number): void;
-        static _depthMask(flag: boolean): void;
-        static _blendFunc(sourceFactor: number, destFactor: number): void;
-        static _depthFunc(texture: number): void;
-        static _colorMask(red: boolean, green: boolean, blue: boolean, alpha: boolean): void;
-        static _stencilOp(func: number, ref: number, mask: number): void;
-        static _getString(name: number): string;
+        static glActiveTexture(texture: number): void;
+        static _activeTexture(texture: number): void;
+        static _getActiveTexture(): number;
+        static _glDeleteFramebuffers(texture: number): void;
+        static _glFramebufferTexture2D(target: number, attachment: number, texTarget: number, texture: number, level: number): void;
+        static _blendFuncSeparate(srcFactor: number, dstFactor: number, srcFactorAlpha: number, dstFactorAlpha: number): void;
+        static _clearStencil(texture: number): void;
+        static _enableDepthTest(): void;
+        static _glUniformMatrix4(location: number, transpose: boolean, value: $FloatBuffer): void;
+        static _glUniform3(location: number, value: $FloatBuffer): void;
+        static _glUniform3(location: number, value: $IntBuffer): void;
+        static _glBindVertexArray(texture: number): void;
+        static _enableBlend(): void;
+        static _scissorBox(srcFactor: number, dstFactor: number, srcFactorAlpha: number, dstFactorAlpha: number): void;
+        static _glUniformMatrix3(location: number, transpose: boolean, value: $FloatBuffer): void;
+        static _enableScissorTest(): void;
+        static _glBindBuffer(sourceFactor: number, destFactor: number): void;
+        static _polygonMode(sourceFactor: number, destFactor: number): void;
+        static _glUniform1i(sourceFactor: number, destFactor: number): void;
+        static _glUniform4(location: number, value: $IntBuffer): void;
+        static _glUniform4(location: number, value: $FloatBuffer): void;
+        static _readPixels(x: number, y: number, width: number, height: number, format: number, type: number, pixels: number): void;
+        static _readPixels(x: number, y: number, width: number, height: number, format: number, type: number, pixels: $ByteBuffer): void;
+        static _enableCull(): void;
+        static _stencilMask(texture: number): void;
+        static _deleteTexture(texture: number): void;
+        static _drawElements(mode: number, count: number, type: number, indices: number): void;
+        static _texImage2D(target: number, level: number, internalFormat: number, width: number, height: number, border: number, format: number, type: number, pixels: $IntBuffer | null): void;
+        static _disableBlend(): void;
+        static _glUniformMatrix2(location: number, transpose: boolean, value: $FloatBuffer): void;
+        static _glUniform2(location: number, value: $FloatBuffer): void;
+        static _glUniform2(location: number, value: $IntBuffer): void;
+        static _glDeleteBuffers(texture: number): void;
+        static _getInteger(pname: number): number;
+        static _glUniform1(location: number, value: $FloatBuffer): void;
+        static _glUniform1(location: number, value: $IntBuffer): void;
+        static _glGenBuffers(): number;
+        static _blendEquation(texture: number): void;
+        static _disableCull(): void;
+        static _stencilFunc(func: number, ref: number, mask: number): void;
+        static _clearDepth(depth: number): void;
+        static _polygonOffset(factor: number, units: number): void;
+        static _pixelStore(sourceFactor: number, destFactor: number): void;
+        static _glBufferData(target: number, size: number, arg2: number): void;
+        static _glBufferData(target: number, data: $ByteBuffer, usage: number): void;
+        static _glGenVertexArrays(): number;
+        static _disableDepthTest(): void;
         static _glBlitFrameBuffer(srcX0: number, srcY0: number, srcX1: number, srcY1: number, dstX0: number, dstY0: number, dstX1: number, dstY1: number, mask: number, filter: number): void;
+        static _glMapBuffer(target: number, access: number): $ByteBuffer;
+        static _glUnmapBuffer(texture: number): void;
         static _glUseProgram(texture: number): void;
-        static _glDeleteRenderbuffers(texture: number): void;
-        static _glBindAttribLocation(program: number, index: number, name: $CharSequence): void;
-        static _glRenderbufferStorage(srcFactor: number, dstFactor: number, srcFactorAlpha: number, dstFactorAlpha: number): void;
+        static setupGuiFlatDiffuseLighting(lightingVector1: $Vector3f, lightingVector2: $Vector3f): void;
+        static getDEPTH$iris_$md$c99f8a$2(): $GlStateManager$DepthState;
         static _glGetUniformLocation(program: number, name: $CharSequence): number;
-        static _glGetAttribLocation(program: number, name: $CharSequence): number;
-        static _glBindRenderbuffer(sourceFactor: number, destFactor: number): void;
+        static getBLEND$iris_$md$c99f8a$0(): $GlStateManager$BlendState;
         static _glFramebufferRenderbuffer(srcFactor: number, dstFactor: number, srcFactorAlpha: number, dstFactorAlpha: number): void;
-        static getDEPTH$iris_$md$942995$2(): $GlStateManager$DepthState;
-        static _glCopyTexSubImage2D(target: number, level: number, xOffset: number, yOffset: number, x: number, y: number, width: number, height: number): void;
-        static getBLEND$iris_$md$942995$0(): $GlStateManager$BlendState;
+        static _glBindAttribLocation(program: number, index: number, name: $CharSequence): void;
         static getBoundFramebuffer(): number;
-        static getCOLOR_MASK$iris_$md$942995$1(): $GlStateManager$ColorMask;
-        static getTEXTURES$iris_$md$942995$4(): $GlStateManager$TextureState[];
-        static getActiveTexture$iris_$md$942995$3(): number;
+        static _glDeleteRenderbuffers(texture: number): void;
+        static _glBindRenderbuffer(sourceFactor: number, destFactor: number): void;
+        static _glRenderbufferStorage(srcFactor: number, dstFactor: number, srcFactorAlpha: number, dstFactorAlpha: number): void;
+        static _glCopyTexSubImage2D(target: number, level: number, xOffset: number, yOffset: number, x: number, y: number, width: number, height: number): void;
+        static _glGetAttribLocation(program: number, name: $CharSequence): number;
         static TEXTURE_COUNT: number;
         static BLEND: $GlStateManager$BlendState;
         static TEXTURES: $GlStateManager$TextureState[];
         static DEPTH: $GlStateManager$DepthState;
         constructor();
-        static get DEPTH$iris_$md$942995$2(): $GlStateManager$DepthState;
-        static get BLEND$iris_$md$942995$0(): $GlStateManager$BlendState;
+        static get COLOR_MASK$iris_$md$c99f8a$1(): $GlStateManager$ColorMask;
+        static get activeTexture$iris_$md$c99f8a$3(): number;
+        static get TEXTURES$iris_$md$c99f8a$4(): $GlStateManager$TextureState[];
+        static get DEPTH$iris_$md$c99f8a$2(): $GlStateManager$DepthState;
+        static get BLEND$iris_$md$c99f8a$0(): $GlStateManager$BlendState;
         static get boundFramebuffer(): number;
-        static get COLOR_MASK$iris_$md$942995$1(): $GlStateManager$ColorMask;
-        static get TEXTURES$iris_$md$942995$4(): $GlStateManager$TextureState[];
-        static get activeTexture$iris_$md$942995$3(): number;
     }
     export class $NativeImage implements $AutoCloseable, $PipelineNativeImageAccessor, $NativeImageAccessor$1, $IMixinNativeImage, $NativeImageAccessor {
-        getHeight(): number;
-        setPixelRGBA(x: number, y: number, abgrColor: number): void;
-        asByteArray(): number[];
-        untrack(): void;
         format(): $NativeImage$Format;
-        static read(textureStream: $InputStream): $NativeImage;
-        static read(format: $NativeImage$Format_ | null, textureStream: $InputStream): $NativeImage;
-        static read(textureData: $ByteBuffer): $NativeImage;
         static read(bytes: number[]): $NativeImage;
         static read(format: $NativeImage$Format_ | null, textureData: $ByteBuffer): $NativeImage;
+        static read(textureStream: $InputStream): $NativeImage;
+        static read(textureData: $ByteBuffer): $NativeImage;
+        static read(format: $NativeImage$Format_ | null, textureStream: $InputStream): $NativeImage;
         close(): void;
         copyFrom(other: $NativeImage): void;
         writeToFile(path: $Path_): void;
         writeToFile(file: $File_): void;
-        getWidth(): number;
-        upload(level: number, xOffset: number, yOffset: number, unpackSkipPixels: number, unpackSkipRows: number, width: number, height: number, mipmap: boolean, autoClose: boolean): void;
-        upload(level: number, xOffset: number, yOffset: number, unpackSkipPixels: number, unpackSkipRows: number, width: number, height: number, blur: boolean, clamp: boolean, mipmap: boolean, autoClose: boolean): void;
-        upload(level: number, xOffset: number, yOffset: number, mipmap: boolean): void;
-        getPixelsRGBA(): number[];
-        downloadDepthBuffer(unused: number): void;
-        getGreenOrLuminance(x: number, y: number): number;
-        getLuminanceOrAlpha(x: number, y: number): number;
-        downloadTexture(level: number, opaque: boolean): void;
         resizeSubRectTo(x: number, y: number, width: number, height: number, image: $NativeImage): void;
-        applyToAllPixels(_function: $IntUnaryOperator_): void;
-        getRedOrLuminance(x: number, y: number): number;
-        setPixelLuminance(x: number, y: number, luminance: number): void;
         /**
          * @deprecated
          */
         makePixelArray(): number[];
+        getRedOrLuminance(x: number, y: number): number;
+        setPixelLuminance(x: number, y: number, luminance: number): void;
+        applyToAllPixels(_function: $IntUnaryOperator_): void;
         getBlueOrLuminance(x: number, y: number): number;
         copyFromFont(face: $FT_Face, index: number): boolean;
-        static invoke_class_constructor_FancyMenu$fancymenu_$md$942995$0(arg0: $NativeImage$Format_, arg1: number, arg2: number, arg3: boolean, arg4: number): $NativeImage;
-        blendPixel(x: number, y: number, abgrColor: number): void;
+        asByteArray(): number[];
+        untrack(): void;
+        getWidth(): number;
+        getHeight(): number;
+        upload(level: number, xOffset: number, yOffset: number, unpackSkipPixels: number, unpackSkipRows: number, width: number, height: number, mipmap: boolean, autoClose: boolean): void;
+        upload(level: number, xOffset: number, yOffset: number, unpackSkipPixels: number, unpackSkipRows: number, width: number, height: number, blur: boolean, clamp: boolean, mipmap: boolean, autoClose: boolean): void;
+        upload(level: number, xOffset: number, yOffset: number, mipmap: boolean): void;
+        downloadTexture(level: number, opaque: boolean): void;
+        getPixelsRGBA(): number[];
+        static invoke_class_constructor_FancyMenu$fancymenu_$md$c99f8a$0(arg0: $NativeImage$Format_, arg1: number, arg2: number, arg3: boolean, arg4: number): $NativeImage;
+        downloadDepthBuffer(unused: number): void;
+        getGreenOrLuminance(x: number, y: number): number;
+        getLuminanceOrAlpha(x: number, y: number): number;
+        setPixelRGBA(x: number, y: number, abgrColor: number): void;
+        getPixelRGBA(x: number, y: number): number;
         mappedCopy(_function: $IntUnaryOperator_): $NativeImage;
-        flipY(): void;
+        blendPixel(x: number, y: number, abgrColor: number): void;
         drawPixels(): void;
         fillRect(x: number, y: number, width: number, height: number, value: number): void;
-        copyRect(source: $NativeImage, xFrom: number, yFrom: number, xTo: number, yTo: number, width: number, height: number, mirrorX: boolean, mirrorY: boolean): void;
+        flipY(): void;
         copyRect(xFrom: number, yFrom: number, xToDelta: number, yToDelta: number, width: number, height: number, mirrorX: boolean, mirrorY: boolean): void;
-        getPixelRGBA(x: number, y: number): number;
+        copyRect(source: $NativeImage, xFrom: number, yFrom: number, xTo: number, yTo: number, width: number, height: number, mirrorX: boolean, mirrorY: boolean): void;
+        getPixels(): number;
         pixels(): number;
         invokeCheckAllocated(): void;
         get_pixels_FancyMenu(): number;
-        getPixels(): number;
         invoke_writeToChannel_FancyMenu(channel: $WritableByteChannel): boolean;
-        constructor(width: number, height: number, useCalloc: boolean);
         constructor(format: $NativeImage$Format_, width: number, height: number, useCalloc: boolean);
-        get height(): number;
+        constructor(width: number, height: number, useCalloc: boolean);
         get width(): number;
+        get height(): number;
         get pixelsRGBA(): number[];
         get _pixels_FancyMenu(): number;
     }
     export class $ClipboardManager {
-        setClipboard(window: number, arg1: string): void;
         getClipboard(window: number, arg1: $GLFWErrorCallbackI_): string;
+        setClipboard(window: number, arg1: string): void;
         static FORMAT_UNAVAILABLE: number;
         constructor();
     }
     export class $VideoMode {
-        getHeight(): number;
         write(): string;
         static read(videoMode: string | null): ($VideoMode) | undefined;
-        getWidth(): number;
-        getRefreshRate(): number;
-        getGreenBits(): number;
         getBlueBits(): number;
+        getGreenBits(): number;
+        getWidth(): number;
+        getHeight(): number;
+        getRefreshRate(): number;
         getRedBits(): number;
-        constructor(width: number, height: number, redBits: number, greenBits: number, blueBits: number, refreshRate: number);
         constructor(glfwVideoMode: $GLFWVidMode);
         constructor(bufferVideoMode: $GLFWVidMode$Buffer);
-        get height(): number;
-        get width(): number;
-        get refreshRate(): number;
-        get greenBits(): number;
+        constructor(width: number, height: number, redBits: number, greenBits: number, blueBits: number, refreshRate: number);
         get blueBits(): number;
+        get greenBits(): number;
+        get width(): number;
+        get height(): number;
+        get refreshRate(): number;
         get redBits(): number;
     }
     export class $GlConst {
@@ -377,36 +377,36 @@ declare module "@package/com/mojang/blaze3d/platform" {
         constructor();
     }
     export class $GLX {
-        static make<T>(value: T, consumer: $Consumer_<T>): T;
         static make<T>(supplier: $Supplier_<T>): T;
+        static make<T>(value: T, consumer: $Consumer_<T>): T;
+        static _shouldClose(window: $Window): boolean;
         static _getRefreshRate(window: $Window): number;
         static _getCpuInfo(): string;
-        static _shouldClose(window: $Window): boolean;
+        static getOpenGLVersionString(): string;
+        static _setGlfwErrorCallback(errorCallback: $GLFWErrorCallbackI_): void;
+        static _initGlfw(): $LongSupplier;
+        static _init(debugVerbosity: number, synchronous: boolean): void;
         static _renderCrosshair(lineLength: number, renderX: boolean, renderY: boolean, renderZ: boolean): void;
         static _getLWJGLVersion(): string;
-        static _setGlfwErrorCallback(errorCallback: $GLFWErrorCallbackI_): void;
-        static getOpenGLVersionString(): string;
-        static _init(debugVerbosity: number, synchronous: boolean): void;
-        static _initGlfw(): $LongSupplier;
         constructor();
         static get openGLVersionString(): string;
     }
     export class $Monitor {
-        getPreferredVidMode(videoMode: ($VideoMode) | undefined): $VideoMode;
-        getMonitor(): number;
-        getX(): number;
-        getY(): number;
-        getCurrentMode(): $VideoMode;
-        getMode(index: number): $VideoMode;
         getModeCount(): number;
-        getVideoModeIndex(videoMode: $VideoMode): number;
         refreshVideoModes(): void;
+        getVideoModeIndex(videoMode: $VideoMode): number;
+        getY(): number;
+        getMonitor(): number;
+        getMode(index: number): $VideoMode;
+        getX(): number;
+        getCurrentMode(): $VideoMode;
+        getPreferredVidMode(videoMode: ($VideoMode) | undefined): $VideoMode;
         constructor(monitor: number);
+        get modeCount(): number;
+        get y(): number;
         get monitor(): number;
         get x(): number;
-        get y(): number;
         get currentMode(): $VideoMode;
-        get modeCount(): number;
     }
     export class $GlStateManager$ColorMask {
         red: boolean;
@@ -442,13 +442,13 @@ declare module "@package/com/mojang/blaze3d/platform" {
         getValue(): number;
         getType(): $InputConstants$Type;
         getDisplayName(): $Component;
-        static getNAME_MAP$controlling_$md$942995$0(): $Map<any, any>;
+        static getNAME_MAP$controlling_$md$c99f8a$0(): $Map<any, any>;
         getNumericKeyValue(): $OptionalInt;
         displayName: $LazyLoadedValue<$Component>;
         get name(): string;
         get value(): number;
         get type(): $InputConstants$Type;
-        static get NAME_MAP$controlling_$md$942995$0(): $Map<any, any>;
+        static get NAME_MAP$controlling_$md$c99f8a$0(): $Map<any, any>;
         get numericKeyValue(): $OptionalInt;
     }
     export class $NativeImage$InternalGlFormat extends $Enum<$NativeImage$InternalGlFormat> {
@@ -489,12 +489,12 @@ declare module "@package/com/mojang/blaze3d/platform" {
      */
     export type $GlStateManager$SourceFactor_ = "constant_alpha" | "constant_color" | "dst_alpha" | "dst_color" | "one" | "one_minus_constant_alpha" | "one_minus_constant_color" | "one_minus_dst_alpha" | "one_minus_dst_color" | "one_minus_src_alpha" | "one_minus_src_color" | "src_alpha" | "src_alpha_saturate" | "src_color" | "zero";
     export class $Lighting {
-        static setupForEntityInInventory(): void;
-        static setupForEntityInInventory(quaternion: $Quaternionf): void;
+        static setupNetherLevel(): void;
         static setupForFlatItems(): void;
         static setupFor3DItems(): void;
-        static setupNetherLevel(): void;
         static setupLevel(): void;
+        static setupForEntityInInventory(): void;
+        static setupForEntityInInventory(quaternion: $Quaternionf): void;
         static NETHER_DIFFUSE_LIGHT_1: $Vector3f;
         static NETHER_DIFFUSE_LIGHT_0: $Vector3f;
         static DIFFUSE_LIGHT_0: $Vector3f;
@@ -515,28 +515,28 @@ declare module "@package/com/mojang/blaze3d/platform" {
      */
     export type $GlStateManager$Viewport_ = "instance";
     export class $ScreenManager {
-        getMonitor(monitorID: number): $Monitor;
         shutdown(): void;
         static clamp(value: number, min: number, max: number): number;
+        getMonitor(monitorID: number): $Monitor;
         findBestMonitor(window: $Window): $Monitor;
         monitors: $Long2ObjectMap<$Monitor>;
         constructor(monitorCreator: $MonitorCreator_);
     }
     export class $GlDebug {
-        static enableDebugCallback(debugVerbosity: number, synchronous: boolean): void;
         static typeToString(token: number): string;
-        static isDebugEnabled(): boolean;
         static getLastOpenGlDebugMessages(): $List<string>;
-        static sourceToString(token: number): string;
+        static isDebugEnabled(): boolean;
         static severityToString(token: number): string;
+        static enableDebugCallback(debugVerbosity: number, synchronous: boolean): void;
+        static sourceToString(token: number): string;
         constructor();
-        static get debugEnabled(): boolean;
         static get lastOpenGlDebugMessages(): $List<string>;
+        static get debugEnabled(): boolean;
     }
     export class $IconSet extends $Enum<$IconSet> {
-        getMacIcon(resources: $PackResources): $IoSupplier<$InputStream>;
         static values(): $IconSet[];
         static valueOf(arg0: string): $IconSet;
+        getMacIcon(resources: $PackResources): $IoSupplier<$InputStream>;
         getStandardIcons(resources: $PackResources): $List<$IoSupplier<$InputStream>>;
         static SNAPSHOT: $IconSet;
         static RELEASE: $IconSet;
@@ -551,8 +551,8 @@ declare module "@package/com/mojang/blaze3d/platform" {
         static getKey(name: string): $InputConstants$Key;
         static getKey(keyCode: number, scanCode: number): $InputConstants$Key;
         static updateRawMouseInput(window: number, arg1: boolean): void;
-        static isRawMouseInputSupported(): boolean;
         static setupKeyboardCallbacks(window: number, arg1: $GLFWKeyCallbackI_, keyCallback: $GLFWCharModsCallbackI_): void;
+        static isRawMouseInputSupported(): boolean;
         static setupMouseCallbacks(window: number, arg1: $GLFWCursorPosCallbackI_, cursorPositionCallback: $GLFWMouseButtonCallbackI_, mouseButtonCallback: $GLFWScrollCallbackI_, scrollCallback: $GLFWDropCallbackI_): void;
         static isKeyDown(window: number, arg1: number): boolean;
         static grabOrReleaseMouse(window: number, arg1: number, cursorValue: number, xPos: number): void;
@@ -688,29 +688,29 @@ declare module "@package/com/mojang/blaze3d/platform" {
     export class $NativeImage$Format extends $Enum<$NativeImage$Format> {
         static values(): $NativeImage$Format[];
         static valueOf(arg0: string): $NativeImage$Format;
+        luminanceOffset(): number;
+        supportedByStb(): boolean;
+        alphaOffset(): number;
+        greenOffset(): number;
+        hasLuminance(): boolean;
+        hasLuminanceOrRed(): boolean;
+        hasLuminanceOrBlue(): boolean;
         components(): number;
-        luminanceOrGreenOffset(): number;
-        setPackPixelStoreState(): void;
         luminanceOrRedOffset(): number;
-        hasLuminanceOrGreen(): boolean;
+        luminanceOrAlphaOffset(): number;
         luminanceOrBlueOffset(): number;
         hasLuminanceOrAlpha(): boolean;
-        luminanceOrAlphaOffset(): number;
-        hasLuminance(): boolean;
-        luminanceOffset(): number;
-        hasLuminanceOrRed(): boolean;
-        supportedByStb(): boolean;
-        greenOffset(): number;
-        alphaOffset(): number;
-        hasLuminanceOrBlue(): boolean;
-        hasBlue(): boolean;
+        hasLuminanceOrGreen(): boolean;
+        luminanceOrGreenOffset(): number;
+        setPackPixelStoreState(): void;
+        setUnpackPixelStoreState(): void;
         hasRed(): boolean;
-        blueOffset(): number;
         redOffset(): number;
+        blueOffset(): number;
         hasGreen(): boolean;
+        hasBlue(): boolean;
         glFormat(): number;
         hasAlpha(): boolean;
-        setUnpackPixelStoreState(): void;
         static LUMINANCE_ALPHA: $NativeImage$Format;
         static RGBA: $NativeImage$Format;
         static LUMINANCE: $NativeImage$Format;
@@ -723,31 +723,31 @@ declare module "@package/com/mojang/blaze3d/platform" {
     export class $GlStateManager$StencilFunc {
     }
     export class $GlUtil {
-        static getRenderer(): string;
         static freeMemory(buffer: $Buffer): void;
         static allocateMemory(size: number): $ByteBuffer;
-        static getVendor(): string;
         static getOpenGLVersion(): string;
+        static getRenderer(): string;
+        static getVendor(): string;
         static getCpuInfo(): string;
         constructor();
+        static get openGLVersion(): string;
         static get renderer(): string;
         static get vendor(): string;
-        static get openGLVersion(): string;
         static get cpuInfo(): string;
     }
     export class $GlStateManager$StencilState {
     }
     export class $TextureUtil {
+        static releaseTextureId(textureId: number): void;
+        static generateTextureId(): number;
+        static prepareImage(textureId: number, width: number, height: number): void;
+        static prepareImage(pixelFormat: $NativeImage$InternalGlFormat_, textureId: number, mipmapLevel: number, width: number, height: number): void;
+        static prepareImage(textureId: number, mipmapLevel: number, width: number, height: number): void;
+        static prepareImage(pixelFormat: $NativeImage$InternalGlFormat_, textureId: number, width: number, height: number): void;
         static writeAsPNG(outputDir: $Path_, textureName: string, textureId: number, amount: number, width: number, height: number): void;
         static writeAsPNG(outputDir: $Path_, textureName: string, textureId: number, amount: number, width: number, height: number, _function: $IntUnaryOperator_ | null): void;
         static getDebugTexturePath(basePath: $Path_): $Path;
         static getDebugTexturePath(): $Path;
-        static releaseTextureId(textureId: number): void;
-        static generateTextureId(): number;
-        static prepareImage(pixelFormat: $NativeImage$InternalGlFormat_, textureId: number, width: number, height: number): void;
-        static prepareImage(textureId: number, mipmapLevel: number, width: number, height: number): void;
-        static prepareImage(textureId: number, width: number, height: number): void;
-        static prepareImage(pixelFormat: $NativeImage$InternalGlFormat_, textureId: number, mipmapLevel: number, width: number, height: number): void;
         static readResource(inputStream: $InputStream): $ByteBuffer;
         static MIN_MIPMAP_LEVEL: number;
         constructor();
@@ -758,10 +758,10 @@ declare module "@package/com/mojang/blaze3d/platform" {
     export class $GlStateManager$CullState {
     }
     export class $GlStateManager$BooleanState implements $BooleanStateExtended, $BooleanStateAccessor {
-        setUnknownState(): void;
         enable(): void;
-        setEnabled(enabled: boolean): void;
         disable(): void;
+        setUnknownState(): void;
+        setEnabled(enabled: boolean): void;
         isEnabled(): boolean;
         enabled: boolean;
         constructor(state: number);
@@ -769,25 +769,41 @@ declare module "@package/com/mojang/blaze3d/platform" {
     export class $GlDebug$LogEntry {
     }
     export class $Window implements $AutoCloseable, $NativeWindowHandle, $FullscreenManager, $WindowKJS, $WindowAccessor {
-        defaultErrorCallback(error: number, description: number): void;
-        changeFullscreenVideoMode(): void;
+        static getPlatform(): string;
+        modify$bca000$veil$modifyMajorVersion(arg0: number, arg1: $LocalIntRef): number;
+        modify$bca000$veil$modifyMinorVersion(arg0: number, arg1: $LocalIntRef): number;
+        close(): void;
+        static checkGlfwError(errorConsumer: $BiConsumer_<number, string>): void;
+        getY(): number;
+        getScreenHeight(): number;
+        getScreenWidth(): number;
+        updateRawMouseInput(vsyncEnabled: boolean): void;
+        setDefaultErrorCallback(): void;
+        modify$bdc000$veil$captureMajorVersion(arg0: number, arg1: $LocalIntRef): number;
+        modify$bdc000$veil$captureMinorVersion(arg0: number, arg1: $LocalIntRef): number;
+        getWidth(): number;
+        getHeight(): number;
         /**
          * Gets a pointer to the native window object that is passed to GLFW.
          */
         getWindow(): number;
-        getHeight(): number;
-        static getPlatform(): string;
-        getPreferredFullscreenVideoMode(): ($VideoMode) | undefined;
-        modify$bca000$veil$modifyMinorVersion(arg0: number, arg1: $LocalIntRef): number;
-        modify$bdc000$veil$captureMajorVersion(arg0: number, arg1: $LocalIntRef): number;
-        modify$bdc000$veil$captureMinorVersion(arg0: number, arg1: $LocalIntRef): number;
-        modify$bca000$veil$modifyMajorVersion(arg0: number, arg1: $LocalIntRef): number;
         getX(): number;
-        close(): void;
-        getWidth(): number;
-        setPreferredFullscreenVideoMode(preferredFullscreenVideoMode: ($VideoMode) | undefined): void;
-        setFullscreenMode(fullscreenMode: $FullscreenMode_): void;
-        getY(): number;
+        getPreferredFullscreenVideoMode(): ($VideoMode) | undefined;
+        getGuiScaledHeight(): number;
+        getGuiScaledWidth(): number;
+        getGuiScale(): number;
+        setWindowed(windowedWidth: number, windowedHeight: number): void;
+        setErrorSection(errorSection: string): void;
+        toggleFullScreen(): void;
+        isFullscreen(): boolean;
+        updateVsync(vsyncEnabled: boolean): void;
+        setFramerateLimit(limit: number): void;
+        shouldClose(): boolean;
+        setGuiScale(scaleFactor: number): void;
+        updateDisplay(): void;
+        getFramerateLimit(): number;
+        calculateScale(guiScale: number, forceUnicode: boolean): number;
+        wrapOperation$dah000$sodium$setAdditionalWindowHints(arg0: number, arg1: number, arg2: $CharSequence, arg3: number, arg4: number, arg5: $Operation_<any>): number;
         findBestMonitor(): $Monitor;
         getRefreshRate(): number;
         getFullscreenMode(): $FullscreenMode;
@@ -795,30 +811,14 @@ declare module "@package/com/mojang/blaze3d/platform" {
          * Gets a pointer to the native window object that is passed to GLFW.
          */
         getWin32Handle(): number;
-        setDefaultErrorCallback(): void;
-        updateRawMouseInput(vsyncEnabled: boolean): void;
-        getGuiScale(): number;
-        setFramerateLimit(limit: number): void;
-        setWindowed(windowedWidth: number, windowedHeight: number): void;
-        toggleFullScreen(): void;
-        updateVsync(vsyncEnabled: boolean): void;
-        isFullscreen(): boolean;
-        setErrorSection(errorSection: string): void;
-        calculateScale(guiScale: number, forceUnicode: boolean): number;
-        shouldClose(): boolean;
-        updateDisplay(): void;
-        getFramerateLimit(): number;
-        setGuiScale(scaleFactor: number): void;
-        getScreenWidth(): number;
-        getScreenHeight(): number;
-        static checkGlfwError(errorConsumer: $BiConsumer_<number, string>): void;
-        getGuiScaledHeight(): number;
-        getGuiScaledWidth(): number;
-        wrapOperation$dah000$sodium$setAdditionalWindowHints(arg0: number, arg1: number, arg2: $CharSequence, arg3: number, arg4: number, arg5: $Operation_<any>): number;
+        setFullscreenMode(fullscreenMode: $FullscreenMode_): void;
+        setPreferredFullscreenVideoMode(preferredFullscreenVideoMode: ($VideoMode) | undefined): void;
         setTitle(errorSection: string): void;
         setIcon(packResources: $PackResources, iconSet: $IconSet_): void;
-        setWidth(limit: number): void;
         setHeight(limit: number): void;
+        setWidth(limit: number): void;
+        changeFullscreenVideoMode(): void;
+        defaultErrorCallback(error: number, description: number): void;
         kjs$loadIcons(original: $List_<$IoSupplier_<$InputStream>>): $List<$IoSupplier<$InputStream>>;
         framebufferWidth: number;
         x: number;
@@ -829,16 +829,16 @@ declare module "@package/com/mojang/blaze3d/platform" {
         static BASE_WIDTH: number;
         height: number;
         constructor(eventHandler: $WindowEventHandler, screenManager: $ScreenManager, displayData: $DisplayData, preferredFullscreenVideoMode: string | null, title: string);
-        get window(): number;
         static get platform(): string;
-        get refreshRate(): number;
-        get win32Handle(): number;
-        get fullscreen(): boolean;
-        set errorSection(value: string);
-        get screenWidth(): number;
         get screenHeight(): number;
+        get screenWidth(): number;
+        get window(): number;
         get guiScaledHeight(): number;
         get guiScaledWidth(): number;
+        set errorSection(value: string);
+        get fullscreen(): boolean;
+        get refreshRate(): number;
+        get win32Handle(): number;
         set title(value: string);
     }
     export class $InputConstants$Type extends $Enum<$InputConstants$Type> {
@@ -854,9 +854,9 @@ declare module "@package/com/mojang/blaze3d/platform" {
      */
     export type $InputConstants$Type_ = "keysym" | "scancode" | "mouse";
     export class $MacosUtil {
-        static exitNativeFullscreen(windowId: number): void;
         static loadIcon(iconStreamSupplier: $IoSupplier_<$InputStream>): void;
         static clearResizableBit(windowId: number): void;
+        static exitNativeFullscreen(windowId: number): void;
         constructor();
     }
     export class $WindowEventHandler {
@@ -893,8 +893,8 @@ declare module "@package/com/mojang/blaze3d/platform" {
      */
     export type $GlStateManager$LogicOp_ = "and" | "and_inverted" | "and_reverse" | "clear" | "copy" | "copy_inverted" | "equiv" | "invert" | "nand" | "noop" | "nor" | "or" | "or_inverted" | "or_reverse" | "set" | "xor";
     export class $DebugMemoryUntracker {
-        static untrack(pointer: $Pointer_): void;
         static untrack(memAddr: number): void;
+        static untrack(pointer: $Pointer_): void;
         constructor();
     }
     export class $DisplayData {

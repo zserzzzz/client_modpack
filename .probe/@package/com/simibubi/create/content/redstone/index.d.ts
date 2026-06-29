@@ -33,9 +33,9 @@ declare module "@package/com/simibubi/create/content/redstone" {
         transform(arg0: $BlockState_, arg1: $StructureTransform): $BlockState;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
         static getTargetDirection(arg0: $BlockState_): $Direction;
+        onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         static TARGET: $EnumProperty<$AttachFace>;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];

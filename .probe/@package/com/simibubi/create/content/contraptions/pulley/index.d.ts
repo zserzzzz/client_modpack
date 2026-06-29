@@ -49,18 +49,18 @@ declare module "@package/com/simibubi/create/content/contraptions/pulley" {
         constructor(arg0: $VisualizationContext, arg1: T, arg2: number);
     }
     export class $PulleyContraption extends $TranslatingContraption implements $CanLoadBigCannon, $HasFragileContraption {
-        createbigcannons$setBrokenDisassembly(arg0: boolean): void;
-        createbigcannons$isBrokenDisassembly(): boolean;
-        createbigcannons$getOriginalForcedDirection(arg0: $Level_): $Direction;
-        createbigcannons$getAssemblyMovementDirection(arg0: $Level_): $Direction;
-        getInitialOffset(): number;
-        createbigcannons$getEncounteredBlocks(): $Map<any, any>;
-        createbigcannons$fragileDisassemble(): void;
-        createbigcannons$shouldCheckFragility(): boolean;
         createbigcannons$blockBreaksDisassembly(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_): boolean;
         createbigcannons$getFragileBlockPositions(): $Set<any>;
+        createbigcannons$isBrokenDisassembly(): boolean;
+        createbigcannons$setBrokenDisassembly(arg0: boolean): void;
         createbigcannons$toLocalPos(arg0: $BlockPos_): $BlockPos;
+        createbigcannons$getAssemblyMovementDirection(arg0: $Level_): $Direction;
+        createbigcannons$getOriginalForcedDirection(arg0: $Level_): $Direction;
+        createbigcannons$getEncounteredBlocks(): $Map<any, any>;
+        createbigcannons$fragileDisassemble(): void;
         createbigcannons$getCannonLoadingColliders(): $Set<any>;
+        getInitialOffset(): number;
+        createbigcannons$shouldCheckFragility(): boolean;
         hasUniversalCreativeCrate: boolean;
         isLegacy: $Object2BooleanMap<$BlockPos>;
         anchor: $BlockPos;
@@ -86,9 +86,9 @@ declare module "@package/com/simibubi/create/content/contraptions/pulley" {
         constructor(arg0: $BlockEntityRendererProvider$Context, arg1: $PartialModel, arg2: $PartialModel);
     }
     export class $PulleyBlock$RopeBlockBase extends $Block implements $SimpleWaterloggedBlock {
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -150,15 +150,15 @@ declare module "@package/com/simibubi/create/content/contraptions/pulley" {
         constructor(arg0: $BlockBehaviour$Properties);
     }
     export class $PulleyBlock extends $HorizontalAxisKineticBlock implements $IBE<$PulleyBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$PulleyBlockEntity>;
         getBlockEntityClass(): $Class<$PulleyBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$PulleyBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$PulleyBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$PulleyBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($PulleyBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$PulleyBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $PulleyBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$PulleyBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($PulleyBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$PulleyBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -189,8 +189,8 @@ declare module "@package/com/simibubi/create/content/contraptions/pulley" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$PulleyBlockEntity>;
         get blockEntityClass(): $Class<$PulleyBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$PulleyBlockEntity>;
     }
     export class $PulleyRenderer extends $AbstractPulleyRenderer<$PulleyBlockEntity> {
         static isPulleyRunning(arg0: $PulleyBlockEntity): boolean;
@@ -200,16 +200,16 @@ declare module "@package/com/simibubi/create/content/contraptions/pulley" {
         constructor(arg0: $BlockEntityRendererProvider$Context);
     }
     export class $PulleyBlockEntity extends $LinearActuatorBlockEntity implements $ThresholdSwitchObservable {
-        getMinValue(): number;
-        getMaxValue(): number;
         format(arg0: number): $MutableComponent;
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
-        getCurrentValue(): number;
+        getMinValue(): number;
+        getMaxValue(): number;
         getAttachedContraption(): $AbstractContraptionEntity;
         startMirroringOther(arg0: $BlockPos_): void;
         notifyMirrorsOfDisassembly(): void;
-        animateOffset(arg0: number): void;
+        getCurrentValue(): number;
         getMirrorParent(): $BlockPos;
+        animateOffset(arg0: number): void;
         offset: number;
         level: $Level;
         sharedMirrorContraption: $WeakReference<$AbstractContraptionEntity>;
@@ -229,8 +229,8 @@ declare module "@package/com/simibubi/create/content/contraptions/pulley" {
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
         get minValue(): number;
         get maxValue(): number;
-        get currentValue(): number;
         get attachedContraption(): $AbstractContraptionEntity;
+        get currentValue(): number;
         get mirrorParent(): $BlockPos;
     }
     export class $AbstractPulleyVisual$LightCache {

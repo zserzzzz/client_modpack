@@ -16,11 +16,11 @@ declare module "@package/com/blamejared/controlling/api/entries" {
         mouseClicked(arg0: number, arg1: number, arg2: number): boolean;
         mouseReleased(arg0: number, arg1: number, arg2: number): boolean;
         getKeyDesc(): $Component;
-        getBtnResetKeyBinding(): $Button;
         getBtnChangeKeyBinding(): $Button;
+        getBtnResetKeyBinding(): $Button;
         get key(): $KeyMapping;
         get keyDesc(): $Component;
-        get btnResetKeyBinding(): $Button;
         get btnChangeKeyBinding(): $Button;
+        get btnResetKeyBinding(): $Button;
     }
 }

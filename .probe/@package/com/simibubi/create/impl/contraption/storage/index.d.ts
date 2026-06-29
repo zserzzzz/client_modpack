@@ -18,10 +18,10 @@ declare module "@package/com/simibubi/create/impl/contraption/storage" {
         constructor();
     }
     export class $MountedItemStorageFallbackProvider extends $Enum<$MountedItemStorageFallbackProvider> implements $SimpleRegistry$Provider<$Block, $MountedItemStorageType<never>> {
-        onRegister(arg0: $Runnable_): void;
         get(arg0: $Block_): $MountedItemStorageType<never>;
         static values(): $MountedItemStorageFallbackProvider[];
         static valueOf(arg0: string): $MountedItemStorageFallbackProvider;
+        onRegister(arg0: $Runnable_): void;
         static INSTANCE: $MountedItemStorageFallbackProvider;
     }
     /**

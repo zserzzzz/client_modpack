@@ -37,9 +37,9 @@ declare module "@package/net/neoforged/neoforge/network/payload" {
     export type $CommonVersionPayload_ = { versions?: $List_<number>,  } | [versions?: $List_<number>, ];
     export class $ClientboundCustomSetTimePayload extends $Record implements $CustomPacketPayload {
         type(): $CustomPacketPayload$Type<$ClientboundCustomSetTimePayload>;
-        gameTime(): number;
-        dayTimeFraction(): number;
         dayTimePerTick(): number;
+        dayTimeFraction(): number;
+        gameTime(): number;
         dayTime(): number;
         gameRule(): boolean;
         toVanillaClientbound(): $ClientboundCustomPayloadPacket;
@@ -51,7 +51,7 @@ declare module "@package/net/neoforged/neoforge/network/payload" {
     /**
      * Values that may be interpreted as {@link $ClientboundCustomSetTimePayload}.
      */
-    export type $ClientboundCustomSetTimePayload_ = { dayTime?: number, dayTimePerTick?: number, dayTimeFraction?: number, gameTime?: number, gameRule?: boolean,  } | [dayTime?: number, dayTimePerTick?: number, dayTimeFraction?: number, gameTime?: number, gameRule?: boolean, ];
+    export type $ClientboundCustomSetTimePayload_ = { gameTime?: number, gameRule?: boolean, dayTime?: number, dayTimePerTick?: number, dayTimeFraction?: number,  } | [gameTime?: number, gameRule?: boolean, dayTime?: number, dayTimePerTick?: number, dayTimeFraction?: number, ];
     export class $FrozenRegistryPayload extends $Record implements $CustomPacketPayload {
         type(): $CustomPacketPayload$Type<$FrozenRegistryPayload>;
         snapshot(): $RegistrySnapshot;
@@ -65,7 +65,7 @@ declare module "@package/net/neoforged/neoforge/network/payload" {
     /**
      * Values that may be interpreted as {@link $FrozenRegistryPayload}.
      */
-    export type $FrozenRegistryPayload_ = { registryName?: $ResourceLocation_, snapshot?: $RegistrySnapshot,  } | [registryName?: $ResourceLocation_, snapshot?: $RegistrySnapshot, ];
+    export type $FrozenRegistryPayload_ = { snapshot?: $RegistrySnapshot, registryName?: $ResourceLocation_,  } | [snapshot?: $RegistrySnapshot, registryName?: $ResourceLocation_, ];
     export class $AuxiliaryLightDataPayload extends $Record implements $CustomPacketPayload {
         type(): $CustomPacketPayload$Type<$AuxiliaryLightDataPayload>;
         entries(): $Map<$BlockPos, number>;
@@ -79,7 +79,7 @@ declare module "@package/net/neoforged/neoforge/network/payload" {
     /**
      * Values that may be interpreted as {@link $AuxiliaryLightDataPayload}.
      */
-    export type $AuxiliaryLightDataPayload_ = { entries?: $Map_<$BlockPos_, number>, pos?: $ChunkPos,  } | [entries?: $Map_<$BlockPos_, number>, pos?: $ChunkPos, ];
+    export type $AuxiliaryLightDataPayload_ = { pos?: $ChunkPos, entries?: $Map_<$BlockPos_, number>,  } | [pos?: $ChunkPos, entries?: $Map_<$BlockPos_, number>, ];
     export class $ModdedNetworkPayload extends $Record implements $CustomPacketPayload {
         type(): $CustomPacketPayload$Type<$ModdedNetworkPayload>;
         setup(): $NetworkPayloadSetup;
@@ -130,7 +130,7 @@ declare module "@package/net/neoforged/neoforge/network/payload" {
     /**
      * Values that may be interpreted as {@link $RegistryDataMapSyncPayload}.
      */
-    export type $RegistryDataMapSyncPayload_<T> = { registryKey?: $ResourceKey_<$Registry<any>>, dataMaps?: $Map_<$ResourceLocation_, $Map_<$ResourceKey_<any>, never>>,  } | [registryKey?: $ResourceKey_<$Registry<any>>, dataMaps?: $Map_<$ResourceLocation_, $Map_<$ResourceKey_<any>, never>>, ];
+    export type $RegistryDataMapSyncPayload_<T> = { dataMaps?: $Map_<$ResourceLocation_, $Map_<$ResourceKey_<any>, never>>, registryKey?: $ResourceKey_<$Registry<any>>,  } | [dataMaps?: $Map_<$ResourceLocation_, $Map_<$ResourceKey_<any>, never>>, registryKey?: $ResourceKey_<$Registry<any>>, ];
     export class $KnownRegistryDataMapsReplyPayload extends $Record implements $CustomPacketPayload {
         type(): $CustomPacketPayload$Type<$KnownRegistryDataMapsReplyPayload>;
         dataMaps(): $Map<$ResourceKey<$Registry<never>>, $Collection<$ResourceLocation>>;
@@ -164,13 +164,13 @@ declare module "@package/net/neoforged/neoforge/network/payload" {
     /**
      * Values that may be interpreted as {@link $ModdedNetworkQueryComponent}.
      */
-    export type $ModdedNetworkQueryComponent_ = { version?: string, optional?: boolean, flow?: ($PacketFlow_) | undefined, id?: $ResourceLocation_,  } | [version?: string, optional?: boolean, flow?: ($PacketFlow_) | undefined, id?: $ResourceLocation_, ];
+    export type $ModdedNetworkQueryComponent_ = { id?: $ResourceLocation_, version?: string, optional?: boolean, flow?: ($PacketFlow_) | undefined,  } | [id?: $ResourceLocation_, version?: string, optional?: boolean, flow?: ($PacketFlow_) | undefined, ];
     export class $AdvancedOpenScreenPayload extends $Record implements $CustomPacketPayload {
         name(): $Component;
         type(): $CustomPacketPayload$Type<$AdvancedOpenScreenPayload>;
-        additionalData(): number[];
-        windowId(): number;
         menuType(): $MenuType<never>;
+        windowId(): number;
+        additionalData(): number[];
         toVanillaClientbound(): $ClientboundCustomPayloadPacket;
         toVanillaServerbound(): $ServerboundCustomPayloadPacket;
         static TYPE: $CustomPacketPayload$Type<$AdvancedOpenScreenPayload>;
@@ -180,7 +180,7 @@ declare module "@package/net/neoforged/neoforge/network/payload" {
     /**
      * Values that may be interpreted as {@link $AdvancedOpenScreenPayload}.
      */
-    export type $AdvancedOpenScreenPayload_ = { menuType?: $MenuType_<never>, windowId?: number, name?: $Component_, additionalData?: number[],  } | [menuType?: $MenuType_<never>, windowId?: number, name?: $Component_, additionalData?: number[], ];
+    export type $AdvancedOpenScreenPayload_ = { windowId?: number, name?: $Component_, additionalData?: number[], menuType?: $MenuType_<never>,  } | [windowId?: number, name?: $Component_, additionalData?: number[], menuType?: $MenuType_<never>, ];
     export class $SyncAttachmentsPayload$LevelTarget extends $Record implements $SyncAttachmentsPayload$Target {
         constructor();
     }
@@ -299,7 +299,7 @@ declare module "@package/net/neoforged/neoforge/network/payload" {
     /**
      * Values that may be interpreted as {@link $AdvancedAddEntityPayload}.
      */
-    export type $AdvancedAddEntityPayload_ = { entityId?: number, customPayload?: number[],  } | [entityId?: number, customPayload?: number[], ];
+    export type $AdvancedAddEntityPayload_ = { customPayload?: number[], entityId?: number,  } | [customPayload?: number[], entityId?: number, ];
     export class $SyncAttachmentsPayload extends $Record implements $CustomPacketPayload {
         type(): $CustomPacketPayload$Type<$CustomPacketPayload>;
         target(): $SyncAttachmentsPayload$Target;
@@ -314,7 +314,7 @@ declare module "@package/net/neoforged/neoforge/network/payload" {
     /**
      * Values that may be interpreted as {@link $SyncAttachmentsPayload}.
      */
-    export type $SyncAttachmentsPayload_ = { target?: $SyncAttachmentsPayload$Target, types?: $List_<$AttachmentType_<never>>, syncPayload?: number[],  } | [target?: $SyncAttachmentsPayload$Target, types?: $List_<$AttachmentType_<never>>, syncPayload?: number[], ];
+    export type $SyncAttachmentsPayload_ = { types?: $List_<$AttachmentType_<never>>, syncPayload?: number[], target?: $SyncAttachmentsPayload$Target,  } | [types?: $List_<$AttachmentType_<never>>, syncPayload?: number[], target?: $SyncAttachmentsPayload$Target, ];
     export class $KnownRegistryDataMapsPayload extends $Record implements $CustomPacketPayload {
         type(): $CustomPacketPayload$Type<$KnownRegistryDataMapsPayload>;
         dataMaps(): $Map<$ResourceKey<$Registry<never>>, $List<$KnownRegistryDataMapsPayload$KnownDataMap>>;
@@ -374,7 +374,7 @@ declare module "@package/net/neoforged/neoforge/network/payload" {
     /**
      * Values that may be interpreted as {@link $CommonRegisterPayload}.
      */
-    export type $CommonRegisterPayload_ = { version?: number, channels?: $Set_<$ResourceLocation_>, protocol?: $ConnectionProtocol_,  } | [version?: number, channels?: $Set_<$ResourceLocation_>, protocol?: $ConnectionProtocol_, ];
+    export type $CommonRegisterPayload_ = { protocol?: $ConnectionProtocol_, version?: number, channels?: $Set_<$ResourceLocation_>,  } | [protocol?: $ConnectionProtocol_, version?: number, channels?: $Set_<$ResourceLocation_>, ];
     /**
      * This payload is sent to the client when the server has finished sending all the frozen registries.
      */
@@ -395,7 +395,7 @@ declare module "@package/net/neoforged/neoforge/network/payload" {
     /**
      * Values that may be interpreted as {@link $KnownRegistryDataMapsPayload$KnownDataMap}.
      */
-    export type $KnownRegistryDataMapsPayload$KnownDataMap_ = { id?: $ResourceLocation_, mandatory?: boolean,  } | [id?: $ResourceLocation_, mandatory?: boolean, ];
+    export type $KnownRegistryDataMapsPayload$KnownDataMap_ = { mandatory?: boolean, id?: $ResourceLocation_,  } | [mandatory?: boolean, id?: $ResourceLocation_, ];
     export class $ModdedNetworkQueryPayload extends $Record implements $CustomPacketPayload {
         type(): $CustomPacketPayload$Type<$ModdedNetworkQueryPayload>;
         queries(): $Map<$ConnectionProtocol, $Set<$ModdedNetworkQueryComponent>>;
@@ -415,8 +415,8 @@ declare module "@package/net/neoforged/neoforge/network/payload" {
         type(): $CustomPacketPayload$Type<$AdvancedContainerSetDataPayload>;
         value(): number;
         containerId(): number;
-        dataId(): number;
         toVanillaPacket(): $ClientboundContainerSetDataPacket;
+        dataId(): number;
         toVanillaClientbound(): $ClientboundCustomPayloadPacket;
         toVanillaServerbound(): $ServerboundCustomPayloadPacket;
         static TYPE: $CustomPacketPayload$Type<$AdvancedContainerSetDataPayload>;
@@ -426,7 +426,7 @@ declare module "@package/net/neoforged/neoforge/network/payload" {
     /**
      * Values that may be interpreted as {@link $AdvancedContainerSetDataPayload}.
      */
-    export type $AdvancedContainerSetDataPayload_ = { containerId?: number, dataId?: number, value?: number,  } | [containerId?: number, dataId?: number, value?: number, ];
+    export type $AdvancedContainerSetDataPayload_ = { value?: number, containerId?: number, dataId?: number,  } | [value?: number, containerId?: number, dataId?: number, ];
     export class $SplitPacketPayload extends $Record implements $CustomPacketPayload {
         payload(): number[];
         type(): $CustomPacketPayload$Type<$SplitPacketPayload>;

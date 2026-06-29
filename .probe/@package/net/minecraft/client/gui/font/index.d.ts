@@ -96,7 +96,7 @@ declare module "@package/net/minecraft/client/gui/font" {
     /**
      * Values that may be interpreted as {@link $FontManager$UnresolvedBuilderBundle}.
      */
-    export type $FontManager$UnresolvedBuilderBundle_ = { builders?: $List_<$FontManager$BuilderResult_>, dependencies?: $Set_<$ResourceLocation_>, fontId?: $ResourceLocation_,  } | [builders?: $List_<$FontManager$BuilderResult_>, dependencies?: $Set_<$ResourceLocation_>, fontId?: $ResourceLocation_, ];
+    export type $FontManager$UnresolvedBuilderBundle_ = { fontId?: $ResourceLocation_, builders?: $List_<$FontManager$BuilderResult_>, dependencies?: $Set_<$ResourceLocation_>,  } | [fontId?: $ResourceLocation_, builders?: $List_<$FontManager$BuilderResult_>, dependencies?: $Set_<$ResourceLocation_>, ];
     export class $FontManager$FontDefinitionFile extends $Record {
     }
     /**
@@ -120,8 +120,8 @@ declare module "@package/net/minecraft/client/gui/font" {
         close(): void;
         reload(preparationBarrier: $PreparableReloadListener$PreparationBarrier_, resourceManager: $ResourceManager, preparationsProfiler: $ProfilerFiller, reloadProfiler: $ProfilerFiller, backgroundExecutor: $Executor_, gameExecutor: $Executor_): $CompletableFuture<void>;
         createFontFilterFishy(): $Font;
-        updateOptions(options: $Options): void;
         getFabricId(): $ResourceLocation;
+        updateOptions(options: $Options): void;
         createFont(): $Font;
         getName(): string;
         getFabricDependencies(): $Collection<$ResourceLocation>;
@@ -138,56 +138,56 @@ declare module "@package/net/minecraft/client/gui/font" {
     /**
      * Values that may be interpreted as {@link $FontManager$Preparation}.
      */
-    export type $FontManager$Preparation_ = { fontSets?: $Map_<$ResourceLocation_, $List_<$GlyphProvider$Conditional_>>, allProviders?: $List_<$GlyphProvider_>,  } | [fontSets?: $Map_<$ResourceLocation_, $List_<$GlyphProvider$Conditional_>>, allProviders?: $List_<$GlyphProvider_>, ];
+    export type $FontManager$Preparation_ = { allProviders?: $List_<$GlyphProvider_>, fontSets?: $Map_<$ResourceLocation_, $List_<$GlyphProvider$Conditional_>>,  } | [allProviders?: $List_<$GlyphProvider_>, fontSets?: $Map_<$ResourceLocation_, $List_<$GlyphProvider$Conditional_>>, ];
     export class $FontSet implements $AutoCloseable {
         name(): $ResourceLocation;
         close(): void;
         reload(allProviders: $List_<$GlyphProvider$Conditional_>, options: $Set_<$FontOption_>): void;
         reload(options: $Set_<$FontOption_>): void;
-        getGlyph(character: number): $BakedGlyph;
-        getGlyphInfo(character: number, filterFishyGlyphs: boolean): $GlyphInfo;
         getRandomGlyph(glyph: $GlyphInfo): $BakedGlyph;
+        getGlyphInfo(character: number, filterFishyGlyphs: boolean): $GlyphInfo;
+        getGlyph(character: number): $BakedGlyph;
         whiteGlyph(): $BakedGlyph;
         constructor(textureManager: $TextureManager, name: $ResourceLocation_);
     }
     export class $TextFieldHelper {
+        insertText(text: string): void;
         copy(): void;
         keyPressed(key: number): boolean;
-        removeWordsFromCursor(direction: number): void;
-        insertText(text: string): void;
         charTyped(character: string): boolean;
-        paste(): void;
         cut(): void;
-        selectAll(): void;
-        removeCharsFromCursor(direction: number): void;
-        static getClipboardContents(minecraft: $Minecraft): string;
-        static setClipboardContents(text: $Minecraft, arg1: string): void;
-        setSelectionRange(selectionStart: number, selectionEnd: number): void;
-        moveByWords(direction: number): void;
-        moveByWords(direction: number, keepSelection: boolean): void;
-        getCursorPos(): number;
-        moveByChars(direction: number, keepSelection: boolean): void;
-        moveByChars(direction: number): void;
-        isSelecting(): boolean;
+        paste(): void;
         setCursorToEnd(): void;
         setCursorToEnd(keepSelection: boolean): void;
         getSelectionPos(): number;
+        isSelecting(): boolean;
+        getCursorPos(): number;
+        moveByChars(direction: number, keepSelection: boolean): void;
+        moveByChars(direction: number): void;
+        setSelectionRange(selectionStart: number, selectionEnd: number): void;
+        moveByWords(direction: number, keepSelection: boolean): void;
+        moveByWords(direction: number): void;
         setCursorPos(direction: number, keepSelection: boolean): void;
         setCursorPos(direction: number): void;
         static createClipboardSetter(minecraft: $Minecraft): $Consumer<string>;
         static createClipboardGetter(minecraft: $Minecraft): $Supplier<string>;
+        static setClipboardContents(text: $Minecraft, arg1: string): void;
+        static getClipboardContents(minecraft: $Minecraft): string;
+        removeCharsFromCursor(direction: number): void;
         removeFromCursor(direction: number, step: $TextFieldHelper$CursorStep_): void;
-        setCursorToStart(): void;
         setCursorToStart(keepSelection: boolean): void;
+        setCursorToStart(): void;
+        selectAll(): void;
         moveBy(direction: number, keepSelection: boolean, cursorStep: $TextFieldHelper$CursorStep_): void;
+        removeWordsFromCursor(direction: number): void;
         setSelectionPos(direction: number): void;
         getMessageFn: $Supplier<string>;
         constructor(getMessage: $Supplier_<string>, setMessage: $Consumer_<string>, getClipboard: $Supplier_<string>, setClipboard: $Consumer_<string>, stringValidator: $Predicate_<string>);
         get selecting(): boolean;
     }
     export class $AllMissingGlyphProvider implements $GlyphProvider {
-        getGlyph(arg0: number): $GlyphInfo;
         getSupportedGlyphs(): $IntSet;
+        getGlyph(arg0: number): $GlyphInfo;
         close(): void;
         constructor();
         get supportedGlyphs(): $IntSet;
@@ -197,11 +197,11 @@ declare module "@package/net/minecraft/client/gui/font" {
     /**
      * Values that may be interpreted as {@link $FontManager$BuilderId}.
      */
-    export type $FontManager$BuilderId_ = { index?: number, fontId?: $ResourceLocation_, pack?: string,  } | [index?: number, fontId?: $ResourceLocation_, pack?: string, ];
+    export type $FontManager$BuilderId_ = { fontId?: $ResourceLocation_, pack?: string, index?: number,  } | [fontId?: $ResourceLocation_, pack?: string, index?: number, ];
     export class $FontManager$BuilderResult extends $Record {
     }
     /**
      * Values that may be interpreted as {@link $FontManager$BuilderResult}.
      */
-    export type $FontManager$BuilderResult_ = { filter?: $FontOption$Filter, id?: $FontManager$BuilderId_, result?: $Either<$CompletableFuture<($GlyphProvider_) | undefined>, $ResourceLocation_>,  } | [filter?: $FontOption$Filter, id?: $FontManager$BuilderId_, result?: $Either<$CompletableFuture<($GlyphProvider_) | undefined>, $ResourceLocation_>, ];
+    export type $FontManager$BuilderResult_ = { id?: $FontManager$BuilderId_, result?: $Either<$CompletableFuture<($GlyphProvider_) | undefined>, $ResourceLocation_>, filter?: $FontOption$Filter,  } | [id?: $FontManager$BuilderId_, result?: $Either<$CompletableFuture<($GlyphProvider_) | undefined>, $ResourceLocation_>, filter?: $FontOption$Filter, ];
 }

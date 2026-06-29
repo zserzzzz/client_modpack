@@ -21,19 +21,19 @@ export * as widget from "@package/com/simibubi/create/foundation/gui/widget";
 declare module "@package/com/simibubi/create/foundation/gui" {
     export class $CustomLightingSettings$Builder {
         build(): $CustomLightingSettings;
+        secondLightRotation(arg0: number, arg1: number): $CustomLightingSettings$Builder;
         doubleLight(): $CustomLightingSettings$Builder;
         firstLightRotation(arg0: number, arg1: number): $CustomLightingSettings$Builder;
-        secondLightRotation(arg0: number, arg1: number): $CustomLightingSettings$Builder;
         constructor();
     }
     export class $AllGuiTextures extends $Enum<$AllGuiTextures> implements $ScreenElement, $TextureSheetSegment {
-        getHeight(): number;
         static values(): $AllGuiTextures[];
         static valueOf(arg0: string): $AllGuiTextures;
         getLocation(): $ResourceLocation;
         getWidth(): number;
         render(arg0: $GuiGraphics, arg1: number, arg2: number, arg3: $Color): void;
         render(arg0: $GuiGraphics, arg1: number, arg2: number): void;
+        getHeight(): number;
         getStartY(): number;
         getStartX(): number;
         bind(): void;
@@ -250,8 +250,8 @@ declare module "@package/com/simibubi/create/foundation/gui" {
         static PLAYER_INVENTORY: $AllGuiTextures;
         static HOTSLOT: $AllGuiTextures;
         static TOOLBELT_HOTBAR_OFF: $AllGuiTextures;
-        get height(): number;
         get width(): number;
+        get height(): number;
         get startY(): number;
         get startX(): number;
     }
@@ -397,8 +397,8 @@ declare module "@package/com/simibubi/create/foundation/gui" {
         clear(): void;
         add(arg0: $Pair<$AbstractWidget, string>): void;
         forEach(arg0: $Consumer_<$GuiEventListener>): void;
-        saveValues(arg0: $CompoundTag_): void;
         loadValues<T extends $GuiEventListener>(arg0: $CompoundTag_, arg1: $Consumer_<T>, arg2: $Consumer_<T>): void;
+        saveValues(arg0: $CompoundTag_): void;
         renderWidgetBG(arg0: number, arg1: $GuiGraphics): void;
         constructor();
     }
@@ -407,16 +407,16 @@ declare module "@package/com/simibubi/create/foundation/gui" {
         static drawHoveringText(arg0: $GuiGraphics, arg1: $List_<$FormattedText>, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number, arg10: $Font): void;
         static drawHoveringText(arg0: $ItemStack_, arg1: $GuiGraphics, arg2: $List_<$FormattedText>, arg3: number, arg4: number, arg5: number, arg6: number, arg7: number, arg8: $Font): void;
         static drawHoveringText(arg0: $GuiGraphics, arg1: $List_<$FormattedText>, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: $Font): void;
-        static preItemToolTip(arg0: $ItemStack_): void;
         static postItemToolTip(): void;
+        static preItemToolTip(arg0: $ItemStack_): void;
         constructor();
     }
     export class $ModularGuiLineBuilder {
-        addSelectionScrollInput(arg0: number, arg1: number, arg2: $BiConsumer_<$SelectionScrollInput, $Label>, arg3: string): $ModularGuiLineBuilder;
-        addScrollInput(arg0: number, arg1: number, arg2: $BiConsumer_<$ScrollInput, $Label>, arg3: string): $ModularGuiLineBuilder;
-        customArea(arg0: number, arg1: number): $ModularGuiLineBuilder;
-        addIntegerTextInput(arg0: number, arg1: number, arg2: $BiConsumer_<$EditBox, $TooltipArea>, arg3: string): $ModularGuiLineBuilder;
         addTextInput(arg0: number, arg1: number, arg2: $BiConsumer_<$EditBox, $TooltipArea>, arg3: string): $ModularGuiLineBuilder;
+        addSelectionScrollInput(arg0: number, arg1: number, arg2: $BiConsumer_<$SelectionScrollInput, $Label>, arg3: string): $ModularGuiLineBuilder;
+        customArea(arg0: number, arg1: number): $ModularGuiLineBuilder;
+        addScrollInput(arg0: number, arg1: number, arg2: $BiConsumer_<$ScrollInput, $Label>, arg3: string): $ModularGuiLineBuilder;
+        addIntegerTextInput(arg0: number, arg1: number, arg2: $BiConsumer_<$EditBox, $TooltipArea>, arg3: string): $ModularGuiLineBuilder;
         speechBubble(): $ModularGuiLineBuilder;
         constructor(arg0: $Font, arg1: $ModularGuiLine, arg2: number, arg3: number);
     }

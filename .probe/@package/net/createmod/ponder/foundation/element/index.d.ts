@@ -35,20 +35,20 @@ declare module "@package/net/createmod/ponder/foundation/element" {
         builder(arg0: $PonderScene): $TextElementBuilder;
         getPalette(): $PonderPalette;
         simulated$hidePointer(): void;
+        wrapOperation$egn000$simulated$removePointerTwoTheSqueakuel(arg0: $GuiGraphics, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: number, arg8: $Operation_<any>): void;
         wrapOperation$egn000$simulated$removePointer(arg0: $GuiGraphics, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: number, arg8: $Operation_<any>): void;
         wrapOperation$egn000$simulated$shiftItALittleToTheLeftIfThereIsntALine(arg0: number, arg1: number, arg2: $Operation_<any>): number;
-        wrapOperation$egn000$simulated$removePointerTwoTheSqueakuel(arg0: $GuiGraphics, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: number, arg8: $Operation_<any>): void;
         setY(arg0: number): void;
         setTextGetter(arg0: $Supplier_<string>): void;
-        setVec(arg0: $Vec3_): void;
-        setPalette(arg0: $PonderPalette_): void;
         setNearScene(arg0: boolean): void;
+        setPalette(arg0: $PonderPalette_): void;
+        setVec(arg0: $Vec3_): void;
         static COLOR_WINDOW_BORDER: $Couple<$Color>;
         constructor();
         set y(value: number);
         set textGetter(value: $Supplier_<string>);
-        set vec(value: $Vec3_);
         set nearScene(value: boolean);
+        set vec(value: $Vec3_);
     }
     export class $TrackedElementBase<T> extends $PonderElementBase implements $TrackedElement<T> {
         ifPresent(arg0: $Consumer_<T>): void;
@@ -63,11 +63,11 @@ declare module "@package/net/createmod/ponder/foundation/element" {
         constructor(arg0: $Vec3_, arg1: $Pointing_);
     }
     export class $ParrotElementImpl extends $AnimatedSceneElementBase implements $ParrotElement, $ParrotElementAccessor {
-        getPositionOffset(): $Vec3;
         static create(arg0: $Vec3_, arg1: $Supplier_<$ParrotPose>): $ParrotElement;
-        getRotation(): $Vec3;
-        setPose(arg0: $ParrotPose): void;
+        getPositionOffset(): $Vec3;
         setRotation(arg0: $Vec3_, arg1: boolean): void;
+        setPose(arg0: $ParrotPose): void;
+        getRotation(): $Vec3;
         setPositionOffset(arg0: $Vec3_, arg1: boolean): void;
         getEntity(): $Parrot;
         set pose(value: $ParrotPose);
@@ -77,11 +77,11 @@ declare module "@package/net/createmod/ponder/foundation/element" {
         renderLayer(arg0: $PonderLevel, arg1: $MultiBufferSource_, arg2: $RenderType, arg3: $GuiGraphics, arg4: number): void;
         renderFirst(arg0: $PonderLevel, arg1: $MultiBufferSource_, arg2: $GuiGraphics, arg3: number): void;
         forceApplyFade(arg0: number): void;
-        setFadeVec(arg0: $Vec3_): void;
         renderLast(arg0: $PonderLevel, arg1: $MultiBufferSource_, arg2: $GuiGraphics, arg3: number): void;
         setFade(arg0: number): void;
+        setFadeVec(arg0: $Vec3_): void;
         constructor();
-        set fadeVec(value: $Vec3_);
         set fade(value: number);
+        set fadeVec(value: $Vec3_);
     }
 }

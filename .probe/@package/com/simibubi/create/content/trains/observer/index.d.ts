@@ -39,19 +39,19 @@ import { $RegisterCapabilitiesEvent } from "@package/net/neoforged/neoforge/capa
 
 declare module "@package/com/simibubi/create/content/trains/observer" {
     export class $TrackObserverBlock extends $Block implements $IBE<$TrackObserverBlockEntity>, $IWrenchable {
-        getBlockEntityType(): $BlockEntityType<$TrackObserverBlockEntity>;
         getBlockEntityClass(): $Class<$TrackObserverBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$TrackObserverBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$TrackObserverBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$TrackObserverBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($TrackObserverBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$TrackObserverBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $TrackObserverBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$TrackObserverBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($TrackObserverBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$TrackObserverBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -82,8 +82,8 @@ declare module "@package/com/simibubi/create/content/trains/observer" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$TrackObserverBlockEntity>;
         get blockEntityClass(): $Class<$TrackObserverBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$TrackObserverBlockEntity>;
     }
     export class $TrackObserverVisual extends $AbstractBlockEntityVisual<$TrackObserverBlockEntity> implements $SimpleTickableVisual {
         tick(arg0: $TickableVisual$Context): void;
@@ -93,9 +93,9 @@ declare module "@package/com/simibubi/create/content/trains/observer" {
     export class $TrackObserverBlockEntity extends $SmartBlockEntity implements $TransformableBlockEntity, $Clearable {
         transform(arg0: $BlockEntity, arg1: $StructureTransform): void;
         getFilter(): $ItemStack;
+        clearContent(): void;
         createFilter(): $FilteringBehaviour;
         static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
-        clearContent(): void;
         getObserver(): $TrackObserver;
         isBlockPowered(): boolean;
         worldPosition: $BlockPos;
@@ -114,8 +114,8 @@ declare module "@package/com/simibubi/create/content/trains/observer" {
         getFilter(): $FilterItemStack;
         keepAlive(arg0: $Train): void;
         getCurrentTrain(): $UUID;
-        isActivated(): boolean;
         setFilterAndNotify(arg0: $Level_, arg1: $ItemStack_): void;
+        isActivated(): boolean;
         edgeLocation: $Couple<$TrackNodeLocation>;
         blockEntityPos: $BlockPos;
         blockEntityDimension: $ResourceKey<$Level>;

@@ -19,8 +19,8 @@ declare module "@package/dev/emi/emi/api/recipe" {
         getPredicate(): $Predicate<$EmiRecipe>;
         canCraft(recipe: $EmiRecipe, amount: number): boolean;
         canCraft(recipe: $EmiRecipe): boolean;
-        getCraftables(): $List<$EmiIngredient>;
         getCraftAvailability(recipe: $EmiRecipe): $List<boolean>;
+        getCraftables(): $List<$EmiIngredient>;
         inventory: $Map<$EmiStack, $EmiStack>;
         /**
          * @deprecated
@@ -34,32 +34,32 @@ declare module "@package/dev/emi/emi/api/recipe" {
     }
     export interface $EmiRecipe extends $GlobalMixin {
         getId(): $ResourceLocation;
-        getInputs(): $List<$EmiIngredient>;
-        getCatalysts(): $List<$EmiIngredient>;
-        supportsRecipeTree(): boolean;
-        getBackingRecipe(): $RecipeHolder<never>;
-        getDisplayWidth(): number;
-        getDisplayHeight(): number;
-        hideCraftable(): boolean;
         getCategory(): $EmiRecipeCategory;
-        getOutputs(): $List<$EmiStack>;
+        getInputs(): $List<$EmiIngredient>;
         addWidgets(arg0: $WidgetHolder): void;
+        getOutputs(): $List<$EmiStack>;
+        getDisplayHeight(): number;
+        supportsRecipeTree(): boolean;
+        hideCraftable(): boolean;
+        getBackingRecipe(): $RecipeHolder<never>;
+        getCatalysts(): $List<$EmiIngredient>;
+        getDisplayWidth(): number;
         get id(): $ResourceLocation;
-        get inputs(): $List<$EmiIngredient>;
-        get catalysts(): $List<$EmiIngredient>;
-        get backingRecipe(): $RecipeHolder<never>;
-        get displayWidth(): number;
-        get displayHeight(): number;
         get category(): $EmiRecipeCategory;
+        get inputs(): $List<$EmiIngredient>;
         get outputs(): $List<$EmiStack>;
+        get displayHeight(): number;
+        get backingRecipe(): $RecipeHolder<never>;
+        get catalysts(): $List<$EmiIngredient>;
+        get displayWidth(): number;
     }
     export class $EmiRecipeCategory implements $EmiRenderable, $GlobalMixin {
         getName(): $Component;
         getId(): $ResourceLocation;
         getSort(): $Comparator<$EmiRecipe>;
         render(draw: $GuiGraphics, x: number, y: number, delta: number): void;
-        renderSimplified(draw: $GuiGraphics, x: number, y: number, delta: number): void;
         getTooltip(): $List<$ClientTooltipComponent>;
+        renderSimplified(draw: $GuiGraphics, x: number, y: number, delta: number): void;
         simplified: $EmiRenderable;
         sorter: $Comparator<$EmiRecipe>;
         icon: $EmiRenderable;

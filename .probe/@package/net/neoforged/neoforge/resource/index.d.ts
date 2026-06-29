@@ -15,22 +15,22 @@ import { $ContextAwareReloadListenerAccessor } from "@package/rbasamoyai/createb
 
 declare module "@package/net/neoforged/neoforge/resource" {
     export class $EmptyPackResources$EmptyResourcesSupplier implements $Pack$ResourcesSupplier {
-        openFull(id: $PackLocationInfo_, info: $Pack$Metadata_): $PackResources;
         openPrimary(id: $PackLocationInfo_): $PackResources;
+        openFull(id: $PackLocationInfo_, info: $Pack$Metadata_): $PackResources;
         constructor(packMeta: $PackMetadataSection_);
     }
     export class $EmptyPackResources extends $AbstractPackResources {
         constructor(packId: $PackLocationInfo_, packMeta: $PackMetadataSection_);
     }
     export class $ResourcePackLoader {
+        static getPackNames(packType: $PackType_): $List<string>;
+        static populatePackRepository(resourcePacks: $PackRepository, packType: $PackType_, trusted: boolean): void;
+        static expandAndRemoveRootChildren(packs: $Stream<$Pack>, availablePacks: $Collection_<$Pack>): $List<$Pack>;
         static reorderNewlyDiscoveredPacks(set: $Collection_<string>, old: $Collection_<string>, packRepository: $PackRepository): void;
         static buildPackFinder(modResourcePacks: $Map_<$IModFile, $Pack$ResourcesSupplier>, packType: $PackType_): $RepositorySource;
         static createPackForMod(mf: $IModFileInfo): $Pack$ResourcesSupplier;
-        static getPackNames(packType: $PackType_): $List<string>;
-        static populatePackRepository(resourcePacks: $PackRepository, packType: $PackType_, trusted: boolean): void;
-        static readWithOptionalMeta(location: $PackLocationInfo_, resources: $Pack$ResourcesSupplier, type: $PackType_, selectionConfig: $PackSelectionConfig_): $Pack;
         static getPackFor(modId: string): ($Pack$ResourcesSupplier) | undefined;
-        static expandAndRemoveRootChildren(packs: $Stream<$Pack>, availablePacks: $Collection_<$Pack>): $List<$Pack>;
+        static readWithOptionalMeta(location: $PackLocationInfo_, resources: $Pack$ResourcesSupplier, type: $PackType_, selectionConfig: $PackSelectionConfig_): $Pack;
         static MOD_RESOURCES_ID: string;
         static MOD_DATA_ID: string;
         static OPTIONAL_FORMAT: $MetadataSectionType<$PackMetadataSection>;

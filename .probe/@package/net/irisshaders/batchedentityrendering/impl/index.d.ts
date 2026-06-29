@@ -10,22 +10,22 @@ declare module "@package/net/irisshaders/batchedentityrendering/impl" {
     export class $MemoryTrackingRenderBuffers {
     }
     export interface $MemoryTrackingRenderBuffers {
-        getEntityBufferAllocatedSize(): number;
         freeAndDeleteBuffers(): void;
         getMiscBufferAllocatedSize(): number;
         getMaxBegins(): number;
-        get entityBufferAllocatedSize(): number;
+        getEntityBufferAllocatedSize(): number;
         get miscBufferAllocatedSize(): number;
         get maxBegins(): number;
+        get entityBufferAllocatedSize(): number;
     }
     export class $MemoryTrackingBuffer {
     }
     export interface $MemoryTrackingBuffer {
-        getAllocatedSize(): number;
-        getUsedSize(): number;
         freeAndDeleteBuffer(): void;
-        get allocatedSize(): number;
+        getUsedSize(): number;
+        getAllocatedSize(): number;
         get usedSize(): number;
+        get allocatedSize(): number;
     }
     export class $BufferBuilderExt {
     }
@@ -39,9 +39,9 @@ declare module "@package/net/irisshaders/batchedentityrendering/impl" {
     export class $DrawCallTrackingRenderBuffers {
     }
     export interface $DrawCallTrackingRenderBuffers {
+        resetDrawCounts(): void;
         getRenderTypes(): number;
         getDrawCalls(): number;
-        resetDrawCounts(): void;
         get renderTypes(): number;
         get drawCalls(): number;
     }
@@ -62,7 +62,7 @@ declare module "@package/net/irisshaders/batchedentityrendering/impl" {
     export class $RenderBuffersExt {
     }
     export interface $RenderBuffersExt {
-        beginLevelRendering(): void;
         endLevelRendering(): void;
+        beginLevelRendering(): void;
     }
 }

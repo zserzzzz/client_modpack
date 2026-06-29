@@ -38,13 +38,13 @@ import { $RegisterCapabilitiesEvent } from "@package/net/neoforged/neoforge/capa
 
 declare module "@package/com/simibubi/create/content/contraptions/actors/psi" {
     export class $PortableStorageInterfaceBlockEntity extends $SmartBlockEntity {
-        canTransfer(): boolean;
+        startConnecting(): void;
+        isTransferring(): boolean;
         isPowered(): boolean;
         neighbourChanged(): void;
-        isTransferring(): boolean;
-        startConnecting(): void;
-        startTransferringTo(arg0: $Contraption, arg1: number): void;
+        canTransfer(): boolean;
         onContentTransferred(): void;
+        startTransferringTo(arg0: $Contraption, arg1: number): void;
         worldPosition: $BlockPos;
         keepAlive: number;
         level: $Level;
@@ -52,8 +52,8 @@ declare module "@package/com/simibubi/create/content/contraptions/actors/psi" {
         static ATTACHMENTS_NBT_KEY: string;
         hasComparators: number;
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
-        get powered(): boolean;
         get transferring(): boolean;
+        get powered(): boolean;
     }
     export class $PSIVisual extends $AbstractBlockEntityVisual<$PortableStorageInterfaceBlockEntity> implements $SimpleDynamicVisual, $SimpleTickableVisual {
         tick(arg0: $TickableVisual$Context): void;
@@ -63,17 +63,17 @@ declare module "@package/com/simibubi/create/content/contraptions/actors/psi" {
         constructor(arg0: $VisualizationContext, arg1: $PortableStorageInterfaceBlockEntity, arg2: number);
     }
     export class $PortableStorageInterfaceBlock extends $WrenchableDirectionalBlock implements $IBE<$PortableStorageInterfaceBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$PortableStorageInterfaceBlockEntity>;
         getBlockEntityClass(): $Class<$PortableStorageInterfaceBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$PortableStorageInterfaceBlockEntity>;
         static forFluids(arg0: $BlockBehaviour$Properties): $PortableStorageInterfaceBlock;
         static forItems(arg0: $BlockBehaviour$Properties): $PortableStorageInterfaceBlock;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$PortableStorageInterfaceBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$PortableStorageInterfaceBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($PortableStorageInterfaceBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$PortableStorageInterfaceBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $PortableStorageInterfaceBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$PortableStorageInterfaceBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($PortableStorageInterfaceBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$PortableStorageInterfaceBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -103,8 +103,8 @@ declare module "@package/com/simibubi/create/content/contraptions/actors/psi" {
         static UPDATE_CLIENTS: number;
         static FACING: $DirectionProperty;
         hasCollision: boolean;
-        get blockEntityType(): $BlockEntityType<$PortableStorageInterfaceBlockEntity>;
         get blockEntityClass(): $Class<$PortableStorageInterfaceBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$PortableStorageInterfaceBlockEntity>;
     }
     export class $PIInstance {
         remove(): void;
@@ -114,14 +114,14 @@ declare module "@package/com/simibubi/create/content/contraptions/actors/psi" {
         constructor(arg0: $InstancerProvider_, arg1: $BlockState_, arg2: $BlockPos_, arg3: boolean);
     }
     export class $PortableFluidInterfaceBlockEntity$InterfaceFluidHandler implements $IFluidHandler {
-        getTanks(): number;
-        drain(arg0: number, arg1: $IFluidHandler$FluidAction_): $FluidStack;
         drain(arg0: $FluidStack_, arg1: $IFluidHandler$FluidAction_): $FluidStack;
+        drain(arg0: number, arg1: $IFluidHandler$FluidAction_): $FluidStack;
         fill(arg0: $FluidStack_, arg1: $IFluidHandler$FluidAction_): number;
         keepAlive(): void;
-        getFluidInTank(arg0: number): $FluidStack;
         getTankCapacity(arg0: number): number;
         isFluidValid(arg0: number, arg1: $FluidStack_): boolean;
+        getFluidInTank(arg0: number): $FluidStack;
+        getTanks(): number;
         constructor(arg0: $PortableFluidInterfaceBlockEntity, arg1: $IFluidHandler);
         get tanks(): number;
     }
@@ -137,25 +137,25 @@ declare module "@package/com/simibubi/create/content/contraptions/actors/psi" {
     export class $PortableStorageInterfaceMovement implements $MovementBehaviour {
         reset(arg0: $MovementContext): void;
         tick(arg0: $MovementContext): void;
-        stopMoving(arg0: $MovementContext): void;
-        getActiveAreaOffset(arg0: $MovementContext): $Vec3;
         renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
-        cancelStall(arg0: $MovementContext): void;
+        getActiveAreaOffset(arg0: $MovementContext): $Vec3;
+        disableBlockEntityRendering(): boolean;
+        static getAnimation(arg0: $MovementContext): $LerpedFloat;
         visitNewPosition(arg0: $MovementContext, arg1: $BlockPos_): void;
         createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
-        static getAnimation(arg0: $MovementContext): $LerpedFloat;
-        disableBlockEntityRendering(): boolean;
+        cancelStall(arg0: $MovementContext): void;
+        stopMoving(arg0: $MovementContext): void;
         isActive(arg0: $MovementContext): boolean;
         /**
          * @deprecated
          */
         dropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
-        mustTickWhileDisabled(): boolean;
         onDisabledByControls(arg0: $MovementContext): void;
-        collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
-        onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
+        mustTickWhileDisabled(): boolean;
         startMoving(arg0: $MovementContext): void;
         canBeDisabledVia(arg0: $MovementContext): $ItemStack;
+        collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
+        onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
         writeExtraData(arg0: $MovementContext): void;
         constructor();
     }

@@ -29,21 +29,21 @@ declare module "@package/net/neoforged/neoforge/network/registration" {
      */
     export type $NetworkChannel_ = { id?: $ResourceLocation_, chosenVersion?: string,  } | [id?: $ResourceLocation_, chosenVersion?: string, ];
     export class $PayloadRegistration<T extends $CustomPacketPayload> extends $Record {
+        codec(): $StreamCodec<$RegistryFriendlyByteBuf, T>;
         type(): $CustomPacketPayload$Type<T>;
         version(): string;
         id(): $ResourceLocation;
         handler(): $IPayloadHandler<T>;
         optional(): boolean;
-        flow(): ($PacketFlow) | undefined;
         protocols(): $List<$ConnectionProtocol>;
-        codec(): $StreamCodec<$RegistryFriendlyByteBuf, T>;
+        flow(): ($PacketFlow) | undefined;
         matchesFlow(arg0: $PacketFlow_): boolean;
         constructor(type: $CustomPacketPayload$Type_<T>, codec: $StreamCodec<$RegistryFriendlyByteBuf, T>, handler: $IPayloadHandler_<T>, protocols: $List_<$ConnectionProtocol_>, flow: ($PacketFlow_) | undefined, version: string, optional: boolean);
     }
     /**
      * Values that may be interpreted as {@link $PayloadRegistration}.
      */
-    export type $PayloadRegistration_<T> = { optional?: boolean, version?: string, codec?: $StreamCodec<$RegistryFriendlyByteBuf, $CustomPacketPayload_>, type?: $CustomPacketPayload$Type_<$CustomPacketPayload_>, protocols?: $List_<$ConnectionProtocol_>, flow?: ($PacketFlow_) | undefined, handler?: $IPayloadHandler_<$CustomPacketPayload>,  } | [optional?: boolean, version?: string, codec?: $StreamCodec<$RegistryFriendlyByteBuf, $CustomPacketPayload_>, type?: $CustomPacketPayload$Type_<$CustomPacketPayload_>, protocols?: $List_<$ConnectionProtocol_>, flow?: ($PacketFlow_) | undefined, handler?: $IPayloadHandler_<$CustomPacketPayload>, ];
+    export type $PayloadRegistration_<T> = { flow?: ($PacketFlow_) | undefined, handler?: $IPayloadHandler_<$CustomPacketPayload>, optional?: boolean, version?: string, codec?: $StreamCodec<$RegistryFriendlyByteBuf, $CustomPacketPayload_>, type?: $CustomPacketPayload$Type_<$CustomPacketPayload_>, protocols?: $List_<$ConnectionProtocol_>,  } | [flow?: ($PacketFlow_) | undefined, handler?: $IPayloadHandler_<$CustomPacketPayload>, optional?: boolean, version?: string, codec?: $StreamCodec<$RegistryFriendlyByteBuf, $CustomPacketPayload_>, type?: $CustomPacketPayload$Type_<$CustomPacketPayload_>, protocols?: $List_<$ConnectionProtocol_>, ];
     export class $NetworkPayloadSetup extends $Record {
         static from(arg0: $Map_<$ConnectionProtocol_, $NegotiationResult_>): $NetworkPayloadSetup;
         static empty(): $NetworkPayloadSetup;
@@ -67,7 +67,7 @@ declare module "@package/net/neoforged/neoforge/network/registration" {
     /**
      * Values that may be interpreted as {@link $ModdedPlayPayloadRegistration}.
      */
-    export type $ModdedPlayPayloadRegistration_<T> = { type?: $Class<$CustomPacketPayload_>, id?: $ResourceLocation_, reader?: $StreamCodec<$RegistryFriendlyByteBuf, $CustomPacketPayload_>, handler?: $IPayloadHandler_<$CustomPacketPayload>,  } | [type?: $Class<$CustomPacketPayload_>, id?: $ResourceLocation_, reader?: $StreamCodec<$RegistryFriendlyByteBuf, $CustomPacketPayload_>, handler?: $IPayloadHandler_<$CustomPacketPayload>, ];
+    export type $ModdedPlayPayloadRegistration_<T> = { id?: $ResourceLocation_, reader?: $StreamCodec<$RegistryFriendlyByteBuf, $CustomPacketPayload_>, handler?: $IPayloadHandler_<$CustomPacketPayload>, type?: $Class<$CustomPacketPayload_>,  } | [id?: $ResourceLocation_, reader?: $StreamCodec<$RegistryFriendlyByteBuf, $CustomPacketPayload_>, handler?: $IPayloadHandler_<$CustomPacketPayload>, type?: $Class<$CustomPacketPayload_>, ];
     export class $HandlerThread extends $Enum<$HandlerThread> {
         static values(): $HandlerThread[];
         static valueOf(arg0: string): $HandlerThread;
@@ -88,19 +88,11 @@ declare module "@package/net/neoforged/neoforge/network/registration" {
     /**
      * Values that may be interpreted as {@link $ModdedConfigurationPayloadRegistration}.
      */
-    export type $ModdedConfigurationPayloadRegistration_<T> = { type?: $Class<$CustomPacketPayload_>, id?: $ResourceLocation_, reader?: $StreamCodec<$FriendlyByteBuf, $CustomPacketPayload_>, handler?: $IPayloadHandler_<$CustomPacketPayload>,  } | [type?: $Class<$CustomPacketPayload_>, id?: $ResourceLocation_, reader?: $StreamCodec<$FriendlyByteBuf, $CustomPacketPayload_>, handler?: $IPayloadHandler_<$CustomPacketPayload>, ];
+    export type $ModdedConfigurationPayloadRegistration_<T> = { id?: $ResourceLocation_, reader?: $StreamCodec<$FriendlyByteBuf, $CustomPacketPayload_>, handler?: $IPayloadHandler_<$CustomPacketPayload>, type?: $Class<$CustomPacketPayload_>,  } | [id?: $ResourceLocation_, reader?: $StreamCodec<$FriendlyByteBuf, $CustomPacketPayload_>, handler?: $IPayloadHandler_<$CustomPacketPayload>, type?: $Class<$CustomPacketPayload_>, ];
     /**
      * Builder-style helper for registering `CustomPacketPayload`s, used for modded networking.
      */
     export class $PayloadRegistrar {
-        /**
-         * Creates a copy of this registrar with a different version. Payloads registered with the returned copy will use the passed version, instead of the version from the constructor.
-         * 
-         * On Neo-Neo connections, the connection will only succeed if all registered payloads have the same version.
-         * 
-         * On other connections, the payload version is ignored, since only Neo knows how to communicate Neo payload versions.
-         */
-        versioned(version: string): $PayloadRegistrar;
         /**
          * Creates a copy of this registrar with optional mode enabled. Payloads registered with the returned copy will be marked as optional.
          * 
@@ -114,15 +106,11 @@ declare module "@package/net/neoforged/neoforge/network/registration" {
         /**
          * Registers a client-bound payload for the play phase.
          */
-        configurationToServer<T extends $CustomPacketPayload>(type: $CustomPacketPayload$Type_<T>, reader: $StreamCodec<$FriendlyByteBuf, T>, handler: $IPayloadHandler_<T>): $PayloadRegistrar;
+        playToServer<T extends $CustomPacketPayload>(type: $CustomPacketPayload$Type_<T>, reader: $StreamCodec<$RegistryFriendlyByteBuf, T>, handler: $IPayloadHandler_<T>): $PayloadRegistrar;
         /**
          * Registers a client-bound payload for the play phase.
          */
-        configurationBidirectional<T extends $CustomPacketPayload>(type: $CustomPacketPayload$Type_<T>, reader: $StreamCodec<$FriendlyByteBuf, T>, handler: $IPayloadHandler_<T>): $PayloadRegistrar;
-        /**
-         * Registers a client-bound payload for the play phase.
-         */
-        configurationToClient<T extends $CustomPacketPayload>(type: $CustomPacketPayload$Type_<T>, reader: $StreamCodec<$FriendlyByteBuf, T>, handler: $IPayloadHandler_<T>): $PayloadRegistrar;
+        playBidirectional<T extends $CustomPacketPayload>(type: $CustomPacketPayload$Type_<T>, reader: $StreamCodec<$RegistryFriendlyByteBuf, T>, handler: $IPayloadHandler_<T>): $PayloadRegistrar;
         /**
          * Creates a copy of this registrar with a different default handling thread.
          * 
@@ -134,7 +122,27 @@ declare module "@package/net/neoforged/neoforge/network/registration" {
         /**
          * Registers a client-bound payload for the play phase.
          */
-        commonToClient<T extends $CustomPacketPayload>(type: $CustomPacketPayload$Type_<T>, reader: $StreamCodec<$FriendlyByteBuf, T>, handler: $IPayloadHandler_<T>): $PayloadRegistrar;
+        configurationToServer<T extends $CustomPacketPayload>(type: $CustomPacketPayload$Type_<T>, reader: $StreamCodec<$FriendlyByteBuf, T>, handler: $IPayloadHandler_<T>): $PayloadRegistrar;
+        /**
+         * Registers a client-bound payload for the play phase.
+         */
+        configurationToClient<T extends $CustomPacketPayload>(type: $CustomPacketPayload$Type_<T>, reader: $StreamCodec<$FriendlyByteBuf, T>, handler: $IPayloadHandler_<T>): $PayloadRegistrar;
+        /**
+         * Registers a client-bound payload for the play phase.
+         */
+        configurationBidirectional<T extends $CustomPacketPayload>(type: $CustomPacketPayload$Type_<T>, reader: $StreamCodec<$FriendlyByteBuf, T>, handler: $IPayloadHandler_<T>): $PayloadRegistrar;
+        /**
+         * Registers a client-bound payload for the play phase.
+         */
+        commonBidirectional<T extends $CustomPacketPayload>(type: $CustomPacketPayload$Type_<T>, reader: $StreamCodec<$FriendlyByteBuf, T>, handler: $IPayloadHandler_<T>): $PayloadRegistrar;
+        /**
+         * Creates a copy of this registrar with a different version. Payloads registered with the returned copy will use the passed version, instead of the version from the constructor.
+         * 
+         * On Neo-Neo connections, the connection will only succeed if all registered payloads have the same version.
+         * 
+         * On other connections, the payload version is ignored, since only Neo knows how to communicate Neo payload versions.
+         */
+        versioned(version: string): $PayloadRegistrar;
         /**
          * Registers a client-bound payload for the play phase.
          */
@@ -142,29 +150,21 @@ declare module "@package/net/neoforged/neoforge/network/registration" {
         /**
          * Registers a client-bound payload for the play phase.
          */
-        playToServer<T extends $CustomPacketPayload>(type: $CustomPacketPayload$Type_<T>, reader: $StreamCodec<$RegistryFriendlyByteBuf, T>, handler: $IPayloadHandler_<T>): $PayloadRegistrar;
-        /**
-         * Registers a client-bound payload for the play phase.
-         */
-        commonBidirectional<T extends $CustomPacketPayload>(type: $CustomPacketPayload$Type_<T>, reader: $StreamCodec<$FriendlyByteBuf, T>, handler: $IPayloadHandler_<T>): $PayloadRegistrar;
-        /**
-         * Registers a client-bound payload for the play phase.
-         */
-        playBidirectional<T extends $CustomPacketPayload>(type: $CustomPacketPayload$Type_<T>, reader: $StreamCodec<$RegistryFriendlyByteBuf, T>, handler: $IPayloadHandler_<T>): $PayloadRegistrar;
+        commonToClient<T extends $CustomPacketPayload>(type: $CustomPacketPayload$Type_<T>, reader: $StreamCodec<$FriendlyByteBuf, T>, handler: $IPayloadHandler_<T>): $PayloadRegistrar;
         constructor(version: string);
     }
     /**
      * Utilities for manipulation of Netty `Channel` attributes
      */
     export class $ChannelAttributes {
-        static getConnectionType(connection: $Connection): $ConnectionType;
-        static setPayloadSetup(connection: $Connection, setup: $NetworkPayloadSetup_): void;
-        static getPayloadSetup(connection: $Connection): $NetworkPayloadSetup;
-        static setConnectionType(connection: $Connection, type: $ConnectionType_): void;
         /**
          * Returns a mutable set of the currently known common channels for the given protocol.
          */
         static getOrCreateCommonChannels(connection: $Connection, protocol: $ConnectionProtocol_): $Set<$ResourceLocation>;
+        static getConnectionType(connection: $Connection): $ConnectionType;
+        static setPayloadSetup(connection: $Connection, setup: $NetworkPayloadSetup_): void;
+        static getPayloadSetup(connection: $Connection): $NetworkPayloadSetup;
+        static setConnectionType(connection: $Connection, type: $ConnectionType_): void;
         /**
          * Returns a mutable set of the currently known ad-hoc channels.
          */
@@ -185,7 +185,6 @@ declare module "@package/net/neoforged/neoforge/network/registration" {
      * To prevent payloads from being send to a client that has no idea what to do with them, the registry provides endpoints for the vanilla code base to check if a packet can be send to a client.
      */
     export class $NetworkRegistry implements $NetworkRegistryAccessor {
-        static handlePacketUnchecked<T extends $PacketListener>(packet: $Packet<T>, listener: $PacketListener): void;
         /**
          * Attempts to retrieve the `StreamCodec` for a non-vanilla payload.
          * 
@@ -209,14 +208,89 @@ declare module "@package/net/neoforged/neoforge/network/registration" {
          */
         static guard<T>(future: $CompletableFuture<T>, payloadId: $ResourceLocation_): $CompletableFuture<T>;
         /**
+         * Indicates whether the given connection has a connection setup that can transmit the given payload id.
+         */
+        static hasChannel(connection: $Connection, protocol: $ConnectionProtocol_, payloadId: $ResourceLocation_): boolean;
+        /**
          * Checks if the packet listener's connection can send/receive the given payload.
          */
         static hasChannel(listener: $ICommonPacketListener, payloadId: $ResourceLocation_): boolean;
         /**
-         * Indicates whether the given connection has a connection setup that can transmit the given payload id.
+         * Invoked to add to the known ad-hoc channels on a connection.
+         * 
+         * Invoked on the network thread.
          */
-        static hasChannel(connection: $Connection, protocol: $ConnectionProtocol_, payloadId: $ResourceLocation_): boolean;
+        static onMinecraftRegister(connection: $Connection, resourceLocations: $Set_<$ResourceLocation_>): void;
+        /**
+         * Invoked to add to the known ad-hoc channels on a connection.
+         * 
+         * Invoked on the network thread.
+         */
+        static onMinecraftUnregister(connection: $Connection, resourceLocations: $Set_<$ResourceLocation_>): void;
+        /**
+         * Handles modded payloads on the server. Invoked after built-in handling.
+         * 
+         * Called on the network thread.
+         */
+        static handleModdedPayload(listener: $ServerCommonPacketListener, packet: $ServerboundCustomPayloadPacket_): void;
+        /**
+         * Handles modded payloads on the client. Invoked after built-in handling.
+         * 
+         * Called on the network thread.
+         */
+        static handleModdedPayload(listener: $ClientCommonPacketListener, packet: $ClientboundCustomPayloadPacket_): void;
+        /**
+         * Replaces any existing common channels with the incoming ones from a `CommonRegisterPayload`.
+         * 
+         * Invoked on the network thread.
+         */
+        static onCommonRegister(listener: $ICommonPacketListener, payload: $CommonRegisterPayload_): void;
+        /**
+         * Checks if a payload is a modded payload. A modded payload is any payload that does not have `minecraft` as the domain, and is not a discarded payload.
+         * 
+         * The special handling for `DiscardedPayload` is because it falsely reports its type as the type that failed to decode.
+         */
+        static isModdedPayload(payload: $CustomPacketPayload_): boolean;
+        /**
+         * Called when a `CommonVersionPayload` is received.
+         * Triggers a disconnect if none of the supplied version match our supported ones.
+         * Since we only support one version, we don't need to do further handling or record the "active" version just yet.
+         * 
+         * Invoked on the network thread.
+         */
+        static checkCommonVersion(listener: $ICommonPacketListener, payload: $CommonVersionPayload_): void;
+        /**
+         * Validates that a `ServerboundCustomPayloadPacket` may be sent to the server.
+         */
+        static checkPacket(packet: $Packet<never>, listener: $ClientCommonPacketListener): void;
+        /**
+         * Validates that a `ClientboundCustomPayloadPacket` may be sent to the client.
+         */
+        static checkPacket(packet: $Packet<never>, listener: $ServerCommonPacketListener): void;
         static getConnectionType(connection: $Connection): $ConnectionType;
+        static handlePacketUnchecked<T extends $PacketListener>(packet: $Packet<T>, listener: $PacketListener): void;
+        static setSetup$fabric_networking_api_v1_$md$c99f8a$8(arg0: boolean): void;
+        static getSetup$fabric_networking_api_v1_$md$c99f8a$7(): boolean;
+        /**
+         * Invoked by the client when a modded server queries it for its available channels. The negotiation happens solely on the server side, and the result is later transmitted to the client.
+         * 
+         * Invoked on the network thread.
+         */
+        static onNetworkQuery(listener: $ClientConfigurationPacketListener): void;
+        static getInitialServerUnregisterChannels(): $Set<$ResourceLocation>;
+        /**
+         * @return the initial channels for the configuration phase.
+         */
+        static getInitialListeningChannels(flow: $PacketFlow_): $Set<$ResourceLocation>;
+        /**
+         * Invoked by the client to indicate that it detect a connection to a modded server, by receiving a `ModdedNetworkPayload`.
+         * This will configure the active connection to the server to use the channels that were negotiated.
+         * 
+         * Once this method completes a `NetworkPayloadSetup` will be present on the connection.
+         * 
+         * Invoked on the network thread.
+         */
+        static initializeNeoForgeConnection(listener: $ClientConfigurationPacketListener, setup: $NetworkPayloadSetup_): void;
         /**
          * Invoked by the server when it completes the negotiation with the client during the configuration phase.
          * 
@@ -231,83 +305,19 @@ declare module "@package/net/neoforged/neoforge/network/registration" {
          */
         static initializeNeoForgeConnection(listener: $ServerConfigurationPacketListener, clientChannels: $Map_<$ConnectionProtocol_, $Set_<$ModdedNetworkQueryComponent_>>): void;
         /**
-         * Invoked by the client to indicate that it detect a connection to a modded server, by receiving a `ModdedNetworkPayload`.
-         * This will configure the active connection to the server to use the channels that were negotiated.
-         * 
-         * Once this method completes a `NetworkPayloadSetup` will be present on the connection.
-         * 
-         * Invoked on the network thread.
+         * Configures a mock connection for use in game tests. The mock connection will act as if the server and client are fully compatible and both NeoForge.
          */
-        static initializeNeoForgeConnection(listener: $ClientConfigurationPacketListener, setup: $NetworkPayloadSetup_): void;
-        /**
-         * @return the initial channels for the configuration phase.
-         */
-        static getInitialListeningChannels(flow: $PacketFlow_): $Set<$ResourceLocation>;
-        static getInitialServerUnregisterChannels(): $Set<$ResourceLocation>;
-        /**
-         * Invoked to add to the known ad-hoc channels on a connection.
-         * 
-         * Invoked on the network thread.
-         */
-        static onMinecraftUnregister(connection: $Connection, resourceLocations: $Set_<$ResourceLocation_>): void;
-        /**
-         * Invoked to add to the known ad-hoc channels on a connection.
-         * 
-         * Invoked on the network thread.
-         */
-        static onMinecraftRegister(connection: $Connection, resourceLocations: $Set_<$ResourceLocation_>): void;
-        /**
-         * Called when a `CommonVersionPayload` is received.
-         * Triggers a disconnect if none of the supplied version match our supported ones.
-         * Since we only support one version, we don't need to do further handling or record the "active" version just yet.
-         * 
-         * Invoked on the network thread.
-         */
-        static checkCommonVersion(listener: $ICommonPacketListener, payload: $CommonVersionPayload_): void;
-        /**
-         * Checks if a payload is a modded payload. A modded payload is any payload that does not have `minecraft` as the domain, and is not a discarded payload.
-         * 
-         * The special handling for `DiscardedPayload` is because it falsely reports its type as the type that failed to decode.
-         */
-        static isModdedPayload(payload: $CustomPacketPayload_): boolean;
-        /**
-         * Replaces any existing common channels with the incoming ones from a `CommonRegisterPayload`.
-         * 
-         * Invoked on the network thread.
-         */
-        static onCommonRegister(listener: $ICommonPacketListener, payload: $CommonRegisterPayload_): void;
-        /**
-         * Validates that a `ClientboundCustomPayloadPacket` may be sent to the client.
-         */
-        static checkPacket(packet: $Packet<never>, listener: $ServerCommonPacketListener): void;
-        /**
-         * Validates that a `ServerboundCustomPayloadPacket` may be sent to the server.
-         */
-        static checkPacket(packet: $Packet<never>, listener: $ClientCommonPacketListener): void;
-        /**
-         * Invoked by the client when a modded server queries it for its available channels. The negotiation happens solely on the server side, and the result is later transmitted to the client.
-         * 
-         * Invoked on the network thread.
-         */
-        static onNetworkQuery(listener: $ClientConfigurationPacketListener): void;
-        /**
-         * Handles modded payloads on the client. Invoked after built-in handling.
-         * 
-         * Called on the network thread.
-         */
-        static handleModdedPayload(listener: $ClientCommonPacketListener, packet: $ClientboundCustomPayloadPacket_): void;
-        /**
-         * Handles modded payloads on the server. Invoked after built-in handling.
-         * 
-         * Called on the network thread.
-         */
-        static handleModdedPayload(listener: $ServerCommonPacketListener, packet: $ServerboundCustomPayloadPacket_): void;
-        static setSetup$fabric_networking_api_v1_$md$942995$8(arg0: boolean): void;
-        static getSetup$fabric_networking_api_v1_$md$942995$7(): boolean;
+        static configureMockConnection(connection: $Connection): void;
         /**
          * Filters the given packets for a bundle packet in the game phase of the connection.
          */
         static filterGameBundlePackets<T extends $PacketListener>(context: $ChannelHandlerContext, packets: $Iterable_<$Packet<T>>): $List<$Packet<never>>;
+        /**
+         * Invoked when the configuration phase of a connection is completed.
+         * 
+         * Updates the ad-hoc channels to prepare for the game phase by removing the initial channels and building a new list based on the connection type.
+         */
+        static onConfigurationFinished(listener: $ICommonPacketListener): void;
         /**
          * Invoked by the `ServerConfigurationPacketListenerImpl` when a vanilla or other connection is detected.
          */
@@ -322,21 +332,11 @@ declare module "@package/net/neoforged/neoforge/network/registration" {
          * @return the initial channels for the configuration phase.
          */
         static getCommonPlayChannels(flow: $PacketFlow_): $Set<$ResourceLocation>;
-        /**
-         * Configures a mock connection for use in game tests. The mock connection will act as if the server and client are fully compatible and both NeoForge.
-         */
-        static configureMockConnection(connection: $Connection): void;
-        /**
-         * Invoked when the configuration phase of a connection is completed.
-         * 
-         * Updates the ad-hoc channels to prepare for the game phase by removing the initial channels and building a new list based on the connection type.
-         */
-        static onConfigurationFinished(listener: $ICommonPacketListener): void;
-        static getPayloadRegistrations$fabric_networking_api_v1_$md$942995$6(): $Map<any, any>;
+        static getPayloadRegistrations$fabric_networking_api_v1_$md$c99f8a$6(): $Map<any, any>;
         static SUPPORTED_COMMON_NETWORKING_VERSIONS: $List<number>;
+        static set setup$fabric_networking_api_v1_$md$c99f8a$8(value: boolean);
+        static get setup$fabric_networking_api_v1_$md$c99f8a$7(): boolean;
         static get initialServerUnregisterChannels(): $Set<$ResourceLocation>;
-        static set setup$fabric_networking_api_v1_$md$942995$8(value: boolean);
-        static get setup$fabric_networking_api_v1_$md$942995$7(): boolean;
-        static get payloadRegistrations$fabric_networking_api_v1_$md$942995$6(): $Map<any, any>;
+        static get payloadRegistrations$fabric_networking_api_v1_$md$c99f8a$6(): $Map<any, any>;
     }
 }

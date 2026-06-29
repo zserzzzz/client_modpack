@@ -6,19 +6,19 @@ export * as versions from "@package/net/neoforged/neoforge/internal/versions";
 
 declare module "@package/net/neoforged/neoforge/internal" {
     export class $RegistrationEvents {
-        static canModifyComponents(): boolean;
         static modifyComponents(): void;
+        static canModifyComponents(): boolean;
         constructor();
     }
     export class $BrandingControl {
+        static resourceManagerReloadListener(): $ResourceManagerReloadListener;
         static forEachLine(includeMC: boolean, reverse: boolean, lineConsumer: $BiConsumer_<number, string>): void;
         static forEachAboveCopyrightLine(lineConsumer: $BiConsumer_<number, string>): void;
-        static getClientBranding(): string;
-        static resourceManagerReloadListener(): $ResourceManagerReloadListener;
         static getServerBranding(): string;
+        static getClientBranding(): string;
         constructor();
-        static get clientBranding(): string;
         static get serverBranding(): string;
+        static get clientBranding(): string;
     }
     export class $NeoForgeBindings implements $IBindingsProvider {
         getGameBus(): $IEventBus;

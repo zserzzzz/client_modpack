@@ -69,9 +69,9 @@ declare module "@package/net/minecraft/client/gui/screens/options" {
     }
     export class $OptionsSubScreen extends $Screen implements $AccessOptionsSubScreen {
         addOptions(): void;
-        addContents(): void;
         addTitle(): void;
         addFooter(): void;
+        addContents(): void;
         controlling$getLastScreen(): $Screen;
         static MENU_BACKGROUND: $ResourceLocation;
         minecraft: $Minecraft;
@@ -292,10 +292,10 @@ declare module "@package/net/minecraft/client/gui/screens/options" {
         constructor(lastScreen: $Screen, options: $Options);
     }
     export class $OptionsScreen extends $Screen implements $ScreenWithVanillaProxyElementsExt {
-        essential$getProxyHandler(): $ScreenWithProxiesHandler;
-        static createDifficultyButton(x: number, y: number, name: string, minecraft: $Minecraft): $CycleButton<$Difficulty>;
-        handler$gib000$sable$createSableButton(arg0: $CallbackInfoReturnable<any>): void;
         getOptionsButton(): $TexturedButtonWidget_neoforge;
+        essential$getProxyHandler(): $ScreenWithProxiesHandler;
+        handler$gib000$sable$createSableButton(arg0: $CallbackInfoReturnable<any>): void;
+        static createDifficultyButton(x: number, y: number, name: string, minecraft: $Minecraft): $CycleButton<$Difficulty>;
         static MENU_BACKGROUND: $ResourceLocation;
         minecraft: $Minecraft;
         static TELEMETRY: $Component;

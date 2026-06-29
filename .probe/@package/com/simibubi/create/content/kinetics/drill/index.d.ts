@@ -35,7 +35,7 @@ import { $AtomicInteger } from "@package/java/util/concurrent/atomic";
 import { $ResourceKey } from "@package/net/minecraft/resources";
 import { $WrappedLevel } from "@package/net/createmod/catnip/levelWrappers";
 import { $MovementContext } from "@package/com/simibubi/create/content/contraptions/behaviour";
-import { $Block$BlockStatePairKey, $SoundType, $SimpleWaterloggedBlock, $Block } from "@package/net/minecraft/world/level/block";
+import { $Block$BlockStatePairKey, $SimpleWaterloggedBlock, $SoundType, $Block } from "@package/net/minecraft/world/level/block";
 import { $AABB_, $BlockHitResult } from "@package/net/minecraft/world/phys";
 import { $BlockEntityTicker, $BlockEntityType, $BlockEntityType_, $BlockEntity, $TickingBlockEntity } from "@package/net/minecraft/world/level/block/entity";
 
@@ -56,21 +56,21 @@ declare module "@package/com/simibubi/create/content/kinetics/drill" {
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
     }
     export class $DrillBlock extends $DirectionalKineticBlock implements $IBE<$DrillBlockEntity>, $SimpleWaterloggedBlock {
-        getBlockEntityType(): $BlockEntityType<$DrillBlockEntity>;
-        getBlockEntityClass(): $Class<$DrillBlockEntity>;
-        wrapOperation$gkf000$sable$fixBlockBreakerDamage(arg0: $AABB_, arg1: $AABB_, arg2: $Operation_<any>, arg3: $Level_): boolean;
         static getDamage(arg0: number): number;
+        getBlockEntityClass(): $Class<$DrillBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$DrillBlockEntity>;
+        wrapOperation$gkf000$sable$fixBlockBreakerDamage(arg0: $AABB_, arg1: $AABB_, arg2: $Operation_<any>, arg3: $Level_): boolean;
         wrapOperation$gkf000$sable$fixBlockBreakerDamage$mixinextras$bridge$19(arg0: $AABB_, arg1: $AABB_, arg2: $Operation_<any>, arg3: $LocalRef<any>): boolean;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$DrillBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$DrillBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($DrillBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$DrillBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $DrillBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$DrillBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($DrillBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$DrillBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
@@ -103,15 +103,15 @@ declare module "@package/com/simibubi/create/content/kinetics/drill" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$DrillBlockEntity>;
         get blockEntityClass(): $Class<$DrillBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$DrillBlockEntity>;
     }
     export class $DrillBlock$PlacementHelper implements $IPlacementHelper {
         getOffset(arg0: $Player, arg1: $Level_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockHitResult, arg5: $ItemStack_): $PlacementOffset;
-        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
-        matchesState(arg0: $BlockState_): boolean;
-        displayGhost(arg0: $PlacementOffset): void;
         matchesItem(arg0: $ItemStack_): boolean;
+        matchesState(arg0: $BlockState_): boolean;
+        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
+        displayGhost(arg0: $PlacementOffset): void;
     }
     export class $DrillActorVisual extends $ActorVisual {
         constructor(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext);
@@ -124,8 +124,8 @@ declare module "@package/com/simibubi/create/content/kinetics/drill" {
     }
     export class $CobbleGenOptimisation {
         static getConfig(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $Direction_): $CobbleGenOptimisation$CobbleGenBlockConfiguration;
-        static invalidateWorld(arg0: $LevelAccessor): void;
         static determineOutput(arg0: $ServerLevel, arg1: $BlockPos_, arg2: $CobbleGenOptimisation$CobbleGenBlockConfiguration_): $BlockState;
+        static invalidateWorld(arg0: $LevelAccessor): void;
         constructor();
     }
     export class $DrillMovementBehaviour extends $BlockBreakingMovementBehaviour {

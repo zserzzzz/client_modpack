@@ -4,8 +4,8 @@ declare module "@package/com/forsteri/createliquidfuel/mixin" {
     export class $BlazeBurnerAccessor {
     }
     export interface $BlazeBurnerAccessor {
-        createliquidfuel$setRemainingBurnTime(arg0: number): void;
         createliquidfuel$invokeSetBlockHeat(arg0: $BlazeBurnerBlock$HeatLevel_): void;
+        createliquidfuel$setRemainingBurnTime(arg0: number): void;
         createliquidfuel$getRemainingBurnTime(): number;
     }
 }

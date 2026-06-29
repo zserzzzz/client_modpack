@@ -22,12 +22,12 @@ declare module "@package/net/minecraft/client/gui/screens/packs" {
     }
     export class $PackSelectionModel implements $PackLoadingManagerAccessor {
         commit(): void;
-        getSelected(): $Stream<$PackSelectionModel$Entry>;
-        getUnselected(): $Stream<$PackSelectionModel$Entry>;
         findNewPacks(): void;
+        getUnselected(): $Stream<$PackSelectionModel$Entry>;
+        getSelected(): $Stream<$PackSelectionModel$Entry>;
         updateRepoSelectedList(): void;
-        essential$getEnabledList(): $List<$Pack>;
         essential$getDisabledList(): $List<$Pack>;
+        essential$getEnabledList(): $List<$Pack>;
         essential$getChangeRunnable(): $Runnable;
         iconGetter: $Function<$Pack, $ResourceLocation>;
         onListChanged: $Runnable;
@@ -77,14 +77,14 @@ declare module "@package/net/minecraft/client/gui/screens/packs" {
     }
     export class $PackSelectionModel$EntryBase implements $PackSelectionModel$Entry {
         getExtendedDescription(): $Component;
-        canUnselect(): boolean;
         canSelect(): boolean;
+        canUnselect(): boolean;
         get extendedDescription(): $Component;
     }
     export class $PackSelectionScreen extends $Screen implements $PackScreenAccessor, $EssentialGuiDraggableEntryScreen<any>, $EssentialGuiScreenBeforeClose, $EssentialPostScreenDrawHook {
-        essential$getDragHandlerOrNull(): $GuiDragDropEntryHandler<any>;
         updateFocus(selection: $TransferableSelectionList): void;
         clearSelected(): void;
+        essential$getDragHandlerOrNull(): $GuiDragDropEntryHandler<any>;
         /**
          * Returns the tab order group of the GUI component.
          * Tab order group determines the order in which the components are traversed when using keyboard navigation.
@@ -119,9 +119,9 @@ declare module "@package/net/minecraft/client/gui/screens/packs" {
     }
     export class $TransferableSelectionList$PackEntry extends $ObjectSelectionList$Entry<$TransferableSelectionList$PackEntry> implements $ResourcePackListEntryAccessor {
         getPackId(): string;
-        keyboardMoveDown(): void;
-        keyboardMoveUp(): void;
         keyboardSelection(): void;
+        keyboardMoveUp(): void;
+        keyboardMoveDown(): void;
         /**
          * @return `true` if the GUI element is focused, `false` otherwise
          */
@@ -137,33 +137,33 @@ declare module "@package/net/minecraft/client/gui/screens/packs" {
     export class $PackSelectionModel$Entry {
     }
     export interface $PackSelectionModel$Entry {
-        getPackSource(): $PackSource;
         select(): void;
-        getDescription(): $Component;
         getId(): string;
+        getDescription(): $Component;
+        getExtendedDescription(): $Component;
         isRequired(): boolean;
-        isSelected(): boolean;
         getTitle(): $Component;
+        isSelected(): boolean;
         getCompatibility(): $PackCompatibility;
         isFixedPosition(): boolean;
+        getPackSource(): $PackSource;
         moveDown(): void;
-        getIconTexture(): $ResourceLocation;
         moveUp(): void;
-        getExtendedDescription(): $Component;
+        canSelect(): boolean;
+        getIconTexture(): $ResourceLocation;
+        canMoveUp(): boolean;
+        unselect(): void;
         canMoveDown(): boolean;
         canUnselect(): boolean;
-        canSelect(): boolean;
-        unselect(): void;
-        canMoveUp(): boolean;
-        get packSource(): $PackSource;
-        get description(): $Component;
         get id(): string;
+        get description(): $Component;
+        get extendedDescription(): $Component;
         get required(): boolean;
-        get selected(): boolean;
         get title(): $Component;
+        get selected(): boolean;
         get compatibility(): $PackCompatibility;
         get fixedPosition(): boolean;
+        get packSource(): $PackSource;
         get iconTexture(): $ResourceLocation;
-        get extendedDescription(): $Component;
     }
 }

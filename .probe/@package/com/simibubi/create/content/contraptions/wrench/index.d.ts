@@ -31,9 +31,9 @@ import { $StreamCodec } from "@package/net/minecraft/network/codec";
 
 declare module "@package/com/simibubi/create/content/contraptions/wrench" {
     export class $RadialWrenchMenu extends $AbstractSimiScreen {
-        static registerBlacklistedBlock(arg0: $ResourceLocation_): void;
-        static registerRotationProperty(arg0: $Property<never>, arg1: string): void;
         static tryCreateFor(arg0: $BlockState_, arg1: $BlockPos_, arg2: $Level_): ($RadialWrenchMenu) | undefined;
+        static registerRotationProperty(arg0: $Property<never>, arg1: string): void;
+        static registerBlacklistedBlock(arg0: $ResourceLocation_): void;
         static MENU_BACKGROUND: $ResourceLocation;
         minecraft: $Minecraft;
         static INWORLD_FOOTER_SEPARATOR: $ResourceLocation;
@@ -100,10 +100,10 @@ declare module "@package/com/simibubi/create/content/contraptions/wrench" {
     /**
      * Values that may be interpreted as {@link $RadialWrenchMenuSubmitPacket}.
      */
-    export type $RadialWrenchMenuSubmitPacket_ = { blockPos?: $BlockPos_, newState?: $BlockState_,  } | [blockPos?: $BlockPos_, newState?: $BlockState_, ];
+    export type $RadialWrenchMenuSubmitPacket_ = { newState?: $BlockState_, blockPos?: $BlockPos_,  } | [newState?: $BlockState_, blockPos?: $BlockPos_, ];
     export class $RadialWrenchHandler {
-        static clientTick(): void;
         static onKeyInput(arg0: number, arg1: boolean): void;
+        static clientTick(): void;
         static COOLDOWN: number;
         constructor();
     }

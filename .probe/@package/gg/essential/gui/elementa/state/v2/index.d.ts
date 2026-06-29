@@ -18,9 +18,9 @@ declare module "@package/gg/essential/gui/elementa/state/v2" {
     export class $State<T> {
     }
     export interface $State<T> {
-        getUntracked(): T;
         get(): T;
         get(arg0: $Observer_): T;
+        getUntracked(): T;
         onSetValue(arg0: $ReferenceHolder_, arg1: $Function1_<T, $Unit>): $Function0<$Unit>;
         get untracked(): T;
     }

@@ -1,26 +1,27 @@
-import { $File } from "@package/java/io";
-import { $LevelSettings } from "@package/net/minecraft/world/level";
-import { $Logger } from "@package/org/slf4j";
 import { $Services, $WorldStem_, $TickTask, $MinecraftServer$ReloadableResources, $RegistryLayer_, $MinecraftServer, $Services_ } from "@package/net/minecraft/server";
 import { $GlobalSavedSubLevelPointer_ } from "@package/dev/ryanhcode/sable/sublevel/storage/holding";
 import { $SubLevelData } from "@package/dev/ryanhcode/sable/sublevel/storage/serialization";
-import { $Component } from "@package/net/minecraft/network/chat";
-import { $PlayerList } from "@package/net/minecraft/server/players";
 import { $CallbackInfo } from "@package/org/spongepowered/asm/mixin/injection/callback";
 import { $Minecraft } from "@package/net/minecraft/client";
-import { $PlayerDataStorage, $WorldData, $LevelStorageSource$LevelStorageAccess } from "@package/net/minecraft/world/level/storage";
-import { $ServerSubLevel } from "@package/dev/ryanhcode/sable/sublevel";
 import { $Queue, $List, $UUID_ } from "@package/java/util";
-import { $McIntegratedServerManager } from "@package/gg/essential/sps";
 import { $ChunkProgressListenerFactory_ } from "@package/net/minecraft/server/level/progress";
-import { $PackRepository } from "@package/net/minecraft/server/packs/repository";
 import { $LayeredRegistryAccess } from "@package/net/minecraft/core";
 import { $InetAddress, $Proxy } from "@package/java/net";
 import { $IDeferrableIntegratedServer } from "@package/org/embeddedt/modernfix/duck/suspend_integrated_server_during_load";
-import { $AtomicInteger } from "@package/java/util/concurrent/atomic";
 import { $GameProfile } from "@package/com/mojang/authlib";
 import { $Thread } from "@package/java/lang";
 import { $IntegratedServerExt } from "@package/gg/essential/mixins/ext/server/integrated";
+import { $File } from "@package/java/io";
+import { $LevelSettings } from "@package/net/minecraft/world/level";
+import { $Logger } from "@package/org/slf4j";
+import { $Component } from "@package/net/minecraft/network/chat";
+import { $PlayerList } from "@package/net/minecraft/server/players";
+import { $PlayerDataStorage, $WorldData, $LevelStorageSource$LevelStorageAccess } from "@package/net/minecraft/world/level/storage";
+import { $ServerSubLevel } from "@package/dev/ryanhcode/sable/sublevel";
+import { $McIntegratedServerManager } from "@package/gg/essential/sps";
+import { $LocalSampleLogger } from "@package/net/minecraft/util/debugchart";
+import { $PackRepository } from "@package/net/minecraft/server/packs/repository";
+import { $AtomicInteger } from "@package/java/util/concurrent/atomic";
 import { $SableToastableServer } from "@package/dev/ryanhcode/sable/mixinterface/toast";
 
 declare module "@package/net/minecraft/client/server" {
@@ -46,17 +47,18 @@ declare module "@package/net/minecraft/client/server" {
     }
     export class $IntegratedServer extends $MinecraftServer implements $IDeferrableIntegratedServer, $SableToastableServer, $IntegratedServerExt {
         getEssential$manager(): $McIntegratedServerManager;
-        sable$reportSubLevelSaveFailure(arg0: $SubLevelData): void;
+        setUUID(uuid: $UUID_): void;
+        handler$ieg000$essential$disconnectPlayers(ci: $CallbackInfo): void;
+        getTickTimeLogger(): $LocalSampleLogger;
+        handler$iia001$essential$runTasks(ci: $CallbackInfo): void;
+        handler$iie008$essential$tick(ci: $CallbackInfo): void;
         /**
          * Saves all necessary data as preparation for stopping the server.
          */
         mfix$markClientLoadFinished(): void;
         sable$reportSubLevelPhysicsFailure(arg0: $ServerSubLevel): void;
         sable$reportSubLevelLoadFailure(arg0: $GlobalSavedSubLevelPointer_): void;
-        handler$iia001$essential$runTasks(ci: $CallbackInfo): void;
-        handler$iie008$essential$tick(ci: $CallbackInfo): void;
-        setUUID(uuid: $UUID_): void;
-        handler$ieg000$essential$disconnectPlayers(ci: $CallbackInfo): void;
+        sable$reportSubLevelSaveFailure(arg0: $SubLevelData): void;
         static VANILLA_BRAND: string;
         proxy: $Proxy;
         static ANONYMOUS_PLAYER_PROFILE: $GameProfile;
@@ -72,6 +74,7 @@ declare module "@package/net/minecraft/client/server" {
         constructor(serverThread: $Thread, minecraft: $Minecraft, storageSource: $LevelStorageSource$LevelStorageAccess, packRepository: $PackRepository, worldStem: $WorldStem_, services: $Services_, progressListenerFactory: $ChunkProgressListenerFactory_);
         get essential$manager(): $McIntegratedServerManager;
         set UUID(value: $UUID_);
+        get tickTimeLogger(): $LocalSampleLogger;
     }
     export class $LanServer {
         getAddress(): string;
@@ -85,9 +88,9 @@ declare module "@package/net/minecraft/client/server" {
         get motd(): string;
     }
     export class $LanServerPinger extends $Thread {
-        static createPingString(motdMessage: string, adMessage: string): string;
-        static parseAddress(pingResponse: string): string;
         static parseMotd(pingResponse: string): string;
+        static parseAddress(pingResponse: string): string;
+        static createPingString(motdMessage: string, adMessage: string): string;
         static MULTICAST_GROUP: string;
         static PING_PORT: number;
         static MIN_PRIORITY: number;

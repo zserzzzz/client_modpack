@@ -14,33 +14,33 @@ declare module "@package/dev/ryanhcode/sable/network/client" {
     /**
      * Values that may be interpreted as {@link $SubLevelSnapshotInterpolator$Snapshot}.
      */
-    export type $SubLevelSnapshotInterpolator$Snapshot_ = { gameTick?: number, pose?: $Pose3dc,  } | [gameTick?: number, pose?: $Pose3dc, ];
+    export type $SubLevelSnapshotInterpolator$Snapshot_ = { pose?: $Pose3dc, gameTick?: number,  } | [pose?: $Pose3dc, gameTick?: number, ];
     export class $SubLevelSnapshotInterpolator {
         tick(arg0: number): void;
         getInterpolatedPose(): $Pose3dc;
-        receiveSnapshot(arg0: number, arg1: $Pose3dc): void;
         splitFrom(arg0: $SubLevelSnapshotInterpolator, arg1: $Pose3dc): void;
-        getSampleAt(arg0: number, arg1: $Pose3d): void;
         receiveStop(): void;
+        getSampleAt(arg0: number, arg1: $Pose3d): void;
         setFirstPoses(arg0: $Pose3dc, arg1: $Pose3dc): void;
+        receiveSnapshot(arg0: number, arg1: $Pose3dc): void;
         buffer: $ObjectArrayList<$SubLevelSnapshotInterpolator$Snapshot>;
         constructor(arg0: $Pose3d);
         get interpolatedPose(): $Pose3dc;
     }
     export class $ClientSableInterpolationState {
-        addDebugInfo(arg0: $Consumer_<string>): void;
         tick(): void;
+        addDebugInfo(arg0: $Consumer_<string>): void;
         isStopped(): boolean;
-        receiveSnapshot(arg0: $ClientSubLevel, arg1: number, arg2: $Pose3dc, arg3: $PacketReceiveMode_): void;
+        getInterpolationDelay(): number;
         getTickPointer(): number;
         receiveInfo(arg0: number, arg1: number, arg2: boolean): void;
-        getInterpolationDelay(): number;
+        receiveSnapshot(arg0: $ClientSubLevel, arg1: number, arg2: $Pose3dc, arg3: $PacketReceiveMode_): void;
         mostRecentInterpolationTick: number;
         static RENDER_INTERPOLATION_BOUNDS: boolean;
         lastInterpolationTick: number;
         constructor();
         get stopped(): boolean;
-        get tickPointer(): number;
         get interpolationDelay(): number;
+        get tickPointer(): number;
     }
 }

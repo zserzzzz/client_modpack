@@ -17,16 +17,16 @@ declare module "@package/net/neoforged/neoforge/event/village" {
      */
     export class $WandererTradesEvent extends $Event {
         getRegistryAccess(): $RegistryAccess;
-        getGenericTrades(): $List<$VillagerTrades$ItemListing>;
         getRareTrades(): $List<$VillagerTrades$ItemListing>;
+        getGenericTrades(): $List<$VillagerTrades$ItemListing>;
         /**
          * @deprecated
          */
         constructor(generic: $List_<$VillagerTrades$ItemListing_>, rare: $List_<$VillagerTrades$ItemListing_>);
         constructor(generic: $List_<$VillagerTrades$ItemListing_>, rare: $List_<$VillagerTrades$ItemListing_>, registryAccess: $RegistryAccess);
         get registryAccess(): $RegistryAccess;
-        get genericTrades(): $List<$VillagerTrades$ItemListing>;
         get rareTrades(): $List<$VillagerTrades$ItemListing>;
+        get genericTrades(): $List<$VillagerTrades$ItemListing>;
     }
     /**
      * VillagerTradesEvent is fired during reload by `TagsUpdatedEvent`. It is used to gather the trade lists for each profession.
@@ -40,16 +40,16 @@ declare module "@package/net/neoforged/neoforge/event/village" {
      */
     export class $VillagerTradesEvent extends $Event {
         getType(): $VillagerProfession;
-        getTrades(): $Int2ObjectMap<$List<$VillagerTrades$ItemListing>>;
         getRegistryAccess(): $RegistryAccess;
+        getTrades(): $Int2ObjectMap<$List<$VillagerTrades$ItemListing>>;
         /**
          * @deprecated
          */
         constructor(trades: $Int2ObjectMap<$List_<$VillagerTrades$ItemListing_>>, type: $VillagerProfession_);
         constructor(trades: $Int2ObjectMap<$List_<$VillagerTrades$ItemListing_>>, type: $VillagerProfession_, registryAccess: $RegistryAccess);
         get type(): $VillagerProfession;
-        get trades(): $Int2ObjectMap<$List<$VillagerTrades$ItemListing>>;
         get registryAccess(): $RegistryAccess;
+        get trades(): $Int2ObjectMap<$List<$VillagerTrades$ItemListing>>;
     }
     /**
      * VillageSiegeEvent is fired just before a zombie siege finds a successful location in
@@ -63,15 +63,15 @@ declare module "@package/net/neoforged/neoforge/event/village" {
      */
     export class $VillageSiegeEvent extends $Event implements $ICancellableEvent {
         getLevel(): $Level;
-        getSiege(): $VillageSiege;
         getPlayer(): $Player;
         getAttemptedSpawnPos(): $Vec3;
-        setCanceled(arg0: boolean): void;
+        getSiege(): $VillageSiege;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(siege: $VillageSiege, level: $Level_, player: $Player, attemptedSpawnPos: $Vec3_);
         get level(): $Level;
-        get siege(): $VillageSiege;
         get player(): $Player;
         get attemptedSpawnPos(): $Vec3;
+        get siege(): $VillageSiege;
     }
 }

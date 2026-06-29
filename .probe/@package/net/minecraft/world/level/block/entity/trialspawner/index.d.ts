@@ -29,6 +29,7 @@ declare module "@package/net/minecraft/world/level/block/entity/trialspawner" {
         markUpdated(): void;
     }
     export class $TrialSpawner implements $IOwnedSpawner {
+        codec(): $Codec<$TrialSpawner>;
         getState(): $TrialSpawnerState;
         setState(level: $Level_, state: $TrialSpawnerState_): void;
         /**
@@ -40,35 +41,34 @@ declare module "@package/net/minecraft/world/level/block/entity/trialspawner" {
          */
         getOwner(): $Either<$BlockEntity, $Entity>;
         getData(): $TrialSpawnerData;
-        ejectReward(level: $ServerLevel, pos: $BlockPos_, lootTable: $ResourceKey_<$LootTable>): void;
-        getNormalConfig(): $TrialSpawnerConfig;
-        canSpawnInLevel(level: $Level_): boolean;
-        applyOminous(level: $ServerLevel, pos: $BlockPos_): void;
-        getOminousConfig(): $TrialSpawnerConfig;
-        getPlayerDetector(): $PlayerDetector;
-        getEntitySelector(): $PlayerDetector$EntitySelector;
-        removeOminous(level: $ServerLevel, pos: $BlockPos_): void;
-        markUpdated(): void;
+        isOminous(): boolean;
+        spawnMob(level: $ServerLevel, pos: $BlockPos_): ($UUID) | undefined;
+        tickServer(level: $ServerLevel, pos: $BlockPos_, isOminous: boolean): void;
+        tickClient(level: $Level_, pos: $BlockPos_, isOminous: boolean): void;
         getConfig(): $TrialSpawnerConfig;
         /**
          * @deprecated
          */
         overridePeacefulAndMobSpawnRule(): void;
-        codec(): $Codec<$TrialSpawner>;
+        getRequiredPlayerRange(): number;
+        getTargetCooldownLength(): number;
+        static addDetectPlayerParticles(level: $Level_, pos: $BlockPos_, random: $RandomSource, type: number, particle: $ParticleOptions_): void;
+        static addBecomeOminousParticles(level: $Level_, pos: $BlockPos_, random: $RandomSource): void;
+        static addEjectItemParticles(level: $Level_, pos: $BlockPos_, random: $RandomSource): void;
+        getOminousConfig(): $TrialSpawnerConfig;
+        ejectReward(level: $ServerLevel, pos: $BlockPos_, lootTable: $ResourceKey_<$LootTable>): void;
+        removeOminous(level: $ServerLevel, pos: $BlockPos_): void;
+        canSpawnInLevel(level: $Level_): boolean;
+        applyOminous(level: $ServerLevel, pos: $BlockPos_): void;
+        getPlayerDetector(): $PlayerDetector;
         static addSpawnParticles(level: $Level_, pos: $BlockPos_, random: $RandomSource, particleType: $SimpleParticleType): void;
+        getNormalConfig(): $TrialSpawnerConfig;
+        getEntitySelector(): $PlayerDetector$EntitySelector;
+        markUpdated(): void;
         /**
          * @deprecated
          */
         setPlayerDetector(playerDetector: $PlayerDetector_): void;
-        static addDetectPlayerParticles(level: $Level_, pos: $BlockPos_, random: $RandomSource, type: number, particle: $ParticleOptions_): void;
-        static addBecomeOminousParticles(level: $Level_, pos: $BlockPos_, random: $RandomSource): void;
-        getRequiredPlayerRange(): number;
-        getTargetCooldownLength(): number;
-        static addEjectItemParticles(level: $Level_, pos: $BlockPos_, random: $RandomSource): void;
-        spawnMob(level: $ServerLevel, pos: $BlockPos_): ($UUID) | undefined;
-        isOminous(): boolean;
-        tickClient(level: $Level_, pos: $BlockPos_, isOminous: boolean): void;
-        tickServer(level: $ServerLevel, pos: $BlockPos_, isOminous: boolean): void;
         static DETECT_PLAYER_SPAWN_BUFFER: number;
         static NORMAL_CONFIG_TAG_NAME: string;
         static OMINOUS_CONFIG_TAG_NAME: string;
@@ -76,24 +76,24 @@ declare module "@package/net/minecraft/world/level/block/entity/trialspawner" {
         constructor(stateAccessor: $TrialSpawner$StateAccessor, playerDetector: $PlayerDetector_, entitySelector: $PlayerDetector$EntitySelector);
         get owner(): $Either<$BlockEntity, $Entity>;
         get data(): $TrialSpawnerData;
-        get normalConfig(): $TrialSpawnerConfig;
-        get ominousConfig(): $TrialSpawnerConfig;
-        get entitySelector(): $PlayerDetector$EntitySelector;
+        get ominous(): boolean;
         get config(): $TrialSpawnerConfig;
         get requiredPlayerRange(): number;
         get targetCooldownLength(): number;
-        get ominous(): boolean;
+        get ominousConfig(): $TrialSpawnerConfig;
+        get normalConfig(): $TrialSpawnerConfig;
+        get entitySelector(): $PlayerDetector$EntitySelector;
     }
     export class $TrialSpawnerState extends $Enum<$TrialSpawnerState> implements $StringRepresentable {
         static values(): $TrialSpawnerState[];
         static valueOf(arg0: string): $TrialSpawnerState;
-        isCapableOfSpawning(): boolean;
-        getSerializedName(): string;
-        spinningMobSpeed(): number;
-        tickAndGetNext(pos: $BlockPos_, spawner: $TrialSpawner, level: $ServerLevel): $TrialSpawnerState;
-        hasSpinningMob(): boolean;
-        emitParticles(level: $Level_, pos: $BlockPos_, isOminous: boolean): void;
         lightLevel(): number;
+        getSerializedName(): string;
+        isCapableOfSpawning(): boolean;
+        hasSpinningMob(): boolean;
+        spinningMobSpeed(): number;
+        emitParticles(level: $Level_, pos: $BlockPos_, isOminous: boolean): void;
+        tickAndGetNext(pos: $BlockPos_, spawner: $TrialSpawner, level: $ServerLevel): $TrialSpawnerState;
         getRemappedEnumConstantName(): string;
         static COOLDOWN: $TrialSpawnerState;
         static ACTIVE: $TrialSpawnerState;
@@ -101,8 +101,8 @@ declare module "@package/net/minecraft/world/level/block/entity/trialspawner" {
         static EJECTING_REWARD: $TrialSpawnerState;
         static WAITING_FOR_REWARD_EJECTION: $TrialSpawnerState;
         static WAITING_FOR_PLAYERS: $TrialSpawnerState;
-        get capableOfSpawning(): boolean;
         get serializedName(): string;
+        get capableOfSpawning(): boolean;
         get remappedEnumConstantName(): string;
     }
     /**
@@ -120,8 +120,8 @@ declare module "@package/net/minecraft/world/level/block/entity/trialspawner" {
      */
     export type $TrialSpawnerState$ParticleEmission_ = (() => void);
     export class $PlayerDetector$EntitySelector {
-        static onlySelectPlayers(players: $List_<$Player>): $PlayerDetector$EntitySelector;
         static onlySelectPlayer(player: $Player): $PlayerDetector$EntitySelector;
+        static onlySelectPlayers(players: $List_<$Player>): $PlayerDetector$EntitySelector;
         static SELECT_FROM_LEVEL: $PlayerDetector$EntitySelector;
     }
     export interface $PlayerDetector$EntitySelector {
@@ -141,18 +141,18 @@ declare module "@package/net/minecraft/world/level/block/entity/trialspawner" {
      */
     export type $PlayerDetector_ = ((arg0: $ServerLevel, arg1: $PlayerDetector$EntitySelector, arg2: $BlockPos, arg3: number, arg4: boolean) => $List_<$UUID_>);
     export class $TrialSpawnerConfig extends $Record {
-        simultaneousMobs(): number;
+        spawnRange(): number;
+        ticksBetweenItemSpawners(): number;
+        spawnPotentialsDefinition(): $SimpleWeightedRandomList<$SpawnData>;
         lootTablesToEject(): $SimpleWeightedRandomList<$ResourceKey<$LootTable>>;
         ticksBetweenSpawn(): number;
-        totalMobs(): number;
-        spawnPotentialsDefinition(): $SimpleWeightedRandomList<$SpawnData>;
-        ticksBetweenItemSpawners(): number;
-        spawnRange(): number;
-        calculateTargetSimultaneousMobs(players: number): number;
         simultaneousMobsAddedPerPlayer(): number;
+        calculateTargetSimultaneousMobs(players: number): number;
+        totalMobsAddedPerPlayer(): number;
         calculateTargetTotalMobs(players: number): number;
         itemsToDropWhenOminous(): $ResourceKey<$LootTable>;
-        totalMobsAddedPerPlayer(): number;
+        totalMobs(): number;
+        simultaneousMobs(): number;
         static CODEC: $Codec<$TrialSpawnerConfig>;
         static DEFAULT: $TrialSpawnerConfig;
         constructor(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: $SimpleWeightedRandomList<$SpawnData_>, arg7: $SimpleWeightedRandomList<$ResourceKey_<$LootTable>>, arg8: $ResourceKey_<$LootTable>);
@@ -160,7 +160,7 @@ declare module "@package/net/minecraft/world/level/block/entity/trialspawner" {
     /**
      * Values that may be interpreted as {@link $TrialSpawnerConfig}.
      */
-    export type $TrialSpawnerConfig_ = { lootTablesToEject?: $SimpleWeightedRandomList<$ResourceKey_<$LootTable>>, spawnRange?: number, spawnPotentialsDefinition?: $SimpleWeightedRandomList<$SpawnData_>, simultaneousMobs?: number, totalMobsAddedPerPlayer?: number, itemsToDropWhenOminous?: $ResourceKey_<$LootTable>, simultaneousMobsAddedPerPlayer?: number, totalMobs?: number, ticksBetweenSpawn?: number,  } | [lootTablesToEject?: $SimpleWeightedRandomList<$ResourceKey_<$LootTable>>, spawnRange?: number, spawnPotentialsDefinition?: $SimpleWeightedRandomList<$SpawnData_>, simultaneousMobs?: number, totalMobsAddedPerPlayer?: number, itemsToDropWhenOminous?: $ResourceKey_<$LootTable>, simultaneousMobsAddedPerPlayer?: number, totalMobs?: number, ticksBetweenSpawn?: number, ];
+    export type $TrialSpawnerConfig_ = { ticksBetweenSpawn?: number, lootTablesToEject?: $SimpleWeightedRandomList<$ResourceKey_<$LootTable>>, spawnRange?: number, spawnPotentialsDefinition?: $SimpleWeightedRandomList<$SpawnData_>, simultaneousMobs?: number, totalMobsAddedPerPlayer?: number, itemsToDropWhenOminous?: $ResourceKey_<$LootTable>, simultaneousMobsAddedPerPlayer?: number, totalMobs?: number,  } | [ticksBetweenSpawn?: number, lootTablesToEject?: $SimpleWeightedRandomList<$ResourceKey_<$LootTable>>, spawnRange?: number, spawnPotentialsDefinition?: $SimpleWeightedRandomList<$SpawnData_>, simultaneousMobs?: number, totalMobsAddedPerPlayer?: number, itemsToDropWhenOminous?: $ResourceKey_<$LootTable>, simultaneousMobsAddedPerPlayer?: number, totalMobs?: number, ];
     export class $TrialSpawner$FlameParticle extends $Enum<$TrialSpawner$FlameParticle> {
         static values(): $TrialSpawner$FlameParticle[];
         static valueOf(arg0: string): $TrialSpawner$FlameParticle;
@@ -176,22 +176,22 @@ declare module "@package/net/minecraft/world/level/block/entity/trialspawner" {
     export type $TrialSpawner$FlameParticle_ = "normal" | "ominous";
     export class $TrialSpawnerData {
         reset(): void;
+        setEntityId(spawner: $TrialSpawner, random: $RandomSource, entityType: $EntityType_<never>): void;
+        getUpdateTag(spawnerState: $TrialSpawnerState_): $CompoundTag;
+        countAdditionalPlayers(pos: $BlockPos_): number;
+        isReadyToSpawnNextMob(level: $ServerLevel, config: $TrialSpawnerConfig_, players: number): boolean;
+        isReadyToEjectItems(level: $ServerLevel, delay: number, targetCooldownLength: number): boolean;
+        haveAllCurrentMobsDied(): boolean;
+        resetAfterBecomingOminous(spawner: $TrialSpawner, level: $ServerLevel): void;
+        hasFinishedSpawningAllMobs(config: $TrialSpawnerConfig_, players: number): boolean;
+        getOrCreateNextSpawnData(spawner: $TrialSpawner, random: $RandomSource): $SpawnData;
         getOrCreateDisplayEntity(spawner: $TrialSpawner, level: $Level_, spawnerState: $TrialSpawnerState_): $Entity;
+        isReadyToOpenShutter(level: $ServerLevel, delay: number, targetCooldownLength: number): boolean;
+        isCooldownFinished(level: $ServerLevel): boolean;
         hasMobToSpawn(trialSpawner: $TrialSpawner, random: $RandomSource): boolean;
         getDispensingItems(level: $ServerLevel, config: $TrialSpawnerConfig_, pos: $BlockPos_): $SimpleWeightedRandomList<$ItemStack>;
-        isCooldownFinished(level: $ServerLevel): boolean;
         tryDetectPlayers(level: $ServerLevel, pos: $BlockPos_, spawner: $TrialSpawner): void;
-        getUpdateTag(spawnerState: $TrialSpawnerState_): $CompoundTag;
         getSpin(): number;
-        countAdditionalPlayers(pos: $BlockPos_): number;
-        isReadyToOpenShutter(level: $ServerLevel, delay: number, targetCooldownLength: number): boolean;
-        isReadyToEjectItems(level: $ServerLevel, delay: number, targetCooldownLength: number): boolean;
-        isReadyToSpawnNextMob(level: $ServerLevel, config: $TrialSpawnerConfig_, players: number): boolean;
-        getOrCreateNextSpawnData(spawner: $TrialSpawner, random: $RandomSource): $SpawnData;
-        haveAllCurrentMobsDied(): boolean;
-        hasFinishedSpawningAllMobs(config: $TrialSpawnerConfig_, players: number): boolean;
-        resetAfterBecomingOminous(spawner: $TrialSpawner, level: $ServerLevel): void;
-        setEntityId(spawner: $TrialSpawner, random: $RandomSource, entityType: $EntityType_<never>): void;
         getOSpin(): number;
         nextMobSpawnsAt: number;
         oSpin: number;

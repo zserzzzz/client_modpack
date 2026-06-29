@@ -93,10 +93,10 @@ declare module "@package/com/simibubi/create/content/logistics/redstoneRequester
         isValid(): boolean;
         encodedRequest(): $PackageOrderWithCrafts;
         targetOffset(): $BlockPos;
-        writeToItem(arg0: $BlockPos_, arg1: $ItemStack_): void;
-        static readFromItem(arg0: $Level_, arg1: $Player, arg2: $BlockPos_, arg3: $ItemStack_): $AutoRequestData;
         encodedTargetAddress(): string;
         targetDim(): string;
+        writeToItem(arg0: $BlockPos_, arg1: $ItemStack_): void;
+        static readFromItem(arg0: $Level_, arg1: $Player, arg2: $BlockPos_, arg3: $ItemStack_): $AutoRequestData;
         static CODEC: $Codec<$AutoRequestData>;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $AutoRequestData>;
         constructor();
@@ -106,7 +106,7 @@ declare module "@package/com/simibubi/create/content/logistics/redstoneRequester
     /**
      * Values that may be interpreted as {@link $AutoRequestData}.
      */
-    export type $AutoRequestData_ = { encodedRequest?: $PackageOrderWithCrafts_, encodedTargetAddress?: string, targetOffset?: $BlockPos_, isValid?: boolean, targetDim?: string,  } | [encodedRequest?: $PackageOrderWithCrafts_, encodedTargetAddress?: string, targetOffset?: $BlockPos_, isValid?: boolean, targetDim?: string, ];
+    export type $AutoRequestData_ = { isValid?: boolean, targetDim?: string, encodedRequest?: $PackageOrderWithCrafts_, encodedTargetAddress?: string, targetOffset?: $BlockPos_,  } | [isValid?: boolean, targetDim?: string, encodedRequest?: $PackageOrderWithCrafts_, encodedTargetAddress?: string, targetOffset?: $BlockPos_, ];
     export class $RedstoneRequesterBlockEntity extends $StockCheckingBlockEntity implements $MenuProvider {
         use(arg0: $Player): $InteractionResult;
         getDisplayName(): $Component;
@@ -131,21 +131,21 @@ declare module "@package/com/simibubi/create/content/logistics/redstoneRequester
         get displayName(): $Component;
     }
     export class $RedstoneRequesterBlock extends $Block implements $IBE<$RedstoneRequesterBlockEntity>, $IWrenchable {
-        getBlockEntityType(): $BlockEntityType<$RedstoneRequesterBlockEntity>;
         getBlockEntityClass(): $Class<$RedstoneRequesterBlockEntity>;
-        static programRequester(arg0: $ServerPlayer, arg1: $StockTickerBlockEntity, arg2: $PackageOrderWithCrafts_, arg3: string): void;
+        getBlockEntityType(): $BlockEntityType<$RedstoneRequesterBlockEntity>;
         static appendRequesterTooltip(arg0: $ItemStack_, arg1: $List_<$Component_>): void;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$RedstoneRequesterBlockEntity>): void;
+        static programRequester(arg0: $ServerPlayer, arg1: $StockTickerBlockEntity, arg2: $PackageOrderWithCrafts_, arg3: string): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$RedstoneRequesterBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($RedstoneRequesterBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$RedstoneRequesterBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $RedstoneRequesterBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$RedstoneRequesterBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($RedstoneRequesterBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$RedstoneRequesterBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -177,8 +177,8 @@ declare module "@package/com/simibubi/create/content/logistics/redstoneRequester
         hasCollision: boolean;
         static AXIS: $EnumProperty<$Direction$Axis>;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$RedstoneRequesterBlockEntity>;
         get blockEntityClass(): $Class<$RedstoneRequesterBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$RedstoneRequesterBlockEntity>;
     }
     export class $RedstoneRequesterScreen extends $AbstractSimiContainerScreen<$RedstoneRequesterMenu> {
         leftPos: number;

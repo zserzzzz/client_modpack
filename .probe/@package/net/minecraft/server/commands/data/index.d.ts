@@ -19,6 +19,7 @@ declare module "@package/net/minecraft/server/commands/data" {
     export class $BlockDataAccessor implements $DataAccessor {
         getData(): $CompoundTag;
         setData(other: $CompoundTag_): void;
+        getModifiedSuccess(): $Component;
         /**
          * Gets the message used as a result of querying the given NBT (both for /data get and /data get path)
          */
@@ -27,7 +28,6 @@ declare module "@package/net/minecraft/server/commands/data" {
          * Gets the message used as a result of querying the given path with a scale.
          */
         getPrintSuccess(path: $NbtPathArgument$NbtPath, scale: number, arg2: number): $Component;
-        getModifiedSuccess(): $Component;
         static PROVIDER: $Function<string, $DataCommands$DataProvider>;
         static ERROR_NOT_A_BLOCK_ENTITY: $SimpleCommandExceptionType;
         constructor(entity: $BlockEntity, pos: $BlockPos_);
@@ -38,6 +38,7 @@ declare module "@package/net/minecraft/server/commands/data" {
     export interface $DataAccessor {
         getData(): $CompoundTag;
         setData(other: $CompoundTag_): void;
+        getModifiedSuccess(): $Component;
         /**
          * Gets the message used as a result of querying the given NBT (both for /data get and /data get path)
          */
@@ -46,7 +47,6 @@ declare module "@package/net/minecraft/server/commands/data" {
          * Gets the message used as a result of querying the given path with a scale.
          */
         getPrintSuccess(path: $NbtPathArgument$NbtPath, scale: number, arg2: number): $Component;
-        getModifiedSuccess(): $Component;
         get modifiedSuccess(): $Component;
     }
     export class $DataCommands$DataProvider {
@@ -64,15 +64,15 @@ declare module "@package/net/minecraft/server/commands/data" {
     export class $EntityDataAccessor implements $DataAccessor {
         getData(): $CompoundTag;
         setData(other: $CompoundTag_): void;
-        /**
-         * Gets the message used as a result of querying the given NBT (both for /data get and /data get path)
-         */
-        getPrintSuccess(nbt: $Tag_): $Component;
+        getModifiedSuccess(): $Component;
         /**
          * Gets the message used as a result of querying the given path with a scale.
          */
         getPrintSuccess(path: $NbtPathArgument$NbtPath, scale: number, arg2: number): $Component;
-        getModifiedSuccess(): $Component;
+        /**
+         * Gets the message used as a result of querying the given NBT (both for /data get and /data get path)
+         */
+        getPrintSuccess(nbt: $Tag_): $Component;
         static PROVIDER: $Function<string, $DataCommands$DataProvider>;
         constructor(entity: $Entity);
         get modifiedSuccess(): $Component;
@@ -96,6 +96,7 @@ declare module "@package/net/minecraft/server/commands/data" {
     export class $StorageDataAccessor implements $DataAccessor {
         getData(): $CompoundTag;
         setData(other: $CompoundTag_): void;
+        getModifiedSuccess(): $Component;
         /**
          * Gets the message used as a result of querying the given path with a scale.
          */
@@ -104,7 +105,6 @@ declare module "@package/net/minecraft/server/commands/data" {
          * Gets the message used as a result of querying the given NBT (both for /data get and /data get path)
          */
         getPrintSuccess(nbt: $Tag_): $Component;
-        getModifiedSuccess(): $Component;
         static getGlobalTags(context: $CommandContext<$CommandSourceStack>): $CommandStorage;
         static SUGGEST_STORAGE: $SuggestionProvider<$CommandSourceStack>;
         static PROVIDER: $Function<string, $DataCommands$DataProvider>;

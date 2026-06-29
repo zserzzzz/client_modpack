@@ -15,18 +15,18 @@ export * as pipeline from "@package/net/caffeinemc/mods/sodium/client/render/chu
 declare module "@package/net/caffeinemc/mods/sodium/client/render/chunk/compile" {
     export class $ChunkSortOutput extends $BuilderTaskOutput implements $SortData {
         getTopoSorter(): $DynamicTopoData$DynamicTopoSorter;
+        isReusingUploadedIndexData(): boolean;
         markAsReusingUploadedData(): void;
         copyResultFrom(arg0: $Sorter): void;
         getIndexBuffer(): $NativeBuffer;
-        isReusingUploadedIndexData(): boolean;
         getIntBuffer(): $IntBuffer;
         submitTime: number;
         render: $RenderSection;
         constructor(arg0: $RenderSection, arg1: number);
         constructor(arg0: $RenderSection, arg1: number, arg2: $Sorter);
         get topoSorter(): $DynamicTopoData$DynamicTopoSorter;
-        get indexBuffer(): $NativeBuffer;
         get reusingUploadedIndexData(): boolean;
+        get indexBuffer(): $NativeBuffer;
         get intBuffer(): $IntBuffer;
     }
     export class $BuilderTaskOutput {

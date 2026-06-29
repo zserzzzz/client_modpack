@@ -20,8 +20,8 @@ declare module "@package/net/neoforged/neoforge/common/advancements/critereon" {
      */
     export type $ItemAbilityPredicate_ = { action?: $ItemAbility_,  } | [action?: $ItemAbility_, ];
     export class $SnowBootsEntityPredicate implements $EntitySubPredicate {
-        matches(entity: $Entity, level: $ServerLevel, position: $Vec3_): boolean;
         codec(): $MapCodec<$SnowBootsEntityPredicate>;
+        matches(entity: $Entity, level: $ServerLevel, position: $Vec3_): boolean;
         static CODEC: $MapCodec<$SnowBootsEntityPredicate>;
         static INSTANCE: $SnowBootsEntityPredicate;
     }
@@ -32,8 +32,8 @@ declare module "@package/net/neoforged/neoforge/common/advancements/critereon" {
         static TYPE: $ItemSubPredicate$Type<$PiglinCurrencyItemPredicate>;
     }
     export class $PiglinNeutralArmorEntityPredicate implements $EntitySubPredicate {
-        matches(entity: $Entity, level: $ServerLevel, position: $Vec3_): boolean;
         codec(): $MapCodec<$PiglinNeutralArmorEntityPredicate>;
+        matches(entity: $Entity, level: $ServerLevel, position: $Vec3_): boolean;
         static CODEC: $MapCodec<$PiglinNeutralArmorEntityPredicate>;
         static INSTANCE: $PiglinNeutralArmorEntityPredicate;
     }

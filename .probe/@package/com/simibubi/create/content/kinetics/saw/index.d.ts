@@ -52,24 +52,24 @@ declare module "@package/com/simibubi/create/content/kinetics/saw" {
         static findDynamicTree(arg0: $Block_, arg1: $BlockPos_): ($AbstractBlockBreakQueue) | undefined;
         static findTree(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $BlockState_): $TreeCutter$Tree;
         static canDynamicTreeCutFrom(arg0: $Block_): boolean;
-        static isChorus(arg0: $BlockState_): boolean;
         static isVerticalPlant(arg0: $BlockState_): boolean;
+        static isChorus(arg0: $BlockState_): boolean;
         static NO_TREE: $TreeCutter$Tree;
         constructor();
     }
     export class $SawBlock extends $DirectionalAxisKineticBlock implements $IBE<$SawBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$SawBlockEntity>;
-        getBlockEntityClass(): $Class<$SawBlockEntity>;
-        wrapOperation$gkf000$sable$fixBlockBreakerDamage(arg0: $AABB_, arg1: $AABB_, arg2: $Operation_<any>, arg3: $Level_): boolean;
         static isHorizontal(arg0: $BlockState_): boolean;
+        getBlockEntityClass(): $Class<$SawBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$SawBlockEntity>;
+        wrapOperation$gkf000$sable$fixBlockBreakerDamage(arg0: $AABB_, arg1: $AABB_, arg2: $Operation_<any>, arg3: $Level_): boolean;
         wrapOperation$gkf000$sable$fixBlockBreakerDamage$mixinextras$bridge$23(arg0: $AABB_, arg1: $AABB_, arg2: $Operation_<any>, arg3: $LocalRef<any>): boolean;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$SawBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SawBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($SawBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SawBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $SawBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$SawBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($SawBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SawBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -102,8 +102,8 @@ declare module "@package/com/simibubi/create/content/kinetics/saw" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$SawBlockEntity>;
         get blockEntityClass(): $Class<$SawBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$SawBlockEntity>;
     }
     export class $TreeCutter$SearchDirection extends $Enum<$TreeCutter$SearchDirection> {
     }
@@ -122,18 +122,18 @@ declare module "@package/com/simibubi/create/content/kinetics/saw" {
         constructor();
     }
     export class $SawMovementBehaviour extends $BlockBreakingMovementBehaviour {
-        redirect$gka000$sable$fixSpeed$mixinextras$bridge$16(arg0: $Vec3_, arg1: $Vec3_, arg2: $LocalRef<any>): number;
         redirect$gka000$sable$fixSpeed(arg0: $Vec3_, arg1: $Vec3_, arg2: $MovementContext): number;
+        redirect$gka000$sable$fixSpeed$mixinextras$bridge$16(arg0: $Vec3_, arg1: $Vec3_, arg2: $LocalRef<any>): number;
         redirect$gka000$sable$fixRelativeMotion$mixinextras$bridge$17(arg0: $MovementContext, arg1: $LocalRef<any>, arg2: $LocalRef<any>): $Vec3;
-        redirect$gka000$sable$fixRelativeMotion(arg0: $MovementContext, arg1: $MovementContext, arg2: $Vec3_): $Vec3;
         dropItemFromCutTree(arg0: $MovementContext, arg1: $BlockPos_, arg2: $ItemStack_): void;
+        redirect$gka000$sable$fixRelativeMotion(arg0: $MovementContext, arg1: $MovementContext, arg2: $Vec3_): $Vec3;
         constructor();
     }
     export class $CuttingRecipe extends $StandardProcessingRecipe<$RecipeWrapper> implements $IAssemblyRecipe {
         matches(arg0: $RecipeWrapper, arg1: $Level_): boolean;
         addAssemblyIngredients(arg0: $List_<$Ingredient_>): void;
-        getDescriptionForAssembly(): $Component;
         addRequiredMachines(arg0: $Set_<$ItemLike_>): void;
+        getDescriptionForAssembly(): $Component;
         getJEISubCategory(): $Supplier<$Supplier<$SequencedAssemblySubCategory>>;
         addAssemblyFluidIngredients(arg0: $List_<$SizedFluidIngredient>): void;
         supportsAssembly(): boolean;
@@ -150,18 +150,18 @@ declare module "@package/com/simibubi/create/content/kinetics/saw" {
     }
     export class $SawBlock$PlacementHelper implements $IPlacementHelper {
         getOffset(arg0: $Player, arg1: $Level_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockHitResult, arg5: $ItemStack_): $PlacementOffset;
-        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
-        matchesState(arg0: $BlockState_): boolean;
-        displayGhost(arg0: $PlacementOffset): void;
         matchesItem(arg0: $ItemStack_): boolean;
+        matchesState(arg0: $BlockState_): boolean;
+        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
+        displayGhost(arg0: $PlacementOffset): void;
     }
     export class $TreeCutter$Tree extends $AbstractBlockBreakQueue {
         constructor(arg0: $List_<$BlockPos_>, arg1: $List_<$BlockPos_>, arg2: $List_<$BlockPos_>);
     }
     export class $SawBlockEntity extends $BlockBreakingKineticBlockEntity implements $Clearable {
         start(arg0: $ItemStack_): void;
-        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
         clearContent(): void;
+        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
         insertItem(arg0: $ItemEntity): void;
         static isSawable(arg0: $BlockState_): boolean;
         dropItemFromCutTree(arg0: $BlockPos_, arg1: $ItemStack_): void;

@@ -35,8 +35,12 @@ declare module "@package/net/neoforged/neoforge/client/extensions/common" {
      * This event is fired on the mod-specific event bus, only on the logical client.
      */
     export class $RegisterClientExtensionsEvent extends $Event implements $IModBusEvent {
-        registerFluidType(arg0: $IClientFluidTypeExtensions, ...arg1: $FluidType_[]): void;
         registerFluidType(arg0: $IClientFluidTypeExtensions, ...arg1: $Holder_<$FluidType>[]): void;
+        registerFluidType(arg0: $IClientFluidTypeExtensions, ...arg1: $FluidType_[]): void;
+        registerBlock(arg0: $IClientBlockExtensions, ...arg1: $Block_[]): void;
+        registerBlock(arg0: $IClientBlockExtensions, ...arg1: $Holder_<$Block>[]): void;
+        registerItem(arg0: $IClientItemExtensions, ...arg1: $Item_[]): void;
+        registerItem(arg0: $IClientItemExtensions, ...arg1: $Holder_<$Item>[]): void;
         /**
          * @return whether a `IClientBlockExtensions` has been registered for the given `Block`
          */
@@ -45,12 +49,6 @@ declare module "@package/net/neoforged/neoforge/client/extensions/common" {
          * @return whether a `IClientItemExtensions` has been registered for the given `Item`
          */
         isItemRegistered(item: $Item_): boolean;
-        registerMobEffect(arg0: $IClientMobEffectExtensions, ...arg1: $MobEffect_[]): void;
-        registerMobEffect(arg0: $IClientMobEffectExtensions, ...arg1: $Holder_<$MobEffect>[]): void;
-        registerBlock(arg0: $IClientBlockExtensions, ...arg1: $Block_[]): void;
-        registerBlock(arg0: $IClientBlockExtensions, ...arg1: $Holder_<$Block>[]): void;
-        registerItem(arg0: $IClientItemExtensions, ...arg1: $Holder_<$Item>[]): void;
-        registerItem(arg0: $IClientItemExtensions, ...arg1: $Item_[]): void;
         /**
          * @return whether a `IClientFluidTypeExtensions` has been registered for the given `FluidType`
          */
@@ -59,6 +57,8 @@ declare module "@package/net/neoforged/neoforge/client/extensions/common" {
          * @return whether a `IClientMobEffectExtensions` has been registered for the given `MobEffect`
          */
         isMobEffectRegistered(mobEffect: $MobEffect_): boolean;
+        registerMobEffect(arg0: $IClientMobEffectExtensions, ...arg1: $Holder_<$MobEffect>[]): void;
+        registerMobEffect(arg0: $IClientMobEffectExtensions, ...arg1: $MobEffect_[]): void;
     }
     /**
      * Client-only extensions to `FluidType`.
@@ -77,6 +77,73 @@ declare module "@package/net/neoforged/neoforge/client/extensions/common" {
          * and blue channels respectively. Each channel should be between [0,1].
          */
         modifyFogColor(camera: $Camera, partialTick: number, level: $ClientLevel, renderDistance: number, darkenWorldAmount: number, fluidFogColor: $Vector3f): $Vector3f;
+        /**
+         * Returns the reference of the texture to apply to a source fluid.
+         * 
+         * This should return a reference to the texture and not the actual
+         * texture itself (e.g. `minecraft:block/water_still` will point to
+         * `assets/minecraft/textures/block/water_still.png`).
+         * 
+         * Important: This method should only return `null` for `Fluids#EMPTY`.
+         * All other implementations must define this property.
+         */
+        getStillTexture(): $ResourceLocation;
+        /**
+         * Returns the reference of the texture to apply to a source fluid.
+         * 
+         * This should return a reference to the texture and not the actual
+         * texture itself (e.g. `minecraft:block/water_still` will point to
+         * `assets/minecraft/textures/block/water_still.png`).
+         * 
+         * Important: This method should only return `null` for `Fluids#EMPTY`.
+         * All other implementations must define this property.
+         */
+        getStillTexture(stack: $FluidStack_): $ResourceLocation;
+        /**
+         * Returns the reference of the texture to apply to a source fluid.
+         * 
+         * This should return a reference to the texture and not the actual
+         * texture itself (e.g. `minecraft:block/water_still` will point to
+         * `assets/minecraft/textures/block/water_still.png`).
+         * 
+         * Important: This method should only return `null` for `Fluids#EMPTY`.
+         * All other implementations must define this property.
+         */
+        getStillTexture(state: $FluidState, getter: $BlockAndTintGetter, pos: $BlockPos_): $ResourceLocation;
+        /**
+         * Returns the tint applied to the fluid's textures.
+         * 
+         * The result represents a 32-bit integer where each 8-bits represent
+         * the alpha, red, green, and blue channel respectively.
+         */
+        getTintColor(): number;
+        /**
+         * Returns the tint applied to the fluid's textures.
+         * 
+         * The result represents a 32-bit integer where each 8-bits represent
+         * the alpha, red, green, and blue channel respectively.
+         */
+        getTintColor(stack: $FluidStack_): number;
+        /**
+         * Returns the tint applied to the fluid's textures.
+         * 
+         * The result represents a 32-bit integer where each 8-bits represent
+         * the alpha, red, green, and blue channel respectively.
+         */
+        getTintColor(state: $FluidState, getter: $BlockAndTintGetter, pos: $BlockPos_): number;
+        /**
+         * Called to allow rendering custom quads for a fluid during chunk meshing. You may replace the fluid
+         * rendering entirely, or return false to allow vanilla's fluid rendering to also run.
+         * 
+         * Note: this method will be called once for every fluid block during chunk meshing, so any logic
+         * here needs to be performant.
+         */
+        renderFluid(fluidState: $FluidState, getter: $BlockAndTintGetter, pos: $BlockPos_, vertexConsumer: $VertexConsumer, blockState: $BlockState_): boolean;
+        /**
+         * Renders `#getRenderOverlayTexture` onto the camera when within
+         * the fluid.
+         */
+        renderOverlay(mc: $Minecraft, poseStack: $PoseStack): void;
         /**
          * Modifies how the fog is currently being rendered when the camera is
          * within a fluid.
@@ -116,19 +183,6 @@ declare module "@package/net/neoforged/neoforge/client/extensions/common" {
          */
         getFlowingTexture(): $ResourceLocation;
         /**
-         * Renders `#getRenderOverlayTexture` onto the camera when within
-         * the fluid.
-         */
-        renderOverlay(mc: $Minecraft, poseStack: $PoseStack): void;
-        /**
-         * Called to allow rendering custom quads for a fluid during chunk meshing. You may replace the fluid
-         * rendering entirely, or return false to allow vanilla's fluid rendering to also run.
-         * 
-         * Note: this method will be called once for every fluid block during chunk meshing, so any logic
-         * here needs to be performant.
-         */
-        renderFluid(fluidState: $FluidState, getter: $BlockAndTintGetter, pos: $BlockPos_, vertexConsumer: $VertexConsumer, blockState: $BlockState_): boolean;
-        /**
          * Returns the reference of the texture to apply to a source fluid.
          * 
          * This should return a reference to the texture and not the actual
@@ -138,50 +192,7 @@ declare module "@package/net/neoforged/neoforge/client/extensions/common" {
          * Important: This method should only return `null` for `Fluids#EMPTY`.
          * All other implementations must define this property.
          */
-        getStillTexture(stack: $FluidStack_): $ResourceLocation;
-        /**
-         * Returns the reference of the texture to apply to a source fluid.
-         * 
-         * This should return a reference to the texture and not the actual
-         * texture itself (e.g. `minecraft:block/water_still` will point to
-         * `assets/minecraft/textures/block/water_still.png`).
-         * 
-         * Important: This method should only return `null` for `Fluids#EMPTY`.
-         * All other implementations must define this property.
-         */
-        getStillTexture(): $ResourceLocation;
-        /**
-         * Returns the reference of the texture to apply to a source fluid.
-         * 
-         * This should return a reference to the texture and not the actual
-         * texture itself (e.g. `minecraft:block/water_still` will point to
-         * `assets/minecraft/textures/block/water_still.png`).
-         * 
-         * Important: This method should only return `null` for `Fluids#EMPTY`.
-         * All other implementations must define this property.
-         */
-        getStillTexture(state: $FluidState, getter: $BlockAndTintGetter, pos: $BlockPos_): $ResourceLocation;
-        /**
-         * Returns the tint applied to the fluid's textures.
-         * 
-         * The result represents a 32-bit integer where each 8-bits represent
-         * the alpha, red, green, and blue channel respectively.
-         */
-        getTintColor(stack: $FluidStack_): number;
-        /**
-         * Returns the tint applied to the fluid's textures.
-         * 
-         * The result represents a 32-bit integer where each 8-bits represent
-         * the alpha, red, green, and blue channel respectively.
-         */
-        getTintColor(state: $FluidState, getter: $BlockAndTintGetter, pos: $BlockPos_): number;
-        /**
-         * Returns the tint applied to the fluid's textures.
-         * 
-         * The result represents a 32-bit integer where each 8-bits represent
-         * the alpha, red, green, and blue channel respectively.
-         */
-        getTintColor(): number;
+        getOverlayTexture(): $ResourceLocation;
         /**
          * Returns the reference of the texture to apply to a source fluid.
          * 
@@ -193,17 +204,6 @@ declare module "@package/net/neoforged/neoforge/client/extensions/common" {
          * All other implementations must define this property.
          */
         getOverlayTexture(stack: $FluidStack_): $ResourceLocation;
-        /**
-         * Returns the reference of the texture to apply to a source fluid.
-         * 
-         * This should return a reference to the texture and not the actual
-         * texture itself (e.g. `minecraft:block/water_still` will point to
-         * `assets/minecraft/textures/block/water_still.png`).
-         * 
-         * Important: This method should only return `null` for `Fluids#EMPTY`.
-         * All other implementations must define this property.
-         */
-        getOverlayTexture(): $ResourceLocation;
         /**
          * Returns the reference of the texture to apply to a source fluid.
          * 
@@ -235,6 +235,13 @@ declare module "@package/net/neoforged/neoforge/client/extensions/common" {
     }
     export interface $IClientBlockExtensions {
         /**
+         * NOT CURRENTLY IMPLEMENTED
+         * 
+         * Use this to change the fog color used when the entity is "inside" a material.
+         * Vec3d is used here as "r/g/b" 0 - 1 values.
+         */
+        getFogColor(state: $BlockState_, level: $LevelReader, pos: $BlockPos_, entity: $Entity, originalColor: $Vector3d, partialTick: number): $Vector3d;
+        /**
          * Play breaking sound(s) when the block is destroyed. This allows playing sounds dependent on BE data
          * as it is called before the block and BE are actually removed on the client.
          */
@@ -254,13 +261,6 @@ declare module "@package/net/neoforged/neoforge/client/extensions/common" {
          */
         addDestroyEffects(state: $BlockState_, Level: $Level_, pos: $BlockPos_, manager: $ParticleEngine): boolean;
         /**
-         * NOT CURRENTLY IMPLEMENTED
-         * 
-         * Use this to change the fog color used when the entity is "inside" a material.
-         * Vec3d is used here as "r/g/b" 0 - 1 values.
-         */
-        getFogColor(state: $BlockState_, level: $LevelReader, pos: $BlockPos_, entity: $Entity, originalColor: $Vector3d, partialTick: number): $Vector3d;
-        /**
          * Returns true if the breaking particles created from the `BlockState` passed should be tinted with biome colors.
          */
         areBreakingParticlesTinted(state: $BlockState_, level: $ClientLevel, pos: $BlockPos_): boolean;
@@ -274,20 +274,6 @@ declare module "@package/net/neoforged/neoforge/client/extensions/common" {
         static DEFAULT: $IClientItemExtensions;
     }
     export interface $IClientItemExtensions {
-        getFont(arg0: $ItemStack_, arg1: $IClientItemExtensions$FontContext_): $Font;
-        /**
-         * @return Whether the item should bob when rendered in the world as an entity
-         */
-        shouldBobAsEntity(stack: $ItemStack_): boolean;
-        /**
-         * Called once per render pass of equipped armor items, regardless of the number of layers; the return value of this
-         * method is passed to `#getArmorLayerTintColor(ItemStack, LivingEntity, ArmorMaterial.Layer, int, int)` as
-         * the `fallbackColor` parameter.
-         * 
-         * You can override this method for your custom armor item to provide an alternative default color for the item when
-         * no explicit color is specified.
-         */
-        getDefaultDyeColor(stack: $ItemStack_): number;
         /**
          * Queries this item's renderer.
          * 
@@ -303,23 +289,13 @@ declare module "@package/net/neoforged/neoforge/client/extensions/common" {
          */
         getArmPose(entityLiving: $LivingEntity, hand: $InteractionHand_, itemStack: $ItemStack_): $HumanoidModel$ArmPose;
         /**
-         * @return Whether the item should bob when rendered in the world as an entity
-         */
-        shouldSpreadAsEntity(stack: $ItemStack_): boolean;
-        /**
-         * Called right before when client applies transformations to item in hand and render it.
-         */
-        applyForgeHandTransform(poseStack: $PoseStack, player: $LocalPlayer, arm: $HumanoidArm_, itemInHand: $ItemStack_, partialTick: number, equipProcess: number, swingProcess: number): boolean;
-        /**
-         * @deprecated
-         */
-        renderHelmetOverlay(stack: $ItemStack_, player: $Player, width: number, height: number, partialTick: number): void;
-        /**
-         * Called when the client starts rendering the HUD, and is wearing this item in the helmet slot.
+         * Queries the armor model for this item when it's equipped. Useful in place of
+         * `#getHumanoidArmorModel(LivingEntity, ItemStack, EquipmentSlot, HumanoidModel)` for wrapping the original
+         * model or returning anything non-standard.
          * 
-         * This is where pumpkins would render their overlay.
+         * If you override this method you are responsible for copying any properties you care about from the original model.
          */
-        renderHelmetOverlay(stack: $ItemStack_, player: $Player, guiGraphics: $GuiGraphics, deltaTracker: $DeltaTracker): void;
+        getGenericArmorModel(livingEntity: $LivingEntity, itemStack: $ItemStack_, equipmentSlot: $EquipmentSlot_, original: $HumanoidModel<never>): $Model;
         /**
          * Called when armor layers are rendered by `HumanoidArmorLayer`.
          * 
@@ -332,21 +308,45 @@ declare module "@package/net/neoforged/neoforge/client/extensions/common" {
         getArmorLayerTintColor(stack: $ItemStack_, entity: $LivingEntity, layer: $ArmorMaterial$Layer, layerIdx: number, fallbackColor: number): number;
         getScopeOverlayTexture(arg0: $ItemStack_): $ResourceLocation;
         /**
-         * Called when an armor piece is about to be rendered, allowing parts of the model to be animated or changed.
-         */
-        setupModelAnimations(livingEntity: $LivingEntity, itemStack: $ItemStack_, equipmentSlot: $EquipmentSlot_, model: $Model, limbSwing: number, limbSwingAmount: number, partialTick: number, ageInTicks: number, netHeadYaw: number, headPitch: number): void;
-        /**
          * Queries the humanoid armor model for this item when it's equipped.
          */
         getHumanoidArmorModel(livingEntity: $LivingEntity, itemStack: $ItemStack_, equipmentSlot: $EquipmentSlot_, original: $HumanoidModel<never>): $HumanoidModel<never>;
         /**
-         * Queries the armor model for this item when it's equipped. Useful in place of
-         * `#getHumanoidArmorModel(LivingEntity, ItemStack, EquipmentSlot, HumanoidModel)` for wrapping the original
-         * model or returning anything non-standard.
-         * 
-         * If you override this method you are responsible for copying any properties you care about from the original model.
+         * @deprecated
          */
-        getGenericArmorModel(livingEntity: $LivingEntity, itemStack: $ItemStack_, equipmentSlot: $EquipmentSlot_, original: $HumanoidModel<never>): $Model;
+        renderHelmetOverlay(stack: $ItemStack_, player: $Player, width: number, height: number, partialTick: number): void;
+        /**
+         * Called when the client starts rendering the HUD, and is wearing this item in the helmet slot.
+         * 
+         * This is where pumpkins would render their overlay.
+         */
+        renderHelmetOverlay(stack: $ItemStack_, player: $Player, guiGraphics: $GuiGraphics, deltaTracker: $DeltaTracker): void;
+        /**
+         * Called when an armor piece is about to be rendered, allowing parts of the model to be animated or changed.
+         */
+        setupModelAnimations(livingEntity: $LivingEntity, itemStack: $ItemStack_, equipmentSlot: $EquipmentSlot_, model: $Model, limbSwing: number, limbSwingAmount: number, partialTick: number, ageInTicks: number, netHeadYaw: number, headPitch: number): void;
+        /**
+         * @return Whether the item should bob when rendered in the world as an entity
+         */
+        shouldSpreadAsEntity(stack: $ItemStack_): boolean;
+        /**
+         * Called right before when client applies transformations to item in hand and render it.
+         */
+        applyForgeHandTransform(poseStack: $PoseStack, player: $LocalPlayer, arm: $HumanoidArm_, itemInHand: $ItemStack_, partialTick: number, equipProcess: number, swingProcess: number): boolean;
+        getFont(arg0: $ItemStack_, arg1: $IClientItemExtensions$FontContext_): $Font;
+        /**
+         * Called once per render pass of equipped armor items, regardless of the number of layers; the return value of this
+         * method is passed to `#getArmorLayerTintColor(ItemStack, LivingEntity, ArmorMaterial.Layer, int, int)` as
+         * the `fallbackColor` parameter.
+         * 
+         * You can override this method for your custom armor item to provide an alternative default color for the item when
+         * no explicit color is specified.
+         */
+        getDefaultDyeColor(stack: $ItemStack_): number;
+        /**
+         * @return Whether the item should bob when rendered in the world as an entity
+         */
+        shouldBobAsEntity(stack: $ItemStack_): boolean;
         get customRenderer(): $BlockEntityWithoutLevelRenderer;
     }
     export class $IClientItemExtensions$FontContext extends $Enum<$IClientItemExtensions$FontContext> {
@@ -377,21 +377,21 @@ declare module "@package/net/neoforged/neoforge/client/extensions/common" {
     }
     export interface $IClientMobEffectExtensions {
         /**
-         * Queries whether the given effect should be shown in the player's inventory.
-         * 
-         * By default, this returns `true`.
+         * Renders the icon of the specified effect in the player's inventory.
+         * This can be used to render icons from your own texture sheet.
          */
-        isVisibleInInventory(instance: $MobEffectInstance): boolean;
+        renderInventoryIcon(instance: $MobEffectInstance, screen: $EffectRenderingInventoryScreen<never>, guiGraphics: $GuiGraphics, x: number, y: number, blitOffset: number): boolean;
         /**
          * Renders the icon of the specified effect in the player's inventory.
          * This can be used to render icons from your own texture sheet.
          */
         renderInventoryText(instance: $MobEffectInstance, screen: $EffectRenderingInventoryScreen<never>, guiGraphics: $GuiGraphics, x: number, y: number, blitOffset: number): boolean;
         /**
-         * Renders the icon of the specified effect in the player's inventory.
-         * This can be used to render icons from your own texture sheet.
+         * Queries whether the given effect should be shown in the player's inventory.
+         * 
+         * By default, this returns `true`.
          */
-        renderInventoryIcon(instance: $MobEffectInstance, screen: $EffectRenderingInventoryScreen<never>, guiGraphics: $GuiGraphics, x: number, y: number, blitOffset: number): boolean;
+        isVisibleInInventory(instance: $MobEffectInstance): boolean;
         /**
          * Queries whether the given effect should be shown in the player's inventory.
          * 

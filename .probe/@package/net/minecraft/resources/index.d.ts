@@ -31,8 +31,6 @@ declare module "@package/net/minecraft/resources" {
      * @see net.minecraft.resources.ResourceKey
      */
     export class $ResourceLocation implements $Comparable<$ResourceLocation>, $SpecialEquality {
-        static tryBuild(namespace: string, path: string): $ResourceLocation;
-        static isAllowedInResourceLocation(character: string): boolean;
         compareTo(other: $ResourceLocation_): number;
         static read(location: string): $DataResult<$ResourceLocation>;
         static read(reader: $StringReader): $ResourceLocation;
@@ -40,32 +38,34 @@ declare module "@package/net/minecraft/resources" {
         getPath(): string;
         withPrefix(location: string): $ResourceLocation;
         withSuffix(location: string): $ResourceLocation;
+        getNamespace(): string;
+        static fromNamespaceAndPath(namespace: string, path: string): $ResourceLocation;
         /**
          * @return `true` if the specified `namespace` is valid: consists only of `[a-z0-9_.-]` characters
          */
         static isValidPath(namespace: string): boolean;
-        static tryParse(location: string): $ResourceLocation;
         static withDefaultNamespace(location: string): $ResourceLocation;
-        getNamespace(): string;
+        static tryParse(location: string): $ResourceLocation;
         /**
          * @return `true` if the specified `namespace` is valid: consists only of `[a-z0-9_.-]` characters
          */
         static isValidNamespace(namespace: string): boolean;
-        static bySeparator(location: string, seperator: string): $ResourceLocation;
         static tryBySeparator(location: string, seperator: string): $ResourceLocation;
-        compareNamespaced(other: $ResourceLocation_): number;
-        toDebugFileName(): string;
-        toLanguageKey(namespace: string, path: string): string;
-        toLanguageKey(): string;
-        toLanguageKey(type: string): string;
-        specialEquals(o: $Object, shallow: boolean): boolean;
-        static validNamespaceChar(character: string): boolean;
-        static readNonEmpty(reader: $StringReader): $ResourceLocation;
-        toShortLanguageKey(): string;
         static validPathChar(character: string): boolean;
-        withPath(location: string): $ResourceLocation;
+        specialEquals(o: $Object, shallow: boolean): boolean;
+        compareNamespaced(other: $ResourceLocation_): number;
+        static bySeparator(location: string, seperator: string): $ResourceLocation;
+        static readNonEmpty(reader: $StringReader): $ResourceLocation;
+        static validNamespaceChar(character: string): boolean;
+        toDebugFileName(): string;
+        toLanguageKey(): string;
+        toLanguageKey(namespace: string, path: string): string;
+        toLanguageKey(type: string): string;
+        toShortLanguageKey(): string;
+        static isAllowedInResourceLocation(character: string): boolean;
+        static tryBuild(namespace: string, path: string): $ResourceLocation;
         withPath(pathOperator: $UnaryOperator_<string>): $ResourceLocation;
-        static fromNamespaceAndPath(namespace: string, path: string): $ResourceLocation;
+        withPath(location: string): $ResourceLocation;
         static CODEC: $Codec<$ResourceLocation>;
         static REALMS_NAMESPACE: string;
         static ERROR_INVALID: $SimpleCommandExceptionType;
@@ -90,81 +90,81 @@ declare module "@package/net/minecraft/resources" {
      */
     export type $RegistryDataLoader$LoadingFunction_ = ((arg0: $RegistryDataLoader$Loader<never>, arg1: $RegistryOps$RegistryInfoLookup) => void);
     export class $RegistryDataLoader$RegistryData<T> extends $Record implements $RegistryDataAccessor {
+        elementCodec(): $Codec<T>;
         key(): $ResourceKey<$Registry<T>>;
         create(registryLifecycle: $Lifecycle, loadingErrors: $Map_<$ResourceKey_<never>, $Exception>): $RegistryDataLoader$Loader<T>;
-        elementCodec(): $Codec<T>;
-        runWithArguments(runner: $BiConsumer_<$ResourceKey<$Registry<T>>, $Codec<T>>): void;
         requiredNonEmpty(): boolean;
+        runWithArguments(runner: $BiConsumer_<$ResourceKey<$Registry<T>>, $Codec<T>>): void;
         registryBuilderConsumer(): $Consumer<$RegistryBuilder<T>>;
         invokeCreate(registryLifecycle: $Lifecycle, loadingErrors: $Map_<$ResourceKey_<never>, $Exception>): $RegistryDataLoader$Loader<never>;
-        constructor(arg0: $ResourceKey_<$Registry<T>>, arg1: $Codec<T>, arg2: boolean);
         constructor(key: $ResourceKey_<$Registry<T>>, elementCodec: $Codec<T>, requiredNonEmpty: boolean, registryBuilderConsumer: $Consumer_<$RegistryBuilder<T>>);
         constructor(key: $ResourceKey_<$Registry<T>>, elementCodec: $Codec<T>);
+        constructor(arg0: $ResourceKey_<$Registry<T>>, arg1: $Codec<T>, arg2: boolean);
     }
     /**
      * Values that may be interpreted as {@link $RegistryDataLoader$RegistryData}.
      */
-    export type $RegistryDataLoader$RegistryData_<T> = { key?: $ResourceKey_<$Registry<any>>, requiredNonEmpty?: boolean, registryBuilderConsumer?: $Consumer_<$RegistryBuilder<any>>, elementCodec?: $Codec<any>,  } | [key?: $ResourceKey_<$Registry<any>>, requiredNonEmpty?: boolean, registryBuilderConsumer?: $Consumer_<$RegistryBuilder<any>>, elementCodec?: $Codec<any>, ];
+    export type $RegistryDataLoader$RegistryData_<T> = { registryBuilderConsumer?: $Consumer_<$RegistryBuilder<any>>, elementCodec?: $Codec<any>, key?: $ResourceKey_<$Registry<any>>, requiredNonEmpty?: boolean,  } | [registryBuilderConsumer?: $Consumer_<$RegistryBuilder<any>>, elementCodec?: $Codec<any>, key?: $ResourceKey_<$Registry<any>>, requiredNonEmpty?: boolean, ];
     export class $HolderSetCodec<E> implements $Codec<$HolderSet<E>> {
         decode<T>(ops: $DynamicOps<T>, input: T): $DataResult<$Pair<$HolderSet<E>, T>>;
         encode<T>(input: $HolderSet_<E>, ops: $DynamicOps<T>, prefix: T): $DataResult<T>;
         static create<E>(registryKey: $ResourceKey_<$Registry<E>>, holderCodec: $Codec<$Holder_<E>>, disallowInline: boolean): $Codec<$HolderSet<E>>;
-        stable(): $Codec<$HolderSet<E>>;
-        dispatch<E>(arg0: string, arg1: $Function_<E, $HolderSet<E>>, arg2: $Function_<$HolderSet<E>, $MapCodec<E>>): $Codec<E>;
-        dispatch<E>(arg0: $Function_<E, $HolderSet<E>>, arg1: $Function_<$HolderSet<E>, $MapCodec<E>>): $Codec<E>;
-        validate(arg0: $Function_<$HolderSet<E>, $DataResult<$HolderSet<E>>>): $Codec<$HolderSet<E>>;
-        orElse(arg0: $HolderSet_<E>): $Codec<$HolderSet<E>>;
-        orElse(arg0: $UnaryOperator_<string>, arg1: $HolderSet_<E>): $Codec<$HolderSet<E>>;
-        orElse(arg0: $Consumer_<string>, arg1: $HolderSet_<E>): $Codec<$HolderSet<E>>;
-        orElseGet(arg0: $UnaryOperator_<string>, arg1: $Supplier_<$HolderSet<E>>): $Codec<$HolderSet<E>>;
-        orElseGet(arg0: $Consumer_<string>, arg1: $Supplier_<$HolderSet<E>>): $Codec<$HolderSet<E>>;
-        orElseGet(arg0: $Supplier_<$HolderSet<E>>): $Codec<$HolderSet<E>>;
-        partialDispatch<E>(arg0: string, arg1: $Function_<E, $DataResult<$HolderSet<E>>>, arg2: $Function_<$HolderSet<E>, $DataResult<$MapCodec<E>>>): $Codec<E>;
-        withLifecycle(arg0: $Lifecycle): $Codec<$HolderSet<E>>;
-        dispatchMap<E>(arg0: string, arg1: $Function_<E, $HolderSet<E>>, arg2: $Function_<$HolderSet<E>, $MapCodec<E>>): $MapCodec<E>;
-        dispatchMap<E>(arg0: $Function_<E, $HolderSet<E>>, arg1: $Function_<$HolderSet<E>, $MapCodec<E>>): $MapCodec<E>;
-        promotePartial(arg0: $Consumer_<string>): $Codec<$HolderSet<E>>;
-        optionalFieldOf(arg0: string): $MapCodec<($HolderSet<E>) | undefined>;
-        optionalFieldOf(arg0: string, arg1: $Lifecycle, arg2: $HolderSet_<E>, arg3: $Lifecycle): $MapCodec<$HolderSet<E>>;
-        optionalFieldOf(arg0: string, arg1: $HolderSet_<E>, arg2: $Lifecycle): $MapCodec<$HolderSet<E>>;
-        optionalFieldOf(arg0: string, arg1: $HolderSet_<E>): $MapCodec<$HolderSet<E>>;
-        flatComapMap<S>(arg0: $Function_<$HolderSet<E>, S>, arg1: $Function_<S, $DataResult<$HolderSet<E>>>): $Codec<S>;
-        sizeLimitedListOf(arg0: number): $Codec<$List<$HolderSet<E>>>;
-        dispatchStable<E>(arg0: $Function_<E, $HolderSet<E>>, arg1: $Function_<$HolderSet<E>, $MapCodec<E>>): $Codec<E>;
-        comapFlatMap<S>(arg0: $Function_<$HolderSet<E>, $DataResult<S>>, arg1: $Function_<S, $HolderSet<E>>): $Codec<S>;
-        listOf(arg0: number, arg1: number): $Codec<$List<$HolderSet<E>>>;
         listOf(): $Codec<$List<$HolderSet<E>>>;
-        mapResult(arg0: $Codec$ResultFunction<$HolderSet_<E>>): $Codec<$HolderSet<E>>;
+        listOf(arg0: number, arg1: number): $Codec<$List<$HolderSet<E>>>;
         flatXmap<S>(arg0: $Function_<$HolderSet<E>, $DataResult<S>>, arg1: $Function_<S, $DataResult<$HolderSet<E>>>): $Codec<S>;
         xmap<S>(arg0: $Function_<$HolderSet<E>, S>, arg1: $Function_<S, $HolderSet<E>>): $Codec<S>;
         deprecated(arg0: number): $Codec<$HolderSet<E>>;
+        mapResult(arg0: $Codec$ResultFunction<$HolderSet_<E>>): $Codec<$HolderSet<E>>;
+        stable(): $Codec<$HolderSet<E>>;
+        flatComapMap<S>(arg0: $Function_<$HolderSet<E>, S>, arg1: $Function_<S, $DataResult<$HolderSet<E>>>): $Codec<S>;
+        optionalFieldOf(arg0: string): $MapCodec<($HolderSet<E>) | undefined>;
+        optionalFieldOf(arg0: string, arg1: $HolderSet_<E>, arg2: $Lifecycle): $MapCodec<$HolderSet<E>>;
+        optionalFieldOf(arg0: string, arg1: $Lifecycle, arg2: $HolderSet_<E>, arg3: $Lifecycle): $MapCodec<$HolderSet<E>>;
+        optionalFieldOf(arg0: string, arg1: $HolderSet_<E>): $MapCodec<$HolderSet<E>>;
+        dispatchMap<E>(arg0: string, arg1: $Function_<E, $HolderSet<E>>, arg2: $Function_<$HolderSet<E>, $MapCodec<E>>): $MapCodec<E>;
+        dispatchMap<E>(arg0: $Function_<E, $HolderSet<E>>, arg1: $Function_<$HolderSet<E>, $MapCodec<E>>): $MapCodec<E>;
+        dispatchStable<E>(arg0: $Function_<E, $HolderSet<E>>, arg1: $Function_<$HolderSet<E>, $MapCodec<E>>): $Codec<E>;
+        partialDispatch<E>(arg0: string, arg1: $Function_<E, $DataResult<$HolderSet<E>>>, arg2: $Function_<$HolderSet<E>, $DataResult<$MapCodec<E>>>): $Codec<E>;
+        promotePartial(arg0: $Consumer_<string>): $Codec<$HolderSet<E>>;
+        sizeLimitedListOf(arg0: number): $Codec<$List<$HolderSet<E>>>;
+        dispatch<E>(arg0: $Function_<E, $HolderSet<E>>, arg1: $Function_<$HolderSet<E>, $MapCodec<E>>): $Codec<E>;
+        dispatch<E>(arg0: string, arg1: $Function_<E, $HolderSet<E>>, arg2: $Function_<$HolderSet<E>, $MapCodec<E>>): $Codec<E>;
+        validate(arg0: $Function_<$HolderSet<E>, $DataResult<$HolderSet<E>>>): $Codec<$HolderSet<E>>;
+        orElse(arg0: $HolderSet_<E>): $Codec<$HolderSet<E>>;
+        orElse(arg0: $Consumer_<string>, arg1: $HolderSet_<E>): $Codec<$HolderSet<E>>;
+        orElse(arg0: $UnaryOperator_<string>, arg1: $HolderSet_<E>): $Codec<$HolderSet<E>>;
+        orElseGet(arg0: $UnaryOperator_<string>, arg1: $Supplier_<$HolderSet<E>>): $Codec<$HolderSet<E>>;
+        orElseGet(arg0: $Consumer_<string>, arg1: $Supplier_<$HolderSet<E>>): $Codec<$HolderSet<E>>;
+        orElseGet(arg0: $Supplier_<$HolderSet<E>>): $Codec<$HolderSet<E>>;
+        lenientOptionalFieldOf(arg0: string, arg1: $HolderSet_<E>, arg2: $Lifecycle): $MapCodec<$HolderSet<E>>;
+        lenientOptionalFieldOf(arg0: string, arg1: $HolderSet_<E>): $MapCodec<$HolderSet<E>>;
         lenientOptionalFieldOf(arg0: string): $MapCodec<($HolderSet<E>) | undefined>;
         lenientOptionalFieldOf(arg0: string, arg1: $Lifecycle, arg2: $HolderSet_<E>, arg3: $Lifecycle): $MapCodec<$HolderSet<E>>;
-        lenientOptionalFieldOf(arg0: string, arg1: $HolderSet_<E>): $MapCodec<$HolderSet<E>>;
-        lenientOptionalFieldOf(arg0: string, arg1: $HolderSet_<E>, arg2: $Lifecycle): $MapCodec<$HolderSet<E>>;
-        encodeStart<T>(ops: $DynamicOps<T>, input: $HolderSet_<E>): $DataResult<T>;
+        comapFlatMap<S>(arg0: $Function_<$HolderSet<E>, $DataResult<S>>, arg1: $Function_<S, $HolderSet<E>>): $Codec<S>;
         comap<B>(arg0: $Function_<B, $HolderSet<E>>): $Encoder<B>;
         flatComap<B>(arg0: $Function_<B, $DataResult<$HolderSet<E>>>): $Encoder<B>;
+        encodeStart<T>(ops: $DynamicOps<T>, input: $HolderSet_<E>): $DataResult<T>;
+        simple(): $Decoder$Simple<$HolderSet<E>>;
         decode<T>(arg0: $Dynamic<T>): $DataResult<$Pair<$HolderSet<E>, T>>;
         map<B>(arg0: $Function_<$HolderSet<E>, B>): $Decoder<B>;
         flatMap<B>(arg0: $Function_<$HolderSet<E>, $DataResult<B>>): $Decoder<B>;
-        parse<T>(arg0: $Dynamic<T>): $DataResult<$HolderSet<E>>;
         parse<T>(ops: $DynamicOps<T>, input: T): $DataResult<$HolderSet<E>>;
+        parse<T>(arg0: $Dynamic<T>): $DataResult<$HolderSet<E>>;
         boxed(): $Decoder$Boxed<$HolderSet<E>>;
         terminal(): $Decoder$Terminal<$HolderSet<E>>;
-        simple(): $Decoder$Simple<$HolderSet<E>>;
         fieldOf(arg0: string): $MapEncoder<$HolderSet<E>>;
+        withLifecycle(arg0: $Lifecycle): $Encoder<$HolderSet<E>>;
     }
     export class $RegistryOps<T> extends $DelegatingOps<T> {
         owner<E>(registryKey: $ResourceKey_<$Registry<E>>): ($HolderOwner<E>) | undefined;
         static create<T>(delegate: $DynamicOps<T>, registries: $HolderLookup$Provider): $RegistryOps<T>;
         static create<T>(delegate: $DynamicOps<T>, lookupProvider: $RegistryOps$RegistryInfoLookup_): $RegistryOps<T>;
         getter<E>(registryKey: $ResourceKey_<$Registry<E>>): ($HolderGetter<E>) | undefined;
-        withParent<U>(ops: $DynamicOps<U>): $RegistryOps<U>;
-        static retrieveGetter<E, O>(key: $ResourceKey_<$Registry<E>>): $RecordCodecBuilder<O, $HolderGetter<E>>;
-        static retrieveElement<E, O>(key: $ResourceKey_<E>): $RecordCodecBuilder<O, $Holder$Reference<E>>;
-        static retrieveRegistryLookup<E>(arg0: $ResourceKey_<$Registry<E>>): $MapCodec<$HolderLookup$RegistryLookup<E>>;
         static injectRegistryContext<T>(dynamic: $Dynamic<T>, registries: $HolderLookup$Provider): $Dynamic<T>;
+        static retrieveRegistryLookup<E>(arg0: $ResourceKey_<$Registry<E>>): $MapCodec<$HolderLookup$RegistryLookup<E>>;
+        withParent<U>(ops: $DynamicOps<U>): $RegistryOps<U>;
+        static retrieveElement<E, O>(key: $ResourceKey_<E>): $RecordCodecBuilder<O, $Holder$Reference<E>>;
+        static retrieveGetter<E, O>(key: $ResourceKey_<$Registry<E>>): $RecordCodecBuilder<O, $HolderGetter<E>>;
         delegate: $DynamicOps<T>;
         lookupProvider: $RegistryOps$RegistryInfoLookup;
         constructor(arg0: $RegistryOps<T>);
@@ -181,7 +181,7 @@ declare module "@package/net/minecraft/resources" {
     /**
      * Values that may be interpreted as {@link $RegistryOps$RegistryInfo}.
      */
-    export type $RegistryOps$RegistryInfo_<T> = { getter?: $HolderGetter<any>, owner?: $HolderOwner<any>, elementsLifecycle?: $Lifecycle,  } | [getter?: $HolderGetter<any>, owner?: $HolderOwner<any>, elementsLifecycle?: $Lifecycle, ];
+    export type $RegistryOps$RegistryInfo_<T> = { elementsLifecycle?: $Lifecycle, getter?: $HolderGetter<any>, owner?: $HolderOwner<any>,  } | [elementsLifecycle?: $Lifecycle, getter?: $HolderGetter<any>, owner?: $HolderOwner<any>, ];
     export class $RegistryOps$RegistryInfoLookup {
     }
     export interface $RegistryOps$RegistryInfoLookup {
@@ -195,8 +195,21 @@ declare module "@package/net/minecraft/resources" {
      * A `DynamicOps` that delegates all functionality to an internal delegate. Comments and parameters here are copied from `DynamicOps` in DataFixerUpper.
      */
     export class $DelegatingOps<T> implements $DynamicOps<T> {
-        mapBuilder(): $RecordBuilder<T>;
+        createByte(value: number): T;
+        /**
+         * Only successful if first argument is a map or empty.
+         */
+        mergeToMap(map: T, key: T, value: T): $DataResult<T>;
+        mergeToMap(map: T, values: $MapLike<T>): $DataResult<T>;
+        mergeToMap(map: T, values: $Map_<T, T>): $DataResult<T>;
         createInt(value: number): T;
+        getList(input: T): $DataResult<$Consumer<$Consumer<T>>>;
+        convertTo<U>(outOps: $DynamicOps<U>, input: T): U;
+        getStringValue(input: T): $DataResult<string>;
+        getBooleanValue(input: T): $DataResult<boolean>;
+        createFloat(value: number): T;
+        createDouble(value: number): T;
+        mapBuilder(): $RecordBuilder<T>;
         remove(input: T, key: string): T;
         empty(): T;
         emptyList(): T;
@@ -208,56 +221,43 @@ declare module "@package/net/minecraft/resources" {
         createLong(value: number): T;
         createString(value: string): T;
         getStream(input: T): $DataResult<$Stream<T>>;
-        createFloat(value: number): T;
-        createDouble(value: number): T;
         createList(input: $Stream<T>): T;
+        getNumberValue(input: T): $DataResult<$Number>;
+        compressMaps(): boolean;
+        createByteList(input: $ByteBuffer): T;
+        getLongStream(input: T): $DataResult<$LongStream>;
+        getIntStream(input: T): $DataResult<$IntStream>;
+        createIntList(input: $IntStream): T;
+        createLongList(input: $LongStream): T;
+        listBuilder(): $ListBuilder<T>;
         createNumeric(i: $Number): T;
+        getMapValues(input: T): $DataResult<$Stream<$Pair<T, T>>>;
+        mergeToList(list: T, values: $List_<T>): $DataResult<T>;
+        /**
+         * Only successful if first argument is a list/array or empty.
+         */
+        mergeToList(list: T, value: T): $DataResult<T>;
+        createShort(value: number): T;
         /**
          * Only successful if first argument is a list/array or empty.
          */
         mergeToPrimitive(list: T, value: T): $DataResult<T>;
         getMapEntries(input: T): $DataResult<$Consumer<$BiConsumer<T, T>>>;
-        getIntStream(input: T): $DataResult<$IntStream>;
-        createLongList(input: $LongStream): T;
-        compressMaps(): boolean;
-        listBuilder(): $ListBuilder<T>;
-        getMapValues(input: T): $DataResult<$Stream<$Pair<T, T>>>;
-        createIntList(input: $IntStream): T;
-        createByteList(input: $ByteBuffer): T;
-        getLongStream(input: T): $DataResult<$LongStream>;
-        createShort(value: number): T;
-        /**
-         * Only successful if first argument is a list/array or empty.
-         */
-        mergeToList(list: T, value: T): $DataResult<T>;
-        mergeToList(list: T, values: $List_<T>): $DataResult<T>;
         createBoolean(value: boolean): T;
-        getStringValue(input: T): $DataResult<string>;
-        getBooleanValue(input: T): $DataResult<boolean>;
-        getNumberValue(input: T): $DataResult<$Number>;
-        /**
-         * Only successful if first argument is a map or empty.
-         */
-        mergeToMap(map: T, key: T, value: T): $DataResult<T>;
-        mergeToMap(map: T, values: $Map_<T, T>): $DataResult<T>;
-        mergeToMap(map: T, values: $MapLike<T>): $DataResult<T>;
-        convertTo<U>(outOps: $DynamicOps<U>, input: T): U;
-        createByte(value: number): T;
-        getList(input: T): $DataResult<$Consumer<$Consumer<T>>>;
-        get(arg0: T, arg1: string): $DataResult<T>;
-        update(arg0: T, arg1: string, arg2: $Function_<T, T>): T;
-        set(arg0: T, arg1: string, arg2: T): T;
-        updateGeneric(arg0: T, arg1: T, arg2: $Function_<T, T>): T;
-        withEncoder<E>(arg0: $Encoder_<E>): $Function<E, $DataResult<T>>;
-        withDecoder<E>(arg0: $Decoder_<E>): $Function<T, $DataResult<$Pair<E, T>>>;
-        convertList<U>(outOps: $DynamicOps<U>, input: T): U;
-        getNumberValue(arg0: T, arg1: $Number): $Number;
+        convertMap<U>(outOps: $DynamicOps<U>, input: T): U;
+        withParser<E>(arg0: $Decoder_<E>): $Function<T, $DataResult<E>>;
         /**
          * Only successful if first argument is a list/array or empty.
          */
         getGeneric(list: T, value: T): $DataResult<T>;
-        withParser<E>(arg0: $Decoder_<E>): $Function<T, $DataResult<E>>;
-        convertMap<U>(outOps: $DynamicOps<U>, input: T): U;
+        get(arg0: T, arg1: string): $DataResult<T>;
+        update(arg0: T, arg1: string, arg2: $Function_<T, T>): T;
+        set(arg0: T, arg1: string, arg2: T): T;
+        getNumberValue(arg0: T, arg1: $Number): $Number;
+        updateGeneric(arg0: T, arg1: T, arg2: $Function_<T, T>): T;
+        withDecoder<E>(arg0: $Decoder_<E>): $Function<T, $DataResult<$Pair<E, T>>>;
+        convertList<U>(outOps: $DynamicOps<U>, input: T): U;
+        withEncoder<E>(arg0: $Encoder_<E>): $Function<E, $DataResult<T>>;
         delegate: $DynamicOps<T>;
         constructor(delegate: $DynamicOps<T>);
     }
@@ -272,51 +272,51 @@ declare module "@package/net/minecraft/resources" {
          */
         static create<E>(registryKey: $ResourceKey_<$Registry<E>>, elementCodec: $Codec<E>): $RegistryFileCodec<E>;
         static create<E>(registryKey: $ResourceKey_<$Registry<E>>, elementCodec: $Codec<E>, allowInline: boolean): $RegistryFileCodec<E>;
-        stable(): $Codec<$Holder<E>>;
-        dispatch<E>(arg0: string, arg1: $Function_<E, $Holder<E>>, arg2: $Function_<$Holder<E>, $MapCodec<E>>): $Codec<E>;
-        dispatch<E>(arg0: $Function_<E, $Holder<E>>, arg1: $Function_<$Holder<E>, $MapCodec<E>>): $Codec<E>;
-        validate(arg0: $Function_<$Holder<E>, $DataResult<$Holder<E>>>): $Codec<$Holder<E>>;
-        orElse(arg0: $Holder_<E>): $Codec<$Holder<E>>;
-        orElse(arg0: $UnaryOperator_<string>, arg1: $Holder_<E>): $Codec<$Holder<E>>;
-        orElse(arg0: $Consumer_<string>, arg1: $Holder_<E>): $Codec<$Holder<E>>;
-        orElseGet(arg0: $UnaryOperator_<string>, arg1: $Supplier_<$Holder<E>>): $Codec<$Holder<E>>;
-        orElseGet(arg0: $Consumer_<string>, arg1: $Supplier_<$Holder<E>>): $Codec<$Holder<E>>;
-        orElseGet(arg0: $Supplier_<$Holder<E>>): $Codec<$Holder<E>>;
-        partialDispatch<E>(arg0: string, arg1: $Function_<E, $DataResult<$Holder<E>>>, arg2: $Function_<$Holder<E>, $DataResult<$MapCodec<E>>>): $Codec<E>;
-        withLifecycle(arg0: $Lifecycle): $Codec<$Holder<E>>;
-        dispatchMap<E>(arg0: string, arg1: $Function_<E, $Holder<E>>, arg2: $Function_<$Holder<E>, $MapCodec<E>>): $MapCodec<E>;
-        dispatchMap<E>(arg0: $Function_<E, $Holder<E>>, arg1: $Function_<$Holder<E>, $MapCodec<E>>): $MapCodec<E>;
-        promotePartial(arg0: $Consumer_<string>): $Codec<$Holder<E>>;
-        optionalFieldOf(arg0: string): $MapCodec<($Holder<E>) | undefined>;
-        optionalFieldOf(arg0: string, arg1: $Lifecycle, arg2: $Holder_<E>, arg3: $Lifecycle): $MapCodec<$Holder<E>>;
-        optionalFieldOf(arg0: string, arg1: $Holder_<E>, arg2: $Lifecycle): $MapCodec<$Holder<E>>;
-        optionalFieldOf(arg0: string, arg1: $Holder_<E>): $MapCodec<$Holder<E>>;
-        flatComapMap<S>(arg0: $Function_<$Holder<E>, S>, arg1: $Function_<S, $DataResult<$Holder<E>>>): $Codec<S>;
-        sizeLimitedListOf(arg0: number): $Codec<$List<$Holder<E>>>;
-        dispatchStable<E>(arg0: $Function_<E, $Holder<E>>, arg1: $Function_<$Holder<E>, $MapCodec<E>>): $Codec<E>;
-        comapFlatMap<S>(arg0: $Function_<$Holder<E>, $DataResult<S>>, arg1: $Function_<S, $Holder<E>>): $Codec<S>;
-        listOf(arg0: number, arg1: number): $Codec<$List<$Holder<E>>>;
         listOf(): $Codec<$List<$Holder<E>>>;
-        mapResult(arg0: $Codec$ResultFunction<$Holder_<E>>): $Codec<$Holder<E>>;
+        listOf(arg0: number, arg1: number): $Codec<$List<$Holder<E>>>;
         flatXmap<S>(arg0: $Function_<$Holder<E>, $DataResult<S>>, arg1: $Function_<S, $DataResult<$Holder<E>>>): $Codec<S>;
         xmap<S>(arg0: $Function_<$Holder<E>, S>, arg1: $Function_<S, $Holder<E>>): $Codec<S>;
         deprecated(arg0: number): $Codec<$Holder<E>>;
+        mapResult(arg0: $Codec$ResultFunction<$Holder_<E>>): $Codec<$Holder<E>>;
+        stable(): $Codec<$Holder<E>>;
+        flatComapMap<S>(arg0: $Function_<$Holder<E>, S>, arg1: $Function_<S, $DataResult<$Holder<E>>>): $Codec<S>;
+        optionalFieldOf(arg0: string): $MapCodec<($Holder<E>) | undefined>;
+        optionalFieldOf(arg0: string, arg1: $Holder_<E>, arg2: $Lifecycle): $MapCodec<$Holder<E>>;
+        optionalFieldOf(arg0: string, arg1: $Lifecycle, arg2: $Holder_<E>, arg3: $Lifecycle): $MapCodec<$Holder<E>>;
+        optionalFieldOf(arg0: string, arg1: $Holder_<E>): $MapCodec<$Holder<E>>;
+        dispatchMap<E>(arg0: string, arg1: $Function_<E, $Holder<E>>, arg2: $Function_<$Holder<E>, $MapCodec<E>>): $MapCodec<E>;
+        dispatchMap<E>(arg0: $Function_<E, $Holder<E>>, arg1: $Function_<$Holder<E>, $MapCodec<E>>): $MapCodec<E>;
+        dispatchStable<E>(arg0: $Function_<E, $Holder<E>>, arg1: $Function_<$Holder<E>, $MapCodec<E>>): $Codec<E>;
+        partialDispatch<E>(arg0: string, arg1: $Function_<E, $DataResult<$Holder<E>>>, arg2: $Function_<$Holder<E>, $DataResult<$MapCodec<E>>>): $Codec<E>;
+        promotePartial(arg0: $Consumer_<string>): $Codec<$Holder<E>>;
+        sizeLimitedListOf(arg0: number): $Codec<$List<$Holder<E>>>;
+        dispatch<E>(arg0: $Function_<E, $Holder<E>>, arg1: $Function_<$Holder<E>, $MapCodec<E>>): $Codec<E>;
+        dispatch<E>(arg0: string, arg1: $Function_<E, $Holder<E>>, arg2: $Function_<$Holder<E>, $MapCodec<E>>): $Codec<E>;
+        validate(arg0: $Function_<$Holder<E>, $DataResult<$Holder<E>>>): $Codec<$Holder<E>>;
+        orElse(arg0: $Holder_<E>): $Codec<$Holder<E>>;
+        orElse(arg0: $Consumer_<string>, arg1: $Holder_<E>): $Codec<$Holder<E>>;
+        orElse(arg0: $UnaryOperator_<string>, arg1: $Holder_<E>): $Codec<$Holder<E>>;
+        orElseGet(arg0: $UnaryOperator_<string>, arg1: $Supplier_<$Holder<E>>): $Codec<$Holder<E>>;
+        orElseGet(arg0: $Consumer_<string>, arg1: $Supplier_<$Holder<E>>): $Codec<$Holder<E>>;
+        orElseGet(arg0: $Supplier_<$Holder<E>>): $Codec<$Holder<E>>;
+        lenientOptionalFieldOf(arg0: string, arg1: $Holder_<E>, arg2: $Lifecycle): $MapCodec<$Holder<E>>;
+        lenientOptionalFieldOf(arg0: string, arg1: $Holder_<E>): $MapCodec<$Holder<E>>;
         lenientOptionalFieldOf(arg0: string): $MapCodec<($Holder<E>) | undefined>;
         lenientOptionalFieldOf(arg0: string, arg1: $Lifecycle, arg2: $Holder_<E>, arg3: $Lifecycle): $MapCodec<$Holder<E>>;
-        lenientOptionalFieldOf(arg0: string, arg1: $Holder_<E>): $MapCodec<$Holder<E>>;
-        lenientOptionalFieldOf(arg0: string, arg1: $Holder_<E>, arg2: $Lifecycle): $MapCodec<$Holder<E>>;
-        encodeStart<T>(ops: $DynamicOps<T>, input: $Holder_<E>): $DataResult<T>;
+        comapFlatMap<S>(arg0: $Function_<$Holder<E>, $DataResult<S>>, arg1: $Function_<S, $Holder<E>>): $Codec<S>;
         comap<B>(arg0: $Function_<B, $Holder<E>>): $Encoder<B>;
         flatComap<B>(arg0: $Function_<B, $DataResult<$Holder<E>>>): $Encoder<B>;
+        encodeStart<T>(ops: $DynamicOps<T>, input: $Holder_<E>): $DataResult<T>;
+        simple(): $Decoder$Simple<$Holder<E>>;
         decode<T>(arg0: $Dynamic<T>): $DataResult<$Pair<$Holder<E>, T>>;
         map<B>(arg0: $Function_<$Holder<E>, B>): $Decoder<B>;
         flatMap<B>(arg0: $Function_<$Holder<E>, $DataResult<B>>): $Decoder<B>;
-        parse<T>(arg0: $Dynamic<T>): $DataResult<$Holder<E>>;
         parse<T>(ops: $DynamicOps<T>, input: T): $DataResult<$Holder<E>>;
+        parse<T>(arg0: $Dynamic<T>): $DataResult<$Holder<E>>;
         boxed(): $Decoder$Boxed<$Holder<E>>;
         terminal(): $Decoder$Terminal<$Holder<E>>;
-        simple(): $Decoder$Simple<$Holder<E>>;
         fieldOf(arg0: string): $MapEncoder<$Holder<E>>;
+        withLifecycle(arg0: $Lifecycle): $Encoder<$Holder<E>>;
     }
     export class $ResourceLocation$Serializer implements $JsonDeserializer<$ResourceLocation>, $JsonSerializer<$ResourceLocation> {
         serialize(src: $ResourceLocation_, typeOfSrc: $Type, context: $JsonSerializationContext): $JsonElement;
@@ -332,6 +332,7 @@ declare module "@package/net/minecraft/resources" {
      * @see net.minecraft.resources.ResourceLocation
      */
     export class $ResourceKey<T> implements $Comparable<$ResourceKey<never>>, $SpecialEquality {
+        static codec<T>(registryKey: $ResourceKey_<$Registry<T>>): $Codec<$ResourceKey<T>>;
         cast<E>(registryKey: $ResourceKey_<$Registry<E>>): ($ResourceKey<E>) | undefined;
         compareTo(arg0: $ResourceKey_<never>): number;
         location(): $ResourceLocation;
@@ -342,23 +343,22 @@ declare module "@package/net/minecraft/resources" {
          */
         static create<T>(registryKey: $ResourceKey_<$Registry<T>>, location: $ResourceLocation_): $ResourceKey<T>;
         registry(): $ResourceLocation;
-        static codec<T>(registryKey: $ResourceKey_<$Registry<T>>): $Codec<$ResourceKey<T>>;
-        /**
-         * @return the created registry key. The registry name is set to `minecraft:root` and the location the specified `registryName`.
-         */
-        static createRegistryKey<T>(location: $ResourceLocation_): $ResourceKey<$Registry<T>>;
-        specialEquals(o: $Object, shallow: boolean): boolean;
         /**
          * @return `true` if this resource key is a direct child of the specified `registryKey`.
          */
         isFor(registryKey: $ResourceKey_<$Registry<never>>): boolean;
         registryKey(): $ResourceKey<$Registry<$ResourceKey<never>>>;
-        getNamespace(): string;
-        static streamCodec<T>(registryKey: $ResourceKey_<$Registry<T>>): $StreamCodec<$ByteBuf, $ResourceKey<T>>;
+        /**
+         * @return the created registry key. The registry name is set to `minecraft:root` and the location the specified `registryName`.
+         */
+        static createRegistryKey<T>(location: $ResourceLocation_): $ResourceKey<$Registry<T>>;
+        specialEquals(o: $Object, shallow: boolean): boolean;
         getPath(): string;
+        static streamCodec<T>(registryKey: $ResourceKey_<$Registry<T>>): $StreamCodec<$ByteBuf, $ResourceKey<T>>;
+        getNamespace(): string;
         constructor(registryName: $ResourceLocation_, location: $ResourceLocation_);
-        get namespace(): string;
         get path(): string;
+        get namespace(): string;
     }
     /**
      * Values that may be interpreted as {@link $ResourceKey}.
@@ -379,80 +379,80 @@ declare module "@package/net/minecraft/resources" {
         decode<T>(ops: $DynamicOps<T>, value: T): $DataResult<$Pair<$Holder<E>, T>>;
         encode<T>(holder: $Holder_<E>, ops: $DynamicOps<T>, value: T): $DataResult<T>;
         static create<E>(registryKey: $ResourceKey_<$Registry<E>>): $RegistryFixedCodec<E>;
-        stable(): $Codec<$Holder<E>>;
-        dispatch<E>(arg0: string, arg1: $Function_<E, $Holder<E>>, arg2: $Function_<$Holder<E>, $MapCodec<E>>): $Codec<E>;
-        dispatch<E>(arg0: $Function_<E, $Holder<E>>, arg1: $Function_<$Holder<E>, $MapCodec<E>>): $Codec<E>;
-        validate(arg0: $Function_<$Holder<E>, $DataResult<$Holder<E>>>): $Codec<$Holder<E>>;
-        orElse(arg0: $Holder_<E>): $Codec<$Holder<E>>;
-        orElse(arg0: $UnaryOperator_<string>, arg1: $Holder_<E>): $Codec<$Holder<E>>;
-        orElse(arg0: $Consumer_<string>, arg1: $Holder_<E>): $Codec<$Holder<E>>;
-        orElseGet(arg0: $UnaryOperator_<string>, arg1: $Supplier_<$Holder<E>>): $Codec<$Holder<E>>;
-        orElseGet(arg0: $Consumer_<string>, arg1: $Supplier_<$Holder<E>>): $Codec<$Holder<E>>;
-        orElseGet(arg0: $Supplier_<$Holder<E>>): $Codec<$Holder<E>>;
-        partialDispatch<E>(arg0: string, arg1: $Function_<E, $DataResult<$Holder<E>>>, arg2: $Function_<$Holder<E>, $DataResult<$MapCodec<E>>>): $Codec<E>;
-        withLifecycle(arg0: $Lifecycle): $Codec<$Holder<E>>;
-        dispatchMap<E>(arg0: string, arg1: $Function_<E, $Holder<E>>, arg2: $Function_<$Holder<E>, $MapCodec<E>>): $MapCodec<E>;
-        dispatchMap<E>(arg0: $Function_<E, $Holder<E>>, arg1: $Function_<$Holder<E>, $MapCodec<E>>): $MapCodec<E>;
-        promotePartial(arg0: $Consumer_<string>): $Codec<$Holder<E>>;
-        optionalFieldOf(arg0: string): $MapCodec<($Holder<E>) | undefined>;
-        optionalFieldOf(arg0: string, arg1: $Lifecycle, arg2: $Holder_<E>, arg3: $Lifecycle): $MapCodec<$Holder<E>>;
-        optionalFieldOf(arg0: string, arg1: $Holder_<E>, arg2: $Lifecycle): $MapCodec<$Holder<E>>;
-        optionalFieldOf(arg0: string, arg1: $Holder_<E>): $MapCodec<$Holder<E>>;
-        flatComapMap<S>(arg0: $Function_<$Holder<E>, S>, arg1: $Function_<S, $DataResult<$Holder<E>>>): $Codec<S>;
-        sizeLimitedListOf(arg0: number): $Codec<$List<$Holder<E>>>;
-        dispatchStable<E>(arg0: $Function_<E, $Holder<E>>, arg1: $Function_<$Holder<E>, $MapCodec<E>>): $Codec<E>;
-        comapFlatMap<S>(arg0: $Function_<$Holder<E>, $DataResult<S>>, arg1: $Function_<S, $Holder<E>>): $Codec<S>;
-        listOf(arg0: number, arg1: number): $Codec<$List<$Holder<E>>>;
         listOf(): $Codec<$List<$Holder<E>>>;
-        mapResult(arg0: $Codec$ResultFunction<$Holder_<E>>): $Codec<$Holder<E>>;
+        listOf(arg0: number, arg1: number): $Codec<$List<$Holder<E>>>;
         flatXmap<S>(arg0: $Function_<$Holder<E>, $DataResult<S>>, arg1: $Function_<S, $DataResult<$Holder<E>>>): $Codec<S>;
         xmap<S>(arg0: $Function_<$Holder<E>, S>, arg1: $Function_<S, $Holder<E>>): $Codec<S>;
         deprecated(arg0: number): $Codec<$Holder<E>>;
+        mapResult(arg0: $Codec$ResultFunction<$Holder_<E>>): $Codec<$Holder<E>>;
+        stable(): $Codec<$Holder<E>>;
+        flatComapMap<S>(arg0: $Function_<$Holder<E>, S>, arg1: $Function_<S, $DataResult<$Holder<E>>>): $Codec<S>;
+        optionalFieldOf(arg0: string): $MapCodec<($Holder<E>) | undefined>;
+        optionalFieldOf(arg0: string, arg1: $Holder_<E>, arg2: $Lifecycle): $MapCodec<$Holder<E>>;
+        optionalFieldOf(arg0: string, arg1: $Lifecycle, arg2: $Holder_<E>, arg3: $Lifecycle): $MapCodec<$Holder<E>>;
+        optionalFieldOf(arg0: string, arg1: $Holder_<E>): $MapCodec<$Holder<E>>;
+        dispatchMap<E>(arg0: string, arg1: $Function_<E, $Holder<E>>, arg2: $Function_<$Holder<E>, $MapCodec<E>>): $MapCodec<E>;
+        dispatchMap<E>(arg0: $Function_<E, $Holder<E>>, arg1: $Function_<$Holder<E>, $MapCodec<E>>): $MapCodec<E>;
+        dispatchStable<E>(arg0: $Function_<E, $Holder<E>>, arg1: $Function_<$Holder<E>, $MapCodec<E>>): $Codec<E>;
+        partialDispatch<E>(arg0: string, arg1: $Function_<E, $DataResult<$Holder<E>>>, arg2: $Function_<$Holder<E>, $DataResult<$MapCodec<E>>>): $Codec<E>;
+        promotePartial(arg0: $Consumer_<string>): $Codec<$Holder<E>>;
+        sizeLimitedListOf(arg0: number): $Codec<$List<$Holder<E>>>;
+        dispatch<E>(arg0: $Function_<E, $Holder<E>>, arg1: $Function_<$Holder<E>, $MapCodec<E>>): $Codec<E>;
+        dispatch<E>(arg0: string, arg1: $Function_<E, $Holder<E>>, arg2: $Function_<$Holder<E>, $MapCodec<E>>): $Codec<E>;
+        validate(arg0: $Function_<$Holder<E>, $DataResult<$Holder<E>>>): $Codec<$Holder<E>>;
+        orElse(arg0: $Holder_<E>): $Codec<$Holder<E>>;
+        orElse(arg0: $Consumer_<string>, arg1: $Holder_<E>): $Codec<$Holder<E>>;
+        orElse(arg0: $UnaryOperator_<string>, arg1: $Holder_<E>): $Codec<$Holder<E>>;
+        orElseGet(arg0: $UnaryOperator_<string>, arg1: $Supplier_<$Holder<E>>): $Codec<$Holder<E>>;
+        orElseGet(arg0: $Consumer_<string>, arg1: $Supplier_<$Holder<E>>): $Codec<$Holder<E>>;
+        orElseGet(arg0: $Supplier_<$Holder<E>>): $Codec<$Holder<E>>;
+        lenientOptionalFieldOf(arg0: string, arg1: $Holder_<E>, arg2: $Lifecycle): $MapCodec<$Holder<E>>;
+        lenientOptionalFieldOf(arg0: string, arg1: $Holder_<E>): $MapCodec<$Holder<E>>;
         lenientOptionalFieldOf(arg0: string): $MapCodec<($Holder<E>) | undefined>;
         lenientOptionalFieldOf(arg0: string, arg1: $Lifecycle, arg2: $Holder_<E>, arg3: $Lifecycle): $MapCodec<$Holder<E>>;
-        lenientOptionalFieldOf(arg0: string, arg1: $Holder_<E>): $MapCodec<$Holder<E>>;
-        lenientOptionalFieldOf(arg0: string, arg1: $Holder_<E>, arg2: $Lifecycle): $MapCodec<$Holder<E>>;
-        encodeStart<T>(ops: $DynamicOps<T>, value: $Holder_<E>): $DataResult<T>;
+        comapFlatMap<S>(arg0: $Function_<$Holder<E>, $DataResult<S>>, arg1: $Function_<S, $Holder<E>>): $Codec<S>;
         comap<B>(arg0: $Function_<B, $Holder<E>>): $Encoder<B>;
         flatComap<B>(arg0: $Function_<B, $DataResult<$Holder<E>>>): $Encoder<B>;
+        encodeStart<T>(ops: $DynamicOps<T>, value: $Holder_<E>): $DataResult<T>;
+        simple(): $Decoder$Simple<$Holder<E>>;
         decode<T>(arg0: $Dynamic<T>): $DataResult<$Pair<$Holder<E>, T>>;
         map<B>(arg0: $Function_<$Holder<E>, B>): $Decoder<B>;
         flatMap<B>(arg0: $Function_<$Holder<E>, $DataResult<B>>): $Decoder<B>;
-        parse<T>(arg0: $Dynamic<T>): $DataResult<$Holder<E>>;
         parse<T>(ops: $DynamicOps<T>, value: T): $DataResult<$Holder<E>>;
+        parse<T>(arg0: $Dynamic<T>): $DataResult<$Holder<E>>;
         boxed(): $Decoder$Boxed<$Holder<E>>;
         terminal(): $Decoder$Terminal<$Holder<E>>;
-        simple(): $Decoder$Simple<$Holder<E>>;
         fieldOf(arg0: string): $MapEncoder<$Holder<E>>;
+        withLifecycle(arg0: $Lifecycle): $Encoder<$Holder<E>>;
     }
     export class $ResourceKey$InternKey extends $Record {
     }
     /**
      * Values that may be interpreted as {@link $ResourceKey$InternKey}.
      */
-    export type $ResourceKey$InternKey_ = { location?: $ResourceLocation_, registry?: $ResourceLocation_,  } | [location?: $ResourceLocation_, registry?: $ResourceLocation_, ];
+    export type $ResourceKey$InternKey_ = { registry?: $ResourceLocation_, location?: $ResourceLocation_,  } | [registry?: $ResourceLocation_, location?: $ResourceLocation_, ];
     export class $FileToIdConverter {
-        listMatchingResourceStacks(resourceManager: $ResourceManager): $Map<$ResourceLocation, $List<$Resource>>;
-        listMatchingResources(resourceManager: $ResourceManager): $Map<$ResourceLocation, $Resource>;
         static json(name: string): $FileToIdConverter;
+        listMatchingResourceStacksFromNamespace(arg0: $ResourceManager, arg1: string): $Map<$ResourceLocation, $List<$Resource>>;
         idToFile(file: $ResourceLocation_): $ResourceLocation;
         fileToId(file: $ResourceLocation_): $ResourceLocation;
-        listMatchingResourceStacksFromNamespace(arg0: $ResourceManager, arg1: string): $Map<$ResourceLocation, $List<$Resource>>;
+        listMatchingResources(resourceManager: $ResourceManager): $Map<$ResourceLocation, $Resource>;
         listMatchingResourcesFromNamespace(arg0: $ResourceManager, arg1: string): $Map<$ResourceLocation, $Resource>;
+        listMatchingResourceStacks(resourceManager: $ResourceManager): $Map<$ResourceLocation, $List<$Resource>>;
         constructor(prefix: string, extenstion: string);
     }
     export class $RegistryDataLoader$Loader<T> extends $Record {
         data(): $RegistryDataLoader$RegistryData<T>;
         registry(): $WritableRegistry<T>;
-        loadFromResources(resouceManager: $ResourceManager, registryInfoLookup: $RegistryOps$RegistryInfoLookup_): void;
         loadingErrors(): $Map<$ResourceKey<never>, $Exception>;
+        loadFromResources(resouceManager: $ResourceManager, registryInfoLookup: $RegistryOps$RegistryInfoLookup_): void;
         loadFromNetwork(elements: $Map_<$ResourceKey_<$Registry<never>>, $List_<$RegistrySynchronization$PackedRegistryEntry_>>, resourceProvider: $ResourceProvider_, registryInfoLookup: $RegistryOps$RegistryInfoLookup_): void;
         constructor(data: $RegistryDataLoader$RegistryData_<T>, registry: $WritableRegistry<T>, loadingErrors: $Map_<$ResourceKey_<never>, $Exception>);
     }
     /**
      * Values that may be interpreted as {@link $RegistryDataLoader$Loader}.
      */
-    export type $RegistryDataLoader$Loader_<T> = { registry?: $WritableRegistry<any>, data?: $RegistryDataLoader$RegistryData_<any>, loadingErrors?: $Map_<$ResourceKey_<never>, $Exception>,  } | [registry?: $WritableRegistry<any>, data?: $RegistryDataLoader$RegistryData_<any>, loadingErrors?: $Map_<$ResourceKey_<never>, $Exception>, ];
+    export type $RegistryDataLoader$Loader_<T> = { data?: $RegistryDataLoader$RegistryData_<any>, loadingErrors?: $Map_<$ResourceKey_<never>, $Exception>, registry?: $WritableRegistry<any>,  } | [data?: $RegistryDataLoader$RegistryData_<any>, loadingErrors?: $Map_<$ResourceKey_<never>, $Exception>, registry?: $WritableRegistry<any>, ];
     export class $RegistryOps$HolderLookupAdapter implements $RegistryOps$RegistryInfoLookup {
         lookup<E>(registryKey: $ResourceKey_<$Registry<E>>): ($RegistryOps$RegistryInfo<E>) | undefined;
         lookupProvider: $HolderLookup$Provider;

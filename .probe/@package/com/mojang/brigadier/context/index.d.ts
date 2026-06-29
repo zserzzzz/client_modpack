@@ -8,27 +8,27 @@ declare module "@package/com/mojang/brigadier/context" {
         getInput(): string;
         getChild(): $CommandContext<S>;
         getSource(): S;
-        getRootNode(): $CommandNode<S>;
-        isForked(): boolean;
-        getNodes(): $List<$ParsedCommandNode<S>>;
-        hasNodes(): boolean;
-        getArgument<V>(arg0: string, arg1: $Class<V>): V;
         getLastChild(): $CommandContext<S>;
+        getRootNode(): $CommandNode<S>;
         getRange(): $StringRange;
+        getArgument<V>(arg0: string, arg1: $Class<V>): V;
+        getNodes(): $List<$ParsedCommandNode<S>>;
         copyFor(arg0: S): $CommandContext<S>;
         getCommand(): $Command<S>;
         getRedirectModifier(): $RedirectModifier<S>;
+        isForked(): boolean;
+        hasNodes(): boolean;
         constructor(arg0: S, arg1: string, arg2: $Map_<string, $ParsedArgument<S, never>>, arg3: $Command_<S>, arg4: $CommandNode<S>, arg5: $List_<$ParsedCommandNode<S>>, arg6: $StringRange, arg7: $CommandContext<S>, arg8: $RedirectModifier_<S>, arg9: boolean);
         get input(): string;
         get child(): $CommandContext<S>;
         get source(): S;
-        get rootNode(): $CommandNode<S>;
-        get forked(): boolean;
-        get nodes(): $List<$ParsedCommandNode<S>>;
         get lastChild(): $CommandContext<S>;
+        get rootNode(): $CommandNode<S>;
         get range(): $StringRange;
+        get nodes(): $List<$ParsedCommandNode<S>>;
         get command(): $Command<S>;
         get redirectModifier(): $RedirectModifier<S>;
+        get forked(): boolean;
     }
     export class $ParsedCommandNode<S> {
         getNode(): $CommandNode<S>;
@@ -64,39 +64,39 @@ declare module "@package/com/mojang/brigadier/context" {
      */
     export type $ContextChain$Stage_ = "modify" | "execute";
     export class $CommandContextBuilder<S> {
-        findSuggestionContext(arg0: number): $SuggestionContext<S>;
         copy(): $CommandContextBuilder<S>;
         build(arg0: string): $CommandContext<S>;
         getChild(): $CommandContextBuilder<S>;
         getSource(): S;
         getArguments(): $Map<string, $ParsedArgument<S, never>>;
-        getRootNode(): $CommandNode<S>;
-        getNodes(): $List<$ParsedCommandNode<S>>;
         getLastChild(): $CommandContextBuilder<S>;
+        getRootNode(): $CommandNode<S>;
         getRange(): $StringRange;
-        withCommand(arg0: $Command_<S>): $CommandContextBuilder<S>;
         getDispatcher(): $CommandDispatcher<S>;
         withNode(arg0: $CommandNode<S>, arg1: $StringRange): $CommandContextBuilder<S>;
-        withChild(arg0: $CommandContextBuilder<S>): $CommandContextBuilder<S>;
+        getNodes(): $List<$ParsedCommandNode<S>>;
         getCommand(): $Command<S>;
+        findSuggestionContext(arg0: number): $SuggestionContext<S>;
+        withChild(arg0: $CommandContextBuilder<S>): $CommandContextBuilder<S>;
+        withCommand(arg0: $Command_<S>): $CommandContextBuilder<S>;
         withSource(arg0: S): $CommandContextBuilder<S>;
         withArgument(arg0: string, arg1: $ParsedArgument<S, never>): $CommandContextBuilder<S>;
         constructor(arg0: $CommandDispatcher<S>, arg1: S, arg2: $CommandNode<S>, arg3: number);
         get child(): $CommandContextBuilder<S>;
         get source(): S;
         get arguments(): $Map<string, $ParsedArgument<S, never>>;
-        get rootNode(): $CommandNode<S>;
-        get nodes(): $List<$ParsedCommandNode<S>>;
         get lastChild(): $CommandContextBuilder<S>;
+        get rootNode(): $CommandNode<S>;
         get range(): $StringRange;
         get dispatcher(): $CommandDispatcher<S>;
+        get nodes(): $List<$ParsedCommandNode<S>>;
         get command(): $Command<S>;
     }
     export class $ContextChain<S> {
-        executeAll(arg0: S, arg1: $ResultConsumer_<S>): number;
         nextStage(): $ContextChain<S>;
-        static tryFlatten<S>(arg0: $CommandContext<S>): ($ContextChain<S>) | undefined;
+        executeAll(arg0: S, arg1: $ResultConsumer_<S>): number;
         getStage(): $ContextChain$Stage;
+        static tryFlatten<S>(arg0: $CommandContext<S>): ($ContextChain<S>) | undefined;
         static runModifier<S>(arg0: $CommandContext<S>, arg1: S, arg2: $ResultConsumer_<S>, arg3: boolean): $Collection<S>;
         static runExecutable<S>(arg0: $CommandContext<S>, arg1: S, arg2: $ResultConsumer_<S>, arg3: boolean): number;
         getTopContext(): $CommandContext<S>;

@@ -4,9 +4,9 @@ declare module "@package/neoforge/fun/qu_an/minecraft/asyncparticles/client/comp
     export class $ContraptionHeightMap extends $HeightMap {
         setMoving(xz: number, moving: boolean): void;
         setMoving(x: number, z: number, moving: boolean): void;
-        getPendingMoving(x: number, z: number): number;
-        getPendingMoving(xz: number): number;
         getDefaultMoving(): number;
+        getPendingMoving(xz: number): number;
+        getPendingMoving(x: number, z: number): number;
         static DEFAULT_HEIGHT: number;
         static DEFAULT_MOVING: number;
         constructor(defaultHeight: number, defaultMoving: number);

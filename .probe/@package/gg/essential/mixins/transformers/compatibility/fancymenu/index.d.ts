@@ -16,7 +16,7 @@ declare module "@package/gg/essential/mixins/transformers/compatibility/fancymen
     export interface $KonkreteDrawScreenEventAcc extends $KonkreteGuiScreenEventAcc {
         invokeGetMouseX(): number;
         invokeGetMouseY(): number;
-        invokeGetDrawContext(): $GuiGraphics;
         invokeGetRenderPartialTicks(): number;
+        invokeGetDrawContext(): $GuiGraphics;
     }
 }

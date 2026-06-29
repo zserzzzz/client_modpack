@@ -8,8 +8,8 @@ declare module "@package/gg/essential/cosmetics/skinmask" {
     export class $SkinMask {
         apply(arg0: $Bitmap): $Bitmap;
         offset(arg0: number, arg1: number, arg2: number): $SkinMask;
-        applyTo(arg0: $MutableBitmap): void;
         getParts(): $Map<$EnumPart, $Mask>;
+        applyTo(arg0: $MutableBitmap): void;
         static access$getSKIN_PARTS$cp(): $Map<any, any>;
         static Companion: $SkinMask$Companion;
         constructor(arg0: $Map_<$EnumPart_, $Mask>);

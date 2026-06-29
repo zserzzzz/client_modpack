@@ -9,10 +9,10 @@ declare module "@package/dev/ryanhcode/sable/api/physics/object" {
     export class $ArbitraryPhysicsObject {
     }
     export interface $ArbitraryPhysicsObject {
-        onUnloaded(arg0: $SubLevelHoldingChunkMap, arg1: $ChunkPos): void;
-        onRemoved(): void;
-        onAddition(arg0: $SubLevelPhysicsSystem): void;
         wakeUp(): void;
         getBoundingBox(arg0: $BoundingBox3d): void;
+        onRemoved(): void;
+        onAddition(arg0: $SubLevelPhysicsSystem): void;
+        onUnloaded(arg0: $SubLevelHoldingChunkMap, arg1: $ChunkPos): void;
     }
 }

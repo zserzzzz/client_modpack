@@ -17,7 +17,7 @@ declare module "@package/com/simibubi/create/compat/computercraft/implementation
     /**
      * Values that may be interpreted as {@link $ComputerUtil$Collection}.
      */
-    export type $ComputerUtil$Collection_ = { list?: $List_<never>, map?: $Map_<never, never>, mode?: $ComputerUtil$MatchMode,  } | [list?: $List_<never>, map?: $Map_<never, never>, mode?: $ComputerUtil$MatchMode, ];
+    export type $ComputerUtil$Collection_ = { map?: $Map_<never, never>, mode?: $ComputerUtil$MatchMode, list?: $List_<never>,  } | [map?: $Map_<never, never>, mode?: $ComputerUtil$MatchMode, list?: $List_<never>, ];
     export class $ComputerUtil$MatchMode extends $Enum<$ComputerUtil$MatchMode> {
     }
 }

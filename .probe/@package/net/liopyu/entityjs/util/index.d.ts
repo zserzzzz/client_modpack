@@ -443,33 +443,33 @@ declare module "@package/net/liopyu/entityjs/util" {
          */
         static getEntityBuilder<T extends $BuilderBase<never>>(arg0: $EntityType_<never>): T;
         /**
-         * Flying entity path navigation
-         */
-        static createFlyingPathNavigation(arg0: $Mob, arg1: $Level_): $FlyingPathNavigation;
-        /**
-         * Ground entity path navigation
-         */
-        static createGroundPathNavigation(arg0: $Mob, arg1: $Level_): $GroundPathNavigation;
-        /**
          * Creates a custom Jump Control builder and returns it.
          */
         static createJumpControl(arg0: $Mob, arg1: $Consumer_<$JumpControlJSBuilder>): $JumpControlJS;
-        /**
-         * Creates a custom Move Control builder and returns it.
-         */
-        static createMoveControl(arg0: $Mob, arg1: $Consumer_<$MoveControlJSBuilder>): $MoveControlJS;
         /**
          * Creates a custom Look Control builder and returns it.
          */
         static createLookControl(arg0: $Mob, arg1: $Consumer_<$LookControlJSBuilder>): $LookControlJS;
         /**
-         * Wall climbing entity path navigation
+         * Creates a custom Move Control builder and returns it.
          */
-        static createWallClimberNavigation(arg0: $Mob, arg1: $Level_): $WallClimberNavigation;
+        static createMoveControl(arg0: $Mob, arg1: $Consumer_<$MoveControlJSBuilder>): $MoveControlJS;
+        /**
+         * Ground entity path navigation
+         */
+        static createGroundPathNavigation(arg0: $Mob, arg1: $Level_): $GroundPathNavigation;
+        /**
+         * Flying entity path navigation
+         */
+        static createFlyingPathNavigation(arg0: $Mob, arg1: $Level_): $FlyingPathNavigation;
         /**
          * Amphibious entity path navigation
          */
         static createAmphibiousPathNavigation(arg0: $Mob, arg1: $Level_): $AmphibiousPathNavigation;
+        /**
+         * Wall climbing entity path navigation
+         */
+        static createWallClimberNavigation(arg0: $Mob, arg1: $Level_): $WallClimberNavigation;
         /**
          * Water bound entity path navigation
          */

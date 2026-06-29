@@ -21,14 +21,14 @@ declare module "@package/javax/management" {
         get notifTypes(): string[];
     }
     export class $MBeanFeatureInfo implements $Serializable, $DescriptorRead {
-        getDescription(): string;
         getName(): string;
         getDescriptor(): $Descriptor;
+        getDescription(): string;
         constructor(arg0: string, arg1: string);
         constructor(arg0: string, arg1: string, arg2: $Descriptor);
-        get description(): string;
         get name(): string;
         get descriptor(): $Descriptor;
+        get description(): string;
     }
     export class $DescriptorRead {
     }
@@ -43,36 +43,36 @@ declare module "@package/javax/management" {
     export class $Descriptor {
     }
     export interface $Descriptor extends $Serializable, $Cloneable {
-        getFieldNames(): string[];
         equals(arg0: $Object): boolean;
         hashCode(): number;
         clone(): $Object;
         getFields(): string[];
         setFields(arg0: string[], arg1: $Object[]): void;
         isValid(): boolean;
+        getFieldNames(): string[];
         setField(arg0: string, arg1: $Object): void;
         removeField(arg0: string): void;
-        getFieldValue(arg0: string): $Object;
         getFieldValues(...arg0: string[]): $Object[];
-        get fieldNames(): string[];
+        getFieldValue(arg0: string): $Object;
         get valid(): boolean;
+        get fieldNames(): string[];
     }
     export class $MBeanInfo implements $Cloneable, $Serializable, $DescriptorRead {
-        getDescription(): string;
         clone(): $Object;
         getDescriptor(): $Descriptor;
         getConstructors(): $MBeanConstructorInfo[];
         getClassName(): string;
         getAttributes(): $MBeanAttributeInfo[];
+        getDescription(): string;
         getOperations(): $MBeanOperationInfo[];
         getNotifications(): $MBeanNotificationInfo[];
         constructor(arg0: string, arg1: string, arg2: $MBeanAttributeInfo[], arg3: $MBeanConstructorInfo[], arg4: $MBeanOperationInfo[], arg5: $MBeanNotificationInfo[]);
         constructor(arg0: string, arg1: string, arg2: $MBeanAttributeInfo[], arg3: $MBeanConstructorInfo[], arg4: $MBeanOperationInfo[], arg5: $MBeanNotificationInfo[], arg6: $Descriptor);
-        get description(): string;
         get descriptor(): $Descriptor;
         get constructors(): $MBeanConstructorInfo[];
         get className(): string;
         get attributes(): $MBeanAttributeInfo[];
+        get description(): string;
         get operations(): $MBeanOperationInfo[];
         get notifications(): $MBeanNotificationInfo[];
     }

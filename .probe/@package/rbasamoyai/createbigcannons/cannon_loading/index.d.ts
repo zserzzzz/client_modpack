@@ -9,9 +9,9 @@ declare module "@package/rbasamoyai/createbigcannons/cannon_loading" {
         static canBreakLoader(arg0: $BlockState_): boolean;
     }
     export interface $CanLoadBigCannon {
-        createbigcannons$getOriginalForcedDirection(arg0: $Level_): $Direction;
-        createbigcannons$getAssemblyMovementDirection(arg0: $Level_): $Direction;
         createbigcannons$toLocalPos(arg0: $BlockPos_): $BlockPos;
+        createbigcannons$getAssemblyMovementDirection(arg0: $Level_): $Direction;
+        createbigcannons$getOriginalForcedDirection(arg0: $Level_): $Direction;
         createbigcannons$getCannonLoadingColliders(): $Set<$BlockPos>;
     }
 }

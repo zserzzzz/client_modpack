@@ -12,33 +12,33 @@ declare module "@package/foundry/veil/api/client/render/post" {
     export class $PostPipeline$Context {
     }
     export interface $PostPipeline$Context extends $ShaderTextureSource$Context {
-        getPipeline(arg0: $ResourceLocation_): $PostPipeline;
         getShader(arg0: $ResourceLocation_): $ShaderProgram;
+        getPipeline(arg0: $ResourceLocation_): $PostPipeline;
+        setFramebuffer(arg0: $ResourceLocation_, arg1: $AdvancedFbo): void;
+        setTexture(arg0: $CharSequence, arg1: number, arg2: number, arg3: number): void;
+        getDrawFramebuffer(): $AdvancedFbo;
+        getFramebufferOrDraw(arg0: $ResourceLocation_): $AdvancedFbo;
         applySamplers(arg0: $TextureUniformAccess): void;
         clearSamplers(arg0: $TextureUniformAccess): void;
-        setTexture(arg0: $CharSequence, arg1: number, arg2: number, arg3: number): void;
-        setFramebuffer(arg0: $ResourceLocation_, arg1: $AdvancedFbo): void;
-        getFramebufferOrDraw(arg0: $ResourceLocation_): $AdvancedFbo;
-        getDrawFramebuffer(): $AdvancedFbo;
         get drawFramebuffer(): $AdvancedFbo;
     }
     export class $PostPipeline {
         static CODEC: $Codec<$PostPipeline>;
     }
     export interface $PostPipeline extends $UniformAccess, $NativeResource {
-        getUniform(arg0: $CharSequence): $ShaderUniformAccess;
         apply(arg0: $PostPipeline$Context): void;
         getType(): $PostPipelineStageRegistry$PipelineType<$PostPipeline>;
         free(): void;
-        setUniformBlock(arg0: $CharSequence, arg1: number): void;
+        getUniform(arg0: $CharSequence): $ShaderUniformAccess;
         setStorageBlock(arg0: $CharSequence, arg1: number): void;
-        getStorageBlock(arg0: $CharSequence): number;
+        setUniformBlock(arg0: $CharSequence, arg1: number): void;
         getUniformBlock(arg0: $CharSequence): number;
-        getUniformLocation(arg0: $CharSequence): number;
-        hasStorageBlock(arg0: $CharSequence): boolean;
-        hasUniformBlock(arg0: $CharSequence): boolean;
-        getUniformSafe(arg0: $CharSequence): $ShaderUniformAccess;
+        getStorageBlock(arg0: $CharSequence): number;
         hasUniform(arg0: $CharSequence): boolean;
+        hasUniformBlock(arg0: $CharSequence): boolean;
+        hasStorageBlock(arg0: $CharSequence): boolean;
+        getUniformSafe(arg0: $CharSequence): $ShaderUniformAccess;
+        getUniformLocation(arg0: $CharSequence): number;
         get type(): $PostPipelineStageRegistry$PipelineType<$PostPipeline>;
     }
 }

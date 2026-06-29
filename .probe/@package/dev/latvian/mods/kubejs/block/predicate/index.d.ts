@@ -48,5 +48,5 @@ declare module "@package/dev/latvian/mods/kubejs/block/predicate" {
     /**
      * Values that may be interpreted as {@link $BlockIDPredicate$PropertyObject}.
      */
-    export type $BlockIDPredicate$PropertyObject_ = { value?: $Object, property?: $Property<never>,  } | [value?: $Object, property?: $Property<never>, ];
+    export type $BlockIDPredicate$PropertyObject_ = { property?: $Property<never>, value?: $Object,  } | [property?: $Property<never>, value?: $Object, ];
 }

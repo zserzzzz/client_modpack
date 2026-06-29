@@ -31,8 +31,8 @@ declare module "@package/net/minecraft/client/gui/components/tabs" {
     }
     export class $TabManager {
         setTabArea(tabArea: $ScreenRectangle_): void;
-        setCurrentTab(tab: $Tab, playClickSound: boolean): void;
         getCurrentTab(): $Tab;
+        setCurrentTab(tab: $Tab, playClickSound: boolean): void;
         constructor(addWidget: $Consumer_<$AbstractWidget>, removeWidget: $Consumer_<$AbstractWidget>);
         set tabArea(value: $ScreenRectangle_);
     }
@@ -55,15 +55,15 @@ declare module "@package/net/minecraft/client/gui/components/tabs" {
     export class $TabNavigationBar extends $AbstractContainerEventHandler implements $Renderable, $NarratableEntry, $TabNavigationBarAccessor {
         static builder(tabManager: $TabManager, width: number): $TabNavigationBar$Builder;
         /**
+         * Renders the graphical user interface (GUI) element.
+         */
+        render(guiGraphics: $GuiGraphics, mouseX: number, mouseY: number, partialTick: number): void;
+        /**
          * Handles key pressed events.
          * 
          * @return `true` if the key press was handled, `false` otherwise.
          */
         keyPressed(keycode: number): boolean;
-        /**
-         * Renders the graphical user interface (GUI) element.
-         */
-        render(guiGraphics: $GuiGraphics, mouseX: number, mouseY: number, partialTick: number): void;
         /**
          * @return the narration priority
          */
@@ -72,12 +72,12 @@ declare module "@package/net/minecraft/client/gui/components/tabs" {
          * Updates the narration output with the current narration information.
          */
         updateNarration(narrationElementOutput: $NarrationElementOutput): void;
+        narrateListElementPosition(tabButton: $NarrationElementOutput, arg1: $TabButton): void;
         /**
          * Arranges the elements within the tabbed layout.
          */
         arrangeElements(): void;
         setWidth(width: number): void;
-        narrateListElementPosition(tabButton: $NarrationElementOutput, arg1: $TabButton): void;
         /**
          * Selects the tab at the specified index.
          */
@@ -87,9 +87,9 @@ declare module "@package/net/minecraft/client/gui/components/tabs" {
          */
         isActive(): boolean;
         yacl$getTabManager(): $TabManager;
-        yacl$getTabButtons(): $ImmutableList<$TabButton>;
-        yacl$getTabs(): $ImmutableList<$Tab>;
         yacl$getLayout(): $LinearLayout;
+        yacl$getTabs(): $ImmutableList<$Tab>;
+        yacl$getTabButtons(): $ImmutableList<$TabButton>;
         /**
          * Returns the index of the current tab.
          * 

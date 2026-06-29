@@ -37,21 +37,21 @@ declare module "@package/com/simibubi/create/compat/jei" {
     export class $CreateJEI$CategoryBuilder<T extends $Recipe<never>> extends $CreateRecipeCategory$Builder<T> {
     }
     export class $StockKeeperTransferHandler implements $IUniversalRecipeTransferHandler<$StockKeeperRequestMenu> {
-        getContainerClass(): $Class<$StockKeeperRequestMenu>;
         getMenuType(): ($MenuType<$StockKeeperRequestMenu>) | undefined;
         transferRecipe(arg0: $StockKeeperRequestMenu, arg1: $Object, arg2: $IRecipeSlotsView_, arg3: $Player, arg4: boolean, arg5: boolean): $IRecipeTransferError;
+        getContainerClass(): $Class<$StockKeeperRequestMenu>;
         constructor(arg0: $IJeiHelpers);
-        get containerClass(): $Class<$StockKeeperRequestMenu>;
         get menuType(): ($MenuType<$StockKeeperRequestMenu>) | undefined;
+        get containerClass(): $Class<$StockKeeperRequestMenu>;
     }
     export class $SlotMover implements $IGuiContainerHandler<$AbstractSimiContainerScreen<never>> {
         getGuiExtraAreas(arg0: $AbstractSimiContainerScreen<never>): $List<$Rect2i>;
-        getGuiClickableAreas(arg0: $AbstractSimiContainerScreen<never>, arg1: number, arg2: number): $Collection<$IGuiClickableArea>;
         /**
          * @deprecated
          */
         getClickableIngredientUnderMouse(arg0: $AbstractSimiContainerScreen<never>, arg1: number, arg2: number): ($IClickableIngredient<never>) | undefined;
         getClickableIngredientUnderMouse(arg0: $IClickableIngredientFactory, arg1: $AbstractSimiContainerScreen<never>, arg2: number, arg3: number): ($IClickableIngredient<never>) | undefined;
+        getGuiClickableAreas(arg0: $AbstractSimiContainerScreen<never>, arg1: number, arg2: number): $Collection<$IGuiClickableArea>;
         constructor();
     }
     export class $GhostIngredientHandler$GhostTarget<I, T extends $GhostItemMenu<never>> implements $IGhostIngredientHandler$Target<I> {
@@ -66,32 +66,32 @@ declare module "@package/com/simibubi/create/compat/jei" {
         static createRecipes(): $Stream<$RecipeHolder<$CraftingRecipe>>;
     }
     export class $ScreenResourceWrapper implements $IDrawable {
-        getHeight(): number;
         getWidth(): number;
+        getHeight(): number;
         draw(arg0: $GuiGraphics, arg1: number, arg2: number): void;
         draw(arg0: $GuiGraphics): void;
         constructor(arg0: $AllGuiTextures_);
-        get height(): number;
         get width(): number;
+        get height(): number;
     }
     export class $BlueprintTransferHandler implements $IRecipeTransferHandler<$BlueprintMenu, $RecipeHolder<$CraftingRecipe>> {
-        getRecipeType(): $RecipeType<$RecipeHolder<$CraftingRecipe>>;
-        getContainerClass(): $Class<$BlueprintMenu>;
         getMenuType(): ($MenuType<$BlueprintMenu>) | undefined;
         transferRecipe(arg0: $BlueprintMenu, arg1: $RecipeHolder_<$CraftingRecipe>, arg2: $IRecipeSlotsView_, arg3: $Player, arg4: boolean, arg5: boolean): $IRecipeTransferError;
+        getContainerClass(): $Class<$BlueprintMenu>;
+        getRecipeType(): $RecipeType<$RecipeHolder<$CraftingRecipe>>;
         constructor();
-        get recipeType(): $RecipeType<$RecipeHolder<$CraftingRecipe>>;
-        get containerClass(): $Class<$BlueprintMenu>;
         get menuType(): ($MenuType<$BlueprintMenu>) | undefined;
+        get containerClass(): $Class<$BlueprintMenu>;
+        get recipeType(): $RecipeType<$RecipeHolder<$CraftingRecipe>>;
     }
     export class $ItemIcon implements $IDrawable {
-        getHeight(): number;
         getWidth(): number;
+        getHeight(): number;
         draw(arg0: $GuiGraphics, arg1: number, arg2: number): void;
         draw(arg0: $GuiGraphics): void;
         constructor(arg0: $Supplier_<$ItemStack>);
-        get height(): number;
         get width(): number;
+        get height(): number;
     }
     export class $ConversionRecipe extends $StandardProcessingRecipe<$RecipeWrapper> {
         matches(arg0: $RecipeWrapper, arg1: $Level_): boolean;
@@ -99,25 +99,25 @@ declare module "@package/com/simibubi/create/compat/jei" {
         constructor(arg0: $ProcessingRecipeParams);
     }
     export class $DoubleItemIcon implements $IDrawable {
-        getHeight(): number;
         getWidth(): number;
+        getHeight(): number;
         draw(arg0: $GuiGraphics, arg1: number, arg2: number): void;
         draw(arg0: $GuiGraphics): void;
         constructor(arg0: $Supplier_<$ItemStack>, arg1: $Supplier_<$ItemStack>);
-        get height(): number;
         get width(): number;
+        get height(): number;
     }
     export class $GhostIngredientHandler<T extends $GhostItemMenu<never>> implements $IGhostIngredientHandler<$AbstractSimiContainerScreen<T>> {
-        getTargetsTyped<I>(arg0: $AbstractSimiContainerScreen<$AbstractSimiContainerScreen<T>>, arg1: $ITypedIngredient<I>, arg2: boolean): $List<$IGhostIngredientHandler$Target<I>>;
         onComplete(): void;
+        getTargetsTyped<I>(arg0: $AbstractSimiContainerScreen<$AbstractSimiContainerScreen<T>>, arg1: $ITypedIngredient<I>, arg2: boolean): $List<$IGhostIngredientHandler$Target<I>>;
         shouldHighlightTargets(): boolean;
         constructor();
     }
     export class $StockKeeperGuiContainerHandler extends $Record implements $IGuiContainerHandler<$StockKeeperRequestScreen> {
         getClickableIngredientUnderMouse(arg0: $StockKeeperRequestScreen, arg1: number, arg2: number): ($IClickableIngredient<never>) | undefined;
         ingredientManager(): $IIngredientManager;
-        getGuiClickableAreas(arg0: $StockKeeperRequestScreen, arg1: number, arg2: number): $Collection<$IGuiClickableArea>;
         getClickableIngredientUnderMouse(arg0: $IClickableIngredientFactory, arg1: $StockKeeperRequestScreen, arg2: number, arg3: number): ($IClickableIngredient<never>) | undefined;
+        getGuiClickableAreas(arg0: $StockKeeperRequestScreen, arg1: number, arg2: number): $Collection<$IGuiClickableArea>;
         getGuiExtraAreas(arg0: $StockKeeperRequestScreen): $List<$Rect2i>;
         constructor(ingredientManager: $IIngredientManager);
     }
@@ -126,39 +126,39 @@ declare module "@package/com/simibubi/create/compat/jei" {
      */
     export type $StockKeeperGuiContainerHandler_ = { ingredientManager?: $IIngredientManager,  } | [ingredientManager?: $IIngredientManager, ];
     export class $EmptyBackground implements $IDrawable {
-        getHeight(): number;
         getWidth(): number;
+        getHeight(): number;
         draw(arg0: $GuiGraphics, arg1: number, arg2: number): void;
         draw(arg0: $GuiGraphics): void;
         constructor(arg0: number, arg1: number);
-        get height(): number;
         get width(): number;
+        get height(): number;
     }
     export class $CreateJEI implements $IModPlugin {
-        static getTypedRecipes(arg0: $RecipeType_<never>): $List<$RecipeHolder<never>>;
-        static consumeAllRecipes(arg0: $Consumer_<$RecipeHolder<never>>): void;
-        static doInputsMatch(arg0: $Recipe<never>, arg1: $Recipe<never>): boolean;
-        static doOutputsMatch(arg0: $Recipe<never>, arg1: $Recipe<never>): boolean;
+        static consumeTypedRecipes<T extends $Recipe<never>>(arg0: $Consumer_<$RecipeHolder<never>>, arg1: $RecipeType_<never>): void;
+        registerExtraIngredients(arg0: $IExtraIngredientRegistration_): void;
+        registerFluidSubtypes<T>(arg0: $ISubtypeRegistration, arg1: $IPlatformFluidHelper<T>): void;
+        registerRecipeCatalysts(arg0: $IRecipeCatalystRegistration): void;
+        registerGuiHandlers(arg0: $IGuiHandlerRegistration): void;
+        registerRecipeTransferHandlers(arg0: $IRecipeTransferRegistration): void;
+        static getTypedRecipesExcluding(arg0: $RecipeType_<never>, arg1: $Predicate_<$RecipeHolder<never>>): $List<$RecipeHolder<never>>;
         registerRecipes(arg0: $IRecipeRegistration): void;
         registerCategories(arg0: $IRecipeCategoryRegistration): void;
         getPluginUid(): $ResourceLocation;
         onRuntimeAvailable(arg0: $IJeiRuntime): void;
-        static consumeTypedRecipes<T extends $Recipe<never>>(arg0: $Consumer_<$RecipeHolder<never>>, arg1: $RecipeType_<never>): void;
-        registerRecipeTransferHandlers(arg0: $IRecipeTransferRegistration): void;
-        static getTypedRecipesExcluding(arg0: $RecipeType_<never>, arg1: $Predicate_<$RecipeHolder<never>>): $List<$RecipeHolder<never>>;
-        registerExtraIngredients(arg0: $IExtraIngredientRegistration_): void;
-        registerRecipeCatalysts(arg0: $IRecipeCatalystRegistration): void;
-        registerGuiHandlers(arg0: $IGuiHandlerRegistration): void;
-        registerFluidSubtypes<T>(arg0: $ISubtypeRegistration, arg1: $IPlatformFluidHelper<T>): void;
-        registerRuntime(arg0: $IRuntimeRegistration): void;
-        registerModInfo(arg0: $IModInfoRegistration_): void;
-        registerAdvanced(arg0: $IAdvancedRegistration): void;
-        registerVanillaCategoryExtensions(arg0: $IVanillaCategoryExtensionRegistration): void;
-        registerIngredientAliases(arg0: $IIngredientAliasRegistration): void;
-        registerIngredients(arg0: $IModIngredientRegistration): void;
-        onRuntimeUnavailable(): void;
+        static consumeAllRecipes(arg0: $Consumer_<$RecipeHolder<never>>): void;
+        static doOutputsMatch(arg0: $Recipe<never>, arg1: $Recipe<never>): boolean;
+        static getTypedRecipes(arg0: $RecipeType_<never>): $List<$RecipeHolder<never>>;
+        static doInputsMatch(arg0: $Recipe<never>, arg1: $Recipe<never>): boolean;
         registerItemSubtypes(arg0: $ISubtypeRegistration): void;
+        registerIngredients(arg0: $IModIngredientRegistration): void;
+        registerIngredientAliases(arg0: $IIngredientAliasRegistration): void;
+        onRuntimeUnavailable(): void;
         onConfigManagerAvailable(arg0: $IJeiConfigManager_): void;
+        registerVanillaCategoryExtensions(arg0: $IVanillaCategoryExtensionRegistration): void;
+        registerModInfo(arg0: $IModInfoRegistration_): void;
+        registerRuntime(arg0: $IRuntimeRegistration): void;
+        registerAdvanced(arg0: $IAdvancedRegistration): void;
         static runtime: $IJeiRuntime;
         constructor();
         get pluginUid(): $ResourceLocation;

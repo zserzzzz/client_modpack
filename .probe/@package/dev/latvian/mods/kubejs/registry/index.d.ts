@@ -37,6 +37,14 @@ declare module "@package/dev/latvian/mods/kubejs/registry" {
          * Sets the translation key for this object, e.g. `block.minecraft.stone`.
          */
         translationKey(key: string): this;
+        /**
+         * Combined method of formattedDisplayName().displayName(name).
+         */
+        formattedDisplayName(name: $Component_): this;
+        /**
+         * Makes displayName() override language files.
+         */
+        formattedDisplayName(): this;
         get(): T;
         /**
          * Sets the display name for this object, e.g. `Stone`.
@@ -50,14 +58,6 @@ declare module "@package/dev/latvian/mods/kubejs/registry" {
         tag(tag: $ResourceLocation_[]): this;
         getBuilderTranslationKey(): string;
         getTranslationKeyGroup(): string;
-        /**
-         * Combined method of formattedDisplayName().displayName(name).
-         */
-        formattedDisplayName(name: $Component_): this;
-        /**
-         * Makes displayName() override language files.
-         */
-        formattedDisplayName(): this;
         registryKey: $ResourceKey<$Registry<T>>;
         sourceLine: $SourceLine;
         id: $ResourceLocation;
@@ -100,8 +100,8 @@ declare module "@package/dev/latvian/mods/kubejs/registry" {
      */
     export type $BuilderTypeRegistryHandler_ = { map?: $Map_<$ResourceKey_<never>, $BuilderTypeRegistryHandler$Info<never>>,  } | [map?: $Map_<$ResourceKey_<never>, $BuilderTypeRegistryHandler$Info<never>>, ];
     export class $RegistryEventHandler {
-        static registerAll(event: $RegisterEvent): void;
         static registerEntityAttributes(event: $EntityAttributeModificationEvent): void;
+        static registerAll(event: $RegisterEvent): void;
         constructor();
     }
     export class $BuilderFactory {
@@ -140,23 +140,17 @@ declare module "@package/dev/latvian/mods/kubejs/registry" {
          */
         entityJs$createCustom(arg0: $ResourceLocation_, arg1: $Class<any>, arg2: $Consumer_<any>): $CustomEntityBuilder;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -164,17 +158,23 @@ declare module "@package/dev/latvian/mods/kubejs/registry" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         created: $List<$BuilderBase<T>>;
         constructor(registryKey: $ResourceKey_<$Registry<T>>);
     }
@@ -184,23 +184,17 @@ declare module "@package/dev/latvian/mods/kubejs/registry" {
         createCustom(id: $ResourceLocation_, object: $Supplier_<$Object>): $CustomBuilderObject;
         createFromJson(id: $ResourceLocation_, json: $JsonElement_): $CustomBuilderObject;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -208,17 +202,23 @@ declare module "@package/dev/latvian/mods/kubejs/registry" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         registryKey: $ResourceKey<$Registry<T>>;
         codec: $Codec<T>;
         jsonOps: $DynamicOps<$JsonElement>;
@@ -307,17 +307,17 @@ declare module "@package/dev/latvian/mods/kubejs/registry" {
     /**
      * Values that may be interpreted as {@link $BuilderType}.
      */
-    export type $BuilderType_<T> = { factory?: $BuilderFactory_, builderClass?: $Class<$BuilderBase<any>>, type?: $ResourceLocation_,  } | [factory?: $BuilderFactory_, builderClass?: $Class<$BuilderBase<any>>, type?: $ResourceLocation_, ];
+    export type $BuilderType_<T> = { type?: $ResourceLocation_, factory?: $BuilderFactory_, builderClass?: $Class<$BuilderBase<any>>,  } | [type?: $ResourceLocation_, factory?: $BuilderFactory_, builderClass?: $Class<$BuilderBase<any>>, ];
     export class $RegistryType<T> extends $Record {
         type(): $TypeInfo;
         static lookup(target: $TypeInfo_): $RegistryType<never>;
         static register<T>(key: $ResourceKey_<$Registry<T>>, type: $TypeInfo_): void;
         key(): $ResourceKey<$Registry<T>>;
         static ofClass<T>(type: $Class<T>): $RegistryType<T>;
-        static ofType(typeInfo: $TypeInfo_): $RegistryType<never>;
         baseClass(): $Class<never>;
-        static allOfClass<T>(type: $Class<T>): $List<$RegistryType<T>>;
+        static ofType(typeInfo: $TypeInfo_): $RegistryType<never>;
         static ofKey<T>(key: $ResourceKey_<$Registry<T>>): $RegistryType<T>;
+        static allOfClass<T>(type: $Class<T>): $List<$RegistryType<T>>;
         constructor(key: $ResourceKey_<$Registry<T>>, baseClass: $Class<never>, type: $TypeInfo_);
     }
     /**

@@ -24,13 +24,13 @@ import { $StreamCodec } from "@package/net/minecraft/network/codec";
 
 declare module "@package/net/neoforged/neoforge/attachment" {
     export class $AttachmentInternals {
-        static onPlayerClone(event: $PlayerEvent$Clone): void;
         /**
          * Do not call directly, use `IEntityExtension#copyAttachmentsFrom(Entity, boolean)`.
          */
         static copyEntityAttachments(from: $Entity, to: $Entity, isDeath: boolean): void;
         static copyChunkAttachmentsOnPromotion(provider: $HolderLookup$Provider, from: $AttachmentHolder$AsField, to: $AttachmentHolder$AsField): void;
         static onLivingConvert(event: $LivingConversionEvent$Post): void;
+        static onPlayerClone(event: $PlayerEvent$Clone): void;
     }
     /**
      * Implementation class for objects that can hold data attachments.
@@ -40,33 +40,22 @@ declare module "@package/net/neoforged/neoforge/attachment" {
         getData<T>(arg0: $AttachmentType_<T>): T;
         removeData<T>(arg0: $AttachmentType_<T>): T;
         hasData(type: $AttachmentType_<never>): boolean;
-        setData<T>(arg0: $AttachmentType_<T>, arg1: T): T;
-        hasAttachments(): boolean;
-        getExistingDataOrNull<T>(arg0: $AttachmentType_<T>): T;
         /**
          * Writes the serializable attachments to a tag.
          * Returns `null` if there are no serializable attachments.
          */
         serializeAttachments(provider: $HolderLookup$Provider): $CompoundTag;
+        getExistingDataOrNull<T>(arg0: $AttachmentType_<T>): T;
+        setData<T>(arg0: $AttachmentType_<T>, arg1: T): T;
+        hasAttachments(): boolean;
         getData<T>(arg0: $Supplier_<$AttachmentType<T>>): T;
         removeData<T>(arg0: $Supplier_<$AttachmentType<T>>): T;
         /**
          * Returns `true` if there is a data attachment of the give type, `false` otherwise.
          */
         hasData<T>(type: $Supplier_<$AttachmentType<T>>): boolean;
+        getExistingDataOrNull<T>(arg0: $Supplier_<$AttachmentType<T>>): T;
         setData<T>(arg0: $Supplier_<$AttachmentType<T>>, arg1: T): T;
-        /**
-         * @return an optional possibly containing a data attachment value of the given type
-         * 
-         * If there is no data attachment of the given type, an empty optional is returned.
-         */
-        getExistingData<T>(type: $Supplier_<$AttachmentType<T>>): (T) | undefined;
-        /**
-         * @return an optional possibly containing a data attachment value of the given type
-         * 
-         * If there is no data attachment of the given type, an empty optional is returned.
-         */
-        getExistingData<T>(type: $AttachmentType_<T>): (T) | undefined;
         /**
          * Syncs a data attachment of the given type with all relevant clients.
          * 
@@ -81,18 +70,29 @@ declare module "@package/net/neoforged/neoforge/attachment" {
          * the removal of the attachment is synced to the client.
          */
         syncData(type: $Supplier_<$AttachmentType<never>>): void;
-        getExistingDataOrNull<T>(arg0: $Supplier_<$AttachmentType<T>>): T;
-        removeAttached<A>(arg0: $AttachmentType$1<A>): A;
-        getAttached<A>(arg0: $AttachmentType$1<A>): A;
-        setAttached<A>(arg0: $AttachmentType$1<A>, arg1: A): A;
-        getAttachedOrThrow<A>(arg0: $AttachmentType$1<A>): A;
-        getAttachedOrSet<A>(arg0: $AttachmentType$1<A>, arg1: A): A;
-        getAttachedOrElse<A>(arg0: $AttachmentType$1<A>, arg1: A): A;
-        hasAttached(arg0: $AttachmentType$1<never>): boolean;
-        modifyAttached<A>(arg0: $AttachmentType$1<A>, arg1: $UnaryOperator_<A>): A;
-        getAttachedOrGet<A>(arg0: $AttachmentType$1<A>, arg1: $Supplier_<A>): A;
+        /**
+         * @return an optional possibly containing a data attachment value of the given type
+         * 
+         * If there is no data attachment of the given type, an empty optional is returned.
+         */
+        getExistingData<T>(type: $Supplier_<$AttachmentType<T>>): (T) | undefined;
+        /**
+         * @return an optional possibly containing a data attachment value of the given type
+         * 
+         * If there is no data attachment of the given type, an empty optional is returned.
+         */
+        getExistingData<T>(type: $AttachmentType_<T>): (T) | undefined;
         getAttachedOrCreate<A>(arg0: $AttachmentType$1<A>, arg1: $Supplier_<A>): A;
         getAttachedOrCreate<A>(arg0: $AttachmentType$1<A>): A;
+        setAttached<A>(arg0: $AttachmentType$1<A>, arg1: A): A;
+        getAttachedOrSet<A>(arg0: $AttachmentType$1<A>, arg1: A): A;
+        getAttachedOrElse<A>(arg0: $AttachmentType$1<A>, arg1: A): A;
+        getAttachedOrThrow<A>(arg0: $AttachmentType$1<A>): A;
+        getAttached<A>(arg0: $AttachmentType$1<A>): A;
+        getAttachedOrGet<A>(arg0: $AttachmentType$1<A>, arg1: $Supplier_<A>): A;
+        hasAttached(arg0: $AttachmentType$1<never>): boolean;
+        removeAttached<A>(arg0: $AttachmentType$1<A>): A;
+        modifyAttached<A>(arg0: $AttachmentType$1<A>, arg1: $UnaryOperator_<A>): A;
         invokeGetAttachmentMap(): $Map<$AttachmentType<never>, $Object>;
         static ATTACHMENTS_NBT_KEY: string;
         constructor();
@@ -133,15 +133,15 @@ declare module "@package/net/neoforged/neoforge/attachment" {
         constructor(exposedHolder: $IAttachmentHolder);
     }
     export class $AttachmentSync {
-        static syncInitialPlayerAttachments(arg0: $ServerPlayer): void;
+        static syncChunkUpdate(arg0: $LevelChunk, arg1: $AttachmentHolder$AsField, arg2: $AttachmentType_<never>): void;
         static syncEntityUpdate(arg0: $Entity, arg1: $AttachmentType_<never>): void;
         static syncLevelUpdate(arg0: $ServerLevel, arg1: $AttachmentType_<never>): void;
-        static onChunkSent(arg0: $ChunkWatchEvent$Sent): void;
         static syncBlockEntityUpdate(arg0: $BlockEntity, arg1: $AttachmentType_<never>): void;
-        static receiveSyncedDataAttachments(arg0: $AttachmentHolder, arg1: $RegistryAccess, arg2: $List_<$AttachmentType_<never>>, arg3: number[]): void;
+        static syncInitialPlayerAttachments(arg0: $ServerPlayer): void;
+        static onChunkSent(arg0: $ChunkWatchEvent$Sent): void;
         static syncInitialEntityAttachments(arg0: $Entity, arg1: $ServerPlayer, arg2: $Consumer_<$Packet<$ClientGamePacketListener>>): void;
+        static receiveSyncedDataAttachments(arg0: $AttachmentHolder, arg1: $RegistryAccess, arg2: $List_<$AttachmentType_<never>>, arg3: number[]): void;
         static syncInitialLevelAttachments(arg0: $ServerLevel, arg1: $ServerPlayer): void;
-        static syncChunkUpdate(arg0: $LevelChunk, arg1: $AttachmentHolder$AsField, arg2: $AttachmentType_<never>): void;
         static SYNCED_ATTACHMENT_TYPES: $Registry<$AttachmentType<never>>;
         static ATTACHMENT_TYPE_ADD_CALLBACK: $AddCallback<$AttachmentType<never>>;
     }
@@ -231,8 +231,24 @@ declare module "@package/net/neoforged/neoforge/attachment" {
          * Returns `true` if there is a data attachment of the give type, `false` otherwise.
          */
         hasData<T>(type: $Supplier_<$AttachmentType<T>>): boolean;
-        setData<T>(arg0: $Supplier_<$AttachmentType<T>>, arg1: T): T;
+        getExistingDataOrNull<T>(arg0: $Supplier_<$AttachmentType<T>>): T;
+        getExistingDataOrNull<T>(arg0: $AttachmentType_<T>): T;
         setData<T>(arg0: $AttachmentType_<T>, arg1: T): T;
+        setData<T>(arg0: $Supplier_<$AttachmentType<T>>, arg1: T): T;
+        /**
+         * Syncs a data attachment of the given type with all relevant clients.
+         * 
+         * If there is currently no attachment of the given type,
+         * the removal of the attachment is synced to the client.
+         */
+        syncData(type: $AttachmentType_<never>): void;
+        /**
+         * Syncs a data attachment of the given type with all relevant clients.
+         * 
+         * If there is currently no attachment of the given type,
+         * the removal of the attachment is synced to the client.
+         */
+        syncData(type: $Supplier_<$AttachmentType<never>>): void;
         /**
          * Returns `true` if there is any data attachments, `false` otherwise.
          */
@@ -249,31 +265,15 @@ declare module "@package/net/neoforged/neoforge/attachment" {
          * If there is no data attachment of the given type, an empty optional is returned.
          */
         getExistingData<T>(type: $AttachmentType_<T>): (T) | undefined;
-        /**
-         * Syncs a data attachment of the given type with all relevant clients.
-         * 
-         * If there is currently no attachment of the given type,
-         * the removal of the attachment is synced to the client.
-         */
-        syncData(type: $AttachmentType_<never>): void;
-        /**
-         * Syncs a data attachment of the given type with all relevant clients.
-         * 
-         * If there is currently no attachment of the given type,
-         * the removal of the attachment is synced to the client.
-         */
-        syncData(type: $Supplier_<$AttachmentType<never>>): void;
-        getExistingDataOrNull<T>(arg0: $Supplier_<$AttachmentType<T>>): T;
-        getExistingDataOrNull<T>(arg0: $AttachmentType_<T>): T;
     }
     export class $AttachmentType$Builder<T> {
+        build(): $AttachmentType<T>;
+        sync(arg0: $AttachmentSyncHandler<T>): $AttachmentType$Builder<T>;
+        sync(arg0: $StreamCodec<$RegistryFriendlyByteBuf, T>): $AttachmentType$Builder<T>;
+        sync(arg0: $BiPredicate_<$IAttachmentHolder, $ServerPlayer>, arg1: $StreamCodec<$RegistryFriendlyByteBuf, T>): $AttachmentType$Builder<T>;
         serialize(arg0: $Codec<T>): $AttachmentType$Builder<T>;
         serialize(arg0: $IAttachmentSerializer<never, T>): $AttachmentType$Builder<T>;
         serialize(arg0: $Codec<T>, arg1: $Predicate_<T>): $AttachmentType$Builder<T>;
-        build(): $AttachmentType<T>;
-        sync(arg0: $BiPredicate_<$IAttachmentHolder, $ServerPlayer>, arg1: $StreamCodec<$RegistryFriendlyByteBuf, T>): $AttachmentType$Builder<T>;
-        sync(arg0: $AttachmentSyncHandler<T>): $AttachmentType$Builder<T>;
-        sync(arg0: $StreamCodec<$RegistryFriendlyByteBuf, T>): $AttachmentType$Builder<T>;
         copyHandler(arg0: $IAttachmentCopyHandler_<T>): $AttachmentType$Builder<T>;
         copyOnDeath(): $AttachmentType$Builder<T>;
     }

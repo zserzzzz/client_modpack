@@ -23,33 +23,33 @@ declare module "@package/net/createmod/ponder/api/registration" {
     export class $IndexExclusionHelper {
     }
     export interface $IndexExclusionHelper {
-        excludeBlockVariants(arg0: $Class<$Block_>, arg1: $Block_): $IndexExclusionHelper;
         exclude(arg0: $Predicate_<$ItemLike>): $IndexExclusionHelper;
         exclude(arg0: $ItemLike_): $IndexExclusionHelper;
+        excludeBlockVariants(arg0: $Class<$Block_>, arg1: $Block_): $IndexExclusionHelper;
         excludeItemVariants(arg0: $Class<$Item_>, arg1: $Item_): $IndexExclusionHelper;
     }
     export class $StoryBoardEntry {
     }
     export interface $StoryBoardEntry {
-        getComponent(): $ResourceLocation;
         getNamespace(): string;
-        getOrderingEntries(): $List<$StoryBoardEntry$SceneOrderingEntry>;
-        getTags(): $List<$ResourceLocation>;
-        getSchematicLocation(): $ResourceLocation;
-        highlightTags(...arg0: $ResourceLocation_[]): $StoryBoardEntry;
-        orderBefore(arg0: string, arg1: string): $StoryBoardEntry;
-        orderBefore(arg0: string): $StoryBoardEntry;
-        highlightAllTags(): $StoryBoardEntry;
-        highlightTag(arg0: $ResourceLocation_): $StoryBoardEntry;
-        getBoard(): $PonderStoryBoard;
         orderAfter(arg0: string, arg1: string): $StoryBoardEntry;
         orderAfter(arg0: string): $StoryBoardEntry;
-        get component(): $ResourceLocation;
+        getComponent(): $ResourceLocation;
+        getTags(): $List<$ResourceLocation>;
+        highlightAllTags(): $StoryBoardEntry;
+        orderBefore(arg0: string, arg1: string): $StoryBoardEntry;
+        orderBefore(arg0: string): $StoryBoardEntry;
+        highlightTags(...arg0: $ResourceLocation_[]): $StoryBoardEntry;
+        highlightTag(arg0: $ResourceLocation_): $StoryBoardEntry;
+        getBoard(): $PonderStoryBoard;
+        getSchematicLocation(): $ResourceLocation;
+        getOrderingEntries(): $List<$StoryBoardEntry$SceneOrderingEntry>;
         get namespace(): string;
-        get orderingEntries(): $List<$StoryBoardEntry$SceneOrderingEntry>;
+        get component(): $ResourceLocation;
         get tags(): $List<$ResourceLocation>;
-        get schematicLocation(): $ResourceLocation;
         get board(): $PonderStoryBoard;
+        get schematicLocation(): $ResourceLocation;
+        get orderingEntries(): $List<$StoryBoardEntry$SceneOrderingEntry>;
     }
     export class $MultiTagBuilder$Component {
     }
@@ -64,10 +64,10 @@ declare module "@package/net/createmod/ponder/api/registration" {
     }
     export interface $PonderSceneRegistrationHelper<T> {
         withKeyFunction<S>(arg0: $Function_<S, T>): $PonderSceneRegistrationHelper<S>;
-        addStoryBoard(arg0: T, arg1: string, arg2: $PonderStoryBoard_, ...arg3: $ResourceLocation_[]): $StoryBoardEntry;
-        addStoryBoard(arg0: T, arg1: $ResourceLocation_, arg2: $PonderStoryBoard_, ...arg3: $ResourceLocation_[]): $StoryBoardEntry;
         forComponents(arg0: $Iterable_<T>): $MultiSceneBuilder;
         forComponents(...arg0: T[]): $MultiSceneBuilder;
+        addStoryBoard(arg0: T, arg1: string, arg2: $PonderStoryBoard_, ...arg3: $ResourceLocation_[]): $StoryBoardEntry;
+        addStoryBoard(arg0: T, arg1: $ResourceLocation_, arg2: $PonderStoryBoard_, ...arg3: $ResourceLocation_[]): $StoryBoardEntry;
         asLocation(arg0: string): $ResourceLocation;
     }
     export class $MultiTagBuilder$Tag<T> {
@@ -112,26 +112,26 @@ declare module "@package/net/createmod/ponder/api/registration" {
     export class $PonderTagRegistrationHelper<T> {
     }
     export interface $PonderTagRegistrationHelper<T> {
-        withKeyFunction<S>(arg0: $Function_<S, T>): $PonderTagRegistrationHelper<S>;
-        addTagToComponent(arg0: T, arg1: $ResourceLocation_): void;
-        addToComponent(arg0: T): $MultiTagBuilder$Component;
-        addToComponent(...arg0: T[]): $MultiTagBuilder$Component;
-        addToTag(arg0: $ResourceLocation_): $MultiTagBuilder$Tag<T>;
         addToTag(...arg0: $ResourceLocation_[]): $MultiTagBuilder$Tag<T>;
+        addToTag(arg0: $ResourceLocation_): $MultiTagBuilder$Tag<T>;
         registerTag(arg0: string): $TagBuilder;
         registerTag(arg0: $ResourceLocation_): $TagBuilder;
+        addTagToComponent(arg0: T, arg1: $ResourceLocation_): void;
+        withKeyFunction<S>(arg0: $Function_<S, T>): $PonderTagRegistrationHelper<S>;
+        addToComponent(arg0: T): $MultiTagBuilder$Component;
+        addToComponent(...arg0: T[]): $MultiTagBuilder$Component;
     }
     export class $TagBuilder {
     }
     export interface $TagBuilder {
-        register(): void;
-        description(arg0: string): $TagBuilder;
-        item(arg0: $ItemLike_, arg1: boolean, arg2: boolean): $TagBuilder;
-        item(arg0: $ItemLike_): $TagBuilder;
-        title(arg0: string): $TagBuilder;
         icon(arg0: string): $TagBuilder;
         icon(arg0: $ResourceLocation_): $TagBuilder;
+        register(): void;
+        description(arg0: string): $TagBuilder;
+        item(arg0: $ItemLike_): $TagBuilder;
+        item(arg0: $ItemLike_, arg1: boolean, arg2: boolean): $TagBuilder;
         addToIndex(): $TagBuilder;
+        title(arg0: string): $TagBuilder;
         idAsIcon(): $TagBuilder;
     }
     export class $SceneRegistryAccess {
@@ -147,11 +147,11 @@ declare module "@package/net/createmod/ponder/api/registration" {
     }
     export interface $PonderPlugin {
         getModId(): string;
-        onPonderLevelRestore(arg0: $PonderLevel): void;
-        indexExclusions(arg0: $IndexExclusionHelper): void;
         registerSharedText(arg0: $SharedTextRegistrationHelper_): void;
-        registerScenes(arg0: $PonderSceneRegistrationHelper<$ResourceLocation_>): void;
+        indexExclusions(arg0: $IndexExclusionHelper): void;
         registerTags(arg0: $PonderTagRegistrationHelper<$ResourceLocation_>): void;
+        registerScenes(arg0: $PonderSceneRegistrationHelper<$ResourceLocation_>): void;
+        onPonderLevelRestore(arg0: $PonderLevel): void;
         get modId(): string;
     }
     /**

@@ -67,11 +67,11 @@ import { $StreamCodec } from "@package/net/minecraft/network/codec";
 declare module "@package/com/simibubi/create/content/logistics/factoryBoard" {
     export class $FactoryPanelConnectionHandler {
         static clientTick(): void;
-        static getBB(arg0: $BlockState_, arg1: $FactoryPanelPosition_): $AABB;
         static onRightClick(): boolean;
-        static startRelocating(arg0: $FactoryPanelBehaviour): void;
-        static panelClicked(arg0: $LevelAccessor, arg1: $Player, arg2: $FactoryPanelBehaviour): boolean;
+        static getBB(arg0: $BlockState_, arg1: $FactoryPanelPosition_): $AABB;
         static startConnection(arg0: $FactoryPanelBehaviour): void;
+        static panelClicked(arg0: $LevelAccessor, arg1: $Player, arg2: $FactoryPanelBehaviour): boolean;
+        static startRelocating(arg0: $FactoryPanelBehaviour): void;
         constructor();
     }
     export class $FactoryPanelBlockItem extends $LogisticallyLinkedBlockItem {
@@ -87,8 +87,8 @@ declare module "@package/com/simibubi/create/content/logistics/factoryBoard" {
         constructor(arg0: $Block_, arg1: $Item$Properties);
     }
     export class $FactoryPanelScreen extends $AbstractSimiScreen {
-        static convertRecipeToPackageOrderContext(arg0: $CraftingRecipe, arg1: $List_<$BigItemStack>, arg2: boolean): $List<$BigItemStack>;
         playButtonSound(): void;
+        static convertRecipeToPackageOrderContext(arg0: $CraftingRecipe, arg1: $List_<$BigItemStack>, arg2: boolean): $List<$BigItemStack>;
         static MENU_BACKGROUND: $ResourceLocation;
         minecraft: $Minecraft;
         static INWORLD_FOOTER_SEPARATOR: $ResourceLocation;
@@ -117,10 +117,10 @@ declare module "@package/com/simibubi/create/content/logistics/factoryBoard" {
     }
     export class $FactoryPanelBlockEntity extends $SmartBlockEntity {
         getShape(): $VoxelShape;
+        getRestockedPackager(): $PackagerBlockEntity;
         addPanel(arg0: $FactoryPanelBlock$PanelSlot_, arg1: $UUID_): boolean;
         activePanels(): number;
         removePanel(arg0: $FactoryPanelBlock$PanelSlot_): boolean;
-        getRestockedPackager(): $PackagerBlockEntity;
         redraw: boolean;
         worldPosition: $BlockPos;
         advancements: $AdvancementBehaviour;
@@ -151,33 +151,33 @@ declare module "@package/com/simibubi/create/content/logistics/factoryBoard" {
     /**
      * Values that may be interpreted as {@link $FactoryPanelEffectPacket}.
      */
-    export type $FactoryPanelEffectPacket_ = { fromPos?: $FactoryPanelPosition_, toPos?: $FactoryPanelPosition_, success?: boolean,  } | [fromPos?: $FactoryPanelPosition_, toPos?: $FactoryPanelPosition_, success?: boolean, ];
+    export type $FactoryPanelEffectPacket_ = { success?: boolean, fromPos?: $FactoryPanelPosition_, toPos?: $FactoryPanelPosition_,  } | [success?: boolean, fromPos?: $FactoryPanelPosition_, toPos?: $FactoryPanelPosition_, ];
     export class $FactoryPanelBlock extends $FaceAttachedHorizontalDirectionalBlock implements $ProperWaterloggedBlock, $IBE<$FactoryPanelBlockEntity>, $IWrenchable, $SpecialBlockItemRequirement {
-        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
+        static getXRot(arg0: $BlockState_): number;
+        static getYRot(arg0: $BlockState_): number;
+        getBlockEntityClass(): $Class<$FactoryPanelBlockEntity>;
         getBlockEntityType(): $BlockEntityType<$FactoryPanelBlockEntity>;
         onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        getBlockEntityClass(): $Class<$FactoryPanelBlockEntity>;
-        static getYRot(arg0: $BlockState_): number;
-        static getXRot(arg0: $BlockState_): number;
+        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
         static connectedDirection(arg0: $BlockState_): $Direction;
-        static getTargetedSlot(arg0: $BlockPos_, arg1: $BlockState_, arg2: $Vec3_): $FactoryPanelBlock$PanelSlot;
         static canAttachLenient(arg0: $LevelReader, arg1: $BlockPos_, arg2: $Direction_): boolean;
-        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
-        fluidState(arg0: $BlockState_): $FluidState;
+        static getTargetedSlot(arg0: $BlockPos_, arg1: $BlockState_, arg2: $Vec3_): $FactoryPanelBlock$PanelSlot;
         updateWater(arg0: $LevelAccessor, arg1: $BlockState_, arg2: $BlockPos_): void;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$FactoryPanelBlockEntity>): void;
+        fluidState(arg0: $BlockState_): $FluidState;
+        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FactoryPanelBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($FactoryPanelBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FactoryPanelBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $FactoryPanelBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$FactoryPanelBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($FactoryPanelBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FactoryPanelBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
@@ -212,8 +212,8 @@ declare module "@package/com/simibubi/create/content/logistics/factoryBoard" {
         static FACE: $EnumProperty<$AttachFace>;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$FactoryPanelBlockEntity>;
         get blockEntityClass(): $Class<$FactoryPanelBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$FactoryPanelBlockEntity>;
     }
     export class $FactoryPanelBehaviour$ItemStackConnections extends $ArrayList<$FactoryPanelConnection> {
         reversed(): $SequencedCollection<$FactoryPanelConnection>;
@@ -236,28 +236,28 @@ declare module "@package/com/simibubi/create/content/logistics/factoryBoard" {
      */
     export type $FactoryPanelBlock$PanelState_ = "passive" | "active";
     export class $FactoryPanelBehaviour extends $FilteringBehaviour implements $MenuProvider {
-        static at(arg0: $BlockAndTintGetter, arg1: $FactoryPanelConnection): $FactoryPanelBehaviour;
         static at(arg0: $BlockAndTintGetter, arg1: $FactoryPanelPosition_): $FactoryPanelBehaviour;
+        static at(arg0: $BlockAndTintGetter, arg1: $FactoryPanelConnection): $FactoryPanelBehaviour;
         enable(): void;
         getDisplayName(): $Component;
-        disable(): void;
-        moveTo(arg0: $FactoryPanelPosition_, arg1: $ServerPlayer): void;
         displayScreen(arg0: $Player): void;
+        disable(): void;
+        static linkAt(arg0: $BlockAndTintGetter, arg1: $FactoryPanelConnection): $FactoryPanelSupportBehaviour;
+        static linkAt(arg0: $BlockAndTintGetter, arg1: $FactoryPanelPosition_): $FactoryPanelSupportBehaviour;
+        moveTo(arg0: $FactoryPanelPosition_, arg1: $ServerPlayer): void;
+        createMenu(arg0: number, arg1: $Inventory, arg2: $Player): $AbstractContainerMenu;
+        isMissingAddress(): boolean;
+        setNetwork(arg0: $UUID_): void;
+        getIngredientStatusColor(): number;
         getLevelInStorage(): number;
         getPromised(): number;
-        createMenu(arg0: number, arg1: $Inventory, arg2: $Player): $AbstractContainerMenu;
-        checkForRedstoneInput(): void;
-        getIngredientStatusColor(): number;
-        setNetwork(arg0: $UUID_): void;
-        disconnectAllLinks(): void;
-        panelBE(): $FactoryPanelBlockEntity;
-        isMissingAddress(): boolean;
         disconnectAll(): void;
         getPanelPosition(): $FactoryPanelPosition;
         addConnection(arg0: $FactoryPanelPosition_): void;
-        static linkAt(arg0: $BlockAndTintGetter, arg1: $FactoryPanelConnection): $FactoryPanelSupportBehaviour;
-        static linkAt(arg0: $BlockAndTintGetter, arg1: $FactoryPanelPosition_): $FactoryPanelSupportBehaviour;
+        disconnectAllLinks(): void;
+        panelBE(): $FactoryPanelBlockEntity;
         resetTimer(): void;
+        checkForRedstoneInput(): void;
         getFrogAddress(): string;
         getUnloadedLinks(): number;
         resetTimerSlightly(): void;
@@ -293,10 +293,10 @@ declare module "@package/com/simibubi/create/content/logistics/factoryBoard" {
         promiseClearingInterval: number;
         constructor(arg0: $FactoryPanelBlockEntity, arg1: $FactoryPanelBlock$PanelSlot_);
         get displayName(): $Component;
+        get missingAddress(): boolean;
+        get ingredientStatusColor(): number;
         get levelInStorage(): number;
         get promised(): number;
-        get ingredientStatusColor(): number;
-        get missingAddress(): boolean;
         get panelPosition(): $FactoryPanelPosition;
         get frogAddress(): string;
         get unloadedLinks(): number;
@@ -433,19 +433,19 @@ declare module "@package/com/simibubi/create/content/logistics/factoryBoard" {
         constructor(arg0: $FactoryPanelSetItemMenu, arg1: $Inventory, arg2: $Component_);
     }
     export class $FactoryPanelSupportBehaviour extends $BlockEntityBehaviour {
-        disconnect(arg0: $FactoryPanelBehaviour): void;
         connect(arg0: $FactoryPanelBehaviour): void;
-        getLinkedPanels(): $List<$FactoryPanelPosition>;
+        disconnect(arg0: $FactoryPanelBehaviour): void;
         isOutput(): boolean;
-        shouldPanelBePowered(): boolean;
         shouldBePoweredTristate(): boolean;
+        getLinkedPanels(): $List<$FactoryPanelPosition>;
         notifyPanels(): void;
         notifyLink(): void;
+        shouldPanelBePowered(): boolean;
         blockEntity: $SmartBlockEntity;
         static TYPE: $BehaviourType<$FactoryPanelSupportBehaviour>;
         constructor(arg0: $SmartBlockEntity, arg1: $Supplier_<boolean>, arg2: $Supplier_<boolean>, arg3: $Runnable_);
-        get linkedPanels(): $List<$FactoryPanelPosition>;
         get output(): boolean;
+        get linkedPanels(): $List<$FactoryPanelPosition>;
     }
     export class $FactoryPanelModel extends $BakedModelWrapperWithData {
         addPanel(arg0: $List_<$BakedQuad>, arg1: $BlockState_, arg2: $FactoryPanelBlock$PanelSlot_, arg3: $FactoryPanelBlock$PanelType_, arg4: $FactoryPanelBlock$PanelState_, arg5: $RandomSource, arg6: $ModelData, arg7: $RenderType, arg8: boolean): void;

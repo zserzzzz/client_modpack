@@ -17,18 +17,18 @@ declare module "@package/net/neoforged/neoforge/server/command/generation" {
      * Original code: https://github.com/jaskarth/fabric-chunkpregenerator
      */
     export class $GenerationTask {
-        getSkippedCount(): number;
-        getErrorCount(): number;
+        getTotalCount(): number;
         run(arg0: $GenerationTask$Listener): void;
         stop(): void;
-        getTotalCount(): number;
         getOkCount(): number;
+        getSkippedCount(): number;
+        getErrorCount(): number;
         static NEOFORGE_GENERATE_FORCED: $TicketType<$ChunkPos>;
         constructor(serverLevel: $ServerLevel, x: number, z: number, radius: number);
-        get skippedCount(): number;
-        get errorCount(): number;
         get totalCount(): number;
         get okCount(): number;
+        get skippedCount(): number;
+        get errorCount(): number;
     }
     /**
      * Special thanks to Jasmine and Gegy for allowing us to use their pregenerator mod as a model to use in NeoForge!

@@ -17,13 +17,13 @@ declare module "@package/dev/eriksonn/aeronautics/api" {
      */
     export type $CustomSituationalMusic$Condition_ = ((arg0: $ClientLevel, arg1: $LocalPlayer) => boolean);
     export class $CustomSituationalMusic extends $Record {
-        static getSituationalMusic(arg0: $ClientLevel, arg1: $LocalPlayer): $Music;
         condition(): $CustomSituationalMusic$Condition;
+        static getSituationalMusic(arg0: $ClientLevel, arg1: $LocalPlayer): $Music;
         music(): $Music;
         constructor(music: $Music, condition: $CustomSituationalMusic$Condition_);
     }
     /**
      * Values that may be interpreted as {@link $CustomSituationalMusic}.
      */
-    export type $CustomSituationalMusic_ = RegistryTypes.AeronauticsCustomSituationalMusic | { condition?: $CustomSituationalMusic$Condition_, music?: $Music,  } | [condition?: $CustomSituationalMusic$Condition_, music?: $Music, ];
+    export type $CustomSituationalMusic_ = RegistryTypes.AeronauticsCustomSituationalMusic | { music?: $Music, condition?: $CustomSituationalMusic$Condition_,  } | [music?: $Music, condition?: $CustomSituationalMusic$Condition_, ];
 }

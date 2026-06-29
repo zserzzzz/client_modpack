@@ -10,5 +10,5 @@ declare module "@package/mezz/jei/api/ingredients/rendering" {
     /**
      * Values that may be interpreted as {@link $BatchRenderElement}.
      */
-    export type $BatchRenderElement_<T> = { x?: number, y?: number, ingredient?: any,  } | [x?: number, y?: number, ingredient?: any, ];
+    export type $BatchRenderElement_<T> = { y?: number, ingredient?: any, x?: number,  } | [y?: number, ingredient?: any, x?: number, ];
 }

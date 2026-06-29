@@ -1,4 +1,4 @@
-import { $CompoundTag_ } from "@package/net/minecraft/nbt";
+import { $CompoundTag, $CompoundTag_ } from "@package/net/minecraft/nbt";
 import { $EntityType_, $VariantHolder, $Pose_, $Entity$RemovalReason, $LivingEntity, $HasCustomInventoryScreen, $Leashable, $Pose, $PortalProcessor, $SlotAccess, $Entity, $Leashable$LeashData } from "@package/net/minecraft/world/entity";
 import { $FluidType_, $FluidType } from "@package/net/neoforged/neoforge/fluids";
 import { $MinecartFurnaceAccessor } from "@package/com/simibubi/create/foundation/mixin/accessor";
@@ -40,82 +40,64 @@ import { $DamageSource_ } from "@package/net/minecraft/world/damagesource";
 
 declare module "@package/net/minecraft/world/entity/vehicle" {
     export class $Boat extends $VehicleEntity implements $Leashable, $VariantHolder<$Boat$Type>, $IBoatExtension {
-        getVariant(): $Boat$Type;
         setVariant(variant: $Boat$Type_): void;
         setInput(inputLeft: boolean, inputRight: boolean, inputUp: boolean, inputDown: boolean): void;
+        setLeashData(leashData: $Leashable$LeashData | null): void;
+        getLeashData(): $Leashable$LeashData;
         /**
          * Determines whether the boat is in water, gliding on land, or in air
          */
         getStatus(): $Boat$Status;
         /**
-         * Update the boat's speed, based on momentum.
+         * Decides how much the boat should be gliding on the land (based on any slippery blocks)
          */
-        controlBoat(): void;
-        getBubbleAngle(partialTicks: number): number;
-        setPaddleState(left: boolean, right: boolean): void;
+        getSinglePassengerXOffset(): number;
+        hasEnoughSpaceFor(passenger: $Entity): boolean;
+        elasticRangeLeashBehaviour(leashHolder: $Entity, distance: number): void;
         /**
-         * Update the boat's speed, based on momentum.
+         * Applies this boat's yaw to the given entity. Used to update the orientation of its passenger.
          */
-        tickBubbleColumn(): void;
+        clampRotation(entityToUpdate: $Entity): void;
+        getBubbleAngle(partialTicks: number): number;
+        static canVehicleCollide(vehicle: $Entity, entity: $Entity): boolean;
         /**
          * Decides how much the boat should be gliding on the land (based on any slippery blocks)
          */
         getGroundFriction(): number;
-        static canVehicleCollide(vehicle: $Entity, entity: $Entity): boolean;
+        getRowingTime(side: number, limbSwing: number): number;
         /**
          * The maximum height from where the entity is allowed to jump (used in pathfinder)
          */
         getMaxPassengers(): number;
-        getPaddleState(side: number): boolean;
-        getRowingTime(side: number, limbSwing: number): number;
+        /**
+         * Update the boat's speed, based on momentum.
+         */
+        controlBoat(): void;
+        setPaddleState(left: boolean, right: boolean): void;
         getPaddleSound(): $SoundEvent;
+        /**
+         * Update the boat's speed, based on momentum.
+         */
+        tickBubbleColumn(): void;
+        getPaddleState(side: number): boolean;
         /**
          * Decides how much the boat should be gliding on the land (based on any slippery blocks)
          */
         getWaterLevelAbove(): number;
         /**
-         * Applies this boat's yaw to the given entity. Used to update the orientation of its passenger.
+         * Update the boat's speed, based on momentum.
          */
-        clampRotation(entityToUpdate: $Entity): void;
-        elasticRangeLeashBehaviour(leashHolder: $Entity, distance: number): void;
+        floatBoat(): void;
         /**
          * Update the boat's speed, based on momentum.
          */
         tickLerp(): void;
-        /**
-         * Update the boat's speed, based on momentum.
-         */
-        floatBoat(): void;
-        getLeashData(): $Leashable$LeashData;
-        setLeashData(leashData: $Leashable$LeashData | null): void;
-        hasEnoughSpaceFor(passenger: $Entity): boolean;
-        /**
-         * Decides how much the boat should be gliding on the land (based on any slippery blocks)
-         */
-        getSinglePassengerXOffset(): number;
-        setLeashedTo(leashHolder: $Entity, broadcastPacket: boolean): void;
-        getLeashHolder(): $Entity;
-        dropLeash(left: boolean, right: boolean): void;
-        /**
-         * Returns `true` if other Entities should be prevented from moving through this Entity.
-         */
-        canHaveALeashAttachedToIt(): boolean;
-        /**
-         * Update the boat's speed, based on momentum.
-         */
-        leashTooFarBehaviour(): void;
-        setDelayedLeashHolderId(bubbleTime: number): void;
-        handleLeashAtDistance(leashHolder: $Entity, distance: number): boolean;
-        /**
-         * Applies this boat's yaw to the given entity. Used to update the orientation of its passenger.
-         */
-        closeRangeLeashBehaviour(entityToUpdate: $Entity): void;
-        /**
-         * Returns `true` if other Entities should be prevented from moving through this Entity.
-         */
-        isLeashed(): boolean;
         writeLeashData(tag: $CompoundTag_, leashData: $Leashable$LeashData | null): void;
         readLeashData(tag: $CompoundTag_): $Leashable$LeashData;
+        /**
+         * Returns `true` if other Entities should be prevented from moving through this Entity.
+         */
+        mayBeLeashed(): boolean;
         /**
          * Returns `true` if other Entities should be prevented from moving through this Entity.
          */
@@ -123,7 +105,24 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
         /**
          * Returns `true` if other Entities should be prevented from moving through this Entity.
          */
-        mayBeLeashed(): boolean;
+        canHaveALeashAttachedToIt(): boolean;
+        getLeashHolder(): $Entity;
+        setLeashedTo(leashHolder: $Entity, broadcastPacket: boolean): void;
+        /**
+         * Returns `true` if other Entities should be prevented from moving through this Entity.
+         */
+        isLeashed(): boolean;
+        dropLeash(left: boolean, right: boolean): void;
+        handleLeashAtDistance(leashHolder: $Entity, distance: number): boolean;
+        setDelayedLeashHolderId(bubbleTime: number): void;
+        /**
+         * Applies this boat's yaw to the given entity. Used to update the orientation of its passenger.
+         */
+        closeRangeLeashBehaviour(entityToUpdate: $Entity): void;
+        /**
+         * Update the boat's speed, based on momentum.
+         */
+        leashTooFarBehaviour(): void;
         /**
          * Returns whether the entity is within the fluid type of the state.
          */
@@ -132,6 +131,8 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
          * Returns whether the fluid can push an entity.
          */
         canBoatInFluid(type: $FluidType_): boolean;
+        getVariant(): $Boat$Type;
+        serializeNBT(arg0: $HolderLookup$Provider): $Boat$Type;
         firstTick: boolean;
         inputUp: boolean;
         wasEyeInWater: boolean;
@@ -218,26 +219,26 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
         horizontalCollision: boolean;
         constructor(entityType: $EntityType_<$Boat>, level: $Level_);
         constructor(level: $Level_, x: number, arg2: number, y: number);
+        get singlePassengerXOffset(): number;
         get groundFriction(): number;
         get maxPassengers(): number;
         get paddleSound(): $SoundEvent;
         get waterLevelAbove(): number;
-        get singlePassengerXOffset(): number;
         get leashHolder(): $Entity;
-        set delayedLeashHolderId(value: number);
         get leashed(): boolean;
+        set delayedLeashHolderId(value: number);
     }
     export class $Boat$Type extends $Enum<$Boat$Type> implements $StringRepresentable, $IExtensibleEnum {
         getName(): string;
         static values(): $Boat$Type[];
         static valueOf(name: string): $Boat$Type;
-        getSerializedName(): string;
         static byName(name: string): $Boat$Type;
+        static getExtensionInfo(): $ExtensionInfo;
+        getSerializedName(): string;
         /**
          * Get a boat type by its enum ordinal
          */
         static byId(id: number): $Boat$Type;
-        static getExtensionInfo(): $ExtensionInfo;
         isRaft(): boolean;
         getSticks(): $Item;
         getPlanks(): $Block;
@@ -254,8 +255,8 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
         static OAK: $Boat$Type;
         chestBoatItem: $Supplier<$Item>;
         static DARK_OAK: $Boat$Type;
-        get serializedName(): string;
         static get extensionInfo(): $ExtensionInfo;
+        get serializedName(): string;
         get raft(): boolean;
         get sticks(): $Item;
         get planks(): $Block;
@@ -268,50 +269,50 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
     export class $ContainerEntity {
     }
     export interface $ContainerEntity extends $Container, $MenuProvider {
+        unpackChestVehicleLootTable(player: $Player | null): void;
         position(): $Vec3;
         /**
          * @return `true` if the existing container should be closed on the client side when opening a new one, `false` otherwise
          */
         isEmpty(): boolean;
         level(): $Level;
+        setLootTableSeed(lootTableSeed: number): void;
+        setLootTable(lootTable: $ResourceKey_<$LootTable> | null): void;
+        getLootTableSeed(): number;
+        getLootTable(): $ResourceKey<$LootTable>;
+        getBoundingBox(): $AABB;
+        /**
+         * @return `true` if the existing container should be closed on the client side when opening a new one, `false` otherwise
+         */
+        isRemoved(): boolean;
+        removeChestVehicleItemNoUpdate(slot: number): $ItemStack;
+        interactWithContainerVehicle(player: $Player): $InteractionResult;
         getItemStacks(): $NonNullList<$ItemStack>;
         /**
          * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
         clearItemStacks(): void;
-        /**
-         * @return `true` if the existing container should be closed on the client side when opening a new one, `false` otherwise
-         */
-        isRemoved(): boolean;
-        setLootTable(lootTable: $ResourceKey_<$LootTable> | null): void;
-        unpackChestVehicleLootTable(player: $Player | null): void;
-        getLootTableSeed(): number;
+        readChestVehicleSaveData(tag: $CompoundTag_, levelRegistry: $HolderLookup$Provider): void;
         chestVehicleDestroyed(damageSource: $DamageSource_, level: $Level_, entity: $Entity): void;
         getChestVehicleItem(slot: number): $ItemStack;
+        removeChestVehicleItem(slot: number, amount: number): $ItemStack;
         setChestVehicleItem(slot: number, stack: $ItemStack_): void;
         getChestVehicleSlot(index: number): $SlotAccess;
-        readChestVehicleSaveData(tag: $CompoundTag_, levelRegistry: $HolderLookup$Provider): void;
-        removeChestVehicleItem(slot: number, amount: number): $ItemStack;
+        addChestVehicleSaveData(tag: $CompoundTag_, levelRegistry: $HolderLookup$Provider): void;
+        /**
+         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
+         */
+        clearChestVehicleContent(): void;
         isChestVehicleStillValid(player: $Player): boolean;
         /**
          * @return `true` if the existing container should be closed on the client side when opening a new one, `false` otherwise
          */
         isChestVehicleEmpty(): boolean;
-        /**
-         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
-         */
-        clearChestVehicleContent(): void;
-        addChestVehicleSaveData(tag: $CompoundTag_, levelRegistry: $HolderLookup$Provider): void;
-        getBoundingBox(): $AABB;
-        getLootTable(): $ResourceKey<$LootTable>;
-        setLootTableSeed(lootTableSeed: number): void;
-        interactWithContainerVehicle(player: $Player): $InteractionResult;
-        removeChestVehicleItemNoUpdate(slot: number): $ItemStack;
         get empty(): boolean;
-        get itemStacks(): $NonNullList<$ItemStack>;
-        get removed(): boolean;
-        get chestVehicleEmpty(): boolean;
         get boundingBox(): $AABB;
+        get removed(): boolean;
+        get itemStacks(): $NonNullList<$ItemStack>;
+        get chestVehicleEmpty(): boolean;
     }
     export class $MinecartHopper extends $AbstractMinecartContainer implements $Hopper {
         /**
@@ -325,11 +326,11 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
         /**
          * Gets the world X position for this hopper entity.
          */
-        getLevelY(): number;
+        getLevelX(): number;
         /**
          * Gets the world X position for this hopper entity.
          */
-        getLevelX(): number;
+        getLevelY(): number;
         /**
          * Gets the world X position for this hopper entity.
          */
@@ -346,6 +347,7 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
          * Gets the bounding box of this Entity, adjusted to take auxiliary entities into account (e.g. the tile contained by a minecart, such as a command block).
          */
         getSuckAabb(): $AABB;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -421,13 +423,14 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
         horizontalCollision: boolean;
         constructor(entityType: $EntityType_<$MinecartHopper>, level: $Level_);
         constructor(level: $Level_, x: number, arg2: number, y: number);
-        get levelY(): number;
         get levelX(): number;
+        get levelY(): number;
         get levelZ(): number;
         get gridAligned(): boolean;
         get suckAabb(): $AABB;
     }
     export class $MinecartChest extends $AbstractMinecartContainer {
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -505,65 +508,6 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
         constructor(level: $Level_, x: number, arg2: number, y: number);
     }
     export class $AbstractMinecart extends $VehicleEntity implements $IAbstractMinecartExtension, $DynamicLightSource {
-        setDisplayOffset(displayOffset: number): void;
-        /**
-         * Called every tick the minecart is on an activator rail.
-         */
-        activateMinecart(x: number, y: number, z: number, powered: boolean): void;
-        /**
-         * Moves a minecart that is not attached to a rail
-         */
-        comeOffTrack(): void;
-        /**
-         * Called from Detector Rails to retrieve a redstone power level for comparators.
-         */
-        getDisplayOffset(): number;
-        /**
-         * Returns `true` if other Entities should be prevented from moving through this Entity.
-         */
-        hasCustomDisplay(): boolean;
-        moveAlongTrack(pos: $BlockPos_, state: $BlockState_): void;
-        setCanUseRail(customDisplay: boolean): void;
-        setCustomDisplay(customDisplay: boolean): void;
-        moveMinecartOnRail(pos: $BlockPos_): void;
-        /**
-         * Gets the maximum speed for a minecart
-         */
-        getMaxSpeed(): number;
-        getMinecartType(): $AbstractMinecart$Type;
-        getPos(x: number, arg1: number, y: number): $Vec3;
-        /**
-         * Returns `true` if other Entities should be prevented from moving through this Entity.
-         */
-        canUseRail(): boolean;
-        getPosOffs(x: number, arg1: number, y: number, arg3: number): $Vec3;
-        setDragAir(renderDistWeight: number): void;
-        /**
-         * Gets the maximum speed for a minecart
-         */
-        getDragAir(): number;
-        static createMinecart(level: $ServerLevel, x: number, arg2: number, y: number, arg4: $AbstractMinecart$Type_, z: $ItemStack_, arg6: $Player | null): $AbstractMinecart;
-        setDisplayBlockState(displayState: $BlockState_): void;
-        getDisplayBlockState(): $BlockState;
-        /**
-         * Returns the current speed cap for the cart when traveling on rails. This
-         * functions differs from getMaxCartSpeedOnRail() in that it controls
-         * current movement and cannot be overridden. The value however can never be
-         * higher than getMaxCartSpeedOnRail().
-         */
-        getMaxSpeedAirVertical(): number;
-        /**
-         * Moves a minecart that is not attached to a rail
-         */
-        applyNaturalSlowdown(): void;
-        /**
-         * Called from Detector Rails to retrieve a redstone power level for comparators.
-         */
-        getDefaultDisplayOffset(): number;
-        /**
-         * Gets the maximum speed for a minecart
-         */
-        getMaxSpeedWithRail(): number;
         getCollisionHandler(): $IMinecartCollisionHandler;
         static registerCollisionHandler(arg0: $IMinecartCollisionHandler | null): void;
         /**
@@ -573,8 +517,59 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
          * higher than getMaxCartSpeedOnRail().
          */
         getMaxSpeedAirLateral(): number;
+        /**
+         * Returns the current speed cap for the cart when traveling on rails. This
+         * functions differs from getMaxCartSpeedOnRail() in that it controls
+         * current movement and cannot be overridden. The value however can never be
+         * higher than getMaxCartSpeedOnRail().
+         */
+        getMaxSpeedAirVertical(): number;
+        /**
+         * Called from Detector Rails to retrieve a redstone power level for comparators.
+         */
+        getDefaultDisplayOffset(): number;
+        setDisplayBlockState(displayState: $BlockState_): void;
+        getDisplayBlockState(): $BlockState;
         setMaxSpeedAirLateral(yaw: number): void;
         setMaxSpeedAirVertical(yaw: number): void;
+        /**
+         * Moves a minecart that is not attached to a rail
+         */
+        applyNaturalSlowdown(): void;
+        /**
+         * Gets the maximum speed for a minecart
+         */
+        getMaxSpeedWithRail(): number;
+        setDragAir(renderDistWeight: number): void;
+        static createMinecart(level: $ServerLevel, x: number, arg2: number, y: number, arg4: $AbstractMinecart$Type_, z: $ItemStack_, arg6: $Player | null): $AbstractMinecart;
+        getPos(x: number, arg1: number, y: number): $Vec3;
+        setDisplayOffset(displayOffset: number): void;
+        /**
+         * Called from Detector Rails to retrieve a redstone power level for comparators.
+         */
+        getDisplayOffset(): number;
+        getMinecartType(): $AbstractMinecart$Type;
+        setCustomDisplay(customDisplay: boolean): void;
+        /**
+         * Called every tick the minecart is on an activator rail.
+         */
+        activateMinecart(x: number, y: number, z: number, powered: boolean): void;
+        moveAlongTrack(pos: $BlockPos_, state: $BlockState_): void;
+        /**
+         * Gets the maximum speed for a minecart
+         */
+        getMaxSpeed(): number;
+        moveMinecartOnRail(pos: $BlockPos_): void;
+        /**
+         * Returns `true` if other Entities should be prevented from moving through this Entity.
+         */
+        hasCustomDisplay(): boolean;
+        /**
+         * Moves a minecart that is not attached to a rail
+         */
+        comeOffTrack(): void;
+        setCanUseRail(customDisplay: boolean): void;
+        getDefaultDisplayBlockState(): $BlockState;
         /**
          * Returns the current speed cap for the cart when traveling on rails. This
          * functions differs from getMaxCartSpeedOnRail() in that it controls
@@ -583,11 +578,34 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
          */
         getCurrentCartSpeedCapOnRail(): number;
         setCurrentCartSpeedCapOnRail(yaw: number): void;
-        getDefaultDisplayBlockState(): $BlockState;
+        getPosOffs(x: number, arg1: number, y: number, arg3: number): $Vec3;
+        /**
+         * Gets the maximum speed for a minecart
+         */
+        getDragAir(): number;
         /**
          * Returns `true` if other Entities should be prevented from moving through this Entity.
          */
-        isPoweredCart(): boolean;
+        canUseRail(): boolean;
+        /**
+         * Called from Detector Rails to retrieve a redstone power level for comparators.
+         */
+        getComparatorLevel(): number;
+        /**
+         * Returns the current speed cap for the cart when traveling on rails. This
+         * functions differs from getMaxCartSpeedOnRail() in that it controls
+         * current movement and cannot be overridden. The value however can never be
+         * higher than getMaxCartSpeedOnRail().
+         */
+        getMaxCartSpeedOnRail(): number;
+        /**
+         * Returns `true` if other Entities should be prevented from moving through this Entity.
+         */
+        shouldDoRailFunctions(): boolean;
+        /**
+         * Internal, returns the current spot to look for the attached rail.
+         */
+        getCurrentRailPosition(): $BlockPos;
         /**
          * Returns `true` if other Entities should be prevented from moving through this Entity.
          */
@@ -597,24 +615,10 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
          */
         getSlopeAdjustment(): number;
         /**
-         * Called from Detector Rails to retrieve a redstone power level for comparators.
-         */
-        getComparatorLevel(): number;
-        /**
          * Returns `true` if other Entities should be prevented from moving through this Entity.
          */
-        shouldDoRailFunctions(): boolean;
-        /**
-         * Returns the current speed cap for the cart when traveling on rails. This
-         * functions differs from getMaxCartSpeedOnRail() in that it controls
-         * current movement and cannot be overridden. The value however can never be
-         * higher than getMaxCartSpeedOnRail().
-         */
-        getMaxCartSpeedOnRail(): number;
-        /**
-         * Internal, returns the current spot to look for the attached rail.
-         */
-        getCurrentRailPosition(): $BlockPos;
+        isPoweredCart(): boolean;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -688,29 +692,29 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
         static BASE_SAFE_FALL_DISTANCE: number;
         wasTouchingWater: boolean;
         horizontalCollision: boolean;
-        constructor(entityType: $EntityType_<never>, level: $Level_, x: number, arg3: number, y: number);
         constructor(entityType: $EntityType_<never>, level: $Level_);
-        set customDisplay(value: boolean);
-        get maxSpeed(): number;
-        get minecartType(): $AbstractMinecart$Type;
+        constructor(entityType: $EntityType_<never>, level: $Level_, x: number, arg3: number, y: number);
+        get collisionHandler(): $IMinecartCollisionHandler;
         get defaultDisplayOffset(): number;
         get maxSpeedWithRail(): number;
-        get collisionHandler(): $IMinecartCollisionHandler;
+        get minecartType(): $AbstractMinecart$Type;
+        set customDisplay(value: boolean);
+        get maxSpeed(): number;
         get defaultDisplayBlockState(): $BlockState;
-        get poweredCart(): boolean;
-        get slopeAdjustment(): number;
         get comparatorLevel(): number;
         get maxCartSpeedOnRail(): number;
         get currentRailPosition(): $BlockPos;
+        get slopeAdjustment(): number;
+        get poweredCart(): boolean;
     }
     export class $DismountHelper {
-        static nonClimbableShape(level: $BlockGetter, pos: $BlockPos_): $VoxelShape;
-        static findCeilingFrom(pos: $BlockPos_, ceiling: number, shapeForPos: $Function_<$BlockPos, $VoxelShape>): number;
+        static offsetsForDirection(direction: $Direction_): number[][];
         static findSafeDismountLocation(entityType: $EntityType_<never>, level: $CollisionGetter, pos: $BlockPos_, onlySafePositions: boolean): $Vec3;
-        static isBlockFloorValid(distance: number): boolean;
         static canDismountTo(level: $CollisionGetter, offset: $Vec3_, passenger: $LivingEntity, pose: $Pose_): boolean;
         static canDismountTo(level: $CollisionGetter, passenger: $LivingEntity, boundingBox: $AABB_): boolean;
-        static offsetsForDirection(direction: $Direction_): number[][];
+        static isBlockFloorValid(distance: number): boolean;
+        static findCeilingFrom(pos: $BlockPos_, ceiling: number, shapeForPos: $Function_<$BlockPos, $VoxelShape>): number;
+        static nonClimbableShape(level: $BlockGetter, pos: $BlockPos_): $VoxelShape;
         constructor();
     }
     export class $AbstractMinecart$Type extends $Enum<$AbstractMinecart$Type> {
@@ -745,38 +749,29 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
         /**
          * Returns the stack in the given slot.
          */
+        getItem(slot: number): $ItemStack;
+        setLootTableSeed(lootTableSeed: number): void;
+        setLootTable(lootTable: $ResourceKey_<$LootTable> | null): void;
+        /**
+         * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
+         */
+        removeItem(slot: number, amount: number): $ItemStack;
+        stopOpen(player: $Player): void;
+        /**
+         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
+         */
+        clearContent(): void;
+        unpackLootTable(player: $Player | null): void;
+        getLootTableSeed(): number;
+        getLootTable(): $ResourceKey<$LootTable>;
+        /**
+         * Returns the stack in the given slot.
+         */
         removeItemNoUpdate(slot: number): $ItemStack;
         /**
          * Returns the number of slots in the inventory.
          */
         getContainerSize(): number;
-        /**
-         * Returns the stack in the given slot.
-         */
-        getItem(slot: number): $ItemStack;
-        getItemStacks(): $NonNullList<$ItemStack>;
-        /**
-         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
-         */
-        clearItemStacks(): void;
-        unpackLootTable(player: $Player | null): void;
-        /**
-         * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
-         */
-        removeItem(slot: number, amount: number): $ItemStack;
-        setLootTable(lootTable: $ResourceKey_<$LootTable> | null): void;
-        getLootTableSeed(): number;
-        stopOpen(player: $Player): void;
-        createMenu(containerId: number, playerInventory: $Inventory, player: $Player): $AbstractContainerMenu;
-        /**
-         * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
-         */
-        setItem(slot: number, stack: $ItemStack_): void;
-        openCustomInventoryScreen(player: $Player): void;
-        /**
-         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
-         */
-        clearContent(): void;
         /**
          * Don't rename this method to canInteractWith due to conflicts with Container
          */
@@ -785,29 +780,48 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
          * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
         setChanged(): void;
-        getLootTable(): $ResourceKey<$LootTable>;
-        setLootTableSeed(lootTableSeed: number): void;
+        createMenu(containerId: number, playerInventory: $Inventory, player: $Player): $AbstractContainerMenu;
+        /**
+         * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
+         */
+        setItem(slot: number, stack: $ItemStack_): void;
+        getItemStacks(): $NonNullList<$ItemStack>;
+        /**
+         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
+         */
+        clearItemStacks(): void;
+        openCustomInventoryScreen(player: $Player): void;
+        unpackChestVehicleLootTable(player: $Player | null): void;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
          */
         isEmpty(): boolean;
-        unpackChestVehicleLootTable(player: $Player | null): void;
+        /**
+         * Returns the stack in the given slot.
+         */
+        removeChestVehicleItemNoUpdate(slot: number): $ItemStack;
+        interactWithContainerVehicle(player: $Player): $InteractionResult;
+        readChestVehicleSaveData(tag: $CompoundTag_, levelRegistry: $HolderLookup$Provider): void;
         chestVehicleDestroyed(damageSource: $DamageSource_, level: $Level_, entity: $Entity): void;
         /**
          * Returns the stack in the given slot.
          */
         getChestVehicleItem(slot: number): $ItemStack;
         /**
+         * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
+         */
+        removeChestVehicleItem(slot: number, amount: number): $ItemStack;
+        /**
          * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
          */
         setChestVehicleItem(slot: number, stack: $ItemStack_): void;
         getChestVehicleSlot(slot: number): $SlotAccess;
-        readChestVehicleSaveData(tag: $CompoundTag_, levelRegistry: $HolderLookup$Provider): void;
+        addChestVehicleSaveData(tag: $CompoundTag_, levelRegistry: $HolderLookup$Provider): void;
         /**
-         * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
+         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
-        removeChestVehicleItem(slot: number, amount: number): $ItemStack;
+        clearChestVehicleContent(): void;
         /**
          * Don't rename this method to canInteractWith due to conflicts with Container
          */
@@ -818,29 +832,10 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
          */
         isChestVehicleEmpty(): boolean;
         /**
-         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
-         */
-        clearChestVehicleContent(): void;
-        addChestVehicleSaveData(tag: $CompoundTag_, levelRegistry: $HolderLookup$Provider): void;
-        interactWithContainerVehicle(player: $Player): $InteractionResult;
-        /**
-         * Returns the stack in the given slot.
-         */
-        removeChestVehicleItemNoUpdate(slot: number): $ItemStack;
-        /**
-         * @return `true` if the given stack can be extracted into the target inventory
-         */
-        canTakeItem(target: $Container, slot: number, stack: $ItemStack_): boolean;
-        /**
          * Returns `true` if automation is allowed to insert the given stack (ignoring stack size) into the given slot. For guis use Slot.isItemValid
          */
         canPlaceItem(slot: number, stack: $ItemStack_): boolean;
         hasAnyMatching(predicate: $Predicate_<$ItemStack>): boolean;
-        /**
-         * Returns the number of slots in the inventory.
-         */
-        getMaxStackSize(): number;
-        getMaxStackSize(stack: $ItemStack_): number;
         startOpen(player: $Player): void;
         /**
          * Returns `true` if any item from the passed set exists in this inventory.
@@ -850,6 +845,15 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
          * Returns the total amount of the specified item in this inventory. This method does not check for nbt.
          */
         countItem(item: $Item_): number;
+        getMaxStackSize(stack: $ItemStack_): number;
+        /**
+         * Returns the number of slots in the inventory.
+         */
+        getMaxStackSize(): number;
+        /**
+         * @return `true` if the given stack can be extracted into the target inventory
+         */
+        canTakeItem(target: $Container, slot: number, stack: $ItemStack_): boolean;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
@@ -867,47 +871,47 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
          */
         lithium$itemInsertionTestRequiresStackSize1(): boolean;
         /**
-         * Returns the number of slots in the inventory.
+         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
-        getHeight(): number;
-        /**
-         * If a rider of this entity can interact with this entity. Should return true on the
-         * ridden entity if so.
-         */
-        isMutable(): boolean;
+        setChanged(): void;
         insertItem(slot: number, stack: $ItemStack_, simulate: boolean): $ItemStack;
+        asContainer(): $Container;
+        /**
+         * Returns the stack in the given slot.
+         */
+        getStackInSlot(slot: number): $ItemStack;
+        /**
+         * Returns `true` if automation is allowed to insert the given stack (ignoring stack size) into the given slot. For guis use Slot.isItemValid
+         */
+        isItemValid(slot: number, stack: $ItemStack_): boolean;
         extractItem(slot: number, amount: number, simulate: boolean): $ItemStack;
         /**
          * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
          */
         setStackInSlot(slot: number, stack: $ItemStack_): void;
         /**
-         * Returns `true` if automation is allowed to insert the given stack (ignoring stack size) into the given slot. For guis use Slot.isItemValid
+         * If a rider of this entity can interact with this entity. Should return true on the
+         * ridden entity if so.
          */
-        isItemValid(slot: number, stack: $ItemStack_): boolean;
-        /**
-         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
-         */
-        setChanged(): void;
-        /**
-         * Returns the stack in the given slot.
-         */
-        getStackInSlot(slot: number): $ItemStack;
-        asContainer(): $Container;
+        isMutable(): boolean;
         getSlotLimit(slot: number): number;
         /**
          * Returns the number of slots in the inventory.
          */
-        getSlots(): number;
-        /**
-         * Returns the number of slots in the inventory.
-         */
-        getWidth(): number;
+        getHeight(): number;
         /**
          * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
         clear(): void;
         getBlock(level: $Level_): $LevelBlock;
+        /**
+         * Returns the number of slots in the inventory.
+         */
+        getWidth(): number;
+        /**
+         * Returns the number of slots in the inventory.
+         */
+        getSlots(): number;
         /**
          * Allows the menu provider to write additional data to be read by `IContainerFactory#create(int, Inventory, RegistryFriendlyByteBuf)`
          * when the menu is created on the client-side.
@@ -919,32 +923,33 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
          */
         shouldCloseCurrentScreen(): boolean;
         insertItem(stack: $ItemStack_, simulate: boolean): $ItemStack;
+        countNonEmpty(match: $ItemPredicate_): number;
         /**
          * Returns the number of slots in the inventory.
          */
         countNonEmpty(): number;
-        countNonEmpty(match: $ItemPredicate_): number;
+        getAllItems(): $List<$ItemStack>;
+        clear(match: $ItemPredicate_): void;
+        find(match: $ItemPredicate_): number;
+        /**
+         * Returns the number of slots in the inventory.
+         */
+        find(): number;
+        /**
+         * Returns the number of slots in the inventory.
+         */
+        count(): number;
+        count(match: $ItemPredicate_): number;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
          */
         isEmpty(): boolean;
         /**
-         * Returns the number of slots in the inventory.
-         */
-        count(): number;
-        count(match: $ItemPredicate_): number;
-        find(match: $ItemPredicate_): number;
-        /**
-         * Returns the number of slots in the inventory.
-         */
-        find(): number;
-        clear(match: $ItemPredicate_): void;
-        getAllItems(): $List<$ItemStack>;
-        /**
          * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
         clientsort$setChanged(): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $Boat$Type;
         firstTick: boolean;
         inputUp: boolean;
         wasEyeInWater: boolean;
@@ -1035,13 +1040,14 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
         get itemStacks(): $NonNullList<$ItemStack>;
         get chestVehicleEmpty(): boolean;
         set transferCooldown(value: number);
-        get height(): number;
         get mutable(): boolean;
-        get slots(): number;
+        get height(): number;
         get width(): number;
+        get slots(): number;
         get allItems(): $List<$ItemStack>;
     }
     export class $Minecart extends $AbstractMinecart {
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -1121,20 +1127,21 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
     export class $VehicleEntity extends $Entity {
         destroy(source: $DamageSource_): void;
         destroy(dropItem: $Item_): void;
+        shouldSourceDestroy(source: $DamageSource_): boolean;
+        getDamage(): number;
+        setDamage(damage: number): void;
         /**
          * The maximum height from where the entity is allowed to jump (used in pathfinder)
          */
         getHurtDir(): number;
+        setHurtTime(hurtDir: number): void;
         getDropItem(): $Item;
         /**
          * The maximum height from where the entity is allowed to jump (used in pathfinder)
          */
         getHurtTime(): number;
-        setHurtTime(hurtDir: number): void;
-        getDamage(): number;
-        setDamage(damage: number): void;
         setHurtDir(hurtDir: number): void;
-        shouldSourceDestroy(source: $DamageSource_): boolean;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -1212,6 +1219,7 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
     }
     export class $MinecartSpawner extends $AbstractMinecart {
         getSpawner(): $BaseSpawner;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -1291,6 +1299,7 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
     }
     export class $MinecartCommandBlock extends $AbstractMinecart {
         getCommandBlock(): $BaseCommandBlock;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -1377,17 +1386,18 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
         get minecart(): $MinecartCommandBlock;
     }
     export class $MinecartFurnace extends $AbstractMinecart implements $MinecartFurnaceAccessor {
-        setHasFuel(hasFuel: boolean): void;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
          */
         hasFuel(): boolean;
-        create$setFuel(id: number): void;
+        setHasFuel(hasFuel: boolean): void;
         /**
          * Called from Detector Rails to retrieve a redstone power level for comparators.
          */
         create$getFuel(): number;
+        create$setFuel(id: number): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -1463,27 +1473,28 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
         static BASE_SAFE_FALL_DISTANCE: number;
         wasTouchingWater: boolean;
         horizontalCollision: boolean;
-        constructor(level: $Level_, x: number, arg2: number, y: number);
         constructor(entityType: $EntityType_<$MinecartFurnace>, level: $Level_);
+        constructor(level: $Level_, x: number, arg2: number, y: number);
     }
     export class $MinecartTNT extends $AbstractMinecart {
+        explode(damageSource: $DamageSource_ | null, radiusModifier: number): void;
         /**
          * Makes the minecart explode.
          */
         explode(radiusModifier: number): void;
-        explode(damageSource: $DamageSource_ | null, radiusModifier: number): void;
-        /**
-         * Returns `true` if the TNT minecart is ignited.
-         */
-        isPrimed(): boolean;
         /**
          * Ignites this TNT cart.
          */
         primeFuse(): void;
         /**
+         * Returns `true` if the TNT minecart is ignited.
+         */
+        isPrimed(): boolean;
+        /**
          * Gets the remaining fuse time in ticks.
          */
         getFuse(): number;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -1566,33 +1577,24 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
         /**
          * Returns the stack in the given slot.
          */
-        removeItemNoUpdate(index: number): $ItemStack;
-        /**
-         * Returns the stack in the given slot.
-         */
         getItem(index: number): $ItemStack;
-        getItemStacks(): $NonNullList<$ItemStack>;
-        /**
-         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
-         */
-        clearItemStacks(): void;
+        setLootTableSeed(lootTableSeed: number): void;
+        setLootTable(lootTable: $ResourceKey_<$LootTable> | null): void;
+        setLootTable(lootTable: $ResourceKey_<$LootTable>, seed: number): void;
         /**
          * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
          */
         removeItem(index: number, count: number): $ItemStack;
-        setLootTable(lootTable: $ResourceKey_<$LootTable>, seed: number): void;
-        setLootTable(lootTable: $ResourceKey_<$LootTable> | null): void;
-        getLootTableSeed(): number;
-        createMenu(containerId: number, playerInventory: $Inventory): $AbstractContainerMenu;
-        createMenu(containerId: number, playerInventory: $Inventory, player: $Player): $AbstractContainerMenu;
-        /**
-         * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
-         */
-        setItem(index: number, stack: $ItemStack_): void;
         /**
          * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
         clearContent(): void;
+        getLootTableSeed(): number;
+        getLootTable(): $ResourceKey<$LootTable>;
+        /**
+         * Returns the stack in the given slot.
+         */
+        removeItemNoUpdate(index: number): $ItemStack;
         /**
          * Don't rename this method to canInteractWith due to conflicts with Container
          */
@@ -1601,29 +1603,48 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
          * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
         setChanged(): void;
-        getLootTable(): $ResourceKey<$LootTable>;
-        setLootTableSeed(lootTableSeed: number): void;
+        createMenu(containerId: number, playerInventory: $Inventory, player: $Player): $AbstractContainerMenu;
+        createMenu(containerId: number, playerInventory: $Inventory): $AbstractContainerMenu;
+        /**
+         * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
+         */
+        setItem(index: number, stack: $ItemStack_): void;
+        getItemStacks(): $NonNullList<$ItemStack>;
+        /**
+         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
+         */
+        clearItemStacks(): void;
+        unpackChestVehicleLootTable(player: $Player | null): void;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
          */
         isEmpty(): boolean;
-        unpackChestVehicleLootTable(player: $Player | null): void;
+        /**
+         * Returns the stack in the given slot.
+         */
+        removeChestVehicleItemNoUpdate(index: number): $ItemStack;
+        interactWithContainerVehicle(player: $Player): $InteractionResult;
+        readChestVehicleSaveData(tag: $CompoundTag_, levelRegistry: $HolderLookup$Provider): void;
         chestVehicleDestroyed(damageSource: $DamageSource_, level: $Level_, entity: $Entity): void;
         /**
          * Returns the stack in the given slot.
          */
         getChestVehicleItem(index: number): $ItemStack;
         /**
+         * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
+         */
+        removeChestVehicleItem(index: number, count: number): $ItemStack;
+        /**
          * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
          */
         setChestVehicleItem(index: number, stack: $ItemStack_): void;
         getChestVehicleSlot(slot: number): $SlotAccess;
-        readChestVehicleSaveData(tag: $CompoundTag_, levelRegistry: $HolderLookup$Provider): void;
+        addChestVehicleSaveData(tag: $CompoundTag_, levelRegistry: $HolderLookup$Provider): void;
         /**
-         * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
+         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
-        removeChestVehicleItem(index: number, count: number): $ItemStack;
+        clearChestVehicleContent(): void;
         /**
          * Don't rename this method to canInteractWith due to conflicts with Container
          */
@@ -1636,33 +1657,14 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
         /**
          * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
-        clearChestVehicleContent(): void;
-        addChestVehicleSaveData(tag: $CompoundTag_, levelRegistry: $HolderLookup$Provider): void;
-        interactWithContainerVehicle(player: $Player): $InteractionResult;
-        /**
-         * Returns the stack in the given slot.
-         */
-        removeChestVehicleItemNoUpdate(index: number): $ItemStack;
-        /**
-         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
-         */
         generateLootLithium(): void;
-        /**
-         * @return `true` if the given stack can be extracted into the target inventory
-         */
-        canTakeItem(target: $Container, slot: number, stack: $ItemStack_): boolean;
         /**
          * Returns `true` if automation is allowed to insert the given stack (ignoring stack size) into the given slot. For guis use Slot.isItemValid
          */
         canPlaceItem(slot: number, stack: $ItemStack_): boolean;
         hasAnyMatching(predicate: $Predicate_<$ItemStack>): boolean;
-        /**
-         * Returns the maximum stack size for an inventory slot. Seems to always be 64, possibly will be extended.
-         */
-        getMaxStackSize(): number;
-        getMaxStackSize(stack: $ItemStack_): number;
-        stopOpen(player: $Player): void;
         startOpen(player: $Player): void;
+        stopOpen(player: $Player): void;
         /**
          * Returns `true` if any item from the passed set exists in this inventory.
          */
@@ -1671,6 +1673,15 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
          * Returns the total amount of the specified item in this inventory. This method does not check for nbt.
          */
         countItem(item: $Item_): number;
+        getMaxStackSize(stack: $ItemStack_): number;
+        /**
+         * Returns the maximum stack size for an inventory slot. Seems to always be 64, possibly will be extended.
+         */
+        getMaxStackSize(): number;
+        /**
+         * @return `true` if the given stack can be extracted into the target inventory
+         */
+        canTakeItem(target: $Container, slot: number, stack: $ItemStack_): boolean;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
@@ -1688,47 +1699,47 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
          */
         lithium$itemInsertionTestRequiresStackSize1(): boolean;
         /**
-         * Returns the maximum stack size for an inventory slot. Seems to always be 64, possibly will be extended.
+         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
-        getHeight(): number;
-        /**
-         * If a rider of this entity can interact with this entity. Should return true on the
-         * ridden entity if so.
-         */
-        isMutable(): boolean;
+        setChanged(): void;
         insertItem(slot: number, stack: $ItemStack_, simulate: boolean): $ItemStack;
+        asContainer(): $Container;
+        /**
+         * Returns the stack in the given slot.
+         */
+        getStackInSlot(index: number): $ItemStack;
+        /**
+         * Returns `true` if automation is allowed to insert the given stack (ignoring stack size) into the given slot. For guis use Slot.isItemValid
+         */
+        isItemValid(slot: number, stack: $ItemStack_): boolean;
         extractItem(slot: number, amount: number, simulate: boolean): $ItemStack;
         /**
          * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
          */
         setStackInSlot(index: number, stack: $ItemStack_): void;
         /**
-         * Returns `true` if automation is allowed to insert the given stack (ignoring stack size) into the given slot. For guis use Slot.isItemValid
+         * If a rider of this entity can interact with this entity. Should return true on the
+         * ridden entity if so.
          */
-        isItemValid(slot: number, stack: $ItemStack_): boolean;
-        /**
-         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
-         */
-        setChanged(): void;
-        /**
-         * Returns the stack in the given slot.
-         */
-        getStackInSlot(index: number): $ItemStack;
-        asContainer(): $Container;
+        isMutable(): boolean;
         getSlotLimit(slot: number): number;
         /**
          * Returns the maximum stack size for an inventory slot. Seems to always be 64, possibly will be extended.
          */
-        getSlots(): number;
-        /**
-         * Returns the maximum stack size for an inventory slot. Seems to always be 64, possibly will be extended.
-         */
-        getWidth(): number;
+        getHeight(): number;
         /**
          * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
         clear(): void;
         getBlock(level: $Level_): $LevelBlock;
+        /**
+         * Returns the maximum stack size for an inventory slot. Seems to always be 64, possibly will be extended.
+         */
+        getWidth(): number;
+        /**
+         * Returns the maximum stack size for an inventory slot. Seems to always be 64, possibly will be extended.
+         */
+        getSlots(): number;
         /**
          * Allows the menu provider to write additional data to be read by `IContainerFactory#create(int, Inventory, RegistryFriendlyByteBuf)`
          * when the menu is created on the client-side.
@@ -1740,34 +1751,35 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
          */
         shouldCloseCurrentScreen(): boolean;
         insertItem(stack: $ItemStack_, simulate: boolean): $ItemStack;
+        countNonEmpty(match: $ItemPredicate_): number;
         /**
          * Returns the maximum stack size for an inventory slot. Seems to always be 64, possibly will be extended.
          */
         countNonEmpty(): number;
-        countNonEmpty(match: $ItemPredicate_): number;
-        /**
-         * If a rider of this entity can interact with this entity. Should return true on the
-         * ridden entity if so.
-         */
-        isEmpty(): boolean;
-        /**
-         * Returns the maximum stack size for an inventory slot. Seems to always be 64, possibly will be extended.
-         */
-        count(): number;
-        count(match: $ItemPredicate_): number;
+        getAllItems(): $List<$ItemStack>;
+        clear(match: $ItemPredicate_): void;
         find(match: $ItemPredicate_): number;
         /**
          * Returns the maximum stack size for an inventory slot. Seems to always be 64, possibly will be extended.
          */
         find(): number;
-        clear(match: $ItemPredicate_): void;
-        getAllItems(): $List<$ItemStack>;
+        /**
+         * Returns the maximum stack size for an inventory slot. Seems to always be 64, possibly will be extended.
+         */
+        count(): number;
+        count(match: $ItemPredicate_): number;
+        /**
+         * If a rider of this entity can interact with this entity. Should return true on the
+         * ridden entity if so.
+         */
+        isEmpty(): boolean;
         getInventoryLithium(): $NonNullList<$ItemStack>;
         setInventoryLithium(arg0: $NonNullList<$ItemStack_>): void;
         /**
          * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
         clientsort$setChanged(): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -1846,10 +1858,10 @@ declare module "@package/net/minecraft/world/entity/vehicle" {
         get itemStacks(): $NonNullList<$ItemStack>;
         get chestVehicleEmpty(): boolean;
         set transferCooldown(value: number);
-        get height(): number;
         get mutable(): boolean;
-        get slots(): number;
+        get height(): number;
         get width(): number;
+        get slots(): number;
         get allItems(): $List<$ItemStack>;
     }
 }

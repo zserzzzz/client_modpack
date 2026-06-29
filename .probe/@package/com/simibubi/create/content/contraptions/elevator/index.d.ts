@@ -134,9 +134,8 @@ declare module "@package/com/simibubi/create/content/contraptions/elevator" {
     /**
      * Values that may be interpreted as {@link $ElevatorColumn$ColumnCoords}.
      */
-    export type $ElevatorColumn$ColumnCoords_ = { x?: number, z?: number, side?: $Direction_,  } | [x?: number, z?: number, side?: $Direction_, ];
+    export type $ElevatorColumn$ColumnCoords_ = { z?: number, side?: $Direction_, x?: number,  } | [z?: number, side?: $Direction_, x?: number, ];
     export class $ElevatorColumn {
-        setActive(arg0: boolean): void;
         static getOrCreate(arg0: $LevelAccessor, arg1: $ElevatorColumn$ColumnCoords_): $ElevatorColumn;
         remove(arg0: $BlockPos_): void;
         static get(arg0: $LevelAccessor, arg1: $ElevatorColumn$ColumnCoords_): $ElevatorColumn;
@@ -144,15 +143,16 @@ declare module "@package/com/simibubi/create/content/contraptions/elevator" {
         add(arg0: $BlockPos_): void;
         isActive(): boolean;
         initNames(arg0: $Level_): void;
+        setActive(arg0: boolean): void;
         markDirty(): void;
         getContacts(): $Collection<$BlockPos>;
-        gatherAll(): void;
         contactAt(arg0: number): $BlockPos;
+        gatherAll(): void;
+        floorReached(arg0: $LevelAccessor, arg1: string): void;
+        namesChanged(): void;
         isTargetAvailable(): boolean;
         getTargetedYLevel(): number;
         compileNamesList(): $List<$IntAttached<$Couple<string>>>;
-        namesChanged(): void;
-        floorReached(arg0: $LevelAccessor, arg1: string): void;
         static LOADED_COLUMNS: $WorldAttached<$Map<$ElevatorColumn$ColumnCoords, $ElevatorColumn>>;
         namesListVersion: number;
         constructor(arg0: $LevelAccessor, arg1: $ElevatorColumn$ColumnCoords_);
@@ -161,20 +161,20 @@ declare module "@package/com/simibubi/create/content/contraptions/elevator" {
         get targetedYLevel(): number;
     }
     export class $ElevatorContactBlock extends $WrenchableDirectionalBlock implements $IBE<$ElevatorContactBlockEntity>, $SpecialBlockItemRequirement {
-        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
         callToContactAndUpdate(arg0: $ElevatorColumn, arg1: $BlockState_, arg2: $Level_, arg3: $BlockPos_, arg4: boolean): void;
-        getBlockEntityType(): $BlockEntityType<$ElevatorContactBlockEntity>;
-        getBlockEntityClass(): $Class<$ElevatorContactBlockEntity>;
         static getLight(arg0: $BlockState_): number;
-        scheduleActivation(arg0: $LevelAccessor, arg1: $BlockPos_): void;
+        getBlockEntityClass(): $Class<$ElevatorContactBlockEntity>;
         static getColumnCoords(arg0: $LevelAccessor, arg1: $BlockPos_): $ElevatorColumn$ColumnCoords;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ElevatorContactBlockEntity>): void;
+        scheduleActivation(arg0: $LevelAccessor, arg1: $BlockPos_): void;
+        getBlockEntityType(): $BlockEntityType<$ElevatorContactBlockEntity>;
+        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ElevatorContactBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ElevatorContactBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ElevatorContactBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $ElevatorContactBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ElevatorContactBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ElevatorContactBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ElevatorContactBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -208,16 +208,16 @@ declare module "@package/com/simibubi/create/content/contraptions/elevator" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$ElevatorContactBlockEntity>;
         get blockEntityClass(): $Class<$ElevatorContactBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$ElevatorContactBlockEntity>;
     }
     export class $ElevatorContraption extends $PulleyContraption {
         getContactYOffset(): number;
         isTargetUnreachable(arg0: number): boolean;
-        getGlobalColumn(): $ElevatorColumn$ColumnCoords;
-        getCurrentTargetY(arg0: $Level_): number;
         setAllControlsToFloor(arg0: number): void;
         syncControlDisplays(): void;
+        getCurrentTargetY(arg0: $Level_): number;
+        getGlobalColumn(): $ElevatorColumn$ColumnCoords;
         broadcastFloorData(arg0: $Level_, arg1: $BlockPos_): void;
         setClientYTarget(arg0: number): void;
         hasUniversalCreativeCrate: boolean;
@@ -236,23 +236,23 @@ declare module "@package/com/simibubi/create/content/contraptions/elevator" {
         constructor();
         constructor(arg0: number);
         get contactYOffset(): number;
-        get globalColumn(): $ElevatorColumn$ColumnCoords;
         set allControlsToFloor(value: number);
+        get globalColumn(): $ElevatorColumn$ColumnCoords;
     }
     export class $ElevatorContactEditPacket extends $BlockEntityConfigurationPacket<$ElevatorContactBlockEntity> {
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ElevatorContactEditPacket>;
         constructor(arg0: $BlockPos_, arg1: string, arg2: string, arg3: $DoorControl_);
     }
     export class $ElevatorPulleyBlock extends $HorizontalKineticBlock implements $IBE<$ElevatorPulleyBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$ElevatorPulleyBlockEntity>;
         getBlockEntityClass(): $Class<$ElevatorPulleyBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ElevatorPulleyBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$ElevatorPulleyBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ElevatorPulleyBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ElevatorPulleyBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ElevatorPulleyBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $ElevatorPulleyBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ElevatorPulleyBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ElevatorPulleyBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ElevatorPulleyBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -283,8 +283,8 @@ declare module "@package/com/simibubi/create/content/contraptions/elevator" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$ElevatorPulleyBlockEntity>;
         get blockEntityClass(): $Class<$ElevatorPulleyBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$ElevatorPulleyBlockEntity>;
     }
     export class $ElevatorFloorListPacket$RequestFloorList extends $Record implements $ServerboundPacketPayload {
         handle(arg0: $ServerPlayer): void;
@@ -312,8 +312,8 @@ declare module "@package/com/simibubi/create/content/contraptions/elevator" {
     }
     export class $ElevatorContactBlockEntity extends $SmartBlockEntity {
         getNames(): $Couple<string>;
-        updateName(arg0: string, arg1: string): void;
         updateDisplayedFloor(arg0: string): void;
+        updateName(arg0: string, arg1: string): void;
         worldPosition: $BlockPos;
         columnCoords: $ElevatorColumn$ColumnCoords;
         level: $Level;

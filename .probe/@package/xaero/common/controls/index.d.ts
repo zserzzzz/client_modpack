@@ -10,11 +10,11 @@ declare module "@package/xaero/common/controls" {
         /**
          * @deprecated
          */
-        keyUp(arg0: $KeyMapping, arg1: boolean): void;
+        keyDown(arg0: $KeyMapping, arg1: boolean, arg2: boolean): void;
         /**
          * @deprecated
          */
-        keyDown(arg0: $KeyMapping, arg1: boolean, arg2: boolean): void;
+        keyUp(arg0: $KeyMapping, arg1: boolean): void;
         /**
          * @deprecated
          */

@@ -56,8 +56,8 @@ declare module "@package/com/simibubi/create/content/equipment/zapper" {
         constructor(arg0: $InteractionHand_, arg1: $PlacementPatterns_);
     }
     export class $ZapperLog {
-        undo(): void;
         record(arg0: $Level_, arg1: $List_<$BlockPos_>): void;
+        undo(): void;
         redo(): void;
         constructor();
     }
@@ -86,8 +86,8 @@ declare module "@package/com/simibubi/create/content/equipment/zapper" {
     }
     export class $ShootableGadgetItemMethods {
         static shouldSwap(arg0: $Player, arg1: $ItemStack_, arg2: $InteractionHand_, arg3: $Predicate_<$ItemStack>): boolean;
-        static applyCooldown(arg0: $Player, arg1: $ItemStack_, arg2: $InteractionHand_, arg3: $Predicate_<$ItemStack>, arg4: number): void;
         static getGunBarrelVec(arg0: $Player, arg1: boolean, arg2: $Vec3_): $Vec3;
+        static applyCooldown(arg0: $Player, arg1: $ItemStack_, arg2: $InteractionHand_, arg3: $Predicate_<$ItemStack>, arg4: number): void;
         static sendPackets(arg0: $Player, arg1: $Function_<boolean, $ShootGadgetPacket>): void;
         constructor();
     }
@@ -132,10 +132,10 @@ declare module "@package/com/simibubi/create/content/equipment/zapper" {
      */
     export type $PlacementPatterns_ = "solid" | "checkered" | "inversecheckered" | "chance25" | "chance50" | "chance75";
     export class $ZapperItem extends $Item implements $CustomArmPoseItem {
-        static setBlockEntityData(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_, arg3: $CompoundTag_, arg4: $Player): void;
         getArmPose(arg0: $ItemStack_, arg1: $AbstractClientPlayer, arg2: $InteractionHand_): $HumanoidModel$ArmPose;
-        isZapper(arg0: $ItemStack_): boolean;
+        static setBlockEntityData(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_, arg3: $CompoundTag_, arg4: $Player): void;
         validateUsage(arg0: $ItemStack_): $Component;
+        isZapper(arg0: $ItemStack_): boolean;
         static BASE_ATTACK_DAMAGE_ID: $ResourceLocation;
         static DEFAULT_MAX_STACK_SIZE: number;
         static MAX_BAR_WIDTH: number;
@@ -149,8 +149,8 @@ declare module "@package/com/simibubi/create/content/equipment/zapper" {
     export class $ShootableGadgetRenderHandler {
         tick(): void;
         shoot(arg0: $InteractionHand_, arg1: $Vec3_): void;
-        getAnimation(arg0: boolean, arg1: number): number;
         registerListeners(arg0: $IEventBus): void;
+        getAnimation(arg0: boolean, arg1: number): number;
         dontAnimateItem(arg0: $InteractionHand_): void;
         constructor();
     }

@@ -14,9 +14,9 @@ declare module "@package/net/mehvahdjukaar/polytone/texture" {
     export class $IDeltaProviderContext {
     }
     export interface $IDeltaProviderContext {
-        polytone$getMode(): $IDeltaProvider;
-        polytone$setMode(arg0: $IDeltaProvider_): void;
-        polytone$getTimeCycleDuration(): number;
         polytone$setTimeCycleDuration(arg0: number): void;
+        polytone$getTimeCycleDuration(): number;
+        polytone$setMode(arg0: $IDeltaProvider_): void;
+        polytone$getMode(): $IDeltaProvider;
     }
 }

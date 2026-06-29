@@ -15,16 +15,16 @@ declare module "@package/foundry/veil/api/quasar/data" {
         shouldCollide(): boolean;
         additive(): boolean;
         spriteData(): $SpriteData;
+        velocityStretchFactor(): number;
+        faceVelocity(): boolean;
+        initModules(): $List<$Holder<$ParticleModuleData>>;
         updateModules(): $List<$Holder<$ParticleModuleData>>;
         getAllModules(): $List<$Holder<$ParticleModuleData>>;
-        renderModules(): $List<$Holder<$ParticleModuleData>>;
-        forceModules(): $List<$Holder<$ParticleModuleData>>;
-        getRegistryId(): $ResourceLocation;
-        faceVelocity(): boolean;
         renderStyle(): $RenderStyle;
-        initModules(): $List<$Holder<$ParticleModuleData>>;
+        getRegistryId(): $ResourceLocation;
+        forceModules(): $List<$Holder<$ParticleModuleData>>;
         collisionModules(): $List<$Holder<$ParticleModuleData>>;
-        velocityStretchFactor(): number;
+        renderModules(): $List<$Holder<$ParticleModuleData>>;
         static CODEC: $Codec<$Holder<$QuasarParticleData>>;
         static DIRECT_CODEC: $Codec<$QuasarParticleData>;
         constructor(shouldCollide: boolean, faceVelocity: boolean, velocityStretchFactor: number, initModules: $List_<$Holder_<$ParticleModuleData>>, updateModules: $List_<$Holder_<$ParticleModuleData>>, collisionModules: $List_<$Holder_<$ParticleModuleData>>, forceModules: $List_<$Holder_<$ParticleModuleData>>, renderModules: $List_<$Holder_<$ParticleModuleData>>, spriteData: $SpriteData_, additive: boolean, renderStyle: $RenderStyle_);
@@ -34,14 +34,14 @@ declare module "@package/foundry/veil/api/quasar/data" {
     /**
      * Values that may be interpreted as {@link $QuasarParticleData}.
      */
-    export type $QuasarParticleData_ = { renderStyle?: $RenderStyle_, additive?: boolean, renderModules?: $List_<$Holder_<$ParticleModuleData>>, faceVelocity?: boolean, spriteData?: $SpriteData_, updateModules?: $List_<$Holder_<$ParticleModuleData>>, velocityStretchFactor?: number, forceModules?: $List_<$Holder_<$ParticleModuleData>>, initModules?: $List_<$Holder_<$ParticleModuleData>>, shouldCollide?: boolean, collisionModules?: $List_<$Holder_<$ParticleModuleData>>,  } | [renderStyle?: $RenderStyle_, additive?: boolean, renderModules?: $List_<$Holder_<$ParticleModuleData>>, faceVelocity?: boolean, spriteData?: $SpriteData_, updateModules?: $List_<$Holder_<$ParticleModuleData>>, velocityStretchFactor?: number, forceModules?: $List_<$Holder_<$ParticleModuleData>>, initModules?: $List_<$Holder_<$ParticleModuleData>>, shouldCollide?: boolean, collisionModules?: $List_<$Holder_<$ParticleModuleData>>, ];
+    export type $QuasarParticleData_ = { initModules?: $List_<$Holder_<$ParticleModuleData>>, shouldCollide?: boolean, collisionModules?: $List_<$Holder_<$ParticleModuleData>>, renderStyle?: $RenderStyle_, additive?: boolean, renderModules?: $List_<$Holder_<$ParticleModuleData>>, faceVelocity?: boolean, spriteData?: $SpriteData_, updateModules?: $List_<$Holder_<$ParticleModuleData>>, velocityStretchFactor?: number, forceModules?: $List_<$Holder_<$ParticleModuleData>>,  } | [initModules?: $List_<$Holder_<$ParticleModuleData>>, shouldCollide?: boolean, collisionModules?: $List_<$Holder_<$ParticleModuleData>>, renderStyle?: $RenderStyle_, additive?: boolean, renderModules?: $List_<$Holder_<$ParticleModuleData>>, faceVelocity?: boolean, spriteData?: $SpriteData_, updateModules?: $List_<$Holder_<$ParticleModuleData>>, velocityStretchFactor?: number, forceModules?: $List_<$Holder_<$ParticleModuleData>>, ];
     export class $EmitterShapeSettings extends $Record {
         dimensions(): $Vector3fc;
         shape(): $EmitterShape;
         rotation(): $Vector3fc;
         getPos(arg0: $RandomSource, arg1: $Vector3dc): $Vector3d;
-        getRegistryId(): $ResourceLocation;
         fromSurface(): boolean;
+        getRegistryId(): $ResourceLocation;
         static CODEC: $Codec<$Holder<$EmitterShapeSettings>>;
         static DIRECT_CODEC: $Codec<$EmitterShapeSettings>;
         constructor(shape: $EmitterShape_, dimensions: $Vector3fc, rotation: $Vector3fc, fromSurface: boolean);
@@ -50,17 +50,17 @@ declare module "@package/foundry/veil/api/quasar/data" {
     /**
      * Values that may be interpreted as {@link $EmitterShapeSettings}.
      */
-    export type $EmitterShapeSettings_ = { shape?: $EmitterShape_, rotation?: $Vector3fc, dimensions?: $Vector3fc, fromSurface?: boolean,  } | [shape?: $EmitterShape_, rotation?: $Vector3fc, dimensions?: $Vector3fc, fromSurface?: boolean, ];
+    export type $EmitterShapeSettings_ = { fromSurface?: boolean, shape?: $EmitterShape_, rotation?: $Vector3fc, dimensions?: $Vector3fc,  } | [fromSurface?: boolean, shape?: $EmitterShape_, rotation?: $Vector3fc, dimensions?: $Vector3fc, ];
     export class $ParticleEmitterData extends $Record {
         count(): number;
         loop(): boolean;
         rate(): number;
-        emitterSettings(): $EmitterSettings;
-        maxLifetime(): number;
-        maxParticles(): number;
-        particleDataHolder(): $Holder<$QuasarParticleData>;
         particleData(): $QuasarParticleData;
         getRegistryId(): $ResourceLocation;
+        maxParticles(): number;
+        maxLifetime(): number;
+        particleDataHolder(): $Holder<$QuasarParticleData>;
+        emitterSettings(): $EmitterSettings;
         static CODEC: $Codec<$Holder<$ParticleEmitterData>>;
         static DIRECT_CODEC: $Codec<$ParticleEmitterData>;
         constructor(maxLifetime: number, loop: boolean, rate: number, count: number, maxParticles: number, emitterSettings: $EmitterSettings_, particleDataHolder: $Holder_<$QuasarParticleData>);
@@ -69,21 +69,21 @@ declare module "@package/foundry/veil/api/quasar/data" {
     /**
      * Values that may be interpreted as {@link $ParticleEmitterData}.
      */
-    export type $ParticleEmitterData_ = { emitterSettings?: $EmitterSettings_, count?: number, maxParticles?: number, particleDataHolder?: $Holder_<$QuasarParticleData>, loop?: boolean, rate?: number, maxLifetime?: number,  } | [emitterSettings?: $EmitterSettings_, count?: number, maxParticles?: number, particleDataHolder?: $Holder_<$QuasarParticleData>, loop?: boolean, rate?: number, maxLifetime?: number, ];
+    export type $ParticleEmitterData_ = { loop?: boolean, rate?: number, maxLifetime?: number, emitterSettings?: $EmitterSettings_, count?: number, maxParticles?: number, particleDataHolder?: $Holder_<$QuasarParticleData>,  } | [loop?: boolean, rate?: number, maxLifetime?: number, emitterSettings?: $EmitterSettings_, count?: number, maxParticles?: number, particleDataHolder?: $Holder_<$QuasarParticleData>, ];
     export class $ParticleSettings extends $Record {
+        randomSize(): boolean;
         randomLifetime(): boolean;
-        particleDirection(arg0: $RandomSource): $Vector3f;
-        initialDirection(): $Vector3fc;
-        initialDirection(arg0: $RandomSource): $Vector3fc;
+        particleLifetime(): number;
+        particleLifetime(arg0: $RandomSource): number;
+        particleSize(): number;
+        particleSize(arg0: $RandomSource): number;
         particleSpeed(arg0: $RandomSource): number;
         particleSpeed(): number;
-        particleSize(arg0: $RandomSource): number;
-        particleSize(): number;
-        particleLifetime(arg0: $RandomSource): number;
-        particleLifetime(): number;
         randomSpeed(): boolean;
-        randomSize(): boolean;
+        particleDirection(arg0: $RandomSource): $Vector3f;
         getRegistryId(): $ResourceLocation;
+        initialDirection(arg0: $RandomSource): $Vector3fc;
+        initialDirection(): $Vector3fc;
         particleLifetimeVariation(): number;
         particleSizeVariation(): number;
         randomInitialDirection(): boolean;
@@ -96,13 +96,13 @@ declare module "@package/foundry/veil/api/quasar/data" {
     /**
      * Values that may be interpreted as {@link $ParticleSettings}.
      */
-    export type $ParticleSettings_ = { randomSpeed?: boolean, initialDirection?: $Vector3fc, randomSize?: boolean, particleSize?: number, randomInitialDirection?: boolean, particleLifetimeVariation?: number, particleLifetime?: number, randomLifetime?: boolean, randomInitialRotation?: boolean, particleSizeVariation?: number, particleSpeed?: number,  } | [randomSpeed?: boolean, initialDirection?: $Vector3fc, randomSize?: boolean, particleSize?: number, randomInitialDirection?: boolean, particleLifetimeVariation?: number, particleLifetime?: number, randomLifetime?: boolean, randomInitialRotation?: boolean, particleSizeVariation?: number, particleSpeed?: number, ];
+    export type $ParticleSettings_ = { randomInitialRotation?: boolean, particleSizeVariation?: number, particleSpeed?: number, randomSpeed?: boolean, initialDirection?: $Vector3fc, randomSize?: boolean, particleSize?: number, randomInitialDirection?: boolean, particleLifetimeVariation?: number, particleLifetime?: number, randomLifetime?: boolean,  } | [randomInitialRotation?: boolean, particleSizeVariation?: number, particleSpeed?: number, randomSpeed?: boolean, initialDirection?: $Vector3fc, randomSize?: boolean, particleSize?: number, randomInitialDirection?: boolean, particleLifetimeVariation?: number, particleLifetime?: number, randomLifetime?: boolean, ];
     export class $EmitterSettings extends $Record {
+        particleSettings(): $ParticleSettings;
         forceSpawn(): boolean;
         emitterShapeSettingsHolders(): $List<$Holder<$EmitterShapeSettings>>;
-        particleSettingsHolder(): $Holder<$ParticleSettings>;
         emitterShapeSettings(): $List<$EmitterShapeSettings>;
-        particleSettings(): $ParticleSettings;
+        particleSettingsHolder(): $Holder<$ParticleSettings>;
         static CODEC: $Codec<$EmitterSettings>;
         constructor(emitterShapeSettingsHolders: $List_<$Holder_<$EmitterShapeSettings>>, particleSettingsHolder: $Holder_<$ParticleSettings>, forceSpawn: boolean);
     }

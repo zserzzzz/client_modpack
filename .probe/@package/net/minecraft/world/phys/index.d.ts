@@ -11,48 +11,12 @@ export * as shapes from "@package/net/minecraft/world/phys/shapes";
 
 declare module "@package/net/minecraft/world/phys" {
     export class $AABB implements $AABBMixin {
-        getBottomCenter(): $Vec3;
-        distanceToSqr(vec: $Vec3_): number;
-        getCenter(): $Vec3;
         /**
          * Checks if the bounding box intersects with another.
          */
         intersects(other: $AABB_): boolean;
         intersects(min: $Vec3_, max: $Vec3_): boolean;
         intersects(x1: number, arg1: number, y1: number, arg3: number, z1: number, arg5: number): boolean;
-        /**
-         * Creates a new `AxisAlignedBB` that is expanded by the given value in all directions. Equivalent to `#grow(double)` with value set to the negative of the value provided here. Passing a negative value to this method values will grow the AABB.
-         * 
-         * Side lengths will be decreased by 2 times the value of the parameter, since both min and max are changed.
-         * 
-         * If contracting and the amount to contract by is larger than the length of a side, then the side will wrap (still creating a valid AABB - see samples on `#grow(double, double, double)`).
-         * 
-         * @return A modified AABB.
-         */
-        deflate(value: number): $AABB;
-        /**
-         * Creates a new `AxisAlignedBB` that has been contracted by the given amount, with positive changes decreasing max values and negative changes increasing min values.
-         * 
-         * If the amount to contract by is larger than the length of a side, then the side will wrap (still creating a valid AABB - see last sample).
-         * 
-         * ### Samples:
-         * 
-         * | Input | Result |
-         * |---|---|
-         * | `new AxisAlignedBB(0, 0, 0, 4, 4, 4).contract(2, 2, 2)` | `box[0.0, 0.0, 0.0 -> 2.0, 2.0, 2.0]` |
-         * | `new AxisAlignedBB(0, 0, 0, 4, 4, 4).contract(-2, -2, -2)` | `box[2.0, 2.0, 2.0 -> 4.0, 4.0, 4.0]` |
-         * | `new AxisAlignedBB(5, 5, 5, 7, 7, 7).contract(0, 1, -1)` | `box[5.0, 5.0, 6.0 -> 7.0, 6.0, 7.0]` |
-         * | `new AxisAlignedBB(-2, -2, -2, 2, 2, 2).contract(4, -4, 0)` | `box[-8.0, 2.0, -2.0 -> -2.0, 8.0, 2.0]` |
-         * 
-         * ### See Also:
-         * 
-         * - `#expand(double, double, double)` - like this, except for expanding.
-         * - `#grow(double, double, double)` and `#grow(double)` - expands in all directions.
-         * - `#shrink(double)` - contracts in all directions (like `#grow(double)`)
-         * 
-         * @return A new modified bounding box.
-         */
-        deflate(x: number, arg1: number, y: number): $AABB;
         min(axis: $Direction$Axis_): number;
         max(axis: $Direction$Axis_): number;
         isInfinite(): boolean;
@@ -99,6 +63,9 @@ declare module "@package/net/minecraft/world/phys" {
          * Returns the average length of the edges of the bounding box.
          */
         getSize(): number;
+        move(pos: $BlockPos_): $AABB;
+        move(vector: $Vec3_): $AABB;
+        move(vec: $Vector3f): $AABB;
         /**
          * Creates a new `AxisAlignedBB` that has been contracted by the given amount, with positive changes decreasing max values and negative changes increasing min values.
          * 
@@ -122,25 +89,8 @@ declare module "@package/net/minecraft/world/phys" {
          * @return A new modified bounding box.
          */
         move(x: number, arg1: number, y: number): $AABB;
-        move(pos: $BlockPos_): $AABB;
-        move(vector: $Vec3_): $AABB;
-        move(vec: $Vector3f): $AABB;
-        static encapsulatingFullBlocks(startPos: $BlockPos_, endPos: $BlockPos_): $AABB;
-        intersect(other: $AABB_): $AABB;
-        /**
-         * Returns the average length of the edges of the bounding box.
-         */
-        getZsize(): number;
-        /**
-         * Returns the average length of the edges of the bounding box.
-         */
-        getXsize(): number;
-        static invokeGetDirection$simulated_$md$942995$0(aabb: $AABB_, start: $Vec3_, minDistance: number[], facing: $Direction_, deltaX: number, arg5: number, deltaY: number): $Direction;
-        /**
-         * Returns the average length of the edges of the bounding box.
-         */
-        getYsize(): number;
-        minmax(other: $AABB_): $AABB;
+        getMinPosition(): $Vec3;
+        getMaxPosition(): $Vec3;
         /**
          * Creates a new `AxisAlignedBB` that is expanded by the given value in all directions. Equivalent to `#grow(double)` with value set to the negative of the value provided here. Passing a negative value to this method values will grow the AABB.
          * 
@@ -150,12 +100,31 @@ declare module "@package/net/minecraft/world/phys" {
          * 
          * @return A modified AABB.
          */
-        setMinY(value: number): $AABB;
-        static ofSize(center: $Vec3_, xSize: number, arg2: number, ySize: number): $AABB;
-        clip(from: $Vec3_, to: $Vec3_): ($Vec3) | undefined;
-        static clip(boxes: $Iterable_<$AABB>, start: $Vec3_, end: $Vec3_, pos: $BlockPos_): $BlockHitResult;
-        static unitCubeFromLowerCorner(vector: $Vec3_): $AABB;
-        expandTowards(vector: $Vec3_): $AABB;
+        deflate(value: number): $AABB;
+        /**
+         * Creates a new `AxisAlignedBB` that has been contracted by the given amount, with positive changes decreasing max values and negative changes increasing min values.
+         * 
+         * If the amount to contract by is larger than the length of a side, then the side will wrap (still creating a valid AABB - see last sample).
+         * 
+         * ### Samples:
+         * 
+         * | Input | Result |
+         * |---|---|
+         * | `new AxisAlignedBB(0, 0, 0, 4, 4, 4).contract(2, 2, 2)` | `box[0.0, 0.0, 0.0 -> 2.0, 2.0, 2.0]` |
+         * | `new AxisAlignedBB(0, 0, 0, 4, 4, 4).contract(-2, -2, -2)` | `box[2.0, 2.0, 2.0 -> 4.0, 4.0, 4.0]` |
+         * | `new AxisAlignedBB(5, 5, 5, 7, 7, 7).contract(0, 1, -1)` | `box[5.0, 5.0, 6.0 -> 7.0, 6.0, 7.0]` |
+         * | `new AxisAlignedBB(-2, -2, -2, 2, 2, 2).contract(4, -4, 0)` | `box[-8.0, 2.0, -2.0 -> -2.0, 8.0, 2.0]` |
+         * 
+         * ### See Also:
+         * 
+         * - `#expand(double, double, double)` - like this, except for expanding.
+         * - `#grow(double, double, double)` and `#grow(double)` - expands in all directions.
+         * - `#shrink(double)` - contracts in all directions (like `#grow(double)`)
+         * 
+         * @return A new modified bounding box.
+         */
+        deflate(x: number, arg1: number, y: number): $AABB;
+        static encapsulatingFullBlocks(startPos: $BlockPos_, endPos: $BlockPos_): $AABB;
         /**
          * Creates a new `AxisAlignedBB` that has been contracted by the given amount, with positive changes decreasing max values and negative changes increasing min values.
          * 
@@ -179,6 +148,17 @@ declare module "@package/net/minecraft/world/phys" {
          * @return A new modified bounding box.
          */
         expandTowards(x: number, arg1: number, y: number): $AABB;
+        expandTowards(vector: $Vec3_): $AABB;
+        intersect(other: $AABB_): $AABB;
+        distanceToSqr(vec: $Vec3_): number;
+        static clip(boxes: $Iterable_<$AABB>, start: $Vec3_, end: $Vec3_, pos: $BlockPos_): $BlockHitResult;
+        clip(from: $Vec3_, to: $Vec3_): ($Vec3) | undefined;
+        getCenter(): $Vec3;
+        /**
+         * Returns the average length of the edges of the bounding box.
+         */
+        getYsize(): number;
+        minmax(other: $AABB_): $AABB;
         /**
          * Creates a new `AxisAlignedBB` that is expanded by the given value in all directions. Equivalent to `#grow(double)` with value set to the negative of the value provided here. Passing a negative value to this method values will grow the AABB.
          * 
@@ -188,7 +168,10 @@ declare module "@package/net/minecraft/world/phys" {
          * 
          * @return A modified AABB.
          */
-        setMaxX(value: number): $AABB;
+        setMinY(value: number): $AABB;
+        static ofSize(center: $Vec3_, xSize: number, arg2: number, ySize: number): $AABB;
+        static unitCubeFromLowerCorner(vector: $Vec3_): $AABB;
+        getBottomCenter(): $Vec3;
         /**
          * Creates a new `AxisAlignedBB` that is expanded by the given value in all directions. Equivalent to `#grow(double)` with value set to the negative of the value provided here. Passing a negative value to this method values will grow the AABB.
          * 
@@ -198,7 +181,7 @@ declare module "@package/net/minecraft/world/phys" {
          * 
          * @return A modified AABB.
          */
-        setMaxY(value: number): $AABB;
+        setMaxZ(value: number): $AABB;
         /**
          * Creates a new `AxisAlignedBB` that is expanded by the given value in all directions. Equivalent to `#grow(double)` with value set to the negative of the value provided here. Passing a negative value to this method values will grow the AABB.
          * 
@@ -219,16 +202,6 @@ declare module "@package/net/minecraft/world/phys" {
          * @return A modified AABB.
          */
         setMinZ(value: number): $AABB;
-        /**
-         * Creates a new `AxisAlignedBB` that is expanded by the given value in all directions. Equivalent to `#grow(double)` with value set to the negative of the value provided here. Passing a negative value to this method values will grow the AABB.
-         * 
-         * Side lengths will be decreased by 2 times the value of the parameter, since both min and max are changed.
-         * 
-         * If contracting and the amount to contract by is larger than the length of a side, then the side will wrap (still creating a valid AABB - see samples on `#grow(double, double, double)`).
-         * 
-         * @return A modified AABB.
-         */
-        setMaxZ(value: number): $AABB;
         /**
          * Creates a new `AxisAlignedBB` that has been contracted by the given amount, with positive changes decreasing max values and negative changes increasing min values.
          * 
@@ -252,9 +225,36 @@ declare module "@package/net/minecraft/world/phys" {
          * @return A new modified bounding box.
          */
         contract(x: number, arg1: number, y: number): $AABB;
+        /**
+         * Creates a new `AxisAlignedBB` that is expanded by the given value in all directions. Equivalent to `#grow(double)` with value set to the negative of the value provided here. Passing a negative value to this method values will grow the AABB.
+         * 
+         * Side lengths will be decreased by 2 times the value of the parameter, since both min and max are changed.
+         * 
+         * If contracting and the amount to contract by is larger than the length of a side, then the side will wrap (still creating a valid AABB - see samples on `#grow(double, double, double)`).
+         * 
+         * @return A modified AABB.
+         */
+        setMaxX(value: number): $AABB;
+        /**
+         * Creates a new `AxisAlignedBB` that is expanded by the given value in all directions. Equivalent to `#grow(double)` with value set to the negative of the value provided here. Passing a negative value to this method values will grow the AABB.
+         * 
+         * Side lengths will be decreased by 2 times the value of the parameter, since both min and max are changed.
+         * 
+         * If contracting and the amount to contract by is larger than the length of a side, then the side will wrap (still creating a valid AABB - see samples on `#grow(double, double, double)`).
+         * 
+         * @return A modified AABB.
+         */
+        setMaxY(value: number): $AABB;
         hasNaN(): boolean;
-        getMinPosition(): $Vec3;
-        getMaxPosition(): $Vec3;
+        static invokeGetDirection$simulated_$md$c99f8a$0(aabb: $AABB_, start: $Vec3_, minDistance: number[], facing: $Direction_, deltaX: number, arg5: number, deltaY: number): $Direction;
+        /**
+         * Returns the average length of the edges of the bounding box.
+         */
+        getXsize(): number;
+        /**
+         * Returns the average length of the edges of the bounding box.
+         */
+        getZsize(): number;
         minY: number;
         minX: number;
         maxZ: number;
@@ -264,17 +264,17 @@ declare module "@package/net/minecraft/world/phys" {
         minZ: number;
         static INFINITE: $AABB;
         constructor(x1: number, arg1: number, y1: number, arg3: number, z1: number, arg5: number);
-        constructor(pos: $BlockPos_);
         constructor(start: $Vec3_, end: $Vec3_);
-        get bottomCenter(): $Vec3;
-        get center(): $Vec3;
+        constructor(pos: $BlockPos_);
         get infinite(): boolean;
         get size(): number;
-        get zsize(): number;
-        get xsize(): number;
-        get ysize(): number;
         get minPosition(): $Vec3;
         get maxPosition(): $Vec3;
+        get center(): $Vec3;
+        get ysize(): number;
+        get bottomCenter(): $Vec3;
+        get xsize(): number;
+        get zsize(): number;
     }
     /**
      * Values that may be interpreted as {@link $AABB}.
@@ -299,19 +299,6 @@ declare module "@package/net/minecraft/world/phys" {
         get entity(): $Entity;
     }
     export class $Vec3 implements $Position {
-        /**
-         * Copies the coordinates of an int vector and centers them horizontally (x and z)
-         */
-        static atBottomCenterOf(toCopy: $Vec3i): $Vec3;
-        /**
-         * Returns the length of the vector.
-         */
-        horizontalDistance(): number;
-        /**
-         * Euclidean distance between this and the specified vector, returned as double.
-         */
-        distanceToSqr(vec: $Vec3_): number;
-        distanceToSqr(x: number, arg1: number, y: number): number;
         get(axis: $Direction$Axis_): number;
         /**
          * Returns the length of the vector.
@@ -344,38 +331,62 @@ declare module "@package/net/minecraft/world/phys" {
          * Returns the length of the vector.
          */
         y(): number;
+        multiply(vec: $Vec3_): $Vec3;
         /**
          * Adds the specified x,y,z vector components to this vector and returns the resulting vector. Does not change this vector.
          */
         multiply(x: number, arg1: number, y: number): $Vec3;
-        multiply(vec: $Vec3_): $Vec3;
         /**
          * Normalizes the vector to a length of 1 (except if it is the zero vector)
          */
         normalize(): $Vec3;
-        subtract(vec: $Vec3_): $Vec3;
         /**
          * Adds the specified x,y,z vector components to this vector and returns the resulting vector. Does not change this vector.
          */
         subtract(x: number, arg1: number, y: number): $Vec3;
+        subtract(vec: $Vec3_): $Vec3;
         relative(direction: $Direction_, length: number): $Vec3;
-        align(axes: $EnumSet<$Direction$Axis_>): $Vec3;
-        /**
-         * Copies the coordinates of an int vector and centers them horizontally and applies a vertical offset.
-         */
-        static upFromBottomCenterOf(toCopy: $Vec3i, verticalOffset: number): $Vec3;
+        xRot(pitch: number): $Vec3;
+        yRot(pitch: number): $Vec3;
+        cross(vec: $Vec3_): $Vec3;
         /**
          * Lerps between this vector and the given vector.
          * @see net.minecraft.util.Mth#lerp(double, double, double)
          */
         lerp(to: $Vec3_, delta: number): $Vec3;
-        cross(vec: $Vec3_): $Vec3;
+        static fromRGB24(packed: number): $Vec3;
+        /**
+         * Copies the coordinates of an int vector and centers them horizontally and applies a vertical offset.
+         */
+        static upFromBottomCenterOf(toCopy: $Vec3i, verticalOffset: number): $Vec3;
+        /**
+         * Returns a `Vec3` from the given pitch and yaw degrees as `Vec2`.
+         */
+        static directionFromRotation(vec: $Vec2): $Vec3;
+        /**
+         * Returns a `Vec3` from the given pitch and yaw degrees.
+         */
+        static directionFromRotation(pitch: number, yaw: number): $Vec3;
+        align(axes: $EnumSet<$Direction$Axis_>): $Vec3;
         /**
          * Returns the length of the vector.
          */
-        horizontalDistanceSqr(): number;
-        static fromRGB24(packed: number): $Vec3;
+        horizontalDistance(): number;
+        /**
+         * Euclidean distance between this and the specified vector, returned as double.
+         */
+        distanceToSqr(vec: $Vec3_): number;
+        distanceToSqr(x: number, arg1: number, y: number): number;
+        /**
+         * Copies the coordinates of an int vector and centers them horizontally (x and z)
+         */
+        static atCenterOf(toCopy: $Vec3i): $Vec3;
         toVector3f(): $Vector3f;
+        /**
+         * Checks if a position is within a certain distance of the coordinates.
+         */
+        closerThan(pos: $Position, distance: number): boolean;
+        closerThan(pos: $Vec3_, horizontalDistance: number, arg2: number): boolean;
         zRot(pitch: number): $Vec3;
         vectorTo(vec: $Vec3_): $Vec3;
         /**
@@ -386,31 +397,20 @@ declare module "@package/net/minecraft/world/phys" {
          * Returns the length of the vector.
          */
         lengthSqr(): number;
-        /**
-         * Returns a `Vec3` from the given pitch and yaw degrees.
-         */
-        static directionFromRotation(pitch: number, yaw: number): $Vec3;
-        /**
-         * Returns a `Vec3` from the given pitch and yaw degrees as `Vec2`.
-         */
-        static directionFromRotation(vec: $Vec2): $Vec3;
+        static atLowerCornerWithOffset(toCopy: $Vec3i, offsetX: number, arg2: number, offsetY: number): $Vec3;
         /**
          * Copies the coordinates of an int vector and centers them horizontally (x and z)
          */
-        static atCenterOf(toCopy: $Vec3i): $Vec3;
+        static atBottomCenterOf(toCopy: $Vec3i): $Vec3;
+        /**
+         * Returns the length of the vector.
+         */
+        horizontalDistanceSqr(): number;
+        offsetRandom(random: $RandomSource, factor: number): $Vec3;
         /**
          * Copies the coordinates of an int vector and centers them horizontally (x and z)
          */
         static atLowerCornerOf(toCopy: $Vec3i): $Vec3;
-        offsetRandom(random: $RandomSource, factor: number): $Vec3;
-        static atLowerCornerWithOffset(toCopy: $Vec3i, offsetX: number, arg2: number, offsetY: number): $Vec3;
-        xRot(pitch: number): $Vec3;
-        yRot(pitch: number): $Vec3;
-        closerThan(pos: $Vec3_, horizontalDistance: number, arg2: number): boolean;
-        /**
-         * Checks if a position is within a certain distance of the coordinates.
-         */
-        closerThan(pos: $Position, distance: number): boolean;
         static ZERO: $Vec3;
         static CODEC: $Codec<$Vec3>;
         constructor(x: number, arg1: number, y: number);
@@ -421,15 +421,15 @@ declare module "@package/net/minecraft/world/phys" {
      */
     export type $Vec3_ = [x: number, y: number, z: number, ];
     export class $Vec2 {
-        distanceToSqr(other: $Vec2): number;
         equals(other: $Vec2): boolean;
         length(): number;
         scale(value: number): $Vec2;
-        add(other: $Vec2): $Vec2;
         add(value: number): $Vec2;
+        add(other: $Vec2): $Vec2;
         dot(other: $Vec2): number;
         normalized(): $Vec2;
         negated(): $Vec2;
+        distanceToSqr(other: $Vec2): number;
         lengthSquared(): number;
         static ZERO: $Vec2;
         static NEG_UNIT_Y: $Vec2;
@@ -456,23 +456,23 @@ declare module "@package/net/minecraft/world/phys" {
     }
     export class $BlockHitResult extends $HitResult {
         /**
-         * Creates a new BlockRayTraceResult, with the clicked face replaced with the given one
-         */
-        withDirection(newFace: $Direction_): $BlockHitResult;
-        /**
          * Gets the face of the block that was clicked
          */
         getDirection(): $Direction;
-        getBlockPos(): $BlockPos;
         /**
          * Creates a new BlockRayTraceResult marked as a miss.
          */
         static miss(location: $Vec3_, direction: $Direction_, pos: $BlockPos_): $BlockHitResult;
+        getBlockPos(): $BlockPos;
+        withPosition(pos: $BlockPos_): $BlockHitResult;
         /**
          * @return `true` if the player's head is inside a block (used by scaffolding)
          */
         isInside(): boolean;
-        withPosition(pos: $BlockPos_): $BlockHitResult;
+        /**
+         * Creates a new BlockRayTraceResult, with the clicked face replaced with the given one
+         */
+        withDirection(newFace: $Direction_): $BlockHitResult;
         location: $Vec3;
         constructor(location: $Vec3_, direction: $Direction_, blockPos: $BlockPos_, inside: boolean);
         get direction(): $Direction;

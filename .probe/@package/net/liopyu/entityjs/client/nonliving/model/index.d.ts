@@ -11,30 +11,7 @@ import { $ContextUtils$PreRenderContext } from "@package/net/liopyu/entityjs/uti
 
 declare module "@package/net/liopyu/entityjs/client/nonliving/model" {
     export class $NLGeoLayerJSBuilder<T extends $Entity> {
-        /**
-         * Sets the render type for the entity's layer via a function.
-         * 
-         * Example usage:
-         * ```javascript
-         * builder.renderType(entity => RenderType.entityCutoutNoCull("kubejs:path/to/texture", outlineEntityBoolean));
-         * ```
-         */
-        renderType(arg0: $Function_<T, $RenderType>): $NLGeoLayerJSBuilder<T>;
         build(arg0: $KubeJSNLEntityRenderer<T>, arg1: $BaseEntityBuilder<T>): $NLGeoLayerJS<T>;
-        /**
-         * Defines logic to preRender the newGeoLayer.
-         * 
-         * Example usage:
-         * ```javascript
-         * geoBuilder.preRender(context => {
-         *     // Define logic to render the newGeoLayer
-         *     if (context.entity.isBaby()) {
-         *         context.poseStack.scale(0.5, 0.5, 0.5);
-         *     }
-         * });
-         * ```
-         */
-        preRender(arg0: $Consumer_<$ContextUtils$PreRenderContext<T>>): $NLGeoLayerJSBuilder<T>;
         /**
          * Defines logic to render the newGeoLayer.
          * By default this will render the flat texture set in textureResource
@@ -54,6 +31,24 @@ declare module "@package/net/liopyu/entityjs/client/nonliving/model" {
         render(arg0: $Consumer_<$ContextUtils$PreRenderContext<T>>): $NLGeoLayerJSBuilder<T>;
         getBuilder(): $BaseEntityBuilder<T>;
         /**
+         * Sets the render type for the entity's layer.
+         * 
+         * Example usage:
+         * ```javascript
+         * builder.setRenderType(RenderType.entityCutoutNoCull("kubejs:path/to/texture", true));
+         * ```
+         */
+        setRenderType(arg0: $RenderType): $NLGeoLayerJSBuilder<T>;
+        /**
+         * Sets the render type for the entity's layer via a function.
+         * 
+         * Example usage:
+         * ```javascript
+         * builder.renderType(entity => RenderType.entityCutoutNoCull("kubejs:path/to/texture", outlineEntityBoolean));
+         * ```
+         */
+        renderType(arg0: $Function_<T, $RenderType>): $NLGeoLayerJSBuilder<T>;
+        /**
          * Sets a function to determine the texture resource for the entity.
          * The provided Function accepts a parameter of type T (the entity),
          * allowing changing the texture based on information about the entity.
@@ -71,21 +66,26 @@ declare module "@package/net/liopyu/entityjs/client/nonliving/model" {
         textureResource(arg0: $Function_<T, $Object>): $NLGeoLayerJSBuilder<T>;
         buildGlowing(arg0: $KubeJSNLEntityRenderer<T>, arg1: $BaseEntityBuilder<T>): $NLGlowingGeoLayerJS<T>;
         /**
-         * Sets the render type for the entity's layer.
+         * Defines logic to preRender the newGeoLayer.
          * 
          * Example usage:
          * ```javascript
-         * builder.setRenderType(RenderType.entityCutoutNoCull("kubejs:path/to/texture", true));
+         * geoBuilder.preRender(context => {
+         *     // Define logic to render the newGeoLayer
+         *     if (context.entity.isBaby()) {
+         *         context.poseStack.scale(0.5, 0.5, 0.5);
+         *     }
+         * });
          * ```
          */
-        setRenderType(arg0: $RenderType): $NLGeoLayerJSBuilder<T>;
+        preRender(arg0: $Consumer_<$ContextUtils$PreRenderContext<T>>): $NLGeoLayerJSBuilder<T>;
         builder: $BaseEntityBuilder<T>;
         constructor(arg0: $BaseEntityBuilder<T>);
     }
     export class $NLGeoLayerJS<T extends $Entity> extends $GeoRenderLayer<T> {
         entityName(): string;
-        preRender(arg0: $PoseStack, arg1: T, arg2: $BakedGeoModel_, arg3: $RenderType, arg4: $MultiBufferSource_, arg5: $VertexConsumer, arg6: number, arg7: number, arg8: number): void;
         render(arg0: $PoseStack, arg1: T, arg2: $BakedGeoModel_, arg3: $RenderType, arg4: $MultiBufferSource_, arg5: $VertexConsumer, arg6: number, arg7: number, arg8: number): void;
+        preRender(arg0: $PoseStack, arg1: T, arg2: $BakedGeoModel_, arg3: $RenderType, arg4: $MultiBufferSource_, arg5: $VertexConsumer, arg6: number, arg7: number, arg8: number): void;
         geoBuilder: $NLGeoLayerJSBuilder<T>;
         renderer: $KubeJSNLEntityRenderer<T>;
         builder: $BaseEntityBuilder<T>;
@@ -94,8 +94,8 @@ declare module "@package/net/liopyu/entityjs/client/nonliving/model" {
     }
     export class $NLGlowingGeoLayerJS<T extends $Entity> extends $AutoGlowingGeoLayer<T> {
         entityName(): string;
-        preRender(arg0: $PoseStack, arg1: T, arg2: $BakedGeoModel_, arg3: $RenderType, arg4: $MultiBufferSource_, arg5: $VertexConsumer, arg6: number, arg7: number, arg8: number): void;
         render(arg0: $PoseStack, arg1: T, arg2: $BakedGeoModel_, arg3: $RenderType, arg4: $MultiBufferSource_, arg5: $VertexConsumer, arg6: number, arg7: number, arg8: number): void;
+        preRender(arg0: $PoseStack, arg1: T, arg2: $BakedGeoModel_, arg3: $RenderType, arg4: $MultiBufferSource_, arg5: $VertexConsumer, arg6: number, arg7: number, arg8: number): void;
         geoBuilder: $NLGeoLayerJSBuilder<T>;
         renderer: $KubeJSNLEntityRenderer<T>;
         builder: $BaseEntityBuilder<T>;

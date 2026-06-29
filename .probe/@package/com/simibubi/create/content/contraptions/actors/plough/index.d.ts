@@ -8,8 +8,8 @@ import { $RandomSource } from "@package/net/minecraft/util";
 import { $InteractionHand } from "@package/net/minecraft/world";
 import { $FakePlayer } from "@package/net/neoforged/neoforge/common/util";
 import { $Object2DoubleMap, $Object2ByteLinkedOpenHashMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos, $Direction, $IdMapper } from "@package/net/minecraft/core";
 import { $ServerPlayerGameMode } from "@package/net/minecraft/server/level";
+import { $HolderLookup$Provider, $BlockPos, $Direction, $IdMapper } from "@package/net/minecraft/core";
 import { $BlockBreakingMovementBehaviour } from "@package/com/simibubi/create/content/kinetics/base";
 import { $Brain } from "@package/net/minecraft/world/entity/ai";
 import { $StateDefinition, $BlockBehaviour$Properties, $BlockState } from "@package/net/minecraft/world/level/block/state";
@@ -71,6 +71,7 @@ declare module "@package/com/simibubi/create/content/contraptions/actors/plough"
         constructor();
     }
     export class $PloughBlock$PloughFakePlayer extends $FakePlayer {
+        serializeNBT(arg0: $HolderLookup$Provider): $Player;
         lerpYRot: number;
         static USE_ITEM_INTERVAL: number;
         lerpYHeadRot: number;

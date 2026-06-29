@@ -8,7 +8,7 @@ declare module "@package/dev/ryanhcode/sable/mixinterface/respawn_point" {
     }
     export interface $ServerPlayerRespawnExtension {
         sable$getRespawnPoint(): $UUID;
-        sable$takeQueuedFreezeFrom(arg0: $ServerPlayer): void;
         sable$getQueuedFreeze(): $Pair<$UUID, $Vector3d>;
+        sable$takeQueuedFreezeFrom(arg0: $ServerPlayer): void;
     }
 }

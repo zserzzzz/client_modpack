@@ -117,26 +117,21 @@ declare module "@package/javax/swing" {
         setValue(arg0: number): void;
         getMaximum(): number;
         getMinimum(): number;
+        setValueIsAdjusting(arg0: boolean): void;
+        removeChangeListener(arg0: $ChangeListener_): void;
+        setMaximum(arg0: number): void;
+        getValueIsAdjusting(): boolean;
+        addChangeListener(arg0: $ChangeListener_): void;
         setExtent(arg0: number): void;
         setRangeProperties(arg0: number, arg1: number, arg2: number, arg3: number, arg4: boolean): void;
-        setMaximum(arg0: number): void;
-        addChangeListener(arg0: $ChangeListener_): void;
-        getValueIsAdjusting(): boolean;
         setMinimum(arg0: number): void;
         getExtent(): number;
-        removeChangeListener(arg0: $ChangeListener_): void;
-        setValueIsAdjusting(arg0: boolean): void;
     }
     export class $JTextArea extends $JTextComponent {
-        append(arg0: string): void;
-        insert(arg0: string, arg1: number): void;
         setTabSize(arg0: number): void;
         getTabSize(): number;
-        getColumns(): number;
-        getRows(): number;
-        replaceRange(arg0: string, arg1: number, arg2: number): void;
-        getLineCount(): number;
-        setRows(arg0: number): void;
+        append(arg0: string): void;
+        insert(arg0: string, arg1: number): void;
         setLineWrap(arg0: boolean): void;
         getLineWrap(): boolean;
         setWrapStyleWord(arg0: boolean): void;
@@ -145,6 +140,11 @@ declare module "@package/javax/swing" {
         getLineStartOffset(arg0: number): number;
         getLineEndOffset(arg0: number): number;
         setColumns(arg0: number): void;
+        replaceRange(arg0: string, arg1: number, arg2: number): void;
+        getLineCount(): number;
+        getColumns(): number;
+        getRows(): number;
+        setRows(arg0: number): void;
         static WHEN_FOCUSED: number;
         static WHEN_ANCESTOR_OF_FOCUSED_COMPONENT: number;
         static FOCUS_ACCELERATOR_KEY: string;
@@ -159,10 +159,10 @@ declare module "@package/javax/swing" {
         static UNDEFINED_CONDITION: number;
         constructor(arg0: $Document, arg1: string, arg2: number, arg3: number);
         constructor(arg0: $Document);
-        constructor(arg0: string, arg1: number, arg2: number);
         constructor();
         constructor(arg0: string);
         constructor(arg0: number, arg1: number);
+        constructor(arg0: string, arg1: number, arg2: number);
         get lineCount(): number;
     }
     export class $TransferHandler$DropLocation {
@@ -170,22 +170,20 @@ declare module "@package/javax/swing" {
         get dropPoint(): $Point;
     }
     export class $JMenu extends $JMenuItem implements $Accessible, $MenuElement {
-        getDelay(): number;
         remove(arg0: $JMenuItem): void;
-        insert(arg0: string, arg1: number): void;
         insert(arg0: $Action, arg1: number): $JMenuItem;
         insert(arg0: $JMenuItem, arg1: number): $JMenuItem;
-        add(arg0: $Action): $JMenuItem;
-        add(arg0: $JMenuItem): $JMenuItem;
+        insert(arg0: string, arg1: number): void;
         add(arg0: string): $JMenuItem;
+        add(arg0: $JMenuItem): $JMenuItem;
+        add(arg0: $Action): $JMenuItem;
         getItem(arg0: number): $JMenuItem;
         getItemCount(): number;
+        getDelay(): number;
         setDelay(arg0: number): void;
-        addSeparator(): void;
-        getPopupMenu(): $JPopupMenu;
-        setPopupMenuVisible(arg0: boolean): void;
         isTearOff(): boolean;
         insertSeparator(arg0: number): void;
+        addSeparator(): void;
         isPopupMenuVisible(): boolean;
         getMenuComponent(arg0: number): $Component;
         getMenuComponentCount(): number;
@@ -196,6 +194,8 @@ declare module "@package/javax/swing" {
         addMenuListener(arg0: $MenuListener): void;
         removeMenuListener(arg0: $MenuListener): void;
         getMenuListeners(): $MenuListener[];
+        getPopupMenu(): $JPopupMenu;
+        setPopupMenuVisible(arg0: boolean): void;
         static ROLLOVER_ENABLED_CHANGED_PROPERTY: string;
         static ROLLOVER_ICON_CHANGED_PROPERTY: string;
         static CONTENT_AREA_FILLED_CHANGED_PROPERTY: string;
@@ -225,17 +225,17 @@ declare module "@package/javax/swing" {
         static MNEMONIC_CHANGED_PROPERTY: string;
         static TOP_ALIGNMENT: number;
         static WHEN_IN_FOCUSED_WINDOW: number;
-        constructor();
         constructor(arg0: string, arg1: boolean);
         constructor(arg0: $Action);
         constructor(arg0: string);
+        constructor();
         get itemCount(): number;
-        get popupMenu(): $JPopupMenu;
         get tearOff(): boolean;
         get menuComponentCount(): number;
         get menuComponents(): $Component[];
         get topLevelMenu(): boolean;
         get menuListeners(): $MenuListener[];
+        get popupMenu(): $JPopupMenu;
     }
     export class $DropMode extends $Enum<$DropMode> {
         static values(): $DropMode[];
@@ -255,23 +255,23 @@ declare module "@package/javax/swing" {
     export type $DropMode_ = "use_selection" | "on" | "insert" | "insert_rows" | "insert_cols" | "on_or_insert" | "on_or_insert_rows" | "on_or_insert_cols";
     export class $JMenuItem extends $AbstractButton implements $Accessible, $MenuElement {
         getComponent(): $Component;
-        processKeyEvent(arg0: $KeyEvent, arg1: $MenuElement[], arg2: $MenuSelectionManager): void;
-        processMouseEvent(arg0: $MouseEvent, arg1: $MenuElement[], arg2: $MenuSelectionManager): void;
         setAccelerator(arg0: $KeyStroke): void;
         processMenuDragMouseEvent(arg0: $MenuDragMouseEvent): void;
         getAccelerator(): $KeyStroke;
         addMenuDragMouseListener(arg0: $MenuDragMouseListener): void;
         removeMenuDragMouseListener(arg0: $MenuDragMouseListener): void;
         getMenuDragMouseListeners(): $MenuDragMouseListener[];
+        processKeyEvent(arg0: $KeyEvent, arg1: $MenuElement[], arg2: $MenuSelectionManager): void;
+        processMouseEvent(arg0: $MouseEvent, arg1: $MenuElement[], arg2: $MenuSelectionManager): void;
         setUI(arg0: $MenuItemUI): void;
+        setArmed(arg0: boolean): void;
+        isArmed(): boolean;
         processMenuKeyEvent(arg0: $MenuKeyEvent): void;
         addMenuKeyListener(arg0: $MenuKeyListener): void;
         removeMenuKeyListener(arg0: $MenuKeyListener): void;
         getMenuKeyListeners(): $MenuKeyListener[];
         menuSelectionChanged(arg0: boolean): void;
         getSubElements(): $MenuElement[];
-        setArmed(arg0: boolean): void;
-        isArmed(): boolean;
         static ROLLOVER_ENABLED_CHANGED_PROPERTY: string;
         static ROLLOVER_ICON_CHANGED_PROPERTY: string;
         static CONTENT_AREA_FILLED_CHANGED_PROPERTY: string;
@@ -318,20 +318,20 @@ declare module "@package/javax/swing" {
         hide(): void;
     }
     export class $TransferHandler$TransferSupport {
-        getComponent(): $Component;
         getDropLocation(): $TransferHandler$DropLocation;
+        getComponent(): $Component;
         isDrop(): boolean;
         getSourceDropActions(): number;
         getUserDropAction(): number;
         getDropAction(): number;
         setShowDropLocation(arg0: boolean): void;
         setDropAction(arg0: number): void;
-        isDataFlavorSupported(arg0: $DataFlavor): boolean;
         getTransferable(): $Transferable;
         getDataFlavors(): $DataFlavor[];
+        isDataFlavorSupported(arg0: $DataFlavor): boolean;
         constructor(arg0: $Component, arg1: $Transferable);
-        get component(): $Component;
         get dropLocation(): $TransferHandler$DropLocation;
+        get component(): $Component;
         get drop(): boolean;
         get sourceDropActions(): number;
         get userDropAction(): number;
@@ -343,29 +343,27 @@ declare module "@package/javax/swing" {
     }
     export interface $ListModel<E> {
         getSize(): number;
+        getElementAt(arg0: number): E;
         addListDataListener(arg0: $ListDataListener): void;
         removeListDataListener(arg0: $ListDataListener): void;
-        getElementAt(arg0: number): E;
         get size(): number;
     }
     export class $MenuSelectionManager {
-        processKeyEvent(arg0: $KeyEvent): void;
-        processMouseEvent(arg0: $MouseEvent): void;
-        addChangeListener(arg0: $ChangeListener_): void;
+        removeChangeListener(arg0: $ChangeListener_): void;
         getSelectedPath(): $MenuElement[];
         isComponentPartOfCurrentMenu(arg0: $Component): boolean;
         componentForPoint(arg0: $Component, arg1: $Point): $Component;
+        processKeyEvent(arg0: $KeyEvent): void;
+        processMouseEvent(arg0: $MouseEvent): void;
+        addChangeListener(arg0: $ChangeListener_): void;
+        getChangeListeners(): $ChangeListener[];
         static defaultManager(): $MenuSelectionManager;
         setSelectedPath(arg0: $MenuElement[]): void;
         clearSelectedPath(): void;
-        removeChangeListener(arg0: $ChangeListener_): void;
-        getChangeListeners(): $ChangeListener[];
         constructor();
         get changeListeners(): $ChangeListener[];
     }
     export class $JRootPane extends $JComponent implements $Accessible {
-        setDefaultButton(arg0: $JButton): void;
-        setUI(arg0: $RootPaneUI): void;
         setGlassPane(arg0: $Component): void;
         setLayeredPane(arg0: $JLayeredPane): void;
         setContentPane(arg0: $Container): void;
@@ -385,6 +383,9 @@ declare module "@package/javax/swing" {
         getLayeredPane(): $JLayeredPane;
         getGlassPane(): $Component;
         getDefaultButton(): $JButton;
+        setDefaultButton(arg0: $JButton): void;
+        getUI(): $RootPaneUI;
+        setUI(arg0: $RootPaneUI): void;
         static CENTER_ALIGNMENT: number;
         static BOTTOM_ALIGNMENT: number;
         static FILE_CHOOSER_DIALOG: number;
@@ -405,17 +406,16 @@ declare module "@package/javax/swing" {
         static WARNING_DIALOG: number;
         static WHEN_IN_FOCUSED_WINDOW: number;
         constructor();
-        set UI(value: $RootPaneUI);
     }
     export class $SingleSelectionModel {
     }
     export interface $SingleSelectionModel {
-        clearSelection(): void;
-        getSelectedIndex(): number;
-        isSelected(): boolean;
-        addChangeListener(arg0: $ChangeListener_): void;
-        removeChangeListener(arg0: $ChangeListener_): void;
         setSelectedIndex(arg0: number): void;
+        getSelectedIndex(): number;
+        removeChangeListener(arg0: $ChangeListener_): void;
+        isSelected(): boolean;
+        clearSelection(): void;
+        addChangeListener(arg0: $ChangeListener_): void;
         get selected(): boolean;
     }
     export class $Action {
@@ -436,22 +436,23 @@ declare module "@package/javax/swing" {
         isEnabled(): boolean;
         accept(arg0: $Object): boolean;
         putValue(arg0: string, arg1: $Object): void;
-        setEnabled(arg0: boolean): void;
         removePropertyChangeListener(arg0: $PropertyChangeListener_): void;
         addPropertyChangeListener(arg0: $PropertyChangeListener_): void;
+        setEnabled(arg0: boolean): void;
     }
     export class $JMenuBar extends $JComponent implements $Accessible, $MenuElement {
         add(arg0: $JMenu): $JMenu;
-        getComponent(): $Component;
+        getSelectionModel(): $SingleSelectionModel;
         setSelectionModel(arg0: $SingleSelectionModel): void;
         isSelected(): boolean;
+        getComponent(): $Component;
+        setSelected(arg0: $Component): void;
         processKeyEvent(arg0: $KeyEvent, arg1: $MenuElement[], arg2: $MenuSelectionManager): void;
         processMouseEvent(arg0: $MouseEvent, arg1: $MenuElement[], arg2: $MenuSelectionManager): void;
-        setSelected(arg0: $Component): void;
         getMenu(arg0: number): $JMenu;
-        getMenuCount(): number;
-        setHelpMenu(arg0: $JMenu): void;
-        getHelpMenu(): $JMenu;
+        setMargin(arg0: $Insets): void;
+        getMargin(): $Insets;
+        getUI(): $MenuBarUI;
         setUI(arg0: $MenuBarUI): void;
         getComponentIndex(arg0: $Component): number;
         isBorderPainted(): boolean;
@@ -460,11 +461,11 @@ declare module "@package/javax/swing" {
          */
         getComponentAtIndex(arg0: number): $Component;
         setBorderPainted(arg0: boolean): void;
-        getMargin(): $Insets;
         menuSelectionChanged(arg0: boolean): void;
         getSubElements(): $MenuElement[];
-        setMargin(arg0: $Insets): void;
-        getSelectionModel(): $SingleSelectionModel;
+        getMenuCount(): number;
+        setHelpMenu(arg0: $JMenu): void;
+        getHelpMenu(): $JMenu;
         static WHEN_FOCUSED: number;
         static WHEN_ANCESTOR_OF_FOCUSED_COMPONENT: number;
         static CENTER_ALIGNMENT: number;
@@ -477,9 +478,8 @@ declare module "@package/javax/swing" {
         static UNDEFINED_CONDITION: number;
         constructor();
         get component(): $Component;
-        get menuCount(): number;
-        set UI(value: $MenuBarUI);
         get subElements(): $MenuElement[];
+        get menuCount(): number;
     }
     export class $ListCellRenderer<E> {
     }
@@ -492,41 +492,6 @@ declare module "@package/javax/swing" {
     export type $ListCellRenderer_<E> = ((arg0: $JList<E>, arg1: E, arg2: number, arg3: boolean, arg4: boolean) => $Component);
     export class $JList<E> extends $JComponent implements $Scrollable, $Accessible {
         getModel(): $ListModel<E>;
-        clearSelection(): void;
-        setCellRenderer(arg0: $ListCellRenderer_<E>): void;
-        getSelectionForeground(): $Color;
-        setSelectionForeground(arg0: $Color): void;
-        getSelectionBackground(): $Color;
-        setSelectionBackground(arg0: $Color): void;
-        setVisibleRowCount(arg0: number): void;
-        setLayoutOrientation(arg0: number): void;
-        getLastVisibleIndex(): number;
-        setDragEnabled(arg0: boolean): void;
-        getDragEnabled(): boolean;
-        setDropMode(arg0: $DropMode_): void;
-        getDropMode(): $DropMode;
-        getDropLocation(): $JList$DropLocation;
-        getListSelectionListeners(): $ListSelectionListener[];
-        setSelectionModel(arg0: $ListSelectionModel): void;
-        /**
-         * @deprecated
-         */
-        getSelectedValues(): $Object[];
-        getSelectedValuesList(): $List<E>;
-        getSelectedIndex(): number;
-        getPreferredScrollableViewportSize(): $Dimension;
-        getScrollableUnitIncrement(arg0: $Rectangle, arg1: number, arg2: number): number;
-        getScrollableBlockIncrement(arg0: $Rectangle, arg1: number, arg2: number): number;
-        getScrollableTracksViewportWidth(): boolean;
-        getScrollableTracksViewportHeight(): boolean;
-        getNextMatch(arg0: string, arg1: number, arg2: $Position$Bias): number;
-        setModel(arg0: $ListModel<E>): void;
-        setSelectedValue(arg0: $Object, arg1: boolean): void;
-        getUI(): $ListUI;
-        setUI(arg0: $ListUI): void;
-        getValueIsAdjusting(): boolean;
-        setListData(arg0: E[]): void;
-        setListData(arg0: $Vector<E>): void;
         getCellRenderer(): $ListCellRenderer<E>;
         getPrototypeCellValue(): E;
         locationToIndex(arg0: $Point): number;
@@ -560,6 +525,41 @@ declare module "@package/javax/swing" {
         setPrototypeCellValue(arg0: E): void;
         setFixedCellWidth(arg0: number): void;
         setFixedCellHeight(arg0: number): void;
+        setCellRenderer(arg0: $ListCellRenderer_<E>): void;
+        getSelectionForeground(): $Color;
+        setSelectionForeground(arg0: $Color): void;
+        getSelectionBackground(): $Color;
+        setSelectionBackground(arg0: $Color): void;
+        setVisibleRowCount(arg0: number): void;
+        setLayoutOrientation(arg0: number): void;
+        getLastVisibleIndex(): number;
+        setDragEnabled(arg0: boolean): void;
+        getDragEnabled(): boolean;
+        setDropMode(arg0: $DropMode_): void;
+        getDropMode(): $DropMode;
+        getDropLocation(): $JList$DropLocation;
+        getListSelectionListeners(): $ListSelectionListener[];
+        setSelectionModel(arg0: $ListSelectionModel): void;
+        /**
+         * @deprecated
+         */
+        getSelectedValues(): $Object[];
+        getSelectedValuesList(): $List<E>;
+        getSelectedIndex(): number;
+        getPreferredScrollableViewportSize(): $Dimension;
+        getScrollableUnitIncrement(arg0: $Rectangle, arg1: number, arg2: number): number;
+        getScrollableBlockIncrement(arg0: $Rectangle, arg1: number, arg2: number): number;
+        getScrollableTracksViewportWidth(): boolean;
+        getScrollableTracksViewportHeight(): boolean;
+        clearSelection(): void;
+        getValueIsAdjusting(): boolean;
+        getNextMatch(arg0: string, arg1: number, arg2: $Position$Bias): number;
+        setModel(arg0: $ListModel<E>): void;
+        setSelectedValue(arg0: $Object, arg1: boolean): void;
+        getUI(): $ListUI;
+        setUI(arg0: $ListUI): void;
+        setListData(arg0: E[]): void;
+        setListData(arg0: $Vector<E>): void;
         static CENTER_ALIGNMENT: number;
         static BOTTOM_ALIGNMENT: number;
         static VERTICAL_WRAP: number;
@@ -573,10 +573,16 @@ declare module "@package/javax/swing" {
         static HORIZONTAL_WRAP: number;
         static TOP_ALIGNMENT: number;
         static WHEN_IN_FOCUSED_WINDOW: number;
+        constructor(arg0: $ListModel<E>);
         constructor();
         constructor(arg0: $Vector<E>);
         constructor(arg0: E[]);
-        constructor(arg0: $ListModel<E>);
+        get anchorSelectionIndex(): number;
+        get leadSelectionIndex(): number;
+        get minSelectionIndex(): number;
+        get maxSelectionIndex(): number;
+        get selectionEmpty(): boolean;
+        get firstVisibleIndex(): number;
         get lastVisibleIndex(): number;
         get dropLocation(): $JList$DropLocation;
         get listSelectionListeners(): $ListSelectionListener[];
@@ -585,62 +591,16 @@ declare module "@package/javax/swing" {
         get preferredScrollableViewportSize(): $Dimension;
         get scrollableTracksViewportWidth(): boolean;
         get scrollableTracksViewportHeight(): boolean;
-        get anchorSelectionIndex(): number;
-        get leadSelectionIndex(): number;
-        get minSelectionIndex(): number;
-        get maxSelectionIndex(): number;
-        get selectionEmpty(): boolean;
-        get firstVisibleIndex(): number;
     }
     export class $JComponent extends $Container implements $Serializable, $TransferHandler$HasGetTransferHandler {
-        setBorder(arg0: $Border): void;
-        firePropertyChange(arg0: string, arg1: boolean, arg2: boolean): void;
-        firePropertyChange(arg0: string, arg1: number, arg2: number): void;
         setOpaque(arg0: boolean): void;
+        getBorder(): $Border;
         repaint(arg0: $Rectangle): void;
         getInsets(arg0: $Insets): $Insets;
-        getBorder(): $Border;
+        firePropertyChange(arg0: string, arg1: number, arg2: number): void;
+        firePropertyChange(arg0: string, arg1: boolean, arg2: boolean): void;
         requestFocus(arg0: boolean): boolean;
-        getInheritsPopupMenu(): boolean;
-        getComponentPopupMenu(): $JPopupMenu;
-        /**
-         * @deprecated
-         */
-        isManagingFocus(): boolean;
-        static getDefaultLocale(): $Locale;
-        putClientProperty(arg0: $Object, arg1: $Object): void;
-        isOptimizedDrawingEnabled(): boolean;
-        static isLightweightComponent(arg0: $Component): boolean;
-        /**
-         * @deprecated
-         */
-        getNextFocusableComponent(): $Component;
-        /**
-         * @deprecated
-         */
-        setNextFocusableComponent(arg0: $Component): void;
-        getClientProperty(arg0: $Object): $Object;
-        getInputMap(arg0: number): $InputMap;
-        getInputMap(): $InputMap;
-        getActionMap(): $ActionMap;
-        registerKeyboardAction(arg0: $ActionListener_, arg1: string, arg2: $KeyStroke, arg3: number): void;
-        registerKeyboardAction(arg0: $ActionListener_, arg1: $KeyStroke, arg2: number): void;
-        setInputMap(arg0: number, arg1: $InputMap): void;
-        setActionMap(arg0: $ActionMap): void;
-        static setDefaultLocale(arg0: $Locale): void;
-        getToolTipText(): string;
-        getToolTipText(arg0: $MouseEvent): string;
-        scrollRectToVisible(arg0: $Rectangle): void;
-        setAutoscrolls(arg0: boolean): void;
-        computeVisibleRect(arg0: $Rectangle): void;
-        addVetoableChangeListener(arg0: $VetoableChangeListener_): void;
-        removeVetoableChangeListener(arg0: $VetoableChangeListener_): void;
-        getVetoableChangeListeners(): $VetoableChangeListener[];
-        addAncestorListener(arg0: $AncestorListener): void;
-        removeAncestorListener(arg0: $AncestorListener): void;
-        getAncestorListeners(): $AncestorListener[];
-        paintImmediately(arg0: $Rectangle): void;
-        paintImmediately(arg0: number, arg1: number, arg2: number, arg3: number): void;
+        setBorder(arg0: $Border): void;
         getUIClassID(): string;
         setInheritsPopupMenu(arg0: boolean): void;
         setComponentPopupMenu(arg0: $JPopupMenu): void;
@@ -677,8 +637,48 @@ declare module "@package/javax/swing" {
         getTransferHandler(): $TransferHandler;
         getVisibleRect(): $Rectangle;
         getTopLevelAncestor(): $Container;
-        getRootPane(): $JRootPane;
         setDoubleBuffered(arg0: boolean): void;
+        getRootPane(): $JRootPane;
+        getInheritsPopupMenu(): boolean;
+        getComponentPopupMenu(): $JPopupMenu;
+        /**
+         * @deprecated
+         */
+        isManagingFocus(): boolean;
+        static getDefaultLocale(): $Locale;
+        putClientProperty(arg0: $Object, arg1: $Object): void;
+        isOptimizedDrawingEnabled(): boolean;
+        static isLightweightComponent(arg0: $Component): boolean;
+        /**
+         * @deprecated
+         */
+        getNextFocusableComponent(): $Component;
+        /**
+         * @deprecated
+         */
+        setNextFocusableComponent(arg0: $Component): void;
+        getClientProperty(arg0: $Object): $Object;
+        getInputMap(arg0: number): $InputMap;
+        getInputMap(): $InputMap;
+        getActionMap(): $ActionMap;
+        registerKeyboardAction(arg0: $ActionListener_, arg1: $KeyStroke, arg2: number): void;
+        registerKeyboardAction(arg0: $ActionListener_, arg1: string, arg2: $KeyStroke, arg3: number): void;
+        setInputMap(arg0: number, arg1: $InputMap): void;
+        setActionMap(arg0: $ActionMap): void;
+        static setDefaultLocale(arg0: $Locale): void;
+        getToolTipText(arg0: $MouseEvent): string;
+        getToolTipText(): string;
+        scrollRectToVisible(arg0: $Rectangle): void;
+        setAutoscrolls(arg0: boolean): void;
+        computeVisibleRect(arg0: $Rectangle): void;
+        addVetoableChangeListener(arg0: $VetoableChangeListener_): void;
+        removeVetoableChangeListener(arg0: $VetoableChangeListener_): void;
+        getVetoableChangeListeners(): $VetoableChangeListener[];
+        addAncestorListener(arg0: $AncestorListener): void;
+        removeAncestorListener(arg0: $AncestorListener): void;
+        getAncestorListeners(): $AncestorListener[];
+        paintImmediately(arg0: $Rectangle): void;
+        paintImmediately(arg0: number, arg1: number, arg2: number, arg3: number): void;
         static WHEN_FOCUSED: number;
         static WHEN_ANCESTOR_OF_FOCUSED_COMPONENT: number;
         static CENTER_ALIGNMENT: number;
@@ -691,10 +691,6 @@ declare module "@package/javax/swing" {
         static UNDEFINED_CONDITION: number;
         constructor();
         set opaque(value: boolean);
-        get managingFocus(): boolean;
-        get optimizedDrawingEnabled(): boolean;
-        get vetoableChangeListeners(): $VetoableChangeListener[];
-        get ancestorListeners(): $AncestorListener[];
         get UIClassID(): string;
         get UI(): $ComponentUI;
         get paintingTile(): boolean;
@@ -704,8 +700,12 @@ declare module "@package/javax/swing" {
         get registeredKeyStrokes(): $KeyStroke[];
         get visibleRect(): $Rectangle;
         get topLevelAncestor(): $Container;
-        get rootPane(): $JRootPane;
         set doubleBuffered(value: boolean);
+        get rootPane(): $JRootPane;
+        get managingFocus(): boolean;
+        get optimizedDrawingEnabled(): boolean;
+        get vetoableChangeListeners(): $VetoableChangeListener[];
+        get ancestorListeners(): $AncestorListener[];
     }
     export class $Scrollable {
     }
@@ -721,20 +721,27 @@ declare module "@package/javax/swing" {
     }
     export class $InputVerifier {
         verify(arg0: $JComponent): boolean;
+        verifyTarget(arg0: $JComponent): boolean;
         shouldYieldFocus(arg0: $JComponent, arg1: $JComponent): boolean;
         /**
          * @deprecated
          */
         shouldYieldFocus(arg0: $JComponent): boolean;
-        verifyTarget(arg0: $JComponent): boolean;
     }
     export class $JScrollBar extends $JComponent implements $Adjustable, $Accessible {
+        getModel(): $BoundedRangeModel;
         getValue(): number;
         setValue(arg0: number): void;
         getMaximum(): number;
         getMinimum(): number;
-        getModel(): $BoundedRangeModel;
+        setValueIsAdjusting(arg0: boolean): void;
         setValues(arg0: number, arg1: number, arg2: number, arg3: number): void;
+        setOrientation(arg0: number): void;
+        getOrientation(): number;
+        setMaximum(arg0: number): void;
+        getValueIsAdjusting(): boolean;
+        setModel(arg0: $BoundedRangeModel): void;
+        getVisibleAmount(): number;
         getUnitIncrement(): number;
         getUnitIncrement(arg0: number): number;
         setUnitIncrement(arg0: number): void;
@@ -745,15 +752,8 @@ declare module "@package/javax/swing" {
         addAdjustmentListener(arg0: $AdjustmentListener_): void;
         removeAdjustmentListener(arg0: $AdjustmentListener_): void;
         getAdjustmentListeners(): $AdjustmentListener[];
-        setMaximum(arg0: number): void;
-        getOrientation(): number;
-        setOrientation(arg0: number): void;
-        setModel(arg0: $BoundedRangeModel): void;
         setUI(arg0: $ScrollBarUI): void;
-        getValueIsAdjusting(): boolean;
         setMinimum(arg0: number): void;
-        getVisibleAmount(): number;
-        setValueIsAdjusting(arg0: boolean): void;
         static WHEN_FOCUSED: number;
         static WHEN_ANCESTOR_OF_FOCUSED_COMPONENT: number;
         static CENTER_ALIGNMENT: number;
@@ -764,37 +764,38 @@ declare module "@package/javax/swing" {
         static TOP_ALIGNMENT: number;
         static WHEN_IN_FOCUSED_WINDOW: number;
         static UNDEFINED_CONDITION: number;
+        constructor();
         constructor(arg0: number);
         constructor(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number);
-        constructor();
         get adjustmentListeners(): $AdjustmentListener[];
         set UI(value: $ScrollBarUI);
     }
     export class $JPopupMenu extends $JComponent implements $Accessible, $MenuElement {
+        getInvoker(): $Component;
         show(arg0: $Component, arg1: number, arg2: number): void;
-        pack(): void;
         insert(arg0: $Action, arg1: number): void;
         insert(arg0: $Component, arg1: number): void;
         add(arg0: $JMenuItem): $JMenuItem;
-        add(arg0: $Action): $JMenuItem;
         add(arg0: string): $JMenuItem;
+        add(arg0: $Action): $JMenuItem;
+        getSelectionModel(): $SingleSelectionModel;
+        setSelectionModel(arg0: $SingleSelectionModel): void;
+        pack(): void;
         setLabel(arg0: string): void;
         getLabel(): string;
         getComponent(): $Component;
-        getInvoker(): $Component;
-        setSelectionModel(arg0: $SingleSelectionModel): void;
-        static getDefaultLightWeightPopupEnabled(): boolean;
+        setSelected(arg0: $Component): void;
         processKeyEvent(arg0: $KeyEvent, arg1: $MenuElement[], arg2: $MenuSelectionManager): void;
         isPopupTrigger(arg0: $MouseEvent): boolean;
         processMouseEvent(arg0: $MouseEvent, arg1: $MenuElement[], arg2: $MenuSelectionManager): void;
-        setSelected(arg0: $Component): void;
         addSeparator(): void;
-        getUI(): $PopupMenuUI;
+        getMargin(): $Insets;
         setUI(arg0: $PopupMenuUI): void;
+        static getDefaultLightWeightPopupEnabled(): boolean;
         isLightWeightPopupEnabled(): boolean;
         setInvoker(arg0: $Component): void;
-        setPopupSize(arg0: number, arg1: number): void;
         setPopupSize(arg0: $Dimension): void;
+        setPopupSize(arg0: number, arg1: number): void;
         getComponentIndex(arg0: $Component): number;
         isBorderPainted(): boolean;
         static setDefaultLightWeightPopupEnabled(arg0: boolean): void;
@@ -810,10 +811,8 @@ declare module "@package/javax/swing" {
          */
         getComponentAtIndex(arg0: number): $Component;
         setBorderPainted(arg0: boolean): void;
-        getMargin(): $Insets;
         menuSelectionChanged(arg0: boolean): void;
         getSubElements(): $MenuElement[];
-        getSelectionModel(): $SingleSelectionModel;
         static WHEN_FOCUSED: number;
         static WHEN_ANCESTOR_OF_FOCUSED_COMPONENT: number;
         static CENTER_ALIGNMENT: number;
@@ -828,12 +827,18 @@ declare module "@package/javax/swing" {
         constructor();
         get component(): $Component;
         set selected(value: $Component);
+        get margin(): $Insets;
+        set UI(value: $PopupMenuUI);
         get popupMenuListeners(): $PopupMenuListener[];
         get menuKeyListeners(): $MenuKeyListener[];
-        get margin(): $Insets;
         get subElements(): $MenuElement[];
     }
     export class $JViewport extends $JComponent implements $Accessible {
+        removeChangeListener(arg0: $ChangeListener_): void;
+        setView(arg0: $Component): void;
+        addChangeListener(arg0: $ChangeListener_): void;
+        setViewPosition(arg0: $Point): void;
+        getView(): $Component;
         getViewPosition(): $Point;
         getExtentSize(): $Dimension;
         setScrollMode(arg0: number): void;
@@ -849,16 +854,10 @@ declare module "@package/javax/swing" {
         getViewSize(): $Dimension;
         setViewSize(arg0: $Dimension): void;
         getViewRect(): $Rectangle;
-        toViewCoordinates(arg0: $Dimension): $Dimension;
         toViewCoordinates(arg0: $Point): $Point;
+        toViewCoordinates(arg0: $Dimension): $Dimension;
         setExtentSize(arg0: $Dimension): void;
-        addChangeListener(arg0: $ChangeListener_): void;
-        setView(arg0: $Component): void;
-        getView(): $Component;
-        getUI(): $ViewportUI;
         setUI(arg0: $ViewportUI): void;
-        setViewPosition(arg0: $Point): void;
-        removeChangeListener(arg0: $ChangeListener_): void;
         getChangeListeners(): $ChangeListener[];
         static CENTER_ALIGNMENT: number;
         static BOTTOM_ALIGNMENT: number;
@@ -875,6 +874,7 @@ declare module "@package/javax/swing" {
         static WHEN_IN_FOCUSED_WINDOW: number;
         constructor();
         get viewRect(): $Rectangle;
+        set UI(value: $ViewportUI);
         get changeListeners(): $ChangeListener[];
     }
     export class $InputMap implements $Serializable {
@@ -892,20 +892,20 @@ declare module "@package/javax/swing" {
     export class $ButtonModel {
     }
     export interface $ButtonModel extends $ItemSelectable {
-        setGroup(arg0: $ButtonGroup): void;
         isEnabled(): boolean;
-        setEnabled(arg0: boolean): void;
-        isSelected(): boolean;
-        getGroup(): $ButtonGroup;
-        setSelected(arg0: boolean): void;
-        addChangeListener(arg0: $ChangeListener_): void;
-        setPressed(arg0: boolean): void;
-        isPressed(): boolean;
-        getActionCommand(): string;
-        addActionListener(arg0: $ActionListener_): void;
         removeChangeListener(arg0: $ChangeListener_): void;
-        setActionCommand(arg0: string): void;
+        getGroup(): $ButtonGroup;
+        setGroup(arg0: $ButtonGroup): void;
+        isSelected(): boolean;
+        getActionCommand(): string;
+        setSelected(arg0: boolean): void;
+        setEnabled(arg0: boolean): void;
+        isPressed(): boolean;
+        setPressed(arg0: boolean): void;
+        addChangeListener(arg0: $ChangeListener_): void;
         removeActionListener(arg0: $ActionListener_): void;
+        setActionCommand(arg0: string): void;
+        addActionListener(arg0: $ActionListener_): void;
         getMnemonic(): number;
         setArmed(arg0: boolean): void;
         setRollover(arg0: boolean): void;
@@ -916,21 +916,21 @@ declare module "@package/javax/swing" {
         isArmed(): boolean;
     }
     export class $JLayeredPane extends $JComponent implements $Accessible {
+        getIndexOf(arg0: $Component): number;
         getPosition(arg0: $Component): number;
         getLayer(arg0: $Component): number;
         static getLayer(arg0: $JComponent): number;
-        setLayer(arg0: $Component, arg1: number): void;
-        setLayer(arg0: $Component, arg1: number, arg2: number): void;
-        moveToFront(arg0: $Component): void;
         moveToBack(arg0: $Component): void;
-        getIndexOf(arg0: $Component): number;
-        setPosition(arg0: $Component, arg1: number): void;
+        moveToFront(arg0: $Component): void;
         getComponentCountInLayer(arg0: number): number;
         static putLayer(arg0: $JComponent, arg1: number): void;
         static getLayeredPaneAbove(arg0: $Component): $JLayeredPane;
         highestLayer(): number;
         lowestLayer(): number;
         getComponentsInLayer(arg0: number): $Component[];
+        setLayer(arg0: $Component, arg1: number): void;
+        setLayer(arg0: $Component, arg1: number, arg2: number): void;
+        setPosition(arg0: $Component, arg1: number): void;
         static PALETTE_LAYER: number;
         static LAYER_PROPERTY: string;
         static CENTER_ALIGNMENT: number;
@@ -952,10 +952,10 @@ declare module "@package/javax/swing" {
     }
     export class $JToolTip extends $JComponent implements $Accessible {
         getComponent(): $JComponent;
+        getTipText(): string;
         setComponent(arg0: $JComponent): void;
         getUI(): $ToolTipUI;
         setTipText(arg0: string): void;
-        getTipText(): string;
         static WHEN_FOCUSED: number;
         static WHEN_ANCESTOR_OF_FOCUSED_COMPONENT: number;
         static CENTER_ALIGNMENT: number;
@@ -980,8 +980,6 @@ declare module "@package/javax/swing" {
     export class $JScrollPane extends $JComponent implements $ScrollPaneConstants, $Accessible {
         setViewport(arg0: $JViewport): void;
         getCorner(arg0: string): $Component;
-        getVerticalScrollBar(): $JScrollBar;
-        setUI(arg0: $ScrollPaneUI): void;
         setVerticalScrollBarPolicy(arg0: number): void;
         setHorizontalScrollBarPolicy(arg0: number): void;
         createVerticalScrollBar(): $JScrollBar;
@@ -1005,6 +1003,9 @@ declare module "@package/javax/swing" {
         isWheelScrollingEnabled(): boolean;
         setWheelScrollingEnabled(arg0: boolean): void;
         getViewport(): $JViewport;
+        getVerticalScrollBar(): $JScrollBar;
+        getUI(): $ScrollPaneUI;
+        setUI(arg0: $ScrollPaneUI): void;
         static WHEN_FOCUSED: number;
         static WHEN_ANCESTOR_OF_FOCUSED_COMPONENT: number;
         static CENTER_ALIGNMENT: number;
@@ -1019,7 +1020,6 @@ declare module "@package/javax/swing" {
         constructor(arg0: number, arg1: number);
         constructor(arg0: $Component);
         constructor(arg0: $Component, arg1: number, arg2: number);
-        set UI(value: $ScrollPaneUI);
         set viewportView(value: $Component);
         get viewportBorderBounds(): $Rectangle;
         set rowHeaderView(value: $Component);
@@ -1028,8 +1028,8 @@ declare module "@package/javax/swing" {
     export class $Icon {
     }
     export interface $Icon {
-        getIconWidth(): number;
         paintIcon(arg0: $Component, arg1: $Graphics, arg2: number, arg3: number): void;
+        getIconWidth(): number;
         getIconHeight(): number;
         get iconWidth(): number;
         get iconHeight(): number;
@@ -1038,9 +1038,11 @@ declare module "@package/javax/swing" {
         setContentType(arg0: string): void;
         getContentType(): string;
         read(arg0: $InputStream, arg1: $Object): void;
+        getEditorKit(): $EditorKit;
         getPage(): $URL;
-        setPage(arg0: $URL): void;
         setPage(arg0: string): void;
+        setPage(arg0: $URL): void;
+        scrollToReference(arg0: string): void;
         getEditorKitForContentType(arg0: string): $EditorKit;
         setEditorKit(arg0: $EditorKit): void;
         static createEditorKitForContentType(arg0: string): $EditorKit;
@@ -1052,8 +1054,6 @@ declare module "@package/javax/swing" {
         getHyperlinkListeners(): $HyperlinkListener[];
         fireHyperlinkUpdate(arg0: $HyperlinkEvent): void;
         static getEditorKitClassNameForContentType(arg0: string): string;
-        scrollToReference(arg0: string): void;
-        getEditorKit(): $EditorKit;
         static FOCUS_ACCELERATOR_KEY: string;
         static CENTER_ALIGNMENT: number;
         static HONOR_DISPLAY_PROPERTIES: string;
@@ -1101,13 +1101,10 @@ declare module "@package/javax/swing" {
     }
     export class $TransferHandler implements $Serializable {
         getSourceActions(arg0: $JComponent): number;
-        importData(arg0: $TransferHandler$TransferSupport): boolean;
         importData(arg0: $JComponent, arg1: $Transferable): boolean;
-        canImport(arg0: $TransferHandler$TransferSupport): boolean;
+        importData(arg0: $TransferHandler$TransferSupport): boolean;
         canImport(arg0: $JComponent, arg1: $DataFlavor[]): boolean;
-        static getCutAction(): $Action;
-        static getCopyAction(): $Action;
-        static getPasteAction(): $Action;
+        canImport(arg0: $TransferHandler$TransferSupport): boolean;
         setDragImage(arg0: $Image): void;
         getDragImage(): $Image;
         setDragImageOffset(arg0: $Point): void;
@@ -1115,6 +1112,9 @@ declare module "@package/javax/swing" {
         exportAsDrag(arg0: $JComponent, arg1: $InputEvent, arg2: number): void;
         exportToClipboard(arg0: $JComponent, arg1: $Clipboard, arg2: number): void;
         getVisualRepresentation(arg0: $Transferable): $Icon;
+        static getCutAction(): $Action;
+        static getCopyAction(): $Action;
+        static getPasteAction(): $Action;
         static COPY_OR_MOVE: number;
         static MOVE: number;
         static LINK: number;
@@ -1126,20 +1126,23 @@ declare module "@package/javax/swing" {
         static get pasteAction(): $Action;
     }
     export class $KeyStroke extends $AWTKeyStroke {
+        static getKeyStrokeForEvent(arg0: $KeyEvent): $KeyStroke;
+        static getKeyStroke(arg0: number, arg1: number): $KeyStroke;
         static getKeyStroke(arg0: number, arg1: number, arg2: boolean): $KeyStroke;
         static getKeyStroke(arg0: string): $KeyStroke;
-        static getKeyStroke(arg0: number, arg1: number): $KeyStroke;
+        static getKeyStroke(arg0: string): $KeyStroke;
+        static getKeyStroke(arg0: string, arg1: number): $KeyStroke;
         /**
          * @deprecated
          */
         static getKeyStroke(arg0: string, arg1: boolean): $KeyStroke;
-        static getKeyStroke(arg0: string, arg1: number): $KeyStroke;
-        static getKeyStroke(arg0: string): $KeyStroke;
-        static getKeyStrokeForEvent(arg0: $KeyEvent): $KeyStroke;
     }
     export class $AbstractButton extends $JComponent implements $ItemSelectable, $SwingConstants {
+        getModel(): $ButtonModel;
+        getAction(): $Action;
         getText(): string;
         setText(arg0: string): void;
+        removeChangeListener(arg0: $ChangeListener_): void;
         /**
          * @deprecated
          */
@@ -1148,35 +1151,27 @@ declare module "@package/javax/swing" {
          * @deprecated
          */
         getLabel(): string;
-        getModel(): $ButtonModel;
-        isSelected(): boolean;
-        setSelected(arg0: boolean): void;
-        getAction(): $Action;
-        setAction(arg0: $Action): void;
-        addChangeListener(arg0: $ChangeListener_): void;
-        setIcon(arg0: $Icon): void;
-        setModel(arg0: $ButtonModel): void;
         getIcon(): $Icon;
-        doClick(arg0: number): void;
+        isSelected(): boolean;
+        setAction(arg0: $Action): void;
+        getActionCommand(): string;
+        setSelected(arg0: boolean): void;
         doClick(): void;
+        doClick(arg0: number): void;
+        setModel(arg0: $ButtonModel): void;
+        setFocusPainted(arg0: boolean): void;
+        setIcon(arg0: $Icon): void;
         getHorizontalAlignment(): number;
         getVerticalAlignment(): number;
+        addChangeListener(arg0: $ChangeListener_): void;
         setContentAreaFilled(arg0: boolean): void;
-        setUI(arg0: $ButtonUI): void;
-        getActionCommand(): string;
-        setFocusPainted(arg0: boolean): void;
-        setHorizontalAlignment(arg0: number): void;
-        addActionListener(arg0: $ActionListener_): void;
-        setHorizontalTextPosition(arg0: number): void;
-        setVerticalTextPosition(arg0: number): void;
-        isBorderPainted(): boolean;
-        setBorderPainted(arg0: boolean): void;
-        getMargin(): $Insets;
-        removeChangeListener(arg0: $ChangeListener_): void;
         setMargin(arg0: $Insets): void;
-        setActionCommand(arg0: string): void;
+        getMargin(): $Insets;
         removeActionListener(arg0: $ActionListener_): void;
-        getActionListeners(): $ActionListener[];
+        setActionCommand(arg0: string): void;
+        addActionListener(arg0: $ActionListener_): void;
+        getUI(): $ButtonUI;
+        setUI(arg0: $ButtonUI): void;
         getMnemonic(): number;
         setRolloverEnabled(arg0: boolean): void;
         getDisabledIcon(): $Icon;
@@ -1212,6 +1207,12 @@ declare module "@package/javax/swing" {
         getChangeListeners(): $ChangeListener[];
         getItemListeners(): $ItemListener[];
         getSelectedObjects(): $Object[];
+        setHorizontalAlignment(arg0: number): void;
+        getActionListeners(): $ActionListener[];
+        setHorizontalTextPosition(arg0: number): void;
+        setVerticalTextPosition(arg0: number): void;
+        isBorderPainted(): boolean;
+        setBorderPainted(arg0: boolean): void;
         static ROLLOVER_ENABLED_CHANGED_PROPERTY: string;
         static ROLLOVER_ICON_CHANGED_PROPERTY: string;
         static CONTENT_AREA_FILLED_CHANGED_PROPERTY: string;
@@ -1241,11 +1242,10 @@ declare module "@package/javax/swing" {
         static MNEMONIC_CHANGED_PROPERTY: string;
         static TOP_ALIGNMENT: number;
         static WHEN_IN_FOCUSED_WINDOW: number;
-        set UI(value: $ButtonUI);
-        get actionListeners(): $ActionListener[];
         get changeListeners(): $ChangeListener[];
         get itemListeners(): $ItemListener[];
         get selectedObjects(): $Object[];
+        get actionListeners(): $ActionListener[];
     }
     export class $ListSelectionModel {
         static MULTIPLE_INTERVAL_SELECTION: number;
@@ -1253,11 +1253,6 @@ declare module "@package/javax/swing" {
         static SINGLE_SELECTION: number;
     }
     export interface $ListSelectionModel {
-        clearSelection(): void;
-        insertIndexInterval(arg0: number, arg1: number, arg2: boolean): void;
-        removeIndexInterval(arg0: number, arg1: number): void;
-        getSelectedItemsCount(): number;
-        getValueIsAdjusting(): boolean;
         getSelectedIndices(): number[];
         getAnchorSelectionIndex(): number;
         getLeadSelectionIndex(): number;
@@ -1275,10 +1270,15 @@ declare module "@package/javax/swing" {
         addSelectionInterval(arg0: number, arg1: number): void;
         removeSelectionInterval(arg0: number, arg1: number): void;
         setValueIsAdjusting(arg0: boolean): void;
-        get selectedItemsCount(): number;
+        clearSelection(): void;
+        getValueIsAdjusting(): boolean;
+        insertIndexInterval(arg0: number, arg1: number, arg2: boolean): void;
+        removeIndexInterval(arg0: number, arg1: number): void;
+        getSelectedItemsCount(): number;
         get selectedIndices(): number[];
         get minSelectionIndex(): number;
         get maxSelectionIndex(): number;
         get selectionEmpty(): boolean;
+        get selectedItemsCount(): number;
     }
 }

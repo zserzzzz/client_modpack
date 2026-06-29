@@ -11,14 +11,14 @@ import { $Vector4f, $Matrix3f, $Matrix4f, $Quaternionf, $Vector3f } from "@packa
 
 declare module "@package/com/mojang/math" {
     export class $OctahedralGroup extends $Enum<$OctahedralGroup> implements $StringRepresentable {
-        inverse(): $OctahedralGroup;
         static values(): $OctahedralGroup[];
         static valueOf(arg0: string): $OctahedralGroup;
         compose(other: $OctahedralGroup_): $OctahedralGroup;
         rotate(frontAndTop: $FrontAndTop_): $FrontAndTop;
         rotate(direction: $Direction_): $Direction;
-        getSerializedName(): string;
+        inverse(): $OctahedralGroup;
         transformation(): $Matrix3f;
+        getSerializedName(): string;
         inverts(axis: $Direction$Axis_): boolean;
         getRemappedEnumConstantName(): string;
         static ROT_60_REF_NPN: $OctahedralGroup;
@@ -93,14 +93,14 @@ declare module "@package/com/mojang/math" {
         constructor(numerator: number, denominator: number);
     }
     export class $Transformation implements $ITransformationExtension {
-        inverse(): $Transformation;
         static identity(): $Transformation;
         compose(other: $Transformation): $Transformation;
-        getLeftRotation(): $Quaternionf;
-        getRightRotation(): $Quaternionf;
-        getScale(): $Vector3f;
-        getTranslation(): $Vector3f;
         slerp(transformation: $Transformation, delta: number): $Transformation;
+        getScale(): $Vector3f;
+        inverse(): $Transformation;
+        getTranslation(): $Vector3f;
+        getRightRotation(): $Quaternionf;
+        getLeftRotation(): $Quaternionf;
         getMatrix(): $Matrix4f;
         getNormalMatrix(): $Matrix3f;
         /**
@@ -115,26 +115,26 @@ declare module "@package/com/mojang/math" {
          * Transforms the position according to this transformation.
          */
         transformPosition(position: $Vector4f): void;
-        blockCornerToCenter(): $Transformation;
-        blockCenterToCorner(): $Transformation;
-        /**
-         * Returns a new transformation with a changed origin by applying the given parameter (which is relative to the
-         * current origin). This can be used for switching between coordinate systems.
-         */
-        applyOrigin(origin: $Vector3f): $Transformation;
         /**
          * Rotates the direction according to this transformation and returns the nearest `Direction` to the
          * resulting direction.
          */
         rotateTransform(facing: $Direction_): $Direction;
+        /**
+         * Returns a new transformation with a changed origin by applying the given parameter (which is relative to the
+         * current origin). This can be used for switching between coordinate systems.
+         */
+        applyOrigin(origin: $Vector3f): $Transformation;
+        blockCenterToCorner(): $Transformation;
+        blockCornerToCenter(): $Transformation;
         static CODEC: $Codec<$Transformation>;
         static EXTENDED_CODEC: $Codec<$Transformation>;
         constructor(matrix: $Matrix4f | null);
         constructor(translation: $Vector3f | null, leftRotation: $Quaternionf | null, scale: $Vector3f | null, rightRotation: $Quaternionf | null);
-        get leftRotation(): $Quaternionf;
-        get rightRotation(): $Quaternionf;
         get scale(): $Vector3f;
         get translation(): $Vector3f;
+        get rightRotation(): $Quaternionf;
+        get leftRotation(): $Quaternionf;
         get matrix(): $Matrix4f;
         get normalMatrix(): $Matrix3f;
     }
@@ -170,17 +170,17 @@ declare module "@package/com/mojang/math" {
     export class $FieldsAreNonnullByDefault implements $Annotation {
     }
     export class $GivensParameters extends $Record {
-        inverse(): $GivensParameters;
-        sinHalf(): number;
-        cosHalf(): number;
-        aroundY(matrix: $Matrix3f): $Matrix3f;
-        aroundY(quaternion: $Quaternionf): $Quaternionf;
-        aroundX(matrix: $Matrix3f): $Matrix3f;
-        aroundX(quaternion: $Quaternionf): $Quaternionf;
         sin(): number;
         cos(): number;
+        inverse(): $GivensParameters;
+        aroundX(matrix: $Matrix3f): $Matrix3f;
+        aroundX(quaternion: $Quaternionf): $Quaternionf;
+        cosHalf(): number;
+        sinHalf(): number;
         aroundZ(matrix: $Matrix3f): $Matrix3f;
         aroundZ(quaternion: $Quaternionf): $Quaternionf;
+        aroundY(quaternion: $Quaternionf): $Quaternionf;
+        aroundY(matrix: $Matrix3f): $Matrix3f;
         static fromPositiveAngle(angle: number): $GivensParameters;
         static fromUnnormalized(sinHalf: number, cosHalf: number): $GivensParameters;
         constructor(arg0: number, arg1: number);
@@ -191,8 +191,8 @@ declare module "@package/com/mojang/math" {
     export type $GivensParameters_ = { sinHalf?: number, cosHalf?: number,  } | [sinHalf?: number, cosHalf?: number, ];
     export class $MatrixUtil {
         static mulComponentWise(matrix: $Matrix4f, scalar: number): $Matrix4f;
-        static isPureTranslation(matrix: $Matrix4f): boolean;
         static isOrthonormal(matrix: $Matrix4f): boolean;
+        static isPureTranslation(matrix: $Matrix4f): boolean;
         static svdDecompose(matrix: $Matrix3f): $Triple<$Quaternionf, $Vector3f, $Quaternionf>;
         static eigenvalueJacobi(input: $Matrix3f, iterations: number): $Quaternionf;
     }

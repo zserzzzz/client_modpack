@@ -11,8 +11,8 @@ declare module "@package/net/minecraft/world/level/levelgen/presets" {
     export class $WorldPresets {
         static bootstrap(context: $BootstrapContext<$WorldPreset_>): void;
         static createNormalWorldDimensions(registry: $RegistryAccess): $WorldDimensions;
-        static getNormalOverworld(registry: $RegistryAccess): $LevelStem;
         static fromSettings(worldDimensions: $WorldDimensions_): ($ResourceKey<$WorldPreset>) | undefined;
+        static getNormalOverworld(registry: $RegistryAccess): $LevelStem;
         static AMPLIFIED: $ResourceKey<$WorldPreset>;
         static FLAT: $ResourceKey<$WorldPreset>;
         static SINGLE_BIOME_SURFACE: $ResourceKey<$WorldPreset>;

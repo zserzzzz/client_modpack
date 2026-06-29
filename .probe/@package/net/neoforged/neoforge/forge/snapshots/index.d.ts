@@ -5,9 +5,9 @@ import { $GuiGraphics, $Font } from "@package/net/minecraft/client/gui";
 
 declare module "@package/net/neoforged/neoforge/forge/snapshots" {
     export class $ForgeSnapshotsMod {
-        static logStartupWarning(): void;
         static addCrashReportHeader(builder: $StringBuilder, crashReport: $CrashReport): void;
         static processOptions(fieldAccess: $Options$FieldAccess): void;
+        static logStartupWarning(): void;
         static BRANDING_ID: string;
         static BRANDING_NAME: string;
         constructor();

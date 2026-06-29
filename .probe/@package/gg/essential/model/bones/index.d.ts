@@ -5,29 +5,29 @@ import { $List_, $List } from "@package/java/util";
 
 declare module "@package/gg/essential/model/bones" {
     export class $BakedAnimations$BakedBone {
-        setGimbal(arg0: boolean): void;
         getGimbal(): boolean;
-        getBoneId(): number;
+        setGimbal(arg0: boolean): void;
         getAnimOffsetX(): number;
+        setAnimOffsetX(arg0: number): void;
+        getAnimOffsetY(): number;
+        setAnimOffsetY(arg0: number): void;
         getAnimOffsetZ(): number;
         setAnimOffsetZ(arg0: number): void;
         getAnimRotX(): number;
-        setAnimRotY(arg0: number): void;
-        getAnimOffsetY(): number;
-        setAnimOffsetY(arg0: number): void;
-        setAnimOffsetX(arg0: number): void;
-        getAnimRotY(): number;
-        getAnimRotZ(): number;
-        setAnimRotZ(arg0: number): void;
-        getAnimScaleX(): number;
         setAnimRotX(arg0: number): void;
-        setAnimScaleX(arg0: number): void;
-        getAnimScaleY(): number;
-        getAnimScaleZ(): number;
-        setWorldGimbal(arg0: boolean): void;
-        getWorldGimbal(): boolean;
         setAnimScaleY(arg0: number): void;
+        setWorldGimbal(arg0: boolean): void;
+        getAnimRotZ(): number;
+        getAnimRotY(): number;
+        getWorldGimbal(): boolean;
+        setAnimRotZ(arg0: number): void;
+        setAnimScaleX(arg0: number): void;
+        getAnimScaleZ(): number;
         setAnimScaleZ(arg0: number): void;
+        setAnimRotY(arg0: number): void;
+        getAnimScaleX(): number;
+        getAnimScaleY(): number;
+        getBoneId(): number;
         constructor(arg0: number);
         get boneId(): number;
     }

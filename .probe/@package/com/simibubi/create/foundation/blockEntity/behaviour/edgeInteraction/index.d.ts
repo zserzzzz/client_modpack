@@ -43,8 +43,8 @@ declare module "@package/com/simibubi/create/foundation/blockEntity/behaviour/ed
     }
     export class $EdgeInteractionHandler {
         static onBlockActivated(arg0: $PlayerInteractEvent$RightClickBlock): void;
-        static getConnectiveSides(arg0: $Level_, arg1: $BlockPos_, arg2: $Direction_, arg3: $EdgeInteractionBehaviour): $List<$Direction>;
         static getActivatedDirection(arg0: $Level_, arg1: $BlockPos_, arg2: $Direction_, arg3: $Vec3_, arg4: $EdgeInteractionBehaviour): $Direction;
+        static getConnectiveSides(arg0: $Level_, arg1: $BlockPos_, arg2: $Direction_, arg3: $EdgeInteractionBehaviour): $List<$Direction>;
         constructor();
     }
 }

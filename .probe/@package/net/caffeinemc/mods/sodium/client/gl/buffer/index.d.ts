@@ -7,16 +7,16 @@ declare module "@package/net/caffeinemc/mods/sodium/client/gl/buffer" {
     export class $GlBufferTarget extends $Enum<$GlBufferTarget> {
         static values(): $GlBufferTarget[];
         static valueOf(arg0: string): $GlBufferTarget;
-        getTargetParameter(): number;
         getBindingParameter(): number;
+        getTargetParameter(): number;
         static COPY_WRITE_BUFFER: $GlBufferTarget;
         static COPY_READ_BUFFER: $GlBufferTarget;
         static VALUES: $GlBufferTarget[];
         static COUNT: number;
         static ELEMENT_BUFFER: $GlBufferTarget;
         static ARRAY_BUFFER: $GlBufferTarget;
-        get targetParameter(): number;
         get bindingParameter(): number;
+        get targetParameter(): number;
     }
     /**
      * Values that may be interpreted as {@link $GlBufferTarget}.

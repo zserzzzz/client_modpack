@@ -13,7 +13,7 @@ import { $PlayerInfo, $ClientPacketListener, $ClientLevel } from "@package/net/m
 import { $PlayerFreezeExtension } from "@package/dev/ryanhcode/sable/mixinterface/player_freezing";
 import { $LocalPlayerInterface } from "@package/net/irisshaders/iris/mixinterface";
 import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos } from "@package/net/minecraft/core";
+import { $HolderLookup$Provider, $BlockPos } from "@package/net/minecraft/core";
 import { $Operation_ } from "@package/com/llamalad7/mixinextras/injector/wrapoperation";
 import { $Brain } from "@package/net/minecraft/world/entity/ai";
 import { $AbstractClientPlayerAccessor } from "@package/dev/engine_room/flywheel/backend/mixin";
@@ -51,77 +51,29 @@ export * as inventory from "@package/net/minecraft/client/player/inventory";
 
 declare module "@package/net/minecraft/client/player" {
     export class $LocalPlayer extends $AbstractClientPlayer implements $LocalPlayerInterface, $IMixinLocalPlayer, $LocalClientPlayerKJS, $PlayerFreezeExtension {
+        drop(fullStack: boolean): boolean;
         /**
          * Returns whether the entity is in a server world
          */
-        getDoLimitedCrafting(): boolean;
-        /**
-         * Sets the current XP, total XP, and level number.
-         */
-        setExperienceValues(currentXP: number, maxXP: number, level: number): void;
-        sable$calculateViewVector2(xRot: number, yRot: number): $Vec3;
-        removeRecipeHighlight(recipe: $RecipeHolder_<never>): void;
-        setDoLimitedCrafting(useConfusion: boolean): void;
+        shouldShowDeathScreen(): boolean;
         /**
          * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
          */
         clientSideCloseContainer(): void;
+        removeRecipeHighlight(recipe: $RecipeHolder_<never>): void;
         /**
          * Returns the amount of health added by the Absorption effect.
          */
         getCurrentConstantMood(): number;
         /**
-         * Returns whether the entity is in a server world
+         * Sets the current XP, total XP, and level number.
          */
-        shouldShowDeathScreen(): boolean;
-        drop(fullStack: boolean): boolean;
-        handler$dnp000$xaerominimap$onTickStart(arg0: $CallbackInfo): void;
-        getStatsCounter(): $StatsCounter;
-        getRecipeBook(): $ClientRecipeBook;
+        setExperienceValues(currentXP: number, maxXP: number, level: number): void;
+        setDoLimitedCrafting(useConfusion: boolean): void;
         /**
          * Returns whether the entity is in a server world
          */
-        isHandsBusy(): boolean;
-        /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
-         */
-        sendOpenInventory(): void;
-        wrapOperation$bke000$vista$suppl$preventMovementWhileOperatingCannon(arg0: $Input, arg1: boolean, arg2: number, arg3: $Operation_<any>): void;
-        handler$bfa000$clientsort$afterPermissionLevelChange(arg0: number, arg1: $CallbackInfo): void;
-        setShowDeathScreen(useConfusion: boolean): void;
-        /**
-         * Returns whether the entity is in a server world
-         */
-        isControlledCamera(): boolean;
-        setPermissionLevel(permissionLevel: number): void;
-        /**
-         * Returns whether the entity is in a server world
-         */
-        isAutoJumpEnabled(): boolean;
-        /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
-         */
-        sendRidingJump(): void;
-        jumpableVehicle(): $PlayerRideableJumping;
-        onGameModeChanged(gameMode: $GameType_): void;
-        /**
-         * Returns the amount of health added by the Absorption effect.
-         */
-        getCurrentMood(): number;
-        /**
-         * Returns the amount of health added by the Absorption effect.
-         */
-        getJumpRidingScale(): number;
-        /**
-         * Returns the amount of health added by the Absorption effect.
-         */
-        getWaterVision(): number;
-        updateAutoJump(movementX: number, movementZ: number): void;
-        /**
-         * Returns whether the entity is in a server world
-         */
-        isMovingSlowly(): boolean;
-        getActivePortalLocalTransition(): $Portal$Transition;
+        getDoLimitedCrafting(): boolean;
         /**
          * Heal living entity (param: amount of half-hearts)
          */
@@ -130,12 +82,61 @@ declare module "@package/net/minecraft/client/player" {
          * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
          */
         resetPos(): void;
+        handler$dnp000$xaerominimap$onTickStart(arg0: $CallbackInfo): void;
+        handler$bfa000$clientsort$afterPermissionLevelChange(arg0: number, arg1: $CallbackInfo): void;
+        /**
+         * Returns whether the entity is in a server world
+         */
+        isHandsBusy(): boolean;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        sendOpenInventory(): void;
+        getStatsCounter(): $StatsCounter;
+        getActivePortalLocalTransition(): $Portal$Transition;
+        sable$calculateViewVector2(xRot: number, yRot: number): $Vec3;
+        /**
+         * Returns the amount of health added by the Absorption effect.
+         */
+        getCurrentMood(): number;
+        /**
+         * Returns whether the entity is in a server world
+         */
+        isControlledCamera(): boolean;
+        /**
+         * Returns the amount of health added by the Absorption effect.
+         */
+        getWaterVision(): number;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        sendRidingJump(): void;
+        /**
+         * Returns the amount of health added by the Absorption effect.
+         */
+        getJumpRidingScale(): number;
+        onGameModeChanged(gameMode: $GameType_): void;
+        /**
+         * Returns whether the entity is in a server world
+         */
+        isAutoJumpEnabled(): boolean;
+        updateAutoJump(movementX: number, movementZ: number): void;
+        setPermissionLevel(permissionLevel: number): void;
+        /**
+         * Returns whether the entity is in a server world
+         */
+        isMovingSlowly(): boolean;
+        jumpableVehicle(): $PlayerRideableJumping;
+        setShowDeathScreen(useConfusion: boolean): void;
         handler$bfa000$clientsort$beforeContainerClose(arg0: $CallbackInfo): void;
+        wrapOperation$bke000$vista$suppl$preventMovementWhileOperatingCannon(arg0: $Input, arg1: boolean, arg2: number, arg3: $Operation_<any>): void;
+        getRecipeBook(): $ClientRecipeBook;
         /**
          * Returns the current armor value as determined by a call to InventoryPlayer.getTotalArmorValue
          */
         getPermissionLevelKonkrete(): number;
         getMinecraft(): $Minecraft;
+        serializeNBT(arg0: $HolderLookup$Provider): $Player;
         lerpYRot: number;
         static USE_ITEM_INTERVAL: number;
         lerpYHeadRot: number;
@@ -350,16 +351,16 @@ declare module "@package/net/minecraft/client/player" {
         constructor(minecraft: $Minecraft, clientLevel: $ClientLevel, connection: $ClientPacketListener, stats: $StatsCounter, recipeBook: $ClientRecipeBook, wasShiftKeyDown: boolean, wasSprinting: boolean);
         get currentConstantMood(): number;
         get statsCounter(): $StatsCounter;
-        get recipeBook(): $ClientRecipeBook;
-        set showDeathScreen(value: boolean);
-        get controlledCamera(): boolean;
-        set permissionLevel(value: number);
-        get autoJumpEnabled(): boolean;
-        get currentMood(): number;
-        get jumpRidingScale(): number;
-        get waterVision(): number;
-        get movingSlowly(): boolean;
         get activePortalLocalTransition(): $Portal$Transition;
+        get currentMood(): number;
+        get controlledCamera(): boolean;
+        get waterVision(): number;
+        get jumpRidingScale(): number;
+        get autoJumpEnabled(): boolean;
+        set permissionLevel(value: number);
+        get movingSlowly(): boolean;
+        set showDeathScreen(value: boolean);
+        get recipeBook(): $ClientRecipeBook;
         get permissionLevelKonkrete(): number;
     }
     export class $KeyboardInput extends $Input {
@@ -374,39 +375,40 @@ declare module "@package/net/minecraft/client/player" {
         constructor(options: $Options);
     }
     export class $AbstractClientPlayer extends $Player implements $AbstractClientPlayerAccessor, $ClientPlayerKJS, $AbstractClientPlayerExt {
-        setRenderedPose(renderedPose: $PlayerPose): void;
-        getCosmeticsSource(): $State<any>;
-        /**
-         * Set sprinting switch for Entity.
-         */
-        setPoseModified(sprinting: boolean): void;
-        setCosmeticsSource(cosmeticsSource: $State_<any>): void;
-        getCosmeticsState(): $CosmeticsState;
-        getPlayerInfo(): $PlayerInfo;
-        getPoseManager(): $PlayerPoseManager;
-        /**
-         * Returns `true` if the player is in spectator mode.
-         */
-        isPoseModified(): boolean;
-        getRenderedPose(): $PlayerPose;
-        setEssentialCosmeticsCape(cape: string, textures: $Pair<any, any>): void;
-        getSkin(): $PlayerSkin;
-        applyEssentialCosmeticsMask(skin: $ResourceLocation_): $ResourceLocation;
         wasArmorRenderingSuppressed(): boolean[];
         /**
          * Returns the amount of health added by the Absorption effect.
          */
         essential$getCosmeticFrozenYaw(): number;
         essential$setCosmeticFrozenYaw(seconds: number): void;
-        getCosmeticsSourceUuid(): $UUID;
+        applyEssentialCosmeticsMask(skin: $ResourceLocation_): $ResourceLocation;
+        getDeltaMovementLerped(patialTick: number): $Vec3;
+        setEssentialCosmeticsCape(cape: string, textures: $Pair<any, any>): void;
+        getEmissiveCapeTexture(): $UIdentifier;
         getWearablesManager(): $WearablesManager;
+        getCosmeticsSourceUuid(): $UUID;
         /**
          * Returns the amount of health added by the Absorption effect.
          */
         getFieldOfViewModifier(): number;
-        getDeltaMovementLerped(patialTick: number): $Vec3;
-        getEmissiveCapeTexture(): $UIdentifier;
+        getCosmeticsSource(): $State<any>;
+        getCosmeticsState(): $CosmeticsState;
+        setCosmeticsSource(cosmeticsSource: $State_<any>): void;
+        getPlayerInfo(): $PlayerInfo;
+        /**
+         * Set sprinting switch for Entity.
+         */
+        setPoseModified(sprinting: boolean): void;
+        setRenderedPose(renderedPose: $PlayerPose): void;
+        /**
+         * Returns `true` if the player is in spectator mode.
+         */
+        isPoseModified(): boolean;
+        getRenderedPose(): $PlayerPose;
+        getPoseManager(): $PlayerPoseManager;
+        getSkin(): $PlayerSkin;
         flywheel$getPlayerInfo(): $PlayerInfo;
+        serializeNBT(arg0: $HolderLookup$Provider): $Player;
         lerpYRot: number;
         static USE_ITEM_INTERVAL: number;
         lerpYHeadRot: number;
@@ -607,14 +609,14 @@ declare module "@package/net/minecraft/client/player" {
         static DATA_SHOULDER_RIGHT: $EntityDataAccessor<$CompoundTag>;
         currentExplosionCause: $Entity;
         constructor(clientLevel: $ClientLevel, gameProfile: $GameProfile);
+        get emissiveCapeTexture(): $UIdentifier;
+        get wearablesManager(): $WearablesManager;
+        get cosmeticsSourceUuid(): $UUID;
+        get fieldOfViewModifier(): number;
         get cosmeticsState(): $CosmeticsState;
         get playerInfo(): $PlayerInfo;
         get poseManager(): $PlayerPoseManager;
         get skin(): $PlayerSkin;
-        get cosmeticsSourceUuid(): $UUID;
-        get wearablesManager(): $WearablesManager;
-        get fieldOfViewModifier(): number;
-        get emissiveCapeTexture(): $UIdentifier;
     }
     export class $Input {
         tick(isSneaking: boolean, sneakingSpeedMultiplier: number): void;
@@ -632,6 +634,7 @@ declare module "@package/net/minecraft/client/player" {
         get moveVector(): $Vec2;
     }
     export class $RemotePlayer extends $AbstractClientPlayer implements $LivingEntityStickExtension {
+        serializeNBT(arg0: $HolderLookup$Provider): $Player;
         lerpYRot: number;
         static USE_ITEM_INTERVAL: number;
         lerpYHeadRot: number;

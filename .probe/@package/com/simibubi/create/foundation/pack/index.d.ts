@@ -18,10 +18,10 @@ declare module "@package/com/simibubi/create/foundation/pack" {
         getResource(arg0: $PackType_, arg1: $ResourceLocation_): $IoSupplier<$InputStream>;
         location(): $PackLocationInfo;
         close(): void;
-        listResources(arg0: $PackType_, arg1: string, arg2: string, arg3: $PackResources$ResourceOutput_): void;
-        getNamespaces(arg0: $PackType_): $Set<string>;
         getMetadataSection<T>(arg0: $MetadataSectionSerializer<T>): T;
         packId(): string;
+        getNamespaces(arg0: $PackType_): $Set<string>;
+        listResources(arg0: $PackType_, arg1: string, arg2: string, arg3: $PackResources$ResourceOutput_): void;
         getRootResource(...arg0: string[]): $IoSupplier<$InputStream>;
         knownPackInfo(): ($KnownPack) | undefined;
         isHidden(): boolean;
@@ -29,15 +29,15 @@ declare module "@package/com/simibubi/create/foundation/pack" {
         get hidden(): boolean;
     }
     export class $DynamicPackSource extends $Record implements $RepositorySource {
-        packResources(): $PackResources;
-        packId(): string;
-        packType(): $PackType;
-        loadPacks(arg0: $Consumer_<$Pack>): void;
         packPosition(): $Pack$Position;
+        packId(): string;
+        packResources(): $PackResources;
+        loadPacks(arg0: $Consumer_<$Pack>): void;
+        packType(): $PackType;
         constructor(packId: string, packType: $PackType_, packPosition: $Pack$Position_, packResources: $PackResources);
     }
     /**
      * Values that may be interpreted as {@link $DynamicPackSource}.
      */
-    export type $DynamicPackSource_ = { packResources?: $PackResources, packId?: string, packType?: $PackType_, packPosition?: $Pack$Position_,  } | [packResources?: $PackResources, packId?: string, packType?: $PackType_, packPosition?: $Pack$Position_, ];
+    export type $DynamicPackSource_ = { packId?: string, packType?: $PackType_, packPosition?: $Pack$Position_, packResources?: $PackResources,  } | [packId?: string, packType?: $PackType_, packPosition?: $Pack$Position_, packResources?: $PackResources, ];
 }

@@ -22,24 +22,24 @@ declare module "@package/com/simibubi/create/content/kinetics/belt/behaviour" {
     export class $TransportedItemStackHandlerBehaviour extends $BlockEntityBehaviour {
         withStackPlacement(arg0: $TransportedItemStackHandlerBehaviour$PositionGetter_): $TransportedItemStackHandlerBehaviour;
         getWorldPositionOf(arg0: $TransportedItemStack): $Vec3;
+        handleProcessingOnItem(arg0: $TransportedItemStack, arg1: $TransportedItemStackHandlerBehaviour$TransportedResult): void;
         handleCenteredProcessingOnAllItems(arg0: number, arg1: $Function_<$TransportedItemStack, $TransportedItemStackHandlerBehaviour$TransportedResult>): void;
         handleProcessingOnAllItems(arg0: $Function_<$TransportedItemStack, $TransportedItemStackHandlerBehaviour$TransportedResult>): void;
-        handleProcessingOnItem(arg0: $TransportedItemStack, arg1: $TransportedItemStackHandlerBehaviour$TransportedResult): void;
         blockEntity: $SmartBlockEntity;
         static TYPE: $BehaviourType<$TransportedItemStackHandlerBehaviour>;
         constructor(arg0: $SmartBlockEntity, arg1: $TransportedItemStackHandlerBehaviour$ProcessingCallback_);
     }
     export class $TransportedItemStackHandlerBehaviour$TransportedResult {
-        static removeItem(): $TransportedItemStackHandlerBehaviour$TransportedResult;
-        static convertTo(arg0: $List_<$TransportedItemStack>): $TransportedItemStackHandlerBehaviour$TransportedResult;
         static convertTo(arg0: $TransportedItemStack): $TransportedItemStackHandlerBehaviour$TransportedResult;
+        static convertTo(arg0: $List_<$TransportedItemStack>): $TransportedItemStackHandlerBehaviour$TransportedResult;
+        static removeItem(): $TransportedItemStackHandlerBehaviour$TransportedResult;
         getOutputs(): $List<$TransportedItemStack>;
+        static convertToAndLeaveHeld(arg0: $List_<$TransportedItemStack>, arg1: $TransportedItemStack): $TransportedItemStackHandlerBehaviour$TransportedResult;
         static doNothing(): $TransportedItemStackHandlerBehaviour$TransportedResult;
-        didntChangeFrom(arg0: $ItemStack_): boolean;
         doesNothing(): boolean;
         hasHeldOutput(): boolean;
+        didntChangeFrom(arg0: $ItemStack_): boolean;
         getHeldOutput(): $TransportedItemStack;
-        static convertToAndLeaveHeld(arg0: $List_<$TransportedItemStack>, arg1: $TransportedItemStack): $TransportedItemStackHandlerBehaviour$TransportedResult;
         get outputs(): $List<$TransportedItemStack>;
         get heldOutput(): $TransportedItemStack;
     }
@@ -83,17 +83,17 @@ declare module "@package/com/simibubi/create/content/kinetics/belt/behaviour" {
         constructor(arg0: $SmartBlockEntity);
     }
     export class $DirectBeltInputBehaviour extends $BlockEntityBehaviour {
-        allowingBeltFunnels(): $DirectBeltInputBehaviour;
-        tryExportingToBeltFunnel(arg0: $ItemStack_, arg1: $Direction_, arg2: boolean): $ItemStack;
-        onlyInsertWhen(arg0: $DirectBeltInputBehaviour$AvailabilityPredicate_): $DirectBeltInputBehaviour;
         canSupportBeltFunnels(): boolean;
-        handleInsertion(arg0: $ItemStack_, arg1: $Direction_, arg2: boolean): $ItemStack;
-        handleInsertion(arg0: $TransportedItemStack, arg1: $Direction_, arg2: boolean): $ItemStack;
         considerOccupiedWhen(arg0: $DirectBeltInputBehaviour$OccupiedPredicate_): $DirectBeltInputBehaviour;
         setInsertionHandler(arg0: $DirectBeltInputBehaviour$InsertionCallback_): $DirectBeltInputBehaviour;
+        handleInsertion(arg0: $ItemStack_, arg1: $Direction_, arg2: boolean): $ItemStack;
+        handleInsertion(arg0: $TransportedItemStack, arg1: $Direction_, arg2: boolean): $ItemStack;
+        onlyInsertWhen(arg0: $DirectBeltInputBehaviour$AvailabilityPredicate_): $DirectBeltInputBehaviour;
         isOccupied(arg0: $Direction_): boolean;
-        canInsertFromSide(arg0: $Direction_): boolean;
         allowingBeltFunnelsWhen(arg0: $Supplier_<boolean>): $DirectBeltInputBehaviour;
+        tryExportingToBeltFunnel(arg0: $ItemStack_, arg1: $Direction_, arg2: boolean): $ItemStack;
+        allowingBeltFunnels(): $DirectBeltInputBehaviour;
+        canInsertFromSide(arg0: $Direction_): boolean;
         blockEntity: $SmartBlockEntity;
         static TYPE: $BehaviourType<$DirectBeltInputBehaviour>;
         constructor(arg0: $SmartBlockEntity);

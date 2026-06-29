@@ -52,14 +52,14 @@ declare module "@package/com/simibubi/create/content/schematics/cannon" {
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
         config(): $CSchematics;
         getDisplayName(): $Component;
+        clearContent(): void;
         createMenu(arg0: number, arg1: $Inventory, arg2: $Player): $AbstractContainerMenu;
-        finishedPrinting(): void;
+        getShotsPerGunpowder(): number;
         updateChecklist(): void;
         findInventories(): void;
+        finishedPrinting(): void;
         static stripBeltIfNotLast(arg0: $BlockState_): $BlockState;
         playFiringSound(): void;
-        clearContent(): void;
-        getShotsPerGunpowder(): number;
         shouldTriggerClientSideContainerClosingOnOpen(): boolean;
         writeClientSideData(arg0: $AbstractContainerMenu, arg1: $RegistryFriendlyByteBuf): void;
         shouldCloseCurrentScreen(): boolean;
@@ -145,9 +145,9 @@ declare module "@package/com/simibubi/create/content/schematics/cannon" {
         constructor(arg0: $BlockPos_, arg1: $BlockPos_, arg2: $ItemStack_, arg3: $BlockState_, arg4: $CompoundTag_);
     }
     export class $SchematicannonBlockEntity$SchematicannonOptions extends $Record {
+        replaceBlockEntities(): boolean;
         skipMissing(): boolean;
         replaceMode(): number;
-        replaceBlockEntities(): boolean;
         static CODEC: $Codec<$SchematicannonBlockEntity$SchematicannonOptions>;
         static STREAM_CODEC: $StreamCodec<$ByteBuf, $SchematicannonBlockEntity$SchematicannonOptions>;
         constructor(replaceMode: number, skipMissing: boolean, replaceBlockEntities: boolean);
@@ -157,8 +157,8 @@ declare module "@package/com/simibubi/create/content/schematics/cannon" {
      */
     export type $SchematicannonBlockEntity$SchematicannonOptions_ = { skipMissing?: boolean, replaceBlockEntities?: boolean, replaceMode?: number,  } | [skipMissing?: boolean, replaceBlockEntities?: boolean, replaceMode?: number, ];
     export class $SchematicannonRenderer extends $SafeBlockEntityRenderer<$SchematicannonBlockEntity> {
-        static getRecoil(arg0: $SchematicannonBlockEntity, arg1: number): number;
         shouldRenderOffScreen(arg0: $SchematicannonBlockEntity): boolean;
+        static getRecoil(arg0: $SchematicannonBlockEntity, arg1: number): number;
         static getCannonAngles(arg0: $SchematicannonBlockEntity, arg1: $BlockPos_, arg2: number): number[];
         constructor(arg0: $BlockEntityRendererProvider$Context);
     }
@@ -190,8 +190,8 @@ declare module "@package/com/simibubi/create/content/schematics/cannon" {
     }
     export class $LaunchedItem {
         update(arg0: $Level_): boolean;
-        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static fromNBT(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: $HolderGetter<$Block_>): $LaunchedItem;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         stack: $ItemStack;
         totalTicks: number;
         ticksRemaining: number;
@@ -200,8 +200,8 @@ declare module "@package/com/simibubi/create/content/schematics/cannon" {
     export class $MaterialChecklist {
         collect(arg0: $ItemStack_): void;
         require(arg0: $ItemRequirement): void;
-        createWrittenBook(): $ItemStack;
         createWrittenClipboard(): $ItemStack;
+        createWrittenBook(): $ItemStack;
         getRequiredAmount(arg0: $Item_): number;
         warnBlockNotLoaded(): void;
         blocksNotLoaded: boolean;
@@ -247,7 +247,7 @@ declare module "@package/com/simibubi/create/content/schematics/cannon" {
     /**
      * Values that may be interpreted as {@link $ConfigureSchematicannonPacket}.
      */
-    export type $ConfigureSchematicannonPacket_ = { set?: boolean, option?: $ConfigureSchematicannonPacket$Option_,  } | [set?: boolean, option?: $ConfigureSchematicannonPacket$Option_, ];
+    export type $ConfigureSchematicannonPacket_ = { option?: $ConfigureSchematicannonPacket$Option_, set?: boolean,  } | [option?: $ConfigureSchematicannonPacket$Option_, set?: boolean, ];
     export class $SchematicannonScreen extends $AbstractSimiContainerScreen<$SchematicannonMenu> {
         leftPos: number;
         static MENU_BACKGROUND: $ResourceLocation;
@@ -292,15 +292,15 @@ declare module "@package/com/simibubi/create/content/schematics/cannon" {
         constructor(arg0: $SchematicannonMenu, arg1: $Inventory, arg2: $Component_);
     }
     export class $SchematicannonBlock extends $Block implements $IBE<$SchematicannonBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$SchematicannonBlockEntity>;
         getBlockEntityClass(): $Class<$SchematicannonBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$SchematicannonBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$SchematicannonBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SchematicannonBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($SchematicannonBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SchematicannonBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $SchematicannonBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$SchematicannonBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($SchematicannonBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SchematicannonBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -330,7 +330,7 @@ declare module "@package/com/simibubi/create/content/schematics/cannon" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$SchematicannonBlockEntity>;
         get blockEntityClass(): $Class<$SchematicannonBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$SchematicannonBlockEntity>;
     }
 }

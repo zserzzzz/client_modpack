@@ -34,15 +34,15 @@ import { $BlockEntityTicker, $BlockEntityType, $BlockEntityType_, $BlockEntity }
 
 declare module "@package/com/simibubi/create/content/schematics/table" {
     export class $SchematicTableBlock extends $HorizontalDirectionalBlock implements $IBE<$SchematicTableBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$SchematicTableBlockEntity>;
         getBlockEntityClass(): $Class<$SchematicTableBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$SchematicTableBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$SchematicTableBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SchematicTableBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($SchematicTableBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SchematicTableBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $SchematicTableBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$SchematicTableBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($SchematicTableBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SchematicTableBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -73,8 +73,8 @@ declare module "@package/com/simibubi/create/content/schematics/table" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$SchematicTableBlockEntity>;
         get blockEntityClass(): $Class<$SchematicTableBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$SchematicTableBlockEntity>;
     }
     export class $SchematicTableBlockEntity$SchematicTableInventory extends $ItemStackHandler {
         constructor(arg0: $SchematicTableBlockEntity);
@@ -152,8 +152,8 @@ declare module "@package/com/simibubi/create/content/schematics/table" {
     }
     export class $SchematicTableBlockEntity extends $SmartBlockEntity implements $MenuProvider, $IInteractionChecker, $Clearable {
         getDisplayName(): $Component;
-        createMenu(arg0: number, arg1: $Inventory, arg2: $Player): $AbstractContainerMenu;
         clearContent(): void;
+        createMenu(arg0: number, arg1: $Inventory, arg2: $Player): $AbstractContainerMenu;
         startUpload(arg0: string): void;
         finishUpload(): void;
         shouldTriggerClientSideContainerClosingOnOpen(): boolean;

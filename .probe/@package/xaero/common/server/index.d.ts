@@ -12,8 +12,8 @@ declare module "@package/xaero/common/server" {
     export class $MinecraftServerData {
         static get(arg0: $MinecraftServer): $MinecraftServerData;
         getModMain(): $IXaeroMinimap;
-        getSyncedPlayerTracker(): $SyncedPlayerTracker;
         getLevelProperties(arg0: $Path_): $LevelMapProperties;
+        getSyncedPlayerTracker(): $SyncedPlayerTracker;
         getSyncedPlayerTrackerSystemManager(): $SyncedPlayerTrackerSystemManager;
         constructor(arg0: $SyncedPlayerTrackerSystemManager, arg1: $SyncedPlayerTracker, arg2: $IXaeroMinimap);
         get modMain(): $IXaeroMinimap;

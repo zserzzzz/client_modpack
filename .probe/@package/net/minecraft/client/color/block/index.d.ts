@@ -24,6 +24,7 @@ declare module "@package/net/minecraft/client/color/block" {
      */
     export type $BlockColor_ = ((arg0: $BlockState, arg1: $BlockAndTintGetter, arg2: $BlockPos, arg3: number) => number);
     export class $BlockColors implements $BlockColorsAccessor$1, $ColorProviderRegistryImpl$ColorMapperHolder<any, any>, $BlockColorsExtension, $BlockColorsAccessor {
+        static createDefault(): $BlockColors;
         get(arg0: $Block_): $BlockColor;
         /**
          * @deprecated
@@ -31,7 +32,6 @@ declare module "@package/net/minecraft/client/color/block" {
         register(blockColor: $BlockColor_, ...blocks: $Block_[]): void;
         getColor(state: $BlockState_, level: $BlockAndTintGetter | null, pos: $BlockPos_ | null, tintIndex: number): number;
         getColor(state: $BlockState_, level: $Level_, pos: $BlockPos_): number;
-        static createDefault(): $BlockColors;
         sodium$getProviders(): $Reference2ReferenceMap<any, any>;
         getColoringProperties(block: $Block_): $Set<$Property<never>>;
         sodium$getOverridenVanillaBlocks(): $ReferenceSet<any>;

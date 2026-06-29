@@ -41,8 +41,8 @@ export * as placement from "@package/net/minecraft/world/level/levelgen/structur
 declare module "@package/net/minecraft/world/level/levelgen/structure" {
     export class $LegacyStructureDataHandler {
         removeIndex(packedChunkPos: number): void;
-        updateFromLegacy(tag: $CompoundTag_): $CompoundTag;
         static getLegacyStructureHandler(level: $ResourceKey_<$Level>, storage: $DimensionDataStorage | null): $LegacyStructureDataHandler;
+        updateFromLegacy(tag: $CompoundTag_): $CompoundTag;
         constructor(storage: $DimensionDataStorage | null, legacyKeys: $List_<string>, currentKeys: $List_<string>);
     }
     export class $StructureType<S extends $Structure> {
@@ -71,33 +71,33 @@ declare module "@package/net/minecraft/world/level/levelgen/structure" {
      */
     export type $StructureType_<S> = RegistryTypes.WorldgenStructureType | (() => $MapCodec_<S>);
     export class $Structure {
+        type(): $StructureType<never>;
+        step(): $GenerationStep$Decoration;
+        generate(registryAccess: $RegistryAccess, chunkGenerator: $ChunkGenerator, biomeSource: $BiomeSource, randomState: $RandomState, structureTemplateManager: $StructureTemplateManager, seed: number, arg6: $ChunkPos, chunkPos: number, references: $LevelHeightAccessor, heightAccessor: $Predicate_<$Holder<$Biome>>): $StructureStart;
+        spawnOverrides(): $Map<$MobCategory, $StructureSpawnOverride>;
+        terrainAdaptation(): $TerrainAdjustment;
+        static settingsCodec<S extends $Structure>(instance: $RecordCodecBuilder$Instance<S>): $RecordCodecBuilder<S, $Structure$StructureSettings>;
+        static onTopOfChunkCenter(context: $Structure$GenerationContext_, heightmapTypes: $Heightmap$Types_, generator: $Consumer_<$StructurePiecesBuilder>): ($Structure$GenerationStub) | undefined;
+        adjustBoundingBox(boundingBox: $BoundingBox): $BoundingBox;
+        static simpleCodec<S extends $Structure>(factory: $Function_<$Structure$StructureSettings, S>): $MapCodec<S>;
+        biomes(): $HolderSet<$Biome>;
+        getModifiedStructureSettings(): $Structure$StructureSettings;
+        findValidGenerationPoint(context: $Structure$GenerationContext_): ($Structure$GenerationStub) | undefined;
+        static getMeanFirstOccupiedHeight(context: $Structure$GenerationContext_, minX: number, minZ: number, maxX: number, maxZ: number): number;
+        modifiableStructureInfo(): $ModifiableStructureInfo;
+        findGenerationPoint(context: $Structure$GenerationContext_): ($Structure$GenerationStub) | undefined;
         /**
          * @deprecated
          */
         getLowestYIn5by5BoxOffset7Blocks(context: $Structure$GenerationContext_, rotation: $Rotation_): $BlockPos;
-        findValidGenerationPoint(context: $Structure$GenerationContext_): ($Structure$GenerationStub) | undefined;
-        modifiableStructureInfo(): $ModifiableStructureInfo;
-        findGenerationPoint(context: $Structure$GenerationContext_): ($Structure$GenerationStub) | undefined;
-        static getMeanFirstOccupiedHeight(context: $Structure$GenerationContext_, minX: number, minZ: number, maxX: number, maxZ: number): number;
-        type(): $StructureType<never>;
-        step(): $GenerationStep$Decoration;
-        generate(registryAccess: $RegistryAccess, chunkGenerator: $ChunkGenerator, biomeSource: $BiomeSource, randomState: $RandomState, structureTemplateManager: $StructureTemplateManager, seed: number, arg6: $ChunkPos, chunkPos: number, references: $LevelHeightAccessor, heightAccessor: $Predicate_<$Holder<$Biome>>): $StructureStart;
-        getModifiedStructureSettings(): $Structure$StructureSettings;
-        biomes(): $HolderSet<$Biome>;
-        terrainAdaptation(): $TerrainAdjustment;
-        spawnOverrides(): $Map<$MobCategory, $StructureSpawnOverride>;
-        static settingsCodec<S extends $Structure>(instance: $RecordCodecBuilder$Instance<S>): $RecordCodecBuilder<S, $Structure$StructureSettings>;
-        adjustBoundingBox(boundingBox: $BoundingBox): $BoundingBox;
-        static onTopOfChunkCenter(context: $Structure$GenerationContext_, heightmapTypes: $Heightmap$Types_, generator: $Consumer_<$StructurePiecesBuilder>): ($Structure$GenerationStub) | undefined;
-        static simpleCodec<S extends $Structure>(factory: $Function_<$Structure$StructureSettings, S>): $MapCodec<S>;
         afterPlace(level: $WorldGenLevel, structureManager: $StructureManager, chunkGenerator: $ChunkGenerator, random: $RandomSource, boundingBox: $BoundingBox, chunkPos: $ChunkPos, pieces: $PiecesContainer_): void;
-        static getLowestY(context: $Structure$GenerationContext_, minX: number, minZ: number, maxX: number, maxZ: number): number;
         static getLowestY(context: $Structure$GenerationContext_, maxX: number, maxZ: number): number;
+        static getLowestY(context: $Structure$GenerationContext_, minX: number, minZ: number, maxX: number, maxZ: number): number;
         static CODEC: $Codec<$Holder<$Structure>>;
         static DIRECT_CODEC: $Codec<$Structure>;
         constructor(settings: $Structure$StructureSettings_);
-        get modifiedStructureSettings(): $Structure$StructureSettings;
         static set tingsCodec(value: $RecordCodecBuilder$Instance<S>);
+        get modifiedStructureSettings(): $Structure$StructureSettings;
     }
     /**
      * Values that may be interpreted as {@link $Structure}.
@@ -113,8 +113,8 @@ declare module "@package/net/minecraft/world/level/levelgen/structure" {
         static CAVE_AIR: $BlockState;
         width: number;
         height: number;
-        constructor(type: $StructurePieceType_, tag: $CompoundTag_);
         constructor(type: $StructurePieceType_, x: number, y: number, z: number, width: number, height: number, depth: number, orientation: $Direction_);
+        constructor(type: $StructurePieceType_, tag: $CompoundTag_);
     }
     export class $Structure$GenerationStub extends $Record {
         position(): $BlockPos;
@@ -127,7 +127,7 @@ declare module "@package/net/minecraft/world/level/levelgen/structure" {
     /**
      * Values that may be interpreted as {@link $Structure$GenerationStub}.
      */
-    export type $Structure$GenerationStub_ = { generator?: $Either<$Consumer_<$StructurePiecesBuilder>, $StructurePiecesBuilder>, position?: $BlockPos_,  } | [generator?: $Either<$Consumer_<$StructurePiecesBuilder>, $StructurePiecesBuilder>, position?: $BlockPos_, ];
+    export type $Structure$GenerationStub_ = { position?: $BlockPos_, generator?: $Either<$Consumer_<$StructurePiecesBuilder>, $StructurePiecesBuilder>,  } | [position?: $BlockPos_, generator?: $Either<$Consumer_<$StructurePiecesBuilder>, $StructurePiecesBuilder>, ];
     export class $StructurePieceAccessor {
     }
     export interface $StructurePieceAccessor {
@@ -135,52 +135,52 @@ declare module "@package/net/minecraft/world/level/levelgen/structure" {
         addPiece(piece: $StructurePiece): void;
     }
     export class $StructurePiece implements $IStructurePiece {
-        createTag(context: $StructurePieceSerializationContext_): $CompoundTag;
-        static getRandomHorizontalDirection(random: $RandomSource): $Direction;
-        postProcess(level: $WorldGenLevel, structureManager: $StructureManager, generator: $ChunkGenerator, random: $RandomSource, box: $BoundingBox, chunkPos: $ChunkPos, pos: $BlockPos_): void;
-        static makeBoundingBox(x: number, y: number, z: number, direction: $Direction_, offsetX: number, offsetY: number, offsetZ: number): $BoundingBox;
-        generateUpperHalfSphere(level: $WorldGenLevel, box: $BoundingBox, minX: number, minY: number, minZ: number, maxX: number, maxY: number, maxZ: number, state: $BlockState_, excludeAir: boolean): void;
-        isReplaceableByStructures(state: $BlockState_): boolean;
         move(x: number, y: number, z: number): void;
         getBlock(level: $BlockGetter, x: number, y: number, z: number, box: $BoundingBox): $BlockState;
-        addAdditionalSaveData(context: $StructurePieceSerializationContext_, tag: $CompoundTag_): void;
+        isInterior(level: $LevelReader, x: number, y: number, z: number, box: $BoundingBox): boolean;
         getGenDepth(): number;
-        isCloseToChunk(chunkPos: $ChunkPos, distance: number): boolean;
-        fillColumnDown(level: $WorldGenLevel, state: $BlockState_, x: number, y: number, z: number, box: $BoundingBox): void;
-        maybeGenerateBlock(level: $WorldGenLevel, box: $BoundingBox, random: $RandomSource, chance: number, x: number, y: number, z: number, state: $BlockState_): void;
-        addChildren(piece: $StructurePiece, pieces: $StructurePieceAccessor, random: $RandomSource): void;
-        createDispenser(level: $WorldGenLevel, box: $BoundingBox, random: $RandomSource, x: number, y: number, z: number, facing: $Direction_, lootTable: $ResourceKey_<$LootTable>): boolean;
-        static findCollisionPiece(pieces: $List_<$StructurePiece>, boundingBox: $BoundingBox): $StructurePiece;
-        setGenDepth(genDepth: number): void;
         getWorldPos(x: number, y: number, z: number): $BlockPos$MutableBlockPos;
-        getOrientation(): $Direction;
-        getLocatorPosition(): $BlockPos;
+        createChest(level: $WorldGenLevel, box: $BoundingBox, random: $RandomSource, x: number, y: number, z: number, lootTable: $ResourceKey_<$LootTable>): boolean;
+        createChest(level: $ServerLevelAccessor, box: $BoundingBox, random: $RandomSource, pos: $BlockPos_, lootTable: $ResourceKey_<$LootTable>, state: $BlockState_ | null): boolean;
         generateBox(level: $WorldGenLevel, box: $BoundingBox, minX: number, minY: number, minZ: number, maxX: number, maxY: number, maxZ: number, alwaysReplace: boolean, random: $RandomSource, blockSelector: $StructurePiece$BlockSelector): void;
-        generateBox(level: $WorldGenLevel, boundingBox: $BoundingBox, box: $BoundingBox, boundaryBlockState: $BlockState_, insideBlockState: $BlockState_, existingOnly: boolean): void;
-        generateBox(level: $WorldGenLevel, boundingBox: $BoundingBox, box: $BoundingBox, alwaysReplace: boolean, random: $RandomSource, blockSelector: $StructurePiece$BlockSelector): void;
         /**
          * Fill the given area with the selected blocks
          */
         generateBox(level: $WorldGenLevel, box: $BoundingBox, xMin: number, yMin: number, zMin: number, xMax: number, yMax: number, zMax: number, boundaryBlockState: $BlockState_, insideBlockState: $BlockState_, existingOnly: boolean): void;
-        generateMaybeBox(level: $WorldGenLevel, box: $BoundingBox, random: $RandomSource, chance: number, x1: number, y1: number, z1: number, x2: number, y2: number, z2: number, edgeState: $BlockState_, state: $BlockState_, requireNonAir: boolean, requireSkylight: boolean): void;
-        static createBoundingBox(pieces: $Stream<$StructurePiece>): $BoundingBox;
-        createChest(level: $ServerLevelAccessor, box: $BoundingBox, random: $RandomSource, pos: $BlockPos_, lootTable: $ResourceKey_<$LootTable>, state: $BlockState_ | null): boolean;
-        createChest(level: $WorldGenLevel, box: $BoundingBox, random: $RandomSource, x: number, y: number, z: number, lootTable: $ResourceKey_<$LootTable>): boolean;
+        generateBox(level: $WorldGenLevel, boundingBox: $BoundingBox, box: $BoundingBox, boundaryBlockState: $BlockState_, insideBlockState: $BlockState_, existingOnly: boolean): void;
+        generateBox(level: $WorldGenLevel, boundingBox: $BoundingBox, box: $BoundingBox, alwaysReplace: boolean, random: $RandomSource, blockSelector: $StructurePiece$BlockSelector): void;
+        static findCollisionPiece(pieces: $List_<$StructurePiece>, boundingBox: $BoundingBox): $StructurePiece;
+        setGenDepth(genDepth: number): void;
+        createDispenser(level: $WorldGenLevel, box: $BoundingBox, random: $RandomSource, x: number, y: number, z: number, facing: $Direction_, lootTable: $ResourceKey_<$LootTable>): boolean;
+        isCloseToChunk(chunkPos: $ChunkPos, distance: number): boolean;
         setOrientation(orientation: $Direction_ | null): void;
+        generateMaybeBox(level: $WorldGenLevel, box: $BoundingBox, random: $RandomSource, chance: number, x1: number, y1: number, z1: number, x2: number, y2: number, z2: number, edgeState: $BlockState_, state: $BlockState_, requireNonAir: boolean, requireSkylight: boolean): void;
+        addChildren(piece: $StructurePiece, pieces: $StructurePieceAccessor, random: $RandomSource): void;
+        static createBoundingBox(pieces: $Stream<$StructurePiece>): $BoundingBox;
         generateAirBox(level: $WorldGenLevel, box: $BoundingBox, minX: number, minY: number, minZ: number, maxX: number, maxY: number, maxZ: number): void;
-        canBeReplaced(level: $LevelReader, x: number, y: number, z: number, box: $BoundingBox): boolean;
-        isInterior(level: $LevelReader, x: number, y: number, z: number, box: $BoundingBox): boolean;
+        maybeGenerateBlock(level: $WorldGenLevel, box: $BoundingBox, random: $RandomSource, chance: number, x: number, y: number, z: number, state: $BlockState_): void;
+        fillColumnDown(level: $WorldGenLevel, state: $BlockState_, x: number, y: number, z: number, box: $BoundingBox): void;
+        getOrientation(): $Direction;
+        getLocatorPosition(): $BlockPos;
+        createTag(context: $StructurePieceSerializationContext_): $CompoundTag;
+        static makeBoundingBox(x: number, y: number, z: number, direction: $Direction_, offsetX: number, offsetY: number, offsetZ: number): $BoundingBox;
+        postProcess(level: $WorldGenLevel, structureManager: $StructureManager, generator: $ChunkGenerator, random: $RandomSource, box: $BoundingBox, chunkPos: $ChunkPos, pos: $BlockPos_): void;
         static reorient(level: $BlockGetter, pos: $BlockPos_, state: $BlockState_): $BlockState;
         placeBlock(level: $WorldGenLevel, state: $BlockState_, x: number, y: number, z: number, box: $BoundingBox): void;
-        getWorldX(x: number, z: number): number;
+        addAdditionalSaveData(context: $StructurePieceSerializationContext_, tag: $CompoundTag_): void;
+        canBeReplaced(level: $LevelReader, x: number, y: number, z: number, box: $BoundingBox): boolean;
+        generateUpperHalfSphere(level: $WorldGenLevel, box: $BoundingBox, minX: number, minY: number, minZ: number, maxX: number, maxY: number, maxZ: number, state: $BlockState_, excludeAir: boolean): void;
+        isReplaceableByStructures(state: $BlockState_): boolean;
+        static getRandomHorizontalDirection(random: $RandomSource): $Direction;
         getWorldY(y: number): number;
+        getWorldX(x: number, z: number): number;
         getWorldZ(x: number, z: number): number;
         getType(): $StructurePieceType;
-        getRotation(): $Rotation;
         getMirror(): $Mirror;
         getChainLength(): number;
         getBoundingBox(): $BoundingBox;
         getFacing(): $Direction;
+        getRotation(): $Rotation;
         boundingBox: $BoundingBox;
         genDepth: number;
         static CAVE_AIR: $BlockState;
@@ -188,10 +188,10 @@ declare module "@package/net/minecraft/world/level/levelgen/structure" {
         constructor(type: $StructurePieceType_, tag: $CompoundTag_);
         get locatorPosition(): $BlockPos;
         get type(): $StructurePieceType;
-        get rotation(): $Rotation;
         get mirror(): $Mirror;
         get chainLength(): number;
         get facing(): $Direction;
+        get rotation(): $Rotation;
     }
     export class $BuiltinStructureSets {
         static JUNGLE_TEMPLES: $ResourceKey<$StructureSet>;
@@ -219,9 +219,9 @@ declare module "@package/net/minecraft/world/level/levelgen/structure" {
     }
     export class $Structure$StructureSettings extends $Record {
         step(): $GenerationStep$Decoration;
-        biomes(): $HolderSet<$Biome>;
-        terrainAdaptation(): $TerrainAdjustment;
         spawnOverrides(): $Map<$MobCategory, $StructureSpawnOverride>;
+        terrainAdaptation(): $TerrainAdjustment;
+        biomes(): $HolderSet<$Biome>;
         static CODEC: $MapCodec<$Structure$StructureSettings>;
         static DEFAULT: $Structure$StructureSettings;
         constructor(biomes: $HolderSet_<$Biome>);
@@ -230,7 +230,7 @@ declare module "@package/net/minecraft/world/level/levelgen/structure" {
     /**
      * Values that may be interpreted as {@link $Structure$StructureSettings}.
      */
-    export type $Structure$StructureSettings_ = { terrainAdaptation?: $TerrainAdjustment_, spawnOverrides?: $Map_<$MobCategory_, $StructureSpawnOverride_>, step?: $GenerationStep$Decoration_, biomes?: $HolderSet_<$Biome>,  } | [terrainAdaptation?: $TerrainAdjustment_, spawnOverrides?: $Map_<$MobCategory_, $StructureSpawnOverride_>, step?: $GenerationStep$Decoration_, biomes?: $HolderSet_<$Biome>, ];
+    export type $Structure$StructureSettings_ = { step?: $GenerationStep$Decoration_, biomes?: $HolderSet_<$Biome>, terrainAdaptation?: $TerrainAdjustment_, spawnOverrides?: $Map_<$MobCategory_, $StructureSpawnOverride_>,  } | [step?: $GenerationStep$Decoration_, biomes?: $HolderSet_<$Biome>, terrainAdaptation?: $TerrainAdjustment_, spawnOverrides?: $Map_<$MobCategory_, $StructureSpawnOverride_>, ];
     export interface $StructureType<S> extends RegistryMarked<RegistryTypes.WorldgenStructureTypeTag, RegistryTypes.WorldgenStructureType> {}
     export class $PostPlacementProcessor {
         static NONE: $PostPlacementProcessor;
@@ -280,18 +280,18 @@ declare module "@package/net/minecraft/world/level/levelgen/structure" {
      */
     export type $TerrainAdjustment_ = "none" | "bury" | "beard_thin" | "beard_box" | "encapsulate";
     export class $TemplateStructurePiece extends $StructurePiece {
-        makeTemplateLocation(): $ResourceLocation;
-        template(): $StructureTemplate;
-        handler$hfi000$moonlight$ml$processBoxes(arg0: $WorldGenLevel, arg1: $StructureManager, arg2: $ChunkGenerator, arg3: $RandomSource, arg4: $BoundingBox, arg5: $ChunkPos, arg6: $BlockPos_, arg7: $CallbackInfo): void;
         placeSettings(): $StructurePlaceSettings;
-        handleDataMarker(name: string, pos: $BlockPos_, level: $ServerLevelAccessor, random: $RandomSource, box: $BoundingBox): void;
         templatePosition(): $BlockPos;
+        handleDataMarker(name: string, pos: $BlockPos_, level: $ServerLevelAccessor, random: $RandomSource, box: $BoundingBox): void;
+        template(): $StructureTemplate;
+        makeTemplateLocation(): $ResourceLocation;
+        handler$hfi000$moonlight$ml$processBoxes(arg0: $WorldGenLevel, arg1: $StructureManager, arg2: $ChunkGenerator, arg3: $RandomSource, arg4: $BoundingBox, arg5: $ChunkPos, arg6: $BlockPos_, arg7: $CallbackInfo): void;
         boundingBox: $BoundingBox;
         genDepth: number;
         templateName: string;
         static CAVE_AIR: $BlockState;
-        constructor(type: $StructurePieceType_, tag: $CompoundTag_, structureTemplateManager: $StructureTemplateManager, placeSettingsFactory: $Function_<$ResourceLocation, $StructurePlaceSettings>);
         constructor(type: $StructurePieceType_, genDepth: number, structureTemplateManager: $StructureTemplateManager, location: $ResourceLocation_, templateName: string, placeSettings: $StructurePlaceSettings, templatePosition: $BlockPos_);
+        constructor(type: $StructurePieceType_, tag: $CompoundTag_, structureTemplateManager: $StructureTemplateManager, placeSettingsFactory: $Function_<$ResourceLocation, $StructurePlaceSettings>);
     }
     export class $StructureSpawnOverride$BoundingBoxType extends $Enum<$StructureSpawnOverride$BoundingBoxType> implements $StringRepresentable {
         static values(): $StructureSpawnOverride$BoundingBoxType[];
@@ -334,8 +334,8 @@ declare module "@package/net/minecraft/world/level/levelgen/structure" {
         getAll(): $LongSet;
         removeIndex(index: number): void;
         addIndex(index: number): void;
-        hasUnhandledIndex(index: number): boolean;
         hasStartIndex(index: number): boolean;
+        hasUnhandledIndex(index: number): boolean;
         constructor();
         get all(): $LongSet;
     }
@@ -351,11 +351,11 @@ declare module "@package/net/minecraft/world/level/levelgen/structure" {
     export type $StructureSet$StructureSelectionEntry_ = { weight?: number, structure?: $Holder_<$Structure>,  } | [weight?: number, structure?: $Holder_<$Structure>, ];
     export class $PoolElementStructurePiece extends $StructurePiece {
         getPosition(): $BlockPos;
-        getGroundLevelDelta(): number;
         getElement(): $StructurePoolElement;
-        place(level: $WorldGenLevel, structureManager: $StructureManager, generator: $ChunkGenerator, random: $RandomSource, box: $BoundingBox, pos: $BlockPos_, keepJigsaws: boolean): void;
         addJunction(junction: $JigsawJunction): void;
         getJunctions(): $List<$JigsawJunction>;
+        place(level: $WorldGenLevel, structureManager: $StructureManager, generator: $ChunkGenerator, random: $RandomSource, box: $BoundingBox, pos: $BlockPos_, keepJigsaws: boolean): void;
+        getGroundLevelDelta(): number;
         boundingBox: $BoundingBox;
         genDepth: number;
         static CAVE_AIR: $BlockState;
@@ -364,12 +364,12 @@ declare module "@package/net/minecraft/world/level/levelgen/structure" {
         element: $StructurePoolElement;
         constructor(structureTemplateManager: $StructureTemplateManager, element: $StructurePoolElement, position: $BlockPos_, groundLevelDelta: number, rotation: $Rotation_, boundingBox: $BoundingBox, liquidSettings: $LiquidSettings_);
         constructor(context: $StructurePieceSerializationContext_, tag: $CompoundTag_);
-        get groundLevelDelta(): number;
         get junctions(): $List<$JigsawJunction>;
+        get groundLevelDelta(): number;
     }
     export class $StructureSpawnOverride extends $Record {
-        boundingBox(): $StructureSpawnOverride$BoundingBoxType;
         spawns(): $WeightedRandomList<$MobSpawnSettings$SpawnerData>;
+        boundingBox(): $StructureSpawnOverride$BoundingBoxType;
         static CODEC: $Codec<$StructureSpawnOverride>;
         constructor(arg0: $StructureSpawnOverride$BoundingBoxType_, arg1: $WeightedRandomList<$MobSpawnSettings$SpawnerData>);
     }
@@ -416,20 +416,20 @@ declare module "@package/net/minecraft/world/level/levelgen/structure" {
     export interface $BuiltinStructures {
     }
     export class $StructurePiece$BlockSelector {
-        getNext(): $BlockState;
         next(random: $RandomSource, x: number, y: number, z: number, wall: boolean): void;
+        getNext(): $BlockState;
         constructor();
     }
     export class $Structure$GenerationContext extends $Record {
-        biomeSource(): $BiomeSource;
-        structureTemplateManager(): $StructureTemplateManager;
         seed(): number;
         random(): $WorldgenRandom;
-        randomState(): $RandomState;
-        registryAccess(): $RegistryAccess;
+        chunkPos(): $ChunkPos;
+        biomeSource(): $BiomeSource;
         chunkGenerator(): $ChunkGenerator;
         heightAccessor(): $LevelHeightAccessor;
-        chunkPos(): $ChunkPos;
+        randomState(): $RandomState;
+        registryAccess(): $RegistryAccess;
+        structureTemplateManager(): $StructureTemplateManager;
         validBiome(): $Predicate<$Holder<$Biome>>;
         constructor(registryAccess: $RegistryAccess, chunkGenerator: $ChunkGenerator, biomeSource: $BiomeSource, randomState: $RandomState, structureTemplateManager: $StructureTemplateManager, seed: number, arg6: $ChunkPos, chunkPos: $LevelHeightAccessor, heightAccessor: $Predicate_<$Holder<$Biome>>);
         constructor(registryAccess: $RegistryAccess, chunkGenerator: $ChunkGenerator, biomeSource: $BiomeSource, randomState: $RandomState, structureTemplateManager: $StructureTemplateManager, random: $WorldgenRandom, seed: number, chunkPos: $ChunkPos, heightAccessor: $LevelHeightAccessor, validBiome: $Predicate_<$Holder<$Biome>>);
@@ -437,32 +437,32 @@ declare module "@package/net/minecraft/world/level/levelgen/structure" {
     /**
      * Values that may be interpreted as {@link $Structure$GenerationContext}.
      */
-    export type $Structure$GenerationContext_ = { structureTemplateManager?: $StructureTemplateManager, chunkGenerator?: $ChunkGenerator, heightAccessor?: $LevelHeightAccessor, registryAccess?: $RegistryAccess, seed?: number, validBiome?: $Predicate_<$Holder<$Biome>>, random?: $WorldgenRandom, chunkPos?: $ChunkPos, randomState?: $RandomState, biomeSource?: $BiomeSource,  } | [structureTemplateManager?: $StructureTemplateManager, chunkGenerator?: $ChunkGenerator, heightAccessor?: $LevelHeightAccessor, registryAccess?: $RegistryAccess, seed?: number, validBiome?: $Predicate_<$Holder<$Biome>>, random?: $WorldgenRandom, chunkPos?: $ChunkPos, randomState?: $RandomState, biomeSource?: $BiomeSource, ];
+    export type $Structure$GenerationContext_ = { chunkPos?: $ChunkPos, randomState?: $RandomState, biomeSource?: $BiomeSource, structureTemplateManager?: $StructureTemplateManager, chunkGenerator?: $ChunkGenerator, heightAccessor?: $LevelHeightAccessor, registryAccess?: $RegistryAccess, seed?: number, validBiome?: $Predicate_<$Holder<$Biome>>, random?: $WorldgenRandom,  } | [chunkPos?: $ChunkPos, randomState?: $RandomState, biomeSource?: $BiomeSource, structureTemplateManager?: $StructureTemplateManager, chunkGenerator?: $ChunkGenerator, heightAccessor?: $LevelHeightAccessor, registryAccess?: $RegistryAccess, seed?: number, validBiome?: $Predicate_<$Holder<$Biome>>, random?: $WorldgenRandom, ];
     export class $StructureStart implements $IStructureStart {
-        createTag(context: $StructurePieceSerializationContext_, chunkPos: $ChunkPos): $CompoundTag;
-        getChunkPos(): $ChunkPos;
-        placeInChunk(level: $WorldGenLevel, structureManager: $StructureManager, generator: $ChunkGenerator, random: $RandomSource, box: $BoundingBox, chunkPos: $ChunkPos): void;
-        canBeReferenced(): boolean;
         isValid(): boolean;
         addReference(): void;
+        canBeReferenced(): boolean;
+        getChunkPos(): $ChunkPos;
+        placeInChunk(level: $WorldGenLevel, structureManager: $StructureManager, generator: $ChunkGenerator, random: $RandomSource, box: $BoundingBox, chunkPos: $ChunkPos): void;
+        createTag(context: $StructurePieceSerializationContext_, chunkPos: $ChunkPos): $CompoundTag;
         getBoundingBox(): $BoundingBox;
-        getMaxReferences(): number;
         getPieces(): $List<$StructurePiece>;
         static loadStaticStart(context: $StructurePieceSerializationContext_, tag: $CompoundTag_, seed: number): $StructureStart;
-        getStructure(): $Structure;
-        getReferences(): number;
+        getMaxReferences(): number;
         getChildren(): $PiecesContainer;
+        getReferences(): number;
+        getStructure(): $Structure;
         static INVALID_START: $StructureStart;
         static INVALID_START_ID: string;
         constructor(structure: $Structure_, chunkPos: $ChunkPos, references: number, pieceContainer: $PiecesContainer_);
-        get chunkPos(): $ChunkPos;
         get valid(): boolean;
+        get chunkPos(): $ChunkPos;
         get boundingBox(): $BoundingBox;
-        get maxReferences(): number;
         get pieces(): $List<$StructurePiece>;
-        get structure(): $Structure;
-        get references(): number;
+        get maxReferences(): number;
         get children(): $PiecesContainer;
+        get references(): number;
+        get structure(): $Structure;
     }
     export class $StructureSet extends $Record {
         static entry(structure: $Holder_<$Structure>): $StructureSet$StructureSelectionEntry;
@@ -477,7 +477,7 @@ declare module "@package/net/minecraft/world/level/levelgen/structure" {
     /**
      * Values that may be interpreted as {@link $StructureSet}.
      */
-    export type $StructureSet_ = RegistryTypes.WorldgenStructureSet | { structures?: $List_<$StructureSet$StructureSelectionEntry_>, placement?: $StructurePlacement,  } | [structures?: $List_<$StructureSet$StructureSelectionEntry_>, placement?: $StructurePlacement, ];
+    export type $StructureSet_ = RegistryTypes.WorldgenStructureSet | { placement?: $StructurePlacement, structures?: $List_<$StructureSet$StructureSelectionEntry_>,  } | [placement?: $StructurePlacement, structures?: $List_<$StructureSet$StructureSelectionEntry_>, ];
     /**
      * A simple three-dimensional mutable integer bounding box.
      * Note that this box is both mutable, and has an implementation of `hashCode()` and `equals()`.
@@ -485,35 +485,13 @@ declare module "@package/net/minecraft/world/level/levelgen/structure" {
      */
     export class $BoundingBox {
         /**
-         * @return The length of this bounding box along the x-axis.
+         * @return `true` if `box` intersects this box.
          */
-        maxY(): number;
-        /**
-         * @return The length of this bounding box along the x-axis.
-         */
-        minX(): number;
-        /**
-         * @return The length of this bounding box along the x-axis.
-         */
-        minY(): number;
-        /**
-         * @return The length of this bounding box along the x-axis.
-         */
-        maxX(): number;
-        moved(x: number, y: number, z: number): $BoundingBox;
-        /**
-         * @return The center of this bounding box. Note in even-sized dimensions the center position will be offset in the positive direction.
-         */
-        getCenter(): $BlockPos;
+        intersects(box: $BoundingBox): boolean;
         /**
          * @return `true` if this bounding box intersects the horizontal x/z region described by the min and max parameters.
          */
         intersects(minX: number, minZ: number, maxX: number, maxZ: number): boolean;
-        /**
-         * @return `true` if `box` intersects this box.
-         */
-        intersects(box: $BoundingBox): boolean;
-        static encapsulatingPositions(boxes: $Iterable_<$BlockPos>): ($BoundingBox) | undefined;
         /**
          * Returns a vector describing the dimensions of this bounding box.
          * Note that unlike `getXSpan()`, `getYSpan()`, and `getZSpan()`, the length is interpreted here as the difference in coordinates. So a box over a 1x1x1 area, which still contains a single point, will report length zero.
@@ -536,15 +514,29 @@ declare module "@package/net/minecraft/world/level/levelgen/structure" {
          * @return The length of this bounding box along the x-axis.
          */
         maxZ(): number;
-        static infinite(): $BoundingBox;
-        /**
-         * @return `true` if the bounding box contains the `vector`.
-         */
-        isInside(vector: $Vec3i): boolean;
-        isInside(x: number, y: number, z: number): boolean;
-        static fromCorners(first: $Vec3i, second: $Vec3i): $BoundingBox;
         forAllCorners(pos: $Consumer_<$BlockPos>): void;
+        static fromCorners(first: $Vec3i, second: $Vec3i): $BoundingBox;
         static encapsulatingBoxes(boxes: $Iterable_<$BoundingBox>): ($BoundingBox) | undefined;
+        static infinite(): $BoundingBox;
+        moved(x: number, y: number, z: number): $BoundingBox;
+        /**
+         * Create a bounding box with the specified dimensions and rotate it. Used to project a possible new component Bounding Box - to check if it would cut anything already spawned.
+         */
+        static orientBox(structureMinX: number, structureMinY: number, structureMinZ: number, xMin: number, yMin: number, zMin: number, xMax: number, yMax: number, zMax: number, facing: $Direction_): $BoundingBox;
+        /**
+         * @deprecated
+         * Expands this box to be at least large enough to contain `pos`.
+         */
+        encapsulate(pos: $BlockPos_): $BoundingBox;
+        /**
+         * @deprecated
+         * Expands this box to be at least large enough to contain `box`.
+         */
+        encapsulate(box: $BoundingBox): $BoundingBox;
+        /**
+         * @return The center of this bounding box. Note in even-sized dimensions the center position will be offset in the positive direction.
+         */
+        getCenter(): $BlockPos;
         /**
          * @return The length of this bounding box along the x-axis.
          */
@@ -557,31 +549,39 @@ declare module "@package/net/minecraft/world/level/levelgen/structure" {
          * @return The length of this bounding box along the x-axis.
          */
         getZSpan(): number;
+        static encapsulatingPositions(boxes: $Iterable_<$BlockPos>): ($BoundingBox) | undefined;
         /**
-         * @deprecated
-         * Expands this box to be at least large enough to contain `box`.
+         * @return The length of this bounding box along the x-axis.
          */
-        encapsulate(box: $BoundingBox): $BoundingBox;
+        maxX(): number;
         /**
-         * @deprecated
-         * Expands this box to be at least large enough to contain `pos`.
+         * @return The length of this bounding box along the x-axis.
          */
-        encapsulate(pos: $BlockPos_): $BoundingBox;
-        inflatedBy(x: number, y: number, z: number): $BoundingBox;
+        minX(): number;
+        /**
+         * @return The length of this bounding box along the x-axis.
+         */
+        minY(): number;
+        /**
+         * @return The length of this bounding box along the x-axis.
+         */
+        maxY(): number;
+        /**
+         * @return `true` if the bounding box contains the `vector`.
+         */
+        isInside(vector: $Vec3i): boolean;
+        isInside(x: number, y: number, z: number): boolean;
         /**
          * Expands this box by a fixed `value` in all directions.
          */
         inflatedBy(value: number): $BoundingBox;
-        /**
-         * Create a bounding box with the specified dimensions and rotate it. Used to project a possible new component Bounding Box - to check if it would cut anything already spawned.
-         */
-        static orientBox(structureMinX: number, structureMinY: number, structureMinZ: number, xMin: number, yMin: number, zMin: number, xMax: number, yMax: number, zMax: number, facing: $Direction_): $BoundingBox;
+        inflatedBy(x: number, y: number, z: number): $BoundingBox;
         intersectingChunks(): $Stream<$ChunkPos>;
         static CODEC: $Codec<$BoundingBox>;
         constructor(pos: $BlockPos_);
         constructor(minX: number, minY: number, minZ: number, maxX: number, maxY: number, maxZ: number);
-        get center(): $BlockPos;
         get length(): $Vec3i;
+        get center(): $BlockPos;
         get YSpan(): number;
         get XSpan(): number;
         get ZSpan(): number;

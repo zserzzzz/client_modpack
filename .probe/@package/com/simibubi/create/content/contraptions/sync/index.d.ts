@@ -17,10 +17,10 @@ declare module "@package/com/simibubi/create/content/contraptions/sync" {
     export class $ContraptionInteractionPacket extends $Record implements $ServerboundPacketPayload {
         target(): number;
         handle(arg0: $ServerPlayer): void;
+        face(): $Direction;
         getTypeProvider(): $BasePacketPayload$PacketTypeProvider;
         localPos(): $BlockPos;
         hand(): $InteractionHand;
-        face(): $Direction;
         type(): $CustomPacketPayload$Type<$CustomPacketPayload>;
         toVanillaClientbound(): $ClientboundCustomPayloadPacket;
         toVanillaServerbound(): $ServerboundCustomPayloadPacket;
@@ -32,7 +32,7 @@ declare module "@package/com/simibubi/create/content/contraptions/sync" {
     /**
      * Values that may be interpreted as {@link $ContraptionInteractionPacket}.
      */
-    export type $ContraptionInteractionPacket_ = { localPos?: $BlockPos_, hand?: $InteractionHand_, face?: $Direction_, target?: number,  } | [localPos?: $BlockPos_, hand?: $InteractionHand_, face?: $Direction_, target?: number, ];
+    export type $ContraptionInteractionPacket_ = { target?: number, localPos?: $BlockPos_, hand?: $InteractionHand_, face?: $Direction_,  } | [target?: number, localPos?: $BlockPos_, hand?: $InteractionHand_, face?: $Direction_, ];
     export class $LimbSwingUpdatePacket extends $Record implements $ClientboundPacketPayload {
         position(): $Vec3;
         handle(arg0: $LocalPlayer): void;
@@ -50,13 +50,13 @@ declare module "@package/com/simibubi/create/content/contraptions/sync" {
     /**
      * Values that may be interpreted as {@link $LimbSwingUpdatePacket}.
      */
-    export type $LimbSwingUpdatePacket_ = { entityId?: number, position?: $Vec3_, limbSwing?: number,  } | [entityId?: number, position?: $Vec3_, limbSwing?: number, ];
+    export type $LimbSwingUpdatePacket_ = { limbSwing?: number, entityId?: number, position?: $Vec3_,  } | [limbSwing?: number, entityId?: number, position?: $Vec3_, ];
     export class $ClientMotionPacket extends $Record implements $ServerboundPacketPayload {
         handle(arg0: $ServerPlayer): void;
         getTypeProvider(): $BasePacketPayload$PacketTypeProvider;
-        limbSwing(): number;
-        motion(): $Vec3;
         onGround(): boolean;
+        motion(): $Vec3;
+        limbSwing(): number;
         type(): $CustomPacketPayload$Type<$CustomPacketPayload>;
         toVanillaClientbound(): $ClientboundCustomPayloadPacket;
         toVanillaServerbound(): $ServerboundCustomPayloadPacket;
@@ -67,7 +67,7 @@ declare module "@package/com/simibubi/create/content/contraptions/sync" {
     /**
      * Values that may be interpreted as {@link $ClientMotionPacket}.
      */
-    export type $ClientMotionPacket_ = { motion?: $Vec3_, limbSwing?: number, onGround?: boolean,  } | [motion?: $Vec3_, limbSwing?: number, onGround?: boolean, ];
+    export type $ClientMotionPacket_ = { onGround?: boolean, motion?: $Vec3_, limbSwing?: number,  } | [onGround?: boolean, motion?: $Vec3_, limbSwing?: number, ];
     export class $ContraptionSeatMappingPacket extends $Record implements $ClientboundPacketPayload {
         handle(arg0: $LocalPlayer): void;
         mapping(): $Map<$UUID, number>;
@@ -86,5 +86,5 @@ declare module "@package/com/simibubi/create/content/contraptions/sync" {
     /**
      * Values that may be interpreted as {@link $ContraptionSeatMappingPacket}.
      */
-    export type $ContraptionSeatMappingPacket_ = { entityId?: number, dismountedId?: number, mapping?: $Map_<$UUID_, number>,  } | [entityId?: number, dismountedId?: number, mapping?: $Map_<$UUID_, number>, ];
+    export type $ContraptionSeatMappingPacket_ = { mapping?: $Map_<$UUID_, number>, entityId?: number, dismountedId?: number,  } | [mapping?: $Map_<$UUID_, number>, entityId?: number, dismountedId?: number, ];
 }

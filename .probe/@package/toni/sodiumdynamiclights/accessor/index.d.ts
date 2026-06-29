@@ -18,9 +18,9 @@ declare module "@package/toni/sodiumdynamiclights/accessor" {
         static cast<T extends $Entity>(entityType: $EntityType_<T>): $DynamicLightHandlerHolder<T>;
     }
     export interface $DynamicLightHandlerHolder<T> {
-        sodiumdynamiclights$getName(): $Component;
         sodiumdynamiclights$getSetting(): boolean;
-        sodiumdynamiclights$getDynamicLightHandler(): $DynamicLightHandler<T>;
+        sodiumdynamiclights$getName(): $Component;
         sodiumdynamiclights$setDynamicLightHandler(arg0: $DynamicLightHandler_<T>): void;
+        sodiumdynamiclights$getDynamicLightHandler(): $DynamicLightHandler<T>;
     }
 }

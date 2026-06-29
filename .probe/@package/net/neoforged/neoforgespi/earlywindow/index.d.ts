@@ -1,5 +1,5 @@
 import { $Consumer_, $Supplier, $IntConsumer_, $Supplier_, $LongSupplier_, $IntSupplier_ } from "@package/java/util/function";
-import { $Throwable, $Runnable, $ModuleLayer } from "@package/java/lang";
+import { $Throwable, $ModuleLayer, $Runnable } from "@package/java/lang";
 
 declare module "@package/net/neoforged/neoforgespi/earlywindow" {
     export class $ImmediateWindowProvider {
@@ -7,14 +7,14 @@ declare module "@package/net/neoforged/neoforgespi/earlywindow" {
     export interface $ImmediateWindowProvider {
         name(): string;
         initialize(arg0: string[]): $Runnable;
-        loadingOverlay<T>(arg0: $Supplier_<never>, arg1: $Supplier_<never>, arg2: $Consumer_<($Throwable) | undefined>, arg3: boolean): $Supplier<T>;
+        getGLVersion(): string;
         periodicTick(): void;
         positionWindow(arg0: (never) | undefined, arg1: $IntConsumer_, arg2: $IntConsumer_, arg3: $IntConsumer_, arg4: $IntConsumer_): boolean;
+        loadingOverlay<T>(arg0: $Supplier_<never>, arg1: $Supplier_<never>, arg2: $Consumer_<($Throwable) | undefined>, arg3: boolean): $Supplier<T>;
         updateModuleReads(arg0: $ModuleLayer): void;
-        crash(arg0: string): void;
-        getGLVersion(): string;
         updateFramebufferSize(arg0: $IntConsumer_, arg1: $IntConsumer_): void;
         setupMinecraftWindow(arg0: $IntSupplier_, arg1: $IntSupplier_, arg2: $Supplier_<string>, arg3: $LongSupplier_): number;
+        crash(arg0: string): void;
         get GLVersion(): string;
     }
 }

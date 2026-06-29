@@ -10,8 +10,8 @@ declare module "@package/com/simibubi/create/content/kinetics/belt/item" {
     export class $BeltConnectorItem extends $BlockItem {
         static maxLength(): number;
         static canConnect(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockPos_): boolean;
-        static validateAxis(arg0: $Level_, arg1: $BlockPos_): boolean;
         static createBelts(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockPos_): void;
+        static validateAxis(arg0: $Level_, arg1: $BlockPos_): boolean;
         static BASE_ATTACK_DAMAGE_ID: $ResourceLocation;
         static DEFAULT_MAX_STACK_SIZE: number;
         static MAX_BAR_WIDTH: number;

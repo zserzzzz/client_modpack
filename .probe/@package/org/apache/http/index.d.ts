@@ -10,20 +10,20 @@ declare module "@package/org/apache/http" {
         getContent(): $InputStream;
         writeTo(arg0: $OutputStream): void;
         getContentLength(): number;
+        isChunked(): boolean;
+        isRepeatable(): boolean;
+        isStreaming(): boolean;
         /**
          * @deprecated
          */
         consumeContent(): void;
-        isStreaming(): boolean;
-        isRepeatable(): boolean;
-        isChunked(): boolean;
         get contentType(): $Header;
         get contentEncoding(): $Header;
         get content(): $InputStream;
         get contentLength(): number;
-        get streaming(): boolean;
-        get repeatable(): boolean;
         get chunked(): boolean;
+        get repeatable(): boolean;
+        get streaming(): boolean;
     }
     export class $HeaderElement {
     }

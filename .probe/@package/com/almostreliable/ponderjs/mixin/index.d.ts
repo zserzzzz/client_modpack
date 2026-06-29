@@ -13,14 +13,14 @@ declare module "@package/com/almostreliable/ponderjs/mixin" {
     export interface $TextWindowElementAccessor {
         setY(arg0: number): void;
         setTextGetter(arg0: $Supplier_<string>): void;
-        setVec(arg0: $Vec3_): void;
-        setPalette(arg0: $PonderPalette_): void;
         setNearScene(arg0: boolean): void;
+        setPalette(arg0: $PonderPalette_): void;
+        setVec(arg0: $Vec3_): void;
         set y(value: number);
         set textGetter(value: $Supplier_<string>);
-        set vec(value: $Vec3_);
-        set palette(value: $PonderPalette_);
         set nearScene(value: boolean);
+        set palette(value: $PonderPalette_);
+        set vec(value: $Vec3_);
     }
     export class $PonderWorldAccessor {
     }
@@ -45,10 +45,10 @@ declare module "@package/com/almostreliable/ponderjs/mixin" {
     export interface $ParticleAccessor {
         ponderjs$setAlpha(arg0: number): void;
         ponderjs$setRoll(arg0: number): void;
-        ponderjs$setGravity(arg0: number): void;
-        ponderjs$setLifetime(arg0: number): void;
-        ponderjs$setHasPhysics(arg0: boolean): void;
-        ponderjs$setFriction(arg0: number): void;
         ponderjs$setStoppedByCollision(arg0: boolean): void;
+        ponderjs$setLifetime(arg0: number): void;
+        ponderjs$setGravity(arg0: number): void;
+        ponderjs$setFriction(arg0: number): void;
+        ponderjs$setHasPhysics(arg0: boolean): void;
     }
 }

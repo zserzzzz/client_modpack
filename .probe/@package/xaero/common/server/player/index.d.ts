@@ -11,24 +11,24 @@ declare module "@package/xaero/common/server/player" {
     export class $ServerPlayerData {
         static get(arg0: $ServerPlayer): $ServerPlayerData;
         hasMod(): boolean;
-        setLastTrackedPlayerSync(arg0: number): void;
-        getCurrentlySyncedPlayers(): $Set<$UUID>;
-        setClientModNetworkVersion(arg0: number): void;
-        ensureLastSyncedData(): $SyncedTrackedPlayer;
-        getClientModNetworkVersion(): number;
-        getLastTrackedPlayerSync(): number;
         getOpacData(): $Object;
-        getLastSyncedData(): $SyncedTrackedPlayer;
         setOpacData(arg0: $Object): void;
+        getLastSyncedData(): $SyncedTrackedPlayer;
+        setClientModNetworkVersion(arg0: number): void;
+        getCurrentlySyncedPlayers(): $Set<$UUID>;
+        setLastTrackedPlayerSync(arg0: number): void;
+        ensureLastSyncedData(): $SyncedTrackedPlayer;
+        getLastTrackedPlayerSync(): number;
+        getClientModNetworkVersion(): number;
         ensureCurrentlySyncedPlayers(): $Set<$UUID>;
         constructor(arg0: $UUID_);
-        get currentlySyncedPlayers(): $Set<$UUID>;
         get lastSyncedData(): $SyncedTrackedPlayer;
+        get currentlySyncedPlayers(): $Set<$UUID>;
     }
     export class $IServerPlayer {
     }
     export interface $IServerPlayer {
-        setXaeroMinimapPlayerData(arg0: $ServerPlayerData): void;
         getXaeroMinimapPlayerData(): $ServerPlayerData;
+        setXaeroMinimapPlayerData(arg0: $ServerPlayerData): void;
     }
 }

@@ -10,10 +10,10 @@ import { $ItemPredicate_, $ItemPredicate } from "@package/net/minecraft/advancem
 
 declare module "@package/io/github/mortuusars/exposure/data" {
     export class $Filter extends $Record {
-        predicate(): $ItemPredicate;
         shader(): $ResourceLocation;
-        attachmentTexture(): $ResourceLocation;
+        predicate(): $ItemPredicate;
         attachmentTintColor(): $Color;
+        attachmentTexture(): $ResourceLocation;
         static CODEC: $Codec<$Filter>;
         static HOLDER_CODEC: $Codec<$Holder<$Filter>>;
         static DEFAULT_GLASS_TEXTURE: $ResourceLocation;
@@ -37,10 +37,10 @@ declare module "@package/io/github/mortuusars/exposure/data" {
     export type $Lens_ = RegistryTypes.ExposureLens | { focalRange?: $FocalRange, predicate?: $ItemPredicate_,  } | [focalRange?: $FocalRange, predicate?: $ItemPredicate_, ];
     export interface $Filter extends RegistryMarked<RegistryTypes.ExposureFilterTag, RegistryTypes.ExposureFilter> {}
     export class $ColorPalette extends $Record {
-        byId(id: number): number;
         colors(): number[];
-        toColorList(): $List<$Color>;
         closestTo(color: $Color_): number;
+        byId(id: number): number;
+        toColorList(): $List<$Color>;
         static CODEC: $Codec<$ColorPalette>;
         constructor(colors: number[]);
         constructor(colors: $List_<$Color_>);

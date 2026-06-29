@@ -7,7 +7,7 @@ declare module "@package/de/z0rdak/yawp/api/events" {
         static CANCEL: boolean;
     }
     export interface $Cancelable {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
     }
 }

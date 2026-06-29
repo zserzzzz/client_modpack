@@ -17,5 +17,5 @@ declare module "@package/net/minecraft/server/packs/metadata/pack" {
     /**
      * Values that may be interpreted as {@link $PackMetadataSection}.
      */
-    export type $PackMetadataSection_ = { packFormat?: number, description?: $Component_, supportedFormats?: ($InclusiveRange_<number>) | undefined,  } | [packFormat?: number, description?: $Component_, supportedFormats?: ($InclusiveRange_<number>) | undefined, ];
+    export type $PackMetadataSection_ = { description?: $Component_, supportedFormats?: ($InclusiveRange_<number>) | undefined, packFormat?: number,  } | [description?: $Component_, supportedFormats?: ($InclusiveRange_<number>) | undefined, packFormat?: number, ];
 }

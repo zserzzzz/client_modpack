@@ -14,23 +14,23 @@ declare module "@package/com/simibubi/create/content/contraptions/behaviour/disp
         visitNewPosition(arg0: $MovementContext, arg1: $BlockPos_): void;
         isActive(arg0: $MovementContext): boolean;
         tick(arg0: $MovementContext): void;
-        stopMoving(arg0: $MovementContext): void;
         /**
          * @deprecated
          */
         dropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
+        onDisabledByControls(arg0: $MovementContext): void;
+        renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
         getActiveAreaOffset(arg0: $MovementContext): $Vec3;
         mustTickWhileDisabled(): boolean;
-        renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
-        onDisabledByControls(arg0: $MovementContext): void;
+        disableBlockEntityRendering(): boolean;
+        startMoving(arg0: $MovementContext): void;
+        canBeDisabledVia(arg0: $MovementContext): $ItemStack;
         collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
         onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
-        cancelStall(arg0: $MovementContext): void;
-        startMoving(arg0: $MovementContext): void;
-        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
-        canBeDisabledVia(arg0: $MovementContext): $ItemStack;
         writeExtraData(arg0: $MovementContext): void;
-        disableBlockEntityRendering(): boolean;
+        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
+        cancelStall(arg0: $MovementContext): void;
+        stopMoving(arg0: $MovementContext): void;
         constructor();
     }
     export class $DispenserMovementBehaviour extends $DropperMovementBehaviour {

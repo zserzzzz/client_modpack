@@ -7,12 +7,12 @@ export * as object from "@package/gg/moonflower/molangcompiler/api/object";
 
 declare module "@package/gg/moonflower/molangcompiler/api" {
     export class $MolangExpression {
-        static of(arg0: boolean): $MolangExpression;
-        static of(arg0: $Supplier_<number>): $MolangExpression;
         static of(arg0: $BooleanSupplier_): $MolangExpression;
+        static of(arg0: $Supplier_<number>): $MolangExpression;
         static of(arg0: $MolangVariable): $MolangExpression;
-        static of(arg0: number): $MolangExpression;
+        static of(arg0: boolean): $MolangExpression;
         static of(...arg0: $MolangExpression_[]): $MolangExpression;
+        static of(arg0: number): $MolangExpression;
         static "function"(arg0: number, arg1: $MolangJavaFunction_): $MolangExpression;
         static "function"(arg0: $MolangJavaFunction_): $MolangExpression;
         static lazy(arg0: $BooleanSupplier_): $MolangExpression;
@@ -20,6 +20,7 @@ declare module "@package/gg/moonflower/molangcompiler/api" {
         static ZERO: $MolangExpression;
     }
     export interface $MolangExpression {
+        isConstant(): boolean;
         getConstant(): number;
         get(arg0: $MolangEnvironment): number;
         /**
@@ -27,7 +28,6 @@ declare module "@package/gg/moonflower/molangcompiler/api" {
          */
         resolve(arg0: $MolangEnvironment): number;
         getCopy(): $MolangExpression;
-        isConstant(): boolean;
         /**
          * @deprecated
          */
@@ -41,38 +41,37 @@ declare module "@package/gg/moonflower/molangcompiler/api" {
     export class $MolangEnvironmentBuilder<V extends $MolangEnvironment> {
     }
     export interface $MolangEnvironmentBuilder<V extends $MolangEnvironment> {
-        loadLibrary(arg0: string, arg1: $MolangObject): $MolangEnvironmentBuilder<V>;
-        copy(arg0: $MolangEnvironment): $MolangEnvironmentBuilder<V>;
-        create(): V;
-        create(arg0: number): V;
+        setGlobal(arg0: string, arg1: $MolangExpression_): $MolangEnvironmentBuilder<V>;
         setGlobal(arg0: string, arg1: $Supplier_<number>): $MolangEnvironmentBuilder<V>;
         setGlobal(arg0: string, arg1: number): $MolangEnvironmentBuilder<V>;
-        setGlobal(arg0: string, arg1: $MolangExpression_): $MolangEnvironmentBuilder<V>;
         setGlobal(arg0: string, arg1: number, arg2: $MolangJavaFunction_): $MolangEnvironmentBuilder<V>;
-        setVariable(arg0: string, arg1: $MolangExpression_): $MolangEnvironmentBuilder<V>;
-        setVariable(arg0: string, arg1: $MolangVariable): $MolangEnvironmentBuilder<V>;
-        setVariable(arg0: string, arg1: $Supplier_<number>): $MolangEnvironmentBuilder<V>;
-        setVariable(arg0: string, arg1: number): $MolangEnvironmentBuilder<V>;
+        loadLibrary(arg0: string, arg1: $MolangObject): $MolangEnvironmentBuilder<V>;
+        copy(arg0: $MolangEnvironment): $MolangEnvironmentBuilder<V>;
+        create(arg0: number): V;
+        create(): V;
         setVariables(arg0: $MolangVariableProvider_): $MolangEnvironmentBuilder<V>;
+        setVariable(arg0: string, arg1: $Supplier_<number>): $MolangEnvironmentBuilder<V>;
+        setVariable(arg0: string, arg1: $MolangVariable): $MolangEnvironmentBuilder<V>;
+        setVariable(arg0: string, arg1: number): $MolangEnvironmentBuilder<V>;
+        setVariable(arg0: string, arg1: $MolangExpression_): $MolangEnvironmentBuilder<V>;
         setQuery(arg0: string, arg1: $MolangExpression_): $MolangEnvironmentBuilder<V>;
-        setQuery(arg0: string, arg1: $Supplier_<number>): $MolangEnvironmentBuilder<V>;
-        setQuery(arg0: string, arg1: number): $MolangEnvironmentBuilder<V>;
         setQuery(arg0: string, arg1: number, arg2: $MolangJavaFunction_): $MolangEnvironmentBuilder<V>;
+        setQuery(arg0: string, arg1: number): $MolangEnvironmentBuilder<V>;
+        setQuery(arg0: string, arg1: $Supplier_<number>): $MolangEnvironmentBuilder<V>;
         clearQuery(): $MolangEnvironmentBuilder<V>;
+        unloadLibrary(arg0: string): $MolangEnvironmentBuilder<V>;
         clearLibraries(): $MolangEnvironmentBuilder<V>;
-        removeQuery(arg0: string): $MolangEnvironmentBuilder<V>;
         removeGlobal(arg0: string): $MolangEnvironmentBuilder<V>;
         removeVariable(arg0: string): $MolangEnvironmentBuilder<V>;
-        clearVariable(): $MolangEnvironmentBuilder<V>;
-        unloadLibrary(arg0: string): $MolangEnvironmentBuilder<V>;
         clearGlobal(): $MolangEnvironmentBuilder<V>;
+        clearVariable(): $MolangEnvironmentBuilder<V>;
+        removeQuery(arg0: string): $MolangEnvironmentBuilder<V>;
         set variables(value: $MolangVariableProvider_);
     }
     export class $MolangEnvironment {
         static immutable(arg0: $MolangEnvironment): $MolangEnvironment;
     }
     export interface $MolangEnvironment {
-        getObjects(): $Collection<string>;
         get(arg0: string): $MolangObject;
         loadLibrary(arg0: string, arg1: $MolangObject): void;
         loadLibrary(arg0: string, arg1: $MolangObject, ...arg2: string[]): void;
@@ -80,19 +79,20 @@ declare module "@package/gg/moonflower/molangcompiler/api" {
         copy(): $MolangEnvironment;
         getParameters(): number;
         has(arg0: string): boolean;
+        getObjects(): $Collection<string>;
         getParameter(arg0: number): number;
         edit(): $MolangEnvironmentBuilder<$MolangEnvironment>;
+        safeResolve(arg0: $MolangExpression_): number;
+        canEdit(): boolean;
+        getThis(): number;
+        loadAlias(arg0: string, arg1: string, ...arg2: string[]): void;
         loadParameter(arg0: number): void;
         clearParameters(): void;
         hasParameter(arg0: number): boolean;
         setThisValue(arg0: number): void;
-        canEdit(): boolean;
-        loadAlias(arg0: string, arg1: string, ...arg2: string[]): void;
-        safeResolve(arg0: $MolangExpression_): number;
-        getThis(): number;
-        get objects(): $Collection<string>;
         get parameters(): number;
-        set thisValue(value: number);
+        get objects(): $Collection<string>;
         get this(): number;
+        set thisValue(value: number);
     }
 }

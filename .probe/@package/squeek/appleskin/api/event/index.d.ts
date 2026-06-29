@@ -13,8 +13,8 @@ declare module "@package/squeek/appleskin/api/event" {
         constructor(arg0: number, arg1: number, arg2: number, arg3: $GuiGraphics);
     }
     export class $TooltipOverlayEvent extends $Event implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         defaultFood: $FoodProperties;
         itemStack: $ItemStack;
         modifiedFood: $FoodProperties;
@@ -67,8 +67,8 @@ declare module "@package/squeek/appleskin/api/event" {
         constructor(arg0: number, arg1: $ItemStack_, arg2: $FoodProperties_, arg3: number, arg4: number, arg5: $GuiGraphics);
     }
     export class $HUDOverlayEvent extends $Event implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         guiGraphics: $GuiGraphics;
         x: number;
         y: number;

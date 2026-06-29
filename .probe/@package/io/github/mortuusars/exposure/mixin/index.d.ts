@@ -6,9 +6,9 @@ declare module "@package/io/github/mortuusars/exposure/mixin" {
     export class $LecternBlockEntityAccessor {
     }
     export interface $LecternBlockEntityAccessor {
-        getDataAccess(): $ContainerData;
         getBookAccess(): $Container;
-        get dataAccess(): $ContainerData;
+        getDataAccess(): $ContainerData;
         get bookAccess(): $Container;
+        get dataAccess(): $ContainerData;
     }
 }

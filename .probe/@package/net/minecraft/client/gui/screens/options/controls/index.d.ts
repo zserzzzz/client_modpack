@@ -17,12 +17,12 @@ declare module "@package/net/minecraft/client/gui/screens/options/controls" {
     export class $KeyBindsList extends $ContainerObjectSelectionList<$KeyBindsList$Entry> {
         static access$000(arg0: $KeyBindsList): $Minecraft;
         static access$300(arg0: $KeyBindsList): number;
+        refreshEntries(): void;
+        static access$500(arg0: $KeyBindsList): $Minecraft;
+        static access$600(arg0: $KeyBindsList): $Minecraft;
+        static access$400(arg0: $KeyBindsList): $Minecraft;
         static access$200(arg0: $KeyBindsList): number;
         static access$100(arg0: $KeyBindsList): $Minecraft;
-        static access$500(arg0: $KeyBindsList): $Minecraft;
-        static access$400(arg0: $KeyBindsList): $Minecraft;
-        static access$600(arg0: $KeyBindsList): $Minecraft;
-        refreshEntries(): void;
         resetMappingAndUpdateButtons(): void;
         minecraft: $Minecraft;
         static SCROLLER_BACKGROUND_SPRITE: $ResourceLocation;
@@ -96,16 +96,19 @@ declare module "@package/net/minecraft/client/gui/screens/options/controls" {
         constructor(key: $KeyBindsList, name: $KeyMapping, arg2: $Component_);
     }
     export class $KeyBindsScreen extends $OptionsSubScreen implements $AccessKeyBindsScreen, $AccessKeyBindsScreenNeoForge {
-        getLastPressedModifier(): $InputConstants$Key;
-        /**
-         * Sets the focus state of the GUI element.
-         */
-        setIsLastKeyHeldDown(focused: boolean): void;
+        controlling$setKeyBindsList(arg0: $KeyBindsList): void;
+        controlling$getKeyBindsList(): $KeyBindsList;
+        setLastPressedModifier(arg0: $InputConstants$Key): void;
+        controlling$getResetButton(): $Button;
         /**
          * @return `true` if the GUI element is dragging, `false` otherwise
          */
         isIsLastModifierHeldDown(): boolean;
-        setLastPressedModifier(arg0: $InputConstants$Key): void;
+        /**
+         * Sets the focus state of the GUI element.
+         */
+        setIsLastKeyHeldDown(focused: boolean): void;
+        getLastPressedModifier(): $InputConstants$Key;
         /**
          * @return `true` if the GUI element is dragging, `false` otherwise
          */
@@ -114,12 +117,9 @@ declare module "@package/net/minecraft/client/gui/screens/options/controls" {
          * Sets the focus state of the GUI element.
          */
         setIsLastModifierHeldDown(focused: boolean): void;
+        controlling$setResetButton(arg0: $Button): void;
         getLastPressedKey(): $InputConstants$Key;
         setLastPressedKey(arg0: $InputConstants$Key): void;
-        controlling$getResetButton(): $Button;
-        controlling$setResetButton(arg0: $Button): void;
-        controlling$setKeyBindsList(arg0: $KeyBindsList): void;
-        controlling$getKeyBindsList(): $KeyBindsList;
         selectedKey: $KeyMapping;
         static MENU_BACKGROUND: $ResourceLocation;
         minecraft: $Minecraft;

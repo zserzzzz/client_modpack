@@ -5,19 +5,19 @@ export * as thread from "@package/net/minecraft/server/rcon/thread";
 
 declare module "@package/net/minecraft/server/rcon" {
     export class $RconConsoleSource implements $CommandSource {
+        createCommandSourceStack(): $CommandSourceStack;
         acceptsFailure(): boolean;
         acceptsSuccess(): boolean;
         shouldInformAdmins(): boolean;
-        createCommandSourceStack(): $CommandSourceStack;
         sendSystemMessage(component: $Component_): void;
-        /**
-         * Gets the contents of the RCon log
-         */
-        getCommandResponse(): string;
         /**
          * Clears the RCon log
          */
         prepareForCommand(): void;
+        /**
+         * Gets the contents of the RCon log
+         */
+        getCommandResponse(): string;
         alwaysAccepts(): boolean;
         constructor(server: $MinecraftServer);
         get commandResponse(): string;
@@ -54,14 +54,6 @@ declare module "@package/net/minecraft/server/rcon" {
          */
         static toHexString(input: number): string;
         /**
-         * Read a null-terminated string from the given byte array
-         */
-        static stringFromByteArray(input: number[], offset: number, length: number): string;
-        /**
-         * Read 4 bytes from the given array in little-endian format and return them as an int
-         */
-        static intFromNetworkByteArray(input: number[], offset: number, length: number): number;
-        /**
          * Read 4 bytes from the given array in little-endian format and return them as an int
          */
         static intFromByteArray(input: number[], offset: number, length: number): number;
@@ -69,6 +61,14 @@ declare module "@package/net/minecraft/server/rcon" {
          * Read 4 bytes from the
          */
         static intFromByteArray(input: number[], offset: number): number;
+        /**
+         * Read a null-terminated string from the given byte array
+         */
+        static stringFromByteArray(input: number[], offset: number, length: number): string;
+        /**
+         * Read 4 bytes from the given array in little-endian format and return them as an int
+         */
+        static intFromNetworkByteArray(input: number[], offset: number, length: number): number;
         static MAX_PACKET_SIZE: number;
         static HEX_CHAR: string[];
         constructor();

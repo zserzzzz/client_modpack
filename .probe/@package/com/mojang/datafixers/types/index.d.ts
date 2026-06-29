@@ -11,6 +11,7 @@ export * as families from "@package/com/mojang/datafixers/types/families";
 
 declare module "@package/com/mojang/datafixers/types" {
     export class $Type<A> implements $App<$Type$Mu, A> {
+        codec(): $Codec<A>;
         buildTemplate(): $TypeTemplate;
         one(arg0: $TypeRewriteRule_): ($RewriteResult<A, never>) | undefined;
         equals(arg0: $Object, arg1: boolean, arg2: boolean): boolean;
@@ -20,31 +21,30 @@ declare module "@package/com/mojang/datafixers/types" {
         finder(): $OpticFinder<A>;
         all(arg0: $TypeRewriteRule_, arg1: boolean, arg2: boolean): $RewriteResult<A, never>;
         static unbox<A>(arg0: $App<$Type$Mu, A>): $Type<A>;
-        findField(arg0: string): $OpticFinder<never>;
-        template(): $TypeTemplate;
-        updateMu(arg0: $RecursiveTypeFamily): $Type<never>;
+        findType<FT, FR>(arg0: $Type<FT>, arg1: $Type<FR>, arg2: $Type$TypeMatcher_<FT, FR>, arg3: boolean): $Either<$TypedOptic<A, never, FT, FR>, $Type$FieldNotFoundException>;
+        point(arg0: $DynamicOps<never>): (A) | undefined;
         static opticView<S, T, A, B>(arg0: $Type<S>, arg1: $RewriteResult_<A, B>, arg2: $TypedOptic_<S, T, A, B>): $RewriteResult<S, T>;
+        updateMu(arg0: $RecursiveTypeFamily): $Type<never>;
         getSetType<FT, FR>(arg0: $OpticFinder<FT>, arg1: $Type<FR>): $Type<never>;
         rewrite(arg0: $TypeRewriteRule_, arg1: $PointFreeRule_): ($RewriteResult<A, never>) | undefined;
+        findField(arg0: string): $OpticFinder<never>;
+        template(): $TypeTemplate;
         findChoiceType(arg0: string, arg1: number): ($TaggedChoice$TaggedChoiceType<never>) | undefined;
         findFieldType(arg0: string): $Type<never>;
-        point(arg0: $DynamicOps<never>): (A) | undefined;
-        findType<FT, FR>(arg0: $Type<FT>, arg1: $Type<FR>, arg2: $Type$TypeMatcher_<FT, FR>, arg3: boolean): $Either<$TypedOptic<A, never, FT, FR>, $Type$FieldNotFoundException>;
-        codec(): $Codec<A>;
-        rewriteOrNop(arg0: $TypeRewriteRule_): $RewriteResult<A, never>;
-        readAndWrite<T>(arg0: $DynamicOps<T>, arg1: $Type<never>, arg2: $TypeRewriteRule_, arg3: $PointFreeRule_, arg4: T): $DataResult<T>;
         findTypeCached<FT, FR>(arg0: $Type<FT>, arg1: $Type<FR>, arg2: $Type$TypeMatcher_<FT, FR>, arg3: boolean): $Either<$TypedOptic<A, never, FT, FR>, $Type$FieldNotFoundException>;
+        rewriteOrNop(arg0: $TypeRewriteRule_): $RewriteResult<A, never>;
+        findCheckedType(arg0: number): ($Type<never>) | undefined;
+        readAndWrite<T>(arg0: $DynamicOps<T>, arg1: $Type<never>, arg2: $TypeRewriteRule_, arg3: $PointFreeRule_, arg4: T): $DataResult<T>;
         findTypeInChildren<FT, FR>(arg0: $Type<FT>, arg1: $Type<FR>, arg2: $Type$TypeMatcher_<FT, FR>, arg3: boolean): $Either<$TypedOptic<A, never, FT, FR>, $Type$FieldNotFoundException>;
         findFieldTypeOpt(arg0: string): ($Type<never>) | undefined;
-        findCheckedType(arg0: number): ($Type<never>) | undefined;
-        writeDynamic<T>(arg0: $DynamicOps<T>, arg1: A): $DataResult<$Dynamic<T>>;
         pointTyped(arg0: $DynamicOps<never>): ($Typed<A>) | undefined;
+        readTyped<T>(arg0: $Dynamic<T>): $DataResult<$Pair<$Typed<A>, T>>;
+        readTyped<T>(arg0: $DynamicOps<T>, arg1: T): $DataResult<$Pair<$Typed<A>, T>>;
         everywhere(arg0: $TypeRewriteRule_, arg1: $PointFreeRule_, arg2: boolean, arg3: boolean): ($RewriteResult<A, never>) | undefined;
+        ifSame<B>(arg0: $Type<B>, arg1: $RewriteResult_<B, never>): ($RewriteResult<A, never>) | undefined;
         ifSame<B>(arg0: $Type<B>, arg1: B): (A) | undefined;
         ifSame<B>(arg0: $Typed<B>): (A) | undefined;
-        ifSame<B>(arg0: $Type<B>, arg1: $RewriteResult_<B, never>): ($RewriteResult<A, never>) | undefined;
-        readTyped<T>(arg0: $DynamicOps<T>, arg1: T): $DataResult<$Pair<$Typed<A>, T>>;
-        readTyped<T>(arg0: $Dynamic<T>): $DataResult<$Pair<$Typed<A>, T>>;
+        writeDynamic<T>(arg0: $DynamicOps<T>, arg1: A): $DataResult<$Dynamic<T>>;
         constructor();
     }
     export class $Type$Mu implements $K1 {

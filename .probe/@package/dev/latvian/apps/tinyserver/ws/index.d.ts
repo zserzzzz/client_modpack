@@ -14,12 +14,12 @@ declare module "@package/dev/latvian/apps/tinyserver/ws" {
         mask(): boolean;
         opcode(): $Opcode;
         fin(): boolean;
+        rsv3(): boolean;
+        rsv1(): boolean;
+        rsv2(): boolean;
         applyMask(payload: number[]): void;
         maskZero(): boolean;
-        rsv3(): boolean;
-        rsv2(): boolean;
         maskKey(): number;
-        rsv1(): boolean;
         constructor(opcode: $Opcode_, mask: boolean, fin: boolean, rsv1: boolean, rsv2: boolean, rsv3: boolean, maskKey: number, size: number);
     }
     /**
@@ -37,12 +37,12 @@ declare module "@package/dev/latvian/apps/tinyserver/ws" {
      */
     export type $WSSessionFactory_<REQ, WSS> = (() => WSS);
     export class $Frame extends $Record {
+        static simple(opcode: $Opcode_, mask: number, payload: number[]): $Frame;
         static binary(buffer: number[]): $Frame;
         payload(): number[];
         info(): $FrameInfo;
         appendTo(previous: $Frame_): $Frame;
         static text(text: string): $Frame;
-        static simple(opcode: $Opcode_, mask: number, payload: number[]): $Frame;
         static ping(buffer: number[]): $Frame;
         applyMask(): void;
         constructor(info: $FrameInfo_, payload: number[]);
@@ -65,6 +65,7 @@ declare module "@package/dev/latvian/apps/tinyserver/ws" {
      */
     export type $WSCloseStatus_ = "closed" | "going_away" | "protocol_error" | "unsupported_data";
     export class $WSSession<REQ extends $HTTPRequest> implements $HTTPUpgrade<REQ> {
+        onError(error: $Throwable): void;
         isClosed(): boolean;
         id(): $UUID;
         start(req: REQ): void;
@@ -72,15 +73,14 @@ declare module "@package/dev/latvian/apps/tinyserver/ws" {
         protocol(): string;
         onClose(reason: $StatusCode_, remote: boolean): void;
         send(frame: $Frame_): void;
-        onError(error: $Throwable): void;
+        onOpen(req: REQ): void;
+        sendPing(payload: number[]): void;
+        onTextMessage(message: string): void;
+        onBinaryMessage(message: number[]): void;
         sendText(payload: string): void;
         sendBinary(payload: number[]): void;
-        sendPing(payload: number[]): void;
-        onPing(payload: number[]): void;
         onPong(payload: number[]): void;
-        onBinaryMessage(message: number[]): void;
-        onTextMessage(message: string): void;
-        onOpen(req: REQ): void;
+        onPing(payload: number[]): void;
         constructor();
         get closed(): boolean;
     }

@@ -25,12 +25,12 @@ declare module "@package/net/minecraft/client/gui/font/glyphs" {
         constructor(x0: number, y0: number, x1: number, y1: number, depth: number, r: number, g: number, b: number, a: number);
     }
     export class $BakedGlyph implements $IAcceleratedRenderer<any> {
-        renderType(displayMode: $Font$DisplayMode_): $RenderType;
+        handler$bpo000$acceleratedrendering$renderFast(arg0: boolean, arg1: number, arg2: number, arg3: $Matrix4f, arg4: $VertexConsumer, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number, arg10: $CallbackInfo): void;
         render(arg0: $VertexConsumer, arg1: $BakedGlyph$Effect, arg2: $Matrix4f, arg3: $Matrix3f, arg4: number, arg5: number, arg6: number): void;
         render(italic: boolean, x: number, y: number, matrix: $Matrix4f, buffer: $VertexConsumer, red: number, green: number, blue: number, alpha: number, packedLight: number): void;
-        handler$bpo000$acceleratedrendering$renderEffectFast(arg0: $BakedGlyph$Effect, arg1: $Matrix4f, arg2: $VertexConsumer, arg3: number, arg4: $CallbackInfo): void;
+        renderType(displayMode: $Font$DisplayMode_): $RenderType;
         renderEffect(effect: $BakedGlyph$Effect, matrix: $Matrix4f, buffer: $VertexConsumer, packedLight: number): void;
-        handler$bpo000$acceleratedrendering$renderFast(arg0: boolean, arg1: number, arg2: number, arg3: $Matrix4f, arg4: $VertexConsumer, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number, arg10: $CallbackInfo): void;
+        handler$bpo000$acceleratedrendering$renderEffectFast(arg0: $BakedGlyph$Effect, arg1: $Matrix4f, arg2: $VertexConsumer, arg3: number, arg4: $CallbackInfo): void;
         left: number;
         v0: number;
         u0: number;
@@ -67,13 +67,13 @@ declare module "@package/net/minecraft/client/gui/font/glyphs" {
         bake(glyphProvider: $Function_<$SheetGlyphInfo, $BakedGlyph>): $BakedGlyph;
         getAdvance(): number;
         getAdvance(bold: boolean): number;
-        getShadowOffset(): number;
         getBoldOffset(): number;
+        getShadowOffset(): number;
         image: $NativeImage;
         static WHITE: $SpecialGlyphs;
         static MISSING: $SpecialGlyphs;
-        get shadowOffset(): number;
         get boldOffset(): number;
+        get shadowOffset(): number;
     }
     /**
      * Values that may be interpreted as {@link $SpecialGlyphs}.

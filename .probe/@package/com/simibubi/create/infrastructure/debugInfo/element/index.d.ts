@@ -17,7 +17,7 @@ declare module "@package/com/simibubi/create/infrastructure/debugInfo/element" {
     /**
      * Values that may be interpreted as {@link $InfoEntry}.
      */
-    export type $InfoEntry_ = { name?: string, provider?: $InfoProvider_,  } | [name?: string, provider?: $InfoProvider_, ];
+    export type $InfoEntry_ = { provider?: $InfoProvider_, name?: string,  } | [provider?: $InfoProvider_, name?: string, ];
     export class $DebugInfoSection extends $Record implements $InfoElement {
         name(): string;
         static of(arg0: string, arg1: $Collection_<$DebugInfoSection_>): $DebugInfoSection;

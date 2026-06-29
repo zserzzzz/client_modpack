@@ -11,28 +11,28 @@ import { $Animation, $AnimationProcessor, $AnimationState } from "@package/softw
 declare module "@package/software/bernie/geckolib/model" {
     export class $GeoModel<T extends $GeoAnimatable> {
         getBakedModel(arg0: $ResourceLocation_): $BakedGeoModel;
+        applyMolangQueries(arg0: $AnimationState<T>, arg1: number): void;
+        crashIfBoneMissing(): boolean;
         getRenderType(arg0: T, arg1: $ResourceLocation_): $RenderType;
-        handleAnimations(arg0: T, arg1: number, arg2: $AnimationState<T>, arg3: number): void;
-        getModelResource(arg0: T, arg1: $GeoRenderer<T>): $ResourceLocation;
-        /**
-         * @deprecated
-         */
-        getModelResource(arg0: T): $ResourceLocation;
+        getAnimation(arg0: T, arg1: string): $Animation;
         getTextureResource(arg0: T, arg1: $GeoRenderer<T>): $ResourceLocation;
         /**
          * @deprecated
          */
         getTextureResource(arg0: T): $ResourceLocation;
+        getModelResource(arg0: T, arg1: $GeoRenderer<T>): $ResourceLocation;
+        /**
+         * @deprecated
+         */
+        getModelResource(arg0: T): $ResourceLocation;
         addAdditionalStateData(arg0: T, arg1: number, arg2: $BiConsumer_<$DataTicket<T>, T>): void;
-        getAnimation(arg0: T, arg1: string): $Animation;
-        crashIfBoneMissing(): boolean;
-        applyMolangQueries(arg0: $AnimationState<T>, arg1: number): void;
+        handleAnimations(arg0: T, arg1: number, arg2: $AnimationState<T>, arg3: number): void;
         getAnimationProcessor(): $AnimationProcessor<T>;
         getBone(arg0: string): ($GeoBone) | undefined;
         handler$bjd000$vista$blockGeckoStateMachineStuffThatShouldProbablyNotEvenExist(arg0: $GeoAnimatable, arg1: number, arg2: $AnimationState<any>, arg3: number, arg4: $CallbackInfo): void;
-        getAnimationResourceFallbacks(arg0: T): $ResourceLocation[];
-        setCustomAnimations(arg0: T, arg1: number, arg2: $AnimationState<T>): void;
         getAnimationResource(arg0: T): $ResourceLocation;
+        setCustomAnimations(arg0: T, arg1: number, arg2: $AnimationState<T>): void;
+        getAnimationResourceFallbacks(arg0: T): $ResourceLocation[];
         constructor();
         get animationProcessor(): $AnimationProcessor<T>;
     }

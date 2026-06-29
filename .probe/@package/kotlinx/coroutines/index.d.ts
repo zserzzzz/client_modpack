@@ -10,8 +10,8 @@ declare module "@package/kotlinx/coroutines" {
         static limitedParallelism$default(arg0: $CoroutineDispatcher, arg1: number, arg2: string, arg3: number, arg4: $Object): $CoroutineDispatcher;
         limitedParallelism(arg0: number, arg1: string): $CoroutineDispatcher;
         limitedParallelism(arg0: number): $CoroutineDispatcher;
-        dispatchYield(arg0: $CoroutineContext, arg1: $Runnable_): void;
         isDispatchNeeded(arg0: $CoroutineContext): boolean;
+        dispatchYield(arg0: $CoroutineContext, arg1: $Runnable_): void;
         releaseInterceptedContinuation(arg0: $Continuation<never>): void;
         static Key: $CoroutineDispatcher$Key;
         constructor();

@@ -23,9 +23,9 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer" {
      */
     export type $RemoveRecipesKubeEvent_ = ((category: $ResourceLocation, recipesToRemove: $ResourceLocation[]) => void);
     export class $RecipeViewerEntryType {
-        static fromString(id: $Object): $RecipeViewerEntryType;
         wrapEntry(from: $Object): $Object;
         getBase(from: $Object): $Object;
+        static fromString(id: $Object): $RecipeViewerEntryType;
         wrapPredicate(from: $Object): $Object;
         static ITEM: $RecipeViewerEntryType;
         entryType: $RecipeViewerEntryType$Component<never>;
@@ -64,7 +64,7 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer" {
     /**
      * Values that may be interpreted as {@link $RecipeViewerEntryType$Component}.
      */
-    export type $RecipeViewerEntryType$Component_<T> = { type?: $TypeInfo_, streamCodec?: $StreamCodec<never, any>, empty?: $Predicate_<any>,  } | [type?: $TypeInfo_, streamCodec?: $StreamCodec<never, any>, empty?: $Predicate_<any>, ];
+    export type $RecipeViewerEntryType$Component_<T> = { empty?: $Predicate_<any>, type?: $TypeInfo_, streamCodec?: $StreamCodec<never, any>,  } | [empty?: $Predicate_<any>, type?: $TypeInfo_, streamCodec?: $StreamCodec<never, any>, ];
     export class $RemoveCategoriesKubeEvent {
     }
     export interface $RemoveCategoriesKubeEvent extends $KubeEvent {

@@ -58,15 +58,15 @@ declare module "@package/com/simibubi/create/content/redstone/analogLever" {
         get clientState(): $LerpedFloat;
     }
     export class $AnalogLeverBlock extends $FaceAttachedHorizontalDirectionalBlock implements $IBE<$AnalogLeverBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$AnalogLeverBlockEntity>;
         getBlockEntityClass(): $Class<$AnalogLeverBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$AnalogLeverBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$AnalogLeverBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$AnalogLeverBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($AnalogLeverBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$AnalogLeverBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $AnalogLeverBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$AnalogLeverBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($AnalogLeverBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$AnalogLeverBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -98,7 +98,7 @@ declare module "@package/com/simibubi/create/content/redstone/analogLever" {
         static FACE: $EnumProperty<$AttachFace>;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$AnalogLeverBlockEntity>;
         get blockEntityClass(): $Class<$AnalogLeverBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$AnalogLeverBlockEntity>;
     }
 }

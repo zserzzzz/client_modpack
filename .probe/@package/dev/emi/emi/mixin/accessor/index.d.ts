@@ -34,17 +34,17 @@ declare module "@package/dev/emi/emi/mixin/accessor" {
     export class $HandledScreenAccessor {
     }
     export interface $HandledScreenAccessor {
+        getY(): number;
+        getX(): number;
+        getBackgroundHeight(): number;
+        invokeGetSlotAt(arg0: number, arg1: number): $Slot;
         getBackgroundWidth(): number;
         getFocusedSlot(): $Slot;
-        invokeGetSlotAt(arg0: number, arg1: number): $Slot;
-        getX(): number;
-        getY(): number;
-        getBackgroundHeight(): number;
+        get y(): number;
+        get x(): number;
+        get backgroundHeight(): number;
         get backgroundWidth(): number;
         get focusedSlot(): $Slot;
-        get x(): number;
-        get y(): number;
-        get backgroundHeight(): number;
     }
     export class $BakedModelManagerAccessor {
     }
@@ -119,11 +119,11 @@ declare module "@package/dev/emi/emi/mixin/accessor" {
     export class $BrewingRecipeRegistryAccessor {
     }
     export interface $BrewingRecipeRegistryAccessor {
-        getItemRecipes(): $List<$PotionBrewing$Mix<$Item>>;
         getPotionRecipes(): $List<$PotionBrewing$Mix<$Potion>>;
         getPotionTypes(): $List<$Ingredient>;
-        get itemRecipes(): $List<$PotionBrewing$Mix<$Item>>;
+        getItemRecipes(): $List<$PotionBrewing$Mix<$Item>>;
         get potionRecipes(): $List<$PotionBrewing$Mix<$Potion>>;
         get potionTypes(): $List<$Ingredient>;
+        get itemRecipes(): $List<$PotionBrewing$Mix<$Item>>;
     }
 }

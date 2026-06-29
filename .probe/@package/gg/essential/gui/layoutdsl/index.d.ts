@@ -20,9 +20,9 @@ declare module "@package/gg/essential/gui/layoutdsl" {
      */
     export type $Modifier_ = ((arg0: $UIComponent) => $Function0_<$Unit>);
     export class $LayoutScope$IfDsl {
-        setCache$essential_elementa_layoutdsl(arg0: boolean): void;
         getElseState$essential_elementa_layoutdsl(): $State<boolean>;
         getCache$essential_elementa_layoutdsl(): boolean;
+        setCache$essential_elementa_layoutdsl(arg0: boolean): void;
         constructor(arg0: $State_<boolean>, arg1: boolean);
         get elseState$essential_elementa_layoutdsl(): $State<boolean>;
     }
@@ -31,28 +31,28 @@ declare module "@package/gg/essential/gui/layoutdsl" {
         applyToComponent(arg0: $UIComponent): $Function0<$Unit>;
     }
     export class $LayoutScope {
-        static if_$default(arg0: $LayoutScope, arg1: $State_<any>, arg2: boolean, arg3: $Function1_<any, any>, arg4: number, arg5: $Object): $LayoutScope$IfDsl;
-        static if_$default(arg0: $LayoutScope, arg1: $State$1<any>, arg2: boolean, arg3: $Function1_<any, any>, arg4: number, arg5: $Object): $LayoutScope$IfDsl;
-        static invoke$default(arg0: $LayoutScope, arg1: $UIComponent, arg2: $Modifier_, arg3: $Function1_<any, any>, arg4: number, arg5: $Object): $UIComponent;
-        static invoke$default(arg0: $LayoutScope, arg1: $LayoutDslComponent_, arg2: $Modifier_, arg3: number, arg4: $Object): void;
-        static bind$default(arg0: $LayoutScope, arg1: $State$1<any>, arg2: boolean, arg3: $Function2_<any, any, any>, arg4: number, arg5: $Object): void;
-        static bind$default(arg0: $LayoutScope, arg1: $State_<any>, arg2: boolean, arg3: $Function2_<any, any, any>, arg4: number, arg5: $Object): void;
-        invoke(arg0: $LayoutDslComponent_, arg1: $Modifier_): void;
         invoke<T extends $UIComponent>(arg0: T, arg1: $Modifier_, arg2: $Function1_<$LayoutScope, $Unit>): T;
+        invoke(arg0: $LayoutDslComponent_, arg1: $Modifier_): void;
         forEach<T>(arg0: $State_<$TrackedList<T>>, arg1: boolean, arg2: $Function2_<$LayoutScope, T, $Unit>): void;
         bind<T>(arg0: $State$1<T>, arg1: boolean, arg2: $Function2_<$LayoutScope, T, $Unit>): void;
         bind<T>(arg0: $State_<T>, arg1: boolean, arg2: $Function2_<$LayoutScope, T, $Unit>): void;
         "else"(arg0: $LayoutScope$IfDsl, arg1: $Function1_<$LayoutScope, $Unit>): void;
-        addChild<T extends $UIComponent>(arg0: T, arg1: $Modifier_, arg2: $Function1_<$LayoutScope, $Unit>): void;
-        getContainerDontUseThisUnlessYouReallyHaveTo(): $UIComponent;
-        if_(arg0: $State$1<boolean>, arg1: boolean, arg2: $Function1_<$LayoutScope, $Unit>): $LayoutScope$IfDsl;
-        if_(arg0: $State_<boolean>, arg1: boolean, arg2: $Function1_<$LayoutScope, $Unit>): $LayoutScope$IfDsl;
         ifNotNull<T>(arg0: $State$1<T>, arg1: boolean, arg2: $Function2_<$LayoutScope, T, $Unit>): $LayoutScope$IfDsl;
         ifNotNull<T>(arg0: $State_<T>, arg1: boolean, arg2: $Function2_<$LayoutScope, T, $Unit>): $LayoutScope$IfDsl;
-        static ifNotNull$default(arg0: $LayoutScope, arg1: $State$1<any>, arg2: boolean, arg3: $Function2_<any, any, any>, arg4: number, arg5: $Object): $LayoutScope$IfDsl;
-        static ifNotNull$default(arg0: $LayoutScope, arg1: $State_<any>, arg2: boolean, arg3: $Function2_<any, any, any>, arg4: number, arg5: $Object): $LayoutScope$IfDsl;
-        static addChild$default(arg0: $LayoutScope, arg1: $UIComponent, arg2: $Modifier_, arg3: $Function1_<any, any>, arg4: number, arg5: $Object): void;
+        if_(arg0: $State_<boolean>, arg1: boolean, arg2: $Function1_<$LayoutScope, $Unit>): $LayoutScope$IfDsl;
+        if_(arg0: $State$1<boolean>, arg1: boolean, arg2: $Function1_<$LayoutScope, $Unit>): $LayoutScope$IfDsl;
+        addChild<T extends $UIComponent>(arg0: T, arg1: $Modifier_, arg2: $Function1_<$LayoutScope, $Unit>): void;
+        getContainerDontUseThisUnlessYouReallyHaveTo(): $UIComponent;
+        static bind$default(arg0: $LayoutScope, arg1: $State_<any>, arg2: boolean, arg3: $Function2_<any, any, any>, arg4: number, arg5: $Object): void;
+        static bind$default(arg0: $LayoutScope, arg1: $State$1<any>, arg2: boolean, arg3: $Function2_<any, any, any>, arg4: number, arg5: $Object): void;
+        static if_$default(arg0: $LayoutScope, arg1: $State_<any>, arg2: boolean, arg3: $Function1_<any, any>, arg4: number, arg5: $Object): $LayoutScope$IfDsl;
+        static if_$default(arg0: $LayoutScope, arg1: $State$1<any>, arg2: boolean, arg3: $Function1_<any, any>, arg4: number, arg5: $Object): $LayoutScope$IfDsl;
+        static invoke$default(arg0: $LayoutScope, arg1: $UIComponent, arg2: $Modifier_, arg3: $Function1_<any, any>, arg4: number, arg5: $Object): $UIComponent;
+        static invoke$default(arg0: $LayoutScope, arg1: $LayoutDslComponent_, arg2: $Modifier_, arg3: number, arg4: $Object): void;
         static forEach$default(arg0: $LayoutScope, arg1: $State_<any>, arg2: boolean, arg3: $Function2_<any, any, any>, arg4: number, arg5: $Object): void;
+        static addChild$default(arg0: $LayoutScope, arg1: $UIComponent, arg2: $Modifier_, arg3: $Function1_<any, any>, arg4: number, arg5: $Object): void;
+        static ifNotNull$default(arg0: $LayoutScope, arg1: $State_<any>, arg2: boolean, arg3: $Function2_<any, any, any>, arg4: number, arg5: $Object): $LayoutScope$IfDsl;
+        static ifNotNull$default(arg0: $LayoutScope, arg1: $State$1<any>, arg2: boolean, arg3: $Function2_<any, any, any>, arg4: number, arg5: $Object): $LayoutScope$IfDsl;
         getStateScope(): $ReferenceHolder;
         constructor(arg0: $UIComponent, arg1: $LayoutScope, arg2: $ReferenceHolder_);
         get containerDontUseThisUnlessYouReallyHaveTo(): $UIComponent;

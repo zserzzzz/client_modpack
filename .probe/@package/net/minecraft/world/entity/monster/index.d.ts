@@ -1,7 +1,7 @@
 import { $ZombieAttackGoal, $MeleeAttackGoal, $GoalSelector, $RandomStrollGoal, $RangedAttackGoal, $MoveToBlockGoal, $RangedBowAttackGoal, $OpenDoorGoal, $RemoveBlockGoal, $BreakDoorGoal, $Goal } from "@package/net/minecraft/world/entity/ai/goal";
 import { $SensorType, $Sensor } from "@package/net/minecraft/world/entity/ai/sensing";
 import { $MoveControl$Operation, $JumpControl, $BodyRotationControl, $MoveControl, $LookControl } from "@package/net/minecraft/world/entity/ai/control";
-import { $Tag_, $CompoundTag_ } from "@package/net/minecraft/nbt";
+import { $Tag_, $CompoundTag, $CompoundTag_ } from "@package/net/minecraft/nbt";
 import { $EntityType_, $VariantHolder, $EntityDimensions, $Entity$RemovalReason, $LivingEntity, $Saddleable, $FlyingMob, $AgeableMob, $WalkAnimationState, $Mob, $PowerableMob, $ItemSteerable, $Pose, $PortalProcessor, $SpawnGroupData, $Entity, $PathfinderMob, $Shearable, $MobSpawnType_, $NeutralMob, $TraceableEntity } from "@package/net/minecraft/world/entity";
 import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
 import { $CallbackInfo, $CallbackInfoReturnable } from "@package/org/spongepowered/asm/mixin/injection/callback";
@@ -51,24 +51,25 @@ export * as hoglin from "@package/net/minecraft/world/entity/monster/hoglin";
 
 declare module "@package/net/minecraft/world/entity/monster" {
     export class $Drowned extends $Zombie implements $RangedAttackMob {
-        /**
-         * If a rider of this entity can interact with this entity. Should return true on the
-         * ridden entity if so.
-         */
-        wantsToSwim(): boolean;
-        /**
-         * If a rider of this entity can interact with this entity. Should return true on the
-         * ridden entity if so.
-         */
-        closeToNextPos(): boolean;
         static access$002(arg0: $Drowned, arg1: $PathNavigation): $PathNavigation;
-        setSearchingForLand(searchingForLand: boolean): void;
-        static checkDrownedSpawnRules(drowned: $EntityType_<$Drowned>, serverLevel: $ServerLevelAccessor, mobSpawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
         okTarget(target: $LivingEntity | null): boolean;
         /**
          * Attack the specified entity using a ranged attack.
          */
         performRangedAttack(target: $LivingEntity, distanceFactor: number): void;
+        /**
+         * If a rider of this entity can interact with this entity. Should return true on the
+         * ridden entity if so.
+         */
+        closeToNextPos(): boolean;
+        /**
+         * If a rider of this entity can interact with this entity. Should return true on the
+         * ridden entity if so.
+         */
+        wantsToSwim(): boolean;
+        static checkDrownedSpawnRules(drowned: $EntityType_<$Drowned>, serverLevel: $ServerLevelAccessor, mobSpawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
+        setSearchingForLand(searchingForLand: boolean): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -246,6 +247,7 @@ declare module "@package/net/minecraft/world/entity/monster" {
     export class $Endermite extends $Monster {
         static createAttributes(): $AttributeSupplier$Builder;
         static checkEndermiteSpawnRules(endermite: $EntityType_<$Endermite>, serverLevel: $LevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -412,8 +414,9 @@ declare module "@package/net/minecraft/world/entity/monster" {
         constructor(entityType: $EntityType_<$Endermite>, level: $Level_);
     }
     export class $Vindicator extends $AbstractIllager {
-        static createAttributes(): $AttributeSupplier$Builder;
         static access$000(arg0: $Vindicator): $RandomSource;
+        static createAttributes(): $AttributeSupplier$Builder;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -597,42 +600,43 @@ declare module "@package/net/minecraft/world/entity/monster" {
         getSize(): number;
         setSize(size: number, resetHealth: boolean): void;
         /**
-         * Returns `true` if the slime makes a sound when it jumps (based upon the slime's size)
+         * Returns the volume for the sounds this mob makes.
          */
-        isTiny(): boolean;
-        dealDamage(livingEntity: $LivingEntity): void;
-        static checkSlimeSpawnRules(slime: $EntityType_<$Slime>, level: $LevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
+        getSoundPitch(): number;
+        /**
+         * Gets the amount of time the slime needs to wait between jumps.
+         */
+        getJumpDelay(): number;
+        getSquishSound(): $SoundEvent;
         /**
          * Returns `true` if the slime makes a sound when it jumps (based upon the slime's size)
          */
-        spawnCustomParticles(): boolean;
-        getSquishSound(): $SoundEvent;
+        isDealsDamage(): boolean;
+        getJumpSound(): $SoundEvent;
+        getParticleType(): $ParticleOptions;
         /**
          * Returns the volume for the sounds this mob makes.
          */
         getAttackDamage(): number;
         /**
-         * Gets the amount of time the slime needs to wait between jumps.
-         */
-        getJumpDelay(): number;
-        getJumpSound(): $SoundEvent;
-        /**
          * Causes this entity to do an upwards motion (jumping).
          */
         decreaseSquish(): void;
         /**
-         * Returns the volume for the sounds this mob makes.
-         */
-        getSoundPitch(): number;
-        /**
-         * Returns `true` if the slime makes a sound when it jumps (based upon the slime's size)
-         */
-        isDealsDamage(): boolean;
-        /**
          * Returns `true` if the slime makes a sound when it jumps (based upon the slime's size)
          */
         doPlayJumpSound(): boolean;
-        getParticleType(): $ParticleOptions;
+        /**
+         * Returns `true` if the slime makes a sound when it jumps (based upon the slime's size)
+         */
+        isTiny(): boolean;
+        static checkSlimeSpawnRules(slime: $EntityType_<$Slime>, level: $LevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
+        /**
+         * Returns `true` if the slime makes a sound when it jumps (based upon the slime's size)
+         */
+        spawnCustomParticles(): boolean;
+        dealDamage(livingEntity: $LivingEntity): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -802,44 +806,45 @@ declare module "@package/net/minecraft/world/entity/monster" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(entityType: $EntityType_<$Slime>, level: $Level_);
-        get tiny(): boolean;
-        get squishSound(): $SoundEvent;
-        get attackDamage(): number;
-        get jumpDelay(): number;
-        get jumpSound(): $SoundEvent;
         get soundPitch(): number;
+        get jumpDelay(): number;
+        get squishSound(): $SoundEvent;
         get dealsDamage(): boolean;
+        get jumpSound(): $SoundEvent;
         get particleType(): $ParticleOptions;
+        get attackDamage(): number;
+        get tiny(): boolean;
     }
     export class $Shulker extends $AbstractGolem implements $VariantHolder<($DyeColor) | undefined>, $Enemy {
-        static createAttributes(): $AttributeSupplier$Builder;
+        setVariant(variant: ($DyeColor_) | undefined): void;
         static access$000(arg0: $Shulker): $RandomSource;
         static access$300(arg0: $Shulker): $RandomSource;
-        setVariant(variant: ($DyeColor_) | undefined): void;
-        getColor(): $DyeColor;
+        static access$400(arg0: $Shulker): $RandomSource;
         static access$200(arg0: $Shulker): $RandomSource;
         static access$100(arg0: $Shulker): $RandomSource;
-        static access$400(arg0: $Shulker): $RandomSource;
-        getRenderPosition(partial: number): ($Vec3) | undefined;
-        /**
-         * Gets the horizontal facing direction of this Entity, adjusted to take specially-treated entity types into account.
-         */
-        getAttachFace(): $Direction;
-        /**
-         * Applies or removes armor modifier
-         */
-        setRawPeekAmount(peekAmount: number): void;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
          */
         teleportSomewhere(): boolean;
+        /**
+         * Applies or removes armor modifier
+         */
+        setRawPeekAmount(peekAmount: number): void;
+        getRenderPosition(partial: number): ($Vec3) | undefined;
+        /**
+         * Gets the horizontal facing direction of this Entity, adjusted to take specially-treated entity types into account.
+         */
+        getAttachFace(): $Direction;
         canStayAt(pos: $BlockPos_, facing: $Direction_): boolean;
+        getColor(): $DyeColor;
         static getProgressDeltaAabb(scale: number, expansionDirection: $Direction_, currentPeek: number, oldPeek: number): $AABB;
-        static getProgressAabb(scale: number, expansionDirection: $Direction_, peek: number): $AABB;
-        getClientPeekAmount(partialTick: number): number;
         findAttachableSurface(pos: $BlockPos_): $Direction;
+        getClientPeekAmount(partialTick: number): number;
+        static getProgressAabb(scale: number, expansionDirection: $Direction_, peek: number): $AABB;
+        static createAttributes(): $AttributeSupplier$Builder;
         getVariant(): ($DyeColor) | undefined;
+        serializeNBT(arg0: $HolderLookup$Provider): ($DyeColor) | undefined;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static DATA_PEEK_ID: $EntityDataAccessor<number>;
@@ -1008,12 +1013,13 @@ declare module "@package/net/minecraft/world/entity/monster" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(entityType: $EntityType_<$Shulker>, level: $Level_);
-        get color(): $DyeColor;
-        get attachFace(): $Direction;
         set rawPeekAmount(value: number);
+        get attachFace(): $Direction;
+        get color(): $DyeColor;
     }
     export class $AbstractIllager extends $Raider {
         getArmPose(): $AbstractIllager$IllagerArmPose;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -1186,23 +1192,24 @@ declare module "@package/net/minecraft/world/entity/monster" {
     export class $Evoker$EvokerCastingSpellGoal extends $SpellcasterIllager$SpellcasterCastingSpellGoal {
     }
     export class $Zoglin extends $Monster implements $Enemy, $HoglinBase {
-        static createAttributes(): $AttributeSupplier$Builder;
-        /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
-         */
-        playAngrySound(): void;
-        /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
-         */
-        updateActivity(): void;
         /**
          * If Animal, checks if the age timer is negative
          */
         isAdult(): boolean;
         /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        playAngrySound(): void;
+        /**
          * Returns the current armor value as determined by a call to InventoryPlayer.getTotalArmorValue
          */
         getAttackAnimationRemainingTicks(): number;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        updateActivity(): void;
+        static createAttributes(): $AttributeSupplier$Builder;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -1382,6 +1389,7 @@ declare module "@package/net/minecraft/world/entity/monster" {
     export class $Drowned$DrownedSwimUpGoal extends $Goal {
     }
     export class $WitherSkeleton extends $AbstractSkeleton {
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -1550,20 +1558,11 @@ declare module "@package/net/minecraft/world/entity/monster" {
         constructor(entityType: $EntityType_<$WitherSkeleton>, level: $Level_);
     }
     export class $AbstractSkeleton extends $Monster implements $RangedAttackMob {
-        static createAttributes(): $AttributeSupplier$Builder;
-        /**
-         * Returns the current armor value as determined by a call to InventoryPlayer.getTotalArmorValue
-         */
-        getAttackInterval(): number;
-        /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
-         */
-        reassessWeaponGoal(): void;
-        getStepSound(): $SoundEvent;
         /**
          * Returns the current armor value as determined by a call to InventoryPlayer.getTotalArmorValue
          */
         getHardAttackInterval(): number;
+        getStepSound(): $SoundEvent;
         getArrow(arrow: $ItemStack_, velocity: number, weapon: $ItemStack_ | null): $AbstractArrow;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
@@ -1574,6 +1573,16 @@ declare module "@package/net/minecraft/world/entity/monster" {
          * Attack the specified entity using a ranged attack.
          */
         performRangedAttack(target: $LivingEntity, distanceFactor: number): void;
+        static createAttributes(): $AttributeSupplier$Builder;
+        /**
+         * Returns the current armor value as determined by a call to InventoryPlayer.getTotalArmorValue
+         */
+        getAttackInterval(): number;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        reassessWeaponGoal(): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -1740,10 +1749,10 @@ declare module "@package/net/minecraft/world/entity/monster" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(entityType: $EntityType_<$AbstractSkeleton>, level: $Level_);
-        get attackInterval(): number;
-        get stepSound(): $SoundEvent;
         get hardAttackInterval(): number;
+        get stepSound(): $SoundEvent;
         get shaking(): boolean;
+        get attackInterval(): number;
     }
     export class $Drowned$DrownedMoveControl extends $MoveControl {
         speedModifier: number;
@@ -1772,6 +1781,7 @@ declare module "@package/net/minecraft/world/entity/monster" {
          * Returns the current armor value as determined by a call to InventoryPlayer.getTotalArmorValue
          */
         getSpellCastingTime(): number;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -2008,6 +2018,11 @@ declare module "@package/net/minecraft/world/entity/monster" {
         verticalSearchStart: number;
     }
     export class $ZombifiedPiglin extends $Zombie implements $NeutralMob {
+        /**
+         * Returns the current armor value as determined by a call to InventoryPlayer.getTotalArmorValue
+         */
+        getRemainingPersistentAngerTime(): number;
+        setRemainingPersistentAngerTime(time: number): void;
         static checkZombifiedPiglinSpawnRules(zombifiedPiglin: $EntityType_<$ZombifiedPiglin>, level: $LevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
         /**
          * Dismounts this entity from the entity it is riding.
@@ -2016,19 +2031,14 @@ declare module "@package/net/minecraft/world/entity/monster" {
         setPersistentAngerTarget(target: $UUID_ | null): void;
         getPersistentAngerTarget(): $UUID;
         /**
-         * Returns the current armor value as determined by a call to InventoryPlayer.getTotalArmorValue
-         */
-        getRemainingPersistentAngerTime(): number;
-        setRemainingPersistentAngerTime(time: number): void;
-        /**
          * Dismounts this entity from the entity it is riding.
          */
-        forgetCurrentTargetAndRefreshUniversalAnger(): void;
+        stopBeingAngry(): void;
+        readPersistentAngerSaveData(level: $Level_, tag: $CompoundTag_): void;
         playerDied(player: $Player): void;
         addPersistentAngerSaveData(compound: $CompoundTag_): void;
         isAngryAtAllPlayers(level: $Level_): boolean;
         updatePersistentAnger(serverLevel: $ServerLevel, updateAnger: boolean): void;
-        readPersistentAngerSaveData(level: $Level_, tag: $CompoundTag_): void;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
@@ -2038,7 +2048,8 @@ declare module "@package/net/minecraft/world/entity/monster" {
         /**
          * Dismounts this entity from the entity it is riding.
          */
-        stopBeingAngry(): void;
+        forgetCurrentTargetAndRefreshUniversalAnger(): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -2226,18 +2237,19 @@ declare module "@package/net/minecraft/world/entity/monster" {
         static MIN_SPEED: number;
     }
     export class $Ghast extends $FlyingMob implements $Enemy {
-        static createAttributes(): $AttributeSupplier$Builder;
-        setCharging(charging: boolean): void;
-        /**
-         * Will return how many at most can spawn in a chunk at once.
-         */
-        getExplosionPower(): number;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
          */
         isCharging(): boolean;
+        setCharging(charging: boolean): void;
+        /**
+         * Will return how many at most can spawn in a chunk at once.
+         */
+        getExplosionPower(): number;
+        static createAttributes(): $AttributeSupplier$Builder;
         static checkGhastSpawnRules(ghast: $EntityType_<$Ghast>, level: $LevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -2417,17 +2429,12 @@ declare module "@package/net/minecraft/world/entity/monster" {
     export class $Vex$VexChargeAttackGoal extends $Goal {
     }
     export class $Pillager extends $AbstractIllager implements $CrossbowAttackMob, $InventoryCarrier {
-        static createAttributes(): $AttributeSupplier$Builder;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
          */
         isChargingCrossbow(): boolean;
         getInventory(): $SimpleContainer;
-        /**
-         * Attack the specified entity using a ranged attack.
-         */
-        performRangedAttack(target: $LivingEntity, distanceFactor: number): void;
         setChargingCrossbow(isCharging: boolean): void;
         /**
          * Dismounts this entity from the entity it is riding.
@@ -2436,9 +2443,15 @@ declare module "@package/net/minecraft/world/entity/monster" {
         /**
          * Attack the specified entity using a ranged attack.
          */
+        performRangedAttack(target: $LivingEntity, distanceFactor: number): void;
+        static createAttributes(): $AttributeSupplier$Builder;
+        /**
+         * Attack the specified entity using a ranged attack.
+         */
         performCrossbowAttack(target: $LivingEntity, distanceFactor: number): void;
-        readInventoryFromTag(tag: $CompoundTag_, levelRegistry: $HolderLookup$Provider): void;
         writeInventoryToTag(tag: $CompoundTag_, levelRegistry: $HolderLookup$Provider): void;
+        readInventoryFromTag(tag: $CompoundTag_, levelRegistry: $HolderLookup$Provider): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -2609,11 +2622,6 @@ declare module "@package/net/minecraft/world/entity/monster" {
         get inventory(): $SimpleContainer;
     }
     export class $Ravager extends $Raider {
-        static createAttributes(): $AttributeSupplier$Builder;
-        /**
-         * Returns the current armor value as determined by a call to InventoryPlayer.getTotalArmorValue
-         */
-        getStunnedTick(): number;
         /**
          * Returns the current armor value as determined by a call to InventoryPlayer.getTotalArmorValue
          */
@@ -2621,7 +2629,13 @@ declare module "@package/net/minecraft/world/entity/monster" {
         /**
          * Returns the current armor value as determined by a call to InventoryPlayer.getTotalArmorValue
          */
+        getStunnedTick(): number;
+        /**
+         * Returns the current armor value as determined by a call to InventoryPlayer.getTotalArmorValue
+         */
         getRoarTick(): number;
+        static createAttributes(): $AttributeSupplier$Builder;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -2790,21 +2804,22 @@ declare module "@package/net/minecraft/world/entity/monster" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(entityType: $EntityType_<$Ravager>, level: $Level_);
-        get stunnedTick(): number;
         get attackTick(): number;
+        get stunnedTick(): number;
         get roarTick(): number;
     }
     export class $Guardian$GuardianAttackGoal extends $Goal {
     }
     export class $Evoker extends $SpellcasterIllager {
-        static createAttributes(): $AttributeSupplier$Builder;
         static access$000(arg0: $Evoker): $RandomSource;
         static access$300(arg0: $Evoker): $RandomSource;
-        setWololoTarget(wololoTarget: $Sheep | null): void;
-        getWololoTarget(): $Sheep;
+        static access$400(arg0: $Evoker): $RandomSource;
         static access$200(arg0: $Evoker): $RandomSource;
         static access$100(arg0: $Evoker): $RandomSource;
-        static access$400(arg0: $Evoker): $RandomSource;
+        getWololoTarget(): $Sheep;
+        setWololoTarget(wololoTarget: $Sheep | null): void;
+        static createAttributes(): $AttributeSupplier$Builder;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -2975,20 +2990,21 @@ declare module "@package/net/minecraft/world/entity/monster" {
         constructor(entityType: $EntityType_<$Evoker>, level: $Level_);
     }
     export class $Witch extends $Raider implements $RangedAttackMob {
-        static createAttributes(): $AttributeSupplier$Builder;
+        /**
+         * Set whether this witch is aggressive at an entity.
+         */
+        setUsingItem(usingItem: boolean): void;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
          */
         isDrinkingPotion(): boolean;
         /**
-         * Set whether this witch is aggressive at an entity.
-         */
-        setUsingItem(usingItem: boolean): void;
-        /**
          * Attack the specified entity using a ranged attack.
          */
         performRangedAttack(target: $LivingEntity, distanceFactor: number): void;
+        static createAttributes(): $AttributeSupplier$Builder;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -3156,30 +3172,31 @@ declare module "@package/net/minecraft/world/entity/monster" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(entityType: $EntityType_<$Witch>, level: $Level_);
-        get drinkingPotion(): boolean;
         set usingItem(value: boolean);
+        get drinkingPotion(): boolean;
     }
     export class $Vex extends $Monster implements $TraceableEntity {
-        static createAttributes(): $AttributeSupplier$Builder;
-        static access$000(arg0: $Vex): $RandomSource;
-        static access$300(arg0: $Vex): $RandomSource;
         getOwner(): $Mob;
         setOwner(owner: $Mob): void;
-        setLimitedLife(limitedLifeTicks: number): void;
-        setBoundOrigin(boundOrigin: $BlockPos_ | null): void;
+        static access$000(arg0: $Vex): $RandomSource;
+        static access$300(arg0: $Vex): $RandomSource;
+        static access$500(arg0: $Vex): $RandomSource;
+        static access$600(arg0: $Vex): $RandomSource;
+        static access$700(arg0: $Vex): $MoveControl;
+        static access$400(arg0: $Vex): $RandomSource;
         static access$200(arg0: $Vex): $MoveControl;
         static access$100(arg0: $Vex): $MoveControl;
-        static access$500(arg0: $Vex): $RandomSource;
-        static access$400(arg0: $Vex): $RandomSource;
-        static access$700(arg0: $Vex): $MoveControl;
-        static access$600(arg0: $Vex): $RandomSource;
-        getBoundOrigin(): $BlockPos;
-        setIsCharging(charging: boolean): void;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
          */
         isCharging(): boolean;
+        setBoundOrigin(boundOrigin: $BlockPos_ | null): void;
+        setLimitedLife(limitedLifeTicks: number): void;
+        getBoundOrigin(): $BlockPos;
+        setIsCharging(charging: boolean): void;
+        static createAttributes(): $AttributeSupplier$Builder;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -3348,8 +3365,8 @@ declare module "@package/net/minecraft/world/entity/monster" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(entityType: $EntityType_<$Vex>, level: $Level_);
-        set limitedLife(value: number);
         get charging(): boolean;
+        set limitedLife(value: number);
     }
     export class $Spider$SpiderTargetGoal<T extends $LivingEntity> extends $NearestAttackableTargetGoal<T> {
         randomInterval: number;
@@ -3375,18 +3392,30 @@ declare module "@package/net/minecraft/world/entity/monster" {
         static MIN_SPEED: number;
     }
     export class $Bogged extends $AbstractSkeleton implements $Shearable {
-        shear(source: $SoundSource_): void;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
          */
         readyForShearing(): boolean;
+        shear(source: $SoundSource_): void;
         setSheared(sheared: boolean): void;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
          */
         isSheared(): boolean;
+        /**
+         * Performs the logic used to drop a shear result into the world at the correct position and with the proper movement.
+         * 
+         * Entities may respect their internal position values instead of relying on the `pos` parameter.
+         */
+        spawnShearedDrop(level: $Level_, pos: $BlockPos_, drop: $ItemStack_): void;
+        /**
+         * Checks if this object can be sheared.
+         * 
+         * For example, Sheep return false when they have no wool.
+         */
+        isShearable(player: $Player, item: $ItemStack_, level: $Level_, pos: $BlockPos_): boolean;
         /**
          * Shears this object. This function is called on both sides, and is responsible for performing any and all actions that happen when sheared, except spawning drops.
          * 
@@ -3395,18 +3424,7 @@ declare module "@package/net/minecraft/world/entity/monster" {
          * Entities may respect their internal position values instead of relying on the `pos` parameter.
          */
         onSheared(player: $Player, item: $ItemStack_, level: $Level_, pos: $BlockPos_): $List<$ItemStack>;
-        /**
-         * Checks if this object can be sheared.
-         * 
-         * For example, Sheep return false when they have no wool.
-         */
-        isShearable(player: $Player, item: $ItemStack_, level: $Level_, pos: $BlockPos_): boolean;
-        /**
-         * Performs the logic used to drop a shear result into the world at the correct position and with the proper movement.
-         * 
-         * Entities may respect their internal position values instead of relying on the `pos` parameter.
-         */
-        spawnShearedDrop(level: $Level_, pos: $BlockPos_, drop: $ItemStack_): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -3589,17 +3607,12 @@ declare module "@package/net/minecraft/world/entity/monster" {
         static MIN_SPEED: number;
     }
     export class $PatrollingMonster extends $Monster {
-        /**
-         * If a rider of this entity can interact with this entity. Should return true on the
-         * ridden entity if so.
-         */
-        canBeLeader(): boolean;
-        /**
-         * If a rider of this entity can interact with this entity. Should return true on the
-         * ridden entity if so.
-         */
-        canJoinPatrol(): boolean;
         setPatrolLeader(patrolLeader: boolean): void;
+        /**
+         * If a rider of this entity can interact with this entity. Should return true on the
+         * ridden entity if so.
+         */
+        isPatrolLeader(): boolean;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
@@ -3609,7 +3622,13 @@ declare module "@package/net/minecraft/world/entity/monster" {
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
          */
-        isPatrolLeader(): boolean;
+        canJoinPatrol(): boolean;
+        /**
+         * If a rider of this entity can interact with this entity. Should return true on the
+         * ridden entity if so.
+         */
+        canBeLeader(): boolean;
+        setPatrolTarget(patrolTarget: $BlockPos_): void;
         getPatrolTarget(): $BlockPos;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
@@ -3620,9 +3639,9 @@ declare module "@package/net/minecraft/world/entity/monster" {
          * Dismounts this entity from the entity it is riding.
          */
         findPatrolTarget(): void;
-        setPatrolTarget(patrolTarget: $BlockPos_): void;
         setPatrolling(patrolLeader: boolean): void;
         static checkPatrollingMonsterSpawnRules(patrollingMonster: $EntityType_<$PatrollingMonster>, level: $LevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -3823,15 +3842,16 @@ declare module "@package/net/minecraft/world/entity/monster" {
         constructor(mob: T, speedModifier: number, arg2: number);
     }
     export class $Spider extends $Monster {
+        /**
+         * Returns `true` if the WatchableObject (Byte) is 0x01 otherwise returns `false`. The WatchableObject is updated using setBesideClimbableBlock.
+         */
+        isClimbing(): boolean;
         static createAttributes(): $AttributeSupplier$Builder;
         /**
          * Updates the WatchableObject (Byte) created in entityInit(), setting it to 0x01 if par1 is true or 0x00 if it is false.
          */
         setClimbing(climbing: boolean): void;
-        /**
-         * Returns `true` if the WatchableObject (Byte) is 0x01 otherwise returns `false`. The WatchableObject is updated using setBesideClimbableBlock.
-         */
-        isClimbing(): boolean;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -4004,25 +4024,17 @@ declare module "@package/net/minecraft/world/entity/monster" {
     export class $Drowned$DrownedGoToWaterGoal extends $Goal {
     }
     export class $EnderMan extends $Monster implements $NeutralMob {
-        static createAttributes(): $AttributeSupplier$Builder;
         /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         * Returns the current armor value as determined by a call to InventoryPlayer.getTotalArmorValue
          */
-        playStareSound(): void;
-        setCarriedBlock(state: $BlockState_ | null): void;
-        /**
-         * Checks to see if this enderman should be attacking this player
-         */
-        isLookingAtMe(player: $Player): boolean;
-        getCarriedBlock(): $BlockState;
-        /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
-         */
-        setBeingStaredAt(): void;
+        getRemainingPersistentAngerTime(): number;
+        setRemainingPersistentAngerTime(time: number): void;
         /**
          * Teleport the enderman to a random nearby position
          */
-        hasBeenStaredAt(): boolean;
+        isCreepy(): boolean;
+        getCarriedBlock(): $BlockState;
+        setCarriedBlock(state: $BlockState_ | null): void;
         /**
          * Teleport the enderman to another entity
          */
@@ -4030,11 +4042,23 @@ declare module "@package/net/minecraft/world/entity/monster" {
         /**
          * Teleport the enderman to a random nearby position
          */
-        teleport(): boolean;
+        hasBeenStaredAt(): boolean;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        setBeingStaredAt(): void;
+        /**
+         * Checks to see if this enderman should be attacking this player
+         */
+        isLookingAtMe(player: $Player): boolean;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        playStareSound(): void;
         /**
          * Teleport the enderman to a random nearby position
          */
-        isCreepy(): boolean;
+        teleport(): boolean;
         handler$bje000$vista$clearTvAnger(arg0: $UUID_, arg1: $CallbackInfo): void;
         /**
          * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
@@ -4042,20 +4066,16 @@ declare module "@package/net/minecraft/world/entity/monster" {
         startPersistentAngerTimer(): void;
         setPersistentAngerTarget(target: $UUID_ | null): void;
         getPersistentAngerTarget(): $UUID;
-        /**
-         * Returns the current armor value as determined by a call to InventoryPlayer.getTotalArmorValue
-         */
-        getRemainingPersistentAngerTime(): number;
-        setRemainingPersistentAngerTime(time: number): void;
+        static createAttributes(): $AttributeSupplier$Builder;
         /**
          * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
          */
-        forgetCurrentTargetAndRefreshUniversalAnger(): void;
+        stopBeingAngry(): void;
+        readPersistentAngerSaveData(level: $Level_, tag: $CompoundTag_): void;
         playerDied(player: $Player): void;
         addPersistentAngerSaveData(compound: $CompoundTag_): void;
         isAngryAtAllPlayers(level: $Level_): boolean;
         updatePersistentAnger(serverLevel: $ServerLevel, updateAnger: boolean): void;
-        readPersistentAngerSaveData(level: $Level_, tag: $CompoundTag_): void;
         /**
          * Teleport the enderman to a random nearby position
          */
@@ -4064,7 +4084,8 @@ declare module "@package/net/minecraft/world/entity/monster" {
         /**
          * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
          */
-        stopBeingAngry(): void;
+        forgetCurrentTargetAndRefreshUniversalAnger(): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -4234,6 +4255,7 @@ declare module "@package/net/minecraft/world/entity/monster" {
     }
     export class $Stray extends $AbstractSkeleton {
         static checkStraySpawnRules(stray: $EntityType_<$Stray>, level: $ServerLevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -4407,6 +4429,7 @@ declare module "@package/net/minecraft/world/entity/monster" {
     }
     export class $Husk extends $Zombie {
         static checkHuskSpawnRules(husk: $EntityType_<$Husk>, level: $ServerLevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -4605,21 +4628,21 @@ declare module "@package/net/minecraft/world/entity/monster" {
      */
     export type $RangedAttackMob_ = ((arg0: $LivingEntity, arg1: number) => void);
     export class $Guardian extends $Monster {
-        static createAttributes(): $AttributeSupplier$Builder;
+        setMoving(moving: boolean): void;
+        getSpikesAnimation(partialTick: number): number;
         /**
          * Get number of ticks, at least during which the living entity will be silent.
          */
         getAttackDuration(): number;
         getTailAnimation(partialTick: number): number;
-        getSpikesAnimation(partialTick: number): number;
+        getFlopSound(): $SoundEvent;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
          */
         isMoving(): boolean;
-        setMoving(moving: boolean): void;
-        getFlopSound(): $SoundEvent;
-        setActiveAttackTarget(activeAttackTargetId: number): void;
+        static createAttributes(): $AttributeSupplier$Builder;
+        getAttackAnimationScale(partialTick: number): number;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
@@ -4630,8 +4653,9 @@ declare module "@package/net/minecraft/world/entity/monster" {
          */
         getClientSideAttackTime(): number;
         static checkGuardianSpawnRules(guardian: $EntityType_<$Guardian>, level: $LevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
-        getAttackAnimationScale(partialTick: number): number;
         getActiveAttackTarget(): $LivingEntity;
+        setActiveAttackTarget(activeAttackTargetId: number): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -4830,28 +4854,29 @@ declare module "@package/net/minecraft/world/entity/monster" {
         constructor(mob: $Shulker, arg1: $Mob);
     }
     export class $Strider extends $Animal implements $ItemSteerable, $Saddleable {
-        /**
-         * Returns `true` if the entity is on fire. Used by render to add the fire effect on rendering.
-         */
-        isSuffocating(): boolean;
-        static createAttributes(): $AttributeSupplier$Builder;
         setSuffocating(suffocating: boolean): void;
         /**
          * Returns `true` if the entity is on fire. Used by render to add the fire effect on rendering.
          */
-        isSaddled(): boolean;
-        /**
-         * Returns `true` if the entity is on fire. Used by render to add the fire effect on rendering.
-         */
-        boost(): boolean;
-        getBreedOffspring(level: $ServerLevel, otherParent: $AgeableMob): $Strider;
+        isSuffocating(): boolean;
+        static checkStriderSpawnRules(strider: $EntityType_<$Strider>, level: $LevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
         /**
          * Returns `true` if the entity is on fire. Used by render to add the fire effect on rendering.
          */
         isSaddleable(): boolean;
         equipSaddle(stack: $ItemStack_, soundSource: $SoundSource_ | null): void;
-        static checkStriderSpawnRules(strider: $EntityType_<$Strider>, level: $LevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
+        getBreedOffspring(level: $ServerLevel, otherParent: $AgeableMob): $Strider;
+        /**
+         * Returns `true` if the entity is on fire. Used by render to add the fire effect on rendering.
+         */
+        boost(): boolean;
+        /**
+         * Returns `true` if the entity is on fire. Used by render to add the fire effect on rendering.
+         */
+        isSaddled(): boolean;
+        static createAttributes(): $AttributeSupplier$Builder;
         getSaddleSoundEvent(): $SoundEvent;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -5021,8 +5046,8 @@ declare module "@package/net/minecraft/world/entity/monster" {
         static BASE_SAFE_FALL_DISTANCE: number;
         age: number;
         constructor(entityType: $EntityType_<$Strider>, level: $Level_);
-        get saddled(): boolean;
         get saddleable(): boolean;
+        get saddled(): boolean;
         get saddleSoundEvent(): $SoundEvent;
     }
     export class $Phantom$PhantomLookControl extends $LookControl {
@@ -5039,25 +5064,26 @@ declare module "@package/net/minecraft/world/entity/monster" {
         constructor(arg0: $Evoker);
     }
     export class $ZombieVillager extends $Zombie implements $VillagerDataHolder {
-        getVillagerData(): $VillagerData;
+        setGossips(gossips: $Tag_): void;
         /**
          * Starts conversion of this zombie villager to a villager
          */
         startConverting(conversionStarter: $UUID_ | null, villagerConversionTime: number): void;
         setVillagerXp(villagerXp: number): void;
         setVillagerData(data: $VillagerData): void;
-        setTradeOffers(tradeOffers: $MerchantOffers): void;
         /**
          * Returns the current armor value as determined by a call to InventoryPlayer.getTotalArmorValue
          */
         getVillagerXp(): number;
+        setTradeOffers(tradeOffers: $MerchantOffers): void;
+        getVillagerData(): $VillagerData;
         /**
          * Returns whether this zombie is in the process of converting to a villager
          */
         isConverting(): boolean;
-        setGossips(gossips: $Tag_): void;
         setVariant(variant: $VillagerType_): void;
         getVariant(): $VillagerType;
+        serializeNBT(arg0: $HolderLookup$Provider): $VillagerType;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -5228,9 +5254,9 @@ declare module "@package/net/minecraft/world/entity/monster" {
         static BASE_SAFE_FALL_DISTANCE: number;
         conversionTime: number;
         constructor(entityType: $EntityType_<$ZombieVillager>, level: $Level_);
+        set gossips(value: $Tag_);
         set tradeOffers(value: $MerchantOffers);
         get converting(): boolean;
-        set gossips(value: $Tag_);
     }
     export class $CrossbowAttackMob {
     }
@@ -5251,6 +5277,7 @@ declare module "@package/net/minecraft/world/entity/monster" {
     }
     export class $CaveSpider extends $Spider {
         static createCaveSpider(): $AttributeSupplier$Builder;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -5443,12 +5470,13 @@ declare module "@package/net/minecraft/world/entity/monster" {
      */
     export type $SpellcasterIllager$IllagerSpell_ = "none" | "summon_vex" | "fangs" | "wololo" | "disappear" | "blindness";
     export class $Illusioner extends $SpellcasterIllager implements $RangedAttackMob {
-        static createAttributes(): $AttributeSupplier$Builder;
         getIllusionOffsets(partialTick: number): $Vec3[];
         /**
          * Attack the specified entity using a ranged attack.
          */
         performRangedAttack(target: $LivingEntity, distanceFactor: number): void;
+        static createAttributes(): $AttributeSupplier$Builder;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -5632,6 +5660,7 @@ declare module "@package/net/minecraft/world/entity/monster" {
     export class $MagmaCube extends $Slime {
         static createAttributes(): $AttributeSupplier$Builder;
         static checkMagmaCubeSpawnRules(magmaCube: $EntityType_<$MagmaCube>, level: $LevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -5803,8 +5832,14 @@ declare module "@package/net/minecraft/world/entity/monster" {
         constructor(entityType: $EntityType_<$MagmaCube>, level: $Level_);
     }
     export class $Zombie extends $Monster {
-        static createAttributes(): $AttributeSupplier$Builder;
         static access$000(arg0: $Zombie): $RandomSource;
+        getSkull(): $ItemStack;
+        getStepSound(): $SoundEvent;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        randomizeReinforcementsChance(): void;
+        static createAttributes(): $AttributeSupplier$Builder;
         /**
          * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
          */
@@ -5817,35 +5852,30 @@ declare module "@package/net/minecraft/world/entity/monster" {
          * If Animal, checks if the age timer is negative
          */
         canBreakDoors(): boolean;
-        static getSpawnAsBabyOdds(random: $RandomSource): boolean;
+        handleAttributes(difficulty: number): void;
         /**
          * Set whether this zombie is a child.
          */
         setCanBreakDoors(childZombie: boolean): void;
-        handleAttributes(difficulty: number): void;
+        static getSpawnAsBabyOdds(random: $RandomSource): boolean;
         /**
          * If Animal, checks if the age timer is negative
          */
         isSunSensitive(): boolean;
-        getStepSound(): $SoundEvent;
         /**
          * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
          */
         doUnderWaterConversion(): void;
-        /**
-         * If Animal, checks if the age timer is negative
-         */
-        isUnderWaterConverting(): boolean;
         convertToZombieType(entityType: $EntityType_<$Zombie>): void;
         /**
          * If Animal, checks if the age timer is negative
          */
-        supportsBreakDoorGoal(): boolean;
-        getSkull(): $ItemStack;
+        isUnderWaterConverting(): boolean;
         /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         * If Animal, checks if the age timer is negative
          */
-        randomizeReinforcementsChance(): void;
+        supportsBreakDoorGoal(): boolean;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -6016,30 +6046,31 @@ declare module "@package/net/minecraft/world/entity/monster" {
         conversionTime: number;
         constructor(entityType: $EntityType_<$Zombie>, level: $Level_);
         constructor(level: $Level_);
-        get sunSensitive(): boolean;
-        get stepSound(): $SoundEvent;
-        get underWaterConverting(): boolean;
         get skull(): $ItemStack;
+        get stepSound(): $SoundEvent;
+        get sunSensitive(): boolean;
+        get underWaterConverting(): boolean;
     }
     export class $Monster extends $PathfinderMob implements $Enemy {
-        isPreventingPlayerRest(player: $Player): boolean;
         /**
-         * Static predicate for determining whether a monster can spawn at the provided location, incorporating a check of the current light level at the location.
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
          */
-        static checkMonsterSpawnRules(type: $EntityType_<$Monster>, level: $ServerLevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
-        static createMonsterAttributes(): $AttributeSupplier$Builder;
+        updateNoActionTime(): void;
+        /**
+         * Static predicate for determining whether a monster can spawn at the provided location.
+         */
+        static checkAnyLightMonsterSpawnRules(type: $EntityType_<$Monster>, level: $LevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
+        isPreventingPlayerRest(player: $Player): boolean;
         /**
          * Static predicate for determining if the current light level and environmental conditions allow for a monster to spawn.
          */
         static isDarkEnoughToSpawn(level: $ServerLevelAccessor, pos: $BlockPos_, random: $RandomSource): boolean;
         /**
-         * Static predicate for determining whether a monster can spawn at the provided location.
+         * Static predicate for determining whether a monster can spawn at the provided location, incorporating a check of the current light level at the location.
          */
-        static checkAnyLightMonsterSpawnRules(type: $EntityType_<$Monster>, level: $LevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
-        /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
-         */
-        updateNoActionTime(): void;
+        static checkMonsterSpawnRules(type: $EntityType_<$Monster>, level: $ServerLevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
+        static createMonsterAttributes(): $AttributeSupplier$Builder;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -6225,7 +6256,24 @@ declare module "@package/net/minecraft/world/entity/monster" {
         static MIN_SPEED: number;
     }
     export class $Creeper extends $Monster implements $PowerableMob {
+        handler$ije000$createdieselgenerators$cdg$mobInteract(arg0: $Player, arg1: $InteractionHand_, arg2: $CallbackInfoReturnable<any>): void;
+        /**
+         * Creates an explosion as determined by this creeper's power and explosion radius.
+         */
+        ignite(): void;
+        /**
+         * Returns `true` if an entity is able to drop its skull due to being blown up by this creeper.
+         * 
+         * Does not test if this creeper is charged, the caller must do that. However, does test the doMobLoot gamerule.
+         */
+        isIgnited(): boolean;
         static createAttributes(): $AttributeSupplier$Builder;
+        /**
+         * Returns `true` if an entity is able to drop its skull due to being blown up by this creeper.
+         * 
+         * Does not test if this creeper is charged, the caller must do that. However, does test the doMobLoot gamerule.
+         */
+        isPowered(): boolean;
         /**
          * Returns `true` if an entity is able to drop its skull due to being blown up by this creeper.
          * 
@@ -6237,34 +6285,18 @@ declare module "@package/net/minecraft/world/entity/monster" {
          */
         setSwellDir(state: number): void;
         /**
+         * Params: (Float)Render tick. Returns the intensity of the creeper's flash when it is ignited.
+         */
+        getSwelling(partialTicks: number): number;
+        /**
          * The maximum height from where the entity is allowed to jump (used in pathfinder)
          */
         getSwellDir(): number;
         /**
-         * Params: (Float)Render tick. Returns the intensity of the creeper's flash when it is ignited.
-         */
-        getSwelling(partialTicks: number): number;
-        handler$ije000$createdieselgenerators$cdg$mobInteract(arg0: $Player, arg1: $InteractionHand_, arg2: $CallbackInfoReturnable<any>): void;
-        /**
          * Creates an explosion as determined by this creeper's power and explosion radius.
          */
         increaseDroppedSkulls(): void;
-        /**
-         * Returns `true` if an entity is able to drop its skull due to being blown up by this creeper.
-         * 
-         * Does not test if this creeper is charged, the caller must do that. However, does test the doMobLoot gamerule.
-         */
-        isPowered(): boolean;
-        /**
-         * Creates an explosion as determined by this creeper's power and explosion radius.
-         */
-        ignite(): void;
-        /**
-         * Returns `true` if an entity is able to drop its skull due to being blown up by this creeper.
-         * 
-         * Does not test if this creeper is charged, the caller must do that. However, does test the doMobLoot gamerule.
-         */
-        isIgnited(): boolean;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -6429,13 +6461,14 @@ declare module "@package/net/minecraft/world/entity/monster" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(entityType: $EntityType_<$Creeper>, level: $Level_);
-        get powered(): boolean;
         get ignited(): boolean;
+        get powered(): boolean;
     }
     export class $Blaze$BlazeAttackGoal extends $Goal {
     }
     export class $Giant extends $Monster {
         static createAttributes(): $AttributeSupplier$Builder;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -6603,15 +6636,16 @@ declare module "@package/net/minecraft/world/entity/monster" {
     }
     export class $Skeleton extends $AbstractSkeleton {
         /**
+         * Called to update the entity's position/logic.
+         */
+        doFreezeConversion(): void;
+        /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
          */
         isFreezeConverting(): boolean;
-        /**
-         * Called to update the entity's position/logic.
-         */
-        doFreezeConversion(): void;
         setFreezeConverting(isFrozen: boolean): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -6802,8 +6836,9 @@ declare module "@package/net/minecraft/world/entity/monster" {
      */
     export type $Phantom$AttackPhase_ = "circle" | "swoop";
     export class $Blaze extends $Monster {
-        static createAttributes(): $AttributeSupplier$Builder;
         setCharged(charged: boolean): void;
+        static createAttributes(): $AttributeSupplier$Builder;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -6976,8 +7011,9 @@ declare module "@package/net/minecraft/world/entity/monster" {
         mob: $PathfinderMob;
     }
     export class $Silverfish extends $Monster {
-        static createAttributes(): $AttributeSupplier$Builder;
         static checkSilverfishSpawnRules(silverfish: $EntityType_<$Silverfish>, level: $LevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
+        static createAttributes(): $AttributeSupplier$Builder;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -7144,6 +7180,7 @@ declare module "@package/net/minecraft/world/entity/monster" {
         constructor(entityType: $EntityType_<$Silverfish>, level: $Level_);
     }
     export class $ElderGuardian extends $Guardian {
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -7317,25 +7354,26 @@ declare module "@package/net/minecraft/world/entity/monster" {
     export class $Phantom extends $FlyingMob implements $Enemy {
         static access$000(arg0: $Phantom): $RandomSource;
         static access$300(arg0: $Phantom): $RandomSource;
-        static access$1000(arg0: $Phantom): $RandomSource;
-        static access$1100(arg0: $Phantom): $RandomSource;
+        static access$800(arg0: $Phantom): $RandomSource;
+        static access$500(arg0: $Phantom): $RandomSource;
+        static access$600(arg0: $Phantom): $RandomSource;
+        static access$700(arg0: $Phantom): $RandomSource;
+        static access$400(arg0: $Phantom): $RandomSource;
+        static access$900(arg0: $Phantom): $RandomSource;
         static access$200(arg0: $Phantom): $RandomSource;
         static access$100(arg0: $Phantom): $RandomSource;
-        static access$500(arg0: $Phantom): $RandomSource;
-        static access$900(arg0: $Phantom): $RandomSource;
-        static access$400(arg0: $Phantom): $RandomSource;
-        static access$700(arg0: $Phantom): $RandomSource;
-        static access$600(arg0: $Phantom): $RandomSource;
-        static access$800(arg0: $Phantom): $RandomSource;
-        /**
-         * Returns the current armor value as determined by a call to InventoryPlayer.getTotalArmorValue
-         */
-        getPhantomSize(): number;
         setPhantomSize(phantomSize: number): void;
         /**
          * Returns the current armor value as determined by a call to InventoryPlayer.getTotalArmorValue
          */
+        getPhantomSize(): number;
+        static access$1000(arg0: $Phantom): $RandomSource;
+        static access$1100(arg0: $Phantom): $RandomSource;
+        /**
+         * Returns the current armor value as determined by a call to InventoryPlayer.getTotalArmorValue
+         */
         getUniqueFlapTickOffset(): number;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;

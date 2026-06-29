@@ -45,7 +45,6 @@ import { $ItemLike } from "@package/net/minecraft/world/level";
 import { $DeferredHolder } from "@package/net/neoforged/neoforge/registries";
 import { $TagBuilder, $TagKey_ } from "@package/net/minecraft/tags";
 import { $DataMapProvider, $ExistingFileHelper, $DataMapProvider$Builder } from "@package/net/neoforged/neoforge/common/data";
-import { $IEventBus } from "@package/net/neoforged/bus/api";
 import { $MapColor } from "@package/net/minecraft/world/level/material";
 import { $DynamicPack } from "@package/com/simibubi/create/foundation/pack";
 import { $StandardProcessingRecipe$Builder, $StandardProcessingRecipe } from "@package/com/simibubi/create/content/processing/recipe";
@@ -70,22 +69,24 @@ declare module "@package/com/simibubi/create/foundation/data" {
         constructor();
     }
     export class $CreateEntityBuilder<T extends $Entity, P> extends $EntityBuilder<T, P> {
-        visual(arg0: $NonNullSupplier_<$SimpleEntityVisualizer$Factory<T>>, arg1: boolean): $CreateEntityBuilder<T, P>;
-        visual(arg0: $NonNullSupplier_<$SimpleEntityVisualizer$Factory<T>>): $CreateEntityBuilder<T, P>;
         visual(arg0: $NonNullSupplier_<$SimpleEntityVisualizer$Factory<T>>, arg1: $Predicate_<T>): $CreateEntityBuilder<T, P>;
+        visual(arg0: $NonNullSupplier_<$SimpleEntityVisualizer$Factory<T>>): $CreateEntityBuilder<T, P>;
+        visual(arg0: $NonNullSupplier_<$SimpleEntityVisualizer$Factory<T>>, arg1: boolean): $CreateEntityBuilder<T, P>;
+        get(): T;
         constructor(arg0: $AbstractRegistrate<never>, arg1: P, arg2: string, arg3: $BuilderCallback_, arg4: $EntityType$EntityFactory_<T>, arg5: $MobCategory_);
     }
     export class $CreateBlockEntityBuilder<T extends $BlockEntity, P> extends $BlockEntityBuilder<T, P> implements $CreateBlockEntityBuilderAccessor<any, any> {
-        visual(arg0: $NonNullSupplier_<$SimpleBlockEntityVisualizer$Factory<$Object>>, arg1: $Predicate_<$Object>): $CreateBlockEntityBuilder<$Object, $Object>;
-        visual(arg0: $NonNullSupplier_<$SimpleBlockEntityVisualizer$Factory<$Object>>): $CreateBlockEntityBuilder<$Object, $Object>;
-        visual(arg0: $NonNullSupplier_<$SimpleBlockEntityVisualizer$Factory<$Object>>, arg1: boolean): $CreateBlockEntityBuilder<$Object, $Object>;
+        validBlocksDeferred(arg0: $NonNullSupplier_<$Collection<$NonNullSupplier<$Block>>>): $CreateBlockEntityBuilder<$Object, $Object>;
         displaySource(arg0: $RegistryEntry<$DisplaySource_, $DisplaySource_>): $CreateBlockEntityBuilder<$Object, $Object>;
         displayTarget(arg0: $RegistryEntry<$DisplayTarget_, $DisplayTarget_>): $CreateBlockEntityBuilder<$Object, $Object>;
-        validBlocksDeferred(arg0: $NonNullSupplier_<$Collection<$NonNullSupplier<$Block>>>): $CreateBlockEntityBuilder<$Object, $Object>;
-        getRenderNormally(): $Predicate<$Object>;
+        visual(arg0: $NonNullSupplier_<$SimpleBlockEntityVisualizer$Factory<$Object>>, arg1: boolean): $CreateBlockEntityBuilder<$Object, $Object>;
+        visual(arg0: $NonNullSupplier_<$SimpleBlockEntityVisualizer$Factory<$Object>>, arg1: $Predicate_<$Object>): $CreateBlockEntityBuilder<$Object, $Object>;
+        visual(arg0: $NonNullSupplier_<$SimpleBlockEntityVisualizer$Factory<$Object>>): $CreateBlockEntityBuilder<$Object, $Object>;
         getVisualFactory(): $NonNullSupplier<$SimpleBlockEntityVisualizer$Factory<$Object>>;
-        get renderNormally(): $Predicate<$Object>;
+        getRenderNormally(): $Predicate<$Object>;
+        get(): $Object;
         get visualFactory(): $NonNullSupplier<$SimpleBlockEntityVisualizer$Factory<$Object>>;
+        get renderNormally(): $Predicate<$Object>;
     }
     export class $CreateDatamapProvider extends $DataMapProvider {
         static add<T>(arg0: $DataMapProvider$Builder<T, $Block_>, arg1: $Holder_<$Block>, arg2: T): void;
@@ -106,78 +107,78 @@ declare module "@package/com/simibubi/create/foundation/data" {
     export class $ModelGen {
         static customItemModel<I extends $BlockItem, P>(...arg0: string[]): $NonNullFunction<$ItemBuilder<I, P>, P>;
         static customItemModel<I extends $BlockItem, P>(): $NonNullFunction<$ItemBuilder<I, P>, P>;
-        static createOvergrown(arg0: $DataGenContext<$Block_, $Block_>, arg1: $BlockStateProvider, arg2: $ResourceLocation_, arg3: $ResourceLocation_, arg4: $ResourceLocation_, arg5: $ResourceLocation_): $ModelFile;
         static createOvergrown(arg0: $DataGenContext<$Block_, $Block_>, arg1: $BlockStateProvider, arg2: $ResourceLocation_, arg3: $ResourceLocation_): $ModelFile;
+        static createOvergrown(arg0: $DataGenContext<$Block_, $Block_>, arg1: $BlockStateProvider, arg2: $ResourceLocation_, arg3: $ResourceLocation_, arg4: $ResourceLocation_, arg5: $ResourceLocation_): $ModelFile;
         constructor();
     }
     export class $AssetLookup {
-        static customItemModel<I extends $BlockItem>(arg0: $DataGenContext<$Item_, I>, arg1: $RegistrateItemModelProvider): $ItemModelBuilder;
-        static withIndicator(arg0: $DataGenContext<never, never>, arg1: $RegistrateBlockstateProvider, arg2: $Function_<$BlockState, $ModelFile>, arg3: $IntegerProperty): $Function<$BlockState, $ModelFile>;
+        static itemModel<T extends $Item>(arg0: string): $NonNullBiConsumer<$DataGenContext<$Item, T>, $RegistrateItemModelProvider>;
         static partialBaseModel(arg0: $DataGenContext<never, never>, arg1: $RegistrateBlockstateProvider, ...arg2: string[]): $ModelFile;
         static standardModel(arg0: $DataGenContext<never, never>, arg1: $RegistrateBlockstateProvider): $ModelFile;
+        static customItemModel<I extends $BlockItem>(arg0: $DataGenContext<$Item_, I>, arg1: $RegistrateItemModelProvider): $ItemModelBuilder;
+        static withIndicator(arg0: $DataGenContext<never, never>, arg1: $RegistrateBlockstateProvider, arg2: $Function_<$BlockState, $ModelFile>, arg3: $IntegerProperty): $Function<$BlockState, $ModelFile>;
         static existingItemModel<T extends $Item>(): $NonNullBiConsumer<$DataGenContext<$Item, T>, $RegistrateItemModelProvider>;
-        static forPowered(arg0: $DataGenContext<never, never>, arg1: $RegistrateBlockstateProvider): $Function<$BlockState, $ModelFile>;
-        static forPowered(arg0: $DataGenContext<never, never>, arg1: $RegistrateBlockstateProvider, arg2: string): $Function<$BlockState, $ModelFile>;
-        static itemModel<T extends $Item>(arg0: string): $NonNullBiConsumer<$DataGenContext<$Item, T>, $RegistrateItemModelProvider>;
-        static customBlockItemModel<I extends $BlockItem>(...arg0: string[]): $NonNullBiConsumer<$DataGenContext<$Item, I>, $RegistrateItemModelProvider>;
-        static customGenericItemModel<I extends $Item>(...arg0: string[]): $NonNullBiConsumer<$DataGenContext<$Item, I>, $RegistrateItemModelProvider>;
         static itemModelWithPartials<T extends $Item>(): $NonNullBiConsumer<$DataGenContext<$Item, T>, $RegistrateItemModelProvider>;
+        static forPowered(arg0: $DataGenContext<never, never>, arg1: $RegistrateBlockstateProvider, arg2: string): $Function<$BlockState, $ModelFile>;
+        static forPowered(arg0: $DataGenContext<never, never>, arg1: $RegistrateBlockstateProvider): $Function<$BlockState, $ModelFile>;
+        static customGenericItemModel<I extends $Item>(...arg0: string[]): $NonNullBiConsumer<$DataGenContext<$Item, I>, $RegistrateItemModelProvider>;
+        static customBlockItemModel<I extends $BlockItem>(...arg0: string[]): $NonNullBiConsumer<$DataGenContext<$Item, I>, $RegistrateItemModelProvider>;
         constructor();
     }
     export class $BlockStateGen {
+        static axisBlock<T extends $Block>(arg0: $DataGenContext<$Block_, T>, arg1: $RegistrateBlockstateProvider, arg2: $Function_<$BlockState, $ModelFile>): void;
+        static axisBlock<T extends $Block>(arg0: $DataGenContext<$Block_, T>, arg1: $RegistrateBlockstateProvider, arg2: $Function_<$BlockState, $ModelFile>, arg3: boolean): void;
+        static naturalStoneTypeBlock<P extends $Block>(arg0: string): $NonNullBiConsumer<$DataGenContext<$Block, P>, $RegistrateBlockstateProvider>;
+        static cubeAll<T extends $Block>(arg0: $DataGenContext<$Block_, T>, arg1: $RegistrateBlockstateProvider, arg2: string): void;
+        static cubeAll<T extends $Block>(arg0: $DataGenContext<$Block_, T>, arg1: $RegistrateBlockstateProvider, arg2: string, arg3: string): void;
+        static directionalAxisBlockProvider<T extends $DirectionalAxisKineticBlock>(): $NonNullBiConsumer<$DataGenContext<$Block, T>, $RegistrateBlockstateProvider>;
+        static simpleBlock<T extends $Block>(arg0: $DataGenContext<$Block_, T>, arg1: $RegistrateBlockstateProvider, arg2: $Function_<$BlockState, $ModelFile>): void;
+        static directionalBlockIgnoresWaterlogged<T extends $Block>(arg0: $DataGenContext<$Block_, T>, arg1: $RegistrateBlockstateProvider, arg2: $Function_<$BlockState, $ModelFile>): void;
         static horizontalAxisBlockProvider<T extends $Block>(arg0: boolean): $NonNullBiConsumer<$DataGenContext<$Block, T>, $RegistrateBlockstateProvider>;
+        static axisBlockProvider<T extends $Block>(arg0: boolean): $NonNullBiConsumer<$DataGenContext<$Block, T>, $RegistrateBlockstateProvider>;
+        static horizontalWheel<T extends $Block>(arg0: $DataGenContext<$Block_, T>, arg1: $RegistrateBlockstateProvider, arg2: $Function_<$BlockState, $ModelFile>): void;
+        static blazeHeater(): $NonNullBiConsumer<$DataGenContext<$Block, $BlazeBurnerBlock>, $RegistrateBlockstateProvider>;
+        static horizontalAxisBlock<T extends $Block>(arg0: $DataGenContext<$Block_, T>, arg1: $RegistrateBlockstateProvider, arg2: $Function_<$BlockState, $ModelFile>): void;
         static directionalBlockProvider<T extends $Block>(arg0: boolean): $NonNullBiConsumer<$DataGenContext<$Block, T>, $RegistrateBlockstateProvider>;
         static horizontalWheelProvider<T extends $Block>(arg0: boolean): $NonNullBiConsumer<$DataGenContext<$Block, T>, $RegistrateBlockstateProvider>;
         static uvLockedTrapdoorBlock<P extends $TrapDoorBlock>(arg0: P, arg1: $ModelFile, arg2: $ModelFile, arg3: $ModelFile): $NonNullBiConsumer<$DataGenContext<$Block, P>, $RegistrateBlockstateProvider>;
-        static horizontalAxisBlock<T extends $Block>(arg0: $DataGenContext<$Block_, T>, arg1: $RegistrateBlockstateProvider, arg2: $Function_<$BlockState, $ModelFile>): void;
-        static simpleBlock<T extends $Block>(arg0: $DataGenContext<$Block_, T>, arg1: $RegistrateBlockstateProvider, arg2: $Function_<$BlockState, $ModelFile>): void;
-        static axisBlockProvider<T extends $Block>(arg0: boolean): $NonNullBiConsumer<$DataGenContext<$Block, T>, $RegistrateBlockstateProvider>;
         static directionalBlockProviderIgnoresWaterlogged<T extends $Block>(arg0: boolean): $NonNullBiConsumer<$DataGenContext<$Block, T>, $RegistrateBlockstateProvider>;
-        static cubeAll<T extends $Block>(arg0: $DataGenContext<$Block_, T>, arg1: $RegistrateBlockstateProvider, arg2: string): void;
-        static cubeAll<T extends $Block>(arg0: $DataGenContext<$Block_, T>, arg1: $RegistrateBlockstateProvider, arg2: string, arg3: string): void;
-        static naturalStoneTypeBlock<P extends $Block>(arg0: string): $NonNullBiConsumer<$DataGenContext<$Block, P>, $RegistrateBlockstateProvider>;
-        static axisBlock<T extends $Block>(arg0: $DataGenContext<$Block_, T>, arg1: $RegistrateBlockstateProvider, arg2: $Function_<$BlockState, $ModelFile>, arg3: boolean): void;
-        static axisBlock<T extends $Block>(arg0: $DataGenContext<$Block_, T>, arg1: $RegistrateBlockstateProvider, arg2: $Function_<$BlockState, $ModelFile>): void;
-        static mapToAir(arg0: $RegistrateBlockstateProvider): $Function<$BlockState, $ConfiguredModel[]>;
-        static pipe<P extends $FluidPipeBlock>(): $NonNullBiConsumer<$DataGenContext<$Block, P>, $RegistrateBlockstateProvider>;
+        static simpleCubeAll<T extends $Block>(arg0: string): $NonNullBiConsumer<$DataGenContext<$Block, T>, $RegistrateBlockstateProvider>;
+        static linearChassis<B extends $LinearChassisBlock>(): $NonNullBiConsumer<$DataGenContext<$Block, B>, $RegistrateBlockstateProvider>;
+        static cartAssembler(): $NonNullBiConsumer<$DataGenContext<$Block, $CartAssemblerBlock>, $RegistrateBlockstateProvider>;
+        static radialChassis<B extends $RadialChassisBlock>(): $NonNullBiConsumer<$DataGenContext<$Block, B>, $RegistrateBlockstateProvider>;
+        static whistleExtender<P extends $WhistleExtenderBlock>(): $NonNullBiConsumer<$DataGenContext<$Block, P>, $RegistrateBlockstateProvider>;
+        static encasedPipe<P extends $EncasedPipeBlock>(): $NonNullBiConsumer<$DataGenContext<$Block, P>, $RegistrateBlockstateProvider>;
         static directionalAxisBlock<T extends $DirectionalAxisKineticBlock>(arg0: $DataGenContext<$Block_, T>, arg1: $RegistrateBlockstateProvider, arg2: $BiFunction_<$BlockState, boolean, $ModelFile>): void;
         static horizontalBlockProvider<T extends $Block>(arg0: boolean): $NonNullBiConsumer<$DataGenContext<$Block, T>, $RegistrateBlockstateProvider>;
-        static cartAssembler(): $NonNullBiConsumer<$DataGenContext<$Block, $CartAssemblerBlock>, $RegistrateBlockstateProvider>;
-        static blazeHeater(): $NonNullBiConsumer<$DataGenContext<$Block, $BlazeBurnerBlock>, $RegistrateBlockstateProvider>;
-        static radialChassis<B extends $RadialChassisBlock>(): $NonNullBiConsumer<$DataGenContext<$Block, B>, $RegistrateBlockstateProvider>;
-        static encasedPipe<P extends $EncasedPipeBlock>(): $NonNullBiConsumer<$DataGenContext<$Block, P>, $RegistrateBlockstateProvider>;
-        static whistleExtender<P extends $WhistleExtenderBlock>(): $NonNullBiConsumer<$DataGenContext<$Block, P>, $RegistrateBlockstateProvider>;
-        static linearChassis<B extends $LinearChassisBlock>(): $NonNullBiConsumer<$DataGenContext<$Block, B>, $RegistrateBlockstateProvider>;
-        static horizontalWheel<T extends $Block>(arg0: $DataGenContext<$Block_, T>, arg1: $RegistrateBlockstateProvider, arg2: $Function_<$BlockState, $ModelFile>): void;
-        static simpleCubeAll<T extends $Block>(arg0: string): $NonNullBiConsumer<$DataGenContext<$Block, T>, $RegistrateBlockstateProvider>;
-        static directionalAxisBlockProvider<T extends $DirectionalAxisKineticBlock>(): $NonNullBiConsumer<$DataGenContext<$Block, T>, $RegistrateBlockstateProvider>;
-        static directionalBlockIgnoresWaterlogged<T extends $Block>(arg0: $DataGenContext<$Block_, T>, arg1: $RegistrateBlockstateProvider, arg2: $Function_<$BlockState, $ModelFile>): void;
+        static pipe<P extends $FluidPipeBlock>(): $NonNullBiConsumer<$DataGenContext<$Block, P>, $RegistrateBlockstateProvider>;
+        static mapToAir(arg0: $RegistrateBlockstateProvider): $Function<$BlockState, $ConfiguredModel[]>;
         constructor();
     }
     export class $BuilderTransformers {
-        static encasedLargeCogwheel<B extends $EncasedCogwheelBlock, P>(arg0: string, arg1: $Supplier_<$CTSpriteShiftEntry>): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
         static backtank<B extends $Block, P>(arg0: $Supplier_<$ItemLike>): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
-        static casing<B extends $CasingBlock>(arg0: $Supplier_<$CTSpriteShiftEntry>): $NonNullUnaryOperator<$BlockBuilder<B, $CreateRegistrate>>;
-        static packageItem(arg0: $PackageStyles$PackageStyle_): $ItemBuilder<$PackageItem, $CreateRegistrate>;
         static bell<B extends $Block, P>(): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
-        static ladder<B extends $Block, P>(arg0: string, arg1: $Supplier_<$DataIngredient>, arg2: $MapColor): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
         static trapdoor<B extends $TrapDoorBlock, P>(arg0: boolean): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
+        static ladder<B extends $Block, P>(arg0: string, arg1: $Supplier_<$DataIngredient>, arg2: $MapColor): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
+        static packager<B extends $Block, P>(): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
+        static slidingDoor<B extends $SlidingDoorBlock, P>(arg0: string): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
+        static palettesIronBlock<B extends $Block, P>(): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
+        static layeredCasing<B extends $CasingBlock>(arg0: $Supplier_<$CTSpriteShiftEntry>, arg1: $Supplier_<$CTSpriteShiftEntry>): $NonNullUnaryOperator<$BlockBuilder<B, $CreateRegistrate>>;
         static valveHandle<B extends $ValveHandleBlock>(arg0: $DyeColor_): $NonNullUnaryOperator<$BlockBuilder<B, $CreateRegistrate>>;
         static encasedShaft<B extends $EncasedShaftBlock, P>(arg0: string, arg1: $Supplier_<$CTSpriteShiftEntry>): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
-        static encasedCogwheel<B extends $EncasedCogwheelBlock, P>(arg0: string, arg1: $Supplier_<$CTSpriteShiftEntry>): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
-        static cuckooClock<B extends $Block, P>(): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
         static mechanicalPiston<B extends $Block, P>(arg0: $PistonType_): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
-        static layeredCasing<B extends $CasingBlock>(arg0: $Supplier_<$CTSpriteShiftEntry>, arg1: $Supplier_<$CTSpriteShiftEntry>): $NonNullUnaryOperator<$BlockBuilder<B, $CreateRegistrate>>;
-        static palettesIronBlock<B extends $Block, P>(): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
-        static slidingDoor<B extends $SlidingDoorBlock, P>(arg0: string): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
+        static cuckooClock<B extends $Block, P>(): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
+        static encasedCogwheel<B extends $EncasedCogwheelBlock, P>(arg0: string, arg1: $Supplier_<$CTSpriteShiftEntry>): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
+        static encasedLargeCogwheel<B extends $EncasedCogwheelBlock, P>(arg0: string, arg1: $Supplier_<$CTSpriteShiftEntry>): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
+        static casing<B extends $CasingBlock>(arg0: $Supplier_<$CTSpriteShiftEntry>): $NonNullUnaryOperator<$BlockBuilder<B, $CreateRegistrate>>;
+        static copycat<B extends $CopycatBlock, P>(): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
+        static bearing<B extends $Block, P>(arg0: string, arg1: string): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
         static tableCloth<B extends $Block, P>(arg0: string, arg1: $NonNullSupplier_<$Block>, arg2: boolean): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
         static scaffold<B extends $Block, P>(arg0: string, arg1: $Supplier_<$DataIngredient>, arg2: $MapColor, arg3: $CTSpriteShiftEntry, arg4: $CTSpriteShiftEntry, arg5: $CTSpriteShiftEntry): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
-        static bearing<B extends $Block, P>(arg0: string, arg1: string): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
-        static copycat<B extends $CopycatBlock, P>(): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
-        static crate<B extends $Block, P>(arg0: string): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
-        static bogey<B extends $StandardBogeyBlock, P>(): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
         static beltTunnel<B extends $BeltTunnelBlock>(arg0: string, arg1: $ResourceLocation_): $NonNullUnaryOperator<$BlockBuilder<B, $CreateRegistrate>>;
-        static packager<B extends $Block, P>(): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
+        static bogey<B extends $StandardBogeyBlock, P>(): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
+        static crate<B extends $Block, P>(arg0: string): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
+        static packageItem(arg0: $PackageStyles$PackageStyle_): $ItemBuilder<$PackageItem, $CreateRegistrate>;
         constructor();
     }
     export class $RuntimeDataGenerator$StandardBuilder<T extends $StandardProcessingRecipe<never>> extends $StandardProcessingRecipe$Builder<T> {
@@ -190,65 +191,65 @@ declare module "@package/com/simibubi/create/foundation/data" {
     }
     export class $WindowGen {
         static randomisedWindowBlock(arg0: string, arg1: $Supplier_<$ItemLike>, arg2: $Supplier_<$Supplier<$RenderType>>, arg3: boolean, arg4: $Supplier_<$MapColor>): $BlockBuilder<$WindowBlock, $CreateRegistrate>;
-        static framedGlassPane(arg0: string, arg1: $Supplier_<$Block>, arg2: $Supplier_<$CTSpriteShiftEntry>): $BlockEntry<$ConnectedGlassPaneBlock>;
-        static woodenWindowPane(arg0: $WoodType_, arg1: $Supplier_<$Block>): $BlockEntry<$ConnectedGlassPaneBlock>;
-        static woodenWindowPane(arg0: $WoodType_, arg1: $Supplier_<$Block>, arg2: $Supplier_<$Supplier<$RenderType>>): $BlockEntry<$ConnectedGlassPaneBlock>;
-        static customWindowBlock(arg0: string, arg1: $Supplier_<$ItemLike>, arg2: $Supplier_<$CTSpriteShiftEntry>, arg3: $Supplier_<$Supplier<$RenderType>>, arg4: boolean, arg5: $Supplier_<$MapColor>): $BlockEntry<$WindowBlock>;
         static framedGlass(arg0: string, arg1: $Supplier_<$ConnectedTextureBehaviour>): $BlockEntry<$ConnectedGlassBlock>;
-        static woodenWindowBlock(arg0: $WoodType_, arg1: $Block_, arg2: $Supplier_<$Supplier<$RenderType>>, arg3: boolean): $BlockEntry<$WindowBlock>;
+        static framedGlassPane(arg0: string, arg1: $Supplier_<$Block>, arg2: $Supplier_<$CTSpriteShiftEntry>): $BlockEntry<$ConnectedGlassPaneBlock>;
         static woodenWindowBlock(arg0: $WoodType_, arg1: $Block_): $BlockEntry<$WindowBlock>;
+        static woodenWindowBlock(arg0: $WoodType_, arg1: $Block_, arg2: $Supplier_<$Supplier<$RenderType>>, arg3: boolean): $BlockEntry<$WindowBlock>;
         static windowBlock(arg0: string, arg1: $Supplier_<$ItemLike>, arg2: $Supplier_<$CTSpriteShiftEntry>, arg3: $Supplier_<$Supplier<$RenderType>>, arg4: boolean, arg5: $NonNullFunction_<string, $ResourceLocation>, arg6: $NonNullFunction_<string, $ResourceLocation>, arg7: $Supplier_<$MapColor>): $BlockBuilder<$WindowBlock, $CreateRegistrate>;
-        static customWindowPane(arg0: string, arg1: $Supplier_<$Block>, arg2: $Supplier_<$CTSpriteShiftEntry>, arg3: $Supplier_<$Supplier<$RenderType>>): $BlockBuilder<$ConnectedGlassPaneBlock, $CreateRegistrate>;
+        static woodenWindowPane(arg0: $WoodType_, arg1: $Supplier_<$Block>, arg2: $Supplier_<$Supplier<$RenderType>>): $BlockEntry<$ConnectedGlassPaneBlock>;
+        static woodenWindowPane(arg0: $WoodType_, arg1: $Supplier_<$Block>): $BlockEntry<$ConnectedGlassPaneBlock>;
+        static customWindowBlock(arg0: string, arg1: $Supplier_<$ItemLike>, arg2: $Supplier_<$CTSpriteShiftEntry>, arg3: $Supplier_<$Supplier<$RenderType>>, arg4: boolean, arg5: $Supplier_<$MapColor>): $BlockEntry<$WindowBlock>;
         static standardGlassPane(arg0: string, arg1: $Supplier_<$Block>, arg2: $ResourceLocation_, arg3: $ResourceLocation_, arg4: $Supplier_<$Supplier<$RenderType>>): $BlockEntry<$GlassPaneBlock>;
+        static customWindowPane(arg0: string, arg1: $Supplier_<$Block>, arg2: $Supplier_<$CTSpriteShiftEntry>, arg3: $Supplier_<$Supplier<$RenderType>>): $BlockBuilder<$ConnectedGlassPaneBlock, $CreateRegistrate>;
         constructor();
     }
     export class $TagGen {
         static axeOrPickaxe<T extends $Block, P>(): $NonNullFunction<$BlockBuilder<T, P>, $BlockBuilder<T, P>>;
-        static addOptional<T extends $TagsProvider$TagAppender<never>>(arg0: T, arg1: $Mods_, arg2: string): T;
-        static addOptional<T extends $TagsProvider$TagAppender<never>>(arg0: T, arg1: $Mods_, arg2: $List_<string>): T;
-        static tagBlockAndItem<T extends $Block, P>(arg0: $Map_<$TagKey_<$Block>, $TagKey_<$Item>>): $NonNullFunction<$BlockBuilder<T, P>, $ItemBuilder<$BlockItem, $BlockBuilder<T, P>>>;
-        static tagBlockAndItem<T extends $Block, P>(arg0: $TagKey_<$Block>, arg1: $TagKey_<$Item>): $NonNullFunction<$BlockBuilder<T, P>, $ItemBuilder<$BlockItem, $BlockBuilder<T, P>>>;
-        static tagBlockAndItem<T extends $Block, P>(arg0: $CommonMetal$ItemLikeTag_): $NonNullFunction<$BlockBuilder<T, P>, $ItemBuilder<$BlockItem, $BlockBuilder<T, P>>>;
-        static axeOnly<T extends $Block, P>(): $NonNullFunction<$BlockBuilder<T, P>, $BlockBuilder<T, P>>;
         static pickaxeOnly<T extends $Block, P>(): $NonNullFunction<$BlockBuilder<T, P>, $BlockBuilder<T, P>>;
+        static addOptional<T extends $TagsProvider$TagAppender<never>>(arg0: T, arg1: $Mods_, arg2: $List_<string>): T;
+        static addOptional<T extends $TagsProvider$TagAppender<never>>(arg0: T, arg1: $Mods_, arg2: string): T;
+        static tagBlockAndItem<T extends $Block, P>(arg0: $Map_<$TagKey_<$Block>, $TagKey_<$Item>>): $NonNullFunction<$BlockBuilder<T, P>, $ItemBuilder<$BlockItem, $BlockBuilder<T, P>>>;
+        static tagBlockAndItem<T extends $Block, P>(arg0: $CommonMetal$ItemLikeTag_): $NonNullFunction<$BlockBuilder<T, P>, $ItemBuilder<$BlockItem, $BlockBuilder<T, P>>>;
+        static tagBlockAndItem<T extends $Block, P>(arg0: $TagKey_<$Block>, arg1: $TagKey_<$Item>): $NonNullFunction<$BlockBuilder<T, P>, $ItemBuilder<$BlockItem, $BlockBuilder<T, P>>>;
+        static axeOnly<T extends $Block, P>(): $NonNullFunction<$BlockBuilder<T, P>, $BlockBuilder<T, P>>;
         constructor();
     }
     export class $SimpleDatagenIngredient implements $ICustomIngredient {
-        isSimple(): boolean;
         test(arg0: $ItemStack_): boolean;
         getType(): $IngredientType<never>;
+        isSimple(): boolean;
         getItems(): $Stream<$ItemStack>;
         toVanilla(): $Ingredient;
-        kjs$getStackArray(): $ItemStack[];
-        kjs$asIngredient(): $Ingredient;
-        kjs$getDisplayStacks(): $ItemStackSet;
         kjs$canBeUsedForMatching(): boolean;
+        kjs$getDisplayStacks(): $ItemStackSet;
+        kjs$asIngredient(): $Ingredient;
+        kjs$getStackArray(): $ItemStack[];
+        isWildcard(): boolean;
         getItemStream(): $Stream<$Item>;
-        getFirst(): $ItemStack;
-        getItemIds(): $Set<string>;
-        getStacks(): $ItemStackSet;
         getItemTypes(): $Set<$Item>;
         testItem(item: $Item_): boolean;
-        isWildcard(): boolean;
+        getItemIds(): $Set<string>;
+        getFirst(): $ItemStack;
+        getStacks(): $ItemStackSet;
         or(arg0: $Predicate_<$ItemStack>): $Predicate<$ItemStack>;
         negate(): $Predicate<$ItemStack>;
         and(arg0: $Predicate_<$ItemStack>): $Predicate<$ItemStack>;
         constructor(arg0: $DatagenMod_, arg1: string);
-        get simple(): boolean;
         get type(): $IngredientType<never>;
+        get simple(): boolean;
         get items(): $Stream<$ItemStack>;
-        get itemStream(): $Stream<$Item>;
-        get first(): $ItemStack;
-        get itemIds(): $Set<string>;
-        get stacks(): $ItemStackSet;
-        get itemTypes(): $Set<$Item>;
         get wildcard(): boolean;
+        get itemStream(): $Stream<$Item>;
+        get itemTypes(): $Set<$Item>;
+        get itemIds(): $Set<string>;
+        get first(): $ItemStack;
+        get stacks(): $ItemStackSet;
     }
     export class $SharedProperties {
-        static softMetal(): $Block;
         static wooden(): $Block;
-        static copperMetal(): $Block;
+        static softMetal(): $Block;
         static stone(): $Block;
+        static copperMetal(): $Block;
         static netheriteMetal(): $Block;
         constructor();
     }
@@ -257,11 +258,12 @@ declare module "@package/com/simibubi/create/foundation/data" {
         constructor();
     }
     export class $SpecialBlockStateGen {
-        generate<T extends $Block>(arg0: $DataGenContext<$Block_, T>, arg1: $RegistrateBlockstateProvider): void;
         getModel<T extends $Block>(arg0: $DataGenContext<$Block_, T>, arg1: $RegistrateBlockstateProvider, arg2: $BlockState_): $ModelFile;
+        generate<T extends $Block>(arg0: $DataGenContext<$Block_, T>, arg1: $RegistrateBlockstateProvider): void;
         constructor();
     }
     export class $VirtualFluidBuilder<T extends $BaseFlowingFluid, P> extends $FluidBuilder<T, P> {
+        get(): T;
         constructor(arg0: $AbstractRegistrate<never>, arg1: P, arg2: string, arg3: $BuilderCallback_, arg4: $ResourceLocation_, arg5: $ResourceLocation_, arg6: $FluidBuilder$FluidTypeFactory_, arg7: $NonNullFunction_<$BaseFlowingFluid$Properties, T>, arg8: $NonNullFunction_<$BaseFlowingFluid$Properties, T>);
     }
     export class $TagGen$CreateTagsProvider<T> {
@@ -271,31 +273,30 @@ declare module "@package/com/simibubi/create/foundation/data" {
     }
     export class $CreateRegistrate extends $AbstractRegistrate<$CreateRegistrate> {
         static create(arg0: string): $CreateRegistrate;
-        entity<T extends $Entity>(arg0: string, arg1: $EntityType$EntityFactory_<T>, arg2: $MobCategory_): $CreateEntityBuilder<T, $CreateRegistrate>;
-        entity<T extends $Entity, P>(arg0: P, arg1: string, arg2: $EntityType$EntityFactory_<T>, arg3: $MobCategory_): $CreateEntityBuilder<T, P>;
-        setTooltipModifierFactory(arg0: $Function_<$Item, $TooltipModifier>): $CreateRegistrate;
-        registerEventListeners(arg0: $IEventBus): $CreateRegistrate;
-        setCreativeTab(arg0: $DeferredHolder<$CreativeModeTab_, $CreativeModeTab_>): $CreateRegistrate;
-        getCreativeTab(): $DeferredHolder<$CreativeModeTab, $CreativeModeTab>;
-        static casingConnectivity<T extends $Block>(arg0: $BiConsumer_<T, $CasingConnectivity>): $NonNullConsumer<T>;
-        mountedItemStorage<T extends $MountedItemStorageType<never>>(arg0: string, arg1: $Supplier_<T>): $SimpleBuilder<$MountedItemStorageType<never>, T, $CreateRegistrate>;
-        displaySource<T extends $DisplaySource>(arg0: string, arg1: $Supplier_<T>): $SimpleBuilder<$DisplaySource, T, $CreateRegistrate>;
-        paletteStoneBlock<T extends $Block>(arg0: string, arg1: $NonNullFunction_<$BlockBehaviour$Properties, T>, arg2: $NonNullSupplier_<$Block>, arg3: boolean, arg4: boolean): $BlockBuilder<T, $CreateRegistrate>;
-        paletteStoneBlock(arg0: string, arg1: $NonNullSupplier_<$Block>, arg2: boolean, arg3: boolean): $BlockBuilder<$Block, $CreateRegistrate>;
-        displayTarget<T extends $DisplayTarget>(arg0: string, arg1: $Supplier_<T>): $SimpleBuilder<$DisplayTarget, T, $CreateRegistrate>;
-        standardFluid(arg0: string, arg1: $FluidBuilder$FluidTypeFactory_): $FluidBuilder<$BaseFlowingFluid$Flowing, $CreateRegistrate>;
-        standardFluid(arg0: string): $FluidBuilder<$BaseFlowingFluid$Flowing, $CreateRegistrate>;
-        static isInCreativeTab(arg0: $RegistryEntry<never, never>, arg1: $DeferredHolder<$CreativeModeTab_, $CreativeModeTab_>): boolean;
-        blockEntity<T extends $BlockEntity>(arg0: string, arg1: $BlockEntityBuilder$BlockEntityFactory_<T>): $CreateBlockEntityBuilder<T, $CreateRegistrate>;
-        static defaultFluidType(arg0: $FluidType$Properties, arg1: $ResourceLocation_, arg2: $ResourceLocation_): $FluidType;
-        static connectedTextures(arg0: $Supplier_<$ConnectedTextureBehaviour>): $NonNullConsumer<$Block>;
-        virtualFluid(arg0: string): $FluidBuilder<$VirtualFluid, $CreateRegistrate>;
-        virtualFluid<T extends $BaseFlowingFluid>(arg0: string, arg1: $FluidBuilder$FluidTypeFactory_, arg2: $NonNullFunction_<$BaseFlowingFluid$Properties, T>, arg3: $NonNullFunction_<$BaseFlowingFluid$Properties, T>): $FluidBuilder<T, $CreateRegistrate>;
-        virtualFluid(arg0: string, arg1: $ResourceLocation_, arg2: $ResourceLocation_): $FluidBuilder<$VirtualFluid, $CreateRegistrate>;
-        virtualFluid<T extends $BaseFlowingFluid>(arg0: string, arg1: $ResourceLocation_, arg2: $ResourceLocation_, arg3: $FluidBuilder$FluidTypeFactory_, arg4: $NonNullFunction_<$BaseFlowingFluid$Properties, T>, arg5: $NonNullFunction_<$BaseFlowingFluid$Properties, T>): $FluidBuilder<T, $CreateRegistrate>;
+        mountedFluidStorage<T extends $MountedFluidStorageType<never>>(arg0: string, arg1: $Supplier_<T>): $SimpleBuilder<$MountedFluidStorageType<never>, T, $CreateRegistrate>;
+        getTooltipModifierFactory(): $Function<$Item, $TooltipModifier>;
         static blockModel<T extends $Block>(arg0: $Supplier_<$NonNullFunction<$BakedModel, $BakedModel>>): $NonNullConsumer<T>;
         static itemModel<T extends $Item>(arg0: $Supplier_<$NonNullFunction<$BakedModel, $BakedModel>>): $NonNullConsumer<T>;
-        getTooltipModifierFactory(): $Function<$Item, $TooltipModifier>;
-        mountedFluidStorage<T extends $MountedFluidStorageType<never>>(arg0: string, arg1: $Supplier_<T>): $SimpleBuilder<$MountedFluidStorageType<never>, T, $CreateRegistrate>;
+        entity<T extends $Entity, P>(arg0: P, arg1: string, arg2: $EntityType$EntityFactory_<T>, arg3: $MobCategory_): $CreateEntityBuilder<T, P>;
+        getCreativeTab(): $DeferredHolder<$CreativeModeTab, $CreativeModeTab>;
+        setCreativeTab(arg0: $DeferredHolder<$CreativeModeTab_, $CreativeModeTab_>): $CreateRegistrate;
+        setTooltipModifierFactory(arg0: $Function_<$Item, $TooltipModifier>): $CreateRegistrate;
+        static isInCreativeTab(arg0: $RegistryEntry<never, never>, arg1: $DeferredHolder<$CreativeModeTab_, $CreativeModeTab_>): boolean;
+        mountedItemStorage<T extends $MountedItemStorageType<never>>(arg0: string, arg1: $Supplier_<T>): $SimpleBuilder<$MountedItemStorageType<never>, T, $CreateRegistrate>;
+        displaySource<T extends $DisplaySource>(arg0: string, arg1: $Supplier_<T>): $SimpleBuilder<$DisplaySource, T, $CreateRegistrate>;
+        displayTarget<T extends $DisplayTarget>(arg0: string, arg1: $Supplier_<T>): $SimpleBuilder<$DisplayTarget, T, $CreateRegistrate>;
+        blockEntity<T extends $BlockEntity, P>(arg0: P, arg1: string, arg2: $BlockEntityBuilder$BlockEntityFactory_<T>): $CreateBlockEntityBuilder<T, P>;
+        blockEntity<T extends $BlockEntity>(arg0: string, arg1: $BlockEntityBuilder$BlockEntityFactory_<T>): $CreateBlockEntityBuilder<T, $CreateRegistrate>;
+        paletteStoneBlock(arg0: string, arg1: $NonNullSupplier_<$Block>, arg2: boolean, arg3: boolean): $BlockBuilder<$Block, $CreateRegistrate>;
+        paletteStoneBlock<T extends $Block>(arg0: string, arg1: $NonNullFunction_<$BlockBehaviour$Properties, T>, arg2: $NonNullSupplier_<$Block>, arg3: boolean, arg4: boolean): $BlockBuilder<T, $CreateRegistrate>;
+        static casingConnectivity<T extends $Block>(arg0: $BiConsumer_<T, $CasingConnectivity>): $NonNullConsumer<T>;
+        virtualFluid<T extends $BaseFlowingFluid>(arg0: string, arg1: $FluidBuilder$FluidTypeFactory_, arg2: $NonNullFunction_<$BaseFlowingFluid$Properties, T>, arg3: $NonNullFunction_<$BaseFlowingFluid$Properties, T>): $FluidBuilder<T, $CreateRegistrate>;
+        virtualFluid(arg0: string): $FluidBuilder<$VirtualFluid, $CreateRegistrate>;
+        virtualFluid(arg0: string, arg1: $ResourceLocation_, arg2: $ResourceLocation_): $FluidBuilder<$VirtualFluid, $CreateRegistrate>;
+        virtualFluid<T extends $BaseFlowingFluid>(arg0: string, arg1: $ResourceLocation_, arg2: $ResourceLocation_, arg3: $FluidBuilder$FluidTypeFactory_, arg4: $NonNullFunction_<$BaseFlowingFluid$Properties, T>, arg5: $NonNullFunction_<$BaseFlowingFluid$Properties, T>): $FluidBuilder<T, $CreateRegistrate>;
+        static defaultFluidType(arg0: $FluidType$Properties, arg1: $ResourceLocation_, arg2: $ResourceLocation_): $FluidType;
+        standardFluid(arg0: string): $FluidBuilder<$BaseFlowingFluid$Flowing, $CreateRegistrate>;
+        standardFluid(arg0: string, arg1: $FluidBuilder$FluidTypeFactory_): $FluidBuilder<$BaseFlowingFluid$Flowing, $CreateRegistrate>;
+        static connectedTextures(arg0: $Supplier_<$ConnectedTextureBehaviour>): $NonNullConsumer<$Block>;
     }
 }

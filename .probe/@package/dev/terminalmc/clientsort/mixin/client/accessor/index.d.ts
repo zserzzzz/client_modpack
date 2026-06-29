@@ -10,11 +10,11 @@ declare module "@package/dev/terminalmc/clientsort/mixin/client/accessor" {
     export class $AbstractContainerScreenAccessor {
     }
     export interface $AbstractContainerScreenAccessor {
-        clientsort$getLeftPos(): number;
         clientsort$getImageWidth(): number;
         clientsort$slotClicked(arg0: $Slot, arg1: number, arg2: number, arg3: $ClickType_): void;
-        clientsort$getTopPos(): number;
+        clientsort$getLeftPos(): number;
         clientsort$isHovering(arg0: $Slot, arg1: number, arg2: number): boolean;
+        clientsort$getTopPos(): number;
         clientsort$getPlayerInventoryTitle(): $Component;
     }
     export class $KeyMappingAccessor {

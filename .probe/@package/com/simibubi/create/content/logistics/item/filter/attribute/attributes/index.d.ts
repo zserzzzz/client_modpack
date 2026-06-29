@@ -17,8 +17,8 @@ import { $StreamCodec } from "@package/net/minecraft/network/codec";
 declare module "@package/com/simibubi/create/content/logistics/item/filter/attribute/attributes" {
     export class $FluidContentsAttribute extends $Record implements $ItemAttribute {
         getType(): $ItemAttributeType;
-        fluid(): $Fluid;
         getTranslationKey(): string;
+        fluid(): $Fluid;
         appliesTo(arg0: $ItemStack_, arg1: $Level_): boolean;
         getTranslationParameters(): $Object[];
         format(arg0: boolean): $MutableComponent;
@@ -34,22 +34,22 @@ declare module "@package/com/simibubi/create/content/logistics/item/filter/attri
      */
     export type $FluidContentsAttribute_ = { fluid?: $Fluid_,  } | [fluid?: $Fluid_, ];
     export class $AddedByAttribute$Type implements $ItemAttributeType {
-        createAttribute(): $ItemAttribute;
         codec(): $MapCodec<$ItemAttribute>;
+        createAttribute(): $ItemAttribute;
         streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $ItemAttribute>;
         getAllAttributes(arg0: $ItemStack_, arg1: $Level_): $List<$ItemAttribute>;
         constructor();
     }
     export class $ShulkerFillLevelAttribute$Type implements $ItemAttributeType {
-        createAttribute(): $ItemAttribute;
         codec(): $MapCodec<$ItemAttribute>;
+        createAttribute(): $ItemAttribute;
         streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $ItemAttribute>;
         getAllAttributes(arg0: $ItemStack_, arg1: $Level_): $List<$ItemAttribute>;
         constructor();
     }
     export class $BookAuthorAttribute$Type implements $ItemAttributeType {
-        createAttribute(): $ItemAttribute;
         codec(): $MapCodec<$ItemAttribute>;
+        createAttribute(): $ItemAttribute;
         streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $ItemAttribute>;
         getAllAttributes(arg0: $ItemStack_, arg1: $Level_): $List<$ItemAttribute>;
         constructor();
@@ -91,22 +91,22 @@ declare module "@package/com/simibubi/create/content/logistics/item/filter/attri
      */
     export type $BookCopyAttribute_ = { generation?: number,  } | [generation?: number, ];
     export class $FluidContentsAttribute$Type implements $ItemAttributeType {
-        createAttribute(): $ItemAttribute;
         codec(): $MapCodec<$ItemAttribute>;
+        createAttribute(): $ItemAttribute;
         streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $ItemAttribute>;
         getAllAttributes(arg0: $ItemStack_, arg1: $Level_): $List<$ItemAttribute>;
         constructor();
     }
     export class $InTagAttribute$Type implements $ItemAttributeType {
-        createAttribute(): $ItemAttribute;
         codec(): $MapCodec<$ItemAttribute>;
+        createAttribute(): $ItemAttribute;
         streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $ItemAttribute>;
         getAllAttributes(arg0: $ItemStack_, arg1: $Level_): $List<$ItemAttribute>;
         constructor();
     }
     export class $ItemNameAttribute$Type implements $ItemAttributeType {
-        createAttribute(): $ItemAttribute;
         codec(): $MapCodec<$ItemAttribute>;
+        createAttribute(): $ItemAttribute;
         streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $ItemAttribute>;
         getAllAttributes(arg0: $ItemStack_, arg1: $Level_): $List<$ItemAttribute>;
         constructor();
@@ -138,9 +138,9 @@ declare module "@package/com/simibubi/create/content/logistics/item/filter/attri
      */
     export type $ShulkerFillLevelAttribute_ = { levels?: $ShulkerFillLevelAttribute$ShulkerLevels_,  } | [levels?: $ShulkerFillLevelAttribute$ShulkerLevels_, ];
     export class $ItemNameAttribute extends $Record implements $ItemAttribute {
-        itemName(): string;
         getType(): $ItemAttributeType;
         getTranslationKey(): string;
+        itemName(): string;
         appliesTo(arg0: $ItemStack_, arg1: $Level_): boolean;
         getTranslationParameters(): $Object[];
         format(arg0: boolean): $MutableComponent;
@@ -156,8 +156,8 @@ declare module "@package/com/simibubi/create/content/logistics/item/filter/attri
      */
     export type $ItemNameAttribute_ = { itemName?: string,  } | [itemName?: string, ];
     export class $ColorAttribute$Type implements $ItemAttributeType {
-        createAttribute(): $ItemAttribute;
         codec(): $MapCodec<$ItemAttribute>;
+        createAttribute(): $ItemAttribute;
         streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $ItemAttribute>;
         getAllAttributes(arg0: $ItemStack_, arg1: $Level_): $List<$ItemAttribute>;
         constructor();
@@ -177,8 +177,8 @@ declare module "@package/com/simibubi/create/content/logistics/item/filter/attri
     }
     export class $AddedByAttribute extends $Record implements $ItemAttribute {
         getType(): $ItemAttributeType;
-        modId(): string;
         getTranslationKey(): string;
+        modId(): string;
         appliesTo(arg0: $ItemStack_, arg1: $Level_): boolean;
         getTranslationParameters(): $Object[];
         format(arg0: boolean): $MutableComponent;
@@ -212,23 +212,23 @@ declare module "@package/com/simibubi/create/content/logistics/item/filter/attri
      */
     export type $ColorAttribute_ = { color?: $DyeColor_,  } | [color?: $DyeColor_, ];
     export class $BookCopyAttribute$Type implements $ItemAttributeType {
-        createAttribute(): $ItemAttribute;
         codec(): $MapCodec<$ItemAttribute>;
+        createAttribute(): $ItemAttribute;
         streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $ItemAttribute>;
         getAllAttributes(arg0: $ItemStack_, arg1: $Level_): $List<$ItemAttribute>;
         constructor();
     }
     export class $EnchantAttribute$Type implements $ItemAttributeType {
-        createAttribute(): $ItemAttribute;
         codec(): $MapCodec<$ItemAttribute>;
+        createAttribute(): $ItemAttribute;
         streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $ItemAttribute>;
         getAllAttributes(arg0: $ItemStack_, arg1: $Level_): $List<$ItemAttribute>;
         constructor();
     }
     export class $EnchantAttribute extends $Record implements $ItemAttribute {
         getType(): $ItemAttributeType;
-        enchantment(): $Holder<$Enchantment>;
         getTranslationKey(): string;
+        enchantment(): $Holder<$Enchantment>;
         appliesTo(arg0: $ItemStack_, arg1: $Level_): boolean;
         getTranslationParameters(): $Object[];
         format(arg0: boolean): $MutableComponent;
@@ -262,8 +262,8 @@ declare module "@package/com/simibubi/create/content/logistics/item/filter/attri
      */
     export type $InTagAttribute_ = { tag?: $TagKey_<$Item>,  } | [tag?: $TagKey_<$Item>, ];
     export class $InItemGroupAttribute$Type implements $ItemAttributeType {
-        createAttribute(): $ItemAttribute;
         codec(): $MapCodec<$ItemAttribute>;
+        createAttribute(): $ItemAttribute;
         streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $ItemAttribute>;
         getAllAttributes(arg0: $ItemStack_, arg1: $Level_): $List<$ItemAttribute>;
         constructor();

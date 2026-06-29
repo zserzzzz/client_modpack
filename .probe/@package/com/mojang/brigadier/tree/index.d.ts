@@ -28,32 +28,32 @@ declare module "@package/com/mojang/brigadier/tree" {
         constructor();
     }
     export class $CommandNode<S> implements $Comparable<$CommandNode<S>> {
-        isFork(): boolean;
         getName(): string;
         compareTo(arg0: $CommandNode<S>): number;
         canUse(arg0: S): boolean;
         parse(arg0: $StringReader, arg1: $CommandContextBuilder<S>): void;
         getChild(arg0: string): $CommandNode<S>;
         getChildren(): $Collection<$CommandNode<S>>;
-        addChild(arg0: $CommandNode<S>): void;
         getExamples(): $Collection<string>;
+        addChild(arg0: $CommandNode<S>): void;
         createBuilder(): $ArgumentBuilder<S, never>;
-        findAmbiguities(arg0: $AmbiguityConsumer_<S>): void;
-        getUsageText(): string;
-        getRelevantNodes(arg0: $StringReader): $Collection<$CommandNode<S>>;
-        getRedirect(): $CommandNode<S>;
-        getRequirement(): $Predicate<S>;
         getCommand(): $Command<S>;
+        getRequirement(): $Predicate<S>;
         getRedirectModifier(): $RedirectModifier<S>;
         listSuggestions(arg0: $CommandContext<S>, arg1: $SuggestionsBuilder): $CompletableFuture<$Suggestions>;
-        get fork(): boolean;
+        findAmbiguities(arg0: $AmbiguityConsumer_<S>): void;
+        getRelevantNodes(arg0: $StringReader): $Collection<$CommandNode<S>>;
+        getRedirect(): $CommandNode<S>;
+        getUsageText(): string;
+        isFork(): boolean;
         get name(): string;
         get children(): $Collection<$CommandNode<S>>;
         get examples(): $Collection<string>;
-        get usageText(): string;
-        get redirect(): $CommandNode<S>;
-        get requirement(): $Predicate<S>;
         get command(): $Command<S>;
+        get requirement(): $Predicate<S>;
         get redirectModifier(): $RedirectModifier<S>;
+        get redirect(): $CommandNode<S>;
+        get usageText(): string;
+        get fork(): boolean;
     }
 }

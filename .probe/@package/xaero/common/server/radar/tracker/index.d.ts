@@ -11,21 +11,21 @@ import { $UUID_, $UUID } from "@package/java/util";
 
 declare module "@package/xaero/common/server/radar/tracker" {
     export class $SyncedTrackedPlayer {
-        getZ(): number;
-        getX(): number;
         update(arg0: $Player): void;
         getId(): $UUID;
         copyFrom(arg0: $SyncedTrackedPlayer): void;
-        getY(): number;
-        getDimensionKey(): $ResourceKey<$Level>;
         setPos(arg0: number, arg1: number, arg2: number): $SyncedTrackedPlayer;
+        getY(): number;
+        getZ(): number;
+        getX(): number;
+        getDimensionKey(): $ResourceKey<$Level>;
         setDimension(arg0: $ResourceKey_<$Level>): $SyncedTrackedPlayer;
         matchesEnough(arg0: $Player, arg1: number): boolean;
         constructor(arg0: $UUID_, arg1: number, arg2: number, arg3: number, arg4: $ResourceKey_<$Level>);
-        get z(): number;
-        get x(): number;
         get id(): $UUID;
         get y(): number;
+        get z(): number;
+        get x(): number;
         get dimensionKey(): $ResourceKey<$Level>;
         set dimension(value: $ResourceKey_<$Level>);
     }
@@ -42,8 +42,8 @@ declare module "@package/xaero/common/server/radar/tracker" {
     export class $ISyncedPlayerTrackerSystem {
     }
     export interface $ISyncedPlayerTrackerSystem {
-        isPartySystem(): boolean;
         getTrackingLevel(arg0: $Player, arg1: $Player): number;
+        isPartySystem(): boolean;
         get partySystem(): boolean;
     }
 }

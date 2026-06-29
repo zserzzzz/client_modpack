@@ -83,16 +83,16 @@ declare module "@package/com/simibubi/create/content/kinetics/transmission" {
         constructor(arg0: $BlockBehaviour$Properties);
     }
     export class $GearshiftBlock extends $AbstractEncasedShaftBlock implements $IBE<$SplitShaftBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$SplitShaftBlockEntity>;
-        getBlockEntityClass(): $Class<$SplitShaftBlockEntity>;
         detachKinetics(arg0: $Level_, arg1: $BlockPos_, arg2: boolean): void;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$SplitShaftBlockEntity>): void;
+        getBlockEntityClass(): $Class<$SplitShaftBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$SplitShaftBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SplitShaftBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($SplitShaftBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SplitShaftBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $SplitShaftBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$SplitShaftBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($SplitShaftBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SplitShaftBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -124,8 +124,8 @@ declare module "@package/com/simibubi/create/content/kinetics/transmission" {
         hasCollision: boolean;
         static AXIS: $EnumProperty<$Direction$Axis>;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$SplitShaftBlockEntity>;
         get blockEntityClass(): $Class<$SplitShaftBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$SplitShaftBlockEntity>;
     }
     export class $GearshiftBlockEntity extends $SplitShaftBlockEntity {
         sequenceContext: $SequencedGearshiftBlockEntity$SequenceContext;

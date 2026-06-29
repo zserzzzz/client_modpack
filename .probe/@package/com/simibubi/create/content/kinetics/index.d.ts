@@ -36,9 +36,9 @@ export * as gantry from "@package/com/simibubi/create/content/kinetics/gantry";
 declare module "@package/com/simibubi/create/content/kinetics" {
     export class $RotationPropagator implements $RotationPropagatorAccessor {
         static isConnected(arg0: $KineticBlockEntity, arg1: $KineticBlockEntity): boolean;
-        static handleAdded(arg0: $Level_, arg1: $BlockPos_, arg2: $KineticBlockEntity): void;
         static handleRemoved(arg0: $Level_, arg1: $BlockPos_, arg2: $KineticBlockEntity): void;
-        static callFindConnectedNeighbour$create_connected_$md$942995$0(arg0: $KineticBlockEntity, arg1: $BlockPos_): $KineticBlockEntity;
+        static handleAdded(arg0: $Level_, arg1: $BlockPos_, arg2: $KineticBlockEntity): void;
+        static callFindConnectedNeighbour$create_connected_$md$c99f8a$0(arg0: $KineticBlockEntity, arg1: $BlockPos_): $KineticBlockEntity;
         constructor();
     }
     export class $KineticDebugger {
@@ -53,9 +53,9 @@ declare module "@package/com/simibubi/create/content/kinetics" {
         static get selectedBE(): $KineticBlockEntity;
     }
     export class $TorquePropagator {
+        getOrCreateNetworkFor(arg0: $KineticBlockEntity): $KineticNetwork;
         onLoadWorld(arg0: $LevelAccessor): void;
         onUnloadWorld(arg0: $LevelAccessor): void;
-        getOrCreateNetworkFor(arg0: $KineticBlockEntity): $KineticNetwork;
         constructor();
     }
     export class $KineticNetwork implements $KineticNetworkAccessor {
@@ -63,19 +63,19 @@ declare module "@package/com/simibubi/create/content/kinetics" {
         add(arg0: $KineticBlockEntity): void;
         getSize(): number;
         sync(): void;
-        updateNetwork(): void;
-        addSilently(arg0: $KineticBlockEntity, arg1: number, arg2: number): void;
-        initFromTE(arg0: number, arg1: number, arg2: number): void;
-        getActualCapacityOf(arg0: $KineticBlockEntity): number;
+        updateStressFor(arg0: $KineticBlockEntity, arg1: number): void;
         updateStress(): void;
         updateCapacityFor(arg0: $KineticBlockEntity, arg1: number): void;
-        updateStressFor(arg0: $KineticBlockEntity, arg1: number): void;
-        redirect$egc000$simulated$extraKineticsCapacity(arg0: $Level_, arg1: $BlockPos_): $BlockEntity;
-        redirect$egc000$simulated$extraKineticsStress(arg0: $Level_, arg1: $BlockPos_): $BlockEntity;
-        getActualStressOf(arg0: $KineticBlockEntity): number;
+        addSilently(arg0: $KineticBlockEntity, arg1: number, arg2: number): void;
+        updateNetwork(): void;
+        initFromTE(arg0: number, arg1: number, arg2: number): void;
+        getActualCapacityOf(arg0: $KineticBlockEntity): number;
         updateCapacity(): void;
         calculateStress(): number;
+        getActualStressOf(arg0: $KineticBlockEntity): number;
         calculateCapacity(): number;
+        redirect$egc000$simulated$extraKineticsStress(arg0: $Level_, arg1: $BlockPos_): $BlockEntity;
+        redirect$egc000$simulated$extraKineticsCapacity(arg0: $Level_, arg1: $BlockPos_): $BlockEntity;
         getUnloadedStress(): number;
         sources: $Map<$KineticBlockEntity, number>;
         members: $Map<$KineticBlockEntity, number>;

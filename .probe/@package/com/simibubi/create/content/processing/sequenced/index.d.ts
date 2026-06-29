@@ -23,43 +23,43 @@ import { $StreamCodec } from "@package/net/minecraft/network/codec";
 
 declare module "@package/com/simibubi/create/content/processing/sequenced" {
     export class $SequencedAssemblyRecipe implements $Recipe<$RecipeWrapper> {
-        isSpecial(): boolean;
-        getSequence(): $List<$SequencedRecipe<never>>;
         matches(arg0: $RecipeWrapper, arg1: $Level_): boolean;
         getType(): $RecipeType<never>;
-        getLoops(): number;
-        assemble(arg0: $RecipeWrapper, arg1: $HolderLookup$Provider): $ItemStack;
-        static getRecipe<I extends $RecipeInput, R extends $ProcessingRecipe<I, never>>(arg0: $Level_, arg1: I, arg2: $RecipeType_<R>, arg3: $Class<R>): ($RecipeHolder<R>) | undefined;
-        static getRecipe<R extends $ProcessingRecipe<never, never>>(arg0: $Level_, arg1: $ItemStack_, arg2: $RecipeType_<R>, arg3: $Class<R>): ($RecipeHolder<R>) | undefined;
-        static getRecipe<I extends $RecipeInput, R extends $ProcessingRecipe<I, never>>(arg0: $Level_, arg1: I, arg2: $RecipeType_<R>, arg3: $Class<R>, arg4: $Predicate_<$RecipeHolder<R>>): ($RecipeHolder<R>) | undefined;
-        static getRecipes<R extends $ProcessingRecipe<never, never>>(arg0: $Level_, arg1: $ItemStack_, arg2: $RecipeType_<R>, arg3: $Class<R>, arg4: $Predicate_<$RecipeHolder<R>>): $List<$RecipeHolder<R>>;
+        getSequence(): $List<$SequencedRecipe<never>>;
         getSerializer(): $RecipeSerializer<never>;
-        getIngredient(): $Ingredient;
-        getTransitionalItem(): $ItemStack;
+        static getRecipes<R extends $ProcessingRecipe<never, never>>(arg0: $Level_, arg1: $ItemStack_, arg2: $RecipeType_<R>, arg3: $Class<R>, arg4: $Predicate_<$RecipeHolder<R>>): $List<$RecipeHolder<R>>;
+        isSpecial(): boolean;
         static addToTooltip(arg0: $ItemTooltipEvent): void;
         canCraftInDimensions(arg0: number, arg1: number): boolean;
+        static getRecipe<R extends $ProcessingRecipe<never, never>>(arg0: $Level_, arg1: $ItemStack_, arg2: $RecipeType_<R>, arg3: $Class<R>): ($RecipeHolder<R>) | undefined;
+        static getRecipe<I extends $RecipeInput, R extends $ProcessingRecipe<I, never>>(arg0: $Level_, arg1: I, arg2: $RecipeType_<R>, arg3: $Class<R>, arg4: $Predicate_<$RecipeHolder<R>>): ($RecipeHolder<R>) | undefined;
+        static getRecipe<I extends $RecipeInput, R extends $ProcessingRecipe<I, never>>(arg0: $Level_, arg1: I, arg2: $RecipeType_<R>, arg3: $Class<R>): ($RecipeHolder<R>) | undefined;
+        assemble(arg0: $RecipeWrapper, arg1: $HolderLookup$Provider): $ItemStack;
         getResultItem(arg0: $HolderLookup$Provider): $ItemStack;
+        getIngredient(): $Ingredient;
+        getTransitionalItem(): $ItemStack;
+        getLoops(): number;
         getOutputChance(): number;
-        getRemainingItems(arg0: $RecipeWrapper): $NonNullList<$ItemStack>;
         getGroup(): string;
+        getRemainingItems(arg0: $RecipeWrapper): $NonNullList<$ItemStack>;
+        getToastSymbol(): $ItemStack;
+        getIngredients(): $NonNullList<$Ingredient>;
         isIncomplete(): boolean;
         showNotification(): boolean;
-        getIngredients(): $NonNullList<$Ingredient>;
-        getToastSymbol(): $ItemStack;
         resultPool: $List<$ProcessingOutput>;
         constructor(arg0: $SequencedAssemblyRecipeSerializer);
-        get special(): boolean;
-        get sequence(): $List<$SequencedRecipe<never>>;
         get type(): $RecipeType<never>;
-        get loops(): number;
+        get sequence(): $List<$SequencedRecipe<never>>;
         get serializer(): $RecipeSerializer<never>;
+        get special(): boolean;
         get ingredient(): $Ingredient;
         get transitionalItem(): $ItemStack;
+        get loops(): number;
         get outputChance(): number;
         get group(): string;
-        get incomplete(): boolean;
-        get ingredients(): $NonNullList<$Ingredient>;
         get toastSymbol(): $ItemStack;
+        get ingredients(): $NonNullList<$Ingredient>;
+        get incomplete(): boolean;
     }
     export class $SequencedAssemblyItem extends $Item {
         getProgress(arg0: $ItemStack_): number;
@@ -93,7 +93,7 @@ declare module "@package/com/simibubi/create/content/processing/sequenced" {
     /**
      * Values that may be interpreted as {@link $SequencedAssemblyRecipe$SequencedAssembly}.
      */
-    export type $SequencedAssemblyRecipe$SequencedAssembly_ = { step?: number, progress?: number, id?: $ResourceLocation_,  } | [step?: number, progress?: number, id?: $ResourceLocation_, ];
+    export type $SequencedAssemblyRecipe$SequencedAssembly_ = { id?: $ResourceLocation_, step?: number, progress?: number,  } | [id?: $ResourceLocation_, step?: number, progress?: number, ];
     export class $SequencedAssemblyRecipeSerializer implements $RecipeSerializer<$SequencedAssemblyRecipe> {
         codec(): $MapCodec<$SequencedAssemblyRecipe>;
         streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $SequencedAssemblyRecipe>;
@@ -101,29 +101,29 @@ declare module "@package/com/simibubi/create/content/processing/sequenced" {
         constructor();
     }
     export class $SequencedAssemblyRecipeBuilder {
+        loops(arg0: number): $SequencedAssemblyRecipeBuilder;
         build(): $RecipeHolder<$SequencedAssemblyRecipe>;
         build(arg0: $RecipeOutput): void;
-        require(arg0: $Ingredient_): $SequencedAssemblyRecipeBuilder;
         require(arg0: $TagKey_<$Item>): $SequencedAssemblyRecipeBuilder;
+        require(arg0: $Ingredient_): $SequencedAssemblyRecipeBuilder;
         require(arg0: $ItemLike_): $SequencedAssemblyRecipeBuilder;
-        loops(arg0: number): $SequencedAssemblyRecipeBuilder;
         transitionTo(arg0: $ItemLike_): $SequencedAssemblyRecipeBuilder;
-        addOutput(arg0: $ItemLike_, arg1: number): $SequencedAssemblyRecipeBuilder;
         addOutput(arg0: $ItemStack_, arg1: number): $SequencedAssemblyRecipeBuilder;
-        addStep<B extends $ProcessingRecipeBuilder<never, never, B>>(arg0: $Function_<$ResourceLocation, B>, arg1: $UnaryOperator_<B>): $SequencedAssemblyRecipeBuilder;
-        addStep<R extends $StandardProcessingRecipe<never>>(arg0: $StandardProcessingRecipe$Factory_<R>, arg1: $UnaryOperator_<$StandardProcessingRecipe$Builder<R>>): $SequencedAssemblyRecipeBuilder;
+        addOutput(arg0: $ItemLike_, arg1: number): $SequencedAssemblyRecipeBuilder;
         addStep<R extends $ItemApplicationRecipe>(arg0: $ItemApplicationRecipe$Factory_<R>, arg1: $UnaryOperator_<$ItemApplicationRecipe$Builder<R>>): $SequencedAssemblyRecipeBuilder;
+        addStep<R extends $StandardProcessingRecipe<never>>(arg0: $StandardProcessingRecipe$Factory_<R>, arg1: $UnaryOperator_<$StandardProcessingRecipe$Builder<R>>): $SequencedAssemblyRecipeBuilder;
+        addStep<B extends $ProcessingRecipeBuilder<never, never, B>>(arg0: $Function_<$ResourceLocation, B>, arg1: $UnaryOperator_<B>): $SequencedAssemblyRecipeBuilder;
         constructor(arg0: $ResourceLocation_);
     }
     export class $IAssemblyRecipe {
     }
     export interface $IAssemblyRecipe {
-        addAssemblyFluidIngredients(arg0: $List_<$SizedFluidIngredient>): void;
         addAssemblyIngredients(arg0: $List_<$Ingredient_>): void;
-        getDescriptionForAssembly(): $Component;
         addRequiredMachines(arg0: $Set_<$ItemLike_>): void;
-        getJEISubCategory(): $Supplier<$Supplier<$SequencedAssemblySubCategory>>;
+        getDescriptionForAssembly(): $Component;
+        addAssemblyFluidIngredients(arg0: $List_<$SizedFluidIngredient>): void;
         supportsAssembly(): boolean;
+        getJEISubCategory(): $Supplier<$Supplier<$SequencedAssemblySubCategory>>;
         get descriptionForAssembly(): $Component;
         get JEISubCategory(): $Supplier<$Supplier<$SequencedAssemblySubCategory>>;
     }

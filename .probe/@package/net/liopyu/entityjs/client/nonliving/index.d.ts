@@ -9,9 +9,9 @@ export * as model from "@package/net/liopyu/entityjs/client/nonliving/model";
 declare module "@package/net/liopyu/entityjs/client/nonliving" {
     export class $KubeJSNLEntityRenderer<T extends $Entity> extends $GeoEntityRenderer<T> {
         entityName(): string;
+        scaleModelForRender(arg0: number, arg1: number, arg2: $PoseStack, arg3: T, arg4: $BakedGeoModel_, arg5: boolean, arg6: number, arg7: number, arg8: number): void;
         getScaleWidth(): number;
         getScaleHeight(): number;
-        scaleModelForRender(arg0: number, arg1: number, arg2: $PoseStack, arg3: T, arg4: $BakedGeoModel_, arg5: boolean, arg6: number, arg7: number, arg8: number): void;
         shadowRadius: number;
         static LEASH_RENDER_STEPS: number;
         entityRenderDispatcher: $EntityRenderDispatcher;

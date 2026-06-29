@@ -22,20 +22,20 @@ import { $NeighborUpdater } from "@package/net/minecraft/world/level/redstone";
 
 declare module "@package/net/createmod/ponder/api/level" {
     export class $PonderLevel extends $SchematicLevel implements $PonderWorldAccessor {
-        restore(): void;
         tick(): void;
+        restore(): void;
         addParticle(arg0: $Particle | null): void;
-        addBlockDestroyEffects(arg0: $BlockPos_, arg1: $BlockState_): void;
-        setBlockBreakingProgress(arg0: $BlockPos_, arg1: number): void;
-        createBackup(): void;
-        renderParticles(arg0: $PoseStack, arg1: $MultiBufferSource_, arg2: $Camera, arg3: number): void;
         clearMask(): void;
+        renderParticles(arg0: $PoseStack, arg1: $MultiBufferSource_, arg2: $Camera, arg3: number): void;
         restoreBlocks(arg0: $Selection): void;
         pushFakeLight(arg0: number): void;
-        getBlockBreakingProgressions(): $Map<$BlockPos, number>;
         renderEntities(arg0: $PoseStack, arg1: $SuperRenderTypeBuffer, arg2: $Camera, arg3: number): void;
-        popLight(): void;
+        createBackup(): void;
         setMask(arg0: $Selection | null): void;
+        popLight(): void;
+        getBlockBreakingProgressions(): $Map<$BlockPos, number>;
+        setBlockBreakingProgress(arg0: $BlockPos_, arg1: number): void;
+        addBlockDestroyEffects(arg0: $BlockPos_, arg1: $BlockState_): void;
         self(): $EntityGetter;
         ponderjs$makeParticle<T extends $ParticleOptions>(arg0: T, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number): $Particle;
         restoringBlockSnapshots: boolean;
@@ -68,7 +68,7 @@ declare module "@package/net/createmod/ponder/api/level" {
         blockEntityTickers: $List<$TickingBlockEntity>;
         captureBlockSnapshots: boolean;
         constructor(arg0: $BlockPos_, arg1: $Level_);
-        get blockBreakingProgressions(): $Map<$BlockPos, number>;
         set mask(value: $Selection | null);
+        get blockBreakingProgressions(): $Map<$BlockPos, number>;
     }
 }

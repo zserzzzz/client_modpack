@@ -9,10 +9,10 @@ declare module "@package/net/createmod/catnip/config" {
         constructor(arg0: $ConfigBase, arg1: string, arg2: number, ...arg3: string[]);
     }
     export class $ConfigBase {
-        onReload(): void;
         getName(): string;
         onLoad(): void;
         registerAll(arg0: $ModConfigSpec$Builder): void;
+        onReload(): void;
         specification: $ModConfigSpec;
         constructor();
         get name(): string;

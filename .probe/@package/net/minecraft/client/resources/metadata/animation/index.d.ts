@@ -35,18 +35,18 @@ declare module "@package/net/minecraft/client/resources/metadata/animation" {
      */
     export type $VillagerMetaDataSection$Hat_ = "none" | "partial" | "full";
     export class $AnimationMetadataSection implements $AnimationMetadataSectionAccessor, $IDeltaProviderContext {
-        forEachFrame(output: $AnimationMetadataSection$FrameOutput_): void;
+        getDefaultFrameTime(): number;
+        isInterpolatedFrames(): boolean;
+        polytone$setTimeCycleDuration(duration: number): void;
+        polytone$getTimeCycleDuration(): number;
+        polytone$setMode(mode: $IDeltaProvider_): void;
         calculateFrameSize(width: number, height: number): $FrameSize;
         polytone$getMode(): $IDeltaProvider;
-        polytone$setMode(mode: $IDeltaProvider_): void;
-        isInterpolatedFrames(): boolean;
-        getDefaultFrameTime(): number;
-        polytone$getTimeCycleDuration(): number;
-        polytone$setTimeCycleDuration(duration: number): void;
+        forEachFrame(output: $AnimationMetadataSection$FrameOutput_): void;
         setFrameHeight(arg0: number): void;
+        setFrameWidth(arg0: number): void;
         getFrameWidth(): number;
         getFrameHeight(): number;
-        setFrameWidth(arg0: number): void;
         static SECTION_NAME: string;
         frameHeight: number;
         frameWidth: number;
@@ -56,15 +56,15 @@ declare module "@package/net/minecraft/client/resources/metadata/animation" {
         static DEFAULT_FRAME_TIME: number;
         static EMPTY: $AnimationMetadataSection;
         constructor(frames: $List_<$AnimationFrame>, frameWidth: number, frameHeight: number, defaultFrameTime: number, interpolatedFrames: boolean);
-        get interpolatedFrames(): boolean;
         get defaultFrameTime(): number;
+        get interpolatedFrames(): boolean;
     }
     export class $AnimationMetadataSectionSerializer implements $MetadataSectionSerializer<$AnimationMetadataSection> {
-        modifyReturnValue$dgm000$polytone$addWorldTimeTextureData(original: $AnimationMetadataSection, json: $JsonObject_): $AnimationMetadataSection;
         /**
          * The name of this section type as it appears in JSON.
          */
         getMetadataSectionName(): string;
+        modifyReturnValue$dgm000$polytone$addWorldTimeTextureData(original: $AnimationMetadataSection, json: $JsonObject_): $AnimationMetadataSection;
         fromJson(json: $JsonObject_): $AnimationMetadataSection;
         constructor();
         get metadataSectionName(): string;

@@ -69,22 +69,22 @@ declare module "@package/com/simibubi/create/content/kinetics/base" {
     export class $IRotate {
     }
     export interface $IRotate extends $IWrenchable {
-        showCapacityWithAnnotation(): boolean;
         getRotationAxis(arg0: $BlockState_): $Direction$Axis;
+        showCapacityWithAnnotation(): boolean;
         getMinimumRequiredSpeedLevel(): $IRotate$SpeedLevel;
         hasShaftTowards(arg0: $LevelReader, arg1: $BlockPos_, arg2: $BlockState_, arg3: $Direction_): boolean;
         hideStressImpact(): boolean;
         get minimumRequiredSpeedLevel(): $IRotate$SpeedLevel;
     }
     export class $KineticBlockEntityRenderer<T extends $KineticBlockEntity> extends $SafeBlockEntityRenderer<T> {
-        static standardKineticRotationTransform(arg0: $SuperByteBuffer, arg1: $KineticBlockEntity, arg2: number): $SuperByteBuffer;
-        static getRotationOffsetForPosition(arg0: $KineticBlockEntity, arg1: $BlockPos_, arg2: $Direction$Axis_): number;
-        static getRotationAxisOf(arg0: $KineticBlockEntity): $Direction$Axis;
-        static getAngleForBe(arg0: $KineticBlockEntity, arg1: $BlockPos_, arg2: $Direction$Axis_): number;
         static shaft(arg0: $Direction$Axis_): $BlockState;
+        static renderRotatingKineticBlock(arg0: $KineticBlockEntity, arg1: $BlockState_, arg2: $PoseStack, arg3: $VertexConsumer, arg4: number): void;
         static renderRotatingBuffer(arg0: $KineticBlockEntity, arg1: $SuperByteBuffer, arg2: $PoseStack, arg3: $VertexConsumer, arg4: number): void;
         static kineticRotationTransform(arg0: $SuperByteBuffer, arg1: $KineticBlockEntity, arg2: $Direction$Axis_, arg3: number, arg4: number): $SuperByteBuffer;
-        static renderRotatingKineticBlock(arg0: $KineticBlockEntity, arg1: $BlockState_, arg2: $PoseStack, arg3: $VertexConsumer, arg4: number): void;
+        static getRotationAxisOf(arg0: $KineticBlockEntity): $Direction$Axis;
+        static getAngleForBe(arg0: $KineticBlockEntity, arg1: $BlockPos_, arg2: $Direction$Axis_): number;
+        static getRotationOffsetForPosition(arg0: $KineticBlockEntity, arg1: $BlockPos_, arg2: $Direction$Axis_): number;
+        static standardKineticRotationTransform(arg0: $SuperByteBuffer, arg1: $KineticBlockEntity, arg2: number): $SuperByteBuffer;
         static KINETIC_BLOCK: $SuperByteBufferCache$Compartment<$BlockState>;
         static rainbowMode: boolean;
         constructor(arg0: $BlockEntityRendererProvider$Context);
@@ -114,8 +114,8 @@ declare module "@package/com/simibubi/create/content/kinetics/base" {
     }
     export class $OrientedRotatingVisual<T extends $KineticBlockEntity> extends $KineticBlockEntityVisual<T> {
         static of<T extends $KineticBlockEntity>(arg0: $PartialModel): $SimpleBlockEntityVisualizer$Factory<T>;
-        static gantryShaft(arg0: $VisualizationContext, arg1: $GantryShaftBlockEntity, arg2: number): $BlockEntityVisual<$GantryShaftBlockEntity>;
         static backHorizontal<T extends $KineticBlockEntity>(arg0: $PartialModel): $SimpleBlockEntityVisualizer$Factory<T>;
+        static gantryShaft(arg0: $VisualizationContext, arg1: $GantryShaftBlockEntity, arg2: number): $BlockEntityVisual<$GantryShaftBlockEntity>;
         constructor(arg0: $VisualizationContext, arg1: T, arg2: number, arg3: $Direction_, arg4: $Direction_, arg5: $Model);
     }
     export class $ShaftVisual<T extends $KineticBlockEntity> extends $SingleAxisRotatingVisual<T> {
@@ -124,30 +124,30 @@ declare module "@package/com/simibubi/create/content/kinetics/base" {
     }
     export class $BlockBreakingMovementBehaviour implements $MovementBehaviour {
         tick(arg0: $MovementContext): void;
-        stopMoving(arg0: $MovementContext): void;
-        wrapMethod$gjp000$sable$checkPosition(arg0: $MovementContext, arg1: $BlockPos_, arg2: $Operation_<any>): void;
-        cancelStall(arg0: $MovementContext): void;
         startMoving(arg0: $MovementContext): void;
         visitNewPosition(arg0: $MovementContext, arg1: $BlockPos_): void;
+        cancelStall(arg0: $MovementContext): void;
+        canBreak(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_): boolean;
+        stopMoving(arg0: $MovementContext): void;
         damageEntities(arg0: $MovementContext, arg1: $BlockPos_, arg2: $Level_): void;
         tickBreaker(arg0: $MovementContext): void;
-        canBreak(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_): boolean;
+        wrapMethod$gjp000$sable$checkPosition(arg0: $MovementContext, arg1: $BlockPos_, arg2: $Operation_<any>): void;
         handler$gjp000$sable$testBreakingPosDist(arg0: $MovementContext, arg1: $CallbackInfo): void;
         isActive(arg0: $MovementContext): boolean;
         /**
          * @deprecated
          */
         dropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
+        onDisabledByControls(arg0: $MovementContext): void;
+        renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
         getActiveAreaOffset(arg0: $MovementContext): $Vec3;
         mustTickWhileDisabled(): boolean;
-        renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
-        onDisabledByControls(arg0: $MovementContext): void;
+        disableBlockEntityRendering(): boolean;
+        canBeDisabledVia(arg0: $MovementContext): $ItemStack;
         collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
         onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
-        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
-        canBeDisabledVia(arg0: $MovementContext): $ItemStack;
         writeExtraData(arg0: $MovementContext): void;
-        disableBlockEntityRendering(): boolean;
+        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
         constructor();
     }
     export class $RotationIndicatorParticle extends $SimpleAnimatedParticle {
@@ -237,10 +237,10 @@ declare module "@package/com/simibubi/create/content/kinetics/base" {
         constructor(arg0: $BlockBehaviour$Properties);
     }
     export class $KineticBlockEntityVisual<T extends $KineticBlockEntity> extends $AbstractBlockEntityVisual<T> {
-        static rotationOffset(arg0: $BlockState_, arg1: $Direction$Axis_, arg2: $Vec3i): number;
         static rotationAxis(arg0: $BlockState_): $Direction$Axis;
-        static applyOverstressEffect(arg0: $KineticBlockEntity, ...arg1: $RotatingInstance[]): void;
+        static rotationOffset(arg0: $BlockState_, arg1: $Direction$Axis_, arg2: $Vec3i): number;
         static shouldOffset(arg0: $Direction$Axis_, arg1: $Vec3i): boolean;
+        static applyOverstressEffect(arg0: $KineticBlockEntity, ...arg1: $RotatingInstance[]): void;
         constructor(arg0: $VisualizationContext, arg1: T, arg2: number);
     }
     export class $IRotate$StressImpact extends $Enum<$IRotate$StressImpact> {
@@ -248,8 +248,8 @@ declare module "@package/com/simibubi/create/content/kinetics/base" {
         static valueOf(arg0: string): $IRotate$StressImpact;
         static of(arg0: number): $IRotate$StressImpact;
         static isEnabled(): boolean;
-        getAbsoluteColor(): $ChatFormatting;
         static getFormattedStressText(arg0: number): $LangBuilder;
+        getAbsoluteColor(): $ChatFormatting;
         getRelativeColor(): $ChatFormatting;
         static HIGH: $IRotate$StressImpact;
         static MEDIUM: $IRotate$StressImpact;
@@ -270,9 +270,9 @@ declare module "@package/com/simibubi/create/content/kinetics/base" {
     export class $RotationIndicatorParticleData implements $ParticleOptions, $ICustomParticleDataWithSprite<$RotationIndicatorParticleData> {
         getCodec(arg0: $ParticleType_<$RotationIndicatorParticleData>): $MapCodec<$RotationIndicatorParticleData>;
         getType(): $ParticleType<never>;
-        getStreamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $RotationIndicatorParticleData>;
         getMetaFactory(): $ParticleEngine$SpriteParticleRegistration<$RotationIndicatorParticleData>;
         getAxis(): $Direction$Axis;
+        getStreamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $RotationIndicatorParticleData>;
         getFactory(): $ParticleProvider<$RotationIndicatorParticleData>;
         register(arg0: $ParticleType_<$RotationIndicatorParticleData>, arg1: $RegisterParticleProvidersEvent): void;
         createType(): $ParticleType<$RotationIndicatorParticleData>;
@@ -281,9 +281,9 @@ declare module "@package/com/simibubi/create/content/kinetics/base" {
         constructor(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: $Direction$Axis_);
         constructor();
         get type(): $ParticleType<never>;
-        get streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $RotationIndicatorParticleData>;
         get metaFactory(): $ParticleEngine$SpriteParticleRegistration<$RotationIndicatorParticleData>;
         get axis(): $Direction$Axis;
+        get streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $RotationIndicatorParticleData>;
         get factory(): $ParticleProvider<$RotationIndicatorParticleData>;
     }
     export class $KineticBlock extends $Block implements $IRotate, $KineticBlockAccessor {
@@ -294,10 +294,10 @@ declare module "@package/com/simibubi/create/content/kinetics/base" {
         showCapacityWithAnnotation(): boolean;
         getMinimumRequiredSpeedLevel(): $IRotate$SpeedLevel;
         hideStressImpact(): boolean;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         callAreStatesKineticallyEquivalent(arg0: $BlockState_, arg1: $BlockState_): boolean;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -368,18 +368,18 @@ declare module "@package/com/simibubi/create/content/kinetics/base" {
         static values(): $IRotate$SpeedLevel[];
         static valueOf(arg0: string): $IRotate$SpeedLevel;
         static of(arg0: number): $IRotate$SpeedLevel;
+        getTextColor(): $ChatFormatting;
         getColor(): number;
         getSpeedValue(): number;
-        getTextColor(): $ChatFormatting;
-        getParticleSpeed(): number;
         static getFormattedSpeedText(arg0: number, arg1: boolean): $LangBuilder;
+        getParticleSpeed(): number;
         static MEDIUM: $IRotate$SpeedLevel;
         static SLOW: $IRotate$SpeedLevel;
         static NONE: $IRotate$SpeedLevel;
         static FAST: $IRotate$SpeedLevel;
+        get textColor(): $ChatFormatting;
         get color(): number;
         get speedValue(): number;
-        get textColor(): $ChatFormatting;
         get particleSpeed(): number;
     }
     /**
@@ -387,8 +387,8 @@ declare module "@package/com/simibubi/create/content/kinetics/base" {
      */
     export type $IRotate$SpeedLevel_ = "none" | "slow" | "medium" | "fast";
     export class $DirectionalKineticBlock extends $KineticBlock {
-        getPreferredFacing(arg0: $BlockPlaceContext): $Direction;
         wrapOperation$ege001$simulated$test(arg0: $IRotate, arg1: $LevelReader, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Direction_, arg5: $Operation_<any>): boolean;
+        getPreferredFacing(arg0: $BlockPlaceContext): $Direction;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -420,9 +420,9 @@ declare module "@package/com/simibubi/create/content/kinetics/base" {
         constructor(arg0: $BlockBehaviour$Properties);
     }
     export class $GeneratingKineticBlockEntity extends $KineticBlockEntity {
-        updateGeneratedRotation(): void;
-        createNetworkId(): number;
         applyNewSpeed(arg0: number, arg1: number): void;
+        createNetworkId(): number;
+        updateGeneratedRotation(): void;
         wrapOperation$efp000$simulated$getExtraKinetics(arg0: $Level_, arg1: $BlockPos_, arg2: $Operation_<any>): $BlockEntity;
         sequenceContext: $SequencedGearshiftBlockEntity$SequenceContext;
         networkDirty: boolean;
@@ -444,20 +444,20 @@ declare module "@package/com/simibubi/create/content/kinetics/base" {
         setup(arg0: $KineticBlockEntity): $RotatingInstance;
         setColor(arg0: $KineticBlockEntity): $RotatingInstance;
         setColor(arg0: $Color): $RotatingInstance;
-        setRotationAxis(arg0: $Direction$Axis_): $RotatingInstance;
-        setRotationAxis(arg0: $Vector3f): $RotatingInstance;
-        setRotationAxis(arg0: number, arg1: number, arg2: number): $RotatingInstance;
         rotateTo(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number): $RotatingInstance;
-        setRotationOffset(arg0: number): $RotatingInstance;
-        rotateToFace(arg0: $Direction_, arg1: $Direction$Axis_): $RotatingInstance;
-        rotateToFace(arg0: number, arg1: number, arg2: number): $RotatingInstance;
-        rotateToFace(arg0: $Direction$Axis_): $RotatingInstance;
-        rotateToFace(arg0: $Direction_): $RotatingInstance;
-        rotateToFace(arg0: $Direction_, arg1: $Direction_): $RotatingInstance;
+        setPosition(arg0: $Vector3f): $RotatingInstance;
         setPosition(arg0: number, arg1: number, arg2: number): $RotatingInstance;
         setPosition(arg0: $Vec3i): $RotatingInstance;
-        setPosition(arg0: $Vector3f): $RotatingInstance;
         nudge(arg0: number, arg1: number, arg2: number): $RotatingInstance;
+        setRotationAxis(arg0: $Vector3f): $RotatingInstance;
+        setRotationAxis(arg0: number, arg1: number, arg2: number): $RotatingInstance;
+        setRotationAxis(arg0: $Direction$Axis_): $RotatingInstance;
+        setRotationOffset(arg0: number): $RotatingInstance;
+        rotateToFace(arg0: $Direction_): $RotatingInstance;
+        rotateToFace(arg0: $Direction$Axis_): $RotatingInstance;
+        rotateToFace(arg0: $Direction_, arg1: $Direction_): $RotatingInstance;
+        rotateToFace(arg0: $Direction_, arg1: $Direction$Axis_): $RotatingInstance;
+        rotateToFace(arg0: number, arg1: number, arg2: number): $RotatingInstance;
         static colorFromBE(arg0: $KineticBlockEntity): number;
         setRotationalSpeed(arg0: number): $RotatingInstance;
         green: number;
@@ -541,50 +541,50 @@ declare module "@package/com/simibubi/create/content/kinetics/base" {
         constructor(arg0: $BlockBehaviour$Properties);
     }
     export class $KineticBlockEntity extends $SmartBlockEntity implements $IHaveGoggleInformation, $IHaveHoveringInformation, $KineticBlockEntityExtension {
-        static switchToBlockState(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_): void;
-        calculateStressApplied(): number;
-        getTheoreticalSpeed(): number;
-        clearKineticInformation(): void;
-        setSource(arg0: $BlockPos_): void;
-        tickAudio(): void;
         static convertToDirection(arg0: number, arg1: $Direction_): number;
-        static convertToAngular(arg0: number): number;
-        updateFromNetwork(arg0: number, arg1: number, arg2: number): void;
-        isCustomConnection(arg0: $KineticBlockEntity, arg1: $BlockState_, arg2: $BlockState_): boolean;
-        needsSpeedUpdate(): boolean;
-        static convertToLinear(arg0: number): number;
-        getFlickerScore(): number;
+        setSource(arg0: $BlockPos_): void;
         setSpeed(arg0: number): void;
         getSpeed(): number;
-        isSource(): boolean;
-        simulated$setValidationCountdown(arg0: number): void;
-        isSpeedRequirementFulfilled(): boolean;
-        onSpeedChanged(arg0: number): void;
-        addToGoggleTooltip(arg0: $List_<$Component_>, arg1: boolean): boolean;
-        getGeneratedSpeed(): number;
-        isOverStressed(): boolean;
-        addToTooltip(arg0: $List_<$Component_>, arg1: boolean): boolean;
-        hasNetwork(): boolean;
-        setNetwork(arg0: number): void;
-        hasSource(): boolean;
-        getOrCreateNetwork(): $KineticNetwork;
-        detachKinetics(): void;
-        attachKinetics(): void;
-        removeSource(): void;
-        calculateAddedStressCapacity(): number;
-        simulated$setConnectedToExtraKinetics(arg0: boolean): void;
         handler$ega000$simulated$readConnected(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean, arg3: $CallbackInfo): void;
+        redirect$ega000$simulated$useProperSource(arg0: $Level_, arg1: $BlockPos_): $BlockEntity;
+        handler$ega000$simulated$saveConnected(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean, arg3: $CallbackInfo): void;
+        redirect$ega000$simulated$useProperSource2(arg0: $Level_, arg1: $BlockPos_): $BlockEntity;
+        simulated$setConnectedToExtraKinetics(arg0: boolean): void;
+        simulated$getConnectedToExtraKinetics(): boolean;
         handler$ega000$simulated$removeConnected(arg0: $CallbackInfo): void;
         handler$ega000$simulated$injectRemove(arg0: $CallbackInfo): void;
-        handler$ega000$simulated$saveConnected(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean, arg3: $CallbackInfo): void;
-        simulated$getConnectedToExtraKinetics(): boolean;
-        redirect$ega000$simulated$useProperSource(arg0: $Level_, arg1: $BlockPos_): $BlockEntity;
-        redirect$ega000$simulated$useProperSource2(arg0: $Level_, arg1: $BlockPos_): $BlockEntity;
-        warnOfMovement(): void;
-        handler$egg000$simulated$addExtraKineticsInfo(arg0: $List_<any>, arg1: boolean, arg2: $CallbackInfoReturnable<any>): void;
-        propagateRotationTo(arg0: $KineticBlockEntity, arg1: $BlockState_, arg2: $BlockState_, arg3: $BlockPos_, arg4: boolean, arg5: boolean): number;
+        static switchToBlockState(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_): void;
+        clearKineticInformation(): void;
+        addToTooltip(arg0: $List_<$Component_>, arg1: boolean): boolean;
+        isSource(): boolean;
+        getGeneratedSpeed(): number;
+        addToGoggleTooltip(arg0: $List_<$Component_>, arg1: boolean): boolean;
+        isOverStressed(): boolean;
+        getOrCreateNetwork(): $KineticNetwork;
+        removeSource(): void;
+        detachKinetics(): void;
+        attachKinetics(): void;
         getRotationAngleOffset(arg0: $Direction$Axis_): number;
+        propagateRotationTo(arg0: $KineticBlockEntity, arg1: $BlockState_, arg2: $BlockState_, arg3: $BlockPos_, arg4: boolean, arg5: boolean): number;
         addPropagationLocations(arg0: $IRotate, arg1: $BlockState_, arg2: $List_<$BlockPos_>): $List<$BlockPos>;
+        getTheoreticalSpeed(): number;
+        calculateStressApplied(): number;
+        onSpeedChanged(arg0: number): void;
+        warnOfMovement(): void;
+        tickAudio(): void;
+        setNetwork(arg0: number): void;
+        hasSource(): boolean;
+        hasNetwork(): boolean;
+        calculateAddedStressCapacity(): number;
+        isSpeedRequirementFulfilled(): boolean;
+        simulated$setValidationCountdown(arg0: number): void;
+        getFlickerScore(): number;
+        updateFromNetwork(arg0: number, arg1: number, arg2: number): void;
+        needsSpeedUpdate(): boolean;
+        static convertToAngular(arg0: number): number;
+        static convertToLinear(arg0: number): number;
+        isCustomConnection(arg0: $KineticBlockEntity, arg1: $BlockState_, arg2: $BlockState_): boolean;
+        handler$egg000$simulated$addExtraKineticsInfo(arg0: $List_<any>, arg1: boolean, arg2: $CallbackInfoReturnable<any>): void;
         containedFluidTooltip(arg0: $List_<$Component_>, arg1: boolean, arg2: $IFluidHandler): boolean;
         getIcon(arg0: boolean): $ItemStack;
         sequenceContext: $SequencedGearshiftBlockEntity$SequenceContext;
@@ -598,21 +598,21 @@ declare module "@package/com/simibubi/create/content/kinetics/base" {
         preventSpeedUpdate: number;
         network: number;
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
-        get theoreticalSpeed(): number;
-        get flickerScore(): number;
-        get speedRequirementFulfilled(): boolean;
         get generatedSpeed(): number;
         get overStressed(): boolean;
         get orCreateNetwork(): $KineticNetwork;
+        get theoreticalSpeed(): number;
+        get speedRequirementFulfilled(): boolean;
+        get flickerScore(): number;
     }
     export class $BlockBreakingKineticBlockEntity extends $KineticBlockEntity implements $BlockHarvester {
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
         static isBreakable(arg0: $BlockState_, arg1: number): boolean;
         destroyNextTick(): void;
         canBreak(arg0: $BlockState_, arg1: number): boolean;
-        simulated$getAssociatedDistributor(): $AugerDistributor;
-        onBlockBroken(arg0: $BlockState_): void;
         simulated$setDistributor(arg0: $AugerDistributor_): void;
+        onBlockBroken(arg0: $BlockState_): void;
+        simulated$getAssociatedDistributor(): $AugerDistributor;
         depositItemStack(arg0: $BlockPos_, arg1: $ItemStack_): $ItemStack;
         sequenceContext: $SequencedGearshiftBlockEntity$SequenceContext;
         networkDirty: boolean;

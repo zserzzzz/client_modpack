@@ -8,9 +8,9 @@ declare module "@package/dev/emi/emi/api/stack/serializer" {
         static getDeserialized(element: $JsonElement_): $EmiIngredient;
     }
     export interface $EmiIngredientSerializer<T extends $EmiIngredient> extends $GlobalMixin {
-        serialize(arg0: T): $JsonElement;
-        deserialize(arg0: $JsonElement_): $EmiIngredient;
         getType(): string;
+        deserialize(arg0: $JsonElement_): $EmiIngredient;
+        serialize(arg0: T): $JsonElement;
         get type(): string;
     }
 }

@@ -69,8 +69,8 @@ declare module "@package/net/neoforged/neoforge/event/entity" {
      */
     export class $EntityStruckByLightningEvent extends $EntityEvent implements $ICancellableEvent {
         getLightning(): $LightningBolt;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(entity: $Entity, lightning: $LightningBolt);
         get lightning(): $LightningBolt;
     }
@@ -143,19 +143,19 @@ declare module "@package/net/neoforged/neoforge/event/entity" {
         getTargetY(): number;
         getTargetX(): number;
         getTargetZ(): number;
-        setTargetZ(targetX: number): void;
+        getPrevY(): number;
         getPrevZ(): number;
         setTargetX(targetX: number): void;
-        setTargetY(targetX: number): void;
-        getPrevY(): number;
         getPrevX(): number;
-        setCanceled(arg0: boolean): void;
+        setTargetZ(targetX: number): void;
+        setTargetY(targetX: number): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(entity: $Entity, targetX: number, targetY: number, targetZ: number);
         get target(): $Vec3;
         get prev(): $Vec3;
-        get prevZ(): number;
         get prevY(): number;
+        get prevZ(): number;
         get prevX(): number;
     }
     /**
@@ -174,14 +174,14 @@ declare module "@package/net/neoforged/neoforge/event/entity" {
      * If this event is canceled, the entity will not be teleported.
      */
     export class $EntityTeleportEvent$EnderPearl extends $EntityTeleportEvent implements $ICancellableEvent {
-        getHitResult(): $HitResult;
-        getPlayer(): $ServerPlayer;
-        setAttackDamage(attackDamage: number): void;
         getAttackDamage(): number;
+        getPlayer(): $ServerPlayer;
+        getHitResult(): $HitResult;
+        setAttackDamage(attackDamage: number): void;
         getPearlEntity(): $ThrownEnderpearl;
         constructor(entity: $ServerPlayer, targetX: number, targetY: number, targetZ: number, pearlEntity: $ThrownEnderpearl, attackDamage: number, hitResult: $HitResult);
-        get hitResult(): $HitResult;
         get player(): $ServerPlayer;
+        get hitResult(): $HitResult;
         get pearlEntity(): $ThrownEnderpearl;
     }
     export class $RegisterSpawnPlacementsEvent$MergedSpawnPredicate<T extends $Entity> {
@@ -212,8 +212,8 @@ declare module "@package/net/neoforged/neoforge/event/entity" {
          */
         getLevel(): $Level;
         loadedFromDisk(): boolean;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(entity: $Entity, level: $Level_);
         constructor(entity: $Entity, level: $Level_, loadedFromDisk: boolean);
         get level(): $Level;
@@ -233,8 +233,8 @@ declare module "@package/net/neoforged/neoforge/event/entity" {
      */
     export class $EntityTravelToDimensionEvent extends $EntityEvent implements $ICancellableEvent {
         getDimension(): $ResourceKey<$Level>;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(entity: $Entity, dimension: $ResourceKey_<$Level>);
         get dimension(): $ResourceKey<$Level>;
     }
@@ -249,12 +249,12 @@ declare module "@package/net/neoforged/neoforge/event/entity" {
     export class $EntityInvulnerabilityCheckEvent extends $EntityEvent {
         getSource(): $DamageSource;
         isInvulnerable(): boolean;
+        getOriginalInvulnerability(): boolean;
         /**
          * Sets the invulnerable status of the entity. By default, the invulnerability will be
          * set by value passed into the event invocation.
          */
         setInvulnerable(isInvulnerable: boolean): void;
-        getOriginalInvulnerability(): boolean;
         constructor(entity: $Entity, source: $DamageSource_, isVanillaInvulnerable: boolean);
         get source(): $DamageSource;
         get originalInvulnerability(): boolean;
@@ -273,8 +273,8 @@ declare module "@package/net/neoforged/neoforge/event/entity" {
     export class $ProjectileImpactEvent extends $EntityEvent implements $ICancellableEvent {
         getProjectile(): $Projectile;
         getRayTraceResult(): $HitResult;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(projectile: $Projectile, ray: $HitResult);
         get projectile(): $Projectile;
         get rayTraceResult(): $HitResult;
@@ -311,11 +311,6 @@ declare module "@package/net/neoforged/neoforge/event/entity" {
      */
     export class $EntityEvent$EnteringSection extends $EntityEvent {
         /**
-         * A packed version of the old section's position. This is to be used with the various methods in `SectionPos`,
-         * such as `SectionPos#of(long)` or `SectionPos#x(long)` to avoid allocation.
-         */
-        getPackedNewPos(): number;
-        /**
          * Whether the chunk has changed as part of this event. If this method returns false, only the Y position of the
          * section has changed.
          */
@@ -325,28 +320,33 @@ declare module "@package/net/neoforged/neoforge/event/entity" {
          * such as `SectionPos#of(long)` or `SectionPos#x(long)` to avoid allocation.
          */
         getPackedOldPos(): number;
+        /**
+         * A packed version of the old section's position. This is to be used with the various methods in `SectionPos`,
+         * such as `SectionPos#of(long)` or `SectionPos#x(long)` to avoid allocation.
+         */
+        getPackedNewPos(): number;
         getNewPos(): $SectionPos;
         getOldPos(): $SectionPos;
         constructor(entity: $Entity, packedOldPos: number, packedNewPos: number);
-        get packedNewPos(): number;
         get packedOldPos(): number;
+        get packedNewPos(): number;
         get newPos(): $SectionPos;
         get oldPos(): $SectionPos;
     }
     export class $EntityMountEvent extends $EntityEvent implements $ICancellableEvent {
         getLevel(): $Level;
-        isDismounting(): boolean;
-        getEntityMounting(): $Entity;
-        getEntityBeingMounted(): $Entity;
         isMounting(): boolean;
-        setCanceled(arg0: boolean): void;
+        getEntityMounting(): $Entity;
+        isDismounting(): boolean;
+        getEntityBeingMounted(): $Entity;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(entityMounting: $Entity, entityBeingMounted: $Entity, level: $Level_, isMounting: boolean);
         get level(): $Level;
-        get dismounting(): boolean;
-        get entityMounting(): $Entity;
-        get entityBeingMounted(): $Entity;
         get mounting(): boolean;
+        get entityMounting(): $Entity;
+        get dismounting(): boolean;
+        get entityBeingMounted(): $Entity;
     }
     /**
      * This event is fired whenever an `Entity` leaves a `Level`.
@@ -391,10 +391,10 @@ declare module "@package/net/neoforged/neoforge/event/entity" {
      * game event bus.
      */
     export class $EntityEvent$Size extends $EntityEvent {
-        setNewSize(size: $EntityDimensions_): void;
         getPose(): $Pose;
         getNewSize(): $EntityDimensions;
         getOldSize(): $EntityDimensions;
+        setNewSize(size: $EntityDimensions_): void;
         constructor(entity: $Entity, pose: $Pose_, size: $EntityDimensions_);
         constructor(entity: $Entity, pose: $Pose_, oldSize: $EntityDimensions_, newSize: $EntityDimensions_);
         get pose(): $Pose;
@@ -469,17 +469,17 @@ declare module "@package/net/neoforged/neoforge/event/entity" {
          * 
          * The default state of this event is equivalent to this value.
          */
-        canGrief(): boolean;
-        /**
-         * Changes if the entity is allowed to perform the griefing action.
-         */
-        setCanGrief(canGrief: boolean): void;
+        isMobGriefingEnabled(): boolean;
         /**
          * Returns if the mob griefing game rule is enabled.
          * 
          * The default state of this event is equivalent to this value.
          */
-        isMobGriefingEnabled(): boolean;
+        canGrief(): boolean;
+        /**
+         * Changes if the entity is allowed to perform the griefing action.
+         */
+        setCanGrief(canGrief: boolean): void;
         constructor(level: $Level_, entity: $Entity);
         get mobGriefingEnabled(): boolean;
     }

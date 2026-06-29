@@ -22,33 +22,33 @@ declare module "@package/io/github/mortuusars/exposure/world/camera/frame" {
         setType(type: $ExposureType_): $Frame$Mutable;
         getType(): $ExposureType;
         getTag(): $ExtraData;
-        setPhotographer(photographer: $Photographer): $Frame$Mutable;
-        setEntitiesInFrame(entitiesInFrame: $List_<$EntityInFrame_>): $Frame$Mutable;
-        addExtraData<T>(type: $ExtraData$Type_<T>, value: T): $Frame$Mutable;
         toImmutable(): $Frame;
         setTag(tag: $ExtraData): $Frame$Mutable;
+        setEntitiesInFrame(entitiesInFrame: $List_<$EntityInFrame_>): $Frame$Mutable;
         updateExtraData(updater: $Consumer_<$ExtraData>): $Frame$Mutable;
-        setChromatic(chromatic: boolean): $Frame$Mutable;
+        addExtraData<T>(type: $ExtraData$Type_<T>, value: T): $Frame$Mutable;
+        setPhotographer(photographer: $Photographer): $Frame$Mutable;
         getEntitiesInFrame(): $List<$EntityInFrame>;
+        setChromatic(chromatic: boolean): $Frame$Mutable;
         getPhotographer(): $Photographer;
         constructor(photographData: $Frame_);
         set chromatic(value: boolean);
     }
     export class $Frame extends $Record {
-        entitiesInFrame(): $List<$EntityInFrame>;
         type(): $ExposureType;
         static create(): $Frame$Mutable;
-        toMutable(): $Frame$Mutable;
-        wasTakenWithChromaticFilter(): boolean;
         identifier(): $ExposureIdentifier;
+        getExtraDataForReading(): $ExtraData;
         extraData(): $ExtraData;
         static intersect(identifier: $ExposureIdentifier, frames: $List_<$Frame_>): $Frame;
+        isTakenBy(entity: $LivingEntity): boolean;
+        entitiesInFrame(): $List<$EntityInFrame>;
         photographer(): $Photographer;
-        isProjected(): boolean;
+        toMutable(): $Frame$Mutable;
         getColorChannel(): ($ColorChannel) | undefined;
         isChromatic(): boolean;
-        getExtraDataForReading(): $ExtraData;
-        isTakenBy(entity: $LivingEntity): boolean;
+        isProjected(): boolean;
+        wasTakenWithChromaticFilter(): boolean;
         static WEATHER: $ExtraData$Type<string>;
         static CODEC: $Codec<$Frame>;
         static BIOME: $ExtraData$Type<$ResourceLocation>;
@@ -73,22 +73,22 @@ declare module "@package/io/github/mortuusars/exposure/world/camera/frame" {
         static EMPTY: $Frame;
         static CHROMATIC: $ExtraData$Type<boolean>;
         constructor(identifier: $ExposureIdentifier, type: $ExposureType_, photographer: $Photographer, entitiesInFrame: $List_<$EntityInFrame_>, extraData: $ExtraData);
-        get projected(): boolean;
+        get extraDataForReading(): $ExtraData;
         get colorChannel(): ($ColorChannel) | undefined;
         get chromatic(): boolean;
-        get extraDataForReading(): $ExtraData;
+        get projected(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $Frame}.
      */
-    export type $Frame_ = { photographer?: $Photographer, type?: $ExposureType_, entitiesInFrame?: $List_<$EntityInFrame_>, extraData?: $ExtraData, identifier?: $ExposureIdentifier,  } | [photographer?: $Photographer, type?: $ExposureType_, entitiesInFrame?: $List_<$EntityInFrame_>, extraData?: $ExtraData, identifier?: $ExposureIdentifier, ];
+    export type $Frame_ = { identifier?: $ExposureIdentifier, photographer?: $Photographer, type?: $ExposureType_, entitiesInFrame?: $List_<$EntityInFrame_>, extraData?: $ExtraData,  } | [identifier?: $ExposureIdentifier, photographer?: $Photographer, type?: $ExposureType_, entitiesInFrame?: $List_<$EntityInFrame_>, extraData?: $ExtraData, ];
     export class $Photographer {
         name(): string;
         isEmpty(): boolean;
         matches(entity: $Entity): boolean;
+        uuid(): $UUID;
         isPlayer(): boolean;
         isNPC(): boolean;
-        uuid(): $UUID;
         static CODEC: $Codec<$Photographer>;
         static EMPTY: $Photographer;
         static STREAM_CODEC: $StreamCodec<$ByteBuf, $Photographer>;
@@ -113,5 +113,5 @@ declare module "@package/io/github/mortuusars/exposure/world/camera/frame" {
     /**
      * Values that may be interpreted as {@link $EntityInFrame}.
      */
-    export type $EntityInFrame_ = { id?: $ResourceLocation_, pos?: $BlockPos_, name?: string, extraData?: $ExtraData, distance?: number,  } | [id?: $ResourceLocation_, pos?: $BlockPos_, name?: string, extraData?: $ExtraData, distance?: number, ];
+    export type $EntityInFrame_ = { distance?: number, id?: $ResourceLocation_, pos?: $BlockPos_, name?: string, extraData?: $ExtraData,  } | [distance?: number, id?: $ResourceLocation_, pos?: $BlockPos_, name?: string, extraData?: $ExtraData, ];
 }

@@ -45,8 +45,8 @@ declare module "@package/net/minecraft/world/entity/ai/sensing" {
     }
     export class $MobSensor<T extends $LivingEntity> extends $Sensor<T> {
         mobDetected(sensingEntity: T): void;
-        clearMemory(sensingEntity: T): void;
         checkForMobsNearby(sensingEntity: T): void;
+        clearMemory(sensingEntity: T): void;
         static TARGETING_RANGE: number;
         constructor(scanRate: number, mobTest: $BiPredicate_<T, $LivingEntity>, readyTest: $Predicate_<T>, toSet: $MemoryModuleType_<boolean>, memoryTimeToLive: number);
     }
@@ -104,19 +104,19 @@ declare module "@package/net/minecraft/world/entity/ai/sensing" {
         /**
          * @return if entity is remembered as an attack target and is valid to attack
          */
-        static isEntityAttackableIgnoringLineOfSight(attacker: $LivingEntity, target: $LivingEntity): boolean;
-        /**
-         * @return if entity is remembered as an attack target and is valid to attack
-         */
         static isEntityAttackable(attacker: $LivingEntity, target: $LivingEntity): boolean;
         doTick(level: $ServerLevel, entity: E): void;
         /**
          * @return if entity is remembered as an attack target and is valid to attack
          */
+        static isEntityAttackableIgnoringLineOfSight(attacker: $LivingEntity, target: $LivingEntity): boolean;
+        /**
+         * @return if entity is remembered as an attack target and is valid to attack
+         */
         static isEntityTargetable(attacker: $LivingEntity, target: $LivingEntity): boolean;
-        getSenseInterval(): number;
-        setLastSenseTime(arg0: number): void;
         getLastSenseTime(): number;
+        setLastSenseTime(arg0: number): void;
+        getSenseInterval(): number;
         static TARGETING_RANGE: number;
         constructor(scanRate: number);
         constructor();
@@ -185,8 +185,8 @@ declare module "@package/net/minecraft/world/entity/ai/sensing" {
         constructor();
     }
     export class $GolemSensor extends $Sensor<$LivingEntity> {
-        static golemDetected(livingEntity: $LivingEntity): void;
         static checkForNearbyGolem(livingEntity: $LivingEntity): void;
+        static golemDetected(livingEntity: $LivingEntity): void;
         static TARGETING_RANGE: number;
         constructor();
         constructor(scanRate: number);
@@ -197,9 +197,9 @@ declare module "@package/net/minecraft/world/entity/ai/sensing" {
         constructor();
     }
     export class $SecondaryPoiSensor extends $Sensor<$Villager> {
-        wrapOperation$fba000$farmersdelight$detectModdedFarmland$mixinextras$bridge$6(arg0: $ImmutableSet<any>, arg1: $Object, arg2: $Operation_<any>, arg3: $LocalRef<any>): boolean;
         doTick(level: $ServerLevel, entity: $Villager): void;
         wrapOperation$fba000$farmersdelight$detectModdedFarmland(arg0: $ImmutableSet<any>, arg1: $Object, arg2: $Operation_<any>, arg3: $Villager): boolean;
+        wrapOperation$fba000$farmersdelight$detectModdedFarmland$mixinextras$bridge$6(arg0: $ImmutableSet<any>, arg1: $Object, arg2: $Operation_<any>, arg3: $LocalRef<any>): boolean;
         static TARGETING_RANGE: number;
         constructor();
     }

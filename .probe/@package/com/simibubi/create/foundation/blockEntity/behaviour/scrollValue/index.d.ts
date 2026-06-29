@@ -21,10 +21,10 @@ declare module "@package/com/simibubi/create/foundation/blockEntity/behaviour/sc
     export class $INamedIconOptions {
     }
     export interface $INamedIconOptions {
-        getIcon(): $AllIcons;
         getTranslationKey(): string;
-        get icon(): $AllIcons;
+        getIcon(): $AllIcons;
         get translationKey(): string;
+        get icon(): $AllIcons;
     }
     export class $ScrollValueBehaviour$StepContext {
         forward: boolean;
@@ -44,29 +44,29 @@ declare module "@package/com/simibubi/create/foundation/blockEntity/behaviour/sc
         setValue(arg0: number): void;
         isActive(): boolean;
         between(arg0: number, arg1: number): $ScrollValueBehaviour;
+        formatValue(): string;
         setLabel(arg0: $Component_): void;
         withCallback(arg0: $Consumer_<number>): $ScrollValueBehaviour;
-        formatValue(): string;
-        getValueSettings(): $ValueSettingsBehaviour$ValueSettings;
-        setValueSettings(arg0: $Player, arg1: $ValueSettingsBehaviour$ValueSettings_, arg2: boolean): void;
-        onShortInteract(arg0: $Player, arg1: $InteractionHand_, arg2: $Direction_, arg3: $BlockHitResult): void;
-        onlyActiveWhen(arg0: $Supplier_<boolean>): $ScrollValueBehaviour;
-        getSlotPositioning(): $ValueBoxTransform;
-        createBoard(arg0: $Player, arg1: $BlockHitResult): $ValueSettingsBoard;
         testHit(arg0: $Vec3_): boolean;
         onlyVisibleWithWrench(): boolean;
+        withFormatter(arg0: $Function_<number, string>): $ScrollValueBehaviour;
         withClientCallback(arg0: $Consumer_<number>): $ScrollValueBehaviour;
         requiresWrench(): $ScrollValueBehaviour;
-        withFormatter(arg0: $Function_<number, string>): $ScrollValueBehaviour;
+        getSlotPositioning(): $ValueBoxTransform;
+        setValueSettings(arg0: $Player, arg1: $ValueSettingsBehaviour$ValueSettings_, arg2: boolean): void;
+        getValueSettings(): $ValueSettingsBehaviour$ValueSettings;
+        onlyActiveWhen(arg0: $Supplier_<boolean>): $ScrollValueBehaviour;
+        createBoard(arg0: $Player, arg1: $BlockHitResult): $ValueSettingsBoard;
+        onShortInteract(arg0: $Player, arg1: $InteractionHand_, arg2: $Direction_, arg3: $BlockHitResult): void;
+        mayInteract(arg0: $Player): boolean;
+        netId(): number;
         readFromClipboard(arg0: $HolderLookup$Provider, arg1: $CompoundTag_, arg2: $Player, arg3: $Direction_, arg4: boolean): boolean;
         getClipboardKey(): string;
         writeToClipboard(arg0: $HolderLookup$Provider, arg1: $CompoundTag_, arg2: $Direction_): boolean;
-        mayInteract(arg0: $Player): boolean;
+        acceptsValueSettings(): boolean;
+        bypassesInput(arg0: $ItemStack_): boolean;
         newSettingHovered(arg0: $ValueSettingsBehaviour$ValueSettings_): void;
         playFeedbackSound(arg0: $BlockEntityBehaviour): void;
-        bypassesInput(arg0: $ItemStack_): boolean;
-        netId(): number;
-        acceptsValueSettings(): boolean;
         blockEntity: $SmartBlockEntity;
         label: $Component;
         static TYPE: $BehaviourType<$ScrollValueBehaviour>;

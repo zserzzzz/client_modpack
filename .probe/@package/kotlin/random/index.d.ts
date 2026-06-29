@@ -22,8 +22,8 @@ declare module "@package/kotlin/random" {
         nextLong(arg0: number): number;
         nextBoolean(): boolean;
         nextFloat(): number;
-        nextBits(arg0: number): number;
         static access$getDefaultRandom$cp(): $Random;
+        nextBits(arg0: number): number;
         static nextBytes$default(arg0: $Random, arg1: number[], arg2: number, arg3: number, arg4: number, arg5: $Object): number[];
         static Default: $Random$Default;
         constructor();

@@ -17,8 +17,8 @@ declare module "@package/com/simibubi/create/foundation/networking" {
     export class $ISyncPersistentData {
     }
     export interface $ISyncPersistentData {
-        onPersistentDataUpdated(): void;
         syncPersistentDataWithTracking(arg0: $Entity): void;
+        onPersistentDataUpdated(): void;
     }
     /**
      * Values that may be interpreted as {@link $ISyncPersistentData}.
@@ -26,8 +26,8 @@ declare module "@package/com/simibubi/create/foundation/networking" {
     export type $ISyncPersistentData_ = (() => void);
     export class $ISyncPersistentData$PersistentDataPacket extends $Record implements $ClientboundPacketPayload {
         handle(arg0: $LocalPlayer): void;
-        getTypeProvider(): $BasePacketPayload$PacketTypeProvider;
         readData(): $CompoundTag;
+        getTypeProvider(): $BasePacketPayload$PacketTypeProvider;
         entityId(): number;
         handleInternal(arg0: $Player): void;
         type(): $CustomPacketPayload$Type<$CustomPacketPayload>;

@@ -1,5 +1,5 @@
 import { $DeferredHolder } from "@package/net/neoforged/neoforge/registries";
-import { $BlockPileConfiguration, $NoneFeatureConfiguration, $DeltaFeatureConfiguration, $RandomBooleanFeatureConfiguration, $EndGatewayConfiguration, $NetherForestVegetationConfig, $ColumnFeatureConfiguration, $UnderwaterMagmaConfiguration, $OreConfiguration$TargetBlockState, $RandomFeatureConfiguration, $SpikeConfiguration, $MultifaceGrowthConfiguration, $ReplaceSphereConfiguration, $RootSystemConfiguration, $DiskConfiguration, $TwistingVinesConfig, $LayerConfiguration, $PointedDripstoneConfiguration, $SpringConfiguration, $SimpleRandomFeatureConfiguration, $VegetationPatchConfiguration, $HugeMushroomFeatureConfiguration, $ProbabilityFeatureConfiguration, $SculkPatchConfiguration, $FeatureConfiguration, $LargeDripstoneConfiguration, $GeodeConfiguration, $TreeConfiguration, $RandomPatchConfiguration, $CountConfiguration, $BlockColumnConfiguration, $SimpleBlockConfiguration, $BlockStateConfiguration, $DripstoneClusterConfiguration, $OreConfiguration, $ReplaceBlockConfiguration } from "@package/net/minecraft/world/level/levelgen/feature/configurations";
+import { $BlockPileConfiguration, $NoneFeatureConfiguration, $DeltaFeatureConfiguration, $RandomBooleanFeatureConfiguration, $EndGatewayConfiguration, $NetherForestVegetationConfig, $ColumnFeatureConfiguration, $UnderwaterMagmaConfiguration, $OreConfiguration$TargetBlockState, $RandomFeatureConfiguration, $SpikeConfiguration, $MultifaceGrowthConfiguration, $ReplaceSphereConfiguration, $RootSystemConfiguration, $DiskConfiguration, $TwistingVinesConfig, $LayerConfiguration, $PointedDripstoneConfiguration, $SimpleRandomFeatureConfiguration, $SpringConfiguration, $VegetationPatchConfiguration, $HugeMushroomFeatureConfiguration, $ProbabilityFeatureConfiguration, $SculkPatchConfiguration, $FeatureConfiguration, $LargeDripstoneConfiguration, $GeodeConfiguration, $TreeConfiguration, $RandomPatchConfiguration, $CountConfiguration, $BlockColumnConfiguration, $SimpleBlockConfiguration, $BlockStateConfiguration, $DripstoneClusterConfiguration, $OreConfiguration, $ReplaceBlockConfiguration } from "@package/net/minecraft/world/level/levelgen/feature/configurations";
 import { $Codec, $MapCodec } from "@package/com/mojang/serialization";
 import { $IEventBus } from "@package/net/neoforged/bus/api";
 import { $List, $List_ } from "@package/java/util";
@@ -33,7 +33,7 @@ declare module "@package/com/simibubi/create/infrastructure/worldgen" {
     /**
      * Values that may be interpreted as {@link $LayeredOreFeature$ResolvedLayerEntry}.
      */
-    export type $LayeredOreFeature$ResolvedLayerEntry_ = { radialThresholdMultiplier?: number, layer?: $LayerPattern$Layer, rampStartValue?: number,  } | [radialThresholdMultiplier?: number, layer?: $LayerPattern$Layer, rampStartValue?: number, ];
+    export type $LayeredOreFeature$ResolvedLayerEntry_ = { layer?: $LayerPattern$Layer, rampStartValue?: number, radialThresholdMultiplier?: number,  } | [layer?: $LayerPattern$Layer, rampStartValue?: number, radialThresholdMultiplier?: number, ];
     export class $AllFeatures {
         static register(arg0: $IEventBus): void;
         static LAYERED_ORE: $DeferredHolder<$Feature<never>, $LayeredOreFeature>;
@@ -131,7 +131,7 @@ declare module "@package/com/simibubi/create/infrastructure/worldgen" {
     /**
      * Values that may be interpreted as {@link $LayeredOreFeature$TemporaryLayerEntry}.
      */
-    export type $LayeredOreFeature$TemporaryLayerEntry_ = { layer?: $LayerPattern$Layer, size?: number,  } | [layer?: $LayerPattern$Layer, size?: number, ];
+    export type $LayeredOreFeature$TemporaryLayerEntry_ = { size?: number, layer?: $LayerPattern$Layer,  } | [size?: number, layer?: $LayerPattern$Layer, ];
     export class $AllLayerPatterns {
         static CINNABAR: $NonNullSupplier<$LayerPattern>;
         static SCORCHIA_NETHER: $NonNullSupplier<$LayerPattern>;
@@ -167,9 +167,9 @@ declare module "@package/com/simibubi/create/infrastructure/worldgen" {
         block(arg0: $Block_): $LayerPattern$Layer$Builder;
         block(arg0: $NonNullSupplier_<$Block>): $LayerPattern$Layer$Builder;
         build(): $LayerPattern$Layer;
-        weight(arg0: number): $LayerPattern$Layer$Builder;
-        blocks(arg0: $Block_, arg1: $Block_): $LayerPattern$Layer$Builder;
         blocks(arg0: $Couple<$NonNullSupplier_<$Block>>): $LayerPattern$Layer$Builder;
+        blocks(arg0: $Block_, arg1: $Block_): $LayerPattern$Layer$Builder;
+        weight(arg0: number): $LayerPattern$Layer$Builder;
         passiveBlock(): $LayerPattern$Layer$Builder;
         constructor();
     }

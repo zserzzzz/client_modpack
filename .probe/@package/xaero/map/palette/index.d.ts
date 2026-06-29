@@ -12,8 +12,8 @@ declare module "@package/xaero/map/palette" {
         getCount(arg0: number): number;
         getSize(): number;
         getIndex(arg0: T): number;
-        getNonNullCount(): number;
         addNull(): void;
+        getNonNullCount(): number;
         get size(): number;
         get nonNullCount(): number;
     }

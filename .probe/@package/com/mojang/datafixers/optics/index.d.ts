@@ -7,8 +7,8 @@ declare module "@package/com/mojang/datafixers/optics" {
     export class $Optic<Proof extends $K1, S, T, A, B> {
     }
     export interface $Optic<Proof extends $K1, S, T, A, B> {
-        upCast<Proof2 extends $K1>(arg0: $Set_<$TypeToken<$K1>>, arg1: $TypeToken<Proof2>): ($Optic<Proof2, S, T, A, B>) | undefined;
         "eval"<P extends $K2>(arg0: $App<Proof, P>): $Function<$App2<P, A, B>, $App2<P, S, T>>;
+        upCast<Proof2 extends $K1>(arg0: $Set_<$TypeToken<$K1>>, arg1: $TypeToken<Proof2>): ($Optic<Proof2, S, T, A, B>) | undefined;
     }
     /**
      * Values that may be interpreted as {@link $Optic}.

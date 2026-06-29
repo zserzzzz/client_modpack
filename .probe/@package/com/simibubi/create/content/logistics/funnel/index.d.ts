@@ -55,29 +55,29 @@ declare module "@package/com/simibubi/create/content/logistics/funnel" {
         constructor(arg0: string);
     }
     export class $AbstractFunnelBlock extends $Block implements $IBE<$FunnelBlockEntity>, $IWrenchable, $ProperWaterloggedBlock {
-        getBlockEntityType(): $BlockEntityType<$FunnelBlockEntity>;
-        static getFunnelFacing(arg0: $BlockState_): $Direction;
+        static tryInsert(arg0: $Level_, arg1: $BlockPos_, arg2: $ItemStack_, arg3: boolean): $ItemStack;
         getBlockEntityClass(): $Class<$FunnelBlockEntity>;
         static isFunnel(arg0: $BlockState_): boolean;
-        static tryInsert(arg0: $Level_, arg1: $BlockPos_, arg2: $ItemStack_, arg3: boolean): $ItemStack;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$FunnelBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$FunnelBlockEntity>;
+        static getFunnelFacing(arg0: $BlockState_): $Direction;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FunnelBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($FunnelBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FunnelBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $FunnelBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$FunnelBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($FunnelBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FunnelBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
-        fluidState(arg0: $BlockState_): $FluidState;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         updateWater(arg0: $LevelAccessor, arg1: $BlockState_, arg2: $BlockPos_): void;
+        fluidState(arg0: $BlockState_): $FluidState;
+        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -108,32 +108,32 @@ declare module "@package/com/simibubi/create/content/logistics/funnel" {
         static INSTANT: number;
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
-        get blockEntityType(): $BlockEntityType<$FunnelBlockEntity>;
         get blockEntityClass(): $Class<$FunnelBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$FunnelBlockEntity>;
     }
     export class $FunnelMovementBehaviour implements $MovementBehaviour {
-        static andesite(): $FunnelMovementBehaviour;
         getActiveAreaOffset(arg0: $MovementContext): $Vec3;
+        static andesite(): $FunnelMovementBehaviour;
         visitNewPosition(arg0: $MovementContext, arg1: $BlockPos_): void;
         static brass(): $FunnelMovementBehaviour;
         isActive(arg0: $MovementContext): boolean;
         tick(arg0: $MovementContext): void;
-        stopMoving(arg0: $MovementContext): void;
         /**
          * @deprecated
          */
         dropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
-        mustTickWhileDisabled(): boolean;
-        renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
         onDisabledByControls(arg0: $MovementContext): void;
+        renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
+        mustTickWhileDisabled(): boolean;
+        disableBlockEntityRendering(): boolean;
+        startMoving(arg0: $MovementContext): void;
+        canBeDisabledVia(arg0: $MovementContext): $ItemStack;
         collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
         onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
-        cancelStall(arg0: $MovementContext): void;
-        startMoving(arg0: $MovementContext): void;
-        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
-        canBeDisabledVia(arg0: $MovementContext): $ItemStack;
         writeExtraData(arg0: $MovementContext): void;
-        disableBlockEntityRendering(): boolean;
+        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
+        cancelStall(arg0: $MovementContext): void;
+        stopMoving(arg0: $MovementContext): void;
     }
     export class $FunnelBlockEntity$Mode extends $Enum<$FunnelBlockEntity$Mode> {
     }
@@ -204,13 +204,13 @@ declare module "@package/com/simibubi/create/content/logistics/funnel" {
         hasCollision: boolean;
     }
     export class $FunnelBlockEntity extends $SmartBlockEntity implements $IHaveHoveringInformation, $Clearable {
-        flap(arg0: boolean): void;
-        hasFlap(): boolean;
-        onTransfer(arg0: $ItemStack_): void;
         clearContent(): void;
-        getModeToExtract(): $ItemHelper$ExtractionCountMode;
-        getFlapOffset(): number;
+        flap(arg0: boolean): void;
+        onTransfer(arg0: $ItemStack_): void;
+        hasFlap(): boolean;
         getAmountToExtract(): number;
+        getFlapOffset(): number;
+        getModeToExtract(): $ItemHelper$ExtractionCountMode;
         addToTooltip(arg0: $List_<$Component_>, arg1: boolean): boolean;
         getIcon(arg0: boolean): $ItemStack;
         worldPosition: $BlockPos;
@@ -218,19 +218,19 @@ declare module "@package/com/simibubi/create/content/logistics/funnel" {
         static ATTACHMENTS_NBT_KEY: string;
         hasComparators: number;
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
-        get modeToExtract(): $ItemHelper$ExtractionCountMode;
-        get flapOffset(): number;
         get amountToExtract(): number;
+        get flapOffset(): number;
+        get modeToExtract(): $ItemHelper$ExtractionCountMode;
     }
     export class $FunnelGenerator extends $SpecialBlockStateGen {
         static itemModel(arg0: string): $NonNullBiConsumer<$DataGenContext<$Item, $FunnelItem>, $RegistrateItemModelProvider>;
         constructor(arg0: string, arg1: boolean);
     }
     export class $BeltFunnelBlock extends $AbstractHorizontalFunnelBlock implements $SpecialBlockItemRequirement {
-        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
+        static getShapeForPosition(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Direction_, arg3: boolean): $BeltFunnelBlock$Shape;
         isOfSameType(arg0: $FunnelBlock): boolean;
         static isOnValidBelt(arg0: $BlockState_, arg1: $LevelReader, arg2: $BlockPos_): boolean;
-        static getShapeForPosition(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Direction_, arg3: boolean): $BeltFunnelBlock$Shape;
+        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;

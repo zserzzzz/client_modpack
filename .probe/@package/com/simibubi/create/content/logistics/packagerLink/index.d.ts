@@ -128,11 +128,11 @@ declare module "@package/com/simibubi/create/content/logistics/packagerLink" {
      */
     export type $WiFiEffectPacket_ = { pos?: $BlockPos_,  } | [pos?: $BlockPos_, ];
     export class $LogisticsManager {
-        static findPackagersForRequest(arg0: $UUID_, arg1: $PackageOrderWithCrafts_, arg2: $IdentifiedInventory_, arg3: string): $Multimap<$PackagerBlockEntity, $PackagingRequest>;
-        static performPackageRequests(arg0: $Multimap<$PackagerBlockEntity, $PackagingRequest_>): void;
         static broadcastPackageRequest(arg0: $UUID_, arg1: $LogisticallyLinkedBehaviour$RequestType_, arg2: $PackageOrderWithCrafts_, arg3: $IdentifiedInventory_, arg4: string): boolean;
         static getSummaryOfNetwork(arg0: $UUID_, arg1: boolean): $InventorySummary;
         static getStockOf(arg0: $UUID_, arg1: $ItemStack_, arg2: $IdentifiedInventory_): number;
+        static performPackageRequests(arg0: $Multimap<$PackagerBlockEntity, $PackagingRequest_>): void;
+        static findPackagersForRequest(arg0: $UUID_, arg1: $PackageOrderWithCrafts_, arg2: $IdentifiedInventory_, arg3: string): $Multimap<$PackagerBlockEntity, $PackagingRequest>;
         static ACCURATE_SUMMARIES: $Cache<$UUID, $InventorySummary>;
         static SUMMARIES: $Cache<$UUID, $InventorySummary>;
         constructor();
@@ -141,13 +141,13 @@ declare module "@package/com/simibubi/create/content/logistics/packagerLink" {
         static remove(arg0: $LogisticallyLinkedBehaviour): void;
         static keepAlive(arg0: $LogisticallyLinkedBehaviour): void;
         mayInteract(arg0: $Player): boolean;
-        mayAdministrate(arg0: $Player): boolean;
-        static getAllPresent(arg0: $UUID_, arg1: boolean): $Collection<$LogisticallyLinkedBehaviour>;
-        static getAllPresent(arg0: $UUID_, arg1: boolean, arg2: boolean): $Collection<$LogisticallyLinkedBehaviour>;
-        mayInteractMessage(arg0: $Player): boolean;
         getSummary(arg0: $IdentifiedInventory_): $InventorySummary;
-        redstonePowerChanged(arg0: number): void;
+        static getAllPresent(arg0: $UUID_, arg1: boolean, arg2: boolean): $Collection<$LogisticallyLinkedBehaviour>;
+        static getAllPresent(arg0: $UUID_, arg1: boolean): $Collection<$LogisticallyLinkedBehaviour>;
+        mayAdministrate(arg0: $Player): boolean;
         deductFromAccurateSummary(arg0: $ItemStackHandler): void;
+        redstonePowerChanged(arg0: number): void;
+        mayInteractMessage(arg0: $Player): boolean;
         processRequest(arg0: $ItemStack_, arg1: number, arg2: string, arg3: number, arg4: $MutableBoolean, arg5: number, arg6: $PackageOrderWithCrafts_, arg7: $IdentifiedInventory_): $Pair<$PackagerBlockEntity, $PackagingRequest>;
         static isValidLink(arg0: $LogisticallyLinkedBehaviour): boolean;
         static LINK_ID_GENERATOR: $AtomicInteger;
@@ -186,27 +186,27 @@ declare module "@package/com/simibubi/create/content/logistics/packagerLink" {
      */
     export type $LogisticallyLinkedBehaviour$RequestType_ = "restock" | "redstone" | "player";
     export class $PackagerLinkBlock extends $FaceAttachedHorizontalDirectionalBlock implements $IBE<$PackagerLinkBlockEntity>, $ProperWaterloggedBlock, $IWrenchable {
-        getBlockEntityType(): $BlockEntityType<$PackagerLinkBlockEntity>;
-        getBlockEntityClass(): $Class<$PackagerLinkBlockEntity>;
         static getPower(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): number;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$PackagerLinkBlockEntity>): void;
+        getBlockEntityClass(): $Class<$PackagerLinkBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$PackagerLinkBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$PackagerLinkBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($PackagerLinkBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$PackagerLinkBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $PackagerLinkBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
-        fluidState(arg0: $BlockState_): $FluidState;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$PackagerLinkBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($PackagerLinkBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$PackagerLinkBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         updateWater(arg0: $LevelAccessor, arg1: $BlockState_, arg2: $BlockPos_): void;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        fluidState(arg0: $BlockState_): $FluidState;
+        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -240,15 +240,15 @@ declare module "@package/com/simibubi/create/content/logistics/packagerLink" {
         static FACE: $EnumProperty<$AttachFace>;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$PackagerLinkBlockEntity>;
         get blockEntityClass(): $Class<$PackagerLinkBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$PackagerLinkBlockEntity>;
     }
     export class $WiFiParticle$Data extends $BasicParticleData<$WiFiParticle> implements $ParticleOptions {
         constructor();
     }
     export class $LogisticallyLinkedBlockItem extends $BlockItem {
-        static networkFromStack(arg0: $ItemStack_): $UUID;
         static assignFrequency(arg0: $ItemStack_, arg1: $Player, arg2: $UUID_): void;
+        static networkFromStack(arg0: $ItemStack_): $UUID;
         static isTuned(arg0: $ItemStack_): boolean;
         static BASE_ATTACK_DAMAGE_ID: $ResourceLocation;
         static DEFAULT_MAX_STACK_SIZE: number;
@@ -263,18 +263,18 @@ declare module "@package/com/simibubi/create/content/logistics/packagerLink" {
     export class $GlobalLogisticsManager {
         isLocked(arg0: $UUID_): boolean;
         tick(arg0: $Level_): void;
+        getUnloadedLinkCount(arg0: $UUID_): number;
         mayInteract(arg0: $UUID_, arg1: $Player): boolean;
-        getQueuedPromises(arg0: $UUID_): $RequestPromiseQueue;
+        linkAdded(arg0: $UUID_, arg1: $GlobalPos_, arg2: $UUID_): void;
+        isLockable(arg0: $UUID_): boolean;
+        markDirty(): void;
+        linkLoaded(arg0: $UUID_, arg1: $GlobalPos_): void;
+        levelLoaded(arg0: $LevelAccessor): void;
         mayAdministrate(arg0: $UUID_, arg1: $Player): boolean;
+        linkInvalidated(arg0: $UUID_, arg1: $GlobalPos_): void;
+        getQueuedPromises(arg0: $UUID_): $RequestPromiseQueue;
         linkRemoved(arg0: $UUID_, arg1: $GlobalPos_): void;
         hasQueuedPromises(arg0: $UUID_): boolean;
-        levelLoaded(arg0: $LevelAccessor): void;
-        linkInvalidated(arg0: $UUID_, arg1: $GlobalPos_): void;
-        markDirty(): void;
-        isLockable(arg0: $UUID_): boolean;
-        linkAdded(arg0: $UUID_, arg1: $GlobalPos_, arg2: $UUID_): void;
-        linkLoaded(arg0: $UUID_, arg1: $GlobalPos_): void;
-        getUnloadedLinkCount(arg0: $UUID_): number;
         logisticsNetworks: $Map<$UUID, $LogisticsNetwork>;
         constructor();
     }
@@ -286,16 +286,16 @@ declare module "@package/com/simibubi/create/content/logistics/packagerLink" {
         tick(): void;
         flatten(arg0: boolean): $List<$RequestPromise>;
         itemEnteredSystem(arg0: $ItemStack_, arg1: number): void;
+        getTotalPromisedAndRemoveExpired(arg0: $ItemStack_, arg1: number): number;
         setOnChanged(arg0: $Runnable_): void;
         forceClear(arg0: $ItemStack_): void;
-        getTotalPromisedAndRemoveExpired(arg0: $ItemStack_, arg1: number): number;
         constructor(arg0: $Runnable_);
         get empty(): boolean;
         set onChanged(value: $Runnable_);
     }
     export class $PackagerLinkBlockEntity extends $LinkWithBulbBlockEntity {
-        playEffect(): void;
         fetchSummaryFromPackager(arg0: $IdentifiedInventory_): $InventorySummary;
+        playEffect(): void;
         getPackager(): $PackagerBlockEntity;
         processRequest(arg0: $ItemStack_, arg1: number, arg2: string, arg3: number, arg4: $MutableBoolean, arg5: number, arg6: $PackageOrderWithCrafts_, arg7: $IdentifiedInventory_): $Pair<$PackagerBlockEntity, $PackagingRequest>;
         worldPosition: $BlockPos;

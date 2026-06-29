@@ -23,8 +23,8 @@ declare module "@package/net/neoforged/neoforge/logging" {
         static generateEnhancedStackTrace(throwable: $Throwable): string;
         static generateEnhancedStackTrace(throwable: $Throwable, header: boolean): string;
         static extendSystemReport(systemReport: $SystemReport): void;
-        static addCrashReportHeader(stringbuilder: $StringBuilder, crashReport: $CrashReport): void;
         static dumpModLoadingCrashReport(logger: $Logger, issues: $List_<$ModLoadingIssue_>, topLevelDir: $File_): $File;
+        static addCrashReportHeader(stringbuilder: $StringBuilder, crashReport: $CrashReport): void;
         constructor();
     }
 }

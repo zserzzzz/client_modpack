@@ -27,6 +27,14 @@ export * as print from "@package/java/awt/print";
 
 declare module "@package/java/awt" {
     export class $Toolkit {
+        getImage(arg0: string): $Image;
+        getImage(arg0: $URL): $Image;
+        static getProperty(arg0: string, arg1: string): string;
+        sync(): void;
+        removePropertyChangeListener(arg0: string, arg1: $PropertyChangeListener_): void;
+        addPropertyChangeListener(arg0: string, arg1: $PropertyChangeListener_): void;
+        prepareImage(arg0: $Image, arg1: number, arg2: number, arg3: $ImageObserver_): boolean;
+        beep(): void;
         getColorModel(): $ColorModel;
         static getDefaultToolkit(): $Toolkit;
         setDynamicLayout(arg0: boolean): void;
@@ -35,10 +43,10 @@ declare module "@package/java/awt" {
         createImage(arg0: number[], arg1: number, arg2: number): $Image;
         createImage(arg0: number[]): $Image;
         createImage(arg0: string): $Image;
-        createImage(arg0: $ImageProducer): $Image;
         createImage(arg0: $URL): $Image;
-        getPrintJob(arg0: $Frame, arg1: string, arg2: $Properties): $PrintJob;
+        createImage(arg0: $ImageProducer): $Image;
         getPrintJob(arg0: $Frame, arg1: string, arg2: $JobAttributes, arg3: $PageAttributes): $PrintJob;
+        getPrintJob(arg0: $Frame, arg1: string, arg2: $Properties): $PrintJob;
         getSystemSelection(): $Clipboard;
         createCustomCursor(arg0: $Image, arg1: $Point, arg2: string): $Cursor;
         getBestCursorSize(arg0: number, arg1: number): $Dimension;
@@ -77,14 +85,6 @@ declare module "@package/java/awt" {
         getAWTEventListeners(arg0: number): $AWTEventListener[];
         getAWTEventListeners(): $AWTEventListener[];
         mapInputMethodHighlight(arg0: $InputMethodHighlight): $Map<$TextAttribute, never>;
-        static getProperty(arg0: string, arg1: string): string;
-        sync(): void;
-        removePropertyChangeListener(arg0: string, arg1: $PropertyChangeListener_): void;
-        addPropertyChangeListener(arg0: string, arg1: $PropertyChangeListener_): void;
-        getImage(arg0: string): $Image;
-        getImage(arg0: $URL): $Image;
-        prepareImage(arg0: $Image, arg1: number, arg2: number, arg3: $ImageObserver_): boolean;
-        beep(): void;
         get colorModel(): $ColorModel;
         static get defaultToolkit(): $Toolkit;
         set dynamicLayout(value: boolean);
@@ -110,38 +110,38 @@ declare module "@package/java/awt" {
         static NONE: $JobAttributes$DialogType;
     }
     export class $Polygon implements $Shape, $Serializable {
-        getBounds2D(): $Rectangle2D;
-        getPathIterator(arg0: $AffineTransform, arg1: number): $PathIterator;
-        getPathIterator(arg0: $AffineTransform): $PathIterator;
-        intersects(arg0: number, arg1: number, arg2: number, arg3: number): boolean;
         intersects(arg0: $Rectangle2D): boolean;
-        invalidate(): void;
+        intersects(arg0: number, arg1: number, arg2: number, arg3: number): boolean;
         reset(): void;
-        contains(arg0: $Rectangle2D): boolean;
-        contains(arg0: number, arg1: number): boolean;
-        contains(arg0: number, arg1: number, arg2: number, arg3: number): boolean;
-        contains(arg0: $Point2D): boolean;
         contains(arg0: number, arg1: number): boolean;
         contains(arg0: $Point): boolean;
+        contains(arg0: number, arg1: number): boolean;
+        contains(arg0: $Point2D): boolean;
+        contains(arg0: number, arg1: number, arg2: number, arg3: number): boolean;
+        contains(arg0: $Rectangle2D): boolean;
         getBounds(): $Rectangle;
+        invalidate(): void;
         translate(arg0: number, arg1: number): void;
         /**
          * @deprecated
          */
         getBoundingBox(): $Rectangle;
+        getBounds2D(): $Rectangle2D;
+        getPathIterator(arg0: $AffineTransform): $PathIterator;
+        getPathIterator(arg0: $AffineTransform, arg1: number): $PathIterator;
+        addPoint(arg0: number, arg1: number): void;
         /**
          * @deprecated
          */
         inside(arg0: number, arg1: number): boolean;
-        addPoint(arg0: number, arg1: number): void;
         ypoints: number[];
         xpoints: number[];
         npoints: number;
         constructor();
         constructor(arg0: number[], arg1: number[], arg2: number);
-        get bounds2D(): $Rectangle2D;
         get bounds(): $Rectangle;
         get boundingBox(): $Rectangle;
+        get bounds2D(): $Rectangle2D;
     }
     export class $GraphicsDevice$WindowTranslucency extends $Enum<$GraphicsDevice$WindowTranslucency> {
         static values(): $GraphicsDevice$WindowTranslucency[];
@@ -157,20 +157,20 @@ declare module "@package/java/awt" {
     export class $Menu extends $MenuItem implements $MenuContainer, $Accessible {
         remove(arg0: $MenuComponent): void;
         remove(arg0: number): void;
-        insert(arg0: $MenuItem, arg1: number): void;
         insert(arg0: string, arg1: number): void;
-        add(arg0: string): void;
+        insert(arg0: $MenuItem, arg1: number): void;
         add(arg0: $MenuItem): $MenuItem;
+        add(arg0: string): void;
         removeAll(): void;
         getItem(arg0: number): $MenuItem;
         getItemCount(): number;
+        isTearOff(): boolean;
+        insertSeparator(arg0: number): void;
         addSeparator(): void;
         /**
          * @deprecated
          */
         countItems(): number;
-        isTearOff(): boolean;
-        insertSeparator(arg0: number): void;
         constructor(arg0: string, arg1: boolean);
         constructor(arg0: string);
         constructor();
@@ -205,51 +205,40 @@ declare module "@package/java/awt" {
     }
     export class $BufferCapabilities implements $Cloneable {
         clone(): $Object;
-        isPageFlipping(): boolean;
         getFlipContents(): $BufferCapabilities$FlipContents;
         getFrontBufferCapabilities(): $ImageCapabilities;
         getBackBufferCapabilities(): $ImageCapabilities;
         isFullScreenRequired(): boolean;
         isMultiBufferAvailable(): boolean;
+        isPageFlipping(): boolean;
         constructor(arg0: $ImageCapabilities, arg1: $ImageCapabilities, arg2: $BufferCapabilities$FlipContents);
-        get pageFlipping(): boolean;
         get flipContents(): $BufferCapabilities$FlipContents;
         get frontBufferCapabilities(): $ImageCapabilities;
         get backBufferCapabilities(): $ImageCapabilities;
         get fullScreenRequired(): boolean;
         get multiBufferAvailable(): boolean;
+        get pageFlipping(): boolean;
     }
     export class $Font implements $Serializable {
-        getTransform(): $AffineTransform;
-        static getFont(arg0: $Map_<$AttributedCharacterIterator$Attribute, never>): $Font;
-        static getFont(arg0: string, arg1: $Font): $Font;
-        static getFont(arg0: string): $Font;
-        isBold(): boolean;
-        isItalic(): boolean;
         getName(): string;
         static decode(arg0: string): $Font;
         getSize(): number;
         getAttributes(): $Map<$TextAttribute, never>;
-        getFamily(arg0: $Locale): string;
         getFamily(): string;
-        getStyle(): number;
-        isTransformed(): boolean;
-        getLineMetrics(arg0: $CharacterIterator, arg1: number, arg2: number, arg3: $FontRenderContext): $LineMetrics;
-        getLineMetrics(arg0: string[], arg1: number, arg2: number, arg3: $FontRenderContext): $LineMetrics;
-        getLineMetrics(arg0: string, arg1: number, arg2: number, arg3: $FontRenderContext): $LineMetrics;
-        getLineMetrics(arg0: string, arg1: $FontRenderContext): $LineMetrics;
-        static createFont(arg0: number, arg1: $InputStream): $Font;
-        static createFont(arg0: number, arg1: $File_): $Font;
+        getFamily(arg0: $Locale): string;
+        getTransform(): $AffineTransform;
         getFontName(arg0: $Locale): string;
         getFontName(): string;
         hasLayoutAttributes(): boolean;
         getMissingGlyphCode(): number;
         getBaselineFor(arg0: string): number;
+        canDisplay(arg0: string): boolean;
+        canDisplay(arg0: number): boolean;
         getItalicAngle(): number;
         getStringBounds(arg0: string[], arg1: number, arg2: number, arg3: $FontRenderContext): $Rectangle2D;
+        getStringBounds(arg0: string, arg1: $FontRenderContext): $Rectangle2D;
         getStringBounds(arg0: string, arg1: number, arg2: number, arg3: $FontRenderContext): $Rectangle2D;
         getStringBounds(arg0: $CharacterIterator, arg1: number, arg2: number, arg3: $FontRenderContext): $Rectangle2D;
-        getStringBounds(arg0: string, arg1: $FontRenderContext): $Rectangle2D;
         static textRequiresLayout(arg0: string[], arg1: number, arg2: number): boolean;
         static createFonts(arg0: $File_): $Font[];
         static createFonts(arg0: $InputStream): $Font[];
@@ -257,25 +246,36 @@ declare module "@package/java/awt" {
         getSize2D(): number;
         isPlain(): boolean;
         getAvailableAttributes(): $AttributedCharacterIterator$Attribute[];
+        deriveFont(arg0: $AffineTransform): $Font;
+        deriveFont(arg0: number): $Font;
+        deriveFont(arg0: $Map_<$AttributedCharacterIterator$Attribute, never>): $Font;
+        deriveFont(arg0: number, arg1: number): $Font;
+        deriveFont(arg0: number, arg1: $AffineTransform): $Font;
+        deriveFont(arg0: number): $Font;
         canDisplayUpTo(arg0: string[], arg1: number, arg2: number): number;
-        canDisplayUpTo(arg0: $CharacterIterator, arg1: number, arg2: number): number;
         canDisplayUpTo(arg0: string): number;
+        canDisplayUpTo(arg0: $CharacterIterator, arg1: number, arg2: number): number;
         hasUniformLineMetrics(): boolean;
+        getLineMetrics(arg0: string, arg1: number, arg2: number, arg3: $FontRenderContext): $LineMetrics;
+        getLineMetrics(arg0: string, arg1: $FontRenderContext): $LineMetrics;
+        getLineMetrics(arg0: string[], arg1: number, arg2: number, arg3: $FontRenderContext): $LineMetrics;
+        getLineMetrics(arg0: $CharacterIterator, arg1: number, arg2: number, arg3: $FontRenderContext): $LineMetrics;
         getMaxCharBounds(arg0: $FontRenderContext): $Rectangle2D;
-        layoutGlyphVector(arg0: $FontRenderContext, arg1: string[], arg2: number, arg3: number, arg4: number): $GlyphVector;
-        createGlyphVector(arg0: $FontRenderContext, arg1: string): $GlyphVector;
         createGlyphVector(arg0: $FontRenderContext, arg1: number[]): $GlyphVector;
         createGlyphVector(arg0: $FontRenderContext, arg1: $CharacterIterator): $GlyphVector;
+        createGlyphVector(arg0: $FontRenderContext, arg1: string): $GlyphVector;
         createGlyphVector(arg0: $FontRenderContext, arg1: string[]): $GlyphVector;
+        layoutGlyphVector(arg0: $FontRenderContext, arg1: string[], arg2: number, arg3: number, arg4: number): $GlyphVector;
+        isTransformed(): boolean;
         getNumGlyphs(): number;
-        deriveFont(arg0: number, arg1: $AffineTransform): $Font;
-        deriveFont(arg0: $Map_<$AttributedCharacterIterator$Attribute, never>): $Font;
-        deriveFont(arg0: number): $Font;
-        deriveFont(arg0: $AffineTransform): $Font;
-        deriveFont(arg0: number, arg1: number): $Font;
-        deriveFont(arg0: number): $Font;
-        canDisplay(arg0: number): boolean;
-        canDisplay(arg0: string): boolean;
+        getStyle(): number;
+        isItalic(): boolean;
+        isBold(): boolean;
+        static getFont(arg0: $Map_<$AttributedCharacterIterator$Attribute, never>): $Font;
+        static getFont(arg0: string, arg1: $Font): $Font;
+        static getFont(arg0: string): $Font;
+        static createFont(arg0: number, arg1: $InputStream): $Font;
+        static createFont(arg0: number, arg1: $File_): $Font;
         static PLAIN: number;
         static ITALIC: number;
         static CENTER_BASELINE: number;
@@ -293,23 +293,23 @@ declare module "@package/java/awt" {
         static LAYOUT_LEFT_TO_RIGHT: number;
         static BOLD: number;
         static TYPE1_FONT: number;
-        constructor(arg0: string, arg1: number, arg2: number);
         constructor(arg0: $Map_<$AttributedCharacterIterator$Attribute, never>);
-        get transform(): $AffineTransform;
-        get bold(): boolean;
-        get italic(): boolean;
+        constructor(arg0: string, arg1: number, arg2: number);
         get name(): string;
         get size(): number;
         get attributes(): $Map<$TextAttribute, never>;
-        get style(): number;
-        get transformed(): boolean;
+        get transform(): $AffineTransform;
         get missingGlyphCode(): number;
         get italicAngle(): number;
         get PSName(): string;
         get size2D(): number;
         get plain(): boolean;
         get availableAttributes(): $AttributedCharacterIterator$Attribute[];
+        get transformed(): boolean;
         get numGlyphs(): number;
+        get style(): number;
+        get italic(): boolean;
+        get bold(): boolean;
     }
     export class $JobAttributes$DefaultSelectionType extends $AttributeValue {
         static ALL: $JobAttributes$DefaultSelectionType;
@@ -319,12 +319,12 @@ declare module "@package/java/awt" {
     export class $MenuContainer {
     }
     export interface $MenuContainer {
+        remove(arg0: $MenuComponent): void;
         /**
          * @deprecated
          */
         postEvent(arg0: $Event): boolean;
         getFont(): $Font;
-        remove(arg0: $MenuComponent): void;
         get font(): $Font;
     }
     export class $Dimension extends $Dimension2D implements $Serializable {
@@ -333,27 +333,11 @@ declare module "@package/java/awt" {
         setSize(arg0: number, arg1: number): void;
         width: number;
         height: number;
-        constructor(arg0: number, arg1: number);
         constructor(arg0: $Dimension);
         constructor();
+        constructor(arg0: number, arg1: number);
     }
     export class $Graphics {
-        getFont(): $Font;
-        drawRect(arg0: number, arg1: number, arg2: number, arg3: number): void;
-        drawRoundRect(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number): void;
-        fillRoundRect(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number): void;
-        drawOval(arg0: number, arg1: number, arg2: number, arg3: number): void;
-        fillOval(arg0: number, arg1: number, arg2: number, arg3: number): void;
-        fillArc(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number): void;
-        drawPolyline(arg0: number[], arg1: number[], arg2: number): void;
-        drawPolygon(arg0: number[], arg1: number[], arg2: number): void;
-        drawPolygon(arg0: $Polygon): void;
-        fillPolygon(arg0: number[], arg1: number[], arg2: number): void;
-        fillPolygon(arg0: $Polygon): void;
-        drawChars(arg0: string[], arg1: number, arg2: number, arg3: number, arg4: number): void;
-        clipRect(arg0: number, arg1: number, arg2: number, arg3: number): void;
-        getFontMetrics(): $FontMetrics;
-        getFontMetrics(arg0: $Font): $FontMetrics;
         /**
          * @deprecated
          */
@@ -363,20 +347,21 @@ declare module "@package/java/awt" {
         setColor(arg0: $Color): void;
         dispose(): void;
         translate(arg0: number, arg1: number): void;
+        copyArea(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number): void;
+        drawString(arg0: $AttributedCharacterIterator, arg1: number, arg2: number): void;
+        drawString(arg0: string, arg1: number, arg2: number): void;
         getColor(): $Color;
-        drawImage(arg0: $Image, arg1: number, arg2: number, arg3: $Color, arg4: $ImageObserver_): boolean;
-        drawImage(arg0: $Image, arg1: number, arg2: number, arg3: number, arg4: number, arg5: $Color, arg6: $ImageObserver_): boolean;
-        drawImage(arg0: $Image, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: $ImageObserver_): boolean;
-        drawImage(arg0: $Image, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: $Color, arg10: $ImageObserver_): boolean;
         drawImage(arg0: $Image, arg1: number, arg2: number, arg3: $ImageObserver_): boolean;
         drawImage(arg0: $Image, arg1: number, arg2: number, arg3: number, arg4: number, arg5: $ImageObserver_): boolean;
-        drawString(arg0: string, arg1: number, arg2: number): void;
-        drawString(arg0: $AttributedCharacterIterator, arg1: number, arg2: number): void;
+        drawImage(arg0: $Image, arg1: number, arg2: number, arg3: number, arg4: number, arg5: $Color, arg6: $ImageObserver_): boolean;
+        drawImage(arg0: $Image, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: $Color, arg10: $ImageObserver_): boolean;
+        drawImage(arg0: $Image, arg1: number, arg2: number, arg3: $Color, arg4: $ImageObserver_): boolean;
+        drawImage(arg0: $Image, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: $ImageObserver_): boolean;
         clearRect(arg0: number, arg1: number, arg2: number, arg3: number): void;
-        setClip(arg0: number, arg1: number, arg2: number, arg3: number): void;
         setClip(arg0: $Shape): void;
-        getClipBounds(): $Rectangle;
+        setClip(arg0: number, arg1: number, arg2: number, arg3: number): void;
         getClipBounds(arg0: $Rectangle): $Rectangle;
+        getClipBounds(): $Rectangle;
         hitClip(arg0: number, arg1: number, arg2: number, arg3: number): boolean;
         setPaintMode(): void;
         setXORMode(arg0: $Color): void;
@@ -387,12 +372,27 @@ declare module "@package/java/awt" {
          * @deprecated
          */
         getClipRect(): $Rectangle;
+        getFont(): $Font;
+        drawRect(arg0: number, arg1: number, arg2: number, arg3: number): void;
+        drawRoundRect(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number): void;
+        fillRoundRect(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number): void;
+        drawOval(arg0: number, arg1: number, arg2: number, arg3: number): void;
+        fillOval(arg0: number, arg1: number, arg2: number, arg3: number): void;
+        fillArc(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number): void;
+        drawPolyline(arg0: number[], arg1: number[], arg2: number): void;
+        drawPolygon(arg0: $Polygon): void;
+        drawPolygon(arg0: number[], arg1: number[], arg2: number): void;
+        fillPolygon(arg0: $Polygon): void;
+        fillPolygon(arg0: number[], arg1: number[], arg2: number): void;
+        drawChars(arg0: string[], arg1: number, arg2: number, arg3: number, arg4: number): void;
+        clipRect(arg0: number, arg1: number, arg2: number, arg3: number): void;
         fillRect(arg0: number, arg1: number, arg2: number, arg3: number): void;
+        getFontMetrics(): $FontMetrics;
+        getFontMetrics(arg0: $Font): $FontMetrics;
         getClip(): $Shape;
         setFont(arg0: $Font): void;
         drawLine(arg0: number, arg1: number, arg2: number, arg3: number): void;
         drawArc(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number): void;
-        copyArea(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number): void;
         set XORMode(value: $Color);
     }
     export class $GraphicsConfigTemplate implements $Serializable {
@@ -404,18 +404,18 @@ declare module "@package/java/awt" {
         constructor();
     }
     export class $MenuComponent implements $Serializable {
-        /**
-         * @deprecated
-         */
-        postEvent(arg0: $Event): boolean;
-        getFont(): $Font;
         getName(): string;
         getParent(): $MenuContainer;
         setName(arg0: string): void;
         dispatchEvent(arg0: $AWTEvent): void;
-        removeNotify(): void;
-        setFont(arg0: $Font): void;
         getAccessibleContext(): $AccessibleContext;
+        /**
+         * @deprecated
+         */
+        postEvent(arg0: $Event): boolean;
+        removeNotify(): void;
+        getFont(): $Font;
+        setFont(arg0: $Font): void;
         constructor();
         get parent(): $MenuContainer;
         get accessibleContext(): $AccessibleContext;
@@ -593,10 +593,10 @@ declare module "@package/java/awt" {
      * @deprecated
      */
     export class $Event implements $Serializable {
-        controlDown(): boolean;
         translate(arg0: number, arg1: number): void;
-        shiftDown(): boolean;
         metaDown(): boolean;
+        shiftDown(): boolean;
+        controlDown(): boolean;
         static DOWN: number;
         static PRINT_SCREEN: number;
         static BACK_SPACE: number;
@@ -671,9 +671,9 @@ declare module "@package/java/awt" {
         static KEY_ACTION_RELEASE: number;
         static META_MASK: number;
         static HOME: number;
-        constructor(arg0: $Object, arg1: number, arg2: $Object);
         constructor(arg0: $Object, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number);
         constructor(arg0: $Object, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: $Object);
+        constructor(arg0: $Object, arg1: number, arg2: $Object);
     }
     export class $Stroke {
     }
@@ -696,21 +696,21 @@ declare module "@package/java/awt" {
      */
     export type $Window$Type_ = "normal" | "utility" | "popup";
     export class $MenuBar extends $MenuComponent implements $MenuContainer, $Accessible {
-        shortcuts(): $Enumeration<$MenuShortcut>;
-        remove(arg0: $MenuComponent): void;
         remove(arg0: number): void;
+        remove(arg0: $MenuComponent): void;
         add(arg0: $Menu): $Menu;
+        shortcuts(): $Enumeration<$MenuShortcut>;
+        getShortcutMenuItem(arg0: $MenuShortcut): $MenuItem;
+        deleteShortcut(arg0: $MenuShortcut): void;
         addNotify(): void;
         getMenu(arg0: number): $Menu;
-        getMenuCount(): number;
-        setHelpMenu(arg0: $Menu): void;
-        getHelpMenu(): $Menu;
         /**
          * @deprecated
          */
         countMenus(): number;
-        getShortcutMenuItem(arg0: $MenuShortcut): $MenuItem;
-        deleteShortcut(arg0: $MenuShortcut): void;
+        getMenuCount(): number;
+        setHelpMenu(arg0: $Menu): void;
+        getHelpMenu(): $Menu;
         constructor();
         get menuCount(): number;
     }
@@ -723,7 +723,6 @@ declare module "@package/java/awt" {
         getInitialComponent(arg0: $Window): $Component;
     }
     export class $Graphics2D extends $Graphics {
-        getTransform(): $AffineTransform;
         scale(arg0: number, arg1: number): void;
         fill(arg0: $Shape): void;
         transform(arg0: $AffineTransform): void;
@@ -731,11 +730,19 @@ declare module "@package/java/awt" {
         rotate(arg0: number, arg1: number, arg2: number): void;
         hit(arg0: $Rectangle, arg1: $Shape, arg2: boolean): boolean;
         translate(arg0: number, arg1: number): void;
-        drawImage(arg0: $BufferedImage, arg1: $BufferedImageOp, arg2: number, arg3: number): void;
-        drawImage(arg0: $Image, arg1: $AffineTransform, arg2: $ImageObserver_): boolean;
-        draw(arg0: $Shape): void;
+        getDeviceConfiguration(): $GraphicsConfiguration;
+        getTransform(): $AffineTransform;
+        getBackground(): $Color;
+        shear(arg0: number, arg1: number): void;
         drawString(arg0: string, arg1: number, arg2: number): void;
         drawString(arg0: $AttributedCharacterIterator, arg1: number, arg2: number): void;
+        draw(arg0: $Shape): void;
+        getFontRenderContext(): $FontRenderContext;
+        clip(arg0: $Shape): void;
+        drawImage(arg0: $Image, arg1: $AffineTransform, arg2: $ImageObserver_): boolean;
+        drawImage(arg0: $BufferedImage, arg1: $BufferedImageOp, arg2: number, arg3: number): void;
+        getRenderingHints(): $RenderingHints;
+        setComposite(arg0: $Composite_): void;
         setPaint(arg0: $Paint): void;
         drawRenderedImage(arg0: $RenderedImage, arg1: $AffineTransform): void;
         setStroke(arg0: $Stroke_): void;
@@ -743,22 +750,15 @@ declare module "@package/java/awt" {
         setRenderingHints(arg0: $Map_<never, never>): void;
         addRenderingHints(arg0: $Map_<never, never>): void;
         getPaint(): $Paint;
+        getComposite(): $Composite;
         getStroke(): $Stroke;
         drawRenderableImage(arg0: $RenderableImage, arg1: $AffineTransform): void;
-        getBackground(): $Color;
         setRenderingHint(arg0: $RenderingHints$Key, arg1: $Object): void;
-        shear(arg0: number, arg1: number): void;
-        clip(arg0: $Shape): void;
-        setBackground(arg0: $Color): void;
-        getFontRenderContext(): $FontRenderContext;
-        setTransform(arg0: $AffineTransform): void;
-        getComposite(): $Composite;
         drawGlyphVector(arg0: $GlyphVector, arg1: number, arg2: number): void;
-        setComposite(arg0: $Composite_): void;
-        getDeviceConfiguration(): $GraphicsConfiguration;
-        getRenderingHints(): $RenderingHints;
-        get fontRenderContext(): $FontRenderContext;
+        setBackground(arg0: $Color): void;
+        setTransform(arg0: $AffineTransform): void;
         get deviceConfiguration(): $GraphicsConfiguration;
+        get fontRenderContext(): $FontRenderContext;
     }
     export class $Transparency {
         static OPAQUE: number;
@@ -777,40 +777,11 @@ declare module "@package/java/awt" {
         /**
          * @deprecated
          */
-        postEvent(arg0: $Event): boolean;
-        getHeight(): number;
-        setBounds(arg0: $Rectangle): void;
-        setBounds(arg0: number, arg1: number, arg2: number, arg3: number): void;
-        /**
-         * @deprecated
-         */
-        reshape(arg0: number, arg1: number, arg2: number, arg3: number): void;
-        getColorModel(): $ColorModel;
-        getFont(): $Font;
-        getX(): number;
-        /**
-         * @deprecated
-         */
         show(arg0: boolean): void;
         /**
          * @deprecated
          */
         show(): void;
-        getMousePosition(): $Point;
-        createImage(arg0: number, arg1: number): $Image;
-        createImage(arg0: $ImageProducer): $Image;
-        firePropertyChange(arg0: string, arg1: number, arg2: number): void;
-        firePropertyChange(arg0: string, arg1: number, arg2: number): void;
-        firePropertyChange(arg0: string, arg1: number, arg2: number): void;
-        firePropertyChange(arg0: string, arg1: number, arg2: number): void;
-        firePropertyChange(arg0: string, arg1: number, arg2: number): void;
-        firePropertyChange(arg0: string, arg1: string, arg2: string): void;
-        getPropertyChangeListeners(): $PropertyChangeListener[];
-        getPropertyChangeListeners(arg0: string): $PropertyChangeListener[];
-        getFontMetrics(arg0: $Font): $FontMetrics;
-        checkImage(arg0: $Image, arg1: $ImageObserver_): number;
-        checkImage(arg0: $Image, arg1: number, arg2: number, arg3: $ImageObserver_): number;
-        invalidate(): void;
         getName(): string;
         remove(arg0: $MenuComponent): void;
         /**
@@ -819,13 +790,13 @@ declare module "@package/java/awt" {
         size(): $Dimension;
         update(arg0: $Graphics): void;
         add(arg0: $PopupMenu): void;
-        contains(arg0: $Point): boolean;
         contains(arg0: number, arg1: number): boolean;
-        list(arg0: $PrintStream, arg1: number): void;
-        list(arg0: $PrintWriter, arg1: number): void;
-        list(arg0: $PrintWriter): void;
-        list(arg0: $PrintStream): void;
+        contains(arg0: $Point): boolean;
         list(): void;
+        list(arg0: $PrintStream): void;
+        list(arg0: $PrintStream, arg1: number): void;
+        list(arg0: $PrintWriter): void;
+        list(arg0: $PrintWriter, arg1: number): void;
         getBounds(arg0: $Rectangle): $Rectangle;
         getBounds(): $Rectangle;
         isEnabled(): boolean;
@@ -877,151 +848,41 @@ declare module "@package/java/awt" {
         getLocale(): $Locale;
         setLocale(arg0: $Locale): void;
         isValid(): boolean;
-        setSize(arg0: $Dimension): void;
         setSize(arg0: number, arg1: number): void;
-        getCursor(): $Cursor;
-        getWidth(): number;
-        setVisible(arg0: boolean): void;
-        /**
-         * @deprecated
-         */
-        locate(arg0: number, arg1: number): $Component;
-        setEnabled(arg0: boolean): void;
-        setLocation(arg0: $Point): void;
-        setLocation(arg0: number, arg1: number): void;
-        /**
-         * @deprecated
-         */
-        disable(): void;
-        removePropertyChangeListener(arg0: $PropertyChangeListener_): void;
-        removePropertyChangeListener(arg0: string, arg1: $PropertyChangeListener_): void;
+        setSize(arg0: $Dimension): void;
+        invalidate(): void;
         getY(): number;
+        /**
+         * @deprecated
+         */
+        lostFocus(arg0: $Event, arg1: $Object): boolean;
+        getMousePosition(): $Point;
+        getCursor(): $Cursor;
+        removePropertyChangeListener(arg0: string, arg1: $PropertyChangeListener_): void;
+        removePropertyChangeListener(arg0: $PropertyChangeListener_): void;
+        getBackground(): $Color;
+        getWidth(): number;
         addPropertyChangeListener(arg0: $PropertyChangeListener_): void;
         addPropertyChangeListener(arg0: string, arg1: $PropertyChangeListener_): void;
         /**
          * @deprecated
          */
-        minimumSize(): $Dimension;
+        disable(): void;
+        setLocation(arg0: $Point): void;
+        setLocation(arg0: number, arg1: number): void;
         getListeners<T extends $EventListener>(arg0: $Class<T>): T[];
         /**
          * @deprecated
          */
         handleEvent(arg0: $Event): boolean;
         dispatchEvent(arg0: $AWTEvent): void;
-        /**
-         * @deprecated
-         */
-        lostFocus(arg0: $Event, arg1: $Object): boolean;
-        getTreeLock(): $Object;
-        removeNotify(): void;
-        addNotify(): void;
-        getToolkit(): $Toolkit;
-        getLocationOnScreen(): $Point;
-        isShowing(): boolean;
-        isFocusOwner(): boolean;
-        transferFocus(): void;
-        getInputContext(): $InputContext;
-        repaint(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number): void;
-        repaint(arg0: number): void;
-        repaint(): void;
-        repaint(arg0: number, arg1: number, arg2: number, arg3: number): void;
-        setForeground(arg0: $Color): void;
-        /**
-         * @deprecated
-         */
-        preferredSize(): $Dimension;
-        isPreferredSizeSet(): boolean;
-        getPreferredSize(): $Dimension;
-        getMinimumSize(): $Dimension;
-        isMinimumSizeSet(): boolean;
-        isMaximumSizeSet(): boolean;
-        createVolatileImage(arg0: number, arg1: number, arg2: $ImageCapabilities): $VolatileImage;
-        createVolatileImage(arg0: number, arg1: number): $VolatileImage;
-        getComponentAt(arg0: number, arg1: number): $Component;
-        getComponentAt(arg0: $Point): $Component;
-        /**
-         * @deprecated
-         */
-        mouseEnter(arg0: $Event, arg1: number, arg2: number): boolean;
-        /**
-         * @deprecated
-         */
-        mouseExit(arg0: $Event, arg1: number, arg2: number): boolean;
-        /**
-         * @deprecated
-         */
-        mouseDown(arg0: $Event, arg1: number, arg2: number): boolean;
-        /**
-         * @deprecated
-         */
-        mouseUp(arg0: $Event, arg1: number, arg2: number): boolean;
-        /**
-         * @deprecated
-         */
-        gotFocus(arg0: $Event, arg1: $Object): boolean;
-        /**
-         * @deprecated
-         */
-        isFocusTraversable(): boolean;
-        getFocusTraversalKeys(arg0: number): $Set<$AWTKeyStroke>;
-        isFocusCycleRoot(arg0: $Container): boolean;
-        getFocusCycleRootAncestor(): $Container;
-        /**
-         * @deprecated
-         */
-        nextFocus(): void;
-        requestFocusInWindow(): boolean;
-        requestFocusInWindow(arg0: $FocusEvent$Cause_): boolean;
-        transferFocusBackward(): void;
+        setMaximumSize(arg0: $Dimension): void;
         addComponentListener(arg0: $ComponentListener): void;
         addFocusListener(arg0: $FocusListener): void;
         addKeyListener(arg0: $KeyListener): void;
         addMouseListener(arg0: $MouseListener): void;
         addMouseMotionListener(arg0: $MouseMotionListener): void;
         addInputMethodListener(arg0: $InputMethodListener): void;
-        prepareImage(arg0: $Image, arg1: $ImageObserver_): boolean;
-        prepareImage(arg0: $Image, arg1: number, arg2: number, arg3: $ImageObserver_): boolean;
-        getGraphics(): $Graphics;
-        isFocusable(): boolean;
-        getBackground(): $Color;
-        imageUpdate(arg0: $Image, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number): boolean;
-        isLightweight(): boolean;
-        setCursor(arg0: $Cursor): void;
-        hasFocus(): boolean;
-        /**
-         * @deprecated
-         */
-        mouseMove(arg0: $Event, arg1: number, arg2: number): boolean;
-        /**
-         * @deprecated
-         */
-        mouseDrag(arg0: $Event, arg1: number, arg2: number): boolean;
-        /**
-         * @deprecated
-         */
-        keyUp(arg0: $Event, arg1: number): boolean;
-        /**
-         * @deprecated
-         */
-        keyDown(arg0: $Event, arg1: number): boolean;
-        paint(arg0: $Graphics): void;
-        isVisible(): boolean;
-        printAll(arg0: $Graphics): void;
-        /**
-         * @deprecated
-         */
-        inside(arg0: number, arg1: number): boolean;
-        /**
-         * @deprecated
-         */
-        hide(): void;
-        getGraphicsConfiguration(): $GraphicsConfiguration;
-        setFocusable(arg0: boolean): void;
-        setBackground(arg0: $Color): void;
-        setMaximumSize(arg0: $Dimension): void;
-        setFont(arg0: $Font): void;
-        requestFocus(arg0: $FocusEvent$Cause_): void;
-        requestFocus(): void;
         addHierarchyListener(arg0: $HierarchyListener_): void;
         addHierarchyBoundsListener(arg0: $HierarchyBoundsListener): void;
         addMouseWheelListener(arg0: $MouseWheelListener_): void;
@@ -1079,35 +940,157 @@ declare module "@package/java/awt" {
         getComponentOrientation(): $ComponentOrientation;
         applyComponentOrientation(arg0: $ComponentOrientation): void;
         setMixingCutoutShape(arg0: $Shape): void;
+        getHeight(): number;
+        /**
+         * @deprecated
+         */
+        postEvent(arg0: $Event): boolean;
+        getX(): number;
+        /**
+         * @deprecated
+         */
+        minimumSize(): $Dimension;
+        /**
+         * @deprecated
+         */
+        preferredSize(): $Dimension;
+        getPreferredSize(): $Dimension;
+        getGraphics(): $Graphics;
+        prepareImage(arg0: $Image, arg1: number, arg2: number, arg3: $ImageObserver_): boolean;
+        prepareImage(arg0: $Image, arg1: $ImageObserver_): boolean;
+        setVisible(arg0: boolean): void;
+        /**
+         * @deprecated
+         */
+        locate(arg0: number, arg1: number): $Component;
+        setEnabled(arg0: boolean): void;
+        setBounds(arg0: number, arg1: number, arg2: number, arg3: number): void;
+        setBounds(arg0: $Rectangle): void;
+        /**
+         * @deprecated
+         */
+        reshape(arg0: number, arg1: number, arg2: number, arg3: number): void;
+        isVisible(): boolean;
+        getTreeLock(): $Object;
+        removeNotify(): void;
+        addNotify(): void;
+        getToolkit(): $Toolkit;
+        getLocationOnScreen(): $Point;
+        isShowing(): boolean;
+        isFocusOwner(): boolean;
+        transferFocus(): void;
+        getInputContext(): $InputContext;
+        repaint(): void;
+        repaint(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number): void;
+        repaint(arg0: number, arg1: number, arg2: number, arg3: number): void;
+        repaint(arg0: number): void;
+        setForeground(arg0: $Color): void;
+        isPreferredSizeSet(): boolean;
+        getMinimumSize(): $Dimension;
+        isMinimumSizeSet(): boolean;
+        isMaximumSizeSet(): boolean;
+        createVolatileImage(arg0: number, arg1: number): $VolatileImage;
+        createVolatileImage(arg0: number, arg1: number, arg2: $ImageCapabilities): $VolatileImage;
+        getComponentAt(arg0: $Point): $Component;
+        getComponentAt(arg0: number, arg1: number): $Component;
+        /**
+         * @deprecated
+         */
+        mouseEnter(arg0: $Event, arg1: number, arg2: number): boolean;
+        /**
+         * @deprecated
+         */
+        mouseExit(arg0: $Event, arg1: number, arg2: number): boolean;
+        /**
+         * @deprecated
+         */
+        mouseDown(arg0: $Event, arg1: number, arg2: number): boolean;
+        /**
+         * @deprecated
+         */
+        mouseUp(arg0: $Event, arg1: number, arg2: number): boolean;
+        /**
+         * @deprecated
+         */
+        gotFocus(arg0: $Event, arg1: $Object): boolean;
+        /**
+         * @deprecated
+         */
+        isFocusTraversable(): boolean;
+        getFocusTraversalKeys(arg0: number): $Set<$AWTKeyStroke>;
+        isFocusCycleRoot(arg0: $Container): boolean;
+        getFocusCycleRootAncestor(): $Container;
+        /**
+         * @deprecated
+         */
+        nextFocus(): void;
+        requestFocusInWindow(arg0: $FocusEvent$Cause_): boolean;
+        requestFocusInWindow(): boolean;
+        transferFocusBackward(): void;
         getForeground(): $Color;
+        isFocusable(): boolean;
+        /**
+         * @deprecated
+         */
+        keyDown(arg0: $Event, arg1: number): boolean;
+        /**
+         * @deprecated
+         */
+        keyUp(arg0: $Event, arg1: number): boolean;
+        setCursor(arg0: $Cursor): void;
+        imageUpdate(arg0: $Image, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number): boolean;
+        getFont(): $Font;
+        isLightweight(): boolean;
+        /**
+         * @deprecated
+         */
+        mouseDrag(arg0: $Event, arg1: number, arg2: number): boolean;
+        /**
+         * @deprecated
+         */
+        mouseMove(arg0: $Event, arg1: number, arg2: number): boolean;
+        hasFocus(): boolean;
+        /**
+         * @deprecated
+         */
+        inside(arg0: number, arg1: number): boolean;
+        printAll(arg0: $Graphics): void;
+        /**
+         * @deprecated
+         */
+        hide(): void;
+        getColorModel(): $ColorModel;
+        setBackground(arg0: $Color): void;
+        createImage(arg0: number, arg1: number): $Image;
+        createImage(arg0: $ImageProducer): $Image;
+        firePropertyChange(arg0: string, arg1: string, arg2: string): void;
+        firePropertyChange(arg0: string, arg1: number, arg2: number): void;
+        firePropertyChange(arg0: string, arg1: number, arg2: number): void;
+        firePropertyChange(arg0: string, arg1: number, arg2: number): void;
+        firePropertyChange(arg0: string, arg1: number, arg2: number): void;
+        firePropertyChange(arg0: string, arg1: number, arg2: number): void;
+        getPropertyChangeListeners(): $PropertyChangeListener[];
+        getPropertyChangeListeners(arg0: string): $PropertyChangeListener[];
+        getFontMetrics(arg0: $Font): $FontMetrics;
+        checkImage(arg0: $Image, arg1: number, arg2: number, arg3: $ImageObserver_): number;
+        checkImage(arg0: $Image, arg1: $ImageObserver_): number;
+        requestFocus(arg0: $FocusEvent$Cause_): void;
+        requestFocus(): void;
+        setFont(arg0: $Font): void;
+        getGraphicsConfiguration(): $GraphicsConfiguration;
+        setFocusable(arg0: boolean): void;
+        paint(arg0: $Graphics): void;
         static CENTER_ALIGNMENT: number;
         static LEFT_ALIGNMENT: number;
         static BOTTOM_ALIGNMENT: number;
         static RIGHT_ALIGNMENT: number;
         static TOP_ALIGNMENT: number;
-        get height(): number;
-        get colorModel(): $ColorModel;
-        get x(): number;
-        get mousePosition(): $Point;
         get parent(): $Container;
         get opaque(): boolean;
         get valid(): boolean;
-        get width(): number;
         get y(): number;
-        get treeLock(): $Object;
-        get toolkit(): $Toolkit;
-        get locationOnScreen(): $Point;
-        get showing(): boolean;
-        get focusOwner(): boolean;
-        get inputContext(): $InputContext;
-        get preferredSizeSet(): boolean;
-        get minimumSizeSet(): boolean;
-        get maximumSizeSet(): boolean;
-        get focusTraversable(): boolean;
-        get focusCycleRootAncestor(): $Container;
-        get graphics(): $Graphics;
-        get lightweight(): boolean;
-        get graphicsConfiguration(): $GraphicsConfiguration;
+        get mousePosition(): $Point;
+        get width(): number;
         get displayable(): boolean;
         get accessibleContext(): $AccessibleContext;
         get doubleBuffered(): boolean;
@@ -1129,6 +1112,23 @@ declare module "@package/java/awt" {
         get inputMethodListeners(): $InputMethodListener[];
         get inputMethodRequests(): $InputMethodRequests;
         set mixingCutoutShape(value: $Shape);
+        get height(): number;
+        get x(): number;
+        get graphics(): $Graphics;
+        get treeLock(): $Object;
+        get toolkit(): $Toolkit;
+        get locationOnScreen(): $Point;
+        get showing(): boolean;
+        get focusOwner(): boolean;
+        get inputContext(): $InputContext;
+        get preferredSizeSet(): boolean;
+        get minimumSizeSet(): boolean;
+        get maximumSizeSet(): boolean;
+        get focusTraversable(): boolean;
+        get focusCycleRootAncestor(): $Container;
+        get lightweight(): boolean;
+        get colorModel(): $ColorModel;
+        get graphicsConfiguration(): $GraphicsConfiguration;
     }
     export class $JobAttributes$SidesType extends $AttributeValue {
         static TWO_SIDED_SHORT_EDGE: $JobAttributes$SidesType;
@@ -1144,25 +1144,25 @@ declare module "@package/java/awt" {
         get selectedObjects(): $Object[];
     }
     export class $FontMetrics implements $Serializable {
-        getHeight(): number;
-        getFont(): $Font;
         stringWidth(arg0: string): number;
-        getLineMetrics(arg0: string[], arg1: number, arg2: number, arg3: $Graphics): $LineMetrics;
-        getLineMetrics(arg0: $CharacterIterator, arg1: number, arg2: number, arg3: $Graphics): $LineMetrics;
-        getLineMetrics(arg0: string, arg1: number, arg2: number, arg3: $Graphics): $LineMetrics;
-        getLineMetrics(arg0: string, arg1: $Graphics): $LineMetrics;
         getStringBounds(arg0: string, arg1: $Graphics): $Rectangle2D;
-        getStringBounds(arg0: $CharacterIterator, arg1: number, arg2: number, arg3: $Graphics): $Rectangle2D;
         getStringBounds(arg0: string[], arg1: number, arg2: number, arg3: $Graphics): $Rectangle2D;
         getStringBounds(arg0: string, arg1: number, arg2: number, arg3: $Graphics): $Rectangle2D;
-        getLeading(): number;
-        hasUniformLineMetrics(): boolean;
-        getMaxCharBounds(arg0: $Graphics): $Rectangle2D;
-        getFontRenderContext(): $FontRenderContext;
+        getStringBounds(arg0: $CharacterIterator, arg1: number, arg2: number, arg3: $Graphics): $Rectangle2D;
         getAscent(): number;
         getDescent(): number;
-        charWidth(arg0: string): number;
+        getLeading(): number;
+        hasUniformLineMetrics(): boolean;
+        getLineMetrics(arg0: string, arg1: $Graphics): $LineMetrics;
+        getLineMetrics(arg0: string[], arg1: number, arg2: number, arg3: $Graphics): $LineMetrics;
+        getLineMetrics(arg0: string, arg1: number, arg2: number, arg3: $Graphics): $LineMetrics;
+        getLineMetrics(arg0: $CharacterIterator, arg1: number, arg2: number, arg3: $Graphics): $LineMetrics;
+        getMaxCharBounds(arg0: $Graphics): $Rectangle2D;
+        getHeight(): number;
         charWidth(arg0: number): number;
+        charWidth(arg0: string): number;
+        getFontRenderContext(): $FontRenderContext;
+        getFont(): $Font;
         getMaxDescent(): number;
         getWidths(): number[];
         charsWidth(arg0: string[], arg1: number, arg2: number): number;
@@ -1173,12 +1173,12 @@ declare module "@package/java/awt" {
         getMaxDecent(): number;
         getMaxAdvance(): number;
         bytesWidth(arg0: number[], arg1: number, arg2: number): number;
-        get height(): number;
-        get font(): $Font;
-        get leading(): number;
-        get fontRenderContext(): $FontRenderContext;
         get ascent(): number;
         get descent(): number;
+        get leading(): number;
+        get height(): number;
+        get fontRenderContext(): $FontRenderContext;
+        get font(): $Font;
         get maxDescent(): number;
         get widths(): number[];
         get maxAscent(): number;
@@ -1187,30 +1187,46 @@ declare module "@package/java/awt" {
     }
     export class $Window extends $Container implements $Accessible {
         setType(arg0: $Window$Type_): void;
-        isAlwaysOnTopSupported(): boolean;
-        pack(): void;
         getType(): $Window$Type;
         isActive(): boolean;
         getOwner(): $Window;
         dispose(): void;
         getShape(): $Shape;
+        setAlwaysOnTop(arg0: boolean): void;
+        isAlwaysOnTop(): boolean;
+        pack(): void;
+        setOpacity(arg0: number): void;
+        getBufferStrategy(): $BufferStrategy;
+        isFocused(): boolean;
         setShape(arg0: $Shape): void;
-        toFront(): void;
         createBufferStrategy(arg0: number): void;
         createBufferStrategy(arg0: number, arg1: $BufferCapabilities): void;
         isFocusableWindow(): boolean;
         getMostRecentFocusOwner(): $Component;
         getFocusOwner(): $Component;
-        setOpacity(arg0: number): void;
         setModalExclusionType(arg0: $Dialog$ModalExclusionType_): void;
         getModalExclusionType(): $Dialog$ModalExclusionType;
         getOpacity(): number;
-        isFocused(): boolean;
-        setLocationRelativeTo(arg0: $Component): void;
-        isAlwaysOnTop(): boolean;
-        setAlwaysOnTop(arg0: boolean): void;
-        getBufferStrategy(): $BufferStrategy;
+        toFront(): void;
+        isAlwaysOnTopSupported(): boolean;
         addWindowListener(arg0: $WindowListener): void;
+        setLocationRelativeTo(arg0: $Component): void;
+        setLocationByPlatform(arg0: boolean): void;
+        setIconImages(arg0: $List_<$Image>): void;
+        toBack(): void;
+        static getWindows(): $Window[];
+        getOwnedWindows(): $Window[];
+        getFocusableWindowState(): boolean;
+        /**
+         * @deprecated
+         */
+        applyResourceBundle(arg0: $ResourceBundle): void;
+        /**
+         * @deprecated
+         */
+        applyResourceBundle(arg0: string): void;
+        addWindowFocusListener(arg0: $WindowFocusListener): void;
+        addWindowStateListener(arg0: $WindowStateListener_): void;
         getIconImages(): $List<$Image>;
         setIconImage(arg0: $Image): void;
         getWarningString(): string;
@@ -1225,47 +1241,31 @@ declare module "@package/java/awt" {
         setAutoRequestFocus(arg0: boolean): void;
         isAutoRequestFocus(): boolean;
         isLocationByPlatform(): boolean;
-        setLocationByPlatform(arg0: boolean): void;
-        setIconImages(arg0: $List_<$Image>): void;
-        toBack(): void;
-        static getWindows(): $Window[];
-        getOwnedWindows(): $Window[];
-        getFocusableWindowState(): boolean;
-        /**
-         * @deprecated
-         */
-        applyResourceBundle(arg0: string): void;
-        /**
-         * @deprecated
-         */
-        applyResourceBundle(arg0: $ResourceBundle): void;
-        addWindowFocusListener(arg0: $WindowFocusListener): void;
-        addWindowStateListener(arg0: $WindowStateListener_): void;
         static CENTER_ALIGNMENT: number;
         static LEFT_ALIGNMENT: number;
         static BOTTOM_ALIGNMENT: number;
         static RIGHT_ALIGNMENT: number;
         static TOP_ALIGNMENT: number;
+        constructor(arg0: $Window, arg1: $GraphicsConfiguration);
         constructor(arg0: $Window);
         constructor(arg0: $Frame);
-        constructor(arg0: $Window, arg1: $GraphicsConfiguration);
-        get alwaysOnTopSupported(): boolean;
         get active(): boolean;
         get owner(): $Window;
+        get bufferStrategy(): $BufferStrategy;
+        get focused(): boolean;
         get focusableWindow(): boolean;
         get mostRecentFocusOwner(): $Component;
         get focusOwner(): $Component;
-        get focused(): boolean;
+        get alwaysOnTopSupported(): boolean;
         set locationRelativeTo(value: $Component);
-        get bufferStrategy(): $BufferStrategy;
+        static get windows(): $Window[];
+        get ownedWindows(): $Window[];
         set iconImage(value: $Image);
         get warningString(): string;
         static get ownerlessWindows(): $Window[];
         get windowListeners(): $WindowListener[];
         get windowFocusListeners(): $WindowFocusListener[];
         get windowStateListeners(): $WindowStateListener[];
-        static get windows(): $Window[];
-        get ownedWindows(): $Window[];
     }
     export class $PageAttributes$PrintQualityType extends $AttributeValue {
         static HIGH: $PageAttributes$PrintQualityType;
@@ -1286,35 +1286,35 @@ declare module "@package/java/awt" {
     export class $PaintContext {
     }
     export interface $PaintContext {
-        getColorModel(): $ColorModel;
         dispose(): void;
+        getColorModel(): $ColorModel;
         getRaster(arg0: number, arg1: number, arg2: number, arg3: number): $Raster;
         get colorModel(): $ColorModel;
     }
     export class $GraphicsDevice {
         getType(): number;
-        getConfigurations(): $GraphicsConfiguration[];
-        getBestConfiguration(arg0: $GraphicsConfigTemplate): $GraphicsConfiguration;
-        getFullScreenWindow(): $Window;
-        setFullScreenWindow(arg0: $Window): void;
         isFullScreenSupported(): boolean;
         isDisplayChangeSupported(): boolean;
+        setDisplayMode(arg0: $DisplayMode): void;
         getDisplayModes(): $DisplayMode[];
         getAvailableAcceleratedMemory(): number;
+        getConfigurations(): $GraphicsConfiguration[];
         getIDstring(): string;
         getDefaultConfiguration(): $GraphicsConfiguration;
         isWindowTranslucencySupported(arg0: $GraphicsDevice$WindowTranslucency_): boolean;
+        getBestConfiguration(arg0: $GraphicsConfigTemplate): $GraphicsConfiguration;
+        getFullScreenWindow(): $Window;
+        setFullScreenWindow(arg0: $Window): void;
         getDisplayMode(): $DisplayMode;
-        setDisplayMode(arg0: $DisplayMode): void;
         static TYPE_IMAGE_BUFFER: number;
         static TYPE_RASTER_SCREEN: number;
         static TYPE_PRINTER: number;
         get type(): number;
-        get configurations(): $GraphicsConfiguration[];
         get fullScreenSupported(): boolean;
         get displayChangeSupported(): boolean;
         get displayModes(): $DisplayMode[];
         get availableAcceleratedMemory(): number;
+        get configurations(): $GraphicsConfiguration[];
         get IDstring(): string;
         get defaultConfiguration(): $GraphicsConfiguration;
     }
@@ -1343,26 +1343,26 @@ declare module "@package/java/awt" {
         get keyEventType(): number;
     }
     export class $GraphicsConfiguration {
+        getBounds(): $Rectangle;
+        createCompatibleImage(arg0: number, arg1: number): $BufferedImage;
+        createCompatibleImage(arg0: number, arg1: number, arg2: number): $BufferedImage;
+        isTranslucencyCapable(): boolean;
         getColorModel(): $ColorModel;
         getColorModel(arg0: number): $ColorModel;
-        getBounds(): $Rectangle;
         getNormalizingTransform(): $AffineTransform;
-        createCompatibleVolatileImage(arg0: number, arg1: number, arg2: $ImageCapabilities, arg3: number): $VolatileImage;
         createCompatibleVolatileImage(arg0: number, arg1: number): $VolatileImage;
         createCompatibleVolatileImage(arg0: number, arg1: number, arg2: number): $VolatileImage;
         createCompatibleVolatileImage(arg0: number, arg1: number, arg2: $ImageCapabilities): $VolatileImage;
+        createCompatibleVolatileImage(arg0: number, arg1: number, arg2: $ImageCapabilities, arg3: number): $VolatileImage;
         getImageCapabilities(): $ImageCapabilities;
         getBufferCapabilities(): $BufferCapabilities;
-        isTranslucencyCapable(): boolean;
         getDevice(): $GraphicsDevice;
         getDefaultTransform(): $AffineTransform;
-        createCompatibleImage(arg0: number, arg1: number): $BufferedImage;
-        createCompatibleImage(arg0: number, arg1: number, arg2: number): $BufferedImage;
         get bounds(): $Rectangle;
+        get translucencyCapable(): boolean;
         get normalizingTransform(): $AffineTransform;
         get imageCapabilities(): $ImageCapabilities;
         get bufferCapabilities(): $BufferCapabilities;
-        get translucencyCapable(): boolean;
         get device(): $GraphicsDevice;
         get defaultTransform(): $AffineTransform;
     }
@@ -1381,18 +1381,18 @@ declare module "@package/java/awt" {
     export class $Shape {
     }
     export interface $Shape {
-        getBounds2D(): $Rectangle2D;
-        getPathIterator(arg0: $AffineTransform): $PathIterator;
-        getPathIterator(arg0: $AffineTransform, arg1: number): $PathIterator;
-        intersects(arg0: $Rectangle2D): boolean;
         intersects(arg0: number, arg1: number, arg2: number, arg3: number): boolean;
-        contains(arg0: number, arg1: number): boolean;
-        contains(arg0: $Rectangle2D): boolean;
+        intersects(arg0: $Rectangle2D): boolean;
         contains(arg0: number, arg1: number, arg2: number, arg3: number): boolean;
         contains(arg0: $Point2D): boolean;
+        contains(arg0: number, arg1: number): boolean;
+        contains(arg0: $Rectangle2D): boolean;
         getBounds(): $Rectangle;
-        get bounds2D(): $Rectangle2D;
+        getBounds2D(): $Rectangle2D;
+        getPathIterator(arg0: $AffineTransform, arg1: number): $PathIterator;
+        getPathIterator(arg0: $AffineTransform): $PathIterator;
         get bounds(): $Rectangle;
+        get bounds2D(): $Rectangle2D;
     }
     export class $Point extends $Point2D implements $Serializable {
         getLocation(): $Point;
@@ -1402,37 +1402,37 @@ declare module "@package/java/awt" {
         setLocation(arg0: number, arg1: number): void;
         x: number;
         y: number;
-        constructor();
         constructor(arg0: number, arg1: number);
         constructor(arg0: $Point);
+        constructor();
     }
     export class $DisplayMode {
-        getHeight(): number;
         equals(arg0: $DisplayMode): boolean;
         getWidth(): number;
+        getHeight(): number;
         getRefreshRate(): number;
         getBitDepth(): number;
         static BIT_DEPTH_MULTI: number;
         static REFRESH_RATE_UNKNOWN: number;
         constructor(arg0: number, arg1: number, arg2: number, arg3: number);
-        get height(): number;
         get width(): number;
+        get height(): number;
         get refreshRate(): number;
         get bitDepth(): number;
     }
     export class $ComponentOrientation implements $Serializable {
-        isLeftToRight(): boolean;
+        isHorizontal(): boolean;
+        static getOrientation(arg0: $Locale): $ComponentOrientation;
         /**
          * @deprecated
          */
         static getOrientation(arg0: $ResourceBundle): $ComponentOrientation;
-        static getOrientation(arg0: $Locale): $ComponentOrientation;
-        isHorizontal(): boolean;
+        isLeftToRight(): boolean;
         static RIGHT_TO_LEFT: $ComponentOrientation;
         static UNKNOWN: $ComponentOrientation;
         static LEFT_TO_RIGHT: $ComponentOrientation;
-        get leftToRight(): boolean;
         get horizontal(): boolean;
+        get leftToRight(): boolean;
     }
     export class $Adjustable {
         static VERTICAL: number;
@@ -1444,6 +1444,9 @@ declare module "@package/java/awt" {
         setValue(arg0: number): void;
         getMaximum(): number;
         getMinimum(): number;
+        getOrientation(): number;
+        setMaximum(arg0: number): void;
+        getVisibleAmount(): number;
         getUnitIncrement(): number;
         setUnitIncrement(arg0: number): void;
         getBlockIncrement(): number;
@@ -1451,10 +1454,7 @@ declare module "@package/java/awt" {
         setVisibleAmount(arg0: number): void;
         addAdjustmentListener(arg0: $AdjustmentListener_): void;
         removeAdjustmentListener(arg0: $AdjustmentListener_): void;
-        setMaximum(arg0: number): void;
-        getOrientation(): number;
         setMinimum(arg0: number): void;
-        getVisibleAmount(): number;
         get orientation(): number;
     }
     export class $RenderingHints$Key {
@@ -1544,28 +1544,22 @@ declare module "@package/java/awt" {
         get empty(): boolean;
     }
     export class $ImageCapabilities implements $Cloneable {
-        isTrueVolatile(): boolean;
         clone(): $Object;
         isAccelerated(): boolean;
+        isTrueVolatile(): boolean;
         constructor(arg0: boolean);
-        get trueVolatile(): boolean;
         get accelerated(): boolean;
+        get trueVolatile(): boolean;
     }
     export class $Rectangle extends $Rectangle2D implements $Shape, $Serializable {
-        setBounds(arg0: $Rectangle): void;
-        setBounds(arg0: number, arg1: number, arg2: number, arg3: number): void;
-        /**
-         * @deprecated
-         */
-        reshape(arg0: number, arg1: number, arg2: number, arg3: number): void;
         intersects(arg0: $Rectangle): boolean;
-        add(arg0: number, arg1: number): void;
         add(arg0: $Point): void;
+        add(arg0: number, arg1: number): void;
         add(arg0: $Rectangle): void;
         contains(arg0: $Rectangle): boolean;
-        contains(arg0: number, arg1: number): boolean;
         contains(arg0: number, arg1: number, arg2: number, arg3: number): boolean;
         contains(arg0: $Point): boolean;
+        contains(arg0: number, arg1: number): boolean;
         getLocation(): $Point;
         getSize(): $Dimension;
         grow(arg0: number, arg1: number): void;
@@ -1582,8 +1576,14 @@ declare module "@package/java/awt" {
         union(arg0: $Rectangle): $Rectangle;
         translate(arg0: number, arg1: number): void;
         intersection(arg0: $Rectangle): $Rectangle;
-        setLocation(arg0: $Point): void;
         setLocation(arg0: number, arg1: number): void;
+        setLocation(arg0: $Point): void;
+        setBounds(arg0: number, arg1: number, arg2: number, arg3: number): void;
+        setBounds(arg0: $Rectangle): void;
+        /**
+         * @deprecated
+         */
+        reshape(arg0: number, arg1: number, arg2: number, arg3: number): void;
         /**
          * @deprecated
          */
@@ -1596,27 +1596,38 @@ declare module "@package/java/awt" {
         static OUT_BOTTOM: number;
         static OUT_LEFT: number;
         height: number;
-        constructor(arg0: $Rectangle);
-        constructor(arg0: $Point, arg1: $Dimension);
         constructor(arg0: number, arg1: number);
-        constructor(arg0: number, arg1: number, arg2: number, arg3: number);
         constructor(arg0: $Dimension);
-        constructor();
         constructor(arg0: $Point);
+        constructor(arg0: $Point, arg1: $Dimension);
+        constructor();
+        constructor(arg0: $Rectangle);
+        constructor(arg0: number, arg1: number, arg2: number, arg3: number);
     }
     export class $Container extends $Component {
-        getMousePosition(arg0: boolean): $Point;
-        remove(arg0: number): void;
         remove(arg0: $Component): void;
-        add(arg0: $Component, arg1: number): $Component;
-        add(arg0: string, arg1: $Component): $Component;
+        remove(arg0: number): void;
         add(arg0: $Component): $Component;
-        add(arg0: $Component, arg1: $Object, arg2: number): void;
         add(arg0: $Component, arg1: $Object): void;
+        add(arg0: $Component, arg1: number): $Component;
+        add(arg0: $Component, arg1: $Object, arg2: number): void;
+        add(arg0: string, arg1: $Component): $Component;
         removeAll(): void;
-        getComponent(arg0: number): $Component;
+        isFocusTraversalPolicySet(): boolean;
+        setFocusCycleRoot(arg0: boolean): void;
+        setFocusTraversalPolicyProvider(arg0: boolean): void;
+        transferFocusDownCycle(): void;
+        getMousePosition(arg0: boolean): $Point;
         getLayout(): $LayoutManager;
         setLayout(arg0: $LayoutManager): void;
+        getComponent(arg0: number): $Component;
+        getComponentZOrder(arg0: $Component): number;
+        getComponentCount(): number;
+        getComponents(): $Component[];
+        /**
+         * @deprecated
+         */
+        insets(): $Insets;
         findComponentAt(arg0: number, arg1: number): $Component;
         findComponentAt(arg0: $Point): $Component;
         /**
@@ -1627,15 +1638,7 @@ declare module "@package/java/awt" {
         getInsets(): $Insets;
         isFocusCycleRoot(): boolean;
         getFocusTraversalPolicy(): $FocusTraversalPolicy;
-        getComponents(): $Component[];
         setFocusTraversalPolicy(arg0: $FocusTraversalPolicy): void;
-        /**
-         * @deprecated
-         */
-        insets(): $Insets;
-        getComponentZOrder(arg0: $Component): number;
-        getComponentCount(): number;
-        isAncestorOf(arg0: $Component): boolean;
         isFocusTraversalPolicyProvider(): boolean;
         addContainerListener(arg0: $ContainerListener): void;
         setComponentZOrder(arg0: $Component, arg1: number): void;
@@ -1643,21 +1646,18 @@ declare module "@package/java/awt" {
         printComponents(arg0: $Graphics): void;
         removeContainerListener(arg0: $ContainerListener): void;
         getContainerListeners(): $ContainerListener[];
-        isFocusTraversalPolicySet(): boolean;
-        setFocusCycleRoot(arg0: boolean): void;
-        setFocusTraversalPolicyProvider(arg0: boolean): void;
-        transferFocusDownCycle(): void;
+        isAncestorOf(arg0: $Component): boolean;
         static CENTER_ALIGNMENT: number;
         static LEFT_ALIGNMENT: number;
         static BOTTOM_ALIGNMENT: number;
         static RIGHT_ALIGNMENT: number;
         static TOP_ALIGNMENT: number;
         constructor();
-        get validateRoot(): boolean;
-        get components(): $Component[];
-        get componentCount(): number;
-        get containerListeners(): $ContainerListener[];
         get focusTraversalPolicySet(): boolean;
+        get componentCount(): number;
+        get components(): $Component[];
+        get validateRoot(): boolean;
+        get containerListeners(): $ContainerListener[];
     }
     export class $JobAttributes$MultipleDocumentHandlingType extends $AttributeValue {
         static SEPARATE_DOCUMENTS_COLLATED_COPIES: $JobAttributes$MultipleDocumentHandlingType;
@@ -1702,15 +1702,16 @@ declare module "@package/java/awt" {
     export class $Color implements $Paint, $Serializable {
         static decode(arg0: string): $Color;
         createContext(arg0: $ColorModel, arg1: $Rectangle, arg2: $Rectangle2D, arg3: $AffineTransform, arg4: $RenderingHints): $PaintContext;
-        static getColor(arg0: string): $Color;
-        static getColor(arg0: string, arg1: $Color): $Color;
-        static getColor(arg0: string, arg1: number): $Color;
-        getComponents(arg0: $ColorSpace, arg1: number[]): number[];
-        getComponents(arg0: number[]): number[];
+        getBlue(): number;
         getRed(): number;
         getGreen(): number;
-        getBlue(): number;
         getAlpha(): number;
+        getComponents(arg0: $ColorSpace, arg1: number[]): number[];
+        getComponents(arg0: number[]): number[];
+        static getColor(arg0: string, arg1: $Color): $Color;
+        static getColor(arg0: string, arg1: number): $Color;
+        static getColor(arg0: string): $Color;
+        getTransparency(): number;
         getRGB(): number;
         static HSBtoRGB(arg0: number, arg1: number, arg2: number): number;
         getRGBComponents(arg0: number[]): number[];
@@ -1722,7 +1723,6 @@ declare module "@package/java/awt" {
         getColorComponents(arg0: $ColorSpace, arg1: number[]): number[];
         getColorComponents(arg0: number[]): number[];
         getColorSpace(): $ColorSpace;
-        getTransparency(): number;
         static lightGray: $Color;
         static magenta: $Color;
         static GRAY: $Color;
@@ -1757,9 +1757,9 @@ declare module "@package/java/awt" {
         constructor(arg0: $ColorSpace, arg1: number[], arg2: number);
         constructor(arg0: number, arg1: number, arg2: number, arg3: number);
         get alpha(): number;
+        get transparency(): number;
         get RGB(): number;
         get colorSpace(): $ColorSpace;
-        get transparency(): number;
     }
     export class $MenuItem extends $MenuComponent implements $Accessible {
         isEnabled(): boolean;
@@ -1767,27 +1767,27 @@ declare module "@package/java/awt" {
         /**
          * @deprecated
          */
-        enable(): void;
+        enable(arg0: boolean): void;
         /**
          * @deprecated
          */
-        enable(arg0: boolean): void;
+        enable(): void;
         setLabel(arg0: string): void;
         getLabel(): string;
-        setEnabled(arg0: boolean): void;
         /**
          * @deprecated
          */
         disable(): void;
         getListeners<T extends $EventListener>(arg0: $Class<T>): T[];
-        addNotify(): void;
         getActionCommand(): string;
-        addActionListener(arg0: $ActionListener_): void;
+        setEnabled(arg0: boolean): void;
         getShortcut(): $MenuShortcut;
         deleteShortcut(): void;
         setShortcut(arg0: $MenuShortcut): void;
-        setActionCommand(arg0: string): void;
+        addNotify(): void;
         removeActionListener(arg0: $ActionListener_): void;
+        setActionCommand(arg0: string): void;
+        addActionListener(arg0: $ActionListener_): void;
         getActionListeners(): $ActionListener[];
         constructor(arg0: string, arg1: $MenuShortcut);
         constructor(arg0: string);
@@ -1831,8 +1831,9 @@ declare module "@package/java/awt" {
         set(arg0: $PageAttributes): void;
         setColor(arg0: $PageAttributes$ColorType): void;
         getOrigin(): $PageAttributes$OriginType;
-        getColor(): $PageAttributes$ColorType;
         getMedia(): $PageAttributes$MediaType;
+        getColor(): $PageAttributes$ColorType;
+        setOrigin(arg0: $PageAttributes$OriginType): void;
         setMediaToDefault(): void;
         setOrientationRequestedToDefault(): void;
         setPrintQualityToDefault(): void;
@@ -1847,19 +1848,19 @@ declare module "@package/java/awt" {
         getOrientationRequested(): $PageAttributes$OrientationRequestedType;
         getPrintQuality(): $PageAttributes$PrintQualityType;
         getPrinterResolution(): number[];
-        setOrigin(arg0: $PageAttributes$OriginType): void;
         constructor(arg0: $PageAttributes$ColorType, arg1: $PageAttributes$MediaType, arg2: $PageAttributes$OrientationRequestedType, arg3: $PageAttributes$OriginType, arg4: $PageAttributes$PrintQualityType, arg5: number[]);
         constructor(arg0: $PageAttributes);
         constructor();
     }
     export class $JobAttributes implements $Cloneable {
+        getSides(): $JobAttributes$SidesType;
         clone(): $Object;
         set(arg0: $JobAttributes): void;
         getFileName(): string;
         getDestination(): $JobAttributes$DestinationType;
         setFileName(arg0: string): void;
         setDestination(arg0: $JobAttributes$DestinationType): void;
-        getSides(): $JobAttributes$SidesType;
+        setSides(arg0: $JobAttributes$SidesType): void;
         setCopiesToDefault(): void;
         setDefaultSelection(arg0: $JobAttributes$DefaultSelectionType): void;
         setDialog(arg0: $JobAttributes$DialogType): void;
@@ -1883,18 +1884,17 @@ declare module "@package/java/awt" {
         setFromPage(arg0: number): void;
         setToPage(arg0: number): void;
         getPrinter(): string;
-        setSides(arg0: $JobAttributes$SidesType): void;
+        constructor();
         constructor(arg0: number, arg1: $JobAttributes$DefaultSelectionType, arg2: $JobAttributes$DestinationType, arg3: $JobAttributes$DialogType, arg4: string, arg5: number, arg6: number, arg7: $JobAttributes$MultipleDocumentHandlingType, arg8: number[][], arg9: string, arg10: $JobAttributes$SidesType);
         constructor(arg0: $JobAttributes);
-        constructor();
     }
     export class $Image {
-        getHeight(arg0: $ImageObserver_): number;
+        getCapabilities(arg0: $GraphicsConfiguration): $ImageCapabilities;
         getProperty(arg0: string, arg1: $ImageObserver_): $Object;
         flush(): void;
         getSource(): $ImageProducer;
         getWidth(arg0: $ImageObserver_): number;
-        getCapabilities(arg0: $GraphicsConfiguration): $ImageCapabilities;
+        getHeight(arg0: $ImageObserver_): number;
         getGraphics(): $Graphics;
         setAccelerationPriority(arg0: number): void;
         getScaledInstance(arg0: number, arg1: number, arg2: number): $Image;
@@ -1911,13 +1911,7 @@ declare module "@package/java/awt" {
     export class $Frame extends $Window implements $MenuContainer {
         getState(): number;
         setState(arg0: number): void;
-        static getFrames(): $Frame[];
         getTitle(): string;
-        /**
-         * @deprecated
-         */
-        setCursor(arg0: number): void;
-        setTitle(arg0: string): void;
         setMaximizedBounds(arg0: $Rectangle): void;
         getExtendedState(): number;
         setExtendedState(arg0: number): void;
@@ -1927,12 +1921,18 @@ declare module "@package/java/awt" {
          * @deprecated
          */
         getCursorType(): number;
-        isResizable(): boolean;
-        setResizable(arg0: boolean): void;
-        getIconImage(): $Image;
-        setUndecorated(arg0: boolean): void;
+        static getFrames(): $Frame[];
         setMenuBar(arg0: $MenuBar): void;
         getMenuBar(): $MenuBar;
+        setUndecorated(arg0: boolean): void;
+        /**
+         * @deprecated
+         */
+        setCursor(arg0: number): void;
+        setTitle(arg0: string): void;
+        setResizable(arg0: boolean): void;
+        isResizable(): boolean;
+        getIconImage(): $Image;
         /**
          * @deprecated
          */
@@ -1999,13 +1999,13 @@ declare module "@package/java/awt" {
          * @deprecated
          */
         static MOVE_CURSOR: number;
-        constructor();
         constructor(arg0: string, arg1: $GraphicsConfiguration);
         constructor(arg0: string);
         constructor(arg0: $GraphicsConfiguration);
+        constructor();
+        get cursorType(): number;
         static get frames(): $Frame[];
         set cursor(value: number);
-        get cursorType(): number;
         get iconImage(): $Image;
     }
     export class $Insets implements $Cloneable, $Serializable {
@@ -2018,10 +2018,8 @@ declare module "@package/java/awt" {
         constructor(arg0: number, arg1: number, arg2: number, arg3: number);
     }
     export class $EventQueue {
-        postEvent(arg0: $AWTEvent): void;
         push(arg0: $EventQueue): void;
-        static isDispatchThread(): boolean;
-        static invokeAndWait(arg0: $Runnable_): void;
+        postEvent(arg0: $AWTEvent): void;
         peekEvent(arg0: number): $AWTEvent;
         peekEvent(): $AWTEvent;
         createSecondaryLoop(): $SecondaryLoop;
@@ -2029,11 +2027,13 @@ declare module "@package/java/awt" {
         static getMostRecentEventTime(): number;
         static getCurrentEvent(): $AWTEvent;
         static invokeLater(arg0: $Runnable_): void;
+        static isDispatchThread(): boolean;
+        static invokeAndWait(arg0: $Runnable_): void;
         constructor();
-        static get dispatchThread(): boolean;
         get nextEvent(): $AWTEvent;
         static get mostRecentEventTime(): number;
         static get currentEvent(): $AWTEvent;
+        static get dispatchThread(): boolean;
     }
     export class $JobAttributes$DestinationType extends $AttributeValue {
         static PRINTER: $JobAttributes$DestinationType;

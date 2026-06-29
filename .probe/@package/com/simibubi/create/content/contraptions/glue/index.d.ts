@@ -1,4 +1,4 @@
-import { $CompoundTag_ } from "@package/net/minecraft/nbt";
+import { $CompoundTag, $CompoundTag_ } from "@package/net/minecraft/nbt";
 import { $EntityType_, $Pose, $PortalProcessor, $Entity, $Entity$RemovalReason, $EntityType$Builder } from "@package/net/minecraft/world/entity";
 import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
 import { $CustomPacketPayload$Type, $CustomPacketPayload } from "@package/net/minecraft/network/protocol/common/custom";
@@ -9,7 +9,7 @@ import { $PlayerInteractEvent$RightClickBlock } from "@package/net/neoforged/neo
 import { $RandomSource } from "@package/net/minecraft/util";
 import { $ServerPlayer } from "@package/net/minecraft/server/level";
 import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos, $BlockPos_, $Direction_, $Direction } from "@package/net/minecraft/core";
+import { $HolderLookup$Provider, $BlockPos, $BlockPos_, $Direction_, $Direction } from "@package/net/minecraft/core";
 import { $RegistryFriendlyByteBuf } from "@package/net/minecraft/network";
 import { $Record, $Object } from "@package/java/lang";
 import { $BlockEvent$EntityPlaceEvent } from "@package/net/neoforged/neoforge/event/level";
@@ -58,8 +58,8 @@ declare module "@package/com/simibubi/create/content/contraptions/glue" {
         constructor();
     }
     export class $SuperGlueRenderer extends $EntityRenderer<$SuperGlueEntity> {
-        getTextureLocation(arg0: $SuperGlueEntity): $ResourceLocation;
         shouldRender(arg0: $SuperGlueEntity, arg1: $Frustum, arg2: number, arg3: number, arg4: number): boolean;
+        getTextureLocation(arg0: $SuperGlueEntity): $ResourceLocation;
         shadowRadius: number;
         static LEASH_RENDER_STEPS: number;
         entityRenderDispatcher: $EntityRenderDispatcher;
@@ -113,7 +113,7 @@ declare module "@package/com/simibubi/create/content/contraptions/glue" {
     /**
      * Values that may be interpreted as {@link $GlueEffectPacket}.
      */
-    export type $GlueEffectPacket_ = { direction?: $Direction_, fullBlock?: boolean, pos?: $BlockPos_,  } | [direction?: $Direction_, fullBlock?: boolean, pos?: $BlockPos_, ];
+    export type $GlueEffectPacket_ = { pos?: $BlockPos_, direction?: $Direction_, fullBlock?: boolean,  } | [pos?: $BlockPos_, direction?: $Direction_, fullBlock?: boolean, ];
     export class $SuperGlueHandler {
         static glueInOffHandAppliesOnBlockPlace(arg0: $BlockEvent$EntityPlaceEvent, arg1: $BlockPos_, arg2: $Player): void;
         static glueListensForBlockPlacement(arg0: $BlockEvent$EntityPlaceEvent): void;
@@ -125,21 +125,22 @@ declare module "@package/com/simibubi/create/content/contraptions/glue" {
         constructor();
     }
     export class $SuperGlueEntity extends $Entity implements $IEntityWithComplexSpawn, $SpecialEntityItemRequirement {
-        getRequiredItems(): $ItemRequirement;
-        static readBoundingBox(arg0: $CompoundTag_): $AABB;
         contains(arg0: $BlockPos_): boolean;
         static build(arg0: $EntityType$Builder<never>): $EntityType$Builder<never>;
-        playPlaceSound(): void;
+        spawnParticles(): void;
         static span(arg0: $BlockPos_, arg1: $BlockPos_): $AABB;
         static isGlued(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $Direction_, arg3: $Set_<$SuperGlueEntity>): boolean;
-        static writeBoundingBox(arg0: $CompoundTag_, arg1: $AABB_): void;
-        resetPositionToBB(): void;
-        static isValidFace(arg0: $Level_, arg1: $BlockPos_, arg2: $Direction_): boolean;
-        static isSideSticky(arg0: $Level_, arg1: $BlockPos_, arg2: $Direction_): boolean;
-        static collectCropped(arg0: $Level_, arg1: $AABB_): $List<$SuperGlueEntity>;
-        spawnParticles(): void;
+        playPlaceSound(): void;
         readSpawnData(arg0: $RegistryFriendlyByteBuf): void;
         writeSpawnData(arg0: $RegistryFriendlyByteBuf): void;
+        getRequiredItems(): $ItemRequirement;
+        static writeBoundingBox(arg0: $CompoundTag_, arg1: $AABB_): void;
+        static readBoundingBox(arg0: $CompoundTag_): $AABB;
+        static isValidFace(arg0: $Level_, arg1: $BlockPos_, arg2: $Direction_): boolean;
+        resetPositionToBB(): void;
+        static isSideSticky(arg0: $Level_, arg1: $BlockPos_, arg2: $Direction_): boolean;
+        static collectCropped(arg0: $Level_, arg1: $AABB_): $List<$SuperGlueEntity>;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;

@@ -29,17 +29,13 @@ declare module "@package/net/neoforged/neoforge/client/entity/animation/json" {
          */
         static getInterpolation(name: $ResourceLocation_): $AnimationChannel$Interpolation;
         /**
-         * Retrieves a comma-separated list of all available `AnimationTarget`s, for use in error messages.
-         */
-        static getTargetList(): string;
-        /**
-         * Gets the `Codec` used to decode a `Keyframe` with the specified `AnimationTarget`.
-         */
-        static getKeyframeCodec(target: $AnimationTarget_): $Codec<$Keyframe>;
-        /**
          * Gets the full `AnimationTarget` from its channelTarget.
          */
         static getTargetFromChannelTarget(target: $AnimationChannel$Target_): $AnimationTarget;
+        /**
+         * Retrieves a comma-separated list of all available `AnimationTarget`s, for use in error messages.
+         */
+        static getInterpolationList(): string;
         /**
          * Gets the `ResourceLocation` associated with the given `interpolation`.
          */
@@ -47,9 +43,13 @@ declare module "@package/net/neoforged/neoforge/client/entity/animation/json" {
         /**
          * Retrieves a comma-separated list of all available `AnimationTarget`s, for use in error messages.
          */
-        static getInterpolationList(): string;
-        static get targetList(): string;
+        static getTargetList(): string;
+        /**
+         * Gets the `Codec` used to decode a `Keyframe` with the specified `AnimationTarget`.
+         */
+        static getKeyframeCodec(target: $AnimationTarget_): $Codec<$Keyframe>;
         static get interpolationList(): string;
+        static get targetList(): string;
     }
     /**
      * Holds a single `AnimationDefinition` loaded from resource packs. Objects of this class will be automatically updated with new
@@ -63,15 +63,15 @@ declare module "@package/net/neoforged/neoforge/client/entity/animation/json" {
         /**
          * Gets the currently loaded animation. If the animation has not been loaded, returns `#EMPTY_ANIMATION`.
          */
-        getOrNull(): $AnimationDefinition;
-        /**
-         * Gets the currently loaded animation. If the animation has not been loaded, returns `#EMPTY_ANIMATION`.
-         */
         get(): $AnimationDefinition;
         /**
          * Gets the key associated with this animation.
          */
         key(): $ResourceLocation;
+        /**
+         * Gets the currently loaded animation. If the animation has not been loaded, returns `#EMPTY_ANIMATION`.
+         */
+        getOrNull(): $AnimationDefinition;
         static EMPTY_ANIMATION: $AnimationDefinition;
         get bound(): boolean;
         get orNull(): $AnimationDefinition;

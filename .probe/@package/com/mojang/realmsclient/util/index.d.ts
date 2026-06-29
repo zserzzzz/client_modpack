@@ -10,9 +10,9 @@ export * as task from "@package/com/mojang/realmsclient/util/task";
 
 declare module "@package/com/mojang/realmsclient/util" {
     export class $RealmsUtil {
+        static convertToAgePresentationFromInstant(date: $Date): $Component;
         static renderPlayerFace(guiGraphics: $GuiGraphics, x: number, y: number, size: number, playerUuid: $UUID_): void;
         static convertToAgePresentation(millis: number): $Component;
-        static convertToAgePresentationFromInstant(date: $Date): $Component;
         constructor();
     }
     export class $RealmsTextureManager$RealmsTexture extends $Record {
@@ -25,10 +25,10 @@ declare module "@package/com/mojang/realmsclient/util" {
      */
     export type $RealmsTextureManager$RealmsTexture_ = { image?: string, textureId?: $ResourceLocation_,  } | [image?: string, textureId?: $ResourceLocation_, ];
     export class $RealmsPersistence {
-        static readFile(): $RealmsPersistence$RealmsPersistenceData;
-        static writeFile(persistenceData: $RealmsPersistence$RealmsPersistenceData): void;
         read(): $RealmsPersistence$RealmsPersistenceData;
         save(persistenceData: $RealmsPersistence$RealmsPersistenceData): void;
+        static readFile(): $RealmsPersistence$RealmsPersistenceData;
+        static writeFile(persistenceData: $RealmsPersistence$RealmsPersistenceData): void;
         constructor();
     }
     export class $TextRenderingUtils$Line {
@@ -40,8 +40,8 @@ declare module "@package/com/mojang/realmsclient/util" {
         constructor();
     }
     export class $TextRenderingUtils {
-        static decompose(text: string, ...segments: $TextRenderingUtils$LineSegment[]): $List<$TextRenderingUtils$Line>;
         static split(toSplit: string, delimiter: string): $List<string>;
+        static decompose(text: string, ...segments: $TextRenderingUtils$LineSegment[]): $List<$TextRenderingUtils$Line>;
     }
     export class $WorldGenerationInfo extends $Record {
         seed(): string;
@@ -57,13 +57,13 @@ declare module "@package/com/mojang/realmsclient/util" {
     export class $JsonUtils {
         static getOptional<T>(key: string, json: $JsonObject_, output: $Function_<$JsonObject, T>): T;
         static getRequired<T>(key: string, json: $JsonObject_, output: $Function_<$JsonObject, T>): T;
-        static getRequiredString(key: string, json: $JsonObject_): string;
+        static getLongOr(key: string, json: $JsonObject_, defaultValue: number): number;
+        static getIntOr(key: string, json: $JsonObject_, defaultValue: number): number;
+        static getUuidOr(key: string, json: $JsonObject_, defaultValue: $UUID_ | null): $UUID;
         static getStringOr(key: string, json: $JsonObject_, defaultValue: string | null): string;
         static getBooleanOr(key: string, json: $JsonObject_, defaultValue: boolean): boolean;
-        static getIntOr(key: string, json: $JsonObject_, defaultValue: number): number;
-        static getLongOr(key: string, json: $JsonObject_, defaultValue: number): number;
-        static getUuidOr(key: string, json: $JsonObject_, defaultValue: $UUID_ | null): $UUID;
         static getDateOr(key: string, json: $JsonObject_): $Date;
+        static getRequiredString(key: string, json: $JsonObject_): string;
         static getRequiredStringOr(key: string, json: $JsonObject_, defaultValue: string): string;
         constructor();
     }
@@ -72,9 +72,9 @@ declare module "@package/com/mojang/realmsclient/util" {
         constructor();
     }
     export class $UploadTokenCache {
-        static invalidate(worldId: number): void;
         static get(worldId: number): string;
         static put(worldId: number, arg1: string): void;
+        static invalidate(worldId: number): void;
         constructor();
     }
     export class $LevelType extends $Enum<$LevelType> {

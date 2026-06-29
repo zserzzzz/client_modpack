@@ -2,8 +2,8 @@ import { $RenderType } from "@package/net/minecraft/client/renderer";
 
 declare module "@package/net/caffeinemc/mods/sodium/client/render/chunk/terrain" {
     export class $TerrainRenderPass {
-        isTranslucent(): boolean;
         supportsFragmentDiscard(): boolean;
+        isTranslucent(): boolean;
         /**
          * @deprecated
          */

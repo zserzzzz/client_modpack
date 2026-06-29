@@ -58,7 +58,6 @@ declare module "@package/net/minecraft/client/resources/model" {
          * @deprecated
          */
         getTransforms(): $ItemTransforms;
-        isGui3d(): boolean;
         getOverrides(): $ItemOverrides;
         isAccelerated(): boolean;
         usesBlockLight(): boolean;
@@ -66,38 +65,39 @@ declare module "@package/net/minecraft/client/resources/model" {
          * @deprecated
          */
         getParticleIcon(): $TextureAtlasSprite;
-        emitBlockQuads(arg0: $BlockAndTintGetter, arg1: $BlockState_, arg2: $BlockPos_, arg3: $Supplier_<any>, arg4: $RenderContext): void;
-        emitItemQuads(arg0: $ItemStack_, arg1: $Supplier_<any>, arg2: $RenderContext): void;
-        getCustomColor(arg0: number, arg1: number): number;
-        isAcceleratedInGui(): boolean;
-        renderItemFast(arg0: $ItemStack_, arg1: $RandomSource, arg2: $PoseStack$Pose, arg3: $IAcceleratedVertexConsumer, arg4: number, arg5: number): void;
-        isCustomRenderer(): boolean;
-        renderBlockFast(arg0: $BlockState_, arg1: $RandomSource, arg2: $PoseStack$Pose, arg3: $IAcceleratedVertexConsumer, arg4: number, arg5: number, arg6: number, arg7: $ModelData, arg8: $RenderType): void;
+        isAcceleratedInHand(): boolean;
         /**
          * @deprecated
          */
         getQuads(state: $BlockState_ | null, direction: $Direction_ | null, random: $RandomSource): $List<$BakedQuad>;
-        isAcceleratedInHand(): boolean;
+        isGui3d(): boolean;
+        renderItemFast(arg0: $ItemStack_, arg1: $RandomSource, arg2: $PoseStack$Pose, arg3: $IAcceleratedVertexConsumer, arg4: number, arg5: number): void;
+        renderBlockFast(arg0: $BlockState_, arg1: $RandomSource, arg2: $PoseStack$Pose, arg3: $IAcceleratedVertexConsumer, arg4: number, arg5: number, arg6: number, arg7: $ModelData, arg8: $RenderType): void;
+        getCustomColor(arg0: number, arg1: number): number;
+        isAcceleratedInGui(): boolean;
+        emitBlockQuads(arg0: $BlockAndTintGetter, arg1: $BlockState_, arg2: $BlockPos_, arg3: $Supplier_<any>, arg4: $RenderContext): void;
+        isCustomRenderer(): boolean;
+        emitItemQuads(arg0: $ItemStack_, arg1: $Supplier_<any>, arg2: $RenderContext): void;
         get transforms(): $ItemTransforms;
-        get gui3d(): boolean;
         get overrides(): $ItemOverrides;
         get accelerated(): boolean;
         get particleIcon(): $TextureAtlasSprite;
+        get acceleratedInHand(): boolean;
+        get gui3d(): boolean;
         get acceleratedInGui(): boolean;
         get customRenderer(): boolean;
-        get acceleratedInHand(): boolean;
     }
     export class $ModelBakery implements $ModelLoaderExtension, $ModelLoaderHooks {
         getModel(modelLocation: $ResourceLocation_): $UnbakedModel;
         continuity$getModelWrappingHandler(): $ModelWrappingHandler;
-        getBakedTopLevelModels(): $Map<$ModelResourceLocation, $BakedModel>;
         bakeModels(textureGetter: $ModelBakery$TextureGetter_): void;
+        fabric_add(modelLocation: $ModelResourceLocation_, model: $UnbakedModel): void;
+        getBakedTopLevelModels(): $Map<$ModelResourceLocation, $BakedModel>;
         getModelGroups(): $Object2IntMap<$BlockState>;
+        continuity$setModelWrappingHandler(handler: $ModelWrappingHandler): void;
         fabric_getOrLoadModel(modelLocation: $ResourceLocation_): $UnbakedModel;
         fabric_getDispatcher(): $ModelLoadingEventDispatcher;
         fabric_getMissingModel(): $UnbakedModel;
-        continuity$setModelWrappingHandler(handler: $ModelWrappingHandler): void;
-        fabric_add(modelLocation: $ModelResourceLocation_, model: $UnbakedModel): void;
         static BLOCK_ENTITY_MARKER: $BlockModel;
         static ITEM_MODEL_GENERATOR: $ItemModelGenerator;
         static NO_PATTERN_SHIELD: $Material;
@@ -131,26 +131,26 @@ declare module "@package/net/minecraft/client/resources/model" {
         get dependencies(): $Collection<$ResourceLocation>;
     }
     export class $BuiltInModel implements $BakedModel, $BakedOpacity {
+        moreculling$canSetCullingShape(): boolean;
+        moreculling$setCullingShape(arg0: $VoxelShape): void;
+        moreculling$getCullingShape(arg0: $BlockState_): $VoxelShape;
         useAmbientOcclusion(): boolean;
         getTransforms(): $ItemTransforms;
-        isGui3d(): boolean;
-        moreculling$resetTranslucencyCache(arg0: $BlockState_): void;
         getOverrides(): $ItemOverrides;
+        moreculling$resetTranslucencyCache(arg0: $BlockState_): void;
         usesBlockLight(): boolean;
         getParticleIcon(): $TextureAtlasSprite;
-        moreculling$canSetCullingShape(): boolean;
-        moreculling$getCullingShape(arg0: $BlockState_): $VoxelShape;
-        moreculling$setCullingShape(arg0: $VoxelShape): void;
-        isCustomRenderer(): boolean;
         getQuads(state: $BlockState_ | null, direction: $Direction_ | null, random: $RandomSource): $List<$BakedQuad>;
+        isGui3d(): boolean;
+        isCustomRenderer(): boolean;
         isAccelerated(): boolean;
-        emitBlockQuads(arg0: $BlockAndTintGetter, arg1: $BlockState_, arg2: $BlockPos_, arg3: $Supplier_<any>, arg4: $RenderContext): void;
-        emitItemQuads(arg0: $ItemStack_, arg1: $Supplier_<any>, arg2: $RenderContext): void;
-        getCustomColor(arg0: number, arg1: number): number;
-        isAcceleratedInGui(): boolean;
+        isAcceleratedInHand(): boolean;
         renderItemFast(arg0: $ItemStack_, arg1: $RandomSource, arg2: $PoseStack$Pose, arg3: $IAcceleratedVertexConsumer, arg4: number, arg5: number): void;
         renderBlockFast(arg0: $BlockState_, arg1: $RandomSource, arg2: $PoseStack$Pose, arg3: $IAcceleratedVertexConsumer, arg4: number, arg5: number, arg6: number, arg7: $ModelData, arg8: $RenderType): void;
-        isAcceleratedInHand(): boolean;
+        getCustomColor(arg0: number, arg1: number): number;
+        isAcceleratedInGui(): boolean;
+        emitBlockQuads(arg0: $BlockAndTintGetter, arg1: $BlockState_, arg2: $BlockPos_, arg3: $Supplier_<any>, arg4: $RenderContext): void;
+        emitItemQuads(arg0: $ItemStack_, arg1: $Supplier_<any>, arg2: $RenderContext): void;
         /**
          * Controls the AO behavior for all quads of this model. The default behavior is to use AO unless the block emits light,
          * `TriState#TRUE` and `TriState#FALSE` force AO to be enabled and disabled respectively, regardless of
@@ -167,12 +167,9 @@ declare module "@package/net/minecraft/client/resources/model" {
         applyTransform(transformType: $ItemDisplayContext_, poseStack: $PoseStack, applyLeftHandTransform: boolean): $BakedModel;
         getParticleIcon(data: $ModelData): $TextureAtlasSprite;
         /**
-         * Gets an ordered list of baked models used to render this model as an item.
-         * Each of those models' render types will be queried via `#getRenderTypes(ItemStack, boolean)`.
-         * 
-         * By default, returns the model itself.
+         * A null `RenderType` is used for the breaking overlay as well as non-standard rendering, so models should return all their quads.
          */
-        getRenderPasses(itemStack: $ItemStack_, fabulous: boolean): $List<$BakedModel>;
+        getQuads(state: $BlockState_, side: $Direction_, rand: $RandomSource, data: $ModelData, renderType: $RenderType): $List<$BakedQuad>;
         /**
          * Gets an ordered list of baked models used to render this model as an item.
          * Each of those models' render types will be queried via `#getRenderTypes(ItemStack, boolean)`.
@@ -187,20 +184,23 @@ declare module "@package/net/minecraft/client/resources/model" {
          * By default, defers query to `ItemBlockRenderTypes`.
          */
         getRenderTypes(state: $BlockState_, rand: $RandomSource, data: $ModelData): $ChunkRenderTypeSet;
-        getModelData(level: $BlockAndTintGetter, pos: $BlockPos_, state: $BlockState_, modelData: $ModelData): $ModelData;
         /**
-         * A null `RenderType` is used for the breaking overlay as well as non-standard rendering, so models should return all their quads.
+         * Gets an ordered list of baked models used to render this model as an item.
+         * Each of those models' render types will be queried via `#getRenderTypes(ItemStack, boolean)`.
+         * 
+         * By default, returns the model itself.
          */
-        getQuads(state: $BlockState_, side: $Direction_, rand: $RandomSource, data: $ModelData, renderType: $RenderType): $List<$BakedQuad>;
+        getRenderPasses(itemStack: $ItemStack_, fabulous: boolean): $List<$BakedModel>;
+        getModelData(level: $BlockAndTintGetter, pos: $BlockPos_, state: $BlockState_, modelData: $ModelData): $ModelData;
         isVanillaAdapter(): boolean;
         constructor(itemTransforms: $ItemTransforms, overrides: $ItemOverrides, particleTexture: $TextureAtlasSprite, usesBlockLight: boolean);
         get transforms(): $ItemTransforms;
-        get gui3d(): boolean;
         get overrides(): $ItemOverrides;
+        get gui3d(): boolean;
         get customRenderer(): boolean;
         get accelerated(): boolean;
-        get acceleratedInGui(): boolean;
         get acceleratedInHand(): boolean;
+        get acceleratedInGui(): boolean;
         get vanillaAdapter(): boolean;
     }
     export class $ModelState {
@@ -212,35 +212,36 @@ declare module "@package/net/minecraft/client/resources/model" {
         get uvLocked(): boolean;
     }
     export class $ModelManager implements $PreparableReloadListener, $AutoCloseable, $ResourceModelManagerAccessor, $FabricBakedModelManager, $BakedModelManagerAccessor, $IdentifiableResourceReloadListener {
+        getModel(modelLocation: $ModelResourceLocation_): $BakedModel;
         close(): void;
         reload(preparationBarrier: $PreparableReloadListener$PreparationBarrier_, resourceManager: $ResourceManager, preparationsProfiler: $ProfilerFiller, reloadProfiler: $ProfilerFiller, backgroundExecutor: $Executor_, gameExecutor: $Executor_): $CompletableFuture<void>;
-        getModel(modelLocation: $ModelResourceLocation_): $BakedModel;
         getBlockModelShaper(): $BlockModelShaper;
-        updateMaxMipLevel(level: number): void;
-        getMissingModel(): $BakedModel;
-        getModelBakery(): $ModelBakery;
         getFabricId(): $ResourceLocation;
-        getAtlas(location: $ResourceLocation_): $TextureAtlas;
-        getFabricDependencies(): $Collection<any>;
         requiresRender(oldState: $BlockState_, newState: $BlockState_): boolean;
+        getFabricDependencies(): $Collection<any>;
+        getMissingModel(): $BakedModel;
+        updateMaxMipLevel(level: number): void;
+        getAtlas(location: $ResourceLocation_): $TextureAtlas;
+        getModelBakery(): $ModelBakery;
         getName(): string;
         getModel(arg0: $ResourceLocation_): $BakedModel;
-        getModels(): $Map<$ModelResourceLocation, $BakedModel>;
         getAtlases(): $AtlasSet;
+        getModels(): $Map<$ModelResourceLocation, $BakedModel>;
         getMaxMipmapLevels(): number;
         bakedRegistry: $Map<$ModelResourceLocation, $BakedModel>;
         constructor(textureManager: $TextureManager, blockColors: $BlockColors, maxMipmapLevels: number);
         get blockModelShaper(): $BlockModelShaper;
-        get missingModel(): $BakedModel;
-        get modelBakery(): $ModelBakery;
         get fabricId(): $ResourceLocation;
         get fabricDependencies(): $Collection<any>;
+        get missingModel(): $BakedModel;
+        get modelBakery(): $ModelBakery;
         get name(): string;
-        get models(): $Map<$ModelResourceLocation, $BakedModel>;
         get atlases(): $AtlasSet;
+        get models(): $Map<$ModelResourceLocation, $BakedModel>;
         get maxMipmapLevels(): number;
     }
     export class $WeightedBakedModel implements $BakedModel, $IDynamicBakedModel, $IAcceleratedBakedModel, $FabricBakedModel, $BakedOpacity {
+        getList(): $List<any>;
         /**
          * Controls the AO behavior for all quads of this model. The default behavior is to use AO unless the block emits light,
          * `TriState#TRUE` and `TriState#FALSE` force AO to be enabled and disabled respectively, regardless of
@@ -252,20 +253,27 @@ declare module "@package/net/minecraft/client/resources/model" {
         useAmbientOcclusion(state: $BlockState_, data: $ModelData, renderType: $RenderType): $TriState;
         useAmbientOcclusion(): boolean;
         getTransforms(): $ItemTransforms;
-        isGui3d(): boolean;
-        moreculling$resetTranslucencyCache(arg0: $BlockState_): void;
         getOverrides(): $ItemOverrides;
-        getList(): $List<any>;
         /**
          * Applies a transform for the given `TransformType` and `applyLeftHandTransform`, and
          * returns the model to be rendered.
          */
         applyTransform(transformType: $ItemDisplayContext_, poseStack: $PoseStack, applyLeftHandTransform: boolean): $BakedModel;
+        getTotalWeight(): number;
+        moreculling$resetTranslucencyCache(arg0: $BlockState_): void;
         isAccelerated(): boolean;
         usesBlockLight(): boolean;
-        getParticleIcon(data: $ModelData): $TextureAtlasSprite;
         getParticleIcon(): $TextureAtlasSprite;
-        getTotalWeight(): number;
+        getParticleIcon(data: $ModelData): $TextureAtlasSprite;
+        isAcceleratedInHand(): boolean;
+        getQuads(state: $BlockState_ | null, side: $Direction_ | null, rand: $RandomSource, extraData: $ModelData, renderType: $RenderType): $List<any>;
+        isGui3d(): boolean;
+        renderItemFast(arg0: $ItemStack_, arg1: $RandomSource, arg2: $PoseStack$Pose, arg3: $IAcceleratedVertexConsumer, arg4: number, arg5: number): void;
+        renderBlockFast(arg0: $BlockState_, arg1: $RandomSource, arg2: $PoseStack$Pose, arg3: $IAcceleratedVertexConsumer, arg4: number, arg5: number, arg6: number, arg7: $ModelData, arg8: $RenderType): void;
+        getCustomColor(arg0: number, arg1: number): number;
+        isAcceleratedInGui(): boolean;
+        emitBlockQuads(arg0: $BlockAndTintGetter, arg1: $BlockState_, arg2: $BlockPos_, arg3: $Supplier_<any>, arg4: $RenderContext): void;
+        isCustomRenderer(): boolean;
         /**
          * Gets the set of render types to use when drawing this block in the level.
          * Supported types are those returned by `RenderType#chunkBufferLayers()`.
@@ -274,27 +282,12 @@ declare module "@package/net/minecraft/client/resources/model" {
          */
         getRenderTypes(state: $BlockState_, rand: $RandomSource, data: $ModelData): $ChunkRenderTypeSet;
         isVanillaAdapter(): boolean;
-        emitBlockQuads(arg0: $BlockAndTintGetter, arg1: $BlockState_, arg2: $BlockPos_, arg3: $Supplier_<any>, arg4: $RenderContext): void;
         emitItemQuads(arg0: $ItemStack_, arg1: $Supplier_<any>, arg2: $RenderContext): void;
         getModelData(level: $BlockAndTintGetter, pos: $BlockPos_, state: $BlockState_, modelData: $ModelData): $ModelData;
-        getCustomColor(arg0: number, arg1: number): number;
-        isAcceleratedInGui(): boolean;
-        renderItemFast(arg0: $ItemStack_, arg1: $RandomSource, arg2: $PoseStack$Pose, arg3: $IAcceleratedVertexConsumer, arg4: number, arg5: number): void;
-        isCustomRenderer(): boolean;
-        renderBlockFast(arg0: $BlockState_, arg1: $RandomSource, arg2: $PoseStack$Pose, arg3: $IAcceleratedVertexConsumer, arg4: number, arg5: number, arg6: number, arg7: $ModelData, arg8: $RenderType): void;
-        getQuads(state: $BlockState_ | null, side: $Direction_ | null, rand: $RandomSource, extraData: $ModelData, renderType: $RenderType): $List<any>;
-        isAcceleratedInHand(): boolean;
         handler$bpl001$acceleratedrendering$checkAccelerationSupport(arg0: $List_<any>, arg1: $CallbackInfo): void;
         moreculling$canSetCullingShape(): boolean;
-        moreculling$getCullingShape(arg0: $BlockState_): $VoxelShape;
         moreculling$setCullingShape(arg0: $VoxelShape): void;
-        /**
-         * Gets an ordered list of baked models used to render this model as an item.
-         * Each of those models' render types will be queried via `#getRenderTypes(ItemStack, boolean)`.
-         * 
-         * By default, returns the model itself.
-         */
-        getRenderPasses(itemStack: $ItemStack_, fabulous: boolean): $List<$BakedModel>;
+        moreculling$getCullingShape(arg0: $BlockState_): $VoxelShape;
         /**
          * Gets an ordered list of baked models used to render this model as an item.
          * Each of those models' render types will be queried via `#getRenderTypes(ItemStack, boolean)`.
@@ -302,18 +295,25 @@ declare module "@package/net/minecraft/client/resources/model" {
          * By default, returns the model itself.
          */
         getRenderTypes(itemStack: $ItemStack_, fabulous: boolean): $List<$RenderType>;
+        /**
+         * Gets an ordered list of baked models used to render this model as an item.
+         * Each of those models' render types will be queried via `#getRenderTypes(ItemStack, boolean)`.
+         * 
+         * By default, returns the model itself.
+         */
+        getRenderPasses(itemStack: $ItemStack_, fabulous: boolean): $List<$BakedModel>;
         isVanilla: boolean;
         constructor(list: $List_<$WeightedEntry$Wrapper_<$BakedModel>>);
-        get transforms(): $ItemTransforms;
-        get gui3d(): boolean;
-        get overrides(): $ItemOverrides;
         get list(): $List<any>;
-        get accelerated(): boolean;
+        get transforms(): $ItemTransforms;
+        get overrides(): $ItemOverrides;
         get totalWeight(): number;
-        get vanillaAdapter(): boolean;
+        get accelerated(): boolean;
+        get acceleratedInHand(): boolean;
+        get gui3d(): boolean;
         get acceleratedInGui(): boolean;
         get customRenderer(): boolean;
-        get acceleratedInHand(): boolean;
+        get vanillaAdapter(): boolean;
     }
     export class $WeightedBakedModel$Builder {
         add(model: $BakedModel | null, weight: number): $WeightedBakedModel$Builder;
@@ -336,11 +336,11 @@ declare module "@package/net/minecraft/client/resources/model" {
         build(): $BakedModel;
         build(arg0: $RenderTypeGroup_): $BakedModel;
         item(): $SimpleBakedModel$Builder;
-        particle(particleIcon: $TextureAtlasSprite): $SimpleBakedModel$Builder;
-        addUnculledFace(quad: $BakedQuad): $SimpleBakedModel$Builder;
-        addCulledFace(facing: $Direction_, quad: $BakedQuad): $SimpleBakedModel$Builder;
-        handler$hnp000$ferritecore$deduplicate(arg0: $BakedQuad, arg1: $CallbackInfoReturnable<any>): void;
         handler$hnp000$ferritecore$deduplicate(arg0: $Direction_, arg1: $BakedQuad, arg2: $CallbackInfoReturnable<any>): void;
+        handler$hnp000$ferritecore$deduplicate(arg0: $BakedQuad, arg1: $CallbackInfoReturnable<any>): void;
+        particle(particleIcon: $TextureAtlasSprite): $SimpleBakedModel$Builder;
+        addCulledFace(facing: $Direction_, quad: $BakedQuad): $SimpleBakedModel$Builder;
+        addUnculledFace(quad: $BakedQuad): $SimpleBakedModel$Builder;
         constructor(blockModel: $BlockModel, overrides: $ItemOverrides, isGui3d: boolean);
         constructor(hasAmbientOcclusion: boolean, usesBlockLight: boolean, isGui3d: boolean, transforms: $ItemTransforms, overrides: $ItemOverrides);
     }
@@ -351,19 +351,19 @@ declare module "@package/net/minecraft/client/resources/model" {
         constructor();
     }
     export class $Material {
-        renderType(renderTypeGetter: $Function_<$ResourceLocation, $RenderType>): $RenderType;
-        sprite(): $TextureAtlasSprite;
+        texture(): $ResourceLocation;
         buffer(buffer: $MultiBufferSource_, renderTypeGetter: $Function_<$ResourceLocation, $RenderType>): $VertexConsumer;
         buffer(buffer: $MultiBufferSource_, renderTypeGetter: $Function_<$ResourceLocation, $RenderType>, withGlint: boolean): $VertexConsumer;
-        texture(): $ResourceLocation;
         atlasLocation(): $ResourceLocation;
+        sprite(): $TextureAtlasSprite;
+        renderType(renderTypeGetter: $Function_<$ResourceLocation, $RenderType>): $RenderType;
         static COMPARATOR: $Comparator<$Material>;
         constructor(atlasLocation: $ResourceLocation_, texture: $ResourceLocation_);
     }
     export class $BlockModelRotation extends $Enum<$BlockModelRotation> implements $ModelState {
-        static by(x: number, y: number): $BlockModelRotation;
         static values(): $BlockModelRotation[];
         static valueOf(arg0: string): $BlockModelRotation;
+        static by(x: number, y: number): $BlockModelRotation;
         getRotation(): $Transformation;
         actualRotation(): $OctahedralGroup;
         /**
@@ -398,9 +398,9 @@ declare module "@package/net/minecraft/client/resources/model" {
      */
     export type $BlockModelRotation_ = "x0_y0" | "x0_y90" | "x0_y180" | "x0_y270" | "x90_y0" | "x90_y90" | "x90_y180" | "x90_y270" | "x180_y0" | "x180_y90" | "x180_y180" | "x180_y270" | "x270_y0" | "x270_y90" | "x270_y180" | "x270_y270";
     export class $AtlasSet$StitchResult {
-        getSprite(location: $ResourceLocation_): $TextureAtlasSprite;
         missing(): $TextureAtlasSprite;
         upload(): void;
+        getSprite(location: $ResourceLocation_): $TextureAtlasSprite;
         readyForUpload(): $CompletableFuture<void>;
         constructor(atlas: $TextureAtlas, preperations: $SpriteLoader$Preparations_);
     }
@@ -434,18 +434,25 @@ declare module "@package/net/minecraft/client/resources/model" {
      */
     export type $AtlasSet$AtlasEntry_ = { atlas?: $TextureAtlas, atlasInfoLocation?: $ResourceLocation_,  } | [atlas?: $TextureAtlas, atlasInfoLocation?: $ResourceLocation_, ];
     export class $SimpleBakedModel implements $BakedModel, $IAcceleratedBakedModel, $IAcceleratedRenderer<any>, $SimpleBakedModelAccessor, $BakedOpacity, $IBakedModelExtension {
+        moreculling$canSetCullingShape(): boolean;
+        moreculling$setCullingShape(arg0: $VoxelShape): void;
+        moreculling$getCullingShape(arg0: $BlockState_): $VoxelShape;
         useAmbientOcclusion(): boolean;
         getTransforms(): $ItemTransforms;
-        isGui3d(): boolean;
+        getOverrides(): $ItemOverrides;
         moreculling$resetTranslucencyCache(arg0: $BlockState_): void;
         render(arg0: $VertexConsumer, arg1: $AcceleratedModelRenderContext_, arg2: $Matrix4f, arg3: $Matrix3f, arg4: number, arg5: number, arg6: number): void;
-        getOverrides(): $ItemOverrides;
         isAccelerated(): boolean;
         usesBlockLight(): boolean;
         getParticleIcon(): $TextureAtlasSprite;
-        moreculling$canSetCullingShape(): boolean;
-        moreculling$getCullingShape(arg0: $BlockState_): $VoxelShape;
-        moreculling$setCullingShape(arg0: $VoxelShape): void;
+        isAcceleratedInHand(): boolean;
+        getQuads(state: $BlockState_ | null, direction: $Direction_ | null, random: $RandomSource): $List<$BakedQuad>;
+        isGui3d(): boolean;
+        renderItemFast(arg0: $ItemStack_, arg1: $RandomSource, arg2: $PoseStack$Pose, arg3: $IAcceleratedVertexConsumer, arg4: number, arg5: number): void;
+        renderBlockFast(arg0: $BlockState_, arg1: $RandomSource, arg2: $PoseStack$Pose, arg3: $IAcceleratedVertexConsumer, arg4: number, arg5: number, arg6: number, arg7: $ModelData, arg8: $RenderType): void;
+        getCustomColor(arg0: number, arg1: number): number;
+        isAcceleratedInGui(): boolean;
+        isCustomRenderer(): boolean;
         /**
          * Gets an ordered list of baked models used to render this model as an item.
          * Each of those models' render types will be queried via `#getRenderTypes(ItemStack, boolean)`.
@@ -460,13 +467,6 @@ declare module "@package/net/minecraft/client/resources/model" {
          * By default, defers query to `ItemBlockRenderTypes`.
          */
         getRenderTypes(state: $BlockState_, rand: $RandomSource, data: $ModelData): $ChunkRenderTypeSet;
-        getCustomColor(arg0: number, arg1: number): number;
-        isAcceleratedInGui(): boolean;
-        renderItemFast(arg0: $ItemStack_, arg1: $RandomSource, arg2: $PoseStack$Pose, arg3: $IAcceleratedVertexConsumer, arg4: number, arg5: number): void;
-        isCustomRenderer(): boolean;
-        renderBlockFast(arg0: $BlockState_, arg1: $RandomSource, arg2: $PoseStack$Pose, arg3: $IAcceleratedVertexConsumer, arg4: number, arg5: number, arg6: number, arg7: $ModelData, arg8: $RenderType): void;
-        getQuads(state: $BlockState_ | null, direction: $Direction_ | null, random: $RandomSource): $List<$BakedQuad>;
-        isAcceleratedInHand(): boolean;
         emitBlockQuads(arg0: $BlockAndTintGetter, arg1: $BlockState_, arg2: $BlockPos_, arg3: $Supplier_<any>, arg4: $RenderContext): void;
         emitItemQuads(arg0: $ItemStack_, arg1: $Supplier_<any>, arg2: $RenderContext): void;
         /**
@@ -485,6 +485,10 @@ declare module "@package/net/minecraft/client/resources/model" {
         applyTransform(transformType: $ItemDisplayContext_, poseStack: $PoseStack, applyLeftHandTransform: boolean): $BakedModel;
         getParticleIcon(data: $ModelData): $TextureAtlasSprite;
         /**
+         * A null `RenderType` is used for the breaking overlay as well as non-standard rendering, so models should return all their quads.
+         */
+        getQuads(state: $BlockState_, side: $Direction_, rand: $RandomSource, data: $ModelData, renderType: $RenderType): $List<$BakedQuad>;
+        /**
          * Gets an ordered list of baked models used to render this model as an item.
          * Each of those models' render types will be queried via `#getRenderTypes(ItemStack, boolean)`.
          * 
@@ -492,10 +496,6 @@ declare module "@package/net/minecraft/client/resources/model" {
          */
         getRenderPasses(itemStack: $ItemStack_, fabulous: boolean): $List<$BakedModel>;
         getModelData(level: $BlockAndTintGetter, pos: $BlockPos_, state: $BlockState_, modelData: $ModelData): $ModelData;
-        /**
-         * A null `RenderType` is used for the breaking overlay as well as non-standard rendering, so models should return all their quads.
-         */
-        getQuads(state: $BlockState_, side: $Direction_, rand: $RandomSource, data: $ModelData, renderType: $RenderType): $List<$BakedQuad>;
         isVanillaAdapter(): boolean;
         getBlockRenderTypes(): $ChunkRenderTypeSet;
         itemRenderTypes: $List<$RenderType>;
@@ -512,11 +512,11 @@ declare module "@package/net/minecraft/client/resources/model" {
          */
         constructor(unculledFaces: $List_<$BakedQuad>, culledFaces: $Map_<$Direction_, $List_<$BakedQuad>>, hasAmbientOcclusion: boolean, usesBlockLight: boolean, isGui3d: boolean, particleIcon: $TextureAtlasSprite, transforms: $ItemTransforms, overrides: $ItemOverrides);
         constructor(arg0: $List_<$BakedQuad>, arg1: $Map_<$Direction_, $List_<$BakedQuad>>, arg2: boolean, arg3: boolean, arg4: boolean, arg5: $TextureAtlasSprite, arg6: $ItemTransforms, arg7: $ItemOverrides, arg8: $RenderTypeGroup_);
-        get gui3d(): boolean;
         get accelerated(): boolean;
+        get acceleratedInHand(): boolean;
+        get gui3d(): boolean;
         get acceleratedInGui(): boolean;
         get customRenderer(): boolean;
-        get acceleratedInHand(): boolean;
         get vanillaAdapter(): boolean;
     }
     export class $ModelManager$ReloadState extends $Record {
@@ -524,12 +524,12 @@ declare module "@package/net/minecraft/client/resources/model" {
     /**
      * Values that may be interpreted as {@link $ModelManager$ReloadState}.
      */
-    export type $ModelManager$ReloadState_ = { modelCache?: $Map_<$BlockState_, $BakedModel>, missingModel?: $BakedModel, modelBakery?: $ModelBakery, readyForUpload?: $CompletableFuture<void>, atlasPreparations?: $Map_<$ResourceLocation_, $AtlasSet$StitchResult>,  } | [modelCache?: $Map_<$BlockState_, $BakedModel>, missingModel?: $BakedModel, modelBakery?: $ModelBakery, readyForUpload?: $CompletableFuture<void>, atlasPreparations?: $Map_<$ResourceLocation_, $AtlasSet$StitchResult>, ];
+    export type $ModelManager$ReloadState_ = { readyForUpload?: $CompletableFuture<void>, atlasPreparations?: $Map_<$ResourceLocation_, $AtlasSet$StitchResult>, modelCache?: $Map_<$BlockState_, $BakedModel>, missingModel?: $BakedModel, modelBakery?: $ModelBakery,  } | [readyForUpload?: $CompletableFuture<void>, atlasPreparations?: $Map_<$ResourceLocation_, $AtlasSet$StitchResult>, modelCache?: $Map_<$BlockState_, $BakedModel>, missingModel?: $BakedModel, modelBakery?: $ModelBakery, ];
     export class $BlockStateModelLoader implements $BlockStatesLoaderHooks {
         static getValueHelper<T extends $Comparable<T>>(property: $Property<T>, propertyName: string): T;
         getModelGroups(): $Object2IntMap<$BlockState>;
-        fabric_setLoadingOverride(arg0: $BlockStatesLoaderHooks$LoadingOverride_): void;
         loadAllBlockStates(): void;
+        fabric_setLoadingOverride(arg0: $BlockStatesLoaderHooks$LoadingOverride_): void;
         static SINGLETON_MODEL_GROUP: number;
         static BLOCKSTATE_LISTER: $FileToIdConverter;
         constructor(blockStateResources: $Map_<$ResourceLocation_, $List_<$BlockStateModelLoader$LoadedJson_>>, profiler: $ProfilerFiller, missingModel: $UnbakedModel, blockColors: $BlockColors, discoveredModelOutput: $BiConsumer_<$ModelResourceLocation, $UnbakedModel>);
@@ -540,9 +540,9 @@ declare module "@package/net/minecraft/client/resources/model" {
     /**
      * Values that may be interpreted as {@link $BlockStateModelLoader$LoadedModel}.
      */
-    export type $BlockStateModelLoader$LoadedModel_ = { key?: $Supplier_<$BlockStateModelLoader$ModelGroupKey>, model?: $UnbakedModel,  } | [key?: $Supplier_<$BlockStateModelLoader$ModelGroupKey>, model?: $UnbakedModel, ];
+    export type $BlockStateModelLoader$LoadedModel_ = { model?: $UnbakedModel, key?: $Supplier_<$BlockStateModelLoader$ModelGroupKey>,  } | [model?: $UnbakedModel, key?: $Supplier_<$BlockStateModelLoader$ModelGroupKey>, ];
     export class $MultiPartBakedModel implements $BakedModel, $IDynamicBakedModel, $IAcceleratedBakedModel, $FabricBakedModel, $BakedOpacity {
-        useAmbientOcclusion(): boolean;
+        moreculling$getCullingShape(arg0: $BlockState_): $VoxelShape;
         /**
          * Controls the AO behavior for all quads of this model. The default behavior is to use AO unless the block emits light,
          * `TriState#TRUE` and `TriState#FALSE` force AO to be enabled and disabled respectively, regardless of
@@ -552,26 +552,34 @@ declare module "@package/net/minecraft/client/resources/model" {
          * This method cannot force AO if the global smooth lighting video setting is disabled.
          */
         useAmbientOcclusion(state: $BlockState_, data: $ModelData, renderType: $RenderType): $TriState;
+        useAmbientOcclusion(): boolean;
         /**
          * @deprecated
          */
         getTransforms(): $ItemTransforms;
-        isGui3d(): boolean;
-        moreculling$resetTranslucencyCache(arg0: $BlockState_): void;
         getOverrides(): $ItemOverrides;
         /**
          * Applies a transform for the given `TransformType` and `applyLeftHandTransform`, and
          * returns the model to be rendered.
          */
         applyTransform(transformType: $ItemDisplayContext_, poseStack: $PoseStack, applyLeftHandTransform: boolean): $BakedModel;
+        moreculling$resetTranslucencyCache(arg0: $BlockState_): void;
         isAccelerated(): boolean;
         usesBlockLight(): boolean;
-        getParticleIcon(data: $ModelData): $TextureAtlasSprite;
         /**
          * @deprecated
          */
         getParticleIcon(): $TextureAtlasSprite;
-        moreculling$getCullingShape(arg0: $BlockState_): $VoxelShape;
+        getParticleIcon(data: $ModelData): $TextureAtlasSprite;
+        isAcceleratedInHand(): boolean;
+        getQuads(state: $BlockState_ | null, side: $Direction_ | null, rand: $RandomSource, extraData: $ModelData, renderType: $RenderType): $List<any>;
+        isGui3d(): boolean;
+        renderItemFast(arg0: $ItemStack_, arg1: $RandomSource, arg2: $PoseStack$Pose, arg3: $IAcceleratedVertexConsumer, arg4: number, arg5: number): void;
+        renderBlockFast(arg0: $BlockState_, arg1: $RandomSource, arg2: $PoseStack$Pose, arg3: $IAcceleratedVertexConsumer, arg4: number, arg5: number, arg6: number, arg7: $ModelData, arg8: $RenderType): void;
+        getCustomColor(arg0: number, arg1: number): number;
+        isAcceleratedInGui(): boolean;
+        emitBlockQuads(arg0: $BlockAndTintGetter, arg1: $BlockState_, arg2: $BlockPos_, arg3: $Supplier_<any>, arg4: $RenderContext): void;
+        isCustomRenderer(): boolean;
         /**
          * Gets the set of render types to use when drawing this block in the level.
          * Supported types are those returned by `RenderType#chunkBufferLayers()`.
@@ -580,21 +588,13 @@ declare module "@package/net/minecraft/client/resources/model" {
          */
         getRenderTypes(state: $BlockState_, rand: $RandomSource, data: $ModelData): $ChunkRenderTypeSet;
         isVanillaAdapter(): boolean;
-        emitBlockQuads(arg0: $BlockAndTintGetter, arg1: $BlockState_, arg2: $BlockPos_, arg3: $Supplier_<any>, arg4: $RenderContext): void;
         emitItemQuads(arg0: $ItemStack_, arg1: $Supplier_<any>, arg2: $RenderContext): void;
         getModelData(level: $BlockAndTintGetter, pos: $BlockPos_, state: $BlockState_, modelData: $ModelData): $ModelData;
-        getCustomColor(arg0: number, arg1: number): number;
-        isAcceleratedInGui(): boolean;
-        renderItemFast(arg0: $ItemStack_, arg1: $RandomSource, arg2: $PoseStack$Pose, arg3: $IAcceleratedVertexConsumer, arg4: number, arg5: number): void;
-        isCustomRenderer(): boolean;
-        renderBlockFast(arg0: $BlockState_, arg1: $RandomSource, arg2: $PoseStack$Pose, arg3: $IAcceleratedVertexConsumer, arg4: number, arg5: number, arg6: number, arg7: $ModelData, arg8: $RenderType): void;
-        getQuads(state: $BlockState_ | null, side: $Direction_ | null, rand: $RandomSource, extraData: $ModelData, renderType: $RenderType): $List<any>;
-        isAcceleratedInHand(): boolean;
-        handler$bpk000$acceleratedrendering$checkAccelerationSupport(arg0: $List_<any>, arg1: $CallbackInfo): void;
-        getSelectors(): $List<any>;
         getSelectors(arg0: $BlockState_ | null): $BitSet;
-        redirect$hnn000$ferritecore$redirectCachePut(arg0: $Map_<any, any>, arg1: $Object, arg2: $Object): $Object;
+        getSelectors(): $List<any>;
         redirect$hnn000$ferritecore$redirectCacheGet(arg0: $Map_<any, any>, arg1: $Object): $Object;
+        redirect$hnn000$ferritecore$redirectCachePut(arg0: $Map_<any, any>, arg1: $Object, arg2: $Object): $Object;
+        handler$bpk000$acceleratedrendering$checkAccelerationSupport(arg0: $List_<any>, arg1: $CallbackInfo): void;
         moreculling$canSetCullingShape(): boolean;
         moreculling$setCullingShape(arg0: $VoxelShape): void;
         /**
@@ -603,26 +603,26 @@ declare module "@package/net/minecraft/client/resources/model" {
          * 
          * By default, returns the model itself.
          */
-        getRenderPasses(itemStack: $ItemStack_, fabulous: boolean): $List<$BakedModel>;
+        getRenderTypes(itemStack: $ItemStack_, fabulous: boolean): $List<$RenderType>;
         /**
          * Gets an ordered list of baked models used to render this model as an item.
          * Each of those models' render types will be queried via `#getRenderTypes(ItemStack, boolean)`.
          * 
          * By default, returns the model itself.
          */
-        getRenderTypes(itemStack: $ItemStack_, fabulous: boolean): $List<$RenderType>;
+        getRenderPasses(itemStack: $ItemStack_, fabulous: boolean): $List<$BakedModel>;
         particleIcon: $TextureAtlasSprite;
         isVanilla: boolean;
         hasAmbientOcclusion: boolean;
         transforms: $ItemTransforms;
         overrides: $ItemOverrides;
         constructor(selectors: $List_<$Pair<$Predicate_<$BlockState>, $BakedModel>>);
-        get gui3d(): boolean;
         get accelerated(): boolean;
-        get vanillaAdapter(): boolean;
+        get acceleratedInHand(): boolean;
+        get gui3d(): boolean;
         get acceleratedInGui(): boolean;
         get customRenderer(): boolean;
-        get acceleratedInHand(): boolean;
+        get vanillaAdapter(): boolean;
     }
     export class $ModelBakery$BakedCacheKey extends $Record {
         id(): $ResourceLocation;
@@ -634,21 +634,21 @@ declare module "@package/net/minecraft/client/resources/model" {
     /**
      * Values that may be interpreted as {@link $ModelBakery$BakedCacheKey}.
      */
-    export type $ModelBakery$BakedCacheKey_ = { isUvLocked?: boolean, transformation?: $Transformation, id?: $ResourceLocation_,  } | [isUvLocked?: boolean, transformation?: $Transformation, id?: $ResourceLocation_, ];
+    export type $ModelBakery$BakedCacheKey_ = { id?: $ResourceLocation_, isUvLocked?: boolean, transformation?: $Transformation,  } | [id?: $ResourceLocation_, isUvLocked?: boolean, transformation?: $Transformation, ];
     export class $BlockStateModelLoader$ModelGroupKey extends $Record {
     }
     /**
      * Values that may be interpreted as {@link $BlockStateModelLoader$ModelGroupKey}.
      */
-    export type $BlockStateModelLoader$ModelGroupKey_ = { models?: $List_<$UnbakedModel>, coloringValues?: $List_<$Object>,  } | [models?: $List_<$UnbakedModel>, coloringValues?: $List_<$Object>, ];
+    export type $BlockStateModelLoader$ModelGroupKey_ = { coloringValues?: $List_<$Object>, models?: $List_<$UnbakedModel>,  } | [coloringValues?: $List_<$Object>, models?: $List_<$UnbakedModel>, ];
     export class $BlockStateModelLoader$BlockStateDefinitionException extends $RuntimeException {
     }
     export class $ModelResourceLocation extends $Record {
-        static vanilla(path: string, variant: string): $ModelResourceLocation;
         id(): $ResourceLocation;
         static standalone(id: $ResourceLocation_): $ModelResourceLocation;
         getVariant(): string;
         variant(): string;
+        static vanilla(path: string, variant: string): $ModelResourceLocation;
         static inventory(id: $ResourceLocation_): $ModelResourceLocation;
         static INVENTORY_VARIANT: string;
         static STANDALONE_VARIANT: string;
@@ -657,16 +657,16 @@ declare module "@package/net/minecraft/client/resources/model" {
     /**
      * Values that may be interpreted as {@link $ModelResourceLocation}.
      */
-    export type $ModelResourceLocation_ = { id?: $ResourceLocation_, variant?: string,  } | [id?: $ResourceLocation_, variant?: string, ];
+    export type $ModelResourceLocation_ = { variant?: string, id?: $ResourceLocation_,  } | [variant?: string, id?: $ResourceLocation_, ];
     export class $ModelBakery$ModelBakerImpl implements $ModelBaker, $BakerImplHooks {
         getModel(location: $ResourceLocation_): $UnbakedModel;
-        bake(location: $ResourceLocation_, state: $ModelState, sprites: $Function_<$Material, $TextureAtlasSprite>): $BakedModel;
         bake(location: $ResourceLocation_, transform: $ModelState): $BakedModel;
+        bake(location: $ResourceLocation_, state: $ModelState, sprites: $Function_<$Material, $TextureAtlasSprite>): $BakedModel;
+        getTopLevelModel(location: $ModelResourceLocation_): $UnbakedModel;
+        bakeUncached(model: $UnbakedModel, state: $ModelState): $BakedModel;
+        bakeUncached(model: $UnbakedModel, state: $ModelState, sprites: $Function_<$Material, $TextureAtlasSprite>): $BakedModel;
         fabric_getTextureGetter(): $Function<any, any>;
         getModelTextureGetter(): $Function<$Material, $TextureAtlasSprite>;
-        bakeUncached(model: $UnbakedModel, state: $ModelState, sprites: $Function_<$Material, $TextureAtlasSprite>): $BakedModel;
-        bakeUncached(model: $UnbakedModel, state: $ModelState): $BakedModel;
-        getTopLevelModel(location: $ModelResourceLocation_): $UnbakedModel;
         this$0: $ModelBakery;
         constructor(textureGetter: $ModelBakery, modelLocation: $ModelBakery$TextureGetter_, arg2: $ModelResourceLocation_);
         get modelTextureGetter(): $Function<$Material, $TextureAtlasSprite>;

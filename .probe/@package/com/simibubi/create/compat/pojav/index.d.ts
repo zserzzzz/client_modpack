@@ -5,7 +5,7 @@ import { $Executor } from "@package/java/util/concurrent";
 import { $NarratableEntry } from "@package/net/minecraft/client/gui/narration";
 import { $Component } from "@package/net/minecraft/network/chat";
 import { $ResourceLocation } from "@package/net/minecraft/resources";
-import { $CycleButton, $Checkbox, $Renderable } from "@package/net/minecraft/client/gui/components";
+import { $Checkbox, $CycleButton, $Renderable } from "@package/net/minecraft/client/gui/components";
 import { $Minecraft, $NarratorStatus } from "@package/net/minecraft/client";
 import { $List } from "@package/java/util";
 import { $Font } from "@package/net/minecraft/client/gui";

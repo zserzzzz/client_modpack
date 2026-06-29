@@ -7,15 +7,15 @@ declare module "@package/net/caffeinemc/mods/sodium/client/gl/tessellation" {
     export class $TessellationBinding extends $Record {
         target(): $GlBufferTarget;
         buffer(): $GlBuffer;
-        static forElementBuffer(arg0: $GlBuffer): $TessellationBinding;
-        static forVertexBuffer(arg0: $GlBuffer, arg1: $GlVertexAttributeBinding[]): $TessellationBinding;
         attributeBindings(): $GlVertexAttributeBinding[];
+        static forVertexBuffer(arg0: $GlBuffer, arg1: $GlVertexAttributeBinding[]): $TessellationBinding;
+        static forElementBuffer(arg0: $GlBuffer): $TessellationBinding;
         constructor(target: $GlBufferTarget_, buffer: $GlBuffer, attributeBindings: $GlVertexAttributeBinding[]);
     }
     /**
      * Values that may be interpreted as {@link $TessellationBinding}.
      */
-    export type $TessellationBinding_ = { buffer?: $GlBuffer, attributeBindings?: $GlVertexAttributeBinding[], target?: $GlBufferTarget_,  } | [buffer?: $GlBuffer, attributeBindings?: $GlVertexAttributeBinding[], target?: $GlBufferTarget_, ];
+    export type $TessellationBinding_ = { target?: $GlBufferTarget_, buffer?: $GlBuffer, attributeBindings?: $GlVertexAttributeBinding[],  } | [target?: $GlBufferTarget_, buffer?: $GlBuffer, attributeBindings?: $GlVertexAttributeBinding[], ];
     export class $GlIndexType extends $Enum<$GlIndexType> {
         static values(): $GlIndexType[];
         static valueOf(arg0: string): $GlIndexType;

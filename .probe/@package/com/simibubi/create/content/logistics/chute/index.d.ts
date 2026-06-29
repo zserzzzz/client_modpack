@@ -48,25 +48,25 @@ declare module "@package/com/simibubi/create/content/logistics/chute" {
     }
     export class $AbstractChuteBlock extends $Block implements $IWrenchable, $IBE<$ChuteBlockEntity> {
         isOpen(arg0: $BlockState_): boolean;
+        getFacing(arg0: $BlockState_): $Direction;
         getBlockEntityClass(): $Class<$ChuteBlockEntity>;
-        updateChuteState(arg0: $BlockState_, arg1: $BlockState_, arg2: $BlockGetter, arg3: $BlockPos_): $BlockState;
+        isTransparent(arg0: $BlockState_): boolean;
         static isOpenChute(arg0: $BlockState_): boolean;
         static isTransparentChute(arg0: $BlockState_): boolean;
-        getFacing(arg0: $BlockState_): $Direction;
-        isTransparent(arg0: $BlockState_): boolean;
         static getChuteFacing(arg0: $BlockState_): $Direction;
         static isChute(arg0: $BlockState_): boolean;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        updateChuteState(arg0: $BlockState_, arg1: $BlockState_, arg2: $BlockGetter, arg3: $BlockPos_): $BlockState;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ChuteBlockEntity>): void;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ChuteBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ChuteBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ChuteBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $ChuteBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ChuteBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ChuteBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ChuteBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -102,42 +102,42 @@ declare module "@package/com/simibubi/create/content/logistics/chute" {
         constructor();
     }
     export class $ChuteItemHandler implements $IItemHandler {
+        getStackInSlot(arg0: number): $ItemStack;
+        getSlots(): number;
+        insertItem(arg0: number, arg1: $ItemStack_, arg2: boolean): $ItemStack;
+        extractItem(arg0: number, arg1: number, arg2: boolean): $ItemStack;
         getSlotLimit(arg0: number): number;
         isItemValid(arg0: number, arg1: $ItemStack_): boolean;
-        extractItem(arg0: number, arg1: number, arg2: boolean): $ItemStack;
-        getSlots(): number;
-        getStackInSlot(arg0: number): $ItemStack;
-        insertItem(arg0: number, arg1: $ItemStack_, arg2: boolean): $ItemStack;
-        kjs$isMutable(): boolean;
         kjs$setStackInSlot(slot: number, stack: $ItemStack_): void;
-        kjs$self(): $IItemHandler;
+        kjs$isMutable(): boolean;
         kjs$getBlock(level: $Level_): $LevelBlock;
-        getHeight(): number;
-        insertItem(stack: $ItemStack_, simulate: boolean): $ItemStack;
+        kjs$self(): $IItemHandler;
         setChanged(): void;
+        insertItem(stack: $ItemStack_, simulate: boolean): $ItemStack;
         asContainer(): $Container;
-        countNonEmpty(): number;
         countNonEmpty(match: $ItemPredicate_): number;
-        getWidth(): number;
-        isEmpty(): boolean;
-        count(): number;
-        count(match: $ItemPredicate_): number;
-        find(match: $ItemPredicate_): number;
-        find(): number;
+        countNonEmpty(): number;
+        getHeight(): number;
+        getAllItems(): $List<$ItemStack>;
         clear(match: $ItemPredicate_): void;
         clear(): void;
-        getAllItems(): $List<$ItemStack>;
+        find(match: $ItemPredicate_): number;
+        find(): number;
+        count(): number;
+        count(match: $ItemPredicate_): number;
+        isEmpty(): boolean;
+        getWidth(): number;
         insertItem(slot: number, stack: $ItemStack_, simulate: boolean): $ItemStack;
-        extractItem(slot: number, amount: number, simulate: boolean): $ItemStack;
-        isItemValid(slot: number, stack: $ItemStack_): boolean;
         getStackInSlot(slot: number): $ItemStack;
+        isItemValid(slot: number, stack: $ItemStack_): boolean;
+        extractItem(slot: number, amount: number, simulate: boolean): $ItemStack;
         getSlotLimit(slot: number): number;
         getSlots(): number;
         constructor(arg0: $ChuteBlockEntity);
         get height(): number;
-        get width(): number;
-        get empty(): boolean;
         get allItems(): $List<$ItemStack>;
+        get empty(): boolean;
+        get width(): number;
     }
     export class $ChuteGenerator extends $SpecialBlockStateGen {
         constructor();
@@ -145,19 +145,19 @@ declare module "@package/com/simibubi/create/content/logistics/chute" {
     export class $ChuteBlockEntity extends $SmartBlockEntity implements $IHaveGoggleInformation, $Clearable, $ChuteBlockEntityAccessor {
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
         getItem(): $ItemStack;
-        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
-        setItem(arg0: $ItemStack_): void;
-        setItem(arg0: $ItemStack_, arg1: number): void;
         clearContent(): void;
+        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
+        setItem(arg0: $ItemStack_, arg1: number): void;
+        setItem(arg0: $ItemStack_): void;
+        addToGoggleTooltip(arg0: $List_<$Component_>, arg1: boolean): boolean;
+        onAdded(): void;
+        blockBelowChanged(): void;
+        canDirectlyInsertCached(): boolean;
+        updatePull(): void;
+        updatePush(arg0: number): void;
+        wrapMethod$gmc000$sable$grabCap(arg0: $Direction_, arg1: $Operation_<any>): $IItemHandler;
         propagatePush(): void;
         getItemMotion(): number;
-        blockBelowChanged(): void;
-        addToGoggleTooltip(arg0: $List_<$Component_>, arg1: boolean): boolean;
-        canDirectlyInsertCached(): boolean;
-        onAdded(): void;
-        updatePush(arg0: number): void;
-        updatePull(): void;
-        wrapMethod$gmc000$sable$grabCap(arg0: $Direction_, arg1: $Operation_<any>): $IItemHandler;
         containedFluidTooltip(arg0: $List_<$Component_>, arg1: boolean, arg2: $IFluidHandler): boolean;
         getIcon(arg0: boolean): $ItemStack;
         getItemHandler(): $ChuteItemHandler;
@@ -210,8 +210,8 @@ declare module "@package/com/simibubi/create/content/logistics/chute" {
     export class $ChuteShapes {
         static getShape(arg0: $BlockState_): $VoxelShape;
         static getCollisionShape(arg0: $BlockState_): $VoxelShape;
-        static createSlope(): $VoxelShape;
         static createShape(arg0: $BlockState_): $VoxelShape;
+        static createSlope(): $VoxelShape;
         static COLLISION_MASK: $VoxelShape;
         static PANEL: $VoxelShape;
         static INTERSECTION_MASK: $VoxelShape;
@@ -229,12 +229,12 @@ declare module "@package/com/simibubi/create/content/logistics/chute" {
         constructor(arg0: $Block_, arg1: $Item$Properties);
     }
     export class $ChuteBlock extends $AbstractChuteBlock implements $ProperWaterloggedBlock {
-        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
-        fluidState(arg0: $BlockState_): $FluidState;
         updateWater(arg0: $LevelAccessor, arg1: $BlockState_, arg2: $BlockPos_): void;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
+        fluidState(arg0: $BlockState_): $FluidState;
+        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;

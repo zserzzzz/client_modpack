@@ -52,7 +52,6 @@ declare module "@package/jdk/jfr/consumer" {
         get truncated(): boolean;
     }
     export class $RecordedObject {
-        getInstant(arg0: string): $Instant;
         getClass(arg0: string): $RecordedClass;
         getBoolean(arg0: string): boolean;
         getByte(arg0: string): number;
@@ -67,6 +66,7 @@ declare module "@package/jdk/jfr/consumer" {
         getString(arg0: string): string;
         getDuration(arg0: string): $Duration;
         hasField(arg0: string): boolean;
+        getInstant(arg0: string): $Instant;
         getThread(arg0: string): $RecordedThread;
         get fields(): $List<$ValueDescriptor>;
     }
@@ -81,29 +81,29 @@ declare module "@package/jdk/jfr/consumer" {
         getThreadGroup(): $RecordedThreadGroup;
         getId(): number;
         getOSName(): string;
-        getJavaName(): string;
         getOSThreadId(): number;
         getJavaThreadId(): number;
+        getJavaName(): string;
         get virtual(): boolean;
         get threadGroup(): $RecordedThreadGroup;
         get id(): number;
         get OSName(): string;
-        get javaName(): string;
         get OSThreadId(): number;
         get javaThreadId(): number;
+        get javaName(): string;
     }
     export class $RecordedEvent extends $RecordedObject {
         getStackTrace(): $RecordedStackTrace;
         getDuration(): $Duration;
         getEndTime(): $Instant;
         getStartTime(): $Instant;
-        getThread(): $RecordedThread;
         getEventType(): $EventType;
+        getThread(): $RecordedThread;
         get stackTrace(): $RecordedStackTrace;
         get duration(): $Duration;
         get endTime(): $Instant;
         get startTime(): $Instant;
-        get thread(): $RecordedThread;
         get eventType(): $EventType;
+        get thread(): $RecordedThread;
     }
 }

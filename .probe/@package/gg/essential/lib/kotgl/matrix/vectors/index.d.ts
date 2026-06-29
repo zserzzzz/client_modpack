@@ -3,9 +3,9 @@ export * as mutables from "@package/gg/essential/lib/kotgl/matrix/vectors/mutabl
 declare module "@package/gg/essential/lib/kotgl/matrix/vectors" {
     export class $Vec4 implements $Vec {
         copyOf(): $Vec4;
-        component2(): number;
-        component3(): number;
         component4(): number;
+        component3(): number;
+        component2(): number;
         component1(): number;
         constructor();
     }
@@ -16,14 +16,14 @@ declare module "@package/gg/essential/lib/kotgl/matrix/vectors" {
     export class $Vec {
     }
     export interface $Vec {
-        getZ(): number;
-        getX(): number;
         copyOf(): $Vec;
         getY(): number;
+        getZ(): number;
+        getX(): number;
         getW(): number;
+        get y(): number;
         get z(): number;
         get x(): number;
-        get y(): number;
         get w(): number;
     }
 }

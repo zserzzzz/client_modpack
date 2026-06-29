@@ -22,8 +22,8 @@ declare module "@package/com/mojang/authlib" {
     }
     export class $Environment extends $Record {
         name(): string;
-        sessionHost(): string;
         servicesHost(): string;
+        sessionHost(): string;
         constructor(sessionHost: string, servicesHost: string, name: string);
     }
     /**
@@ -32,9 +32,9 @@ declare module "@package/com/mojang/authlib" {
     export type $Environment_ = { sessionHost?: string, servicesHost?: string, name?: string,  } | [sessionHost?: string, servicesHost?: string, name?: string, ];
     export class $HttpAuthenticationService implements $AuthenticationService {
         getProxy(): $Proxy;
-        static buildQuery(arg0: $Map_<string, $Object>): string;
-        static concatenateURL(arg0: $URL, arg1: string): $URL;
         static constantURL(arg0: string): $URL;
+        static concatenateURL(arg0: $URL, arg1: string): $URL;
+        static buildQuery(arg0: $Map_<string, $Object>): string;
         get proxy(): $Proxy;
     }
     export class $GameProfile {

@@ -1,5 +1,6 @@
 import { $MapCodec } from "@package/com/mojang/serialization";
 import { $MultiBufferSource_ } from "@package/net/minecraft/client/renderer";
+import { $CompoundTag } from "@package/net/minecraft/nbt";
 import { $CustomRenderedItemModelRenderer } from "@package/com/simibubi/create/foundation/item/render";
 import { $EntityType_, $Pose, $PortalProcessor, $Entity, $Entity$RemovalReason, $EntityType$Builder } from "@package/net/minecraft/world/entity";
 import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
@@ -10,7 +11,7 @@ import { $InteractionHand_ } from "@package/net/minecraft/world";
 import { $Predicate } from "@package/java/util/function";
 import { $BootstrapContext } from "@package/net/minecraft/data/worldgen";
 import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos, $Holder_, $Holder } from "@package/net/minecraft/core";
+import { $HolderLookup$Provider, $BlockPos, $Holder_, $Holder } from "@package/net/minecraft/core";
 import { $IItemDecorator } from "@package/net/neoforged/neoforge/client";
 import { $RegistryFriendlyByteBuf } from "@package/net/minecraft/network";
 import { $Enum, $Record, $Object } from "@package/java/lang";
@@ -66,8 +67,8 @@ declare module "@package/com/simibubi/create/content/equipment/potatoCannon" {
         constructor();
     }
     export class $AllPotatoProjectileEntityHitActions$FoodEffects extends $Record implements $PotatoProjectileEntityHitAction {
-        execute(arg0: $ItemStack_, arg1: $EntityHitResult, arg2: $PotatoProjectileEntityHitAction$Type_): boolean;
         codec(): $MapCodec<$PotatoProjectileEntityHitAction>;
+        execute(arg0: $ItemStack_, arg1: $EntityHitResult, arg2: $PotatoProjectileEntityHitAction$Type_): boolean;
         recoverable(): boolean;
         foodProperty(): $FoodProperties;
         static CODEC: $MapCodec<$AllPotatoProjectileEntityHitActions$FoodEffects>;
@@ -78,10 +79,10 @@ declare module "@package/com/simibubi/create/content/equipment/potatoCannon" {
      */
     export type $AllPotatoProjectileEntityHitActions$FoodEffects_ = { foodProperty?: $FoodProperties_, recoverable?: boolean,  } | [foodProperty?: $FoodProperties_, recoverable?: boolean, ];
     export class $AllPotatoProjectileRenderModes$Tumble extends $Enum<$AllPotatoProjectileRenderModes$Tumble> implements $PotatoProjectileRenderMode {
+        codec(): $MapCodec<$PotatoProjectileRenderMode>;
         static values(): $AllPotatoProjectileRenderModes$Tumble[];
         static valueOf(arg0: string): $AllPotatoProjectileRenderModes$Tumble;
         transform(arg0: $PoseStack, arg1: $PotatoProjectileEntity, arg2: number): void;
-        codec(): $MapCodec<$PotatoProjectileRenderMode>;
         static CODEC: $MapCodec<$AllPotatoProjectileRenderModes$Tumble>;
         static INSTANCE: $AllPotatoProjectileRenderModes$Tumble;
     }
@@ -90,9 +91,9 @@ declare module "@package/com/simibubi/create/content/equipment/potatoCannon" {
      */
     export type $AllPotatoProjectileRenderModes$Tumble_ = "instance";
     export class $AllPotatoProjectileRenderModes$StuckToEntity extends $Record implements $PotatoProjectileRenderMode {
+        codec(): $MapCodec<$PotatoProjectileRenderMode>;
         offset(): $Vec3;
         transform(arg0: $PoseStack, arg1: $PotatoProjectileEntity, arg2: number): void;
-        codec(): $MapCodec<$PotatoProjectileRenderMode>;
         static CODEC: $MapCodec<$AllPotatoProjectileRenderModes$StuckToEntity>;
         constructor(offset: $Vec3_);
     }
@@ -101,10 +102,10 @@ declare module "@package/com/simibubi/create/content/equipment/potatoCannon" {
      */
     export type $AllPotatoProjectileRenderModes$StuckToEntity_ = { offset?: $Vec3_,  } | [offset?: $Vec3_, ];
     export class $AllPotatoProjectileEntityHitActions$SetOnFire extends $Record implements $PotatoProjectileEntityHitAction {
+        codec(): $MapCodec<$PotatoProjectileEntityHitAction>;
         execute(arg0: $ItemStack_, arg1: $EntityHitResult, arg2: $PotatoProjectileEntityHitAction$Type_): boolean;
         static seconds(arg0: number): $AllPotatoProjectileEntityHitActions$SetOnFire;
         ticks(): number;
-        codec(): $MapCodec<$PotatoProjectileEntityHitAction>;
         static CODEC: $MapCodec<$AllPotatoProjectileEntityHitActions$SetOnFire>;
         constructor(ticks: number);
     }
@@ -117,11 +118,11 @@ declare module "@package/com/simibubi/create/content/equipment/potatoCannon" {
         constructor();
     }
     export class $AllPotatoProjectileEntityHitActions$PotionEffect extends $Record implements $PotatoProjectileEntityHitAction {
+        codec(): $MapCodec<$PotatoProjectileEntityHitAction>;
         execute(arg0: $ItemStack_, arg1: $EntityHitResult, arg2: $PotatoProjectileEntityHitAction$Type_): boolean;
         level(): number;
-        ticks(): number;
-        codec(): $MapCodec<$PotatoProjectileEntityHitAction>;
         effect(): $Holder<$MobEffect>;
+        ticks(): number;
         recoverable(): boolean;
         static CODEC: $MapCodec<$AllPotatoProjectileEntityHitActions$PotionEffect>;
         constructor(effect: $Holder_<$MobEffect>, level: number, ticks: number, recoverable: boolean);
@@ -129,10 +130,10 @@ declare module "@package/com/simibubi/create/content/equipment/potatoCannon" {
     /**
      * Values that may be interpreted as {@link $AllPotatoProjectileEntityHitActions$PotionEffect}.
      */
-    export type $AllPotatoProjectileEntityHitActions$PotionEffect_ = { effect?: $Holder_<$MobEffect>, recoverable?: boolean, ticks?: number, level?: number,  } | [effect?: $Holder_<$MobEffect>, recoverable?: boolean, ticks?: number, level?: number, ];
+    export type $AllPotatoProjectileEntityHitActions$PotionEffect_ = { level?: number, effect?: $Holder_<$MobEffect>, recoverable?: boolean, ticks?: number,  } | [level?: number, effect?: $Holder_<$MobEffect>, recoverable?: boolean, ticks?: number, ];
     export class $AllPotatoProjectileEntityHitActions$ChorusTeleport extends $Record implements $PotatoProjectileEntityHitAction {
-        execute(arg0: $ItemStack_, arg1: $EntityHitResult, arg2: $PotatoProjectileEntityHitAction$Type_): boolean;
         codec(): $MapCodec<$PotatoProjectileEntityHitAction>;
+        execute(arg0: $ItemStack_, arg1: $EntityHitResult, arg2: $PotatoProjectileEntityHitAction$Type_): boolean;
         teleportDiameter(): number;
         static CODEC: $MapCodec<$AllPotatoProjectileEntityHitActions$ChorusTeleport>;
         constructor(teleportDiameter: number);
@@ -146,9 +147,9 @@ declare module "@package/com/simibubi/create/content/equipment/potatoCannon" {
         constructor();
     }
     export class $AllPotatoProjectileRenderModes$TowardMotion extends $Record implements $PotatoProjectileRenderMode {
+        codec(): $MapCodec<$PotatoProjectileRenderMode>;
         transform(arg0: $PoseStack, arg1: $PotatoProjectileEntity, arg2: number): void;
         spin(): number;
-        codec(): $MapCodec<$PotatoProjectileRenderMode>;
         spriteAngleOffset(): number;
         static CODEC: $MapCodec<$AllPotatoProjectileRenderModes$TowardMotion>;
         constructor(spriteAngleOffset: number, spin: number);
@@ -156,12 +157,12 @@ declare module "@package/com/simibubi/create/content/equipment/potatoCannon" {
     /**
      * Values that may be interpreted as {@link $AllPotatoProjectileRenderModes$TowardMotion}.
      */
-    export type $AllPotatoProjectileRenderModes$TowardMotion_ = { spin?: number, spriteAngleOffset?: number,  } | [spin?: number, spriteAngleOffset?: number, ];
+    export type $AllPotatoProjectileRenderModes$TowardMotion_ = { spriteAngleOffset?: number, spin?: number,  } | [spriteAngleOffset?: number, spin?: number, ];
     export class $AllPotatoProjectileEntityHitActions$CureZombieVillager extends $Enum<$AllPotatoProjectileEntityHitActions$CureZombieVillager> implements $PotatoProjectileEntityHitAction {
+        codec(): $MapCodec<$PotatoProjectileEntityHitAction>;
         static values(): $AllPotatoProjectileEntityHitActions$CureZombieVillager[];
         static valueOf(arg0: string): $AllPotatoProjectileEntityHitActions$CureZombieVillager;
         execute(arg0: $ItemStack_, arg1: $EntityHitResult, arg2: $PotatoProjectileEntityHitAction$Type_): boolean;
-        codec(): $MapCodec<$PotatoProjectileEntityHitAction>;
         static CODEC: $MapCodec<$AllPotatoProjectileEntityHitActions$CureZombieVillager>;
         static INSTANCE: $AllPotatoProjectileEntityHitActions$CureZombieVillager;
     }
@@ -170,9 +171,9 @@ declare module "@package/com/simibubi/create/content/equipment/potatoCannon" {
      */
     export type $AllPotatoProjectileEntityHitActions$CureZombieVillager_ = "instance";
     export class $AllPotatoProjectileBlockHitActions$PlaceBlockOnGround extends $Record implements $PotatoProjectileBlockHitAction {
+        codec(): $MapCodec<$PotatoProjectileBlockHitAction>;
         execute(arg0: $LevelAccessor, arg1: $ItemStack_, arg2: $BlockHitResult): boolean;
         block(): $Holder<$Block>;
-        codec(): $MapCodec<$PotatoProjectileBlockHitAction>;
         static CODEC: $MapCodec<$AllPotatoProjectileBlockHitActions$PlaceBlockOnGround>;
         constructor(arg0: $Block_);
         constructor(block: $Holder_<$Block>);
@@ -213,18 +214,19 @@ declare module "@package/com/simibubi/create/content/equipment/potatoCannon" {
     export class $PotatoProjectileEntity extends $AbstractHurtingProjectile implements $IEntityWithComplexSpawn, $PotatoProjectileEntityExtension {
         static build(arg0: $EntityType$Builder<never>): $EntityType$Builder<never>;
         getItem(): $ItemStack;
-        static playHitSound(arg0: $Level_, arg1: $Vec3_): void;
         setItem(arg0: $ItemStack_): void;
+        static playHitSound(arg0: $Level_, arg1: $Vec3_): void;
         readSpawnData(arg0: $RegistryFriendlyByteBuf): void;
         writeSpawnData(arg0: $RegistryFriendlyByteBuf): void;
-        aeronautics$setIsFromMountedPotatoCannon(arg0: boolean): void;
-        setEnchantmentEffectsFromCannon(arg0: $ItemStack_): void;
-        aeronautics$setDamageMultiplier(arg0: number): void;
-        getStuckEntity(): $Entity;
-        getRenderMode(): $PotatoProjectileRenderMode;
         static playLaunchSound(arg0: $Level_, arg1: $Vec3_, arg2: number): void;
         setStuckEntity(arg0: $Entity): void;
+        getStuckEntity(): $Entity;
+        getRenderMode(): $PotatoProjectileRenderMode;
         getProjectileType(): $PotatoCannonProjectileType;
+        aeronautics$setDamageMultiplier(arg0: number): void;
+        setEnchantmentEffectsFromCannon(arg0: $ItemStack_): void;
+        aeronautics$setIsFromMountedPotatoCannon(arg0: boolean): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -302,13 +304,13 @@ declare module "@package/com/simibubi/create/content/equipment/potatoCannon" {
         wasTouchingWater: boolean;
         horizontalCollision: boolean;
         constructor(arg0: $EntityType_<$AbstractHurtingProjectile>, arg1: $Level_);
-        set enchantmentEffectsFromCannon(value: $ItemStack_);
         get renderMode(): $PotatoProjectileRenderMode;
         get projectileType(): $PotatoCannonProjectileType;
+        set enchantmentEffectsFromCannon(value: $ItemStack_);
     }
     export class $AllPotatoProjectileBlockHitActions$PlantCrop extends $Record implements $PotatoProjectileBlockHitAction {
-        execute(arg0: $LevelAccessor, arg1: $ItemStack_, arg2: $BlockHitResult): boolean;
         codec(): $MapCodec<$PotatoProjectileBlockHitAction>;
+        execute(arg0: $LevelAccessor, arg1: $ItemStack_, arg2: $BlockHitResult): boolean;
         cropBlock(): $Holder<$Block>;
         static CODEC: $MapCodec<$AllPotatoProjectileBlockHitActions$PlantCrop>;
         constructor(arg0: $Block_);
@@ -319,10 +321,10 @@ declare module "@package/com/simibubi/create/content/equipment/potatoCannon" {
      */
     export type $AllPotatoProjectileBlockHitActions$PlantCrop_ = { cropBlock?: $Holder_<$Block>,  } | [cropBlock?: $Holder_<$Block>, ];
     export class $AllPotatoProjectileEntityHitActions$SuspiciousStew extends $Enum<$AllPotatoProjectileEntityHitActions$SuspiciousStew> implements $PotatoProjectileEntityHitAction {
+        codec(): $MapCodec<$PotatoProjectileEntityHitAction>;
         static values(): $AllPotatoProjectileEntityHitActions$SuspiciousStew[];
         static valueOf(arg0: string): $AllPotatoProjectileEntityHitActions$SuspiciousStew;
         execute(arg0: $ItemStack_, arg1: $EntityHitResult, arg2: $PotatoProjectileEntityHitAction$Type_): boolean;
-        codec(): $MapCodec<$PotatoProjectileEntityHitAction>;
         static CODEC: $MapCodec<$AllPotatoProjectileEntityHitActions$SuspiciousStew>;
         static INSTANCE: $AllPotatoProjectileEntityHitActions$SuspiciousStew;
     }
@@ -331,10 +333,10 @@ declare module "@package/com/simibubi/create/content/equipment/potatoCannon" {
      */
     export type $AllPotatoProjectileEntityHitActions$SuspiciousStew_ = "instance";
     export class $AllPotatoProjectileRenderModes$Billboard extends $Enum<$AllPotatoProjectileRenderModes$Billboard> implements $PotatoProjectileRenderMode {
+        codec(): $MapCodec<$PotatoProjectileRenderMode>;
         static values(): $AllPotatoProjectileRenderModes$Billboard[];
         static valueOf(arg0: string): $AllPotatoProjectileRenderModes$Billboard;
         transform(arg0: $PoseStack, arg1: $PotatoProjectileEntity, arg2: number): void;
-        codec(): $MapCodec<$PotatoProjectileRenderMode>;
         static CODEC: $MapCodec<$AllPotatoProjectileRenderModes$Billboard>;
         static INSTANCE: $AllPotatoProjectileRenderModes$Billboard;
     }

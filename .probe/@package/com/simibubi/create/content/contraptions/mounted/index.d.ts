@@ -38,11 +38,11 @@ import { $BlockEntityTicker, $BlockEntityType, $BlockEntityType_, $BlockEntity }
 declare module "@package/com/simibubi/create/content/contraptions/mounted" {
     export class $MinecartContraptionItem extends $Item {
         static create(arg0: $AbstractMinecart$Type_, arg1: $OrientedContraptionEntity): $ItemStack;
-        static furnace(arg0: $Item$Properties): $MinecartContraptionItem;
         static chest(arg0: $Item$Properties): $MinecartContraptionItem;
+        static furnace(arg0: $Item$Properties): $MinecartContraptionItem;
         static rideable(arg0: $Item$Properties): $MinecartContraptionItem;
-        static wrenchCanBeUsedToPickUpMinecartContraptions(arg0: $PlayerInteractEvent$EntityInteract): void;
         static addContraptionToMinecart(arg0: $Level_, arg1: $ItemStack_, arg2: $AbstractMinecart, arg3: $Direction_): void;
+        static wrenchCanBeUsedToPickUpMinecartContraptions(arg0: $PlayerInteractEvent$EntityInteract): void;
         static BASE_ATTACK_DAMAGE_ID: $ResourceLocation;
         static DEFAULT_MAX_STACK_SIZE: number;
         static MAX_BAR_WIDTH: number;
@@ -57,8 +57,8 @@ declare module "@package/com/simibubi/create/content/contraptions/mounted" {
         static valueOf(arg0: string): $CartAssembleRailType;
         matches(arg0: $BlockState_): boolean;
         getItem(): $Item;
-        getSerializedName(): string;
         getBlock(): $Block;
+        getSerializedName(): string;
         getRemappedEnumConstantName(): string;
         static DETECTOR_RAIL: $CartAssembleRailType;
         static REGULAR: $CartAssembleRailType;
@@ -66,8 +66,8 @@ declare module "@package/com/simibubi/create/content/contraptions/mounted" {
         static ACTIVATOR_RAIL: $CartAssembleRailType;
         static POWERED_RAIL: $CartAssembleRailType;
         get item(): $Item;
-        get serializedName(): string;
         get block(): $Block;
+        get serializedName(): string;
         get remappedEnumConstantName(): string;
     }
     /**
@@ -91,26 +91,26 @@ declare module "@package/com/simibubi/create/content/contraptions/mounted" {
      */
     export type $CartAssemblerBlock$CartAssemblerAction_ = "assemble" | "disassemble" | "assemble_accelerate" | "disassemble_brake" | "assemble_accelerate_directional" | "pass";
     export class $CartAssemblerBlock extends $BaseRailBlock implements $IBE<$CartAssemblerBlockEntity>, $IWrenchable, $SpecialBlockItemRequirement {
-        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
-        getBlockEntityType(): $BlockEntityType<$CartAssemblerBlockEntity>;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        getBlockEntityClass(): $Class<$CartAssemblerBlockEntity>;
         static getHorizontalDirection(arg0: $BlockState_): $Direction;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
+        getBlockEntityClass(): $Class<$CartAssemblerBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$CartAssemblerBlockEntity>;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
+        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
         static canAssembleTo(arg0: $AbstractMinecart): boolean;
         getDropsNoRail(arg0: $BlockState_, arg1: $ServerLevel, arg2: $BlockPos_, arg3: $BlockEntity, arg4: $Entity, arg5: $ItemStack_): $List<$ItemStack>;
         static getRailBlock(arg0: $BlockState_): $BlockState;
-        static createAnchor(arg0: $BlockState_): $BlockState;
         static getActionForCart(arg0: $BlockState_, arg1: $AbstractMinecart): $CartAssemblerBlock$CartAssemblerAction;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$CartAssemblerBlockEntity>): void;
+        static createAnchor(arg0: $BlockState_): $BlockState;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$CartAssemblerBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($CartAssemblerBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$CartAssemblerBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $CartAssemblerBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$CartAssemblerBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($CartAssemblerBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$CartAssemblerBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -147,16 +147,16 @@ declare module "@package/com/simibubi/create/content/contraptions/mounted" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$CartAssemblerBlockEntity>;
         get blockEntityClass(): $Class<$CartAssemblerBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$CartAssemblerBlockEntity>;
     }
     export class $CartAssemblerBlockEntity extends $SmartBlockEntity implements $IDisplayAssemblyExceptions {
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
-        resetTicksSinceMinecartUpdate(): void;
-        tryAssemble(arg0: $AbstractMinecart): void;
-        assembleNextTick(arg0: $AbstractMinecart): void;
         getLastAssemblyException(): $AssemblyException;
+        assembleNextTick(arg0: $AbstractMinecart): void;
         isMinecartUpdateValid(): boolean;
+        tryAssemble(arg0: $AbstractMinecart): void;
+        resetTicksSinceMinecartUpdate(): void;
         addExceptionToTooltip(arg0: $List_<$Component_>): boolean;
         worldPosition: $BlockPos;
         level: $Level;
@@ -228,13 +228,13 @@ declare module "@package/com/simibubi/create/content/contraptions/mounted" {
     export class $CartAssemblerBlockEntity$CartMovementMode extends $Enum<$CartAssemblerBlockEntity$CartMovementMode> implements $INamedIconOptions {
         static values(): $CartAssemblerBlockEntity$CartMovementMode[];
         static valueOf(arg0: string): $CartAssemblerBlockEntity$CartMovementMode;
-        getIcon(): $AllIcons;
         getTranslationKey(): string;
+        getIcon(): $AllIcons;
         static ROTATE: $CartAssemblerBlockEntity$CartMovementMode;
         static ROTATION_LOCKED: $CartAssemblerBlockEntity$CartMovementMode;
         static ROTATE_PAUSED: $CartAssemblerBlockEntity$CartMovementMode;
-        get icon(): $AllIcons;
         get translationKey(): string;
+        get icon(): $AllIcons;
     }
     /**
      * Values that may be interpreted as {@link $CartAssemblerBlockEntity$CartMovementMode}.

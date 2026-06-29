@@ -8,10 +8,8 @@ declare module "@package/dev/latvian/mods/rhino/type" {
     export class $JSFixedArrayTypeInfo extends $Record implements $TypeInfo {
         append(arg0: $TypeStringContext, arg1: $StringBuilder): void;
         types(): $List<$JSOptionalParam>;
-        asClass(): $Class<never>;
         collectContainedComponentClasses(arg0: $Collection_<$Class<never>>): void;
-        isBoolean(): boolean;
-        recordComponents(): $Map<string, $RecordTypeInfo$Component>;
+        asClass(): $Class<never>;
         signature(): string;
         isPrimitive(): boolean;
         newArray(arg0: number): $Object;
@@ -24,30 +22,32 @@ declare module "@package/dev/latvian/mods/rhino/type" {
         isCharacter(): boolean;
         isFloat(): boolean;
         asArray(): $TypeInfo;
-        withParams(...arg0: $TypeInfo_[]): $TypeInfo;
+        recordComponents(): $Map<string, $RecordTypeInfo$Component>;
+        isBoolean(): boolean;
+        getContainedComponentClasses(): $Set<$Class<never>>;
         isShort(): boolean;
-        isByte(): boolean;
-        isInt(): boolean;
-        isDouble(): boolean;
+        isLong(): boolean;
         consolidate(arg0: $Map_<$VariableTypeInfo, $TypeInfo_>): $TypeInfo;
         shouldConvert(): boolean;
         createDefaultValue(): $Object;
-        isLong(): boolean;
+        isDouble(): boolean;
+        isByte(): boolean;
+        isInt(): boolean;
         isFunctionalInterface(): boolean;
-        getContainedComponentClasses(): $Set<$Class<never>>;
+        withParams(...arg0: $TypeInfo_[]): $TypeInfo;
         constructor(types: $List_<$JSOptionalParam_>);
-        get boolean(): boolean;
         get primitive(): boolean;
         get void(): boolean;
         get character(): boolean;
         get float(): boolean;
+        get boolean(): boolean;
+        get containedComponentClasses(): $Set<$Class<never>>;
         get short(): boolean;
+        get long(): boolean;
+        get double(): boolean;
         get byte(): boolean;
         get int(): boolean;
-        get double(): boolean;
-        get long(): boolean;
         get functionalInterface(): boolean;
-        get containedComponentClasses(): $Set<$Class<never>>;
     }
     /**
      * Values that may be interpreted as {@link $JSFixedArrayTypeInfo}.
@@ -56,12 +56,12 @@ declare module "@package/dev/latvian/mods/rhino/type" {
     export class $RecordTypeInfo extends $ClassTypeInfo implements $TypeWrapperFactory<$Object> {
         wrap(arg1: $Object, arg2: $TypeInfo_): $Object;
         getData(): $RecordTypeInfo$Data;
-        createInstance(...arg1: $Object[]): $Object;
         createInstance(arg1: $Map_<never, never>): $Object;
-        getArrayTypeInfo(): $JSFixedArrayTypeInfo;
-        getObjectTypeInfo(): $JSObjectTypeInfo;
-        createCombinedType(...arg0: $TypeInfo_[]): $TypeInfo;
+        createInstance(...arg1: $Object[]): $Object;
         static setGlobalDefaultValue<T>(arg0: $Class<T>, arg1: T): void;
+        getArrayTypeInfo(): $JSFixedArrayTypeInfo;
+        createCombinedType(...arg0: $TypeInfo_[]): $TypeInfo;
+        getObjectTypeInfo(): $JSObjectTypeInfo;
         get data(): $RecordTypeInfo$Data;
         get arrayTypeInfo(): $JSFixedArrayTypeInfo;
         get objectTypeInfo(): $JSObjectTypeInfo;
@@ -76,10 +76,8 @@ declare module "@package/dev/latvian/mods/rhino/type" {
         static of(arg0: $JSOptionalParam_, arg1: $JSOptionalParam_): $JSObjectTypeInfo;
         static of(arg0: $JSOptionalParam_): $JSObjectTypeInfo;
         fields(): $List<$JSOptionalParam>;
-        asClass(): $Class<never>;
         collectContainedComponentClasses(arg0: $Collection_<$Class<never>>): void;
-        isBoolean(): boolean;
-        recordComponents(): $Map<string, $RecordTypeInfo$Component>;
+        asClass(): $Class<never>;
         signature(): string;
         isPrimitive(): boolean;
         newArray(arg0: number): $Object;
@@ -92,30 +90,32 @@ declare module "@package/dev/latvian/mods/rhino/type" {
         isCharacter(): boolean;
         isFloat(): boolean;
         asArray(): $TypeInfo;
-        withParams(...arg0: $TypeInfo_[]): $TypeInfo;
+        recordComponents(): $Map<string, $RecordTypeInfo$Component>;
+        isBoolean(): boolean;
+        getContainedComponentClasses(): $Set<$Class<never>>;
         isShort(): boolean;
-        isByte(): boolean;
-        isInt(): boolean;
-        isDouble(): boolean;
+        isLong(): boolean;
         consolidate(arg0: $Map_<$VariableTypeInfo, $TypeInfo_>): $TypeInfo;
         shouldConvert(): boolean;
         createDefaultValue(): $Object;
-        isLong(): boolean;
+        isDouble(): boolean;
+        isByte(): boolean;
+        isInt(): boolean;
         isFunctionalInterface(): boolean;
-        getContainedComponentClasses(): $Set<$Class<never>>;
+        withParams(...arg0: $TypeInfo_[]): $TypeInfo;
         constructor(fields: $List_<$JSOptionalParam_>);
-        get boolean(): boolean;
         get primitive(): boolean;
         get void(): boolean;
         get character(): boolean;
         get float(): boolean;
+        get boolean(): boolean;
+        get containedComponentClasses(): $Set<$Class<never>>;
         get short(): boolean;
+        get long(): boolean;
+        get double(): boolean;
         get byte(): boolean;
         get int(): boolean;
-        get double(): boolean;
-        get long(): boolean;
         get functionalInterface(): boolean;
-        get containedComponentClasses(): $Set<$Class<never>>;
     }
     /**
      * Values that may be interpreted as {@link $JSObjectTypeInfo}.
@@ -132,7 +132,7 @@ declare module "@package/dev/latvian/mods/rhino/type" {
     /**
      * Values that may be interpreted as {@link $JSOptionalParam}.
      */
-    export type $JSOptionalParam_ = { optional?: boolean, name?: string, type?: $TypeInfo_,  } | [optional?: boolean, name?: string, type?: $TypeInfo_, ];
+    export type $JSOptionalParam_ = { type?: $TypeInfo_, optional?: boolean, name?: string,  } | [type?: $TypeInfo_, optional?: boolean, name?: string, ];
     export class $TypeStringContext {
         static DEFAULT: $TypeStringContext;
     }
@@ -151,7 +151,7 @@ declare module "@package/dev/latvian/mods/rhino/type" {
     /**
      * Values that may be interpreted as {@link $RecordTypeInfo$Component}.
      */
-    export type $RecordTypeInfo$Component_ = { type?: $TypeInfo_, name?: string, index?: number,  } | [type?: $TypeInfo_, name?: string, index?: number, ];
+    export type $RecordTypeInfo$Component_ = { index?: number, type?: $TypeInfo_, name?: string,  } | [index?: number, type?: $TypeInfo_, name?: string, ];
     export class $VariableTypeInfo extends $TypeInfoBase {
         getName(): string;
         getBounds(): $TypeInfo[];
@@ -161,12 +161,12 @@ declare module "@package/dev/latvian/mods/rhino/type" {
         get mainBound(): $TypeInfo;
     }
     export class $TypeInfo {
-        static of(arg0: $TypeVariable<never>): $VariableTypeInfo;
         static of(arg0: $Type): $TypeInfo;
         static of(arg0: $Class<never>): $TypeInfo;
+        static of(arg0: $TypeVariable<never>): $VariableTypeInfo;
         static ofArray(arg0: $Type[]): $TypeInfo[];
-        static safeOf(arg0: $Supplier_<$Type>): $TypeInfo;
         static safeOfArray(arg0: $Supplier_<$Type[]>): $TypeInfo[];
+        static safeOf(arg0: $Supplier_<$Type>): $TypeInfo;
         static PRIMITIVE_INT_ARRAY: $TypeInfo;
         static PRIMITIVE_VOID: $TypeInfo;
         static PRIMITIVE_DOUBLE_ARRAY: $TypeInfo;
@@ -216,8 +216,6 @@ declare module "@package/dev/latvian/mods/rhino/type" {
         static PRIMITIVE_LONG: $TypeInfo;
     }
     export interface $TypeInfo {
-        isBoolean(): boolean;
-        recordComponents(): $Map<string, $RecordTypeInfo$Component>;
         signature(): string;
         append(arg0: $TypeStringContext, arg1: $StringBuilder): void;
         isPrimitive(): boolean;
@@ -231,31 +229,33 @@ declare module "@package/dev/latvian/mods/rhino/type" {
         isCharacter(): boolean;
         isFloat(): boolean;
         asArray(): $TypeInfo;
-        withParams(...arg0: $TypeInfo_[]): $TypeInfo;
+        recordComponents(): $Map<string, $RecordTypeInfo$Component>;
+        isBoolean(): boolean;
+        getContainedComponentClasses(): $Set<$Class<never>>;
+        collectContainedComponentClasses(arg0: $Collection_<$Class<never>>): void;
         isShort(): boolean;
-        isByte(): boolean;
-        asClass(): $Class<never>;
-        isInt(): boolean;
-        isDouble(): boolean;
+        isLong(): boolean;
         consolidate(arg0: $Map_<$VariableTypeInfo, $TypeInfo_>): $TypeInfo;
         shouldConvert(): boolean;
         createDefaultValue(): $Object;
-        isLong(): boolean;
+        isDouble(): boolean;
+        isByte(): boolean;
+        isInt(): boolean;
+        asClass(): $Class<never>;
         isFunctionalInterface(): boolean;
-        collectContainedComponentClasses(arg0: $Collection_<$Class<never>>): void;
-        getContainedComponentClasses(): $Set<$Class<never>>;
-        get boolean(): boolean;
+        withParams(...arg0: $TypeInfo_[]): $TypeInfo;
         get primitive(): boolean;
         get void(): boolean;
         get character(): boolean;
         get float(): boolean;
+        get boolean(): boolean;
+        get containedComponentClasses(): $Set<$Class<never>>;
         get short(): boolean;
+        get long(): boolean;
+        get double(): boolean;
         get byte(): boolean;
         get int(): boolean;
-        get double(): boolean;
-        get long(): boolean;
         get functionalInterface(): boolean;
-        get containedComponentClasses(): $Set<$Class<never>>;
     }
     /**
      * Values that may be interpreted as {@link $TypeInfo}.
@@ -266,8 +266,6 @@ declare module "@package/dev/latvian/mods/rhino/type" {
     export class $TypeInfoBase implements $TypeInfo {
         newArray(arg0: number): $Object;
         asArray(): $TypeInfo;
-        isBoolean(): boolean;
-        recordComponents(): $Map<string, $RecordTypeInfo$Component>;
         signature(): string;
         append(arg0: $TypeStringContext, arg1: $StringBuilder): void;
         isPrimitive(): boolean;
@@ -279,31 +277,33 @@ declare module "@package/dev/latvian/mods/rhino/type" {
         or(arg0: $TypeInfo_): $TypeInfo;
         isCharacter(): boolean;
         isFloat(): boolean;
-        withParams(...arg0: $TypeInfo_[]): $TypeInfo;
+        recordComponents(): $Map<string, $RecordTypeInfo$Component>;
+        isBoolean(): boolean;
+        getContainedComponentClasses(): $Set<$Class<never>>;
+        collectContainedComponentClasses(arg0: $Collection_<$Class<never>>): void;
         isShort(): boolean;
-        isByte(): boolean;
-        isInt(): boolean;
-        isDouble(): boolean;
+        isLong(): boolean;
         consolidate(arg0: $Map_<$VariableTypeInfo, $TypeInfo_>): $TypeInfo;
         shouldConvert(): boolean;
         createDefaultValue(): $Object;
-        isLong(): boolean;
+        isDouble(): boolean;
+        isByte(): boolean;
+        isInt(): boolean;
         isFunctionalInterface(): boolean;
-        collectContainedComponentClasses(arg0: $Collection_<$Class<never>>): void;
-        getContainedComponentClasses(): $Set<$Class<never>>;
+        withParams(...arg0: $TypeInfo_[]): $TypeInfo;
         constructor();
-        get boolean(): boolean;
         get primitive(): boolean;
         get void(): boolean;
         get character(): boolean;
         get float(): boolean;
+        get boolean(): boolean;
+        get containedComponentClasses(): $Set<$Class<never>>;
         get short(): boolean;
+        get long(): boolean;
+        get double(): boolean;
         get byte(): boolean;
         get int(): boolean;
-        get double(): boolean;
-        get long(): boolean;
         get functionalInterface(): boolean;
-        get containedComponentClasses(): $Set<$Class<never>>;
     }
     export class $RecordTypeInfo$Data extends $Record {
         componentMap(): $Map<string, $RecordTypeInfo$Component>;
@@ -314,5 +314,5 @@ declare module "@package/dev/latvian/mods/rhino/type" {
     /**
      * Values that may be interpreted as {@link $RecordTypeInfo$Data}.
      */
-    export type $RecordTypeInfo$Data_ = { components?: $RecordTypeInfo$Component_[], defaultArguments?: $Object[], componentMap?: $Map_<string, $RecordTypeInfo$Component_>,  } | [components?: $RecordTypeInfo$Component_[], defaultArguments?: $Object[], componentMap?: $Map_<string, $RecordTypeInfo$Component_>, ];
+    export type $RecordTypeInfo$Data_ = { componentMap?: $Map_<string, $RecordTypeInfo$Component_>, components?: $RecordTypeInfo$Component_[], defaultArguments?: $Object[],  } | [componentMap?: $Map_<string, $RecordTypeInfo$Component_>, components?: $RecordTypeInfo$Component_[], defaultArguments?: $Object[], ];
 }

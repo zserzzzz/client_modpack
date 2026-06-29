@@ -72,8 +72,8 @@ declare module "@package/com/simibubi/create/content/schematics" {
         constructor();
     }
     export class $SchematicAndQuillItem extends $Item {
-        static replaceStructureVoidWithAir(arg0: $CompoundTag_): void;
         static clampGlueBoxes(arg0: $Level_, arg1: $AABB_, arg2: $CompoundTag_): void;
+        static replaceStructureVoidWithAir(arg0: $CompoundTag_): void;
         static BASE_ATTACK_DAMAGE_ID: $ResourceLocation;
         static DEFAULT_MAX_STACK_SIZE: number;
         static MAX_BAR_WIDTH: number;
@@ -89,10 +89,10 @@ declare module "@package/com/simibubi/create/content/schematics" {
         getTable(arg0: $Level_, arg1: $BlockPos_): $SchematicTableBlockEntity;
         tick(): void;
         getConfig(): $CSchematics;
+        handleWriteRequest(arg0: $ServerPlayer, arg1: string, arg2: number[]): void;
+        handleNewUpload(arg0: $ServerPlayer, arg1: string, arg2: number, arg3: $BlockPos_): void;
         handleFinishedUpload(arg0: $ServerPlayer, arg1: string): void;
         handleInstantSchematic(arg0: $ServerPlayer, arg1: string, arg2: $Level_, arg3: $BlockPos_, arg4: $BlockPos_): void;
-        handleNewUpload(arg0: $ServerPlayer, arg1: string, arg2: number, arg3: $BlockPos_): void;
-        handleWriteRequest(arg0: $ServerPlayer, arg1: string, arg2: number[]): void;
         constructor();
         get config(): $CSchematics;
     }
@@ -117,33 +117,33 @@ declare module "@package/com/simibubi/create/content/schematics" {
     export class $SchematicPrinter implements $SchematicPrinterExtension {
         write(arg0: $CompoundTag_): void;
         isLoaded(): boolean;
+        getAnchor(): $BlockPos;
         getCurrentTarget(): $BlockPos;
+        fromTag(arg0: $CompoundTag_, arg1: boolean): void;
+        handleCurrentTarget(arg0: $SchematicPrinter$BlockTargetHandler_, arg1: $SchematicPrinter$EntityTargetHandler_): void;
+        getCurrentRequirement(): $ItemRequirement;
+        markAllEntityRequirements(arg0: $MaterialChecklist): void;
+        markAllBlockRequirements(arg0: $MaterialChecklist, arg1: $Level_, arg2: $SchematicPrinter$PlacementPredicate_): number;
+        isErrored(): boolean;
         loadSchematic(arg0: $ItemStack_, arg1: $Level_, arg2: boolean): void;
+        sable$getSchematicLevel(): $SchematicLevel;
+        resetSchematic(): void;
+        advanceCurrentPos(): boolean;
         shouldPlaceCurrent(arg0: $Level_, arg1: $SchematicPrinter$PlacementPredicate_): boolean;
         shouldPlaceCurrent(arg0: $Level_): boolean;
-        resetSchematic(): void;
         isWorldEmpty(): boolean;
-        advanceCurrentPos(): boolean;
         sendBlockUpdates(arg0: $Level_): void;
-        fromTag(arg0: $CompoundTag_, arg1: boolean): void;
-        getAnchor(): $BlockPos;
-        getCurrentRequirement(): $ItemRequirement;
-        handleCurrentTarget(arg0: $SchematicPrinter$BlockTargetHandler_, arg1: $SchematicPrinter$EntityTargetHandler_): void;
-        markAllBlockRequirements(arg0: $MaterialChecklist, arg1: $Level_, arg2: $SchematicPrinter$PlacementPredicate_): number;
-        markAllEntityRequirements(arg0: $MaterialChecklist): void;
-        sable$getSchematicLevel(): $SchematicLevel;
-        isErrored(): boolean;
         tryAdvanceCurrentPos(): boolean;
-        shouldPlaceBlock(arg0: $Level_, arg1: $SchematicPrinter$PlacementPredicate_, arg2: $BlockPos_): boolean;
-        static shouldDeferBlock(arg0: $BlockState_): boolean;
         getPrintStage(): $SchematicPrinter$PrintStage;
+        static shouldDeferBlock(arg0: $BlockState_): boolean;
+        shouldPlaceBlock(arg0: $Level_, arg1: $SchematicPrinter$PlacementPredicate_, arg2: $BlockPos_): boolean;
         constructor();
         get loaded(): boolean;
-        get currentTarget(): $BlockPos;
-        get worldEmpty(): boolean;
         get anchor(): $BlockPos;
+        get currentTarget(): $BlockPos;
         get currentRequirement(): $ItemRequirement;
         get errored(): boolean;
+        get worldEmpty(): boolean;
         get printStage(): $SchematicPrinter$PrintStage;
     }
     export class $SchematicExport$SchematicExportResult extends $Record {
@@ -158,7 +158,7 @@ declare module "@package/com/simibubi/create/content/schematics" {
     /**
      * Values that may be interpreted as {@link $SchematicExport$SchematicExportResult}.
      */
-    export type $SchematicExport$SchematicExportResult_ = { origin?: $BlockPos_, dir?: $Path_, fileName?: string, file?: $Path_, overwritten?: boolean, bounds?: $BlockPos_,  } | [origin?: $BlockPos_, dir?: $Path_, fileName?: string, file?: $Path_, overwritten?: boolean, bounds?: $BlockPos_, ];
+    export type $SchematicExport$SchematicExportResult_ = { bounds?: $BlockPos_, origin?: $BlockPos_, dir?: $Path_, fileName?: string, file?: $Path_, overwritten?: boolean,  } | [bounds?: $BlockPos_, origin?: $BlockPos_, dir?: $Path_, fileName?: string, file?: $Path_, overwritten?: boolean, ];
     export class $SchematicItem extends $Item {
         static create(arg0: $Level_, arg1: string, arg2: string): $ItemStack;
         static getSettings(arg0: $ItemStack_, arg1: boolean): $StructurePlaceSettings;

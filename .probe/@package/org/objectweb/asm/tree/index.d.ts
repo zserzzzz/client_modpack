@@ -170,9 +170,9 @@ declare module "@package/org/objectweb/asm/tree" {
         accept(arg0: $MethodVisitor): void;
         getFirst(): $AbstractInsnNode;
         getLast(): $AbstractInsnNode;
-        resetLabels(): void;
         insertBefore(arg0: $AbstractInsnNode, arg1: $InsnList): void;
         insertBefore(arg0: $AbstractInsnNode, arg1: $AbstractInsnNode): void;
+        resetLabels(): void;
         spliterator(): $Spliterator<$AbstractInsnNode>;
         forEach(arg0: $Consumer_<$AbstractInsnNode>): void;
         constructor();
@@ -249,12 +249,12 @@ declare module "@package/org/objectweb/asm/tree" {
         constructor(arg0: number);
     }
     export class $AbstractInsnNode {
-        getNext(): $AbstractInsnNode;
-        getPrevious(): $AbstractInsnNode;
         clone(arg0: $Map_<$LabelNode, $LabelNode>): $AbstractInsnNode;
         accept(arg0: $MethodVisitor): void;
         getType(): number;
         getOpcode(): number;
+        getPrevious(): $AbstractInsnNode;
+        getNext(): $AbstractInsnNode;
         static INT_INSN: number;
         visibleTypeAnnotations: $List<$TypeAnnotationNode>;
         static INSN: number;
@@ -273,10 +273,10 @@ declare module "@package/org/objectweb/asm/tree" {
         static MULTIANEWARRAY_INSN: number;
         static VAR_INSN: number;
         static JUMP_INSN: number;
-        get next(): $AbstractInsnNode;
-        get previous(): $AbstractInsnNode;
         get type(): number;
         get opcode(): number;
+        get previous(): $AbstractInsnNode;
+        get next(): $AbstractInsnNode;
     }
     export class $ModuleOpenNode {
         accept(arg0: $ModuleVisitor): void;

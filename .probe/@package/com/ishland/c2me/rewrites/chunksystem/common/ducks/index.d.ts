@@ -6,8 +6,8 @@ declare module "@package/com/ishland/c2me/rewrites/chunksystem/common/ducks" {
     export class $IPOIUnloading {
     }
     export interface $IPOIUnloading {
-        c2me$unloadPoi(arg0: $ChunkPos): void;
         c2me$shouldUnloadPoi(pos: $ChunkPos): boolean;
+        c2me$unloadPoi(arg0: $ChunkPos): void;
     }
     /**
      * Values that may be interpreted as {@link $IPOIUnloading}.

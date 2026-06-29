@@ -7,29 +7,29 @@ import { $GlslUnaryNode, $GlslAssignmentNode, $GlslPrecisionNode, $GlslCompareNo
 declare module "@package/io/github/ocelot/glslprocessor/api/visitor" {
     export class $GlslNodeVisitor {
         visitOperation(arg0: $GlslOperationNode): void;
-        visitJump(arg0: $GlslJumpNode_): void;
-        visitUnary(arg0: $GlslUnaryNode): void;
-        visitIf(arg0: $GlslIfNode): $GlslIfVisitor;
         visitConstant(arg0: $GlslConstantNode): void;
-        visitGetField(arg0: $GlslGetFieldNode): void;
-        visitReturn(arg0: $GlslReturnNode): void;
-        visitNewField(arg0: $GlslNewFieldNode): void;
-        visitVariable(arg0: $GlslVariableNode): void;
-        visitPrecision(arg0: $GlslPrecisionNode): void;
-        visitCondition(arg0: $GlslConditionalNode): void;
-        visitCompare(arg0: $GlslCompareNode): void;
-        visitWhileLoop(arg0: $GlslWhileLoopNode): $GlslNodeVisitor;
-        visitForLoopEnd(arg0: $GlslForLoopNode): void;
-        visitForLoop(arg0: $GlslForLoopNode): $GlslNodeVisitor;
-        visitBitwise(arg0: $GlslBitwiseNode): $GlslBitwiseVisitor;
-        visitGetArray(arg0: $GlslGetArrayNode): void;
-        visitWhileLoopEnd(arg0: $GlslWhileLoopNode): void;
-        visitSwitch(arg0: $GlslSwitchNode): $GlslSwitchVisitor;
-        visitAssign(arg0: $GlslAssignmentNode): void;
+        visitJump(arg0: $GlslJumpNode_): void;
+        visitIf(arg0: $GlslIfNode): $GlslIfVisitor;
+        visitUnary(arg0: $GlslUnaryNode): void;
         visitFunctionInvocation(arg0: $GlslInvokeFunctionNode): $GlslInvokeVisitor;
         visitPrimitiveConstructor(arg0: $GlslPrimitiveConstructorNode): void;
-        visitVariableDeclaration(arg0: $GlslVariableDeclarationNode): void;
+        visitForLoopEnd(arg0: $GlslForLoopNode): void;
+        visitWhileLoopEnd(arg0: $GlslWhileLoopNode): void;
+        visitPrecision(arg0: $GlslPrecisionNode): void;
+        visitCondition(arg0: $GlslConditionalNode): void;
+        visitWhileLoop(arg0: $GlslWhileLoopNode): $GlslNodeVisitor;
+        visitSwitch(arg0: $GlslSwitchNode): $GlslSwitchVisitor;
+        visitForLoop(arg0: $GlslForLoopNode): $GlslNodeVisitor;
+        visitReturn(arg0: $GlslReturnNode): void;
+        visitBitwise(arg0: $GlslBitwiseNode): $GlslBitwiseVisitor;
+        visitAssign(arg0: $GlslAssignmentNode): void;
+        visitCompare(arg0: $GlslCompareNode): void;
         visitStructDeclaration(arg0: $GlslStructDeclarationNode): void;
+        visitVariableDeclaration(arg0: $GlslVariableDeclarationNode): void;
+        visitNewField(arg0: $GlslNewFieldNode): void;
+        visitGetField(arg0: $GlslGetFieldNode): void;
+        visitGetArray(arg0: $GlslGetArrayNode): void;
+        visitVariable(arg0: $GlslVariableNode): void;
         constructor();
         constructor(arg0: $GlslNodeVisitor);
     }

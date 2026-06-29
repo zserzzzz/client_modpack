@@ -10,8 +10,8 @@ declare module "@package/xaero/lib/client/config/sync/profile" {
         get(arg0: string): $SyncedConfigProfileInfo;
         add(arg0: string, arg1: string): void;
         iterator(): $Iterator<$IConfigProfileInfo>;
-        getDefaultEnforcedProfileId(): string;
         setDefaultEnforcedProfileId(arg0: string): void;
+        getDefaultEnforcedProfileId(): string;
         spliterator(): $Spliterator<$IConfigProfileInfo>;
         forEach(arg0: $Consumer_<$IConfigProfileInfo>): void;
         [Symbol.iterator](): Iterator<$IConfigProfileInfo>

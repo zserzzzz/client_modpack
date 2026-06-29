@@ -24,11 +24,11 @@ declare module "@package/xaero/common/minimap/waypoints/render" {
         /**
          * @deprecated
          */
-        isInteractable(arg0: number, arg1: $Waypoint): boolean;
+        getBoxScale(arg0: number, arg1: $Waypoint, arg2: $WaypointMapRenderContext): number;
         /**
          * @deprecated
          */
-        getBoxScale(arg0: number, arg1: $Waypoint, arg2: $WaypointMapRenderContext): number;
+        isInteractable(arg0: number, arg1: $Waypoint): boolean;
         constructor();
     }
     /**
@@ -63,7 +63,7 @@ declare module "@package/xaero/common/minimap/waypoints/render" {
         /**
          * @deprecated
          */
-        renderElement(arg0: number, arg1: boolean, arg2: boolean, arg3: $GuiGraphics, arg4: $MultiBufferSource$BufferSource, arg5: $Font, arg6: $RenderTarget, arg7: $MinimapRendererHelper, arg8: $Entity, arg9: $Player, arg10: number, arg11: number, arg12: number, arg13: number, arg14: number, arg15: number, arg16: $Waypoint, arg17: number, arg18: number, arg19: boolean, arg20: number): boolean;
+        drawIconOnGUI(arg0: $GuiGraphics, arg1: $MinimapRendererHelper, arg2: $Waypoint, arg3: $ModSettings, arg4: number, arg5: number, arg6: $MultiBufferSource$BufferSource, arg7: $VertexConsumer): void;
         /**
          * @deprecated
          */
@@ -71,17 +71,17 @@ declare module "@package/xaero/common/minimap/waypoints/render" {
         /**
          * @deprecated
          */
-        drawIconOnGUI(arg0: $GuiGraphics, arg1: $MinimapRendererHelper, arg2: $Waypoint, arg3: $ModSettings, arg4: number, arg5: number, arg6: $MultiBufferSource$BufferSource, arg7: $VertexConsumer): void;
+        renderElement(arg0: number, arg1: boolean, arg2: boolean, arg3: $GuiGraphics, arg4: $MultiBufferSource$BufferSource, arg5: $Font, arg6: $RenderTarget, arg7: $MinimapRendererHelper, arg8: $Entity, arg9: $Player, arg10: number, arg11: number, arg12: number, arg13: number, arg14: number, arg15: number, arg16: $Waypoint, arg17: number, arg18: number, arg19: boolean, arg20: number): boolean;
         constructor(arg0: $WaypointReader, arg1: $WaypointRenderProvider, arg2: $WaypointGuiRenderContext);
     }
     /**
      * @deprecated
      */
     export class $WaypointRenderProvider extends $WaypointRenderProvider$1 {
-        getNext(arg0: number, arg1: $WaypointMapRenderContext): $Waypoint;
         begin(arg0: number, arg1: $WaypointMapRenderContext): void;
         end(arg0: number, arg1: $WaypointMapRenderContext): void;
         hasNext(arg0: number, arg1: $WaypointMapRenderContext): boolean;
+        getNext(arg0: number, arg1: $WaypointMapRenderContext): $Waypoint;
         setupContextAndGetNext(arg0: number, arg1: $WaypointMapRenderContext): $Waypoint;
         filter: $Predicate<$Waypoint>;
         constructor();

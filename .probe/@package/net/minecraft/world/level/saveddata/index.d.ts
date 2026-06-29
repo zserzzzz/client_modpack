@@ -25,14 +25,14 @@ declare module "@package/net/minecraft/world/level/saveddata" {
         constructor();
     }
     export class $SavedData$Factory<T extends $SavedData> extends $Record {
-        deserializer(): $BiFunction<$CompoundTag, $HolderLookup$Provider, T>;
         type(): $DataFixTypes;
         "constructor"(): $Supplier<T>;
+        deserializer(): $BiFunction<$CompoundTag, $HolderLookup$Provider, T>;
         constructor(arg0: $Supplier_<T>, arg1: $BiFunction_<$CompoundTag, $HolderLookup$Provider, T>);
         constructor(arg0: $Supplier_<T>, deserializer: $BiFunction_<$CompoundTag, $HolderLookup$Provider, T>, type: $DataFixTypes_);
     }
     /**
      * Values that may be interpreted as {@link $SavedData$Factory}.
      */
-    export type $SavedData$Factory_<T> = { type?: $DataFixTypes_, constructor?: $Supplier_<$SavedData>, deserializer?: $BiFunction_<$CompoundTag, $HolderLookup$Provider, $SavedData>,  } | [type?: $DataFixTypes_, constructor?: $Supplier_<$SavedData>, deserializer?: $BiFunction_<$CompoundTag, $HolderLookup$Provider, $SavedData>, ];
+    export type $SavedData$Factory_<T> = { constructor?: $Supplier_<$SavedData>, deserializer?: $BiFunction_<$CompoundTag, $HolderLookup$Provider, $SavedData>, type?: $DataFixTypes_,  } | [constructor?: $Supplier_<$SavedData>, deserializer?: $BiFunction_<$CompoundTag, $HolderLookup$Provider, $SavedData>, type?: $DataFixTypes_, ];
 }

@@ -183,7 +183,6 @@ declare module "@package/java/time" {
         get chronology(): $Chronology;
     }
     export class $Month extends $Enum<$Month> implements $TemporalAccessor, $TemporalAdjuster {
-        firstMonthOfQuarter(): $Month;
         get(arg0: $TemporalField): number;
         length(arg0: boolean): number;
         static values(): $Month[];
@@ -202,6 +201,7 @@ declare module "@package/java/time" {
         adjustInto(arg0: $Temporal): $Temporal;
         firstDayOfYear(arg0: boolean): number;
         maxLength(): number;
+        firstMonthOfQuarter(): $Month;
         static JANUARY: $Month;
         static JUNE: $Month;
         static MAY: $Month;
@@ -432,23 +432,17 @@ declare module "@package/java/time" {
         get chronology(): $Chronology;
     }
     export class $ZonedDateTime implements $Temporal, $ChronoZonedDateTime<$LocalDate>, $Serializable {
-        static ofLocal(arg0: $LocalDateTime, arg1: $ZoneId, arg2: $ZoneOffset): $ZonedDateTime;
-        withZoneSameInstant(arg0: $ZoneId): $ZonedDateTime;
-        toOffsetDateTime(): $OffsetDateTime;
-        static ofStrict(arg0: $LocalDateTime, arg1: $ZoneOffset, arg2: $ZoneId): $ZonedDateTime;
-        withFixedOffsetZone(): $ZonedDateTime;
         get(arg0: $TemporalField): number;
         getLong(arg0: $TemporalField): number;
         format(arg0: $DateTimeFormatter): string;
         static of(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: $ZoneId): $ZonedDateTime;
-        static of(arg0: $LocalDateTime, arg1: $ZoneId): $ZonedDateTime;
         static of(arg0: $LocalDate, arg1: $LocalTime, arg2: $ZoneId): $ZonedDateTime;
+        static of(arg0: $LocalDateTime, arg1: $ZoneId): $ZonedDateTime;
         static from(arg0: $TemporalAccessor): $ZonedDateTime;
         isSupported(arg0: $TemporalField): boolean;
         isSupported(arg0: $TemporalUnit): boolean;
         static parse(arg0: $CharSequence, arg1: $DateTimeFormatter): $ZonedDateTime;
         static parse(arg0: $CharSequence): $ZonedDateTime;
-        "with"(arg0: $TemporalField, arg1: number): $ZonedDateTime;
         query<R>(arg0: $TemporalQuery_<R>): R;
         getOffset(): $ZoneOffset;
         range(arg0: $TemporalField): $ValueRange;
@@ -462,7 +456,6 @@ declare module "@package/java/time" {
         getHour(): number;
         getMinute(): number;
         getSecond(): number;
-        minus(arg0: $TemporalAmount_): $ZonedDateTime;
         getZone(): $ZoneId;
         until(arg0: $Temporal, arg1: $TemporalUnit): number;
         plusNanos(arg0: number): $ZonedDateTime;
@@ -476,8 +469,8 @@ declare module "@package/java/time" {
         minusSeconds(arg0: number): $ZonedDateTime;
         minusNanos(arg0: number): $ZonedDateTime;
         truncatedTo(arg0: $TemporalUnit): $ZonedDateTime;
-        static ofInstant(arg0: $Instant, arg1: $ZoneId): $ZonedDateTime;
         static ofInstant(arg0: $LocalDateTime, arg1: $ZoneOffset, arg2: $ZoneId): $ZonedDateTime;
+        static ofInstant(arg0: $Instant, arg1: $ZoneId): $ZonedDateTime;
         getMonth(): $Month;
         getDayOfWeek(): $DayOfWeek;
         getDayOfYear(): number;
@@ -492,12 +485,15 @@ declare module "@package/java/time" {
         toLocalTime(): $LocalTime;
         minusYears(arg0: number): $ZonedDateTime;
         minusWeeks(arg0: number): $ZonedDateTime;
-        toLocalDateTime(): $LocalDateTime;
         withHour(arg0: number): $ZonedDateTime;
         withMinute(arg0: number): $ZonedDateTime;
         withSecond(arg0: number): $ZonedDateTime;
         withNano(arg0: number): $ZonedDateTime;
-        withEarlierOffsetAtOverlap(): $ZonedDateTime;
+        toLocalDate(): $LocalDate;
+        static ofLocal(arg0: $LocalDateTime, arg1: $ZoneId, arg2: $ZoneOffset): $ZonedDateTime;
+        toOffsetDateTime(): $OffsetDateTime;
+        static ofStrict(arg0: $LocalDateTime, arg1: $ZoneOffset, arg2: $ZoneId): $ZonedDateTime;
+        withFixedOffsetZone(): $ZonedDateTime;
         compareTo(arg0: $ChronoZonedDateTime<never>): number;
         toInstant(): $Instant;
         isAfter(arg0: $ChronoZonedDateTime<never>): boolean;
@@ -505,13 +501,17 @@ declare module "@package/java/time" {
         isEqual(arg0: $ChronoZonedDateTime<never>): boolean;
         getChronology(): $Chronology;
         toEpochSecond(): number;
-        withZoneSameLocal(arg0: $ZoneId): $ChronoZonedDateTime<$LocalDate>;
-        withLaterOffsetAtOverlap(): $ChronoZonedDateTime<$LocalDate>;
+        "with"(arg0: $TemporalField, arg1: number): $Temporal;
         "with"(arg0: $TemporalAdjuster_): $Temporal;
         minus(arg0: number, arg1: $TemporalUnit): $Temporal;
+        minus(arg0: $TemporalAmount_): $Temporal;
         plus(arg0: $TemporalAmount_): $Temporal;
         plus(arg0: number, arg1: $TemporalUnit): $Temporal;
-        toLocalDate(): $LocalDate;
+        toLocalDateTime(): $ChronoLocalDateTime<$LocalDate>;
+        withZoneSameInstant(arg0: $ZoneId): $ChronoZonedDateTime<$LocalDate>;
+        withZoneSameLocal(arg0: $ZoneId): $ChronoZonedDateTime<$LocalDate>;
+        withLaterOffsetAtOverlap(): $ChronoZonedDateTime<$LocalDate>;
+        withEarlierOffsetAtOverlap(): $ChronoZonedDateTime<$LocalDate>;
         get offset(): $ZoneOffset;
         get nano(): number;
         get year(): number;

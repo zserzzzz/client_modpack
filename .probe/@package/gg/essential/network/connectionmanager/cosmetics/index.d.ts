@@ -17,11 +17,11 @@ declare module "@package/gg/essential/network/connectionmanager/cosmetics" {
         get EMPTY(): $EquippedOutfitsManager$Outfit;
     }
     export class $EquippedOutfitsManager$Outfit {
-        static copy$default(arg0: $EquippedOutfitsManager$Outfit, arg1: $Map_<any, any>, arg2: $Skin, arg3: number, arg4: $Object): $EquippedOutfitsManager$Outfit;
         copy(arg0: $Map_<$CosmeticSlot, $EquippedCosmeticId>, arg1: $Skin): $EquippedOutfitsManager$Outfit;
+        static copy$default(arg0: $EquippedOutfitsManager$Outfit, arg1: $Map_<any, any>, arg2: $Skin, arg3: number, arg4: $Object): $EquippedOutfitsManager$Outfit;
         getCosmetics(): $Map<$CosmeticSlot, $EquippedCosmeticId>;
-        static access$getEMPTY$cp(): $EquippedOutfitsManager$Outfit;
         component2(): $Skin;
+        static access$getEMPTY$cp(): $EquippedOutfitsManager$Outfit;
         getSkin(): $Skin;
         component1(): $Map<$CosmeticSlot, $EquippedCosmeticId>;
         static Companion: $EquippedOutfitsManager$Outfit$Companion;
@@ -34,31 +34,31 @@ declare module "@package/gg/essential/network/connectionmanager/cosmetics" {
         static access$cosmeticStoreInfo$jd(arg0: $CosmeticsData, arg1: string): $State<any>;
     }
     export interface $CosmeticsData {
-        getBundles(): $State<$TrackedList<$CosmeticBundle>>;
+        getCategories(): $State<$TrackedList<$CosmeticCategory>>;
+        getCategory(arg0: string): $CosmeticCategory;
         getCosmetic(arg0: string): $Cosmetic;
+        cosmeticStoreInfo(arg0: string): $State<$CosmeticStoreInfo>;
+        getCosmeticBundle(arg0: string): $CosmeticBundle;
+        cosmeticBase(arg0: string): $State<$CosmeticBase>;
+        getCosmetics(): $State<$TrackedList<$Cosmetic>>;
+        getBundles(): $State<$TrackedList<$CosmeticBundle>>;
+        getFeaturedPageCollections(): $State<$TrackedList<$FeaturedPageCollection>>;
         getImplicitOwnership(arg0: string): $GitRepoCosmeticsDatabase$CosmeticImplicitOwnership;
         getImplicitOwnerships(): $State<$TrackedList<$GitRepoCosmeticsDatabase$CosmeticImplicitOwnership>>;
         getFeaturedPageCollection(arg0: string): $FeaturedPageCollection;
-        getFeaturedPageCollections(): $State<$TrackedList<$FeaturedPageCollection>>;
-        getCategory(arg0: string): $CosmeticCategory;
-        getCosmeticBundle(arg0: string): $CosmeticBundle;
-        cosmeticBase(arg0: string): $State<$CosmeticBase>;
-        cosmeticStoreInfo(arg0: string): $State<$CosmeticStoreInfo>;
-        getCosmetics(): $State<$TrackedList<$Cosmetic>>;
         cosmetic(arg0: string): $State<$Cosmetic>;
-        getCategories(): $State<$TrackedList<$CosmeticCategory>>;
-        get bundles(): $State<$TrackedList<$CosmeticBundle>>;
-        get implicitOwnerships(): $State<$TrackedList<$GitRepoCosmeticsDatabase$CosmeticImplicitOwnership>>;
-        get featuredPageCollections(): $State<$TrackedList<$FeaturedPageCollection>>;
-        get cosmetics(): $State<$TrackedList<$Cosmetic>>;
         get categories(): $State<$TrackedList<$CosmeticCategory>>;
+        get cosmetics(): $State<$TrackedList<$Cosmetic>>;
+        get bundles(): $State<$TrackedList<$CosmeticBundle>>;
+        get featuredPageCollections(): $State<$TrackedList<$FeaturedPageCollection>>;
+        get implicitOwnerships(): $State<$TrackedList<$GitRepoCosmeticsDatabase$CosmeticImplicitOwnership>>;
     }
     export class $EquippedOutfitsManager {
     }
     export interface $EquippedOutfitsManager {
-        getEquippedCosmeticsState(arg0: $UUID_): $State<$EquippedOutfitsManager$Outfit>;
         getCapeHash(arg0: $UUID_): string;
-        getSkin(arg0: $UUID_): $Skin;
         getVisibleCosmeticsState(arg0: $UUID_): $State<$Map<$CosmeticSlot, $EquippedCosmetic>>;
+        getSkin(arg0: $UUID_): $Skin;
+        getEquippedCosmeticsState(arg0: $UUID_): $State<$EquippedOutfitsManager$Outfit>;
     }
 }

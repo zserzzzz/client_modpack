@@ -9,16 +9,16 @@ import { $BlockEntity } from "@package/net/minecraft/world/level/block/entity";
 declare module "@package/com/jesz/createdieselgenerators/fuel_type" {
     export interface $FuelType extends RegistryMarked<RegistryTypes.CreatedieselgeneratorsFuelTypeTag, RegistryTypes.CreatedieselgeneratorsFuelType> {}
     export class $FuelType extends $Record {
-        getGenerated(arg0: $EngineTypes_): $FuelType$PerEngineProperties;
-        getGenerated(arg0: $BlockEntity): $FuelType$PerEngineProperties;
         normal(): $FuelType$PerEngineProperties;
+        fluid(): $HolderSet<$Fluid>;
+        isFlammable(): boolean;
         static getTypeFor(arg0: $HolderLookup$RegistryLookup<$FuelType_>, arg1: $Fluid_): $FuelType;
         soundPitch(): number;
-        fluid(): $HolderSet<$Fluid>;
+        getGenerated(arg0: $EngineTypes_): $FuelType$PerEngineProperties;
+        getGenerated(arg0: $BlockEntity): $FuelType$PerEngineProperties;
         burnerStrength(): number;
-        isFlammable(): boolean;
-        modular(): $FuelType$PerEngineProperties;
         huge(): $FuelType$PerEngineProperties;
+        modular(): $FuelType$PerEngineProperties;
         static CODEC: $Codec<$FuelType>;
         static NCODEC: $Codec<$FuelType>;
         static EMPTY: $FuelType;
@@ -28,16 +28,16 @@ declare module "@package/com/jesz/createdieselgenerators/fuel_type" {
     /**
      * Values that may be interpreted as {@link $FuelType}.
      */
-    export type $FuelType_ = RegistryTypes.CreatedieselgeneratorsFuelType | { huge?: $FuelType$PerEngineProperties_, fluid?: $HolderSet_<$Fluid>, modular?: $FuelType$PerEngineProperties_, soundPitch?: number, burnerStrength?: number, normal?: $FuelType$PerEngineProperties_,  } | [huge?: $FuelType$PerEngineProperties_, fluid?: $HolderSet_<$Fluid>, modular?: $FuelType$PerEngineProperties_, soundPitch?: number, burnerStrength?: number, normal?: $FuelType$PerEngineProperties_, ];
+    export type $FuelType_ = RegistryTypes.CreatedieselgeneratorsFuelType | { burnerStrength?: number, normal?: $FuelType$PerEngineProperties_, huge?: $FuelType$PerEngineProperties_, fluid?: $HolderSet_<$Fluid>, modular?: $FuelType$PerEngineProperties_, soundPitch?: number,  } | [burnerStrength?: number, normal?: $FuelType$PerEngineProperties_, huge?: $FuelType$PerEngineProperties_, fluid?: $HolderSet_<$Fluid>, modular?: $FuelType$PerEngineProperties_, soundPitch?: number, ];
     export class $FuelType$PerEngineProperties extends $Record {
         strength(): number;
-        burn(): number;
         speed(): number;
+        burn(): number;
         static CODEC: $Codec<$FuelType$PerEngineProperties>;
         constructor(speed: number, strength: number, burn: number);
     }
     /**
      * Values that may be interpreted as {@link $FuelType$PerEngineProperties}.
      */
-    export type $FuelType$PerEngineProperties_ = { speed?: number, strength?: number, burn?: number,  } | [speed?: number, strength?: number, burn?: number, ];
+    export type $FuelType$PerEngineProperties_ = { strength?: number, burn?: number, speed?: number,  } | [strength?: number, burn?: number, speed?: number, ];
 }

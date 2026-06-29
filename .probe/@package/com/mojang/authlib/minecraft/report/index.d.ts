@@ -9,17 +9,17 @@ declare module "@package/com/mojang/authlib/minecraft/report" {
         reason(): string;
         static skin(arg0: string, arg1: string, arg2: string | null, arg3: $ReportedEntity_, arg4: $Instant): $AbuseReport;
         static chat(arg0: string, arg1: string, arg2: $ReportEvidence_, arg3: $ReportedEntity_, arg4: $Instant): $AbuseReport;
-        skinUrl(): string;
         createdTime(): $Instant;
+        skinUrl(): string;
+        evidence(): $ReportEvidence;
         opinionComments(): string;
         reportedEntity(): $ReportedEntity;
-        evidence(): $ReportEvidence;
         constructor(opinionComments: string, reason: string | null, evidence: $ReportEvidence_ | null, skinUrl: string | null, reportedEntity: $ReportedEntity_, createdTime: $Instant);
     }
     /**
      * Values that may be interpreted as {@link $AbuseReport}.
      */
-    export type $AbuseReport_ = { createdTime?: $Instant, opinionComments?: string, skinUrl?: string, reason?: string, evidence?: $ReportEvidence_, reportedEntity?: $ReportedEntity_,  } | [createdTime?: $Instant, opinionComments?: string, skinUrl?: string, reason?: string, evidence?: $ReportEvidence_, reportedEntity?: $ReportedEntity_, ];
+    export type $AbuseReport_ = { reportedEntity?: $ReportedEntity_, createdTime?: $Instant, opinionComments?: string, skinUrl?: string, reason?: string, evidence?: $ReportEvidence_,  } | [reportedEntity?: $ReportedEntity_, createdTime?: $Instant, opinionComments?: string, skinUrl?: string, reason?: string, evidence?: $ReportEvidence_, ];
     export class $ReportedEntity extends $Record {
         profileId(): $UUID;
         constructor(profileId: $UUID_);
@@ -29,21 +29,21 @@ declare module "@package/com/mojang/authlib/minecraft/report" {
      */
     export type $ReportedEntity_ = { profileId?: $UUID_,  } | [profileId?: $UUID_, ];
     export class $ReportChatMessage extends $Record {
-        salt(): number;
         signature(): $ByteBuffer;
         index(): number;
         message(): string;
         timestamp(): $Instant;
         sessionId(): $UUID;
-        profileId(): $UUID;
+        salt(): number;
         lastSeen(): $List<$ByteBuffer>;
+        profileId(): $UUID;
         messageReported(): boolean;
         constructor(index: number, profileId: $UUID_, sessionId: $UUID_, timestamp: $Instant, salt: number, lastSeen: $List_<$ByteBuffer>, message: string, signature: $ByteBuffer, messageReported: boolean);
     }
     /**
      * Values that may be interpreted as {@link $ReportChatMessage}.
      */
-    export type $ReportChatMessage_ = { profileId?: $UUID_, timestamp?: $Instant, signature?: $ByteBuffer, sessionId?: $UUID_, messageReported?: boolean, salt?: number, message?: string, index?: number, lastSeen?: $List_<$ByteBuffer>,  } | [profileId?: $UUID_, timestamp?: $Instant, signature?: $ByteBuffer, sessionId?: $UUID_, messageReported?: boolean, salt?: number, message?: string, index?: number, lastSeen?: $List_<$ByteBuffer>, ];
+    export type $ReportChatMessage_ = { salt?: number, message?: string, index?: number, lastSeen?: $List_<$ByteBuffer>, profileId?: $UUID_, timestamp?: $Instant, signature?: $ByteBuffer, sessionId?: $UUID_, messageReported?: boolean,  } | [salt?: number, message?: string, index?: number, lastSeen?: $List_<$ByteBuffer>, profileId?: $UUID_, timestamp?: $Instant, signature?: $ByteBuffer, sessionId?: $UUID_, messageReported?: boolean, ];
     export class $ReportEvidence extends $Record {
         messages(): $List<$ReportChatMessage>;
         constructor(messages: $List_<$ReportChatMessage_>);
@@ -53,10 +53,10 @@ declare module "@package/com/mojang/authlib/minecraft/report" {
      */
     export type $ReportEvidence_ = { messages?: $List_<$ReportChatMessage_>,  } | [messages?: $List_<$ReportChatMessage_>, ];
     export class $AbuseReportLimits extends $Record {
+        trailingContextMessageCount(): number;
         maxOpinionCommentsLength(): number;
         maxReportedMessageCount(): number;
         maxEvidenceMessageCount(): number;
-        trailingContextMessageCount(): number;
         leadingContextMessageCount(): number;
         static DEFAULTS: $AbuseReportLimits;
         constructor(maxOpinionCommentsLength: number, maxReportedMessageCount: number, maxEvidenceMessageCount: number, leadingContextMessageCount: number, trailingContextMessageCount: number);
@@ -64,5 +64,5 @@ declare module "@package/com/mojang/authlib/minecraft/report" {
     /**
      * Values that may be interpreted as {@link $AbuseReportLimits}.
      */
-    export type $AbuseReportLimits_ = { maxOpinionCommentsLength?: number, maxReportedMessageCount?: number, maxEvidenceMessageCount?: number, leadingContextMessageCount?: number, trailingContextMessageCount?: number,  } | [maxOpinionCommentsLength?: number, maxReportedMessageCount?: number, maxEvidenceMessageCount?: number, leadingContextMessageCount?: number, trailingContextMessageCount?: number, ];
+    export type $AbuseReportLimits_ = { maxEvidenceMessageCount?: number, leadingContextMessageCount?: number, trailingContextMessageCount?: number, maxOpinionCommentsLength?: number, maxReportedMessageCount?: number,  } | [maxEvidenceMessageCount?: number, leadingContextMessageCount?: number, trailingContextMessageCount?: number, maxOpinionCommentsLength?: number, maxReportedMessageCount?: number, ];
 }

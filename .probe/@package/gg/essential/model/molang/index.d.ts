@@ -19,19 +19,19 @@ declare module "@package/gg/essential/model/molang" {
         static getOrPut$default(arg0: $Variables, arg1: string, arg2: number, arg3: number, arg4: $Object): $Variables$Variable;
     }
     export interface $Variables {
-        getOrNull(arg0: string): $Variables$Variable;
         get(arg0: string): number;
         set(arg0: string, arg1: number): void;
+        getOrNull(arg0: string): $Variables$Variable;
         getOrPut(arg0: string, arg1: number): $Variables$Variable;
         fallbackBackTo(arg0: $Variables): $Variables;
     }
     export class $MolangQueryAnimation {
     }
     export interface $MolangQueryAnimation extends $MolangQuery {
-        getAnimLoopTime(): number;
         getAnimTime(): number;
-        get animLoopTime(): number;
+        getAnimLoopTime(): number;
         get animTime(): number;
+        get animLoopTime(): number;
     }
     export class $MolangEvalImpl {
     }
@@ -47,8 +47,8 @@ declare module "@package/gg/essential/model/molang" {
     export interface $MolangQuery {
     }
     export class $VariablesMap implements $Variables {
-        getOrNull(arg0: string): $Variables$Variable;
         copy(): $VariablesMap;
+        getOrNull(arg0: string): $Variables$Variable;
         getOrPut(arg0: string, arg1: number): $Variables$Variable;
         get(arg0: string): number;
         set(arg0: string, arg1: number): void;
@@ -60,33 +60,33 @@ declare module "@package/gg/essential/model/molang" {
     export class $MolangQueryEntity {
     }
     export interface $MolangQueryEntity extends $MolangQuery, $MolangQueryTime {
-        getLifeTime(): number;
         getTime(): number;
         getLocator(): $ParticleSystem$Locator;
         getUuid(): $UUID;
-        getModifiedMoveSpeed(): number;
+        getLifeTime(): number;
         getModifiedDistanceMoved(): number;
-        get lifeTime(): number;
+        getModifiedMoveSpeed(): number;
         get time(): number;
         get locator(): $ParticleSystem$Locator;
         get uuid(): $UUID;
-        get modifiedMoveSpeed(): number;
+        get lifeTime(): number;
         get modifiedDistanceMoved(): number;
+        get modifiedMoveSpeed(): number;
     }
     export class $Molang$Companion {
-        serializer(): $KSerializer<$Molang>;
         literal(arg0: number): $Molang;
-        getZERO(): $Molang;
+        serializer(): $KSerializer<$Molang>;
         getONE(): $Molang;
+        getZERO(): $Molang;
         constructor(arg0: $DefaultConstructorMarker);
-        get ZERO(): $Molang;
         get ONE(): $Molang;
+        get ZERO(): $Molang;
     }
     export class $MolangExpression$Companion {
-        getZERO(): $LiteralExpr;
         getONE(): $LiteralExpr;
-        get ZERO(): $LiteralExpr;
+        getZERO(): $LiteralExpr;
         get ONE(): $LiteralExpr;
+        get ZERO(): $LiteralExpr;
     }
     export class $MolangExpression {
         static Companion: $MolangExpression$Companion;
@@ -98,10 +98,10 @@ declare module "@package/gg/essential/model/molang" {
      */
     export type $MolangExpression_ = (() => void);
     export class $Molang {
-        static copy$default(arg0: $Molang, arg1: $MolangExpression_, arg2: number, arg3: $Object): $Molang;
         copy(arg0: $MolangExpression_): $Molang;
-        "eval"(arg0: $MolangContext): number;
         getExpression(): $MolangExpression;
+        static copy$default(arg0: $Molang, arg1: $MolangExpression_, arg2: number, arg3: $Object): $Molang;
+        "eval"(arg0: $MolangContext): number;
         static access$getZERO$cp(): $Molang;
         component1(): $MolangExpression;
         static access$getONE$cp(): $Molang;

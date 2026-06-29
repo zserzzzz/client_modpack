@@ -10,51 +10,51 @@ import { $Vec3_, $BlockHitResult } from "@package/net/minecraft/world/phys";
 
 declare module "@package/net/createmod/catnip/placement" {
     export class $IPlacementHelper {
-        static renderArrow(arg0: $Vec3_, arg1: $Vec3_, arg2: $Direction_): void;
-        static renderArrow(arg0: $Vec3_, arg1: $Vec3_, arg2: $Direction_, arg3: number): void;
-        static orderedByDistance(arg0: $BlockPos_, arg1: $Vec3_): $List<$Direction>;
-        static orderedByDistance(arg0: $BlockPos_, arg1: $Vec3_, arg2: $Predicate_<$Direction>): $List<$Direction>;
-        static orderedByDistance(arg0: $BlockPos_, arg1: $Vec3_, arg2: $Collection_<$Direction_>): $List<$Direction>;
-        static orderedByDistanceExceptAxis(arg0: $BlockPos_, arg1: $Vec3_, arg2: $Direction$Axis_): $List<$Direction>;
-        static orderedByDistanceExceptAxis(arg0: $BlockPos_, arg1: $Vec3_, arg2: $Direction$Axis_, arg3: $Predicate_<$Direction>): $List<$Direction>;
-        static orderedByDistanceExceptAxis(arg0: $BlockPos_, arg1: $Vec3_, arg2: $Direction$Axis_, arg3: $Direction$Axis_): $List<$Direction>;
-        static orderedByDistanceExceptAxis(arg0: $BlockPos_, arg1: $Vec3_, arg2: $Direction$Axis_, arg3: $Direction$Axis_, arg4: $Predicate_<$Direction>): $List<$Direction>;
         static orderedByDistanceOnlyAxis(arg0: $BlockPos_, arg1: $Vec3_, arg2: $Direction$Axis_): $List<$Direction>;
         static orderedByDistanceOnlyAxis(arg0: $BlockPos_, arg1: $Vec3_, arg2: $Direction$Axis_, arg3: $Predicate_<$Direction>): $List<$Direction>;
+        static orderedByDistanceExceptAxis(arg0: $BlockPos_, arg1: $Vec3_, arg2: $Direction$Axis_, arg3: $Direction$Axis_): $List<$Direction>;
+        static orderedByDistanceExceptAxis(arg0: $BlockPos_, arg1: $Vec3_, arg2: $Direction$Axis_): $List<$Direction>;
+        static orderedByDistanceExceptAxis(arg0: $BlockPos_, arg1: $Vec3_, arg2: $Direction$Axis_, arg3: $Predicate_<$Direction>): $List<$Direction>;
+        static orderedByDistanceExceptAxis(arg0: $BlockPos_, arg1: $Vec3_, arg2: $Direction$Axis_, arg3: $Direction$Axis_, arg4: $Predicate_<$Direction>): $List<$Direction>;
+        static orderedByDistance(arg0: $BlockPos_, arg1: $Vec3_): $List<$Direction>;
+        static orderedByDistance(arg0: $BlockPos_, arg1: $Vec3_, arg2: $Collection_<$Direction_>): $List<$Direction>;
+        static orderedByDistance(arg0: $BlockPos_, arg1: $Vec3_, arg2: $Predicate_<$Direction>): $List<$Direction>;
+        static renderArrow(arg0: $Vec3_, arg1: $Vec3_, arg2: $Direction_, arg3: number): void;
+        static renderArrow(arg0: $Vec3_, arg1: $Vec3_, arg2: $Direction_): void;
         static ID: $BlockState;
     }
     export interface $IPlacementHelper {
         getOffset(arg0: $Player, arg1: $Level_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockHitResult, arg5: $ItemStack_): $PlacementOffset;
         getOffset(arg0: $Player, arg1: $Level_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockHitResult): $PlacementOffset;
-        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
-        matchesState(arg0: $BlockState_): boolean;
-        getStatePredicate(): $Predicate<$BlockState>;
-        displayGhost(arg0: $PlacementOffset): void;
         matchesItem(arg0: $ItemStack_): boolean;
+        matchesState(arg0: $BlockState_): boolean;
+        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
         getItemPredicate(): $Predicate<$ItemStack>;
-        get statePredicate(): $Predicate<$BlockState>;
+        displayGhost(arg0: $PlacementOffset): void;
+        getStatePredicate(): $Predicate<$BlockState>;
         get itemPredicate(): $Predicate<$ItemStack>;
+        get statePredicate(): $Predicate<$BlockState>;
     }
     export class $PlacementOffset {
-        getTransform(): $Function<$BlockState, $BlockState>;
         at(arg0: $Vec3i): $PlacementOffset;
         static fail(): $PlacementOffset;
+        static success(arg0: $Vec3i, arg1: $Function_<$BlockState, $BlockState>): $PlacementOffset;
         static success(arg0: $Vec3i): $PlacementOffset;
         static success(): $PlacementOffset;
-        static success(arg0: $Vec3i, arg1: $Function_<$BlockState, $BlockState>): $PlacementOffset;
-        getBlockPos(): $BlockPos;
-        getPos(): $Vec3i;
+        getTransform(): $Function<$BlockState, $BlockState>;
         isReplaceable(arg0: $Level_): boolean;
-        hasGhostState(): boolean;
+        getBlockPos(): $BlockPos;
+        isSuccessful(): boolean;
+        placeInWorld(arg0: $Level_, arg1: $BlockItem, arg2: $Player, arg3: $InteractionHand_, arg4: $BlockHitResult): $ItemInteractionResult;
+        getPos(): $Vec3i;
         getGhostState(): $BlockState;
         withGhostState(arg0: $BlockState_): $PlacementOffset;
+        hasGhostState(): boolean;
         withTransform(arg0: $Function_<$BlockState, $BlockState>): $PlacementOffset;
-        placeInWorld(arg0: $Level_, arg1: $BlockItem, arg2: $Player, arg3: $InteractionHand_, arg4: $BlockHitResult): $ItemInteractionResult;
-        isSuccessful(): boolean;
         get transform(): $Function<$BlockState, $BlockState>;
         get blockPos(): $BlockPos;
+        get successful(): boolean;
         get pos(): $Vec3i;
         get ghostState(): $BlockState;
-        get successful(): boolean;
     }
 }

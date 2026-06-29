@@ -16,15 +16,15 @@ declare module "@package/kotlinx/serialization" {
     export class $SerializationStrategy<T> {
     }
     export interface $SerializationStrategy<T> {
-        serialize(arg0: $Encoder, arg1: T): void;
         getDescriptor(): $SerialDescriptor;
+        serialize(arg0: $Encoder, arg1: T): void;
         get descriptor(): $SerialDescriptor;
     }
     export class $DeserializationStrategy<T> {
     }
     export interface $DeserializationStrategy<T> {
-        deserialize(arg0: $Decoder): T;
         getDescriptor(): $SerialDescriptor;
+        deserialize(arg0: $Decoder): T;
         get descriptor(): $SerialDescriptor;
     }
 }

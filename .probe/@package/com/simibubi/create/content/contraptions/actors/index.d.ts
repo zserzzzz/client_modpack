@@ -29,16 +29,16 @@ export * as seat from "@package/com/simibubi/create/content/contraptions/actors/
 
 declare module "@package/com/simibubi/create/content/contraptions/actors" {
     export class $ActorInstance extends $AbstractInstance {
-        setRotationAxis(arg0: $Vector3f): $ActorInstance;
-        setRotationAxis(arg0: number, arg1: number, arg2: number): $ActorInstance;
-        setSkyLight(arg0: number): $ActorInstance;
         setBlockLight(arg0: number): $ActorInstance;
-        setRotationOffset(arg0: number): $ActorInstance;
+        setSkyLight(arg0: number): $ActorInstance;
         setSpeed(arg0: number): $ActorInstance;
         setPosition(arg0: $BlockPos_): $ActorInstance;
+        setRotationAxis(arg0: $Vector3f): $ActorInstance;
+        setRotationAxis(arg0: number, arg1: number, arg2: number): $ActorInstance;
+        setRotationOffset(arg0: number): $ActorInstance;
+        setLocalRotation(arg0: $Quaternionfc): $ActorInstance;
         setRotationCenter(arg0: number, arg1: number, arg2: number): $ActorInstance;
         setRotationCenter(arg0: $Vector3f): $ActorInstance;
-        setLocalRotation(arg0: $Quaternionfc): $ActorInstance;
         rotation: $Quaternionf;
         skyLight: number;
         rotationOffset: number;
@@ -59,15 +59,15 @@ declare module "@package/com/simibubi/create/content/contraptions/actors" {
     }
     export class $AttachedActorBlock extends $HorizontalDirectionalBlock implements $IWrenchable, $ProperWaterloggedBlock {
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
-        fluidState(arg0: $BlockState_): $FluidState;
         updateWater(arg0: $LevelAccessor, arg1: $BlockState_, arg2: $BlockPos_): void;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
+        fluidState(arg0: $BlockState_): $FluidState;
+        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;

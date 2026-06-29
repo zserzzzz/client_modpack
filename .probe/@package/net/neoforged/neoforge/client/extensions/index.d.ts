@@ -65,14 +65,14 @@ declare module "@package/net/neoforged/neoforge/client/extensions" {
     }
     export interface $IMenuProviderExtension {
         /**
-         * @return `true` if the existing container should be closed on the client side when opening a new one, `false` otherwise
-         */
-        shouldTriggerClientSideContainerClosingOnOpen(): boolean;
-        /**
          * Allows the menu provider to write additional data to be read by `IContainerFactory#create(int, Inventory, RegistryFriendlyByteBuf)`
          * when the menu is created on the client-side.
          */
         writeClientSideData(menu: $AbstractContainerMenu, buffer: $RegistryFriendlyByteBuf): void;
+        /**
+         * @return `true` if the existing container should be closed on the client side when opening a new one, `false` otherwise
+         */
+        shouldTriggerClientSideContainerClosingOnOpen(): boolean;
     }
     /**
      * Extension interface for `Minecraft`.
@@ -102,12 +102,12 @@ declare module "@package/net/neoforged/neoforge/client/extensions" {
     }
     export interface $IVertexConsumerExtension {
         misc(arg0: $VertexFormatElement_, ...arg1: number[]): $VertexConsumer;
-        applyBakedLighting(packedLight: number, data: $ByteBuffer): number;
         applyBakedNormals(generated: $Vector3f, data: $ByteBuffer, normalTransform: $Matrix3f): void;
         /**
          * Variant with no per-vertex shading.
          */
         putBulkData(pose: $PoseStack$Pose, bakedQuad: $BakedQuad, red: number, green: number, blue: number, alpha: number, packedLight: number, packedOverlay: number, readExistingColor: boolean): void;
+        applyBakedLighting(packedLight: number, data: $ByteBuffer): number;
     }
     /**
      * Extension interface for `BakedModel`.
@@ -131,14 +131,9 @@ declare module "@package/net/neoforged/neoforge/client/extensions" {
         applyTransform(transformType: $ItemDisplayContext_, poseStack: $PoseStack, applyLeftHandTransform: boolean): $BakedModel;
         getParticleIcon(data: $ModelData): $TextureAtlasSprite;
         /**
-         * Gets an ordered list of render types to use when drawing this item.
-         * All render types using the `DefaultVertexFormat#NEW_ENTITY` format are supported.
-         * 
-         * This method will only be called on the models returned by `#getRenderPasses(ItemStack, boolean)`.
-         * 
-         * By default, defers query to `ItemBlockRenderTypes`.
+         * A null `RenderType` is used for the breaking overlay as well as non-standard rendering, so models should return all their quads.
          */
-        getRenderPasses(itemStack: $ItemStack_, fabulous: boolean): $List<$BakedModel>;
+        getQuads(state: $BlockState_, side: $Direction_, rand: $RandomSource, data: $ModelData, renderType: $RenderType): $List<$BakedQuad>;
         /**
          * Gets an ordered list of render types to use when drawing this item.
          * All render types using the `DefaultVertexFormat#NEW_ENTITY` format are supported.
@@ -155,11 +150,16 @@ declare module "@package/net/neoforged/neoforge/client/extensions" {
          * By default, defers query to `ItemBlockRenderTypes`.
          */
         getRenderTypes(state: $BlockState_, rand: $RandomSource, data: $ModelData): $ChunkRenderTypeSet;
-        getModelData(level: $BlockAndTintGetter, pos: $BlockPos_, state: $BlockState_, modelData: $ModelData): $ModelData;
         /**
-         * A null `RenderType` is used for the breaking overlay as well as non-standard rendering, so models should return all their quads.
+         * Gets an ordered list of render types to use when drawing this item.
+         * All render types using the `DefaultVertexFormat#NEW_ENTITY` format are supported.
+         * 
+         * This method will only be called on the models returned by `#getRenderPasses(ItemStack, boolean)`.
+         * 
+         * By default, defers query to `ItemBlockRenderTypes`.
          */
-        getQuads(state: $BlockState_, side: $Direction_, rand: $RandomSource, data: $ModelData, renderType: $RenderType): $List<$BakedQuad>;
+        getRenderPasses(itemStack: $ItemStack_, fabulous: boolean): $List<$BakedModel>;
+        getModelData(level: $BlockAndTintGetter, pos: $BlockPos_, state: $BlockState_, modelData: $ModelData): $ModelData;
     }
     /**
      * Extension interface for `DimensionSpecialEffects`.
@@ -172,22 +172,22 @@ declare module "@package/net/neoforged/neoforge/client/extensions" {
          */
         tickRain(level: $ClientLevel, ticks: number, camera: $Camera): boolean;
         /**
-         * Allows for manipulating the coloring of the lightmap texture.
-         * Will be called for each 16*16 combination of sky/block light values.
+         * Renders the snow and rain effects of this dimension.
          */
-        adjustLightmapColors(level: $ClientLevel, partialTicks: number, skyDarken: number, blockLightRedFlicker: number, skyLight: number, pixelX: number, pixelY: number, colors: $Vector3f): void;
+        renderSnowAndRain(level: $ClientLevel, ticks: number, partialTick: number, lightTexture: $LightTexture, camX: number, camY: number, camZ: number): boolean;
         /**
          * Renders the clouds of this dimension.
          */
         renderClouds(level: $ClientLevel, ticks: number, partialTick: number, poseStack: $PoseStack, camX: number, camY: number, camZ: number, modelViewMatrix: $Matrix4f, projectionMatrix: $Matrix4f): boolean;
         /**
-         * Renders the snow and rain effects of this dimension.
-         */
-        renderSnowAndRain(level: $ClientLevel, ticks: number, partialTick: number, lightTexture: $LightTexture, camX: number, camY: number, camZ: number): boolean;
-        /**
          * Renders the sky of this dimension.
          */
         renderSky(level: $ClientLevel, ticks: number, partialTick: number, modelViewMatrix: $Matrix4f, camera: $Camera, projectionMatrix: $Matrix4f, isFoggy: boolean, setupFog: $Runnable_): boolean;
+        /**
+         * Allows for manipulating the coloring of the lightmap texture.
+         * Will be called for each 16*16 combination of sky/block light values.
+         */
+        adjustLightmapColors(level: $ClientLevel, partialTicks: number, skyDarken: number, blockLightRedFlicker: number, skyLight: number, pixelX: number, pixelY: number, colors: $Vector3f): void;
     }
     /**
      * Extension interface for `AbstractWidget`.
@@ -210,20 +210,6 @@ declare module "@package/net/neoforged/neoforge/client/extensions" {
     export class $IKeyMappingExtension {
     }
     export interface $IKeyMappingExtension {
-        getKeyConflictContext(): $IKeyConflictContext;
-        setKeyModifierAndCode(keyModifier: $KeyModifier_, keyCode: $InputConstants$Key): void;
-        getDefaultKeyModifier(): $KeyModifier;
-        setKeyConflictContext(keyConflictContext: $IKeyConflictContext): void;
-        /**
-         * Returns true when one of the bindings' key codes conflicts with the other's modifier.
-         */
-        hasKeyModifierConflict(other: $KeyMapping): boolean;
-        getKeyModifier(): $KeyModifier;
-        /**
-         * @return true if the key conflict context and modifier are active and the keyCode matches this binding, false otherwise
-         */
-        isActiveAndMatches(keyCode: $InputConstants$Key): boolean;
-        isConflictContextAndModifierActive(): boolean;
         getKey(): $InputConstants$Key;
         /**
          * @return the display name of this key mapping
@@ -231,11 +217,25 @@ declare module "@package/net/neoforged/neoforge/client/extensions" {
          */
         getDisplayName(): $Component;
         setToDefault(): void;
-        get defaultKeyModifier(): $KeyModifier;
-        get keyModifier(): $KeyModifier;
-        get conflictContextAndModifierActive(): boolean;
+        isConflictContextAndModifierActive(): boolean;
+        getDefaultKeyModifier(): $KeyModifier;
+        /**
+         * Returns true when one of the bindings' key codes conflicts with the other's modifier.
+         */
+        hasKeyModifierConflict(other: $KeyMapping): boolean;
+        getKeyConflictContext(): $IKeyConflictContext;
+        setKeyModifierAndCode(keyModifier: $KeyModifier_, keyCode: $InputConstants$Key): void;
+        setKeyConflictContext(keyConflictContext: $IKeyConflictContext): void;
+        /**
+         * @return true if the key conflict context and modifier are active and the keyCode matches this binding, false otherwise
+         */
+        isActiveAndMatches(keyCode: $InputConstants$Key): boolean;
+        getKeyModifier(): $KeyModifier;
         get key(): $InputConstants$Key;
         get displayName(): $Component;
+        get conflictContextAndModifierActive(): boolean;
+        get defaultKeyModifier(): $KeyModifier;
+        get keyModifier(): $KeyModifier;
     }
     /**
      * Extension interface for `GuiGraphics`.
@@ -251,11 +251,11 @@ declare module "@package/net/neoforged/neoforge/client/extensions" {
         static RESET_CHAR: string;
     }
     export interface $IGuiGraphicsExtension {
-        getColorFromFormattingCharacter(c: string, isLighter: boolean): number;
         /**
          * Draws a left-aligned string, with a scrolling effect if the string is too long.
          */
         drawScrollingString(font: $Font, text: $Component_, minX: number, maxX: number, y: number, color: number): number;
+        getColorFromFormattingCharacter(c: string, isLighter: boolean): number;
         /**
          * Draws a textured box of any size (smallest size is borderSize * 2 square)
          * based on a fixed size textured box with continuous borders and filler.
@@ -290,9 +290,9 @@ declare module "@package/net/neoforged/neoforge/client/extensions" {
     }
     export interface $IModelBakerExtension {
         bake(location: $ResourceLocation_, state: $ModelState, sprites: $Function_<$Material, $TextureAtlasSprite>): $BakedModel;
-        getModelTextureGetter(): $Function<$Material, $TextureAtlasSprite>;
-        bakeUncached(model: $UnbakedModel, state: $ModelState, sprites: $Function_<$Material, $TextureAtlasSprite>): $BakedModel;
         getTopLevelModel(location: $ModelResourceLocation_): $UnbakedModel;
+        bakeUncached(model: $UnbakedModel, state: $ModelState, sprites: $Function_<$Material, $TextureAtlasSprite>): $BakedModel;
+        getModelTextureGetter(): $Function<$Material, $TextureAtlasSprite>;
         get modelTextureGetter(): $Function<$Material, $TextureAtlasSprite>;
     }
 }

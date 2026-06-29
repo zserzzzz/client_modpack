@@ -31,21 +31,21 @@ declare module "@package/de/keksuccino/konkrete/mixin/mixins/client" {
     }
     export interface $IMixinEditBox {
         getIsEditableKonkrete(): boolean;
-        getMaxLengthKonkrete(): number;
         getHightlightPosKonkrete(): number;
         onValueChangeKonkrete(arg0: string): void;
+        getMaxLengthKonkrete(): number;
         get isEditableKonkrete(): boolean;
-        get maxLengthKonkrete(): number;
         get hightlightPosKonkrete(): number;
+        get maxLengthKonkrete(): number;
     }
     export class $IMixinScreen {
     }
     export interface $IMixinScreen {
-        getChildrenKonkrete(): $List<$GuiEventListener>;
-        invokeAddWidgetKonkrete<T extends $GuiEventListener>(arg0: T): T;
-        getRenderablesKonkrete(): $List<$Renderable>;
-        setFontKonkrete(arg0: $Font): void;
         invokeAddRenderableWidgetKonkrete<T extends $GuiEventListener>(arg0: T): T;
+        getChildrenKonkrete(): $List<$GuiEventListener>;
+        getRenderablesKonkrete(): $List<$Renderable>;
+        invokeAddWidgetKonkrete<T extends $GuiEventListener>(arg0: T): T;
+        setFontKonkrete(arg0: $Font): void;
         get childrenKonkrete(): $List<$GuiEventListener>;
         get renderablesKonkrete(): $List<$Renderable>;
         set fontKonkrete(value: $Font);
@@ -63,8 +63,8 @@ declare module "@package/de/keksuccino/konkrete/mixin/mixins/client" {
     export class $IMixinClientPacketListener {
     }
     export interface $IMixinClientPacketListener {
-        setCommandsKonkrete(arg0: $CommandDispatcher<$SharedSuggestionProvider>): void;
         getCommandsKonkrete(): $CommandDispatcher<$SharedSuggestionProvider>;
+        setCommandsKonkrete(arg0: $CommandDispatcher<$SharedSuggestionProvider>): void;
     }
     export class $IMixinLocalPlayer {
     }
@@ -79,7 +79,7 @@ declare module "@package/de/keksuccino/konkrete/mixin/mixins/client" {
     export class $IMixinDynamicTexture {
     }
     export interface $IMixinDynamicTexture {
-        setPixelsKonkrete(arg0: $NativeImage): void;
         getPixelsKonkrete(): $NativeImage;
+        setPixelsKonkrete(arg0: $NativeImage): void;
     }
 }

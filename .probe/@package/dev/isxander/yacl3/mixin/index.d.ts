@@ -1,4 +1,4 @@
-import { $Tab, $TabManager } from "@package/net/minecraft/client/gui/components/tabs";
+import { $TabManager, $Tab } from "@package/net/minecraft/client/gui/components/tabs";
 import { $LinearLayout } from "@package/net/minecraft/client/gui/layouts";
 import { $TabButton } from "@package/net/minecraft/client/gui/components";
 import { $ImmutableList } from "@package/com/google/common/collect";
@@ -8,9 +8,9 @@ declare module "@package/dev/isxander/yacl3/mixin" {
     }
     export interface $TabNavigationBarAccessor {
         yacl$getTabManager(): $TabManager;
-        yacl$getTabButtons(): $ImmutableList<$TabButton>;
-        yacl$getTabs(): $ImmutableList<$Tab>;
         yacl$getLayout(): $LinearLayout;
+        yacl$getTabs(): $ImmutableList<$Tab>;
+        yacl$getTabButtons(): $ImmutableList<$TabButton>;
         yacl$getWidth(): number;
     }
     export class $AbstractSelectionListAccessor {

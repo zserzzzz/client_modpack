@@ -113,13 +113,13 @@ declare module "@package/java/lang/constant" {
         parameterArray(): $ClassDesc[];
     }
     export class $DynamicConstantDesc<T> implements $ConstantDesc {
-        constantType(): $ClassDesc;
-        constantName(): string;
-        static of<T>(arg0: $DirectMethodHandleDesc): $DynamicConstantDesc<T>;
         static of<T>(arg0: $DirectMethodHandleDesc, ...arg1: $ConstantDesc_[]): $DynamicConstantDesc<T>;
+        static of<T>(arg0: $DirectMethodHandleDesc): $DynamicConstantDesc<T>;
         resolveConstantDesc(arg0: $MethodHandles$Lookup): T;
         bootstrapMethod(): $DirectMethodHandleDesc;
         static ofNamed<T>(arg0: $DirectMethodHandleDesc, arg1: string, arg2: $ClassDesc, ...arg3: $ConstantDesc_[]): $DynamicConstantDesc<T>;
+        constantType(): $ClassDesc;
+        constantName(): string;
         bootstrapArgs(): $ConstantDesc[];
         static ofCanonical<T>(arg0: $DirectMethodHandleDesc, arg1: string, arg2: $ClassDesc, arg3: $ConstantDesc_[]): $ConstantDesc;
         bootstrapArgsList(): $List<$ConstantDesc>;

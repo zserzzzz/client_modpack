@@ -40,10 +40,10 @@ declare module "@package/dev/engine_room/flywheel/api/instance" {
     export class $InstanceType<I extends $Instance> {
     }
     export interface $InstanceType<I extends $Instance> {
+        vertexShader(): $ResourceLocation;
         writer(): $InstanceWriter<I>;
         create(arg0: $InstanceHandle): I;
         layout(): $Layout;
-        vertexShader(): $ResourceLocation;
         cullShader(): $ResourceLocation;
     }
     export class $Instance {

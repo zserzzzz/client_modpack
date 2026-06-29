@@ -60,7 +60,7 @@ declare module "@package/com/simibubi/create/content/logistics/tableCloth" {
     /**
      * Values that may be interpreted as {@link $BlueprintOverlayShopContext}.
      */
-    export type $BlueprintOverlayShopContext_ = { purchases?: number, stockLevel?: number, checkout?: boolean,  } | [purchases?: number, stockLevel?: number, checkout?: boolean, ];
+    export type $BlueprintOverlayShopContext_ = { stockLevel?: number, checkout?: boolean, purchases?: number,  } | [stockLevel?: number, checkout?: boolean, purchases?: number, ];
     export class $TableClothModel$CullData extends $Record {
     }
     /**
@@ -76,8 +76,8 @@ declare module "@package/com/simibubi/create/content/logistics/tableCloth" {
         constructor(arg0: $BlockEntityRendererProvider$Context);
     }
     export class $ShoppingListItem extends $Item {
-        static getAddress(arg0: $ItemStack_): string;
         static getList(arg0: $ItemStack_): $ShoppingListItem$ShoppingList;
+        static getAddress(arg0: $ItemStack_): string;
         static saveList(arg0: $ItemStack_, arg1: $ShoppingListItem$ShoppingList_, arg2: string): $ItemStack;
         static BASE_ATTACK_DAMAGE_ID: $ResourceLocation;
         static DEFAULT_MAX_STACK_SIZE: number;
@@ -91,10 +91,10 @@ declare module "@package/com/simibubi/create/content/logistics/tableCloth" {
     }
     export class $TableClothBlock$PlacementHelper implements $IPlacementHelper {
         getOffset(arg0: $Player, arg1: $Level_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockHitResult, arg5: $ItemStack_): $PlacementOffset;
-        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
-        matchesState(arg0: $BlockState_): boolean;
-        displayGhost(arg0: $PlacementOffset): void;
         matchesItem(arg0: $ItemStack_): boolean;
+        matchesState(arg0: $BlockState_): boolean;
+        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
+        displayGhost(arg0: $PlacementOffset): void;
     }
     export class $TableClothBlockItem extends $BlockItem {
         static BASE_ATTACK_DAMAGE_ID: $ResourceLocation;
@@ -108,20 +108,20 @@ declare module "@package/com/simibubi/create/content/logistics/tableCloth" {
         constructor(arg0: $Block_, arg1: $Item$Properties);
     }
     export class $TableClothBlock extends $Block implements $IHaveBigOutline, $IWrenchable, $IBE<$TableClothBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$TableClothBlockEntity>;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getColor(): $DyeColor;
         getBlockEntityClass(): $Class<$TableClothBlockEntity>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        getBlockEntityType(): $BlockEntityType<$TableClothBlockEntity>;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$TableClothBlockEntity>): void;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$TableClothBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($TableClothBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$TableClothBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $TableClothBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$TableClothBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($TableClothBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$TableClothBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -153,15 +153,15 @@ declare module "@package/com/simibubi/create/content/logistics/tableCloth" {
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties, arg1: $DyeColor_);
         constructor(arg0: $BlockBehaviour$Properties, arg1: string);
-        get blockEntityType(): $BlockEntityType<$TableClothBlockEntity>;
         get color(): $DyeColor;
         get blockEntityClass(): $Class<$TableClothBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$TableClothBlockEntity>;
     }
     export class $ShoppingListItem$ShoppingList extends $Record {
         duplicate(): $ShoppingListItem$ShoppingList;
+        bakeEntries(arg0: $LevelAccessor, arg1: $BlockPos_): $Couple<$InventorySummary>;
         purchases(): $List<$IntAttached<$BlockPos>>;
         shopOwner(): $UUID;
-        bakeEntries(arg0: $LevelAccessor, arg1: $BlockPos_): $Couple<$InventorySummary>;
         getPurchases(arg0: $BlockPos_): number;
         shopNetwork(): $UUID;
         static CODEC: $Codec<$ShoppingListItem$ShoppingList>;
@@ -171,7 +171,7 @@ declare module "@package/com/simibubi/create/content/logistics/tableCloth" {
     /**
      * Values that may be interpreted as {@link $ShoppingListItem$ShoppingList}.
      */
-    export type $ShoppingListItem$ShoppingList_ = { purchases?: $List_<$IntAttached<$BlockPos_>>, shopNetwork?: $UUID_, shopOwner?: $UUID_,  } | [purchases?: $List_<$IntAttached<$BlockPos_>>, shopNetwork?: $UUID_, shopOwner?: $UUID_, ];
+    export type $ShoppingListItem$ShoppingList_ = { shopNetwork?: $UUID_, shopOwner?: $UUID_, purchases?: $List_<$IntAttached<$BlockPos_>>,  } | [shopNetwork?: $UUID_, shopOwner?: $UUID_, purchases?: $List_<$IntAttached<$BlockPos_>>, ];
     export class $TableClothOverlayRenderer {
         static tick(): void;
         constructor();
@@ -188,14 +188,14 @@ declare module "@package/com/simibubi/create/content/logistics/tableCloth" {
         transform(arg0: $BlockEntity, arg1: $StructureTransform): void;
         use(arg0: $Player, arg1: $BlockHitResult): $ItemInteractionResult;
         static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
-        useShop(arg0: $Player): $ItemInteractionResult;
-        getStockLevelForTrade(arg0: $ShoppingListItem$ShoppingList_): number;
         invalidateItemsForRender(): void;
+        getStockLevelForTrade(arg0: $ShoppingListItem$ShoppingList_): number;
+        useShop(arg0: $Player): $ItemInteractionResult;
         isShop(): boolean;
+        getPaymentItem(): $ItemStack;
         targetsPriceTag(arg0: $Player, arg1: $BlockHitResult): boolean;
         getItemsForRender(): $List<$ItemStack>;
         getPaymentAmount(): number;
-        getPaymentItem(): $ItemStack;
         notifyShopUpdate(): void;
         owner: $UUID;
         worldPosition: $BlockPos;
@@ -210,8 +210,8 @@ declare module "@package/com/simibubi/create/content/logistics/tableCloth" {
         requestData: $AutoRequestData;
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
         get shop(): boolean;
+        get paymentItem(): $ItemStack;
         get itemsForRender(): $List<$ItemStack>;
         get paymentAmount(): number;
-        get paymentItem(): $ItemStack;
     }
 }

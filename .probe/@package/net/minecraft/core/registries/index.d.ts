@@ -74,10 +74,10 @@ import { $DamageType } from "@package/net/minecraft/world/damagesource";
 
 declare module "@package/net/minecraft/core/registries" {
     export class $Registries {
-        static levelStemToLevel(levelStem: $ResourceKey_<$LevelStem>): $ResourceKey<$Level>;
-        static levelToLevelStem(levelStem: $ResourceKey_<$Level>): $ResourceKey<$LevelStem>;
         static elementsDirPath(registryKey: $ResourceKey_<$Registry<never>>): string;
+        static levelStemToLevel(levelStem: $ResourceKey_<$LevelStem>): $ResourceKey<$Level>;
         static tagsDirPath(registryKey: $ResourceKey_<$Registry<never>>): string;
+        static levelToLevelStem(levelStem: $ResourceKey_<$Level>): $ResourceKey<$LevelStem>;
         static ENCHANTMENT_LOCATION_BASED_EFFECT_TYPE: $ResourceKey<$Registry<$MapCodec<$EnchantmentLocationBasedEffect>>>;
         static VILLAGER_TYPE: $ResourceKey<$Registry<$VillagerType>>;
         static PROCESSOR_LIST: $ResourceKey<$Registry<$StructureProcessorList>>;
@@ -192,8 +192,8 @@ declare module "@package/net/minecraft/core/registries" {
         constructor();
     }
     export class $BuiltInRegistries {
-        static createContents(): void;
         static bootStrap(): void;
+        static createContents(): void;
         static getVanillaRegistrationOrder(): $Set<$ResourceLocation>;
         static FOLIAGE_PLACER_TYPE: $Registry<$FoliagePlacerType<never>>;
         static POOL_ALIAS_BINDING_TYPE: $Registry<$MapCodec<$PoolAliasBinding>>;

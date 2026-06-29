@@ -50,21 +50,21 @@ declare module "@package/com/simibubi/create/content/decoration/steamWhistle" {
     export type $WhistleBlock$WhistleSize_ = "small" | "medium" | "large";
     export class $WhistleBlock extends $Block implements $IBE<$WhistleBlockEntity>, $IWrenchable {
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        getBlockEntityType(): $BlockEntityType<$WhistleBlockEntity>;
         getBlockEntityClass(): $Class<$WhistleBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$WhistleBlockEntity>;
         static getAttachedDirection(arg0: $BlockState_): $Direction;
         static incrementSize(arg0: $LevelAccessor, arg1: $BlockPos_): void;
         static queuePitchUpdate(arg0: $LevelAccessor, arg1: $BlockPos_): void;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$WhistleBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$WhistleBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($WhistleBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$WhistleBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $WhistleBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$WhistleBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($WhistleBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$WhistleBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -98,18 +98,18 @@ declare module "@package/com/simibubi/create/content/decoration/steamWhistle" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$WhistleBlockEntity>;
         get blockEntityClass(): $Class<$WhistleBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$WhistleBlockEntity>;
     }
     export class $WhistleGenerator extends $SpecialBlockStateGen {
         constructor();
     }
     export class $WhistleExtenderBlock extends $Block implements $IWrenchable {
+        onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         static findRoot(arg0: $LevelAccessor, arg1: $BlockPos_): $BlockPos;
-        onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -145,10 +145,10 @@ declare module "@package/com/simibubi/create/content/decoration/steamWhistle" {
         constructor(arg0: $BlockEntityRendererProvider$Context);
     }
     export class $WhistleSoundInstance extends $AbstractTickableSoundInstance {
-        fadeOut(): void;
         keepAlive(): void;
         getOctave(): $WhistleBlock$WhistleSize;
         setPitch(arg0: number): void;
+        fadeOut(): void;
         attenuation: $SoundInstance$Attenuation;
         looping: boolean;
         sound: $Sound;
@@ -166,9 +166,9 @@ declare module "@package/com/simibubi/create/content/decoration/steamWhistle" {
         get octave(): $WhistleBlock$WhistleSize;
     }
     export class $WhistleBlockEntity extends $SmartBlockEntity implements $IHaveGoggleInformation {
-        getPitchId(): number;
-        getTank(): $FluidTankBlockEntity;
         addToGoggleTooltip(arg0: $List_<$Component_>, arg1: boolean): boolean;
+        getTank(): $FluidTankBlockEntity;
+        getPitchId(): number;
         updatePitch(): void;
         containedFluidTooltip(arg0: $List_<$Component_>, arg1: boolean, arg2: $IFluidHandler): boolean;
         getIcon(arg0: boolean): $ItemStack;
@@ -179,8 +179,8 @@ declare module "@package/com/simibubi/create/content/decoration/steamWhistle" {
         hasComparators: number;
         animation: $LerpedFloat;
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
-        get pitchId(): number;
         get tank(): $FluidTankBlockEntity;
+        get pitchId(): number;
     }
     export class $WhistleExtenderBlock$WhistleExtenderShape extends $Enum<$WhistleExtenderBlock$WhistleExtenderShape> implements $StringRepresentable {
         static values(): $WhistleExtenderBlock$WhistleExtenderShape[];

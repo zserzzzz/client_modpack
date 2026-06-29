@@ -3,8 +3,8 @@ import { $Collection } from "@package/java/util";
 
 declare module "@package/de/maxhenkel/voicechat/plugins" {
     export class $CategoryManager {
-        addCategory(arg0: $VolumeCategoryImpl): void;
         getCategories(): $Collection<$VolumeCategoryImpl>;
+        addCategory(arg0: $VolumeCategoryImpl): void;
         removeCategory(arg0: string): $VolumeCategoryImpl;
         constructor();
         get categories(): $Collection<$VolumeCategoryImpl>;

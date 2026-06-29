@@ -10,9 +10,6 @@ declare module "@package/java/time/chrono" {
         static timeLineOrder(): $Comparator<$ChronoZonedDateTime<never>>;
     }
     export interface $ChronoZonedDateTime<D extends $ChronoLocalDate> extends $Temporal, $Comparable<$ChronoZonedDateTime<never>> {
-        withZoneSameInstant(arg0: $ZoneId): $ChronoZonedDateTime<D>;
-        withZoneSameLocal(arg0: $ZoneId): $ChronoZonedDateTime<D>;
-        withLaterOffsetAtOverlap(): $ChronoZonedDateTime<D>;
         get(arg0: $TemporalField): number;
         equals(arg0: $Object): boolean;
         toString(): string;
@@ -22,12 +19,12 @@ declare module "@package/java/time/chrono" {
         format(arg0: $DateTimeFormatter): string;
         isSupported(arg0: $TemporalField): boolean;
         isSupported(arg0: $TemporalUnit): boolean;
+        "with"(arg0: $TemporalAdjuster_): $ChronoZonedDateTime<D>;
         query<R>(arg0: $TemporalQuery_<R>): R;
         getOffset(): $ZoneOffset;
         range(arg0: $TemporalField): $ValueRange;
         toInstant(): $Instant;
         getZone(): $ZoneId;
-        plus(arg0: $TemporalAmount_): $ChronoZonedDateTime<D>;
         isAfter(arg0: $ChronoZonedDateTime<never>): boolean;
         isBefore(arg0: $ChronoZonedDateTime<never>): boolean;
         toLocalTime(): $LocalTime;
@@ -36,11 +33,14 @@ declare module "@package/java/time/chrono" {
         toEpochSecond(): number;
         toLocalDateTime(): $ChronoLocalDateTime<D>;
         toLocalDate(): D;
+        withZoneSameInstant(arg0: $ZoneId): $ChronoZonedDateTime<D>;
+        withZoneSameLocal(arg0: $ZoneId): $ChronoZonedDateTime<D>;
+        withLaterOffsetAtOverlap(): $ChronoZonedDateTime<D>;
         withEarlierOffsetAtOverlap(): $ChronoZonedDateTime<D>;
-        "with"(arg0: $TemporalAdjuster_): $Temporal;
         "with"(arg0: $TemporalField, arg1: number): $Temporal;
-        minus(arg0: $TemporalAmount_): $Temporal;
         minus(arg0: number, arg1: $TemporalUnit): $Temporal;
+        minus(arg0: $TemporalAmount_): $Temporal;
+        plus(arg0: $TemporalAmount_): $Temporal;
         plus(arg0: number, arg1: $TemporalUnit): $Temporal;
         get offset(): $ZoneOffset;
         get zone(): $ZoneId;

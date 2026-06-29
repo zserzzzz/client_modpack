@@ -34,17 +34,17 @@ declare module "@package/dev/latvian/mods/kubejs/web" {
      */
     export type $LocalWebServerAPIRegistry_ = ((id: $ResourceLocation, version: number) => void);
     export class $JsonContent extends $Record implements $ResponseContent {
-        json(): $Lazy<number[]>;
         type(): string;
         length(): number;
         static array(json: $Consumer_<$JsonArray>): $JsonContent;
         write(out: $OutputStream): void;
         static object(json: $Consumer_<$JsonObject>): $JsonContent;
         static any(json: $Supplier_<$JsonElement>): $JsonContent;
-        bodyPublisher(): $HttpRequest$BodyPublisher;
+        json(): $Lazy<number[]>;
         toBytes(): number[];
         transferTo(connection: $HTTPConnection<never>): void;
         hasData(): boolean;
+        bodyPublisher(): $HttpRequest$BodyPublisher;
         constructor(json: $Lazy<number[]>);
     }
     /**
@@ -64,7 +64,7 @@ declare module "@package/dev/latvian/mods/kubejs/web" {
     /**
      * Values that may be interpreted as {@link $LocalWebServerRegistry$AuthHandler}.
      */
-    export type $LocalWebServerRegistry$AuthHandler_ = { handler?: $HTTPHandler_<$KJSHTTPRequest>, match?: string,  } | [handler?: $HTTPHandler_<$KJSHTTPRequest>, match?: string, ];
+    export type $LocalWebServerRegistry$AuthHandler_ = { match?: string, handler?: $HTTPHandler_<$KJSHTTPRequest>,  } | [match?: string, handler?: $HTTPHandler_<$KJSHTTPRequest>, ];
     export class $KJSHTTPServer extends $HTTPServer<$KJSHTTPRequest> {
     }
     export class $LocalWebServerRegistry implements $ServerRegistry<$KJSHTTPRequest> {
@@ -77,18 +77,18 @@ declare module "@package/dev/latvian/mods/kubejs/web" {
         ws<WSS extends $WSSession<REQ>>(path: string): $WSHandler<$KJSHTTPRequest, WSS>;
         post(path: string, handler: $HTTPHandler_<$KJSHTTPRequest>): void;
         redirect(path: string, redirect: string): void;
+        singleFile(path: string, file: $Path_, responseHandler: $FileResponseHandler_): void;
         dynamicFiles(path: string, directory: $Path_, responseHandler: $FileResponseHandler_, autoIndex: boolean): void;
         staticFiles(path: string, directory: $Path_, responseHandler: $FileResponseHandler_, autoIndex: boolean): void;
         acceptPostString(path: string, handler: $Consumer_<string>): void;
         acceptPostTask(path: string, task: $Runnable_): void;
-        singleFile(path: string, file: $Path_, responseHandler: $FileResponseHandler_): void;
     }
     export class $KJSHTTPRequest extends $HTTPRequest {
-        id(ns: string, path: string): $ResourceLocation;
         id(): $ResourceLocation;
+        id(ns: string, path: string): $ResourceLocation;
         components(ops: $DynamicOps<$Tag_>): $DataComponentPatch;
-        runInMainThread(task: $Runnable_): void;
         registries(): $RegistryAccessContainer;
+        runInMainThread(task: $Runnable_): void;
         supplyInMainThread<T>(task: $Supplier_<T>): T;
         eventLoop: $BlockableEventLoop<never>;
         constructor(eventLoop: $BlockableEventLoop<never>);
@@ -111,7 +111,7 @@ declare module "@package/dev/latvian/mods/kubejs/web" {
     /**
      * Values that may be interpreted as {@link $LocalWebServer$Endpoint}.
      */
-    export type $LocalWebServer$Endpoint_ = { path?: string, auth?: boolean, method?: string,  } | [path?: string, auth?: boolean, method?: string, ];
+    export type $LocalWebServer$Endpoint_ = { auth?: boolean, method?: string, path?: string,  } | [auth?: boolean, method?: string, path?: string, ];
     export class $RelativeURL extends $Record {
         query(): $Map<string, string>;
         path(): string;
@@ -122,7 +122,7 @@ declare module "@package/dev/latvian/mods/kubejs/web" {
     /**
      * Values that may be interpreted as {@link $RelativeURL}.
      */
-    export type $RelativeURL_ = { query?: $Map_<string, string>, path?: string,  } | [query?: $Map_<string, string>, path?: string, ];
+    export type $RelativeURL_ = { path?: string, query?: $Map_<string, string>,  } | [path?: string, query?: $Map_<string, string>, ];
     export class $LocalWebServer extends $Record {
         server(): $KJSHTTPServer;
         url(): string;
@@ -133,16 +133,16 @@ declare module "@package/dev/latvian/mods/kubejs/web" {
     /**
      * Values that may be interpreted as {@link $LocalWebServer}.
      */
-    export type $LocalWebServer_ = { url?: string, endpoints?: $List_<$LocalWebServer$Endpoint_>, explorerCode?: string, server?: $KJSHTTPServer,  } | [url?: string, endpoints?: $List_<$LocalWebServer$Endpoint_>, explorerCode?: string, server?: $KJSHTTPServer, ];
+    export type $LocalWebServer_ = { explorerCode?: string, server?: $KJSHTTPServer, url?: string, endpoints?: $List_<$LocalWebServer$Endpoint_>,  } | [explorerCode?: string, server?: $KJSHTTPServer, url?: string, endpoints?: $List_<$LocalWebServer$Endpoint_>, ];
     export class $SessionInfo extends $Record {
-        static fromJson(info: $SessionInfo_, json: $JsonObject_): $SessionInfo;
         source(): string;
         tags(): $Set<string>;
+        static fromJson(info: $SessionInfo_, json: $JsonObject_): $SessionInfo;
         static NONE: $SessionInfo;
         constructor(source: string, tags: $Set_<string>);
     }
     /**
      * Values that may be interpreted as {@link $SessionInfo}.
      */
-    export type $SessionInfo_ = { source?: string, tags?: $Set_<string>,  } | [source?: string, tags?: $Set_<string>, ];
+    export type $SessionInfo_ = { tags?: $Set_<string>, source?: string,  } | [tags?: $Set_<string>, source?: string, ];
 }

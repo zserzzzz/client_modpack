@@ -8,10 +8,10 @@ declare module "@package/com/simibubi/create/impl/contraption/dispenser" {
         static INSTANCE: $MountedDispenseBehavior;
     }
     export class $DispenserBehaviorConverter extends $Enum<$DispenserBehaviorConverter> implements $SimpleRegistry$Provider<$Item, $MountedDispenseBehavior> {
-        onRegister(arg0: $Runnable_): void;
         get(arg0: $Item_): $MountedDispenseBehavior;
         static values(): $DispenserBehaviorConverter[];
         static valueOf(arg0: string): $DispenserBehaviorConverter;
+        onRegister(arg0: $Runnable_): void;
         static INSTANCE: $DispenserBehaviorConverter;
     }
     /**

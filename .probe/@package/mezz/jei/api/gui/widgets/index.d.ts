@@ -43,45 +43,45 @@ declare module "@package/mezz/jei/api/gui/widgets" {
     export class $IRecipeExtrasBuilder {
     }
     export interface $IRecipeExtrasBuilder {
-        addScrollBoxWidget(arg0: number, arg1: number, arg2: number, arg3: number): $IScrollBoxWidget;
-        /**
-         * @deprecated
-         */
-        addRecipeArrow(arg0: number, arg1: number): void;
-        addRecipeArrow(): $IPlaceable<never>;
-        addRecipePlusSign(): $IPlaceable<never>;
-        /**
-         * @deprecated
-         */
-        addRecipePlusSign(arg0: number, arg1: number): void;
-        addText(arg0: $List_<$FormattedText>, arg1: number, arg2: number): $ITextWidget;
-        /**
-         * @deprecated
-         */
-        addText(arg0: $List_<$FormattedText>, arg1: number, arg2: number, arg3: number, arg4: number): $ITextWidget;
+        addWidget(arg0: $IRecipeWidget_): void;
         addText(arg0: $FormattedText, arg1: number, arg2: number): $ITextWidget;
         /**
          * @deprecated
          */
         addText(arg0: $FormattedText, arg1: number, arg2: number, arg3: number, arg4: number): $ITextWidget;
-        addWidget(arg0: $IRecipeWidget_): void;
-        getRecipeSlots(): $IRecipeSlotDrawablesView;
+        addText(arg0: $List_<$FormattedText>, arg1: number, arg2: number): $ITextWidget;
         /**
          * @deprecated
          */
-        addAnimatedRecipeFlame(arg0: number, arg1: number, arg2: number): void;
-        addAnimatedRecipeFlame(arg0: number): $IPlaceable<never>;
+        addText(arg0: $List_<$FormattedText>, arg1: number, arg2: number, arg3: number, arg4: number): $ITextWidget;
+        addDrawable(arg0: $IDrawable): $IPlaceable<never>;
+        addDrawable(arg0: $IDrawable, arg1: number, arg2: number): void;
+        getRecipeSlots(): $IRecipeSlotDrawablesView;
+        addGuiEventListener(arg0: $IJeiGuiEventListener_): void;
+        addScrollGridWidget(arg0: $List_<$IRecipeSlotDrawable>, arg1: number, arg2: number): $IScrollGridWidget;
+        addInputHandler(arg0: $IJeiInputHandler_): void;
+        addSlottedWidget(arg0: $ISlottedRecipeWidget, arg1: $List_<$IRecipeSlotDrawable>): void;
+        addScrollBoxWidget(arg0: number, arg1: number, arg2: number, arg3: number): $IScrollBoxWidget;
+        /**
+         * @deprecated
+         */
+        addRecipePlusSign(arg0: number, arg1: number): void;
+        addRecipePlusSign(): $IPlaceable<never>;
+        /**
+         * @deprecated
+         */
+        addRecipeArrow(arg0: number, arg1: number): void;
+        addRecipeArrow(): $IPlaceable<never>;
+        addAnimatedRecipeArrow(arg0: number): $IPlaceable<never>;
         /**
          * @deprecated
          */
         addAnimatedRecipeArrow(arg0: number, arg1: number, arg2: number): void;
-        addAnimatedRecipeArrow(arg0: number): $IPlaceable<never>;
-        addDrawable(arg0: $IDrawable): $IPlaceable<never>;
-        addDrawable(arg0: $IDrawable, arg1: number, arg2: number): void;
-        addSlottedWidget(arg0: $ISlottedRecipeWidget, arg1: $List_<$IRecipeSlotDrawable>): void;
-        addInputHandler(arg0: $IJeiInputHandler_): void;
-        addGuiEventListener(arg0: $IJeiGuiEventListener_): void;
-        addScrollGridWidget(arg0: $List_<$IRecipeSlotDrawable>, arg1: number, arg2: number): $IScrollGridWidget;
+        addAnimatedRecipeFlame(arg0: number): $IPlaceable<never>;
+        /**
+         * @deprecated
+         */
+        addAnimatedRecipeFlame(arg0: number, arg1: number, arg2: number): void;
         get recipeSlots(): $IRecipeSlotDrawablesView;
     }
     export class $ITextWidget {
@@ -100,11 +100,7 @@ declare module "@package/mezz/jei/api/gui/widgets" {
         /**
          * @deprecated
          */
-        alignHorizontalCenter(): $ITextWidget;
-        /**
-         * @deprecated
-         */
-        alignVerticalCenter(): $ITextWidget;
+        alignHorizontalLeft(): $ITextWidget;
         /**
          * @deprecated
          */
@@ -112,11 +108,15 @@ declare module "@package/mezz/jei/api/gui/widgets" {
         /**
          * @deprecated
          */
+        alignHorizontalCenter(): $ITextWidget;
+        /**
+         * @deprecated
+         */
         alignVerticalBottom(): $ITextWidget;
         /**
          * @deprecated
          */
-        alignHorizontalLeft(): $ITextWidget;
+        alignVerticalCenter(): $ITextWidget;
         set shadow(value: boolean);
         set color(value: number);
         set font(value: $Font);

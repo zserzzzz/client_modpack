@@ -14,16 +14,16 @@ declare module "@package/software/bernie/geckolib/renderer/layer" {
         constructor(arg0: $GeoRenderer<T>);
     }
     export class $ItemArmorGeoLayer<T extends $LivingEntity> extends $GeoRenderLayer<T> {
-        preRender(arg0: $PoseStack, arg1: T, arg2: $BakedGeoModel_, arg3: $RenderType, arg4: $MultiBufferSource_, arg5: $VertexConsumer, arg6: number, arg7: number, arg8: number): void;
         renderForBone(arg0: $PoseStack, arg1: T, arg2: $GeoBone, arg3: $RenderType, arg4: $MultiBufferSource_, arg5: $VertexConsumer, arg6: number, arg7: number, arg8: number): void;
+        preRender(arg0: $PoseStack, arg1: T, arg2: $BakedGeoModel_, arg3: $RenderType, arg4: $MultiBufferSource_, arg5: $VertexConsumer, arg6: number, arg7: number, arg8: number): void;
         constructor(arg0: $GeoRenderer<T>);
     }
     export class $GeoRenderLayer<T extends $GeoAnimatable> {
         getRenderer(): $GeoRenderer<T>;
-        preRender(arg0: $PoseStack, arg1: T, arg2: $BakedGeoModel_, arg3: $RenderType, arg4: $MultiBufferSource_, arg5: $VertexConsumer, arg6: number, arg7: number, arg8: number): void;
         render(arg0: $PoseStack, arg1: T, arg2: $BakedGeoModel_, arg3: $RenderType, arg4: $MultiBufferSource_, arg5: $VertexConsumer, arg6: number, arg7: number, arg8: number): void;
-        getGeoModel(): $GeoModel<T>;
         renderForBone(arg0: $PoseStack, arg1: T, arg2: $GeoBone, arg3: $RenderType, arg4: $MultiBufferSource_, arg5: $VertexConsumer, arg6: number, arg7: number, arg8: number): void;
+        getGeoModel(): $GeoModel<T>;
+        preRender(arg0: $PoseStack, arg1: T, arg2: $BakedGeoModel_, arg3: $RenderType, arg4: $MultiBufferSource_, arg5: $VertexConsumer, arg6: number, arg7: number, arg8: number): void;
         getDefaultBakedModel(arg0: T): $BakedGeoModel;
         constructor(arg0: $GeoRenderer<T>);
         get renderer(): $GeoRenderer<T>;

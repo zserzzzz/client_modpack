@@ -44,14 +44,8 @@ declare module "@package/net/minecraft/client/gui/screens/multiplayer" {
         constructor();
     }
     export class $JoinMultiplayerScreen extends $Screen implements $GuiMultiplayerAccessor, $EssentialPostScreenDrawHook, $GuiMultiplayerExt, $EssentialGuiDraggableEntryScreen<any> {
-        getPinger(): $ServerStatusPinger;
-        setSelected(selected: $ServerSelectionList$Entry): void;
-        getServers(): $ServerList;
         essential$getDragHandlerOrNull(): $GuiDragDropEntryHandler<any>;
-        onSelectedChange(): void;
-        joinSelectedServer(): void;
-        essential$close(): void;
-        essential$refresh(): void;
+        setSelected(selected: $ServerSelectionList$Entry): void;
         /**
          * Returns the tab order group of the GUI component.
          * Tab order group determines the order in which the components are traversed when using keyboard navigation.
@@ -59,7 +53,13 @@ declare module "@package/net/minecraft/client/gui/screens/multiplayer" {
          * @return The tab order group of the GUI component.
          */
         essential$getQuickSwapIndex(): number;
+        getServers(): $ServerList;
+        onSelectedChange(): void;
+        essential$refresh(): void;
+        essential$close(): void;
+        joinSelectedServer(): void;
         essential$getEssentialGui(): $EssentialMultiplayerGui;
+        getPinger(): $ServerStatusPinger;
         getBtnSelectServer(): $Button;
         getParentScreen(): $Screen;
         getServerListSelector(): $ServerSelectionList;
@@ -87,9 +87,9 @@ declare module "@package/net/minecraft/client/gui/screens/multiplayer" {
         height: number;
         font: $Font;
         constructor(lastScreen: $Screen);
-        get pinger(): $ServerStatusPinger;
         set selected(value: $ServerSelectionList$Entry);
         get servers(): $ServerList;
+        get pinger(): $ServerStatusPinger;
         get btnSelectServer(): $Button;
         get parentScreen(): $Screen;
         get serverListSelector(): $ServerSelectionList;
@@ -167,8 +167,8 @@ declare module "@package/net/minecraft/client/gui/screens/multiplayer" {
         list: $AbstractSelectionList<$ServerLinksScreen$LinkListEntry>;
     }
     export class $ServerSelectionList extends $ObjectSelectionList<$ServerSelectionList$Entry> implements $SelectionListWithDividers<any>, $ServerSelectionListAccessor {
-        static access$000(arg0: $ServerSelectionList, arg1: $AbstractSelectionList$Entry<any>): void;
         removed(): void;
+        static access$000(arg0: $ServerSelectionList, arg1: $AbstractSelectionList$Entry<any>): void;
         static access$100(arg0: $ServerSelectionList, arg1: number): number;
         setSelected(entry: $ServerSelectionList$Entry | null): void;
         updateOnlineServers(servers: $ServerList): void;
@@ -177,11 +177,11 @@ declare module "@package/net/minecraft/client/gui/screens/multiplayer" {
         setEssential$offsetDividers(dividers: $TreeMap<any, any>): void;
         handler$iab000$essential$modifyListEntries(ci: $CallbackInfo): void;
         essential$setDividers(dividers: $Map_<number, $Object>): void;
-        updateList(): void;
         /**
          * @return a List containing all GUI element children of this GUI element
          */
         getServerListInternet(): $List<$ServerSelectionList$OnlineServerEntry>;
+        updateList(): void;
         /**
          * @return a List containing all GUI element children of this GUI element
          */
@@ -238,11 +238,11 @@ declare module "@package/net/minecraft/client/gui/screens/multiplayer" {
         get serverListLan(): $List<$ServerSelectionList$NetworkServerEntry>;
     }
     export class $ServerSelectionList$OnlineServerEntry extends $ServerSelectionList$Entry implements $ServerListEntryNormalExt, $ServerListEntryNormalAccessor {
-        essential$setImpressionConsumer(consumer: $NewServerDiscoveryManager$ImpressionConsumer_): void;
-        essential$getFriends(): $FriendsIndicator;
-        static create$essential_$md$942995$1(arg0: $ServerSelectionList, arg1: $JoinMultiplayerScreen, arg2: $ServerData): $ServerSelectionList$OnlineServerEntry;
         getServerData(): $ServerData;
         drawIcon(guiGraphics: $GuiGraphics, x: number, y: number, icon: $ResourceLocation_): void;
+        static create$essential_$md$c99f8a$1(arg0: $ServerSelectionList, arg1: $JoinMultiplayerScreen, arg2: $ServerData): $ServerSelectionList$OnlineServerEntry;
+        essential$setImpressionConsumer(consumer: $NewServerDiscoveryManager$ImpressionConsumer_): void;
+        essential$getFriends(): $FriendsIndicator;
         updateServerList(): void;
         this$0: $ServerSelectionList;
         /**

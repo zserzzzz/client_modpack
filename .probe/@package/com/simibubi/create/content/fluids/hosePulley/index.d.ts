@@ -36,11 +36,11 @@ declare module "@package/com/simibubi/create/content/fluids/hosePulley" {
     }
     export class $HosePulleyBlockEntity extends $KineticBlockEntity {
         static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
-        getMovementSpeed(): number;
         getInterpolatedOffset(arg0: number): number;
-        wrapOperation$glp000$sable$checkForCollisions2(arg0: $Level_, arg1: $BlockPos_, arg2: $Operation_<any>): $BlockState;
+        getMovementSpeed(): number;
         wrapOperation$glp000$sable$checkForCollisions1(arg0: $Level_, arg1: $BlockPos_, arg2: $Operation_<any>): $BlockState;
         wrapOperation$glp000$sable$checkForCollisions3(arg0: $Level_, arg1: $BlockPos_, arg2: $Operation_<any>): $BlockState;
+        wrapOperation$glp000$sable$checkForCollisions2(arg0: $Level_, arg1: $BlockPos_, arg2: $Operation_<any>): $BlockState;
         sequenceContext: $SequencedGearshiftBlockEntity$SequenceContext;
         networkDirty: boolean;
         worldPosition: $BlockPos;
@@ -55,33 +55,33 @@ declare module "@package/com/simibubi/create/content/fluids/hosePulley" {
         get movementSpeed(): number;
     }
     export class $HosePulleyFluidHandler implements $IFluidHandler {
-        getTanks(): number;
-        drain(arg0: number, arg1: $IFluidHandler$FluidAction_): $FluidStack;
         drain(arg0: $FluidStack_, arg1: $IFluidHandler$FluidAction_): $FluidStack;
+        drain(arg0: number, arg1: $IFluidHandler$FluidAction_): $FluidStack;
         fill(arg0: $FluidStack_, arg1: $IFluidHandler$FluidAction_): number;
-        getFluidInTank(arg0: number): $FluidStack;
         getTankCapacity(arg0: number): number;
         isFluidValid(arg0: number, arg1: $FluidStack_): boolean;
+        getFluidInTank(arg0: number): $FluidStack;
+        getTanks(): number;
         getInternalTank(): $SmartFluidTank;
+        wrapOperation$gma000$sable$modifyGetDrainableFluid(arg0: $FluidDrainingBehaviour, arg1: $BlockPos_, arg2: $Operation_<any>): $FluidStack;
+        wrapOperation$gma000$sable$modifyGetFluidInTank(arg0: $FluidDrainingBehaviour, arg1: $BlockPos_, arg2: $Operation_<any>): $FluidStack;
         handler$gma000$sable$updateLastValidPos(arg0: number, arg1: $FluidStack_, arg2: $IFluidHandler$FluidAction_, arg3: $CallbackInfoReturnable<any>): void;
         wrapOperation$gma000$sable$modifyPullNext(arg0: $FluidDrainingBehaviour, arg1: $BlockPos_, arg2: boolean, arg3: $Operation_<any>): boolean;
-        wrapOperation$gma000$sable$modifyGetFluidInTank(arg0: $FluidDrainingBehaviour, arg1: $BlockPos_, arg2: $Operation_<any>): $FluidStack;
-        wrapOperation$gma000$sable$modifyGetDrainableFluid(arg0: $FluidDrainingBehaviour, arg1: $BlockPos_, arg2: $Operation_<any>): $FluidStack;
         constructor(arg0: $SmartFluidTank, arg1: $FluidFillingBehaviour, arg2: $FluidDrainingBehaviour, arg3: $Supplier_<$BlockPos>, arg4: $Supplier_<boolean>);
         get tanks(): number;
         get internalTank(): $SmartFluidTank;
     }
     export class $HosePulleyBlock extends $HorizontalKineticBlock implements $IBE<$HosePulleyBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$HosePulleyBlockEntity>;
         getBlockEntityClass(): $Class<$HosePulleyBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$HosePulleyBlockEntity>;
         static hasPipeTowards(arg0: $LevelReader, arg1: $BlockPos_, arg2: $BlockState_, arg3: $Direction_): boolean;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$HosePulleyBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$HosePulleyBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($HosePulleyBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$HosePulleyBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $HosePulleyBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$HosePulleyBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($HosePulleyBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$HosePulleyBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -112,7 +112,7 @@ declare module "@package/com/simibubi/create/content/fluids/hosePulley" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$HosePulleyBlockEntity>;
         get blockEntityClass(): $Class<$HosePulleyBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$HosePulleyBlockEntity>;
     }
 }

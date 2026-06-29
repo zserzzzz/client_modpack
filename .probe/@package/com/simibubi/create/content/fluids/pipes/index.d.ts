@@ -54,24 +54,24 @@ declare module "@package/com/simibubi/create/content/fluids/pipes" {
      */
     export type $IAxisPipe_ = ((arg0: $BlockState) => $Direction$Axis_);
     export class $EncasedPipeBlock extends $Block implements $IWrenchable, $SpecialBlockItemRequirement, $IBE<$FluidPipeBlockEntity>, $EncasedBlock, $TransformableBlock {
-        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
         transform(arg0: $BlockState_, arg1: $StructureTransform): $BlockState;
-        handleEncasing(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $ItemStack_, arg4: $Player, arg5: $InteractionHand_, arg6: $BlockHitResult): void;
-        getBlockEntityType(): $BlockEntityType<$FluidPipeBlockEntity>;
-        getBlockEntityClass(): $Class<$FluidPipeBlockEntity>;
-        getCasing(): $Block;
         static transferSixWayProperties(arg0: $BlockState_, arg1: $BlockState_): $BlockState;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        getBlockEntityClass(): $Class<$FluidPipeBlockEntity>;
+        handleEncasing(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $ItemStack_, arg4: $Player, arg5: $InteractionHand_, arg6: $BlockHitResult): void;
+        getBlockEntityType(): $BlockEntityType<$FluidPipeBlockEntity>;
+        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
+        getCasing(): $Block;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$FluidPipeBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FluidPipeBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($FluidPipeBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FluidPipeBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $FluidPipeBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$FluidPipeBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($FluidPipeBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FluidPipeBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -102,8 +102,8 @@ declare module "@package/com/simibubi/create/content/fluids/pipes" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties, arg1: $Supplier_<$Block>);
-        get blockEntityType(): $BlockEntityType<$FluidPipeBlockEntity>;
         get blockEntityClass(): $Class<$FluidPipeBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$FluidPipeBlockEntity>;
         get casing(): $Block;
     }
     export class $FluidPipeBlockEntity$StandardPipeFluidTransportBehaviour extends $FluidTransportBehaviour {
@@ -114,28 +114,28 @@ declare module "@package/com/simibubi/create/content/fluids/pipes" {
         static TYPE: $BehaviourType<$FluidTransportBehaviour>;
     }
     export class $SmartFluidPipeBlock extends $FaceAttachedHorizontalDirectionalBlock implements $IBE<$SmartFluidPipeBlockEntity>, $IAxisPipe, $IWrenchable, $ProperWaterloggedBlock {
-        getBlockEntityType(): $BlockEntityType<$SmartFluidPipeBlockEntity>;
-        getBlockEntityClass(): $Class<$SmartFluidPipeBlockEntity>;
-        static isOpenAt(arg0: $BlockState_, arg1: $Direction_): boolean;
         getAxis(arg0: $BlockState_): $Direction$Axis;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$SmartFluidPipeBlockEntity>): void;
+        getBlockEntityClass(): $Class<$SmartFluidPipeBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$SmartFluidPipeBlockEntity>;
+        static isOpenAt(arg0: $BlockState_, arg1: $Direction_): boolean;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SmartFluidPipeBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($SmartFluidPipeBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SmartFluidPipeBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $SmartFluidPipeBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$SmartFluidPipeBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($SmartFluidPipeBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SmartFluidPipeBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
-        fluidState(arg0: $BlockState_): $FluidState;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         updateWater(arg0: $LevelAccessor, arg1: $BlockState_, arg2: $BlockPos_): void;
+        fluidState(arg0: $BlockState_): $FluidState;
+        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -168,8 +168,8 @@ declare module "@package/com/simibubi/create/content/fluids/pipes" {
         static FACE: $EnumProperty<$AttachFace>;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$SmartFluidPipeBlockEntity>;
         get blockEntityClass(): $Class<$SmartFluidPipeBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$SmartFluidPipeBlockEntity>;
     }
     export class $GlassPipeVisual extends $AbstractBlockEntityVisual<$StraightPipeBlockEntity> implements $SimpleDynamicVisual {
         beginFrame(arg0: $DynamicVisual$Context): void;
@@ -214,34 +214,34 @@ declare module "@package/com/simibubi/create/content/fluids/pipes" {
     }
     export class $FluidPipeBlock extends $PipeBlock implements $SimpleWaterloggedBlock, $IWrenchableWithBracket, $IBE<$FluidPipeBlockEntity>, $EncasableBlock, $TransformableBlock {
         transform(arg0: $BlockState_, arg1: $StructureTransform): $BlockState;
+        static isPipe(arg0: $BlockState_): boolean;
+        updateBlockState(arg0: $BlockState_, arg1: $Direction_, arg2: $Direction_, arg3: $BlockAndTintGetter, arg4: $BlockPos_): $BlockState;
+        onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
+        getBlockEntityClass(): $Class<$FluidPipeBlockEntity>;
         getBlockEntityType(): $BlockEntityType<$FluidPipeBlockEntity>;
         removeBracket(arg0: $BlockGetter, arg1: $BlockPos_, arg2: boolean): ($ItemStack) | undefined;
-        getBlockEntityClass(): $Class<$FluidPipeBlockEntity>;
         static isOpenAt(arg0: $BlockState_, arg1: $Direction_): boolean;
-        static shouldDrawCasing(arg0: $BlockAndTintGetter, arg1: $BlockPos_, arg2: $BlockState_): boolean;
-        static canConnectTo(arg0: $BlockAndTintGetter, arg1: $BlockPos_, arg2: $BlockState_, arg3: $Direction_): boolean;
         static isCornerOrEndPipe(arg0: $BlockAndTintGetter, arg1: $BlockPos_, arg2: $BlockState_): boolean;
         static shouldDrawRim(arg0: $BlockAndTintGetter, arg1: $BlockPos_, arg2: $BlockState_, arg3: $Direction_): boolean;
+        static shouldDrawCasing(arg0: $BlockAndTintGetter, arg1: $BlockPos_, arg2: $BlockState_): boolean;
         getAxisState(arg0: $Direction$Axis_): $BlockState;
-        updateBlockState(arg0: $BlockState_, arg1: $Direction_, arg2: $Direction_, arg3: $BlockAndTintGetter, arg4: $BlockPos_): $BlockState;
-        static isPipe(arg0: $BlockState_): boolean;
-        onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
+        static canConnectTo(arg0: $BlockAndTintGetter, arg1: $BlockPos_, arg2: $BlockState_, arg3: $Direction_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         tryRemoveBracket(arg0: $UseOnContext): boolean;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$FluidPipeBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FluidPipeBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($FluidPipeBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FluidPipeBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $FluidPipeBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        tryEncase(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $ItemStack_, arg4: $Player, arg5: $InteractionHand_, arg6: $BlockHitResult): $ItemInteractionResult;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$FluidPipeBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($FluidPipeBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FluidPipeBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         playEncaseSound(arg0: $Level_, arg1: $BlockPos_): void;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        tryEncase(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $ItemStack_, arg4: $Player, arg5: $InteractionHand_, arg6: $BlockHitResult): $ItemInteractionResult;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
@@ -281,23 +281,23 @@ declare module "@package/com/simibubi/create/content/fluids/pipes" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$FluidPipeBlockEntity>;
         get blockEntityClass(): $Class<$FluidPipeBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$FluidPipeBlockEntity>;
     }
     export class $GlassFluidPipeBlock extends $AxisPipeBlock implements $IBE<$StraightPipeBlockEntity>, $SimpleWaterloggedBlock, $SpecialBlockItemRequirement {
-        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
-        getBlockEntityType(): $BlockEntityType<$StraightPipeBlockEntity>;
         getBlockEntityClass(): $Class<$StraightPipeBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$StraightPipeBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$StraightPipeBlockEntity>;
+        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$StraightPipeBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($StraightPipeBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$StraightPipeBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $StraightPipeBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$StraightPipeBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($StraightPipeBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$StraightPipeBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
@@ -331,18 +331,18 @@ declare module "@package/com/simibubi/create/content/fluids/pipes" {
         hasCollision: boolean;
         static AXIS: $EnumProperty<$Direction$Axis>;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$StraightPipeBlockEntity>;
         get blockEntityClass(): $Class<$StraightPipeBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$StraightPipeBlockEntity>;
     }
     export class $AxisPipeBlock extends $RotatedPillarBlock implements $IWrenchableWithBracket, $IAxisPipe {
+        getAxis(arg0: $BlockState_): $Direction$Axis;
         toRegularPipe(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_): $BlockState;
         removeBracket(arg0: $BlockGetter, arg1: $BlockPos_, arg2: boolean): ($ItemStack) | undefined;
         static isOpenAt(arg0: $BlockState_, arg1: $Direction_): boolean;
-        getAxis(arg0: $BlockState_): $Direction$Axis;
-        tryRemoveBracket(arg0: $UseOnContext): boolean;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        tryRemoveBracket(arg0: $UseOnContext): boolean;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -375,9 +375,9 @@ declare module "@package/com/simibubi/create/content/fluids/pipes" {
         constructor(arg0: $BlockBehaviour$Properties);
     }
     export class $FluidPipeBlockRotation {
+        static mirror(arg0: $BlockState_, arg1: $Mirror_): $BlockState;
         static transform(arg0: $BlockState_, arg1: $StructureTransform): $BlockState;
         static rotate(arg0: $BlockState_, arg1: $Rotation_): $BlockState;
-        static mirror(arg0: $BlockState_, arg1: $Mirror_): $BlockState;
         static FACING_TO_PROPERTY_MAP: $Map<$Direction, $BooleanProperty>;
         constructor();
     }

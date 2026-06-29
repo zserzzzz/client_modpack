@@ -10,7 +10,7 @@ declare module "@package/dev/terminalmc/autoreconnectrf/mixin/accessor" {
     export class $DisconnectedScreenAccessor {
     }
     export interface $DisconnectedScreenAccessor {
-        autoreconnectrf$getLayout(): $LinearLayout;
         autoreconnectrf$getDetails(): $DisconnectionDetails;
+        autoreconnectrf$getLayout(): $LinearLayout;
     }
 }

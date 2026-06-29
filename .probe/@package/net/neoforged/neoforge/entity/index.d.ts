@@ -9,7 +9,7 @@ import { $UUID } from "@package/java/util";
 import { $RandomSource } from "@package/net/minecraft/util";
 import { $EntityDataAccessor, $SynchedEntityData } from "@package/net/minecraft/network/syncher";
 import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos } from "@package/net/minecraft/core";
+import { $HolderLookup$Provider, $BlockPos } from "@package/net/minecraft/core";
 import { $RegistryFriendlyByteBuf } from "@package/net/minecraft/network";
 import { $AtomicInteger } from "@package/java/util/concurrent/atomic";
 import { $Vec3 } from "@package/net/minecraft/world/phys";
@@ -18,6 +18,7 @@ import { $EntityInLevelCallback } from "@package/net/minecraft/world/level/entit
 declare module "@package/net/neoforged/neoforge/entity" {
     export class $PartEntity<T extends $Entity> extends $Entity {
         getParent(): $CompoundTag;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -107,6 +108,12 @@ declare module "@package/net/neoforged/neoforge/entity" {
      */
     export class $XpOrbTargetingEvent extends $Event {
         /**
+         * The `ExperienceOrb` that's looking for a player to follow.
+         * 
+         * You can get the `Level` from this.
+         */
+        getXpOrb(): $ExperienceOrb;
+        /**
          * The maximum distance to scan for players. This is 8 for vanilla orbs.
          */
         getScanDistance(): number;
@@ -118,15 +125,9 @@ declare module "@package/net/neoforged/neoforge/entity" {
          * The result of the event.
          */
         getFollowingPlayer(): $Player;
-        /**
-         * The `ExperienceOrb` that's looking for a player to follow.
-         * 
-         * You can get the `Level` from this.
-         */
-        getXpOrb(): $ExperienceOrb;
         constructor(xpOrb: $ExperienceOrb, scanDistance: number);
-        get scanDistance(): number;
         get xpOrb(): $ExperienceOrb;
+        get scanDistance(): number;
     }
     /**
      * An interface for Entities that need extra information to be communicated

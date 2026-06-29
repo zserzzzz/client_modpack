@@ -21,12 +21,6 @@ declare module "@package/net/neoforged/neoforge/common/ticket" {
      * Common class for a simple ticket based system.
      */
     export class $SimpleTicket<T> {
-        setManager(arg0: $ITicketManager<T>, ...arg1: $ITicketManager<T>[]): void;
-        /**
-         * Removes the ticket from the managing system.
-         * After this call, any calls to `#isValid()` should return false unless it is registered again using `#validate()`
-         */
-        invalidate(): void;
         matches(arg0: T): boolean;
         /**
          * Removes the ticket from the managing system.
@@ -44,6 +38,12 @@ declare module "@package/net/neoforged/neoforge/common/ticket" {
          * Checks if your ticket is still registered in the system.
          */
         isValid(): boolean;
+        /**
+         * Removes the ticket from the managing system.
+         * After this call, any calls to `#isValid()` should return false unless it is registered again using `#validate()`
+         */
+        invalidate(): void;
+        setManager(arg0: $ITicketManager<T>, ...arg1: $ITicketManager<T>[]): void;
         constructor();
         get valid(): boolean;
     }

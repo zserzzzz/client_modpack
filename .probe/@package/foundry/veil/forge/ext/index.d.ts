@@ -9,10 +9,10 @@ declare module "@package/foundry/veil/forge/ext" {
     export class $SodiumWorldRendererExtension {
     }
     export interface $SodiumWorldRendererExtension {
-        veil$getTaskLists(): $Map<$ChunkUpdateType, $ArrayDeque<$RenderSection>>;
-        veil$setTaskLists(arg0: $Map_<$ChunkUpdateType_, $ArrayDeque<$RenderSection>>): void;
         veil$setSortedRenderLists(arg0: $SortedRenderLists): void;
         veil$getSortedRenderLists(): $SortedRenderLists;
+        veil$setTaskLists(arg0: $Map_<$ChunkUpdateType_, $ArrayDeque<$RenderSection>>): void;
+        veil$getTaskLists(): $Map<$ChunkUpdateType, $ArrayDeque<$RenderSection>>;
     }
     export class $DeferredRegisterExtensions<T> {
     }
@@ -27,9 +27,9 @@ declare module "@package/foundry/veil/forge/ext" {
     export class $RenderSectionExtension {
     }
     export interface $RenderSectionExtension {
-        veil$markRendered(): void;
         veil$hasNotRendered(): boolean;
         veil$addIncomingDirections(arg0: number): void;
+        veil$markRendered(): void;
     }
     export class $RenderRegionExtension {
     }

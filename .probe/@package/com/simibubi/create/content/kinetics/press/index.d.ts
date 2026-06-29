@@ -65,8 +65,8 @@ declare module "@package/com/simibubi/create/content/kinetics/press" {
     export class $PressingRecipe extends $StandardProcessingRecipe<$SingleRecipeInput> implements $IAssemblyRecipe {
         matches(arg0: $SingleRecipeInput_, arg1: $Level_): boolean;
         addAssemblyIngredients(arg0: $List_<$Ingredient_>): void;
-        getDescriptionForAssembly(): $Component;
         addRequiredMachines(arg0: $Set_<$ItemLike_>): void;
+        getDescriptionForAssembly(): $Component;
         getJEISubCategory(): $Supplier<$Supplier<$SequencedAssemblySubCategory>>;
         addAssemblyFluidIngredients(arg0: $List_<$SizedFluidIngredient>): void;
         supportsAssembly(): boolean;
@@ -75,18 +75,18 @@ declare module "@package/com/simibubi/create/content/kinetics/press" {
         get JEISubCategory(): $Supplier<$Supplier<$SequencedAssemblySubCategory>>;
     }
     export class $MechanicalPressBlockEntity extends $BasinOperatingBlockEntity implements $PressingBehaviour$PressingBehaviourSpecifics {
-        static canCompress(arg0: $Recipe<never>): boolean;
         getParticleAmount(): number;
         getRecipe(arg0: $ItemStack_): ($RecipeHolder<$PressingRecipe>) | undefined;
-        onPressingCompleted(): void;
+        static canCompress(arg0: $Recipe<never>): boolean;
         getPressingBehaviour(): $PressingBehaviour;
+        onPressingCompleted(): void;
         handler$ijg000$createdieselgenerators$matchStaticFilters(arg0: $RecipeHolder_<any>, arg1: $CallbackInfoReturnable<any>): void;
-        tryProcessOnBelt(arg0: $TransportedItemStack, arg1: $List_<$ItemStack_>, arg2: boolean): boolean;
-        tryProcessInWorld(arg0: $ItemEntity, arg1: boolean): boolean;
-        canProcessInBulk(): boolean;
-        getKineticSpeed(): number;
         onItemPressed(arg0: $ItemStack_): void;
         tryProcessInBasin(arg0: boolean): boolean;
+        tryProcessInWorld(arg0: $ItemEntity, arg1: boolean): boolean;
+        canProcessInBulk(): boolean;
+        tryProcessOnBelt(arg0: $TransportedItemStack, arg1: $List_<$ItemStack_>, arg2: boolean): boolean;
+        getKineticSpeed(): number;
         basinRemoved: boolean;
         pressingBehaviour: $PressingBehaviour;
         level: $Level;
@@ -109,11 +109,11 @@ declare module "@package/com/simibubi/create/content/kinetics/press" {
     export interface $PressingBehaviour$PressingBehaviourSpecifics {
         getParticleAmount(): number;
         onPressingCompleted(): void;
-        tryProcessOnBelt(arg0: $TransportedItemStack, arg1: $List_<$ItemStack_>, arg2: boolean): boolean;
+        tryProcessInBasin(arg0: boolean): boolean;
         tryProcessInWorld(arg0: $ItemEntity, arg1: boolean): boolean;
         canProcessInBulk(): boolean;
+        tryProcessOnBelt(arg0: $TransportedItemStack, arg1: $List_<$ItemStack_>, arg2: boolean): boolean;
         getKineticSpeed(): number;
-        tryProcessInBasin(arg0: boolean): boolean;
         get particleAmount(): number;
         get kineticSpeed(): number;
     }
@@ -121,10 +121,10 @@ declare module "@package/com/simibubi/create/content/kinetics/press" {
         start(arg0: $PressingBehaviour$Mode_): void;
         inWorld(): boolean;
         makeCompactingParticleEffect(arg0: $Vec3_, arg1: $ItemStack_): void;
-        onBasin(): boolean;
-        makePressingParticleEffect(arg0: $Vec3_, arg1: $ItemStack_, arg2: number): void;
-        makePressingParticleEffect(arg0: $Vec3_, arg1: $ItemStack_): void;
         getRenderedHeadOffset(arg0: number): number;
+        onBasin(): boolean;
+        makePressingParticleEffect(arg0: $Vec3_, arg1: $ItemStack_): void;
+        makePressingParticleEffect(arg0: $Vec3_, arg1: $ItemStack_, arg2: number): void;
         getRunningTickSpeed(): number;
         running: boolean;
         mode: $PressingBehaviour$Mode;
@@ -141,15 +141,15 @@ declare module "@package/com/simibubi/create/content/kinetics/press" {
         get runningTickSpeed(): number;
     }
     export class $MechanicalPressBlock extends $HorizontalKineticBlock implements $IBE<$MechanicalPressBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$MechanicalPressBlockEntity>;
         getBlockEntityClass(): $Class<$MechanicalPressBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$MechanicalPressBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$MechanicalPressBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$MechanicalPressBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($MechanicalPressBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$MechanicalPressBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $MechanicalPressBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$MechanicalPressBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($MechanicalPressBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$MechanicalPressBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -180,8 +180,8 @@ declare module "@package/com/simibubi/create/content/kinetics/press" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$MechanicalPressBlockEntity>;
         get blockEntityClass(): $Class<$MechanicalPressBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$MechanicalPressBlockEntity>;
     }
     export class $PressVisual extends $ShaftVisual<$MechanicalPressBlockEntity> implements $SimpleDynamicVisual {
         beginFrame(arg0: $DynamicVisual$Context): void;

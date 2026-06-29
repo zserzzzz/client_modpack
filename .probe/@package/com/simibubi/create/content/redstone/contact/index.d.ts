@@ -37,10 +37,10 @@ declare module "@package/com/simibubi/create/content/redstone/contact" {
         constructor(arg0: $Block_, arg1: $Item$Properties);
     }
     export class $ContactMovementBehaviour implements $MovementBehaviour {
-        stopMoving(arg0: $MovementContext): void;
         getActiveAreaOffset(arg0: $MovementContext): $Vec3;
-        cancelStall(arg0: $MovementContext): void;
         visitNewPosition(arg0: $MovementContext, arg1: $BlockPos_): void;
+        cancelStall(arg0: $MovementContext): void;
+        stopMoving(arg0: $MovementContext): void;
         deactivateLastVisitedContact(arg0: $MovementContext): void;
         isActive(arg0: $MovementContext): boolean;
         tick(arg0: $MovementContext): void;
@@ -48,29 +48,29 @@ declare module "@package/com/simibubi/create/content/redstone/contact" {
          * @deprecated
          */
         dropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
-        mustTickWhileDisabled(): boolean;
-        renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
         onDisabledByControls(arg0: $MovementContext): void;
+        renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
+        mustTickWhileDisabled(): boolean;
+        disableBlockEntityRendering(): boolean;
+        startMoving(arg0: $MovementContext): void;
+        canBeDisabledVia(arg0: $MovementContext): $ItemStack;
         collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
         onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
-        startMoving(arg0: $MovementContext): void;
-        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
-        canBeDisabledVia(arg0: $MovementContext): $ItemStack;
         writeExtraData(arg0: $MovementContext): void;
-        disableBlockEntityRendering(): boolean;
+        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
         constructor();
     }
     export class $RedstoneContactBlock extends $WrenchableDirectionalBlock implements $IBE<any> {
-        getBlockEntityType(): $BlockEntityType<any>;
-        getBlockEntityClass(): $Class<any>;
         getTicker(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<any>): $BlockEntityTicker<any>;
+        getBlockEntityClass(): $Class<any>;
         static hasValidContact(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $Direction_): boolean;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$Object>): void;
+        getBlockEntityType(): $BlockEntityType<any>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$Object, $InteractionResult>): $InteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $Object;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$Object>): void;
         getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): (never) | undefined;
         onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$Object, $ItemInteractionResult>): $ItemInteractionResult;
-        getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $Object;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -102,7 +102,7 @@ declare module "@package/com/simibubi/create/content/redstone/contact" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<any>;
         get blockEntityClass(): $Class<any>;
+        get blockEntityType(): $BlockEntityType<any>;
     }
 }

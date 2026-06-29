@@ -18,20 +18,20 @@ import { $Couple } from "@package/net/createmod/catnip/data";
 
 declare module "@package/net/createmod/ponder/foundation/ui" {
     export class $PonderUI extends $AbstractPonderScreen {
-        getFontRenderer(): $Font;
         static of(arg0: $ResourceLocation_): $PonderUI;
-        static of(arg0: $ItemStack_): $PonderUI;
         static of(arg0: $ItemStack_, arg1: $PonderTag): $PonderUI;
+        static of(arg0: $ItemStack_): $PonderUI;
         getSubject(): $ItemStack;
-        updateIdentifiedItem(arg0: $PonderScene): void;
-        isComfyReadingEnabled(): boolean;
-        getHoveredTooltipItem(): $ItemStack;
-        setComfyReadingEnabled(arg0: boolean): void;
+        getFontRenderer(): $Font;
         static getPartialTicks(): number;
+        seekToTime(arg0: number): void;
         getActiveScene(): $PonderScene;
         coolDownAfterSkip(): void;
         static renderSpeechBox(arg0: $GuiGraphics, arg1: number, arg2: number, arg3: number, arg4: number, arg5: boolean, arg6: $Pointing_, arg7: boolean): void;
-        seekToTime(arg0: number): void;
+        getHoveredTooltipItem(): $ItemStack;
+        setComfyReadingEnabled(arg0: boolean): void;
+        updateIdentifiedItem(arg0: $PonderScene): void;
+        isComfyReadingEnabled(): boolean;
         static MENU_BACKGROUND: $ResourceLocation;
         minecraft: $Minecraft;
         static IDENTIFY: string;
@@ -79,11 +79,11 @@ declare module "@package/net/createmod/ponder/foundation/ui" {
         static THINK_BACK: string;
         static EXIT: string;
         font: $Font;
-        get fontRenderer(): $Font;
         get subject(): $ItemStack;
-        get hoveredTooltipItem(): $ItemStack;
+        get fontRenderer(): $Font;
         static get partialTicks(): number;
         get activeScene(): $PonderScene;
+        get hoveredTooltipItem(): $ItemStack;
     }
     export class $AbstractPonderScreen extends $NavigatableSimiScreen {
         static MENU_BACKGROUND: $ResourceLocation;

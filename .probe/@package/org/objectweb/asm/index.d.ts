@@ -5,15 +5,15 @@ export * as tree from "@package/org/objectweb/asm/tree";
 
 declare module "@package/org/objectweb/asm" {
     export class $ModuleVisitor {
-        getDelegate(): $ModuleVisitor;
         visitEnd(): void;
-        visitUse(arg0: string): void;
-        visitOpen(arg0: string, arg1: number, ...arg2: string[]): void;
-        visitRequire(arg0: string, arg1: number, arg2: string): void;
+        getDelegate(): $ModuleVisitor;
         visitMainClass(arg0: string): void;
-        visitPackage(arg0: string): void;
+        visitRequire(arg0: string, arg1: number, arg2: string): void;
         visitProvide(arg0: string, ...arg1: string[]): void;
+        visitPackage(arg0: string): void;
         visitExport(arg0: string, arg1: number, ...arg2: string[]): void;
+        visitOpen(arg0: string, arg1: number, ...arg2: string[]): void;
+        visitUse(arg0: string): void;
         get delegate(): $ModuleVisitor;
     }
     export class $Handle {
@@ -34,16 +34,16 @@ declare module "@package/org/objectweb/asm" {
         get desc(): string;
     }
     export class $FieldVisitor {
-        getDelegate(): $FieldVisitor;
         visitAnnotation(arg0: string, arg1: boolean): $AnnotationVisitor;
         visitEnd(): void;
         visitTypeAnnotation(arg0: number, arg1: $TypePath, arg2: string, arg3: boolean): $AnnotationVisitor;
         visitAttribute(arg0: $Attribute): void;
+        getDelegate(): $FieldVisitor;
         get delegate(): $FieldVisitor;
     }
     export class $TypePath {
-        static fromString(arg0: string): $TypePath;
         getLength(): number;
+        static fromString(arg0: string): $TypePath;
         getStep(arg0: number): number;
         getStepArgument(arg0: number): number;
         static WILDCARD_BOUND: number;
@@ -53,7 +53,6 @@ declare module "@package/org/objectweb/asm" {
         get length(): number;
     }
     export class $ClassVisitor {
-        getDelegate(): $ClassVisitor;
         visit(arg0: number, arg1: number, arg2: string, arg3: string, arg4: string, arg5: string[]): void;
         visitSource(arg0: string, arg1: string): void;
         visitField(arg0: number, arg1: string, arg2: string, arg3: string, arg4: $Object): $FieldVisitor;
@@ -69,19 +68,19 @@ declare module "@package/org/objectweb/asm" {
         visitPermittedSubclass(arg0: string): void;
         visitInnerClass(arg0: string, arg1: string, arg2: string, arg3: number): void;
         visitRecordComponent(arg0: string, arg1: string, arg2: string): $RecordComponentVisitor;
+        getDelegate(): $ClassVisitor;
         get delegate(): $ClassVisitor;
     }
     export class $AnnotationVisitor {
-        getDelegate(): $AnnotationVisitor;
         visit(arg0: string, arg1: $Object): void;
         visitAnnotation(arg0: string, arg1: string): $AnnotationVisitor;
         visitEnd(): void;
         visitEnum(arg0: string, arg1: string, arg2: string): void;
         visitArray(arg0: string): $AnnotationVisitor;
+        getDelegate(): $AnnotationVisitor;
         get delegate(): $AnnotationVisitor;
     }
     export class $ClassWriter extends $ClassVisitor {
-        setFlags(arg0: number): void;
         newModule(arg0: string): number;
         toByteArray(): number[];
         /**
@@ -100,6 +99,7 @@ declare module "@package/org/objectweb/asm" {
         newField(arg0: string, arg1: string, arg2: string): number;
         newMethod(arg0: string, arg1: string, arg2: string, arg3: boolean): number;
         newNameType(arg0: string, arg1: string): number;
+        setFlags(arg0: number): void;
         static COMPUTE_MAXS: number;
         static COMPUTE_FRAMES: number;
         constructor(arg0: number);
@@ -107,11 +107,11 @@ declare module "@package/org/objectweb/asm" {
         set flags(value: number);
     }
     export class $RecordComponentVisitor {
-        getDelegate(): $RecordComponentVisitor;
         visitAnnotation(arg0: string, arg1: boolean): $AnnotationVisitor;
         visitEnd(): void;
         visitTypeAnnotation(arg0: number, arg1: $TypePath, arg2: string, arg3: boolean): $AnnotationVisitor;
         visitAttribute(arg0: $Attribute): void;
+        getDelegate(): $RecordComponentVisitor;
         get delegate(): $RecordComponentVisitor;
     }
     export class $Attribute {
@@ -125,7 +125,6 @@ declare module "@package/org/objectweb/asm" {
         get codeAttribute(): boolean;
     }
     export class $MethodVisitor {
-        getDelegate(): $MethodVisitor;
         visitFrame(arg0: number, arg1: number, arg2: $Object[], arg3: number, arg4: $Object[]): void;
         visitAnnotation(arg0: string, arg1: boolean): $AnnotationVisitor;
         visitEnd(): void;
@@ -161,31 +160,32 @@ declare module "@package/org/objectweb/asm" {
         visitLocalVariable(arg0: string, arg1: string, arg2: string, arg3: $Label, arg4: $Label, arg5: number): void;
         visitLocalVariableAnnotation(arg0: number, arg1: $TypePath, arg2: $Label[], arg3: $Label[], arg4: number[], arg5: string, arg6: boolean): $AnnotationVisitor;
         visitLineNumber(arg0: number, arg1: $Label): void;
+        getDelegate(): $MethodVisitor;
         get delegate(): $MethodVisitor;
     }
     export class $Type {
         static getDescriptor(arg0: $Class<never>): string;
         getDescriptor(): string;
-        getReturnType(): $Type;
         static getReturnType(arg0: string): $Type;
         static getReturnType(arg0: $Method): $Type;
+        getReturnType(): $Type;
         static getType(arg0: string): $Type;
         static getType(arg0: $Class<never>): $Type;
-        static getType(arg0: $Constructor<never>): $Type;
         static getType(arg0: $Method): $Type;
+        static getType(arg0: $Constructor<never>): $Type;
         getSize(): number;
-        static getMethodType(arg0: $Type, ...arg1: $Type[]): $Type;
         static getMethodType(arg0: string): $Type;
-        static getMethodDescriptor(arg0: $Method): string;
+        static getMethodType(arg0: $Type, ...arg1: $Type[]): $Type;
         static getMethodDescriptor(arg0: $Type, ...arg1: $Type[]): string;
+        static getMethodDescriptor(arg0: $Method): string;
         getClassName(): string;
         static getInternalName(arg0: $Class<never>): string;
         getInternalName(): string;
         getSort(): number;
         static getObjectType(arg0: string): $Type;
-        static getArgumentTypes(arg0: string): $Type[];
         getArgumentTypes(): $Type[];
         static getArgumentTypes(arg0: $Method): $Type[];
+        static getArgumentTypes(arg0: string): $Type[];
         static getArgumentsAndReturnSizes(arg0: string): number;
         getArgumentsAndReturnSizes(): number;
         static getConstructorDescriptor(arg0: $Constructor<never>): string;
@@ -223,8 +223,8 @@ declare module "@package/org/objectweb/asm" {
     }
     export class $ClassReader {
         getInterfaces(): string[];
-        accept(arg0: $ClassVisitor, arg1: number): void;
         accept(arg0: $ClassVisitor, arg1: $Attribute[], arg2: number): void;
+        accept(arg0: $ClassVisitor, arg1: number): void;
         readInt(arg0: number): number;
         getClassName(): string;
         readBytes(arg0: number, arg1: number): number[];
@@ -239,9 +239,9 @@ declare module "@package/org/objectweb/asm" {
         getItemCount(): number;
         readClass(arg0: number, arg1: string[]): string;
         readUTF8(arg0: number, arg1: string[]): string;
-        getAccess(): number;
-        getSuperName(): string;
         readPackage(arg0: number, arg1: string[]): string;
+        getSuperName(): string;
+        getAccess(): number;
         static SKIP_CODE: number;
         /**
          * @deprecated
@@ -251,16 +251,16 @@ declare module "@package/org/objectweb/asm" {
         static SKIP_FRAMES: number;
         header: number;
         static SKIP_DEBUG: number;
-        constructor(arg0: string);
         constructor(arg0: $InputStream);
-        constructor(arg0: number[]);
+        constructor(arg0: string);
         constructor(arg0: number[], arg1: number, arg2: number);
+        constructor(arg0: number[]);
         get interfaces(): string[];
         get className(): string;
         get maxStringLength(): number;
         get itemCount(): number;
-        get access(): number;
         get superName(): string;
+        get access(): number;
     }
     export class $Label {
         getOffset(): number;

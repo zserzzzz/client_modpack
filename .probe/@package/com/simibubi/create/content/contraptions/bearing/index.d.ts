@@ -52,57 +52,57 @@ import { $BlockEntityType_, $BlockEntity, $BlockEntityTicker, $BlockEntityType }
 declare module "@package/com/simibubi/create/content/contraptions/bearing" {
     export class $StabilizedBearingMovementBehaviour implements $MovementBehaviour {
         renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
-        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
-        canBeDisabledVia(arg0: $MovementContext): $ItemStack;
         disableBlockEntityRendering(): boolean;
+        canBeDisabledVia(arg0: $MovementContext): $ItemStack;
+        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
         isActive(arg0: $MovementContext): boolean;
         tick(arg0: $MovementContext): void;
-        stopMoving(arg0: $MovementContext): void;
         /**
          * @deprecated
          */
         dropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
+        onDisabledByControls(arg0: $MovementContext): void;
         getActiveAreaOffset(arg0: $MovementContext): $Vec3;
         mustTickWhileDisabled(): boolean;
-        onDisabledByControls(arg0: $MovementContext): void;
-        collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
-        onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
-        cancelStall(arg0: $MovementContext): void;
         startMoving(arg0: $MovementContext): void;
         visitNewPosition(arg0: $MovementContext, arg1: $BlockPos_): void;
+        collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
+        onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
         writeExtraData(arg0: $MovementContext): void;
+        cancelStall(arg0: $MovementContext): void;
+        stopMoving(arg0: $MovementContext): void;
         constructor();
     }
     export class $IBearingBlockEntity {
     }
     export interface $IBearingBlockEntity extends $IControlContraption {
-        setAngle(arg0: number): void;
-        isWoodenTop(): boolean;
         getInterpolatedAngle(arg0: number): number;
         getMovementModeSlot(): $ValueBoxTransform;
-        set angle(value: number);
-        get woodenTop(): boolean;
+        isWoodenTop(): boolean;
+        setAngle(arg0: number): void;
         get movementModeSlot(): $ValueBoxTransform;
+        get woodenTop(): boolean;
+        set angle(value: number);
     }
     export class $SailBlock$PlacementHelper implements $IPlacementHelper {
         getOffset(arg0: $Player, arg1: $Level_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockHitResult, arg5: $ItemStack_): $PlacementOffset;
-        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
-        matchesState(arg0: $BlockState_): boolean;
-        displayGhost(arg0: $PlacementOffset): void;
         matchesItem(arg0: $ItemStack_): boolean;
+        matchesState(arg0: $BlockState_): boolean;
+        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
+        displayGhost(arg0: $PlacementOffset): void;
     }
     export class $SailBlock extends $WrenchableDirectionalBlock implements $BlockSubLevelLiftProvider, $BlockSubLevelCustomCenterOfMass {
         static frame(arg0: $BlockBehaviour$Properties): $SailBlock;
         getColor(): $DyeColor;
-        static withCanvas(arg0: $BlockBehaviour$Properties, arg1: $DyeColor_): $SailBlock;
-        applyDye(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $Vec3_, arg4: $DyeColor_): void;
-        isFrame(): boolean;
         sable$getNormal(arg0: $BlockState_): $Direction;
         getCenterOfMass(arg0: $BlockGetter, arg1: $BlockState_): $Vector3dc;
-        sable$getParallelDragScalar(): number;
+        applyDye(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $Vec3_, arg4: $DyeColor_): void;
+        isFrame(): boolean;
+        static withCanvas(arg0: $BlockBehaviour$Properties, arg1: $DyeColor_): $SailBlock;
+        sable$getLiftScalar(): number;
         sable$getDirectionlessDragScalar(): number;
         sable$contributeLiftAndDrag(arg0: $BlockSubLevelLiftProvider$LiftProviderContext_, arg1: $ServerSubLevel, arg2: $Pose3d, arg3: number, arg4: $Vector3dc, arg5: $Vector3dc, arg6: $Vector3d, arg7: $Vector3d, arg8: $BlockSubLevelLiftProvider$LiftProviderGroup): void;
-        sable$getLiftScalar(): number;
+        sable$getParallelDragScalar(): number;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -134,15 +134,15 @@ declare module "@package/com/simibubi/create/content/contraptions/bearing" {
         get color(): $DyeColor;
     }
     export class $MechanicalBearingBlock extends $BearingBlock implements $IBE<$MechanicalBearingBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$MechanicalBearingBlockEntity>;
         getBlockEntityClass(): $Class<$MechanicalBearingBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$MechanicalBearingBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$MechanicalBearingBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$MechanicalBearingBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($MechanicalBearingBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$MechanicalBearingBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $MechanicalBearingBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$MechanicalBearingBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($MechanicalBearingBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$MechanicalBearingBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -173,8 +173,8 @@ declare module "@package/com/simibubi/create/content/contraptions/bearing" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$MechanicalBearingBlockEntity>;
         get blockEntityClass(): $Class<$MechanicalBearingBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$MechanicalBearingBlockEntity>;
     }
     export class $ClockworkContraption extends $Contraption {
         static assembleClockworkAt(arg0: $Level_, arg1: $BlockPos_, arg2: $Direction_): $Pair<$ClockworkContraption, $ClockworkContraption>;
@@ -191,23 +191,23 @@ declare module "@package/com/simibubi/create/content/contraptions/bearing" {
         constructor();
     }
     export class $ClockworkBearingBlockEntity extends $KineticBlockEntity implements $IBearingBlockEntity, $IDisplayAssemblyExceptions, $IControlContraptionExtension {
-        disassemble(): void;
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
         attach(arg0: $ControlledContraptionEntity): void;
         isValid(): boolean;
-        isAttachedTo(arg0: $AbstractContraptionEntity): boolean;
-        sable$disassemble(): void;
-        getAngularSpeed(): number;
         isRunning(): boolean;
-        assemble(): void;
-        onStall(): void;
-        setAngle(arg0: number): void;
-        isWoodenTop(): boolean;
         getBlockPosition(): $BlockPos;
+        disassemble(): void;
         getInterpolatedAngle(arg0: number): number;
         getLastAssemblyException(): $AssemblyException;
-        getMinuteArmSpeed(): number;
+        assemble(): void;
+        getAngularSpeed(): number;
+        sable$disassemble(): void;
+        isAttachedTo(arg0: $AbstractContraptionEntity): boolean;
+        isWoodenTop(): boolean;
+        onStall(): void;
+        setAngle(arg0: number): void;
         getHourArmSpeed(): number;
+        getMinuteArmSpeed(): number;
         getMovementModeSlot(): $ValueBoxTransform;
         addExceptionToTooltip(arg0: $List_<$Component_>): boolean;
         sequenceContext: $SequencedGearshiftBlockEntity$SequenceContext;
@@ -222,14 +222,14 @@ declare module "@package/com/simibubi/create/content/contraptions/bearing" {
         network: number;
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
         get valid(): boolean;
-        get angularSpeed(): number;
         get running(): boolean;
-        set angle(value: number);
-        get woodenTop(): boolean;
         get blockPosition(): $BlockPos;
         get lastAssemblyException(): $AssemblyException;
-        get minuteArmSpeed(): number;
+        get angularSpeed(): number;
+        get woodenTop(): boolean;
+        set angle(value: number);
         get hourArmSpeed(): number;
+        get minuteArmSpeed(): number;
         get movementModeSlot(): $ValueBoxTransform;
     }
     export class $BearingBlock extends $DirectionalKineticBlock {
@@ -265,9 +265,9 @@ declare module "@package/com/simibubi/create/content/contraptions/bearing" {
     }
     export class $BearingContraption extends $Contraption implements $BearingContraptionExtension {
         addBlock(arg0: $Level_, arg1: $BlockPos_, arg2: $Pair<$StructureTemplate$StructureBlockInfo_, $BlockEntity>): void;
-        getSailBlocks(): number;
         getFacing(): $Direction;
         aeronautics$setPropeller(): void;
+        getSailBlocks(): number;
         hasUniversalCreativeCrate: boolean;
         isLegacy: $Object2BooleanMap<$BlockPos>;
         anchor: $BlockPos;
@@ -278,8 +278,8 @@ declare module "@package/com/simibubi/create/content/contraptions/bearing" {
         entity: $AbstractContraptionEntity;
         constructor();
         constructor(arg0: boolean, arg1: $Direction_);
-        get sailBlocks(): number;
         get facing(): $Direction;
+        get sailBlocks(): number;
     }
     export class $ClockworkContraption$HandType extends $Enum<$ClockworkContraption$HandType> {
         static values(): $ClockworkContraption$HandType[];
@@ -295,15 +295,15 @@ declare module "@package/com/simibubi/create/content/contraptions/bearing" {
         constructor(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext);
     }
     export class $WindmillBearingBlock extends $BearingBlock implements $IBE<$WindmillBearingBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$WindmillBearingBlockEntity>;
         getBlockEntityClass(): $Class<$WindmillBearingBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$WindmillBearingBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$WindmillBearingBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$WindmillBearingBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($WindmillBearingBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$WindmillBearingBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $WindmillBearingBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$WindmillBearingBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($WindmillBearingBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$WindmillBearingBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -334,28 +334,28 @@ declare module "@package/com/simibubi/create/content/contraptions/bearing" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$WindmillBearingBlockEntity>;
         get blockEntityClass(): $Class<$WindmillBearingBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$WindmillBearingBlockEntity>;
     }
     export class $MechanicalBearingBlockEntity extends $GeneratingKineticBlockEntity implements $IBearingBlockEntity, $IDisplayAssemblyExceptions, $IControlContraptionExtension {
-        disassemble(): void;
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
         attach(arg0: $ControlledContraptionEntity): void;
         isValid(): boolean;
-        isNearInitialAngle(): boolean;
-        isAttachedTo(arg0: $AbstractContraptionEntity): boolean;
-        sable$disassemble(): void;
-        getAngularSpeed(): number;
         isRunning(): boolean;
-        wrapMethod$cbb001$createbigcannons$tick(arg0: $Operation_<any>): void;
+        getBlockPosition(): $BlockPos;
+        disassemble(): void;
+        getInterpolatedAngle(arg0: number): number;
+        getLastAssemblyException(): $AssemblyException;
         assemble(): void;
+        getAngularSpeed(): number;
+        getMovedContraption(): $ControlledContraptionEntity;
+        isNearInitialAngle(): boolean;
+        sable$disassemble(): void;
+        isAttachedTo(arg0: $AbstractContraptionEntity): boolean;
+        isWoodenTop(): boolean;
         onStall(): void;
         setAngle(arg0: number): void;
-        isWoodenTop(): boolean;
-        getBlockPosition(): $BlockPos;
-        getInterpolatedAngle(arg0: number): number;
-        getMovedContraption(): $ControlledContraptionEntity;
-        getLastAssemblyException(): $AssemblyException;
+        wrapMethod$cbb001$createbigcannons$tick(arg0: $Operation_<any>): void;
         getMovementModeSlot(): $ValueBoxTransform;
         addExceptionToTooltip(arg0: $List_<$Component_>): boolean;
         sequenceContext: $SequencedGearshiftBlockEntity$SequenceContext;
@@ -371,14 +371,14 @@ declare module "@package/com/simibubi/create/content/contraptions/bearing" {
         network: number;
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
         get valid(): boolean;
-        get nearInitialAngle(): boolean;
-        get angularSpeed(): number;
         get running(): boolean;
-        set angle(value: number);
-        get woodenTop(): boolean;
         get blockPosition(): $BlockPos;
-        get movedContraption(): $ControlledContraptionEntity;
         get lastAssemblyException(): $AssemblyException;
+        get angularSpeed(): number;
+        get movedContraption(): $ControlledContraptionEntity;
+        get nearInitialAngle(): boolean;
+        get woodenTop(): boolean;
+        set angle(value: number);
         get movementModeSlot(): $ValueBoxTransform;
     }
     export class $BlankSailBlockItem extends $BlockItem {
@@ -401,12 +401,12 @@ declare module "@package/com/simibubi/create/content/contraptions/bearing" {
     export class $WindmillBearingBlockEntity$RotationDirection extends $Enum<$WindmillBearingBlockEntity$RotationDirection> implements $INamedIconOptions {
         static values(): $WindmillBearingBlockEntity$RotationDirection[];
         static valueOf(arg0: string): $WindmillBearingBlockEntity$RotationDirection;
-        getIcon(): $AllIcons;
         getTranslationKey(): string;
+        getIcon(): $AllIcons;
         static COUNTER_CLOCKWISE: $WindmillBearingBlockEntity$RotationDirection;
         static CLOCKWISE: $WindmillBearingBlockEntity$RotationDirection;
-        get icon(): $AllIcons;
         get translationKey(): string;
+        get icon(): $AllIcons;
     }
     /**
      * Values that may be interpreted as {@link $WindmillBearingBlockEntity$RotationDirection}.
@@ -447,15 +447,15 @@ declare module "@package/com/simibubi/create/content/contraptions/bearing" {
         get facing(): $Direction;
     }
     export class $ClockworkBearingBlock extends $BearingBlock implements $IBE<$ClockworkBearingBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$ClockworkBearingBlockEntity>;
         getBlockEntityClass(): $Class<$ClockworkBearingBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ClockworkBearingBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$ClockworkBearingBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ClockworkBearingBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ClockworkBearingBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ClockworkBearingBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $ClockworkBearingBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ClockworkBearingBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ClockworkBearingBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ClockworkBearingBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -486,8 +486,8 @@ declare module "@package/com/simibubi/create/content/contraptions/bearing" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$ClockworkBearingBlockEntity>;
         get blockEntityClass(): $Class<$ClockworkBearingBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$ClockworkBearingBlockEntity>;
     }
     export class $BearingVisual<B extends $KineticBlockEntity> extends $OrientedRotatingVisual<B> implements $SimpleDynamicVisual {
         beginFrame(arg0: $DynamicVisual$Context): void;

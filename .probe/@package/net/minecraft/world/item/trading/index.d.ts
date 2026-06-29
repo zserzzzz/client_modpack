@@ -22,58 +22,58 @@ declare module "@package/net/minecraft/world/item/trading" {
          */
         updateDemand(): void;
         needsRestock(): boolean;
-        getBaseCostA(): $ItemStack;
         getPriceMultiplier(): number;
+        getBaseCostA(): $ItemStack;
         shouldRewardExp(): boolean;
         /**
          * Calculates the demand with following formula: demand = demand + uses - maxUses - uses
          */
         increaseUses(): void;
-        getItemCostA(): $ItemCost;
         getItemCostB(): ($ItemCost) | undefined;
+        getItemCostA(): $ItemCost;
+        /**
+         * Calculates the demand with following formula: demand = demand + uses - maxUses - uses
+         */
+        resetUses(): void;
+        addToSpecialPriceDiff(add: number): void;
+        /**
+         * Calculates the demand with following formula: demand = demand + uses - maxUses - uses
+         */
+        resetSpecialPriceDiff(): void;
+        getUses(): number;
+        assemble(): $ItemStack;
+        getXp(): number;
+        getSpecialPriceDiff(): number;
+        setSpecialPriceDiff(add: number): void;
+        getCostA(): $ItemStack;
+        getCostB(): $ItemStack;
+        getMaxUses(): number;
+        getDemand(): number;
         isOutOfStock(): boolean;
+        satisfiedBy(playerOfferA: $ItemStack_, playerOfferB: $ItemStack_): boolean;
         /**
          * Calculates the demand with following formula: demand = demand + uses - maxUses - uses
          */
         setToOutOfStock(): void;
         static createFromStream(buffer: $RegistryFriendlyByteBuf): $MerchantOffer;
-        satisfiedBy(playerOfferA: $ItemStack_, playerOfferB: $ItemStack_): boolean;
-        /**
-         * Calculates the demand with following formula: demand = demand + uses - maxUses - uses
-         */
-        resetUses(): void;
-        assemble(): $ItemStack;
-        getUses(): number;
-        getXp(): number;
-        getSpecialPriceDiff(): number;
-        setSpecialPriceDiff(add: number): void;
-        /**
-         * Calculates the demand with following formula: demand = demand + uses - maxUses - uses
-         */
-        resetSpecialPriceDiff(): void;
-        addToSpecialPriceDiff(add: number): void;
-        getCostB(): $ItemStack;
-        getDemand(): number;
-        getCostA(): $ItemStack;
-        getMaxUses(): number;
         static CODEC: $Codec<$MerchantOffer>;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $MerchantOffer>;
-        constructor(baseCostA: $ItemCost_, costB: ($ItemCost_) | undefined, result: $ItemStack_, uses: number, maxUses: number, xp: number, priceMultiplier: number, demand: number);
-        constructor(baseCostA: $ItemCost_, costB: ($ItemCost_) | undefined, result: $ItemStack_, uses: number, maxUses: number, xp: number, priceMultiplier: number);
         constructor(baseCostA: $ItemCost_, result: $ItemStack_, maxUses: number, xp: number, priceMultiplier: number);
         constructor(baseCostA: $ItemCost_, costB: ($ItemCost_) | undefined, result: $ItemStack_, maxUses: number, xp: number, priceMultiplier: number);
+        constructor(baseCostA: $ItemCost_, costB: ($ItemCost_) | undefined, result: $ItemStack_, uses: number, maxUses: number, xp: number, priceMultiplier: number);
+        constructor(baseCostA: $ItemCost_, costB: ($ItemCost_) | undefined, result: $ItemStack_, uses: number, maxUses: number, xp: number, priceMultiplier: number, demand: number);
         get result(): $ItemStack;
-        get baseCostA(): $ItemStack;
         get priceMultiplier(): number;
-        get itemCostA(): $ItemCost;
+        get baseCostA(): $ItemStack;
         get itemCostB(): ($ItemCost) | undefined;
-        get outOfStock(): boolean;
+        get itemCostA(): $ItemCost;
         get uses(): number;
         get xp(): number;
-        get costB(): $ItemStack;
-        get demand(): number;
         get costA(): $ItemStack;
+        get costB(): $ItemStack;
         get maxUses(): number;
+        get demand(): number;
+        get outOfStock(): boolean;
     }
     export class $MerchantOffers extends $ArrayList<$MerchantOffer> {
         copy(): $MerchantOffers;
@@ -86,33 +86,33 @@ declare module "@package/net/minecraft/world/item/trading" {
     export class $Merchant {
     }
     export interface $Merchant {
-        getVillagerXp(): number;
-        openTradingScreen(player: $Player, displayName: $Component_, level: number): void;
-        getTradingPlayer(): $Player;
+        getOffers(): $MerchantOffers;
         showProgressBar(): boolean;
+        openTradingScreen(player: $Player, displayName: $Component_, level: number): void;
         setTradingPlayer(tradingPlayer: $Player | null): void;
+        getTradingPlayer(): $Player;
         overrideOffers(offers: $MerchantOffers): void;
-        notifyTrade(offer: $MerchantOffer): void;
         /**
          * Notifies the merchant of a possible merchant recipe being fulfilled or not. Usually, this is just a sound byte being played depending on whether the suggested `ItemStack` is not empty.
          */
         notifyTradeUpdated(stack: $ItemStack_): void;
+        notifyTrade(offer: $MerchantOffer): void;
         canRestock(): boolean;
         overrideXp(xp: number): void;
-        isClientSide(): boolean;
-        getOffers(): $MerchantOffers;
         getNotifyTradeSound(): $SoundEvent;
-        get villagerXp(): number;
-        get clientSide(): boolean;
+        isClientSide(): boolean;
+        getVillagerXp(): number;
         get offers(): $MerchantOffers;
         get notifyTradeSound(): $SoundEvent;
+        get clientSide(): boolean;
+        get villagerXp(): number;
     }
     export class $ItemCost extends $Record {
-        itemStack(): $ItemStack;
         test(stack: $ItemStack_): boolean;
         count(): number;
         item(): $Holder<$Item>;
         components(): $DataComponentPredicate;
+        itemStack(): $ItemStack;
         withComponents(components: $UnaryOperator_<$DataComponentPredicate$Builder>): $ItemCost;
         static CODEC: $Codec<$ItemCost>;
         static OPTIONAL_STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, ($ItemCost) | undefined>;
@@ -125,5 +125,5 @@ declare module "@package/net/minecraft/world/item/trading" {
     /**
      * Values that may be interpreted as {@link $ItemCost}.
      */
-    export type $ItemCost_ = { count?: number, components?: $DataComponentPredicate, itemStack?: $ItemStack_, item?: $Holder_<$Item>,  } | [count?: number, components?: $DataComponentPredicate, itemStack?: $ItemStack_, item?: $Holder_<$Item>, ];
+    export type $ItemCost_ = { item?: $Holder_<$Item>, count?: number, components?: $DataComponentPredicate, itemStack?: $ItemStack_,  } | [item?: $Holder_<$Item>, count?: number, components?: $DataComponentPredicate, itemStack?: $ItemStack_, ];
 }

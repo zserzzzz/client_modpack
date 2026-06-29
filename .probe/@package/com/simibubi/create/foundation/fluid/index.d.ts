@@ -26,22 +26,22 @@ declare module "@package/com/simibubi/create/foundation/fluid" {
         constructor();
     }
     export class $FluidHelper {
+        static getFillSound(arg0: $FluidStack_): $SoundEvent;
         static isLava(arg0: $Fluid_): boolean;
         static isSame(arg0: $FluidStack_, arg1: $Fluid_): boolean;
         static isSame(arg0: $FluidStack_, arg1: $FluidStack_): boolean;
         static isTag(arg0: $FluidStack_, arg1: $TagKey_<$Fluid>): boolean;
-        static isTag(arg0: $FluidState, arg1: $TagKey_<$Fluid>): boolean;
         static isTag(arg0: $Fluid_, arg1: $TagKey_<$Fluid>): boolean;
-        static getFillSound(arg0: $FluidStack_): $SoundEvent;
-        static isWater(arg0: $Fluid_): boolean;
+        static isTag(arg0: $FluidState, arg1: $TagKey_<$Fluid>): boolean;
         static getEmptySound(arg0: $FluidStack_): $SoundEvent;
-        static tryEmptyItemIntoBE(arg0: $Level_, arg1: $Player, arg2: $InteractionHand_, arg3: $ItemStack_, arg4: $SmartBlockEntity): boolean;
-        static tryFillItemFromBE(arg0: $Level_, arg1: $Player, arg2: $InteractionHand_, arg3: $ItemStack_, arg4: $SmartBlockEntity): boolean;
         static exchange(arg0: $IFluidHandler, arg1: $IFluidHandlerItem, arg2: $FluidHelper$FluidExchange_, arg3: number): $FluidHelper$FluidExchange;
         static copyStackWithAmount(arg0: $FluidStack_, arg1: number): $FluidStack;
+        static tryEmptyItemIntoBE(arg0: $Level_, arg1: $Player, arg2: $InteractionHand_, arg3: $ItemStack_, arg4: $SmartBlockEntity): boolean;
+        static tryFillItemFromBE(arg0: $Level_, arg1: $Player, arg2: $InteractionHand_, arg3: $ItemStack_, arg4: $SmartBlockEntity): boolean;
         static hasBlockState(arg0: $Fluid_): boolean;
-        static convertToFlowing(arg0: $Fluid_): $Fluid;
         static convertToStill(arg0: $Fluid_): $Fluid;
+        static convertToFlowing(arg0: $Fluid_): $Fluid;
+        static isWater(arg0: $Fluid_): boolean;
         static exchangeAll(arg0: $IFluidHandler, arg1: $IFluidHandlerItem, arg2: $FluidHelper$FluidExchange_): $FluidHelper$FluidExchange;
         constructor();
     }
@@ -63,13 +63,13 @@ declare module "@package/com/simibubi/create/foundation/fluid" {
      */
     export type $FluidHelper$FluidExchange_ = "item_to_tank" | "tank_to_item";
     export class $CombinedTankWrapper implements $IFluidHandler {
-        getTanks(): number;
-        drain(arg0: number, arg1: $IFluidHandler$FluidAction_): $FluidStack;
         drain(arg0: $FluidStack_, arg1: $IFluidHandler$FluidAction_): $FluidStack;
+        drain(arg0: number, arg1: $IFluidHandler$FluidAction_): $FluidStack;
         fill(arg0: $FluidStack_, arg1: $IFluidHandler$FluidAction_): number;
-        getFluidInTank(arg0: number): $FluidStack;
         getTankCapacity(arg0: number): number;
         isFluidValid(arg0: number, arg1: $FluidStack_): boolean;
+        getFluidInTank(arg0: number): $FluidStack;
+        getTanks(): number;
         enforceVariety(): $CombinedTankWrapper;
         constructor(...arg0: $IFluidHandler[]);
         get tanks(): number;

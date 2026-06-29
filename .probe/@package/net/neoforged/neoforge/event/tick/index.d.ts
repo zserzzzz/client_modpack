@@ -60,15 +60,15 @@ declare module "@package/net/neoforged/neoforge/event/tick" {
      */
     export class $ServerTickEvent extends $Event {
         /**
+         * @return the server instance
+         */
+        getServer(): $MinecraftServer;
+        /**
          * {@return true if the server has enough time to perform any
          * additional tasks (usually IO related) during the current tick,
          * otherwise false}
          */
         hasTime(): boolean;
-        /**
-         * @return the server instance
-         */
-        getServer(): $MinecraftServer;
         get server(): $MinecraftServer;
     }
     /**

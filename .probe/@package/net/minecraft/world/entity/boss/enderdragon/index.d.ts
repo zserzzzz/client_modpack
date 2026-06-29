@@ -1,5 +1,6 @@
 import { $GoalSelector } from "@package/net/minecraft/world/entity/ai/goal";
 import { $JumpControl, $MoveControl, $LookControl } from "@package/net/minecraft/world/entity/ai/control";
+import { $CompoundTag } from "@package/net/minecraft/nbt";
 import { $EnderDragonPart } from "@package/net/minecraft/world/entity/boss";
 import { $EntityDimensions, $EntityType_, $Entity$RemovalReason, $Pose, $PortalProcessor, $WalkAnimationState, $Mob, $Entity } from "@package/net/minecraft/world/entity";
 import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
@@ -10,7 +11,7 @@ import { $RandomSource } from "@package/net/minecraft/util";
 import { $InteractionHand } from "@package/net/minecraft/world";
 import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
 import { $Path, $Node } from "@package/net/minecraft/world/level/pathfinder";
-import { $BlockPos, $BlockPos_ } from "@package/net/minecraft/core";
+import { $HolderLookup$Provider, $BlockPos, $BlockPos_ } from "@package/net/minecraft/core";
 import { $Brain } from "@package/net/minecraft/world/entity/ai";
 import { $PathNavigation } from "@package/net/minecraft/world/entity/ai/navigation";
 import { $Object } from "@package/java/lang";
@@ -36,9 +37,10 @@ declare module "@package/net/minecraft/world/entity/boss/enderdragon" {
          * Returns `true` if other Entities should be prevented from moving through this Entity.
          */
         showsBottom(): boolean;
-        setBeamTarget(beamTarget: $BlockPos_ | null): void;
         getBeamTarget(): $BlockPos;
+        setBeamTarget(beamTarget: $BlockPos_ | null): void;
         setShowBottom(showBottom: boolean): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -114,39 +116,40 @@ declare module "@package/net/minecraft/world/entity/boss/enderdragon" {
         set showBottom(value: boolean);
     }
     export class $EnderDragon extends $Mob implements $Enemy {
-        static createAttributes(): $AttributeSupplier$Builder;
-        onCrystalDestroyed(crystal: $EndCrystal, pos: $BlockPos_, damageSource: $DamageSource_): void;
+        /**
+         * Called when the entity is attacked.
+         */
+        reallyHurt(source: $DamageSource_, amount: number): boolean;
         getHeadPartYOffset(partIndex: number, spineEndOffsets: number[], headPartOffsets: number[]): number;
-        getFightOrigin(): $BlockPos;
+        /**
+         * Generates values for the fields pathPoints, and neighbors, and then returns the nearest pathPoint to the specified position.
+         */
+        findClosestNode(): number;
+        /**
+         * Returns the index into pathPoints of the nearest PathPoint.
+         */
+        findClosestNode(x: number, arg1: number, y: number): number;
         getHeadLookVector(partialTicks: number): $Vec3;
+        setFightOrigin(fightOrigin: $BlockPos_): void;
+        getFightOrigin(): $BlockPos;
+        onCrystalDestroyed(crystal: $EndCrystal, pos: $BlockPos_, damageSource: $DamageSource_): void;
         getPhaseManager(): $EnderDragonPhaseManager;
         /**
          * Returns a double[3] array with movement offsets, used to calculate trailing tail/neck positions. [0] = yaw offset, [1] = y offset, [2] = unused, always 0. Parameters: buffer index offset, partial ticks.
          */
         getLatencyPos(bufferIndexOffset: number, partialTicks: number): number[];
-        setFightOrigin(fightOrigin: $BlockPos_): void;
-        /**
-         * Returns the index into pathPoints of the nearest PathPoint.
-         */
-        findClosestNode(x: number, arg1: number, y: number): number;
-        /**
-         * Generates values for the fields pathPoints, and neighbors, and then returns the nearest pathPoint to the specified position.
-         */
-        findClosestNode(): number;
         getSubEntities(): $EnderDragonPart[];
+        setDragonFight(dragonFight: $EndDragonFight): void;
+        getDragonFight(): $EndDragonFight;
+        hurt(part: $EnderDragonPart, source: $DamageSource_, damage: number): boolean;
         /**
          * Find and return a path among the circles described by pathPoints, or null if the shortest path would just be directly between the start and finish with no intermediate points.
          * 
          * Starting with pathPoint[startIdx], it searches the neighboring points (and their neighboring points, and so on) until it reaches pathPoint[finishIdx], at which point it calls makePath to seal the deal.
          */
         findPath(startIndex: number, finishIndex: number, andThen: $Node | null): $Path;
-        setDragonFight(dragonFight: $EndDragonFight): void;
-        getDragonFight(): $EndDragonFight;
-        hurt(part: $EnderDragonPart, source: $DamageSource_, damage: number): boolean;
-        /**
-         * Called when the entity is attacked.
-         */
-        reallyHurt(source: $DamageSource_, amount: number): boolean;
+        static createAttributes(): $AttributeSupplier$Builder;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;

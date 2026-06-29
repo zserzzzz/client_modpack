@@ -5,7 +5,7 @@ import { $ShaderTextureSource, $ShaderTextureSource$Context_ } from "@package/fo
 import { $Map_, $Map, $Set, $Set_ } from "@package/java/util";
 import { $GlStateManager$DestFactor, $GlStateManager$SourceFactor_, $GlStateManager$DestFactor_, $GlStateManager$SourceFactor } from "@package/com/mojang/blaze3d/platform";
 import { $ShaderFeature, $ShaderPreDefinitions, $ShaderFeature_ } from "@package/foundry/veil/api/client/render/shader";
-import { $ShaderUniform, $ShaderUniformAccess } from "@package/foundry/veil/api/client/render/shader/uniform";
+import { $ShaderUniformAccess } from "@package/foundry/veil/api/client/render/shader/uniform";
 import { $ResourceLocation_, $ResourceLocation } from "@package/net/minecraft/resources";
 import { $VertexFormat, $VertexFormat$Mode_ } from "@package/com/mojang/blaze3d/vertex";
 import { $AbstractTexture } from "@package/net/minecraft/client/renderer/texture";
@@ -20,112 +20,112 @@ declare module "@package/foundry/veil/api/client/render/shader/program" {
         static setFramebufferSamplers(arg0: $ShaderInstance, arg1: $AdvancedFbo): void;
     }
     export interface $TextureUniformAccess {
-        bindSamplers(arg0: $ShaderTextureSource$Context_, arg1: number): void;
-        bindSamplers(arg0: number): void;
         removeTexture(arg0: $CharSequence): void;
-        clearSamplers(): void;
+        bindSamplers(arg0: number): void;
+        bindSamplers(arg0: $ShaderTextureSource$Context_, arg1: number): void;
         setTexture(arg0: $CharSequence, arg1: number, arg2: number, arg3: number): void;
         setTexture(arg0: $CharSequence, arg1: number, arg2: number): void;
-        setTexture(arg0: $CharSequence, arg1: $ResourceLocation_, arg2: number): void;
         setTexture(arg0: $CharSequence, arg1: $ResourceLocation_): void;
-        setTexture(arg0: $CharSequence, arg1: $AbstractTexture, arg2: number): void;
+        setTexture(arg0: $CharSequence, arg1: $ResourceLocation_, arg2: number): void;
         setTexture(arg0: $CharSequence, arg1: $AbstractTexture): void;
+        setTexture(arg0: $CharSequence, arg1: $AbstractTexture, arg2: number): void;
         setFramebufferSamplers(arg0: $AdvancedFbo): void;
+        clearSamplers(): void;
     }
     export class $ProgramDefinition extends $Record {
-        blendMode(): $ShaderBlendMode;
+        shaders(): $Int2ObjectMap<$ResourceLocation>;
         definitions(): string[];
         compute(): $ResourceLocation;
         fragment(): $ResourceLocation;
-        shaders(): $Int2ObjectMap<$ResourceLocation>;
         requiredFeatures(): $ShaderFeature[];
         samplers(): $Map<string, $ShaderTextureSource>;
         tesselationControl(): $ResourceLocation;
         vertex(): $ResourceLocation;
-        tesselationEvaluation(): $ResourceLocation;
-        getMacros(arg0: $Set_<string>, arg1: $ShaderPreDefinitions): $Map<string, string>;
-        geometry(): $ResourceLocation;
+        blendMode(): $ShaderBlendMode;
         definitionDefaults(): $Map<string, string>;
+        tesselationEvaluation(): $ResourceLocation;
+        geometry(): $ResourceLocation;
+        getMacros(arg0: $Set_<string>, arg1: $ShaderPreDefinitions): $Map<string, string>;
         constructor(vertex: $ResourceLocation_, tesselationControl: $ResourceLocation_, tesselationEvaluation: $ResourceLocation_, geometry: $ResourceLocation_, fragment: $ResourceLocation_, compute: $ResourceLocation_, definitions: string[], definitionDefaults: $Map_<string, string>, samplers: $Map_<string, $ShaderTextureSource>, shaders: $Int2ObjectMap<$ResourceLocation_>, requiredFeatures: $ShaderFeature_[], blendMode: $ShaderBlendMode_);
     }
     /**
      * Values that may be interpreted as {@link $ProgramDefinition}.
      */
-    export type $ProgramDefinition_ = { definitionDefaults?: $Map_<string, string>, requiredFeatures?: $ShaderFeature_[], samplers?: $Map_<string, $ShaderTextureSource>, fragment?: $ResourceLocation_, geometry?: $ResourceLocation_, definitions?: string[], tesselationControl?: $ResourceLocation_, compute?: $ResourceLocation_, shaders?: $Int2ObjectMap<$ResourceLocation_>, vertex?: $ResourceLocation_, tesselationEvaluation?: $ResourceLocation_, blendMode?: $ShaderBlendMode_,  } | [definitionDefaults?: $Map_<string, string>, requiredFeatures?: $ShaderFeature_[], samplers?: $Map_<string, $ShaderTextureSource>, fragment?: $ResourceLocation_, geometry?: $ResourceLocation_, definitions?: string[], tesselationControl?: $ResourceLocation_, compute?: $ResourceLocation_, shaders?: $Int2ObjectMap<$ResourceLocation_>, vertex?: $ResourceLocation_, tesselationEvaluation?: $ResourceLocation_, blendMode?: $ShaderBlendMode_, ];
+    export type $ProgramDefinition_ = { shaders?: $Int2ObjectMap<$ResourceLocation_>, vertex?: $ResourceLocation_, tesselationEvaluation?: $ResourceLocation_, blendMode?: $ShaderBlendMode_, definitionDefaults?: $Map_<string, string>, requiredFeatures?: $ShaderFeature_[], samplers?: $Map_<string, $ShaderTextureSource>, fragment?: $ResourceLocation_, geometry?: $ResourceLocation_, definitions?: string[], tesselationControl?: $ResourceLocation_, compute?: $ResourceLocation_,  } | [shaders?: $Int2ObjectMap<$ResourceLocation_>, vertex?: $ResourceLocation_, tesselationEvaluation?: $ResourceLocation_, blendMode?: $ShaderBlendMode_, definitionDefaults?: $Map_<string, string>, requiredFeatures?: $ShaderFeature_[], samplers?: $Map_<string, $ShaderTextureSource>, fragment?: $ResourceLocation_, geometry?: $ResourceLocation_, definitions?: string[], tesselationControl?: $ResourceLocation_, compute?: $ResourceLocation_, ];
     export class $ShaderProgram {
         static unbind(): void;
     }
     export interface $ShaderProgram extends $NativeResource, $UniformAccess, $TextureUniformAccess {
-        getUniform(arg0: $CharSequence): $ShaderUniform;
+        getProgram(): number;
         getName(): $ResourceLocation;
         getDefinition(): $ProgramDefinition;
         bind(): void;
         isValid(): boolean;
         getFormat(): $VertexFormat;
-        getRequiredFeatures(): $Set<$ShaderFeature>;
-        hasTesselation(): boolean;
         /**
          * @deprecated
          */
         toShaderInstance(): $ShaderInstance;
         getShaders(): $Int2ObjectMap<$CompiledShader>;
-        getProgram(): number;
-        setDefaultUniforms(arg0: $VertexFormat$Mode_, arg1: $Matrix4fc, arg2: $Matrix4fc): void;
-        setDefaultUniforms(arg0: $VertexFormat$Mode_): void;
-        setUniformBlock(arg0: $CharSequence, arg1: number): void;
+        getRequiredFeatures(): $Set<$ShaderFeature>;
         setStorageBlock(arg0: $CharSequence, arg1: number): void;
-        getDefinitionDependencies(): $Set<string>;
-        getVertexShader(): $CompiledShader;
-        getComputeShader(): $CompiledShader;
-        hasGeometry(): boolean;
-        getFragmentShader(): $CompiledShader;
-        hasFragment(): boolean;
-        getGeometryShader(): $CompiledShader;
+        setUniformBlock(arg0: $CharSequence, arg1: number): void;
+        setDefaultUniforms(arg0: $VertexFormat$Mode_): void;
+        setDefaultUniforms(arg0: $VertexFormat$Mode_, arg1: $Matrix4fc, arg2: $Matrix4fc): void;
         getTessellationControlShader(): $CompiledShader;
         getTessellationEvaluationShader(): $CompiledShader;
         isCompute(): boolean;
         hasVertex(): boolean;
+        hasGeometry(): boolean;
+        getComputeShader(): $CompiledShader;
+        hasFragment(): boolean;
+        getGeometryShader(): $CompiledShader;
+        getVertexShader(): $CompiledShader;
+        getFragmentShader(): $CompiledShader;
+        getDefinitionDependencies(): $Set<string>;
+        hasTesselation(): boolean;
         getActiveDynamicBuffers(): number;
+        getUniform(arg0: $CharSequence): $ShaderUniformAccess;
+        get program(): number;
         get name(): $ResourceLocation;
         get definition(): $ProgramDefinition;
         get valid(): boolean;
         get format(): $VertexFormat;
-        get requiredFeatures(): $Set<$ShaderFeature>;
         get shaders(): $Int2ObjectMap<$CompiledShader>;
-        get program(): number;
-        get definitionDependencies(): $Set<string>;
-        get vertexShader(): $CompiledShader;
-        get computeShader(): $CompiledShader;
-        get fragmentShader(): $CompiledShader;
-        get geometryShader(): $CompiledShader;
+        get requiredFeatures(): $Set<$ShaderFeature>;
         get tessellationControlShader(): $CompiledShader;
         get tessellationEvaluationShader(): $CompiledShader;
         get compute(): boolean;
+        get computeShader(): $CompiledShader;
+        get geometryShader(): $CompiledShader;
+        get vertexShader(): $CompiledShader;
+        get fragmentShader(): $CompiledShader;
+        get definitionDependencies(): $Set<string>;
         get activeDynamicBuffers(): number;
     }
     export class $UniformAccess {
     }
     export interface $UniformAccess {
         getUniform(arg0: $CharSequence): $ShaderUniformAccess;
-        setUniformBlock(arg0: $CharSequence, arg1: number): void;
         setStorageBlock(arg0: $CharSequence, arg1: number): void;
-        getStorageBlock(arg0: $CharSequence): number;
+        setUniformBlock(arg0: $CharSequence, arg1: number): void;
         getUniformBlock(arg0: $CharSequence): number;
-        getUniformLocation(arg0: $CharSequence): number;
-        hasStorageBlock(arg0: $CharSequence): boolean;
-        hasUniformBlock(arg0: $CharSequence): boolean;
-        getUniformSafe(arg0: $CharSequence): $ShaderUniformAccess;
+        getStorageBlock(arg0: $CharSequence): number;
         hasUniform(arg0: $CharSequence): boolean;
+        hasUniformBlock(arg0: $CharSequence): boolean;
+        hasStorageBlock(arg0: $CharSequence): boolean;
+        getUniformSafe(arg0: $CharSequence): $ShaderUniformAccess;
+        getUniformLocation(arg0: $CharSequence): number;
     }
     export class $ShaderBlendMode extends $Record {
         apply(): void;
-        srcColorFactor(): $GlStateManager$SourceFactor;
-        dstColorFactor(): $GlStateManager$DestFactor;
         srcAlphaFactor(): $GlStateManager$SourceFactor;
         dstAlphaFactor(): $GlStateManager$DestFactor;
+        srcColorFactor(): $GlStateManager$SourceFactor;
+        dstColorFactor(): $GlStateManager$DestFactor;
         hasEquation(): boolean;
-        colorEquation(): $ShaderBlendMode$BlendEquation;
         alphaEquation(): $ShaderBlendMode$BlendEquation;
+        colorEquation(): $ShaderBlendMode$BlendEquation;
         static CODEC: $Codec<$ShaderBlendMode>;
         static DESTINATION_FACTOR_CODEC: $Codec<$GlStateManager$DestFactor>;
         static SOURCE_FACTOR_CODEC: $Codec<$GlStateManager$SourceFactor>;
@@ -134,5 +134,5 @@ declare module "@package/foundry/veil/api/client/render/shader/program" {
     /**
      * Values that may be interpreted as {@link $ShaderBlendMode}.
      */
-    export type $ShaderBlendMode_ = { srcColorFactor?: $GlStateManager$SourceFactor_, dstAlphaFactor?: $GlStateManager$DestFactor_, dstColorFactor?: $GlStateManager$DestFactor_, alphaEquation?: $ShaderBlendMode$BlendEquation, srcAlphaFactor?: $GlStateManager$SourceFactor_, colorEquation?: $ShaderBlendMode$BlendEquation,  } | [srcColorFactor?: $GlStateManager$SourceFactor_, dstAlphaFactor?: $GlStateManager$DestFactor_, dstColorFactor?: $GlStateManager$DestFactor_, alphaEquation?: $ShaderBlendMode$BlendEquation, srcAlphaFactor?: $GlStateManager$SourceFactor_, colorEquation?: $ShaderBlendMode$BlendEquation, ];
+    export type $ShaderBlendMode_ = { alphaEquation?: $ShaderBlendMode$BlendEquation, srcAlphaFactor?: $GlStateManager$SourceFactor_, colorEquation?: $ShaderBlendMode$BlendEquation, srcColorFactor?: $GlStateManager$SourceFactor_, dstAlphaFactor?: $GlStateManager$DestFactor_, dstColorFactor?: $GlStateManager$DestFactor_,  } | [alphaEquation?: $ShaderBlendMode$BlendEquation, srcAlphaFactor?: $GlStateManager$SourceFactor_, colorEquation?: $ShaderBlendMode$BlendEquation, srcColorFactor?: $GlStateManager$SourceFactor_, dstAlphaFactor?: $GlStateManager$DestFactor_, dstColorFactor?: $GlStateManager$DestFactor_, ];
 }

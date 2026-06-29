@@ -7,8 +7,8 @@ import { $BehaviourType, $BlockEntityBehaviour } from "@package/com/simibubi/cre
 
 declare module "@package/com/simibubi/create/foundation/blockEntity/behaviour/animatedContainer" {
     export class $AnimatedContainerBehaviour<M extends $MenuBase<$SmartBlockEntity>> extends $BlockEntityBehaviour {
-        stopOpen(arg0: $Player): void;
         startOpen(arg0: $Player): void;
+        stopOpen(arg0: $Player): void;
         onOpenChanged(arg0: $Consumer_<boolean>): void;
         blockEntity: $SmartBlockEntity;
         openCount: number;

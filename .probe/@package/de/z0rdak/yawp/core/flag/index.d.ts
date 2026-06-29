@@ -20,13 +20,13 @@ declare module "@package/de/z0rdak/yawp/core/flag" {
      */
     export type $FlagType_ = "boolean_flag";
     export class $FlagState extends $Enum<$FlagState> {
-        static ValidFlagStates(): $List<string>;
+        static invert(arg0: $FlagState_): $FlagState;
         static values(): $FlagState[];
         static valueOf(arg0: string): $FlagState;
-        static from(arg0: string): $FlagState;
         static from(arg0: boolean): $FlagState;
-        static invert(arg0: $FlagState_): $FlagState;
+        static from(arg0: string): $FlagState;
         static validLoggingStates(arg0: string): boolean;
+        static ValidFlagStates(): $List<string>;
         static DISABLED: $FlagState;
         static ALLOWED: $FlagState;
         static DENIED: $FlagState;
@@ -37,23 +37,23 @@ declare module "@package/de/z0rdak/yawp/core/flag" {
      */
     export type $FlagState_ = "disabled" | "allowed" | "denied" | "undefined";
     export class $RegionFlag extends $Enum<$RegionFlag> {
-        static fromString(arg0: string): ($RegionFlag) | undefined;
         static values(): $RegionFlag[];
         static valueOf(arg0: string): $RegionFlag;
         static contains(arg0: string): boolean;
         is(arg0: $FlagTag_): boolean;
-        static getFlags(): $Set<$RegionFlag>;
         static getFlags(arg0: $FlagType_): $Set<$RegionFlag>;
-        static getFlagsMatchingCategory(arg0: $FlagTag_): $Set<$RegionFlag>;
+        static getFlags(): $Set<$RegionFlag>;
+        static fromString(arg0: string): ($RegionFlag) | undefined;
         static fromId(arg0: string): $RegionFlag;
         static hasCategory(arg0: $RegionFlag_, arg1: $FlagTag_): boolean;
         isBeneficial(): boolean;
+        static getFlagsMatchingCategory(arg0: $FlagTag_): $Set<$RegionFlag>;
         static matchesCategory(arg0: $RegionFlag_, arg1: $Set_<string>): boolean;
         static getFlagNames(): $List<string>;
         static getBoolFlags(): $Set<$RegionFlag>;
-        static hasPlayerCategory(arg0: $RegionFlag_): boolean;
-        static hasPlayerCategory(arg0: $IFlag): boolean;
         isPlayerFlag(): boolean;
+        static hasPlayerCategory(arg0: $IFlag): boolean;
+        static hasPlayerCategory(arg0: $RegionFlag_): boolean;
         static ANIMAL_BREEDING: $RegionFlag;
         static SLEEP: $RegionFlag;
         static NO_HUNGER: $RegionFlag;
@@ -182,43 +182,41 @@ declare module "@package/de/z0rdak/yawp/core/flag" {
         setState(arg0: $FlagState_): void;
         getType(): $FlagType;
         isActive(): boolean;
-        getFlagMsg(): $FlagMessage;
-        setFlagMsg(arg0: $FlagMessage): void;
         setOverride(arg0: boolean): void;
         doesOverride(): boolean;
+        setFlagMsg(arg0: $FlagMessage): void;
+        getFlagMsg(): $FlagMessage;
         get name(): string;
         get type(): $FlagType;
         get active(): boolean;
         set override(value: boolean);
     }
     export class $RegionFlags implements $IFlagContainer {
-        isFlagDefined(arg0: string): boolean;
-        flagEntries(): $Set<$Map$Entry<string, $IFlag>>;
-        getActiveFlags(): $Map<string, $IFlag>;
         remove(arg0: string): void;
         size(): number;
         get(arg0: string): $IFlag;
         put(arg0: $IFlag): void;
-        flags(arg0: $FlagState_): $List<$IFlag>;
         flags(): $List<$IFlag>;
+        flags(arg0: $FlagState_): $List<$IFlag>;
         clear(): void;
         isEmpty(): boolean;
         contains(arg0: string): boolean;
         isSet(arg0: string): boolean;
         flagState(arg0: string): $FlagState;
+        flagEntries(): $Set<$Map$Entry<string, $IFlag>>;
+        isFlagDefined(arg0: string): boolean;
+        getActiveFlags(): $Map<string, $IFlag>;
         getFlagMap(): $Map<string, $IFlag>;
         static CODEC: $Codec<$RegionFlags>;
-        constructor(arg0: $Map_<string, $IFlag>);
         constructor();
-        get activeFlags(): $Map<string, $IFlag>;
+        constructor(arg0: $Map_<string, $IFlag>);
         get empty(): boolean;
+        get activeFlags(): $Map<string, $IFlag>;
         get flagMap(): $Map<string, $IFlag>;
     }
     export class $IFlagContainer {
     }
     export interface $IFlagContainer {
-        isFlagDefined(arg0: string): boolean;
-        flagEntries(): $Set<$Map$Entry<string, $IFlag>>;
         remove(arg0: string): void;
         size(): number;
         get(arg0: string): $IFlag;
@@ -230,6 +228,8 @@ declare module "@package/de/z0rdak/yawp/core/flag" {
         contains(arg0: string): boolean;
         isSet(arg0: string): boolean;
         flagState(arg0: string): $FlagState;
+        flagEntries(): $Set<$Map$Entry<string, $IFlag>>;
+        isFlagDefined(arg0: string): boolean;
         get empty(): boolean;
     }
     export class $FlagTag extends $Record {
@@ -240,19 +240,19 @@ declare module "@package/de/z0rdak/yawp/core/flag" {
     /**
      * Values that may be interpreted as {@link $FlagTag}.
      */
-    export type $FlagTag_ = { tagRl?: $ResourceLocation_, description?: string,  } | [tagRl?: $ResourceLocation_, description?: string, ];
+    export type $FlagTag_ = { description?: string, tagRl?: $ResourceLocation_,  } | [description?: string, tagRl?: $ResourceLocation_, ];
     export class $FlagContext extends $Record {
         static parentOf(arg0: $IProtectedRegion, arg1: $RegionFlag_, arg2: $Player): $FlagContext;
         flag(): $IFlag;
         region(): $IProtectedRegion;
         player(): $Player;
-        regionFlag(): $RegionFlag;
         resultingState(): $FlagState;
+        regionFlag(): $RegionFlag;
         inheritContext(arg0: $FlagContext_): $FlagContext;
         constructor(region: $IProtectedRegion, regionFlag: $RegionFlag_, flag: $IFlag, player: $Player);
     }
     /**
      * Values that may be interpreted as {@link $FlagContext}.
      */
-    export type $FlagContext_ = { player?: $Player, regionFlag?: $RegionFlag_, region?: $IProtectedRegion, flag?: $IFlag,  } | [player?: $Player, regionFlag?: $RegionFlag_, region?: $IProtectedRegion, flag?: $IFlag, ];
+    export type $FlagContext_ = { flag?: $IFlag, player?: $Player, regionFlag?: $RegionFlag_, region?: $IProtectedRegion,  } | [flag?: $IFlag, player?: $Player, regionFlag?: $RegionFlag_, region?: $IProtectedRegion, ];
 }

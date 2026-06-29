@@ -13,12 +13,12 @@ declare module "@package/net/minecraft/world/item/context" {
         static at(context: $BlockPlaceContext, pos: $BlockPos_, direction: $Direction_): $BlockPlaceContext;
         getNearestLookingVerticalDirection(): $Direction;
         getNearestLookingDirections(): $Direction[];
-        canPlace(): boolean;
         getNearestLookingDirection(): $Direction;
         replacingClickedOnBlock(): boolean;
-        handler$hee000$moonlight$fixNotAccountingForNullPlayer3(arg0: $CallbackInfoReturnable<any>): void;
-        handler$hee000$moonlight$fixNotAccountingForNullPlayer1(arg0: $CallbackInfoReturnable<any>): void;
+        canPlace(): boolean;
         handler$hee000$moonlight$fixNotAccountingForNullPlayer2(arg0: $CallbackInfoReturnable<any>): void;
+        handler$hee000$moonlight$fixNotAccountingForNullPlayer1(arg0: $CallbackInfoReturnable<any>): void;
+        handler$hee000$moonlight$fixNotAccountingForNullPlayer3(arg0: $CallbackInfoReturnable<any>): void;
         replaceClicked: boolean;
         constructor(level: $Level_, player: $Player | null, hand: $InteractionHand_, itemStack: $ItemStack_, hitResult: $BlockHitResult);
         constructor(context: $UseOnContext);
@@ -33,32 +33,32 @@ declare module "@package/net/minecraft/world/item/context" {
     }
     export class $UseOnContext implements $UseOnContextAccessor, $UseOnContextInvoker {
         getLevel(): $Level;
-        getRotation(): number;
-        getItemInHand(): $ItemStack;
-        isSecondaryUseActive(): boolean;
-        isInside(): boolean;
-        getHand(): $InteractionHand;
         getClickLocation(): $Vec3;
-        getHitResult(): $BlockHitResult;
-        getHorizontalDirection(): $Direction;
-        getPlayer(): $Player;
-        getClickedPos(): $BlockPos;
         getClickedFace(): $Direction;
+        getClickedPos(): $BlockPos;
+        getItemInHand(): $ItemStack;
+        getPlayer(): $Player;
+        getHorizontalDirection(): $Direction;
+        getRotation(): number;
+        isSecondaryUseActive(): boolean;
+        getHitResult(): $BlockHitResult;
+        getHand(): $InteractionHand;
+        isInside(): boolean;
         create$getHitResult(): $BlockHitResult;
         cdg_getHitResult(): $BlockHitResult;
         constructor(player: $Player, hand: $InteractionHand_, hitResult: $BlockHitResult);
         constructor(level: $Level_, player: $Player | null, hand: $InteractionHand_, itemStack: $ItemStack_, hitResult: $BlockHitResult);
         get level(): $Level;
-        get rotation(): number;
-        get itemInHand(): $ItemStack;
-        get secondaryUseActive(): boolean;
-        get inside(): boolean;
-        get hand(): $InteractionHand;
         get clickLocation(): $Vec3;
-        get hitResult(): $BlockHitResult;
-        get horizontalDirection(): $Direction;
-        get player(): $Player;
-        get clickedPos(): $BlockPos;
         get clickedFace(): $Direction;
+        get clickedPos(): $BlockPos;
+        get itemInHand(): $ItemStack;
+        get player(): $Player;
+        get horizontalDirection(): $Direction;
+        get rotation(): number;
+        get secondaryUseActive(): boolean;
+        get hitResult(): $BlockHitResult;
+        get hand(): $InteractionHand;
+        get inside(): boolean;
     }
 }

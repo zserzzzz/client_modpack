@@ -16,11 +16,7 @@ declare module "@package/xaero/common/minimap/radar" {
         /**
          * @deprecated
          */
-        getEntityZ(arg0: $Entity, arg1: number): number;
-        /**
-         * @deprecated
-         */
-        getEntityY(arg0: $Entity, arg1: number): number;
+        getTeamColour(arg0: $Entity): number;
         /**
          * @deprecated
          */
@@ -28,11 +24,15 @@ declare module "@package/xaero/common/minimap/radar" {
         /**
          * @deprecated
          */
-        getMaxDistance(arg0: $MinimapProcessor, arg1: boolean): number;
+        getEntityY(arg0: $Entity, arg1: number): number;
         /**
          * @deprecated
          */
-        getTeamColour(arg0: $Entity): number;
+        getEntityZ(arg0: $Entity, arg1: number): number;
+        /**
+         * @deprecated
+         */
+        getMaxDistance(arg0: $MinimapProcessor, arg1: boolean): number;
         /**
          * @deprecated
          */
@@ -40,11 +40,15 @@ declare module "@package/xaero/common/minimap/radar" {
         /**
          * @deprecated
          */
+        updateRadar(arg0: $ClientLevel, arg1: $Player, arg2: $Entity, arg3: $MinimapProcessor): void;
+        /**
+         * @deprecated
+         */
         getEntityColour(arg0: $Player, arg1: $Entity, arg2: number, arg3: boolean, arg4: $EntityRadarCategory, arg5: number, arg6: number, arg7: boolean, arg8: number): number;
         /**
          * @deprecated
          */
-        updateRadar(arg0: $ClientLevel, arg1: $Player, arg2: $Entity, arg3: $MinimapProcessor): void;
+        getRadarListsIterator(): $Iterator<$MinimapRadarList>;
         /**
          * @deprecated
          */
@@ -56,14 +60,10 @@ declare module "@package/xaero/common/minimap/radar" {
         /**
          * @deprecated
          */
-        getRadarListsIterator(): $Iterator<$MinimapRadarList>;
-        /**
-         * @deprecated
-         */
         constructor(arg0: $EntityRadarCategoryManager);
         set lastRenderViewEntity(value: $Entity);
-        get entityCategoryManager(): $EntityRadarCategoryManager;
         get radarListsIterator(): $Iterator<$MinimapRadarList>;
+        get entityCategoryManager(): $EntityRadarCategoryManager;
     }
     /**
      * @deprecated

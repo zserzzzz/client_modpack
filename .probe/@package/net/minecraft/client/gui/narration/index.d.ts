@@ -25,14 +25,14 @@ declare module "@package/net/minecraft/client/gui/narration" {
      * The narration priority levels.
      */
     export class $NarratableEntry$NarrationPriority extends $Enum<$NarratableEntry$NarrationPriority> {
+        static values(): $NarratableEntry$NarrationPriority[];
+        static valueOf(arg0: string): $NarratableEntry$NarrationPriority;
         /**
          * Checks if the narration priority is terminal, indicating that no further narration will occur after this.
          * 
          * @return `true` if the narration priority is terminal, `false` otherwise.
          */
         isTerminal(): boolean;
-        static values(): $NarratableEntry$NarrationPriority[];
-        static valueOf(arg0: string): $NarratableEntry$NarrationPriority;
         static HOVERED: $NarratableEntry$NarrationPriority;
         static NONE: $NarratableEntry$NarrationPriority;
         static FOCUSED: $NarratableEntry$NarrationPriority;

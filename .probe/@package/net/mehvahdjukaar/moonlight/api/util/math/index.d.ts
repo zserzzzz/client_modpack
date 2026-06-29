@@ -28,16 +28,16 @@ declare module "@package/net/mehvahdjukaar/moonlight/api/util/math" {
     /**
      * Values that may be interpreted as {@link $Vec2i}.
      */
-    export type $Vec2i_ = { x?: number, y?: number,  } | [x?: number, y?: number, ];
+    export type $Vec2i_ = { y?: number, x?: number,  } | [y?: number, x?: number, ];
     export class $Direction2D extends $Enum<$Direction2D> implements $StringRepresentable {
-        static closest(arg0: $Vec2i_): $Direction2D;
-        static closest(arg0: $Vec2): $Direction2D;
         static values(): $Direction2D[];
         static valueOf(arg0: string): $Direction2D;
-        getSerializedName(): string;
         getStep(): $Vec2i;
-        getOpposite(): $Direction2D;
         clockwise(): $Direction2D;
+        getSerializedName(): string;
+        getOpposite(): $Direction2D;
+        static closest(arg0: $Vec2): $Direction2D;
+        static closest(arg0: $Vec2i_): $Direction2D;
         counterClockwise(): $Direction2D;
         static from3D(arg0: $Direction_, arg1: $Rotation_): $Direction2D;
         getRemappedEnumConstantName(): string;
@@ -46,8 +46,8 @@ declare module "@package/net/mehvahdjukaar/moonlight/api/util/math" {
         static LEFT: $Direction2D;
         static RIGHT: $Direction2D;
         static UP: $Direction2D;
-        get serializedName(): string;
         get step(): $Vec2i;
+        get serializedName(): string;
         get opposite(): $Direction2D;
         get remappedEnumConstantName(): string;
     }

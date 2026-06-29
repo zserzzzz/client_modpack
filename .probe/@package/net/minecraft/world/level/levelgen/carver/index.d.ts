@@ -23,27 +23,27 @@ declare module "@package/net/minecraft/world/level/levelgen/carver" {
         static of(debugMode: boolean, airState: $BlockState_, waterState: $BlockState_, lavaState: $BlockState_, barrierState: $BlockState_): $CarverDebugSettings;
         static of(airState: $BlockState_, waterState: $BlockState_, lavaState: $BlockState_, barrierState: $BlockState_): $CarverDebugSettings;
         static of(debugMode: boolean, airState: $BlockState_): $CarverDebugSettings;
+        getLavaState(): $BlockState;
         getBarrierState(): $BlockState;
         getAirState(): $BlockState;
         getWaterState(): $BlockState;
-        getLavaState(): $BlockState;
         isDebugMode(): boolean;
         static CODEC: $Codec<$CarverDebugSettings>;
         static DEFAULT: $CarverDebugSettings;
+        get lavaState(): $BlockState;
         get barrierState(): $BlockState;
         get airState(): $BlockState;
         get waterState(): $BlockState;
-        get lavaState(): $BlockState;
         get debugMode(): boolean;
     }
     /**
      * A carver which creates Minecraft's most common cave types.
      */
     export class $CaveWorldCarver extends $WorldCarver<$CaveCarverConfiguration> {
-        isStartChunk(config: $CaveCarverConfiguration, random: $RandomSource): boolean;
         getCaveBound(): number;
-        getThickness(random: $RandomSource): number;
+        isStartChunk(config: $CaveCarverConfiguration, random: $RandomSource): boolean;
         createTunnel(context: $CarvingContext, config: $CaveCarverConfiguration, chunk: $ChunkAccess, biomeAccessor: $Function_<$BlockPos, $Holder<$Biome>>, seed: number, arg5: $Aquifer, aquifer: number, x: number, arg8: number, y: number, arg10: number, z: number, arg12: number, horizontalRadiusMultiplier: number, arg14: number, verticalRadiusMultiplier: number, arg16: number, thickness: $CarvingMask, yaw: $WorldCarver$CarveSkipChecker_): void;
+        getThickness(random: $RandomSource): number;
         /**
          * Carves the given chunk with caves that originate from the given `chunkPos`.
          * This method is invoked 289 times in order to generate each chunk (once for every position in an 8 chunk radius, or 17x17 chunk area, centered around the target chunk).
@@ -51,8 +51,8 @@ declare module "@package/net/minecraft/world/level/levelgen/carver" {
          * @see net.minecraft.world.level.chunk.ChunkGenerator#applyCarvers
          */
         carve(context: $CarvingContext, config: $CaveCarverConfiguration, chunk: $ChunkAccess, biomeAccessor: $Function_<$BlockPos, $Holder<$Biome>>, random: $RandomSource, aquifer: $Aquifer, chunkPos: $ChunkPos, carvingMask: $CarvingMask): boolean;
-        getYScale(): number;
         createRoom(context: $CarvingContext, config: $CaveCarverConfiguration, chunk: $ChunkAccess, biomeAccessor: $Function_<$BlockPos, $Holder<$Biome>>, aquifer: $Aquifer, x: number, arg6: number, y: number, arg8: number, z: number, arg10: $CarvingMask, radius: $WorldCarver$CarveSkipChecker_): void;
+        getYScale(): number;
         static CAVE: $WorldCarver<$CaveCarverConfiguration>;
         static LAVA: $FluidState;
         static CANYON: $WorldCarver<$CanyonCarverConfiguration>;
@@ -66,15 +66,15 @@ declare module "@package/net/minecraft/world/level/levelgen/carver" {
         get YScale(): number;
     }
     export class $CarvingContext extends $WorldGenerationContext {
+        /**
+         * @deprecated
+         */
+        topMaterial(biomeMapper: $Function_<$BlockPos, $Holder<$Biome>>, access: $ChunkAccess, pos: $BlockPos_, hasFluid: boolean): ($BlockState) | undefined;
         randomState(): $RandomState;
         /**
          * @deprecated
          */
         registryAccess(): $RegistryAccess;
-        /**
-         * @deprecated
-         */
-        topMaterial(biomeMapper: $Function_<$BlockPos, $Holder<$Biome>>, access: $ChunkAccess, pos: $BlockPos_, hasFluid: boolean): ($BlockState) | undefined;
         constructor(generator: $NoiseBasedChunkGenerator, registryAccess: $RegistryAccess, level: $LevelHeightAccessor, noiseChunk: $NoiseChunk, randomState: $RandomState, surfaceRule: $SurfaceRules$RuleSource);
     }
     /**
@@ -163,16 +163,16 @@ declare module "@package/net/minecraft/world/level/levelgen/carver" {
         constructor(probability: number, y: $HeightProvider, yScale: $FloatProvider, lavaLevel: $VerticalAnchor_, debugSettings: $CarverDebugSettings, replaceable: $HolderSet_<$Block>, horizontalRadiusMultiplier: $FloatProvider, verticalRadiusMultiplier: $FloatProvider, floorLevel: $FloatProvider);
     }
     export class $WorldCarver<C extends $CarverConfiguration> {
-        getRange(): number;
-        configured(config: C): $ConfiguredWorldCarver<C>;
-        static canReach(chunkPos: $ChunkPos, x: number, arg2: number, z: number, arg4: number, branchIndex: number): boolean;
+        canReplaceBlock(config: C, state: $BlockState_): boolean;
         isStartChunk(config: C, random: $RandomSource): boolean;
         configuredCodec(): $MapCodec<$ConfiguredWorldCarver<C>>;
-        canReplaceBlock(config: C, state: $BlockState_): boolean;
         /**
          * Carves blocks in an ellipsoid (more accurately a spheroid), defined by a center (x, y, z) position, with a horizontal and vertical radius (the semi-axes)
          */
         carveEllipsoid(context: $CarvingContext, config: C, chunk: $ChunkAccess, biomeAccessor: $Function_<$BlockPos, $Holder<$Biome>>, aquifer: $Aquifer, x: number, arg6: number, y: number, arg8: number, z: number, arg10: $CarvingMask, horizontalRadius: $WorldCarver$CarveSkipChecker_): boolean;
+        getRange(): number;
+        configured(config: C): $ConfiguredWorldCarver<C>;
+        static canReach(chunkPos: $ChunkPos, x: number, arg2: number, z: number, arg4: number, branchIndex: number): boolean;
         /**
          * Carves a single block, replacing it with the appropriate state if possible, and handles replacing exposed dirt with grass.
          */
@@ -222,5 +222,5 @@ declare module "@package/net/minecraft/world/level/levelgen/carver" {
     /**
      * Values that may be interpreted as {@link $ConfiguredWorldCarver}.
      */
-    export type $ConfiguredWorldCarver_<WC> = RegistryTypes.WorldgenConfiguredCarver | { config?: $CarverConfiguration, worldCarver?: $WorldCarver_<$CarverConfiguration>,  } | [config?: $CarverConfiguration, worldCarver?: $WorldCarver_<$CarverConfiguration>, ];
+    export type $ConfiguredWorldCarver_<WC> = RegistryTypes.WorldgenConfiguredCarver | { worldCarver?: $WorldCarver_<$CarverConfiguration>, config?: $CarverConfiguration,  } | [worldCarver?: $WorldCarver_<$CarverConfiguration>, config?: $CarverConfiguration, ];
 }

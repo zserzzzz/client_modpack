@@ -102,7 +102,7 @@ declare module "@package/net/minecraft/world/level/storage/loot/providers/number
     /**
      * Values that may be interpreted as {@link $StorageValue}.
      */
-    export type $StorageValue_ = { storage?: $ResourceLocation_, path?: $NbtPathArgument$NbtPath,  } | [storage?: $ResourceLocation_, path?: $NbtPathArgument$NbtPath, ];
+    export type $StorageValue_ = { path?: $NbtPathArgument$NbtPath, storage?: $ResourceLocation_,  } | [path?: $NbtPathArgument$NbtPath, storage?: $ResourceLocation_, ];
     /**
      * Registration for `LootNumberProviderType`.
      * 
@@ -125,17 +125,17 @@ declare module "@package/net/minecraft/world/level/storage/loot/providers/number
      * Additionally a scale can be provided, which will be multiplied with the score.
      */
     export class $ScoreboardValue extends $Record implements $NumberProvider {
+        score(): string;
         target(): $ScoreboardNameProvider;
         getFloat(lootContext: $LootContext): number;
         scale(): number;
         getType(): $LootNumberProviderType;
-        score(): string;
+        static fromScoreboard(entityTarget: $LootContext$EntityTarget_, score: string): $ScoreboardValue;
+        static fromScoreboard(entityTarget: $LootContext$EntityTarget_, score: string, scale: number): $ScoreboardValue;
         /**
          * Get the parameters used by this object.
          */
         getReferencedContextParams(): $Set<$LootContextParam<never>>;
-        static fromScoreboard(entityTarget: $LootContext$EntityTarget_, score: string, scale: number): $ScoreboardValue;
-        static fromScoreboard(entityTarget: $LootContext$EntityTarget_, score: string): $ScoreboardValue;
         getInt(lootContext: $LootContext): number;
         /**
          * Validate that this object is used correctly according to the given ValidationContext.
@@ -149,7 +149,7 @@ declare module "@package/net/minecraft/world/level/storage/loot/providers/number
     /**
      * Values that may be interpreted as {@link $ScoreboardValue}.
      */
-    export type $ScoreboardValue_ = { score?: string, scale?: number, target?: $ScoreboardNameProvider,  } | [score?: string, scale?: number, target?: $ScoreboardNameProvider, ];
+    export type $ScoreboardValue_ = { target?: $ScoreboardNameProvider, score?: string, scale?: number,  } | [target?: $ScoreboardNameProvider, score?: string, scale?: number, ];
     export class $EnchantmentLevelProvider extends $Record implements $NumberProvider {
         getFloat(lootContext: $LootContext): number;
         getType(): $LootNumberProviderType;

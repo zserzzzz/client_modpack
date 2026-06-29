@@ -44,8 +44,8 @@ declare module "@package/com/simibubi/create/infrastructure/gui" {
         height: number;
     }
     export class $OpenCreateMenuButton$SingleMenuRow extends $Record {
-        leftTextKey(): string;
         rightTextKey(): string;
+        leftTextKey(): string;
         constructor(arg0: string);
         constructor(leftTextKey: string, rightTextKey: string);
     }

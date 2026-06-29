@@ -690,8 +690,8 @@ declare module "@package/net/minecraft/world/level/levelgen/feature" {
         config(): FC;
         level(): $WorldGenLevel;
         origin(): $BlockPos;
-        topFeature(): ($ConfiguredFeature<never, never>) | undefined;
         chunkGenerator(): $ChunkGenerator;
+        topFeature(): ($ConfiguredFeature<never, never>) | undefined;
         constructor(topFeature: ($ConfiguredFeature_<never, never>) | undefined, level: $WorldGenLevel, chunkGenerator: $ChunkGenerator, random: $RandomSource, origin: $BlockPos_, config: FC);
     }
     export class $RootSystemFeature extends $Feature<$RootSystemConfiguration> {
@@ -1417,11 +1417,11 @@ declare module "@package/net/minecraft/world/level/levelgen/feature" {
         constructor(codec: $Codec<$LargeDripstoneConfiguration>);
     }
     export class $AbstractHugeMushroomFeature extends $Feature<$HugeMushroomFeatureConfiguration> {
-        getTreeRadiusForHeight(height: number, foliageRadius: number, y: number, arg3: number): number;
-        isValidPosition(level: $LevelAccessor, pos: $BlockPos_, maxHeight: number, mutablePos: $BlockPos$MutableBlockPos, config: $HugeMushroomFeatureConfiguration): boolean;
         getTreeHeight(random: $RandomSource): number;
-        placeTrunk(level: $LevelAccessor, random: $RandomSource, pos: $BlockPos_, config: $HugeMushroomFeatureConfiguration, maxHeight: number, mutablePos: $BlockPos$MutableBlockPos): void;
         makeCap(level: $LevelAccessor, random: $RandomSource, pos: $BlockPos_, treeHeight: number, mutablePos: $BlockPos$MutableBlockPos, config: $HugeMushroomFeatureConfiguration): void;
+        isValidPosition(level: $LevelAccessor, pos: $BlockPos_, maxHeight: number, mutablePos: $BlockPos$MutableBlockPos, config: $HugeMushroomFeatureConfiguration): boolean;
+        getTreeRadiusForHeight(height: number, foliageRadius: number, y: number, arg3: number): number;
+        placeTrunk(level: $LevelAccessor, random: $RandomSource, pos: $BlockPos_, config: $HugeMushroomFeatureConfiguration, maxHeight: number, mutablePos: $BlockPos$MutableBlockPos): void;
         static VEGETATION_PATCH: $Feature<$VegetationPatchConfiguration>;
         static CHORUS_PLANT: $Feature<$NoneFeatureConfiguration>;
         static MONSTER_ROOM: $Feature<$NoneFeatureConfiguration>;
@@ -2009,23 +2009,30 @@ declare module "@package/net/minecraft/world/level/levelgen/feature" {
         constructor(arg0: $Codec<$BlockStateConfiguration>);
     }
     export class $DripstoneUtils {
-        static growPointedDripstone(level: $LevelAccessor, pos: $BlockPos_, direction: $Direction_, height: number, mergeTip: boolean): void;
-        static isNeitherEmptyNorWater(state: $BlockState_): boolean;
-        static isDripstoneBaseOrLava(state: $BlockState_): boolean;
-        static buildBaseToTipColumn(direction: $Direction_, height: number, mergeTip: boolean, blockSetter: $Consumer_<$BlockState>): void;
+        static isEmptyOrWater(level: $LevelAccessor, pos: $BlockPos_): boolean;
+        static isEmptyOrWater(state: $BlockState_): boolean;
         /**
          * The formula used to control dripstone columns radius.
          * @see This tweet by Henrik.
          */
         static getDripstoneHeight(radius: number, arg1: number, maxRadius: number, arg3: number): number;
-        static isEmptyOrWater(state: $BlockState_): boolean;
-        static isEmptyOrWater(level: $LevelAccessor, pos: $BlockPos_): boolean;
         static isDripstoneBase(state: $BlockState_): boolean;
+        static isNeitherEmptyNorWater(state: $BlockState_): boolean;
+        static isDripstoneBaseOrLava(state: $BlockState_): boolean;
+        static growPointedDripstone(level: $LevelAccessor, pos: $BlockPos_, direction: $Direction_, height: number, mergeTip: boolean): void;
         static placeDripstoneBlockIfPossible(level: $LevelAccessor, pos: $BlockPos_): boolean;
+        static buildBaseToTipColumn(direction: $Direction_, height: number, mergeTip: boolean, blockSetter: $Consumer_<$BlockState>): void;
         static isCircleMostlyEmbeddedInStone(level: $WorldGenLevel, pos: $BlockPos_, radius: number): boolean;
-        static isEmptyOrWaterOrLava(level: $LevelAccessor, pos: $BlockPos_): boolean;
         static isEmptyOrWaterOrLava(state: $BlockState_): boolean;
+        static isEmptyOrWaterOrLava(level: $LevelAccessor, pos: $BlockPos_): boolean;
         constructor();
+    }
+    export class $WeightedPlacedFeature {
+        place(level: $WorldGenLevel, chunkGenerator: $ChunkGenerator, random: $RandomSource, pos: $BlockPos_): boolean;
+        static CODEC: $Codec<$WeightedPlacedFeature>;
+        chance: number;
+        feature: $Holder<$PlacedFeature>;
+        constructor(feature: $Holder_<$PlacedFeature>, chance: number);
     }
     export class $RandomSelectorFeature extends $Feature<$RandomFeatureConfiguration> {
         static VEGETATION_PATCH: $Feature<$VegetationPatchConfiguration>;
@@ -2091,13 +2098,6 @@ declare module "@package/net/minecraft/world/level/levelgen/feature" {
         static GEODE: $Feature<$GeodeConfiguration>;
         static KELP: $Feature<$NoneFeatureConfiguration>;
         constructor(arg0: $Codec<$RandomFeatureConfiguration>);
-    }
-    export class $WeightedPlacedFeature {
-        place(level: $WorldGenLevel, chunkGenerator: $ChunkGenerator, random: $RandomSource, pos: $BlockPos_): boolean;
-        static CODEC: $Codec<$WeightedPlacedFeature>;
-        chance: number;
-        feature: $Holder<$PlacedFeature>;
-        constructor(feature: $Holder_<$PlacedFeature>, chance: number);
     }
     export class $KelpFeature extends $Feature<$NoneFeatureConfiguration> {
         static VEGETATION_PATCH: $Feature<$VegetationPatchConfiguration>;
@@ -2362,10 +2362,10 @@ declare module "@package/net/minecraft/world/level/levelgen/feature" {
     export class $SpikeFeature$SpikeCacheLoader extends $CacheLoader<number, $List<$SpikeFeature$EndSpike>> {
     }
     export class $VegetationPatchFeature extends $Feature<$VegetationPatchConfiguration> {
-        distributeVegetation(context: $FeaturePlaceContext<$VegetationPatchConfiguration>, level: $WorldGenLevel, config: $VegetationPatchConfiguration, random: $RandomSource, possiblePositions: $Set_<$BlockPos_>, xRadius: number, zRadius: number): void;
-        placeGround(level: $WorldGenLevel, config: $VegetationPatchConfiguration, replaceableblocks: $Predicate_<$BlockState>, random: $RandomSource, mutablePos: $BlockPos$MutableBlockPos, maxDistance: number): boolean;
-        placeVegetation(level: $WorldGenLevel, config: $VegetationPatchConfiguration, chunkGenerator: $ChunkGenerator, random: $RandomSource, pos: $BlockPos_): boolean;
         placeGroundPatch(level: $WorldGenLevel, config: $VegetationPatchConfiguration, random: $RandomSource, pos: $BlockPos_, state: $Predicate_<$BlockState>, xRadius: number, zRadius: number): $Set<$BlockPos>;
+        placeVegetation(level: $WorldGenLevel, config: $VegetationPatchConfiguration, chunkGenerator: $ChunkGenerator, random: $RandomSource, pos: $BlockPos_): boolean;
+        placeGround(level: $WorldGenLevel, config: $VegetationPatchConfiguration, replaceableblocks: $Predicate_<$BlockState>, random: $RandomSource, mutablePos: $BlockPos$MutableBlockPos, maxDistance: number): boolean;
+        distributeVegetation(context: $FeaturePlaceContext<$VegetationPatchConfiguration>, level: $WorldGenLevel, config: $VegetationPatchConfiguration, random: $RandomSource, possiblePositions: $Set_<$BlockPos_>, xRadius: number, zRadius: number): void;
         static VEGETATION_PATCH: $Feature<$VegetationPatchConfiguration>;
         static CHORUS_PLANT: $Feature<$NoneFeatureConfiguration>;
         static MONSTER_ROOM: $Feature<$NoneFeatureConfiguration>;
@@ -2435,32 +2435,32 @@ declare module "@package/net/minecraft/world/level/levelgen/feature" {
     export class $LargeDripstoneFeature$LargeDripstone {
     }
     export class $Feature<FC extends $FeatureConfiguration> {
+        configuredCodec(): $MapCodec<$ConfiguredFeature<FC, $Feature<FC>>>;
         /**
-         * If the above two blocks are not air, marks them for post-processing.
-         * This is used to prevent floating grass during the generation of features that carve blocks out of the terrain, after other plant-like blocks have generated (such as lake features).
+         * @return `true` if any of the six adjacent blocks to the block at `pos` are air.
          */
-        markAboveForPostProcessing(level: $WorldGenLevel, basePos: $BlockPos_): void;
-        setBlock(level: $LevelWriter, pos: $BlockPos_, state: $BlockState_): void;
+        static isAdjacentToAir(adjacentStateAccessor: $Function_<$BlockPos, $BlockState>, pos: $BlockPos_): boolean;
+        /**
+         * @return `true` if any of the six adjacent blocks to the block at `pos` return `true` to the given filter.
+         */
+        static checkNeighbors(adjacentStateAccessor: $Function_<$BlockPos, $BlockState>, pos: $BlockPos_, filter: $Predicate_<$BlockState>): boolean;
+        static isGrassOrDirt(level: $LevelSimulatedReader, pos: $BlockPos_): boolean;
+        static isReplaceable(blockTag: $TagKey_<$Block>): $Predicate<$BlockState>;
+        safeSetBlock(level: $WorldGenLevel, pos: $BlockPos_, state: $BlockState_, oldState: $Predicate_<$BlockState>): void;
         /**
          * Places the given feature at the given location.
          * During world generation, features are provided with a 3x3 region of chunks, centered on the chunk being generated, that they can safely generate into.
          */
         place(context: $FeaturePlaceContext<FC>): boolean;
         place(config: FC, level: $WorldGenLevel, chunkGenerator: $ChunkGenerator, random: $RandomSource, origin: $BlockPos_): boolean;
-        static isDirt(state: $BlockState_): boolean;
-        configuredCodec(): $MapCodec<$ConfiguredFeature<FC, $Feature<FC>>>;
-        static isReplaceable(blockTag: $TagKey_<$Block>): $Predicate<$BlockState>;
-        static isGrassOrDirt(level: $LevelSimulatedReader, pos: $BlockPos_): boolean;
-        /**
-         * @return `true` if any of the six adjacent blocks to the block at `pos` return `true` to the given filter.
-         */
-        static checkNeighbors(adjacentStateAccessor: $Function_<$BlockPos, $BlockState>, pos: $BlockPos_, filter: $Predicate_<$BlockState>): boolean;
-        /**
-         * @return `true` if any of the six adjacent blocks to the block at `pos` are air.
-         */
-        static isAdjacentToAir(adjacentStateAccessor: $Function_<$BlockPos, $BlockState>, pos: $BlockPos_): boolean;
-        safeSetBlock(level: $WorldGenLevel, pos: $BlockPos_, state: $BlockState_, oldState: $Predicate_<$BlockState>): void;
+        setBlock(level: $LevelWriter, pos: $BlockPos_, state: $BlockState_): void;
         static isStone(state: $BlockState_): boolean;
+        /**
+         * If the above two blocks are not air, marks them for post-processing.
+         * This is used to prevent floating grass during the generation of features that carve blocks out of the terrain, after other plant-like blocks have generated (such as lake features).
+         */
+        markAboveForPostProcessing(level: $WorldGenLevel, basePos: $BlockPos_): void;
+        static isDirt(state: $BlockState_): boolean;
         static VEGETATION_PATCH: $Feature<$VegetationPatchConfiguration>;
         static CHORUS_PLANT: $Feature<$NoneFeatureConfiguration>;
         static MONSTER_ROOM: $Feature<$NoneFeatureConfiguration>;
@@ -2810,8 +2810,8 @@ declare module "@package/net/minecraft/world/level/levelgen/feature" {
      */
     export type $ConfiguredFeature_<FC, F> = RegistryTypes.WorldgenConfiguredFeature | { config?: $FeatureConfiguration, feature?: $Feature_<FC>,  } | [config?: $FeatureConfiguration, feature?: $Feature_<FC>, ];
     export class $CoralFeature extends $Feature<$NoneFeatureConfiguration> {
-        placeCoralBlock(level: $LevelAccessor, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): boolean;
         placeFeature(level: $LevelAccessor, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): boolean;
+        placeCoralBlock(level: $LevelAccessor, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): boolean;
         static VEGETATION_PATCH: $Feature<$VegetationPatchConfiguration>;
         static CHORUS_PLANT: $Feature<$NoneFeatureConfiguration>;
         static MONSTER_ROOM: $Feature<$NoneFeatureConfiguration>;
@@ -3279,21 +3279,21 @@ declare module "@package/net/minecraft/world/level/levelgen/feature" {
         constructor(codec: $Codec<$EndGatewayConfiguration>);
     }
     export class $SpikeFeature$EndSpike {
-        getHeight(): number;
-        isCenterWithinChunk(pos: $BlockPos_): boolean;
-        getCenterZ(): number;
-        getCenterX(): number;
         getTopBoundingBox(): $AABB;
-        isGuarded(): boolean;
+        getHeight(): number;
         getRadius(): number;
+        isGuarded(): boolean;
+        isCenterWithinChunk(pos: $BlockPos_): boolean;
+        getCenterX(): number;
+        getCenterZ(): number;
         static CODEC: $Codec<$SpikeFeature$EndSpike>;
         constructor(centerX: number, centerZ: number, radius: number, height: number, guarded: boolean);
-        get height(): number;
-        get centerZ(): number;
-        get centerX(): number;
         get topBoundingBox(): $AABB;
-        get guarded(): boolean;
+        get height(): number;
         get radius(): number;
+        get guarded(): boolean;
+        get centerX(): number;
+        get centerZ(): number;
     }
     export class $GlowstoneFeature extends $Feature<$NoneFeatureConfiguration> {
         static VEGETATION_PATCH: $Feature<$VegetationPatchConfiguration>;
@@ -3426,10 +3426,10 @@ declare module "@package/net/minecraft/world/level/levelgen/feature" {
         constructor(arg0: $Codec<$RandomPatchConfiguration_>);
     }
     export class $FeatureCountTracker {
-        static clearCounts(): void;
-        static featurePlaced(level: $ServerLevel, feature: $ConfiguredFeature_<never, never>, topFeature: ($PlacedFeature_) | undefined): void;
-        static chunkDecorated(level: $ServerLevel): void;
         static logCounts(): void;
+        static featurePlaced(level: $ServerLevel, feature: $ConfiguredFeature_<never, never>, topFeature: ($PlacedFeature_) | undefined): void;
+        static clearCounts(): void;
+        static chunkDecorated(level: $ServerLevel): void;
         constructor();
     }
     export class $GeodeFeature extends $Feature<$GeodeConfiguration> {
@@ -3693,8 +3693,8 @@ declare module "@package/net/minecraft/world/level/levelgen/feature" {
         constructor(codec: $Codec<$FossilFeatureConfiguration>);
     }
     export class $OreFeature extends $Feature<$OreConfiguration> {
-        static shouldSkipAirCheck(random: $RandomSource, chance: number): boolean;
         static canPlaceOre(state: $BlockState_, adjacentStateAccessor: $Function_<$BlockPos, $BlockState>, random: $RandomSource, config: $OreConfiguration, targetState: $OreConfiguration$TargetBlockState, mutablePos: $BlockPos$MutableBlockPos): boolean;
+        static shouldSkipAirCheck(random: $RandomSource, chance: number): boolean;
         doPlace(level: $WorldGenLevel, random: $RandomSource, config: $OreConfiguration, minX: number, arg4: number, maxX: number, arg6: number, minZ: number, arg8: number, maxZ: number, arg10: number, minY: number, arg12: number, maxY: number): boolean;
         static VEGETATION_PATCH: $Feature<$VegetationPatchConfiguration>;
         static CHORUS_PLANT: $Feature<$NoneFeatureConfiguration>;
@@ -4029,7 +4029,7 @@ declare module "@package/net/minecraft/world/level/levelgen/feature" {
     /**
      * Values that may be interpreted as {@link $FeatureCountTracker$FeatureData}.
      */
-    export type $FeatureCountTracker$FeatureData_ = { feature?: $ConfiguredFeature_<never, never>, topFeature?: ($PlacedFeature_) | undefined,  } | [feature?: $ConfiguredFeature_<never, never>, topFeature?: ($PlacedFeature_) | undefined, ];
+    export type $FeatureCountTracker$FeatureData_ = { topFeature?: ($PlacedFeature_) | undefined, feature?: $ConfiguredFeature_<never, never>,  } | [topFeature?: ($PlacedFeature_) | undefined, feature?: $ConfiguredFeature_<never, never>, ];
     export class $FillLayerFeature extends $Feature<$LayerConfiguration> {
         static VEGETATION_PATCH: $Feature<$VegetationPatchConfiguration>;
         static CHORUS_PLANT: $Feature<$NoneFeatureConfiguration>;
@@ -4232,7 +4232,7 @@ declare module "@package/net/minecraft/world/level/levelgen/feature" {
     /**
      * Values that may be interpreted as {@link $FeatureCountTracker$LevelData}.
      */
-    export type $FeatureCountTracker$LevelData_ = { featureData?: $Object2IntMap<$FeatureCountTracker$FeatureData_>, chunksWithFeatures?: $MutableInt,  } | [featureData?: $Object2IntMap<$FeatureCountTracker$FeatureData_>, chunksWithFeatures?: $MutableInt, ];
+    export type $FeatureCountTracker$LevelData_ = { chunksWithFeatures?: $MutableInt, featureData?: $Object2IntMap<$FeatureCountTracker$FeatureData_>,  } | [chunksWithFeatures?: $MutableInt, featureData?: $Object2IntMap<$FeatureCountTracker$FeatureData_>, ];
     export class $HugeFungusConfiguration implements $FeatureConfiguration {
         getFeatures(): $Stream<$ConfiguredFeature<never, never>>;
         validBaseState: $BlockState;

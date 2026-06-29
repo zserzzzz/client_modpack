@@ -5,12 +5,12 @@ declare module "@package/org/apache/commons/io/output" {
         constructor(arg0: $OutputStream);
     }
     export class $CountingOutputStream extends $ProxyOutputStream {
-        getCount(): number;
-        resetCount(): number;
         getByteCount(): number;
         resetByteCount(): number;
+        getCount(): number;
+        resetCount(): number;
         constructor(arg0: $OutputStream);
-        get count(): number;
         get byteCount(): number;
+        get count(): number;
     }
 }

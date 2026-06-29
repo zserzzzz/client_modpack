@@ -19,10 +19,6 @@ declare module "@package/net/minecraft/network/protocol/handshake" {
     }
     export class $ClientIntentionPacket extends $Record implements $Packet<$ServerHandshakePacketListener> {
         protocolVersion(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isTerminal(): boolean;
         type(): $PacketType<$ClientIntentionPacket>;
         port(): number;
         /**
@@ -30,6 +26,10 @@ declare module "@package/net/minecraft/network/protocol/handshake" {
          */
         handle(handler: $ServerHandshakePacketListener): void;
         hostName(): string;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isTerminal(): boolean;
         intention(): $ClientIntent;
         /**
          * Whether decoding errors will be ignored for this packet.
@@ -46,7 +46,7 @@ declare module "@package/net/minecraft/network/protocol/handshake" {
     /**
      * Values that may be interpreted as {@link $ClientIntentionPacket}.
      */
-    export type $ClientIntentionPacket_ = { port?: number, protocolVersion?: number, intention?: $ClientIntent_, hostName?: string,  } | [port?: number, protocolVersion?: number, intention?: $ClientIntent_, hostName?: string, ];
+    export type $ClientIntentionPacket_ = { intention?: $ClientIntent_, hostName?: string, port?: number, protocolVersion?: number,  } | [intention?: $ClientIntent_, hostName?: string, port?: number, protocolVersion?: number, ];
     export class $HandshakeProtocols {
         static SERVERBOUND_TEMPLATE: $ProtocolInfo$Unbound<$ServerHandshakePacketListener, $FriendlyByteBuf>;
         static SERVERBOUND: $ProtocolInfo<$ServerHandshakePacketListener>;

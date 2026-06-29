@@ -21,20 +21,20 @@ declare module "@package/xaero/hud/minimap/info" {
         add(arg0: $InfoDisplay<never>): void;
         getCount(): number;
         getStream(): $Stream<$InfoDisplay<never>>;
-        adaptOrder(arg0: $Stream<string>): $List<string>;
-        getEnforcedConfig(): $InfoDisplayManagerConfigData;
-        clearStateCache(): void;
         applyLocalConfig(): void;
-        getLocalConfig(): $InfoDisplayManagerConfigData;
+        adaptOrder(arg0: $Stream<string>): $List<string>;
+        clearStateCache(): void;
+        getEnforcedConfig(): $InfoDisplayManagerConfigData;
         getDefaultOrder(): $List<string>;
         getOrderedStream(): $Stream<$InfoDisplay<never>>;
+        getLocalConfig(): $InfoDisplayManagerConfigData;
         constructor(arg0: $Map_<string, $InfoDisplay<never>>, arg1: $List_<string>, arg2: $List_<string>, arg3: $Supplier_<$InfoDisplayManagerConfigData>, arg4: $Consumer_<$InfoDisplayManagerConfigData>, arg5: $Supplier_<$InfoDisplayManagerConfigData>);
         get count(): number;
         get stream(): $Stream<$InfoDisplay<never>>;
         get enforcedConfig(): $InfoDisplayManagerConfigData;
-        get localConfig(): $InfoDisplayManagerConfigData;
         get defaultOrder(): $List<string>;
         get orderedStream(): $Stream<$InfoDisplay<never>>;
+        get localConfig(): $InfoDisplayManagerConfigData;
     }
     export class $InfoDisplayIO {
         decode(arg0: string): $InfoDisplayManagerConfigData;

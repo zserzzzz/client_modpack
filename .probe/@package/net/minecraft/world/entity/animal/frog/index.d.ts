@@ -1,7 +1,8 @@
 import { $GoalSelector } from "@package/net/minecraft/world/entity/ai/goal";
 import { $MoveControl, $LookControl, $JumpControl } from "@package/net/minecraft/world/entity/ai/control";
 import { $SensorType, $Sensor } from "@package/net/minecraft/world/entity/ai/sensing";
-import { $EntityType_, $Pose, $PortalProcessor, $VariantHolder, $Entity, $AnimationState, $EntityDimensions, $Entity$RemovalReason, $LivingEntity, $WalkAnimationState, $Mob, $MobSpawnType_ } from "@package/net/minecraft/world/entity";
+import { $CompoundTag } from "@package/net/minecraft/nbt";
+import { $EntityType_, $Pose, $VariantHolder, $PortalProcessor, $Entity, $AnimationState, $EntityDimensions, $Entity$RemovalReason, $LivingEntity, $WalkAnimationState, $Mob, $MobSpawnType_ } from "@package/net/minecraft/world/entity";
 import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
 import { $AttributeSupplier$Builder } from "@package/net/minecraft/world/entity/ai/attributes";
 import { $UUID, $Stack, $Map } from "@package/java/util";
@@ -13,7 +14,7 @@ import { $Node, $NodeEvaluator, $Path, $PathfindingContext, $AmphibiousNodeEvalu
 import { $ServerLevel } from "@package/net/minecraft/server/level";
 import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
 import { $SoundEvent_ } from "@package/net/minecraft/sounds";
-import { $BlockPos, $Holder_, $Holder, $BlockPos_, $Vec3i } from "@package/net/minecraft/core";
+import { $HolderLookup$Provider, $BlockPos, $Holder_, $Holder, $BlockPos_, $Vec3i } from "@package/net/minecraft/core";
 import { $Brain } from "@package/net/minecraft/world/entity/ai";
 import { $AmphibiousPathNavigation, $PathNavigation } from "@package/net/minecraft/world/entity/ai/navigation";
 import { $Enum, $Object } from "@package/java/lang";
@@ -35,9 +36,9 @@ import { $Vec3 } from "@package/net/minecraft/world/phys";
 
 declare module "@package/net/minecraft/world/entity/animal/frog" {
     export class $FrogAi {
-        static initMemories(frog: $Frog, random: $RandomSource): void;
         static updateActivity(frog: $Frog): void;
         static makeBrain(brain: $Brain<$Frog>): $Brain<never>;
+        static initMemories(frog: $Frog, random: $RandomSource): void;
         static getTemptations(): $Predicate<$ItemStack>;
         constructor();
         static get temptations(): $Predicate<$ItemStack>;
@@ -60,8 +61,8 @@ declare module "@package/net/minecraft/world/entity/animal/frog" {
         start(level: $ServerLevel, entity: $Frog, gameTime: number): void;
         stop(level: $ServerLevel, entity: $Frog, gameTime: number): void;
         tick(level: $ServerLevel, entity: $Frog, gameTime: number): void;
-        checkExtraStartConditions(level: $ServerLevel, owner: $Frog): boolean;
         canStillUse(level: $ServerLevel, entity: $Frog, gameTime: number): boolean;
+        checkExtraStartConditions(level: $ServerLevel, owner: $Frog): boolean;
         static MAX_UNREACHBLE_TONGUE_TARGETS_IN_MEMORY: number;
         static TIME_OUT_DURATION: number;
         static UNREACHABLE_TONGUE_TARGETS_COOLDOWN_DURATION: number;
@@ -72,17 +73,18 @@ declare module "@package/net/minecraft/world/entity/animal/frog" {
         constructor(tongueSound: $SoundEvent_, eatSound: $SoundEvent_);
     }
     export class $Frog extends $Animal implements $VariantHolder<$Holder<$FrogVariant>> {
-        static createAttributes(): $AttributeSupplier$Builder;
+        getVariant(): $Holder<$FrogVariant>;
         setVariant(variant: $Holder_<$FrogVariant>): void;
+        static canEat(entity: $LivingEntity): boolean;
         /**
          * Called to update the entity's position/logic.
          */
         eraseTongueTarget(): void;
-        getTongueTarget(): ($Entity) | undefined;
         setTongueTarget(tongueTarget: $Entity): void;
-        static canEat(entity: $LivingEntity): boolean;
+        getTongueTarget(): ($Entity) | undefined;
+        static createAttributes(): $AttributeSupplier$Builder;
         static checkFrogSpawnRules(animal: $EntityType_<$Animal>, level: $LevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
-        getVariant(): $Holder<$FrogVariant>;
+        serializeNBT(arg0: $HolderLookup$Provider): $Holder<$FrogVariant>;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -287,6 +289,7 @@ declare module "@package/net/minecraft/world/entity/animal/frog" {
          * Returns the current armor value as determined by a call to InventoryPlayer.getTotalArmorValue
          */
         getTicksLeftUntilAdult(): number;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;

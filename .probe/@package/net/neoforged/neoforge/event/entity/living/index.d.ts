@@ -39,14 +39,14 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
      * `AllowDespawn` is not related to the mob spawn event flow, as it fires when a despawn is attempted.
      */
     export class $MobSpawnEvent extends $EntityEvent {
-        getZ(): number;
-        getX(): number;
         getLevel(): $ServerLevelAccessor;
         getY(): number;
-        get z(): number;
-        get x(): number;
+        getZ(): number;
+        getX(): number;
         get level(): $ServerLevelAccessor;
         get y(): number;
+        get z(): number;
+        get x(): number;
     }
     /**
      * LivingDrownEvent is fired whenever a living entity can't breathe and its air supply is less than or equal to zero.
@@ -60,30 +60,6 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
      */
     export class $LivingDrownEvent extends $LivingEvent implements $ICancellableEvent {
         /**
-         * Sets if the entity is actively drowning.
-         */
-        setCanceled(isDrowning: boolean): void;
-        /**
-         * Sets if the entity is actively drowning.
-         */
-        setDrowning(isDrowning: boolean): void;
-        /**
-         * Sets the amount of bubbles that may be spawned.
-         */
-        setBubbleCount(bubbleCount: number): void;
-        /**
-         * Sets the amount of drowning damage that may be inflicted.
-         */
-        setDamageAmount(damageAmount: number): void;
-        /**
-         * Gets the number of ParticleTypes#BUBBLE particles that would be spawned.
-         * 
-         * Bubbles are only spawned if the entity is actively drowning.
-         * 
-         * For vanilla entities, the default value is 8 particles.
-         */
-        getBubbleCount(): number;
-        /**
          * Gets the amount of drowning damage the entity would take.
          * 
          * Drowning damage is only inflicted if the entity is actively drowning.
@@ -93,6 +69,30 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
          * If the damage amount is less than or equal to zero, `Entity#hurt` will not be called.
          */
         getDamageAmount(): number;
+        /**
+         * Gets the number of ParticleTypes#BUBBLE particles that would be spawned.
+         * 
+         * Bubbles are only spawned if the entity is actively drowning.
+         * 
+         * For vanilla entities, the default value is 8 particles.
+         */
+        getBubbleCount(): number;
+        /**
+         * Sets if the entity is actively drowning.
+         */
+        setCanceled(isDrowning: boolean): void;
+        /**
+         * Sets the amount of drowning damage that may be inflicted.
+         */
+        setDamageAmount(damageAmount: number): void;
+        /**
+         * Sets if the entity is actively drowning.
+         */
+        setDrowning(isDrowning: boolean): void;
+        /**
+         * Sets the amount of bubbles that may be spawned.
+         */
+        setBubbleCount(bubbleCount: number): void;
         /**
          * This method returns true if the entity is "actively" drowning.
          * 
@@ -155,14 +155,14 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
      */
     export class $LivingDropsEvent extends $LivingEvent implements $ICancellableEvent {
         getSource(): $DamageSource;
-        isRecentlyHit(): boolean;
         getDrops(): $Collection<$ItemEntity>;
-        setCanceled(arg0: boolean): void;
+        isRecentlyHit(): boolean;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(entity: $LivingEntity, source: $DamageSource_, drops: $Collection_<$ItemEntity>, recentlyHit: boolean);
         get source(): $DamageSource;
-        get recentlyHit(): boolean;
         get drops(): $Collection<$ItemEntity>;
+        get recentlyHit(): boolean;
     }
     export class $LivingChangeTargetEvent$LivingTargetType extends $Enum<$LivingChangeTargetEvent$LivingTargetType> implements $LivingChangeTargetEvent$ILivingTargetType {
         static values(): $LivingChangeTargetEvent$LivingTargetType[];
@@ -190,15 +190,15 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
         getLevel(): $ServerLevelAccessor;
         getResult(): $MobSpawnEvent$SpawnPlacementCheck$Result;
         /**
+         * Retrieves the type of mob spawn that is happening.
+         */
+        getSpawnType(): $MobSpawnType;
+        /**
          * In all vanilla cases, this is equal to `ServerLevelAccessor#getRandom()`.
          */
         getRandom(): $RandomSource;
         getEntityType(): $EntityType<never>;
         getPos(): $BlockPos;
-        /**
-         * Retrieves the type of mob spawn that is happening.
-         */
-        getSpawnType(): $MobSpawnType;
         /**
          * The default vanilla result is useful if an additional check wants to force `Result#ALLOW` only if the vanilla check would succeed.
          */
@@ -212,10 +212,10 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
          */
         constructor(entityType: $EntityType_<never>, level: $ServerLevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource, defaultResult: boolean);
         get level(): $ServerLevelAccessor;
+        get spawnType(): $MobSpawnType;
         get random(): $RandomSource;
         get entityType(): $EntityType<never>;
         get pos(): $BlockPos;
-        get spawnType(): $MobSpawnType;
         get defaultResult(): boolean;
         get placementCheckResult(): boolean;
     }
@@ -232,7 +232,6 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
      * This event is fired on the `NeoForge#EVENT_BUS`.
      */
     export class $LivingGetProjectileEvent extends $LivingEvent {
-        getProjectileWeaponItemStack(): $ItemStack;
         /**
          * Sets the projectile itemstack to be used.
          * 
@@ -245,6 +244,7 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
          * what you'd want it to be to avoid client-server desyncs.
          */
         setProjectileItemStack(projectileItemStack: $ItemStack_): void;
+        getProjectileWeaponItemStack(): $ItemStack;
         getProjectileItemStack(): $ItemStack;
         constructor(livingEntity: $LivingEntity, projectileWeaponItemStack: $ItemStack_, ammo: $ItemStack_);
         get projectileWeaponItemStack(): $ItemStack;
@@ -271,8 +271,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
      */
     export class $LivingDeathEvent extends $LivingEvent implements $ICancellableEvent {
         getSource(): $DamageSource;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(entity: $LivingEntity, source: $DamageSource_);
         get source(): $DamageSource;
     }
@@ -301,8 +301,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
          * @return the totem of undying being used from the entity's inventory
          */
         getTotem(): $ItemStack;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(entity: $LivingEntity, source: $DamageSource_, totem: $ItemStack_, hand: $InteractionHand_);
         get source(): $DamageSource;
         get handHolding(): $InteractionHand;
@@ -360,8 +360,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
      * Cancel the event, or set the duration or <= 0 to prevent it from processing.
      */
     export class $LivingEntityUseItemEvent$Start extends $LivingEntityUseItemEvent implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         /**
          * @deprecated
          */
@@ -404,8 +404,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
      * The only vanilla item this would effect are bows, and it would cause them NOT to fire there arrow.
      */
     export class $LivingEntityUseItemEvent$Stop extends $LivingEntityUseItemEvent implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(entity: $LivingEntity, item: $ItemStack_, duration: number);
     }
     /**
@@ -424,21 +424,21 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
      */
     export class $LivingDamageEvent$Pre extends $LivingDamageEvent {
         /**
-         * @return the current value to be applied to the entity's health after this event
-         */
-        getNewDamage(): number;
-        /**
          * @return the damage source for this damage sequence
          */
         getSource(): $DamageSource;
+        /**
+         * Sets the amount to reduce the entity health by
+         */
+        setNewDamage(newDamage: number): void;
         /**
          * @return the `DamageContainer` instance for this damage sequence
          */
         getContainer(): $DamageContainer;
         /**
-         * Sets the amount to reduce the entity health by
+         * @return the current value to be applied to the entity's health after this event
          */
-        setNewDamage(newDamage: number): void;
+        getNewDamage(): number;
         /**
          * @return the current value to be applied to the entity's health after this event
          */
@@ -484,16 +484,16 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
      */
     export class $BabyEntitySpawnEvent extends $Event implements $ICancellableEvent {
         getChild(): $AgeableMob;
-        getCausedByPlayer(): $Player;
         getParentA(): $Mob;
-        setChild(proposedChild: $AgeableMob): void;
         getParentB(): $Mob;
-        setCanceled(arg0: boolean): void;
+        setChild(proposedChild: $AgeableMob): void;
+        getCausedByPlayer(): $Player;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(parentA: $Mob, parentB: $Mob, proposedChild: $AgeableMob);
-        get causedByPlayer(): $Player;
         get parentA(): $Mob;
         get parentB(): $Mob;
+        get causedByPlayer(): $Player;
     }
     /**
      * Fired every tick that a player is 'using' an item, see `Start` for info.
@@ -501,8 +501,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
      * Cancel the event, or set the duration to <= 0 to cause the player to stop using the item.
      */
     export class $LivingEntityUseItemEvent$Tick extends $LivingEntityUseItemEvent implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(entity: $LivingEntity, item: $ItemStack_, duration: number);
     }
     export class $MobDespawnEvent$Result extends $Enum<$MobDespawnEvent$Result> {
@@ -537,6 +537,14 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
      */
     export class $LivingSwapItemsEvent$Hands extends $LivingSwapItemsEvent implements $ICancellableEvent {
         /**
+         * Sets the item that will be swapped to the main hand of the entity.
+         */
+        setItemSwappedToMainHand(item: $ItemStack_): void;
+        /**
+         * Sets the item that will be swapped to the main hand of the entity.
+         */
+        setItemSwappedToOffHand(item: $ItemStack_): void;
+        /**
          * Gets the item that will be swapped to the main hand of the entity.
          */
         getItemSwappedToMainHand(): $ItemStack;
@@ -544,16 +552,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
          * Gets the item that will be swapped to the main hand of the entity.
          */
         getItemSwappedToOffHand(): $ItemStack;
-        /**
-         * Sets the item that will be swapped to the main hand of the entity.
-         */
-        setItemSwappedToOffHand(item: $ItemStack_): void;
-        /**
-         * Sets the item that will be swapped to the main hand of the entity.
-         */
-        setItemSwappedToMainHand(item: $ItemStack_): void;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(entity: $LivingEntity);
     }
     /**
@@ -583,20 +583,20 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
      */
     export class $LivingKnockBackEvent extends $LivingEvent implements $ICancellableEvent {
         getStrength(): number;
+        getOriginalStrength(): number;
         setStrength(strength: number): void;
         getRatioZ(): number;
         getRatioX(): number;
-        getOriginalRatioX(): number;
         getOriginalRatioZ(): number;
-        setRatioX(ratioX: number): void;
+        getOriginalRatioX(): number;
         setRatioZ(ratioX: number): void;
-        getOriginalStrength(): number;
-        setCanceled(arg0: boolean): void;
+        setRatioX(ratioX: number): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(target: $LivingEntity, strength: number, ratioX: number, ratioZ: number);
-        get originalRatioX(): number;
-        get originalRatioZ(): number;
         get originalStrength(): number;
+        get originalRatioZ(): number;
+        get originalRatioX(): number;
     }
     /**
      * This event is fired whenever a mob is removed and splits into multiple children. It only fires on the logical server.
@@ -666,18 +666,16 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
      */
     export class $FinalizeSpawnEvent extends $MobSpawnEvent implements $ICancellableEvent {
         /**
-         * Retrieves the `DifficultyInstance` for the chunk where the mob is about to be spawned.
+         * This method can be used to cancel the spawn of this mob.
+         * This method must be used if you want to block the spawn, as canceling the event only blocks the call to `Mob#finalizeSpawn`.
+         * Note that if the spawn is cancelled, but the event is not, then `Mob#finalizeSpawn` will still be called, but the entity will not be spawned.
+         * Usually that has no side effects, but callers should be aware.
          */
-        getDifficulty(): $DifficultyInstance;
+        setSpawnCancelled(cancel: boolean): void;
         /**
-         * Sets the spawn data for this entity. If this event is cancelled, this value is not used, since `Mob#finalizeSpawn` will not be called.
+         * Retrieves the type of mob spawn that happened (the event that caused the spawn). The enum names are self-explanatory.
          */
-        setSpawnData(data: $SpawnGroupData): void;
-        /**
-         * Retrieves the `SpawnGroupData` for this entity. When spawning mobs in a loop, this group data is used for the entire group and impacts future spawns.
-         * This is how entities like horses ensure that the whole group spawns as a single variant. How this is used varies on a per-entity basis.
-         */
-        getSpawnData(): $SpawnGroupData;
+        getSpawnType(): $MobSpawnType;
         /**
          * Returns the current spawn cancellation status, which can be changed via `FinalizeSpawnEvent#setSpawnCancelled(boolean)`.
          */
@@ -690,21 +688,27 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
          */
         getSpawner(): $Either<$BlockEntity, $Entity>;
         /**
-         * Retrieves the type of mob spawn that happened (the event that caused the spawn). The enum names are self-explanatory.
+         * Retrieves the `DifficultyInstance` for the chunk where the mob is about to be spawned.
          */
-        getSpawnType(): $MobSpawnType;
-        /**
-         * This method can be used to cancel the spawn of this mob.
-         * This method must be used if you want to block the spawn, as canceling the event only blocks the call to `Mob#finalizeSpawn`.
-         * Note that if the spawn is cancelled, but the event is not, then `Mob#finalizeSpawn` will still be called, but the entity will not be spawned.
-         * Usually that has no side effects, but callers should be aware.
-         */
-        setSpawnCancelled(cancel: boolean): void;
+        getDifficulty(): $DifficultyInstance;
         /**
          * Sets the difficulty instance for this event, which will be propagated to `Mob#finalizeSpawn` unless cancelled.
          * The difficulty instance controls how likely certain random effects are to occur, or if certain mob abilities are enabled.
          */
         setDifficulty(inst: $DifficultyInstance): void;
+        /**
+         * Sets the spawn data for this entity. If this event is cancelled, this value is not used, since `Mob#finalizeSpawn` will not be called.
+         */
+        setSpawnData(data: $SpawnGroupData): void;
+        /**
+         * Retrieves the `SpawnGroupData` for this entity. When spawning mobs in a loop, this group data is used for the entire group and impacts future spawns.
+         * This is how entities like horses ensure that the whole group spawns as a single variant. How this is used varies on a per-entity basis.
+         */
+        getSpawnData(): $SpawnGroupData;
+        /**
+         * Returns the current spawn cancellation status, which can be changed via `FinalizeSpawnEvent#setSpawnCancelled(boolean)`.
+         */
+        isCanceled(): boolean;
         /**
          * This method can be used to cancel the spawn of this mob.
          * This method must be used if you want to block the spawn, as canceling the event only blocks the call to `Mob#finalizeSpawn`.
@@ -712,13 +716,9 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
          * Usually that has no side effects, but callers should be aware.
          */
         setCanceled(cancel: boolean): void;
-        /**
-         * Returns the current spawn cancellation status, which can be changed via `FinalizeSpawnEvent#setSpawnCancelled(boolean)`.
-         */
-        isCanceled(): boolean;
         constructor(entity: $Mob, level: $ServerLevelAccessor, x: number, y: number, z: number, difficulty: $DifficultyInstance, spawnType: $MobSpawnType_, spawnData: $SpawnGroupData, spawner: $Either<$BlockEntity, $Entity>);
-        get spawner(): $Either<$BlockEntity, $Entity>;
         get spawnType(): $MobSpawnType;
+        get spawner(): $Either<$BlockEntity, $Entity>;
     }
     /**
      * LivingHealEvent is fired when an Entity is set to be healed.
@@ -740,8 +740,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
     export class $LivingHealEvent extends $LivingEvent implements $ICancellableEvent {
         getAmount(): number;
         setAmount(amount: number): void;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(entity: $LivingEntity, amount: number);
     }
     /**
@@ -772,8 +772,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
          * The player that is being checked.
          */
         getPlayer(): $Player;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(enderman: $EnderMan, player: $Player);
         get player(): $Player;
     }
@@ -825,12 +825,12 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
      * This event is fired on the `NeoForge#EVENT_BUS`.
      */
     export class $LivingFallEvent extends $LivingEvent implements $ICancellableEvent {
-        getDistance(): number;
-        setDistance(distance: number): void;
-        getDamageMultiplier(): number;
         setDamageMultiplier(distance: number): void;
-        setCanceled(arg0: boolean): void;
+        setDistance(distance: number): void;
+        getDistance(): number;
+        getDamageMultiplier(): number;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(entity: $LivingEntity, distance: number, damageMultiplier: number);
     }
     /**
@@ -847,8 +847,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
         get oldEffectInstance(): $MobEffectInstance;
     }
     export class $LivingEvent$LivingVisibilityEvent extends $LivingEvent {
-        modifyVisibility(mod: number): void;
         getLookingEntity(): $Entity;
+        modifyVisibility(mod: number): void;
         getVisibilityModifier(): number;
         constructor(livingEntity: $LivingEntity, lookingEntity: $Entity, originalMultiplier: number);
         get lookingEntity(): $Entity;
@@ -876,16 +876,16 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
         setRefillAirAmount(consumeAirAmount: number): void;
         getRefillAirAmount(): number;
         /**
+         * Sets the new consumed air amount.
+         */
+        setConsumeAirAmount(consumeAirAmount: number): void;
+        getConsumeAirAmount(): number;
+        /**
          * If the entity can breathe, their air value will be increased by `#getRefillAirAmount()`.
          * 
          * If the entity cannot breathe, their air value will be reduced by `#getConsumeAirAmount()`.
          */
         canBreathe(): boolean;
-        getConsumeAirAmount(): number;
-        /**
-         * Sets the new consumed air amount.
-         */
-        setConsumeAirAmount(consumeAirAmount: number): void;
         constructor(entity: $LivingEntity, canBreathe: boolean, consumeAirAmount: number, refillAirAmount: number);
     }
     export class $MobSpawnEvent$PositionCheck$Result extends $Enum<$MobSpawnEvent$PositionCheck$Result> {
@@ -924,8 +924,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
          * Not every conversion is applicable for this
          */
         setConversionTimer(ticks: number): void;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(entity: $LivingEntity, outcome: $EntityType_<$LivingEntity>, timer: $Consumer_<number>);
         get outcome(): $EntityType<$LivingEntity>;
         set conversionTimer(value: number);
@@ -951,20 +951,6 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
          */
         getContainer(): $DamageContainer;
         /**
-         * @return the current damage to be applied to the entity
-         */
-        getOriginalAmount(): number;
-        /**
-         * @return the current damage to be applied to the entity
-         */
-        getAmount(): number;
-        setAmount(newDamage: number): void;
-        /**
-         * Reduction modifiers alter the vanilla damage reduction before it modifies the damage value.
-         * Modifiers are executed in sequence.
-         */
-        addReductionModifier(type: $DamageContainer$Reduction_, reductionFunc: $IReductionFunction_): void;
-        /**
          * When an entity's invulnerable time is fully cooled down, 20 ticks of invulnerability is added
          * on the next attack. This method allows for setting a new invulnerability tick count when those
          * conditions are met.
@@ -973,13 +959,27 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
          * than 10 and the damage source does not bypass invulnerability*
          */
         setInvulnerabilityTicks(ticks: number): void;
-        setCanceled(arg0: boolean): void;
+        /**
+         * Reduction modifiers alter the vanilla damage reduction before it modifies the damage value.
+         * Modifiers are executed in sequence.
+         */
+        addReductionModifier(type: $DamageContainer$Reduction_, reductionFunc: $IReductionFunction_): void;
+        /**
+         * @return the current damage to be applied to the entity
+         */
+        getAmount(): number;
+        /**
+         * @return the current damage to be applied to the entity
+         */
+        getOriginalAmount(): number;
+        setAmount(newDamage: number): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(entity: $LivingEntity, container: $DamageContainer);
         get source(): $DamageSource;
         get container(): $DamageContainer;
-        get originalAmount(): number;
         set invulnerabilityTicks(value: number);
+        get originalAmount(): number;
     }
     /**
      * Event for when an entity drops experience on its death, can be used to change
@@ -987,12 +987,12 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
      * by canceling the event.
      */
     export class $LivingExperienceDropEvent extends $LivingEvent implements $ICancellableEvent {
-        getOriginalExperience(): number;
-        getDroppedExperience(): number;
         setDroppedExperience(droppedExperience: number): void;
+        getDroppedExperience(): number;
+        getOriginalExperience(): number;
         getAttackingPlayer(): $Player;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(entity: $LivingEntity, attackingPlayer: $Player, originalExperience: number);
         get originalExperience(): number;
         get attackingPlayer(): $Player;
@@ -1008,8 +1008,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
     export class $AnimalTameEvent extends $LivingEvent implements $ICancellableEvent {
         getTamer(): $Player;
         getAnimal(): $Animal;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(animal: $Animal, tamer: $Player);
         get tamer(): $Player;
         get animal(): $Animal;
@@ -1039,21 +1039,21 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
      * This event is fired on the `NeoForge#EVENT_BUS`.
      */
     export class $LivingChangeTargetEvent extends $LivingEvent implements $ICancellableEvent {
+        /**
+         * Sets the new target this entity shall have.
+         */
+        setNewAboutToBeSetTarget(newAboutToBeSetTarget: $LivingEntity): void;
         getTargetType(): $LivingChangeTargetEvent$ILivingTargetType;
         /**
          * @return the new target that this entity will begin to track.
          */
         getNewAboutToBeSetTarget(): $LivingEntity;
         /**
-         * Sets the new target this entity shall have.
-         */
-        setNewAboutToBeSetTarget(newAboutToBeSetTarget: $LivingEntity): void;
-        /**
          * @return the new target that this entity will begin to track.
          */
         getOriginalAboutToBeSetTarget(): $LivingEntity;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(arg0: $LivingEntity, arg1: $LivingEntity, arg2: $LivingChangeTargetEvent$ILivingTargetType);
         get targetType(): $LivingChangeTargetEvent$ILivingTargetType;
         get originalAboutToBeSetTarget(): $LivingEntity;
@@ -1069,8 +1069,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
          * @return the `EffectCure` the effect is being cured by. Null if the effect is not removed due to being cured
          */
         getCure(): $EffectCure;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(living: $LivingEntity, effect: $Holder_<$MobEffect>, cure: $EffectCure);
         constructor(living: $LivingEntity, effectInstance: $MobEffectInstance, cure: $EffectCure);
         get effect(): $Holder<$MobEffect>;
@@ -1084,15 +1084,15 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
      * This event is fired on the `NeoForge#EVENT_BUS`.
      */
     export class $EffectParticleModificationEvent extends $LivingEvent {
-        setParticleOptions(options: $ParticleOptions_): void;
-        setVisible(visible: boolean): void;
         getParticleOptions(): $ParticleOptions;
+        getOriginalParticleOptions(): $ParticleOptions;
+        setVisible(visible: boolean): void;
         getEffect(): $MobEffectInstance;
         isVisible(): boolean;
-        getOriginalParticleOptions(): $ParticleOptions;
+        setParticleOptions(options: $ParticleOptions_): void;
         constructor(entity: $LivingEntity, effect: $MobEffectInstance);
-        get effect(): $MobEffectInstance;
         get originalParticleOptions(): $ParticleOptions;
+        get effect(): $MobEffectInstance;
     }
     /**
      * LivingJumpEvent is fired when an Entity jumps.
@@ -1126,15 +1126,6 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
      */
     export class $LivingDamageEvent$Post extends $LivingDamageEvent {
         /**
-         * @return the number of ticks this entity will be invulnerable after this sequence
-         */
-        getPostAttackInvulnerabilityTicks(): number;
-        getReduction(reduction: $DamageContainer$Reduction_): number;
-        /**
-         * @return the original damage when `LivingEntity#hurt` was invoked
-         */
-        getNewDamage(): number;
-        /**
          * @return the `DamageSource` for this damage sequence
          */
         getSource(): $DamageSource;
@@ -1145,18 +1136,27 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
         /**
          * @return the original damage when `LivingEntity#hurt` was invoked
          */
+        getNewDamage(): number;
+        getReduction(reduction: $DamageContainer$Reduction_): number;
+        /**
+         * @return the original damage when `LivingEntity#hurt` was invoked
+         */
         getOriginalDamage(): number;
         /**
          * @return the original damage when `LivingEntity#hurt` was invoked
          */
         getShieldDamage(): number;
+        /**
+         * @return the number of ticks this entity will be invulnerable after this sequence
+         */
+        getPostAttackInvulnerabilityTicks(): number;
         constructor(entity: $LivingEntity, container: $DamageContainer);
-        get postAttackInvulnerabilityTicks(): number;
-        get newDamage(): number;
         get source(): $DamageSource;
         get blockedDamage(): number;
+        get newDamage(): number;
         get originalDamage(): number;
         get shieldDamage(): number;
+        get postAttackInvulnerabilityTicks(): number;
     }
     /**
      * Fired when the ender dragon or wither attempts to destroy a block and when ever a zombie attempts to break a door. Basically a event version of `Block#canEntityDestroy(BlockState, BlockGetter, BlockPos, Entity)`
@@ -1172,8 +1172,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
     export class $LivingDestroyBlockEvent extends $LivingEvent implements $ICancellableEvent {
         getState(): $BlockState;
         getPos(): $BlockPos;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(entity: $LivingEntity, pos: $BlockPos_, state: $BlockState_);
         get state(): $BlockState;
         get pos(): $BlockPos;
@@ -1201,23 +1201,24 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
      * for players.
      */
     export class $LivingShieldBlockEvent extends $LivingEvent implements $ICancellableEvent {
+        getDamageContainer(): $DamageContainer;
+        getBlockedDamage(): number;
         /**
          * Set how much damage is blocked by this action.
          * 
          * Note that initially the blocked amount is the entire attack.
          */
         setBlockedDamage(blocked: number): void;
-        getBlockedDamage(): number;
-        getDamageContainer(): $DamageContainer;
         shieldDamage(): number;
+        getOriginalBlockedDamage(): number;
         getBlocked(): boolean;
-        getOriginalBlock(): boolean;
         /**
          * Set how much damage is blocked by this action.
          * 
          * Note that initially the blocked amount is the entire attack.
          */
         setShieldDamage(blocked: number): void;
+        getOriginalBlock(): boolean;
         getDamageSource(): $DamageSource;
         /**
          * Sets the blocking state of the entity. By default, entities raising a shield,
@@ -1226,7 +1227,7 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
          * by supplying true to this.
          */
         setBlocked(isBlocked: boolean): void;
-        getOriginalBlockedDamage(): number;
+        isCanceled(): boolean;
         /**
          * Sets the blocking state of the entity. By default, entities raising a shield,
          * facing the damage source, and not being hit by a source that bypasses shields
@@ -1234,12 +1235,11 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
          * by supplying true to this.
          */
         setCanceled(isBlocked: boolean): void;
-        isCanceled(): boolean;
         constructor(blocker: $LivingEntity, container: $DamageContainer, originalBlockedState: boolean);
         get damageContainer(): $DamageContainer;
+        get originalBlockedDamage(): number;
         get originalBlock(): boolean;
         get damageSource(): $DamageSource;
-        get originalBlockedDamage(): number;
     }
     /**
      * Fired after an item has fully finished being used.
@@ -1263,18 +1263,9 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
      */
     export class $ArmorHurtEvent extends $LivingEvent implements $ICancellableEvent {
         /**
-         * @return the original damage before any event modifications
-         */
-        getNewDamage(slot: $EquipmentSlot_): number;
-        /**
          * Sets new damage for the armor. Setting damage for empty slots will have no effect.
          */
         setNewDamage(slot: $EquipmentSlot_, damage: number): void;
-        /**
-         * Provides the Itemstack for the given slot. Hand slots will always return `ItemStack#EMPTY`
-         */
-        getArmorItemStack(slot: $EquipmentSlot_): $ItemStack;
-        getDamageSource(): $DamageSource;
         /**
          * Used internally to get the full map of `ItemStack`s to be hurt
          */
@@ -1282,12 +1273,21 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
         /**
          * @return the original damage before any event modifications
          */
+        getNewDamage(slot: $EquipmentSlot_): number;
+        /**
+         * @return the original damage before any event modifications
+         */
         getOriginalDamage(slot: $EquipmentSlot_): number;
-        setCanceled(arg0: boolean): void;
+        getDamageSource(): $DamageSource;
+        /**
+         * Provides the Itemstack for the given slot. Hand slots will always return `ItemStack#EMPTY`
+         */
+        getArmorItemStack(slot: $EquipmentSlot_): $ItemStack;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(arg0: $EnumMap<$EquipmentSlot_, $ArmorHurtEvent$ArmorEntry>, arg1: $LivingEntity, arg2: $DamageSource_);
-        get damageSource(): $DamageSource;
         get armorMap(): $Map<$EquipmentSlot, $ArmorHurtEvent$ArmorEntry>;
+        get damageSource(): $DamageSource;
     }
     /**
      * This event is fired when a mob checks for a valid spawn position, after `SpawnPlacements#checkSpawnRules` has been evaluated.
@@ -1305,17 +1305,17 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
         setResult(arg0: $MobSpawnEvent$PositionCheck$Result_): void;
         getResult(): $MobSpawnEvent$PositionCheck$Result;
         /**
+         * Retrieves the type of mob spawn that is happening.
+         */
+        getSpawnType(): $MobSpawnType;
+        /**
          * Retrieves the underlying `BaseSpawner` instance if this mob was created by a Mob Spawner of some form.
          * This is always null unless `#getSpawnType()` is `MobSpawnType#SPAWNER`, and may still be null even then.
          */
         getSpawner(): $BaseSpawner;
-        /**
-         * Retrieves the type of mob spawn that is happening.
-         */
-        getSpawnType(): $MobSpawnType;
         constructor(mob: $Mob, level: $ServerLevelAccessor, spawnType: $MobSpawnType_, spawner: $BaseSpawner);
-        get spawner(): $BaseSpawner;
         get spawnType(): $MobSpawnType;
+        get spawner(): $BaseSpawner;
     }
     /**
      * LivingDamageEvent captures an entity's loss of health. At this stage in
@@ -1335,8 +1335,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/living" {
      * This event does not have a result.
      */
     export class $MobEffectEvent$Expired extends $MobEffectEvent implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(living: $LivingEntity, effectInstance: $MobEffectInstance);
     }
 }

@@ -1,4 +1,5 @@
 import { $Codec, $MapCodec } from "@package/com/mojang/serialization";
+import { $CompoundTag } from "@package/net/minecraft/nbt";
 import { $EntityType_, $Pose, $PortalProcessor, $VariantHolder, $Entity, $EntityDimensions, $Entity$RemovalReason, $LivingEntity, $WalkAnimationState } from "@package/net/minecraft/world/entity";
 import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
 import { $ItemFrameAccessor } from "@package/com/simibubi/create/foundation/mixin/accessor";
@@ -10,7 +11,7 @@ import { $Predicate } from "@package/java/util/function";
 import { $BootstrapContext } from "@package/net/minecraft/data/worldgen";
 import { $SoundEvent } from "@package/net/minecraft/sounds";
 import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos, $Holder_, $Holder, $BlockPos_, $Direction_, $Rotations, $Direction } from "@package/net/minecraft/core";
+import { $HolderLookup$Provider, $BlockPos, $Holder_, $Holder, $BlockPos_, $Direction_, $Rotations, $Direction } from "@package/net/minecraft/core";
 import { $Brain } from "@package/net/minecraft/world/entity/ai";
 import { RegistryMarked, RegistryTypes } from "@special/types";
 import { $RegistryFriendlyByteBuf } from "@package/net/minecraft/network";
@@ -35,6 +36,7 @@ import { $StreamCodec } from "@package/net/minecraft/network/codec";
 
 declare module "@package/net/minecraft/world/entity/decoration" {
     export class $GlowItemFrame extends $ItemFrame {
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -112,25 +114,10 @@ declare module "@package/net/minecraft/world/entity/decoration" {
         constructor(arg0: $Level_, arg1: $BlockPos_, arg2: $Direction_);
     }
     export class $ArmorStand extends $LivingEntity implements $EquipmentEntity {
-        static createAttributes(): $AttributeSupplier$Builder;
-        setShowArms(invisible: boolean): void;
-        setNoBasePlate(invisible: boolean): void;
-        setHeadPose(bodyPose: $Rotations): void;
         /**
          * Returns false if the entity is an armor stand. Returns `true` for all other entity living bases.
          */
-        isNoBasePlate(): boolean;
-        setBodyPose(bodyPose: $Rotations): void;
-        setLeftArmPose(bodyPose: $Rotations): void;
-        setRightArmPose(bodyPose: $Rotations): void;
-        setRightLegPose(bodyPose: $Rotations): void;
-        setLeftLegPose(bodyPose: $Rotations): void;
-        getBodyPose(): $Rotations;
-        getRightArmPose(): $Rotations;
-        getRightLegPose(): $Rotations;
-        getHeadPose(): $Rotations;
-        getLeftLegPose(): $Rotations;
-        getLeftArmPose(): $Rotations;
+        isShowArms(): boolean;
         /**
          * Returns false if the entity is an armor stand. Returns `true` for all other entity living bases.
          */
@@ -139,10 +126,26 @@ declare module "@package/net/minecraft/world/entity/decoration" {
          * Returns false if the entity is an armor stand. Returns `true` for all other entity living bases.
          */
         isMarker(): boolean;
+        static createAttributes(): $AttributeSupplier$Builder;
+        setRightLegPose(bodyPose: $Rotations): void;
+        setBodyPose(bodyPose: $Rotations): void;
+        setShowArms(invisible: boolean): void;
+        setNoBasePlate(invisible: boolean): void;
+        setHeadPose(bodyPose: $Rotations): void;
         /**
          * Returns false if the entity is an armor stand. Returns `true` for all other entity living bases.
          */
-        isShowArms(): boolean;
+        isNoBasePlate(): boolean;
+        setLeftArmPose(bodyPose: $Rotations): void;
+        setRightArmPose(bodyPose: $Rotations): void;
+        setLeftLegPose(bodyPose: $Rotations): void;
+        getRightLegPose(): $Rotations;
+        getLeftArmPose(): $Rotations;
+        getBodyPose(): $Rotations;
+        getLeftLegPose(): $Rotations;
+        getRightArmPose(): $Rotations;
+        getHeadPose(): $Rotations;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         lastHurtByPlayerTime: number;
         autoSpinAttackItemStack: $ItemStack;
         lerpYRot: number;
@@ -310,6 +313,7 @@ declare module "@package/net/minecraft/world/entity/decoration" {
          * Updates the entity bounding box based on current facing
          */
         playPlacementSound(): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -452,6 +456,7 @@ declare module "@package/net/minecraft/world/entity/decoration" {
          * Gets the bounding box of this Entity, adjusted to take auxiliary entities into account (e.g. the tile contained by a minecart, such as a command block).
          */
         calculateSupportBox(): $AABB;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -530,8 +535,8 @@ declare module "@package/net/minecraft/world/entity/decoration" {
     export class $PaintingVariant extends $Record {
         width(): number;
         height(): number;
-        assetId(): $ResourceLocation;
         area(): number;
+        assetId(): $ResourceLocation;
         static CODEC: $Codec<$Holder<$PaintingVariant>>;
         static DIRECT_CODEC: $Codec<$PaintingVariant>;
         static DIRECT_STREAM_CODEC: $StreamCodec<$ByteBuf, $PaintingVariant>;
@@ -550,23 +555,24 @@ declare module "@package/net/minecraft/world/entity/decoration" {
          */
         getAnalogOutput(): number;
         getPlaceSound(): $SoundEvent;
-        getFrameItemStack(): $ItemStack;
-        getAddItemSound(): $SoundEvent;
         /**
          * Checks to make sure the `HangingEntity` can be placed there.
          */
         hasFramedMap(): boolean;
-        getRemoveItemSound(): $SoundEvent;
         getRotateItemSound(): $SoundEvent;
+        getFrameItemStack(): $ItemStack;
+        getAddItemSound(): $SoundEvent;
+        getRemoveItemSound(): $SoundEvent;
         getFramedMapId(stack: $ItemStack_): $MapId;
+        setRotation(rotation: number): void;
         /**
          * Return the rotation of the item currently on this frame.
          */
         getRotation(): number;
         setItem(stack: $ItemStack_, updateNeighbours: boolean): void;
         setItem(item: $ItemStack_): void;
-        setRotation(rotation: number): void;
         create$getFrameItemStack(): $ItemStack;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -640,21 +646,22 @@ declare module "@package/net/minecraft/world/entity/decoration" {
         static BASE_SAFE_FALL_DISTANCE: number;
         wasTouchingWater: boolean;
         horizontalCollision: boolean;
-        constructor(entityType: $EntityType_<$ItemFrame>, level: $Level_);
-        constructor(level: $Level_, pos: $BlockPos_, facingDirection: $Direction_);
         constructor(entityType: $EntityType_<$ItemFrame>, level: $Level_, pos: $BlockPos_, direction: $Direction_);
+        constructor(level: $Level_, pos: $BlockPos_, facingDirection: $Direction_);
+        constructor(entityType: $EntityType_<$ItemFrame>, level: $Level_);
         get breakSound(): $SoundEvent;
         get analogOutput(): number;
         get placeSound(): $SoundEvent;
+        get rotateItemSound(): $SoundEvent;
         get frameItemStack(): $ItemStack;
         get addItemSound(): $SoundEvent;
         get removeItemSound(): $SoundEvent;
-        get rotateItemSound(): $SoundEvent;
     }
     export class $Painting extends $HangingEntity implements $VariantHolder<$Holder<$PaintingVariant>> {
         static create(level: $Level_, pos: $BlockPos_, direction: $Direction_): ($Painting) | undefined;
-        getVariant(): $Holder<$PaintingVariant>;
         setVariant(variant: $Holder_<$PaintingVariant>): void;
+        getVariant(): $Holder<$PaintingVariant>;
+        serializeNBT(arg0: $HolderLookup$Provider): $Holder<$PaintingVariant>;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -736,15 +743,16 @@ declare module "@package/net/minecraft/world/entity/decoration" {
     export interface $PaintingVariant extends RegistryMarked<RegistryTypes.PaintingVariantTag, RegistryTypes.PaintingVariant> {}
     export class $BlockAttachedEntity extends $Entity implements $DynamicLightSource {
         dropItem(entity: $Entity | null): void;
-        getPos(): $BlockPos;
         /**
          * Called to update the entity's position/logic.
          */
         recalculateBoundingBox(): void;
+        getPos(): $BlockPos;
         /**
          * Returns `true` if other Entities should be prevented from moving through this Entity.
          */
         survives(): boolean;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;

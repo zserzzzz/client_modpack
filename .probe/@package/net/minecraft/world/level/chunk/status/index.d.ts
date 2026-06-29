@@ -22,42 +22,42 @@ declare module "@package/net/minecraft/world/level/chunk/status" {
      */
     export type $ChunkStatusTask_ = ((arg0: $WorldGenContext, arg1: $ChunkStep, arg2: $StaticCache2D<$GenerationChunkHolder>, arg3: $ChunkAccess) => $CompletableFuture<$ChunkAccess>);
     export class $ChunkStatusTasks {
+        static full(worldGenContext: $WorldGenContext_, step: $ChunkStep_, cache: $StaticCache2D<$GenerationChunkHolder>, chunk: $ChunkAccess): $CompletableFuture<$ChunkAccess>;
+        static passThrough(worldGenContext: $WorldGenContext_, step: $ChunkStep_, cache: $StaticCache2D<$GenerationChunkHolder>, chunk: $ChunkAccess): $CompletableFuture<$ChunkAccess>;
         static light(worldGenContext: $WorldGenContext_, step: $ChunkStep_, cache: $StaticCache2D<$GenerationChunkHolder>, chunk: $ChunkAccess): $CompletableFuture<$ChunkAccess>;
-        static generateSpawn(worldGenContext: $WorldGenContext_, step: $ChunkStep_, cache: $StaticCache2D<$GenerationChunkHolder>, chunk: $ChunkAccess): $CompletableFuture<$ChunkAccess>;
+        static initializeLight(worldGenContext: $WorldGenContext_, step: $ChunkStep_, cache: $StaticCache2D<$GenerationChunkHolder>, chunk: $ChunkAccess): $CompletableFuture<$ChunkAccess>;
+        static generateStructureStarts(worldGenContext: $WorldGenContext_, step: $ChunkStep_, cache: $StaticCache2D<$GenerationChunkHolder>, chunk: $ChunkAccess): $CompletableFuture<$ChunkAccess>;
+        static loadStructureStarts(worldGenContext: $WorldGenContext_, step: $ChunkStep_, cache: $StaticCache2D<$GenerationChunkHolder>, chunk: $ChunkAccess): $CompletableFuture<$ChunkAccess>;
         static generateBiomes(worldGenContext: $WorldGenContext_, step: $ChunkStep_, cache: $StaticCache2D<$GenerationChunkHolder>, chunk: $ChunkAccess): $CompletableFuture<$ChunkAccess>;
+        static generateSpawn(worldGenContext: $WorldGenContext_, step: $ChunkStep_, cache: $StaticCache2D<$GenerationChunkHolder>, chunk: $ChunkAccess): $CompletableFuture<$ChunkAccess>;
         static generateCarvers(worldGenContext: $WorldGenContext_, step: $ChunkStep_, cache: $StaticCache2D<$GenerationChunkHolder>, chunk: $ChunkAccess): $CompletableFuture<$ChunkAccess>;
         static generateSurface(worldGenContext: $WorldGenContext_, step: $ChunkStep_, cache: $StaticCache2D<$GenerationChunkHolder>, chunk: $ChunkAccess): $CompletableFuture<$ChunkAccess>;
         static generateNoise(worldGenContext: $WorldGenContext_, step: $ChunkStep_, cache: $StaticCache2D<$GenerationChunkHolder>, chunk: $ChunkAccess): $CompletableFuture<$ChunkAccess>;
         static generateFeatures(worldGenContext: $WorldGenContext_, step: $ChunkStep_, cache: $StaticCache2D<$GenerationChunkHolder>, chunk: $ChunkAccess): $CompletableFuture<$ChunkAccess>;
-        static full(worldGenContext: $WorldGenContext_, step: $ChunkStep_, cache: $StaticCache2D<$GenerationChunkHolder>, chunk: $ChunkAccess): $CompletableFuture<$ChunkAccess>;
-        static passThrough(worldGenContext: $WorldGenContext_, step: $ChunkStep_, cache: $StaticCache2D<$GenerationChunkHolder>, chunk: $ChunkAccess): $CompletableFuture<$ChunkAccess>;
-        static initializeLight(worldGenContext: $WorldGenContext_, step: $ChunkStep_, cache: $StaticCache2D<$GenerationChunkHolder>, chunk: $ChunkAccess): $CompletableFuture<$ChunkAccess>;
-        static loadStructureStarts(worldGenContext: $WorldGenContext_, step: $ChunkStep_, cache: $StaticCache2D<$GenerationChunkHolder>, chunk: $ChunkAccess): $CompletableFuture<$ChunkAccess>;
-        static generateStructureStarts(worldGenContext: $WorldGenContext_, step: $ChunkStep_, cache: $StaticCache2D<$GenerationChunkHolder>, chunk: $ChunkAccess): $CompletableFuture<$ChunkAccess>;
         static generateStructureReferences(worldGenContext: $WorldGenContext_, step: $ChunkStep_, cache: $StaticCache2D<$GenerationChunkHolder>, chunk: $ChunkAccess): $CompletableFuture<$ChunkAccess>;
         constructor();
     }
     export class $ChunkStep$Builder {
-        addRequirement(status: $ChunkStatus_, radius: number): $ChunkStep$Builder;
         build(): $ChunkStep;
-        blockStateWriteRadius(blockStateWriteRadius: number): $ChunkStep$Builder;
         setTask(task: $ChunkStatusTask_): $ChunkStep$Builder;
+        blockStateWriteRadius(blockStateWriteRadius: number): $ChunkStep$Builder;
+        addRequirement(status: $ChunkStatus_, radius: number): $ChunkStep$Builder;
         constructor(status: $ChunkStatus_);
         constructor(status: $ChunkStatus_, parent: $ChunkStep_);
         set task(value: $ChunkStatusTask_);
     }
     export class $WorldGenContext extends $Record {
-        mainThreadMailBox(): $ProcessorHandle<$ChunkTaskPriorityQueueSorter$Message<$Runnable>>;
         generator(): $ChunkGenerator;
         level(): $ServerLevel;
-        structureManager(): $StructureTemplateManager;
         lightEngine(): $ThreadedLevelLightEngine;
+        structureManager(): $StructureTemplateManager;
+        mainThreadMailBox(): $ProcessorHandle<$ChunkTaskPriorityQueueSorter$Message<$Runnable>>;
         constructor(arg0: $ServerLevel, arg1: $ChunkGenerator, arg2: $StructureTemplateManager, arg3: $ThreadedLevelLightEngine, arg4: $ProcessorHandle<$ChunkTaskPriorityQueueSorter$Message<$Runnable_>>);
     }
     /**
      * Values that may be interpreted as {@link $WorldGenContext}.
      */
-    export type $WorldGenContext_ = { mainThreadMailBox?: $ProcessorHandle<$ChunkTaskPriorityQueueSorter$Message<$Runnable_>>, structureManager?: $StructureTemplateManager, level?: $ServerLevel, generator?: $ChunkGenerator, lightEngine?: $ThreadedLevelLightEngine,  } | [mainThreadMailBox?: $ProcessorHandle<$ChunkTaskPriorityQueueSorter$Message<$Runnable_>>, structureManager?: $StructureTemplateManager, level?: $ServerLevel, generator?: $ChunkGenerator, lightEngine?: $ThreadedLevelLightEngine, ];
+    export type $WorldGenContext_ = { generator?: $ChunkGenerator, lightEngine?: $ThreadedLevelLightEngine, mainThreadMailBox?: $ProcessorHandle<$ChunkTaskPriorityQueueSorter$Message<$Runnable_>>, structureManager?: $StructureTemplateManager, level?: $ServerLevel,  } | [generator?: $ChunkGenerator, lightEngine?: $ThreadedLevelLightEngine, mainThreadMailBox?: $ProcessorHandle<$ChunkTaskPriorityQueueSorter$Message<$Runnable_>>, structureManager?: $StructureTemplateManager, level?: $ServerLevel, ];
     export class $ChunkPyramid extends $Record {
         steps(): $ImmutableList<$ChunkStep>;
         getStepTo(status: $ChunkStatus_): $ChunkStep;
@@ -70,11 +70,11 @@ declare module "@package/net/minecraft/world/level/chunk/status" {
      */
     export type $ChunkPyramid_ = { steps?: $ImmutableList<$ChunkStep_>,  } | [steps?: $ImmutableList<$ChunkStep_>, ];
     export class $ChunkDependencies {
-        getRadiusOf(status: $ChunkStatus_): number;
         size(): number;
         get(radius: number): $ChunkStatus;
         asList(): $ImmutableList<$ChunkStatus>;
         getRadius(): number;
+        getRadiusOf(status: $ChunkStatus_): number;
         constructor(dependencyByRadius: $ImmutableList<$ChunkStatus_>);
         get radius(): number;
     }
@@ -95,19 +95,19 @@ declare module "@package/net/minecraft/world/level/chunk/status" {
      */
     export type $ChunkType_ = "protochunk" | "levelchunk";
     export class $ChunkStep extends $Record {
-        directDependencies(): $ChunkDependencies;
         apply(worldGenContext: $WorldGenContext_, cache: $StaticCache2D<$GenerationChunkHolder>, chunk: $ChunkAccess): $CompletableFuture<$ChunkAccess>;
         task(): $ChunkStatusTask;
         targetStatus(): $ChunkStatus;
-        getAccumulatedRadiusOf(status: $ChunkStatus_): number;
         accumulatedDependencies(): $ChunkDependencies;
+        getAccumulatedRadiusOf(status: $ChunkStatus_): number;
         blockStateWriteRadius(): number;
+        directDependencies(): $ChunkDependencies;
         constructor(arg0: $ChunkStatus_, arg1: $ChunkDependencies, arg2: $ChunkDependencies, arg3: number, arg4: $ChunkStatusTask_);
     }
     /**
      * Values that may be interpreted as {@link $ChunkStep}.
      */
-    export type $ChunkStep_ = { accumulatedDependencies?: $ChunkDependencies, directDependencies?: $ChunkDependencies, targetStatus?: $ChunkStatus_, task?: $ChunkStatusTask_, blockStateWriteRadius?: number,  } | [accumulatedDependencies?: $ChunkDependencies, directDependencies?: $ChunkDependencies, targetStatus?: $ChunkStatus_, task?: $ChunkStatusTask_, blockStateWriteRadius?: number, ];
+    export type $ChunkStep_ = { task?: $ChunkStatusTask_, blockStateWriteRadius?: number, accumulatedDependencies?: $ChunkDependencies, directDependencies?: $ChunkDependencies, targetStatus?: $ChunkStatus_,  } | [task?: $ChunkStatusTask_, blockStateWriteRadius?: number, accumulatedDependencies?: $ChunkDependencies, directDependencies?: $ChunkDependencies, targetStatus?: $ChunkStatus_, ];
     export class $ChunkStatus {
         getName(): string;
         static max(first: $ChunkStatus_, second: $ChunkStatus_): $ChunkStatus;
@@ -115,10 +115,10 @@ declare module "@package/net/minecraft/world/level/chunk/status" {
         getIndex(): number;
         isAfter(chunkStatus: $ChunkStatus_): boolean;
         isBefore(chunkStatus: $ChunkStatus_): boolean;
-        static byName(name: string): $ChunkStatus;
-        isOrAfter(chunkStatus: $ChunkStatus_): boolean;
-        isOrBefore(chunkStatus: $ChunkStatus_): boolean;
         heightmapsAfter(): $EnumSet<$Heightmap$Types>;
+        static byName(name: string): $ChunkStatus;
+        isOrBefore(chunkStatus: $ChunkStatus_): boolean;
+        isOrAfter(chunkStatus: $ChunkStatus_): boolean;
         static getStatusList(): $List<$ChunkStatus>;
         getChunkType(): $ChunkType;
         static LIGHT: $ChunkStatus;

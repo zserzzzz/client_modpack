@@ -14,16 +14,16 @@ declare module "@package/net/minecraft/client/gui/components/debugchart" {
     export class $AbstractDebugChart {
         getWidth(maxWidth: number): number;
         drawChart(guiGraphics: $GuiGraphics, x: number, width: number): void;
-        drawAdditionalDimensions(guiGraphics: $GuiGraphics, height: number, x: number, index: number): void;
         drawStringWithShade(guiGraphics: $GuiGraphics, text: string, x: number, y: number): void;
+        drawAdditionalDimensions(guiGraphics: $GuiGraphics, height: number, x: number, index: number): void;
         getValueForAggregation(index: number): number;
-        renderAdditionalLinesAndLabels(guiGraphics: $GuiGraphics, height: number, x: number, index: number): void;
-        drawMainDimension(guiGraphics: $GuiGraphics, height: number, x: number, index: number): void;
-        toDisplayString(value: number): string;
-        drawDimensions(guiGraphics: $GuiGraphics, height: number, x: number, index: number): void;
         getSampleHeight(value: number): number;
-        getSampleColor(value: number, arg1: number, minPosition: number, arg3: number, minColor: number, midPosition: number, arg6: number): number;
+        toDisplayString(value: number): string;
         getSampleColor(value: number): number;
+        getSampleColor(value: number, arg1: number, minPosition: number, arg3: number, minColor: number, midPosition: number, arg6: number): number;
+        drawDimensions(guiGraphics: $GuiGraphics, height: number, x: number, index: number): void;
+        drawMainDimension(guiGraphics: $GuiGraphics, height: number, x: number, index: number): void;
+        renderAdditionalLinesAndLabels(guiGraphics: $GuiGraphics, height: number, x: number, index: number): void;
         static CHART_HEIGHT: number;
         static LINE_WIDTH: number;
         sampleStorage: $SampleStorage;

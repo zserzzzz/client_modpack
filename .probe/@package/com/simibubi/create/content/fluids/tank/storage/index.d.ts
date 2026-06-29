@@ -20,11 +20,11 @@ declare module "@package/com/simibubi/create/content/fluids/tank/storage" {
     export class $FluidTankMountedStorage extends $WrapperMountedFluidStorage<$FluidTankMountedStorage$Handler> implements $SyncedMountedStorage {
         getCapacity(): number;
         isDirty(): boolean;
+        afterSync(arg0: $Contraption, arg1: $BlockPos_): void;
+        markClean(): void;
         getFluid(): $FluidStack;
         static fromLegacy(arg0: $HolderLookup$Provider, arg1: $CompoundTag_): $FluidTankMountedStorage;
-        markClean(): void;
         static fromTank(arg0: $FluidTankBlockEntity): $FluidTankMountedStorage;
-        afterSync(arg0: $Contraption, arg1: $BlockPos_): void;
         static CODEC: $MapCodec<$FluidTankMountedStorage>;
         type: $MountedFluidStorageType<$MountedFluidStorage>;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $MountedFluidStorage>;

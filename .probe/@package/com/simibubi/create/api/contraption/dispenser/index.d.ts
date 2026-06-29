@@ -30,8 +30,8 @@ declare module "@package/com/simibubi/create/api/contraption/dispenser" {
         constructor();
     }
     export class $DefaultMountedDispenseBehavior implements $MountedDispenseBehavior {
-        dispense(arg0: $ItemStack_, arg1: $MovementContext, arg2: $BlockPos_): $ItemStack;
         static spawnItem(arg0: $Level_, arg1: $ItemStack_, arg2: number, arg3: $Vec3_, arg4: $BlockPos_, arg5: $MovementContext): void;
+        dispense(arg0: $ItemStack_, arg1: $MovementContext, arg2: $BlockPos_): $ItemStack;
         static INSTANCE: $MountedDispenseBehavior;
         constructor();
     }

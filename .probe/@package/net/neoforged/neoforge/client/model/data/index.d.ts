@@ -19,6 +19,11 @@ declare module "@package/net/neoforged/neoforge/client/model/data" {
      */
     export class $ModelDataManager {
         /**
+         * Request a refresh of the stored data for the given `BlockEntity`. The given `BlockEntity`
+         * must be in the level owning this manager
+         */
+        requestRefresh(blockEntity: $BlockEntity): void;
+        /**
          * Retrieves model data for a block at the given position.
          */
         getAt(pos: $BlockPos_): $ModelData;
@@ -30,17 +35,12 @@ declare module "@package/net/neoforged/neoforge/client/model/data" {
          * by this data manager.
          */
         getAt(pos: $SectionPos): $Long2ObjectMap<$ModelData>;
-        /**
-         * Request a refresh of the stored data for the given `BlockEntity`. The given `BlockEntity`
-         * must be in the level owning this manager
-         */
-        requestRefresh(blockEntity: $BlockEntity): void;
+        static onChunkUnload(event: $ChunkEvent$Unload): void;
         /**
          * Snapshot the state of this manager for all sections in the volume specified by the given section coordinates.
          * The snapshot will return `ModelData#EMPTY` for nonexistent keys.
          */
         snapshotSectionRegion(sectionMinX: number, sectionMinY: number, sectionMinZ: number, sectionMaxX: number, sectionMaxY: number, sectionMaxZ: number): $Long2ObjectFunction<$ModelData>;
-        static onChunkUnload(event: $ChunkEvent$Unload): void;
         static EMPTY_SNAPSHOT: $Long2ObjectFunction<$ModelData>;
         constructor(level: $Level_);
     }

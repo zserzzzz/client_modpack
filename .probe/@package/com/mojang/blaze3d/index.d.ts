@@ -13,8 +13,8 @@ declare module "@package/com/mojang/blaze3d" {
     export class $Blaze3D {
         static getTime(): number;
         static process(pipeline: $RenderPipeline, unknown: number): void;
-        static render(pipeline: $RenderPipeline, unknown: number): void;
         static youJustLostTheGame(): void;
+        static render(pipeline: $RenderPipeline, unknown: number): void;
         constructor();
         static get time(): number;
     }

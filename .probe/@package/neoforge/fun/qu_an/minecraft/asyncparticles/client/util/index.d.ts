@@ -1,29 +1,29 @@
 
 declare module "@package/neoforge/fun/qu_an/minecraft/asyncparticles/client/util" {
     export class $HeightMap {
-        defaultHeight(): number;
-        static getZ(xz: number): number;
-        static getX(xz: number): number;
         static asLong(x: number, z: number): number;
         getState(): $HeightMap$State;
-        setHeight(xz: number, height: number): boolean;
-        setHeight(x: number, z: number, height: number): boolean;
+        static getZ(xz: number): number;
+        static getX(xz: number): number;
         setCenter(x: number, z: number): void;
-        beginUpdate(centerX: number, centerZ: number, range: number): void;
+        setHeight(x: number, z: number, height: number): boolean;
+        setHeight(xz: number, height: number): boolean;
+        defaultHeight(): number;
         static isOutOfRange(x: number, z: number, state: $HeightMap$State): boolean;
-        commitUpdate(): void;
-        getPendingHeight(xz: number): number;
         getPendingHeight(x: number, z: number): number;
+        getPendingHeight(xz: number): number;
+        beginUpdate(centerX: number, centerZ: number, range: number): void;
+        commitUpdate(): void;
         static DEFAULT_HEIGHT: number;
         constructor();
         constructor(defaultHeight: number);
         get state(): $HeightMap$State;
     }
     export class $HeightMap$State {
-        getHeight(x: number, z: number): number;
-        centerX(): number;
         range(): number;
         centerZ(): number;
+        getHeight(x: number, z: number): number;
+        centerX(): number;
         constructor(state: $HeightMap$State);
     }
 }

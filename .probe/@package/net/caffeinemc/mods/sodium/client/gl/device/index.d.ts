@@ -10,25 +10,25 @@ declare module "@package/net/caffeinemc/mods/sodium/client/gl/device" {
     export class $CommandList {
     }
     export interface $CommandList extends $AutoCloseable {
-        bindBuffer(arg0: $GlBufferTarget_, arg1: $GlBuffer): void;
-        unmap(arg0: $GlBufferMapping): void;
         flush(): void;
         close(): void;
-        bindVertexArray(arg0: $GlVertexArray): void;
-        mapBuffer(arg0: $GlBuffer, arg1: number, arg2: number, arg3: $EnumBitField<$GlBufferMapFlags_>): $GlBufferMapping;
-        allocateStorage(arg0: $GlMutableBuffer, arg1: number, arg2: $GlBufferUsage_): void;
-        createTessellation(arg0: $GlPrimitiveType_, arg1: $TessellationBinding_[]): $GlTessellation;
-        beginTessellating(arg0: $GlTessellation): $DrawCommandList;
-        deleteTessellation(arg0: $GlTessellation): void;
-        createFence(): $GlFence;
-        copyBufferSubData(arg0: $GlBuffer, arg1: $GlBuffer, arg2: number, arg3: number, arg4: number): void;
-        flushMappedRange(arg0: $GlBufferMapping, arg1: number, arg2: number): void;
-        unbindVertexArray(): void;
+        unmap(arg0: $GlBufferMapping): void;
         deleteBuffer(arg0: $GlBuffer): void;
-        deleteVertexArray(arg0: $GlVertexArray): void;
+        copyBufferSubData(arg0: $GlBuffer, arg1: $GlBuffer, arg2: number, arg3: number, arg4: number): void;
+        unbindVertexArray(): void;
+        createTessellation(arg0: $GlPrimitiveType_, arg1: $TessellationBinding_[]): $GlTessellation;
+        bindVertexArray(arg0: $GlVertexArray): void;
         uploadData(arg0: $GlMutableBuffer, arg1: $ByteBuffer, arg2: $GlBufferUsage_): void;
+        bindBuffer(arg0: $GlBufferTarget_, arg1: $GlBuffer): void;
+        allocateStorage(arg0: $GlMutableBuffer, arg1: number, arg2: $GlBufferUsage_): void;
+        deleteVertexArray(arg0: $GlVertexArray): void;
+        mapBuffer(arg0: $GlBuffer, arg1: number, arg2: number, arg3: $EnumBitField<$GlBufferMapFlags_>): $GlBufferMapping;
         createImmutableBuffer(arg0: number, arg1: $EnumBitField<$GlBufferStorageFlags_>): $GlImmutableBuffer;
         createMutableBuffer(): $GlMutableBuffer;
+        beginTessellating(arg0: $GlTessellation): $DrawCommandList;
+        flushMappedRange(arg0: $GlBufferMapping, arg1: number, arg2: number): void;
+        deleteTessellation(arg0: $GlTessellation): void;
+        createFence(): $GlFence;
     }
     export class $DrawCommandList {
     }

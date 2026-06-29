@@ -4,28 +4,28 @@ import { $List } from "@package/java/util";
 
 declare module "@package/kotlinx/serialization/descriptors" {
     export class $SerialDescriptor {
-        static access$isInline$jd(arg0: $SerialDescriptor): boolean;
-        static access$isNullable$jd(arg0: $SerialDescriptor): boolean;
         static access$getAnnotations$jd(arg0: $SerialDescriptor): $List<any>;
+        static access$isNullable$jd(arg0: $SerialDescriptor): boolean;
+        static access$isInline$jd(arg0: $SerialDescriptor): boolean;
     }
     export interface $SerialDescriptor {
-        getElementDescriptor(arg0: number): $SerialDescriptor;
+        getKind(): $SerialKind;
         getAnnotations(): $List<$Annotation>;
         getElementName(arg0: number): string;
+        getElementAnnotations(arg0: number): $List<$Annotation>;
         isNullable(): boolean;
-        getKind(): $SerialKind;
+        getElementDescriptor(arg0: number): $SerialDescriptor;
         isInline(): boolean;
-        getSerialName(): string;
         getElementIndex(arg0: string): number;
         isElementOptional(arg0: number): boolean;
         getElementsCount(): number;
-        getElementAnnotations(arg0: number): $List<$Annotation>;
+        getSerialName(): string;
+        get kind(): $SerialKind;
         get annotations(): $List<$Annotation>;
         get nullable(): boolean;
-        get kind(): $SerialKind;
         get inline(): boolean;
-        get serialName(): string;
         get elementsCount(): number;
+        get serialName(): string;
     }
     export class $SerialKind {
         constructor(arg0: $DefaultConstructorMarker);

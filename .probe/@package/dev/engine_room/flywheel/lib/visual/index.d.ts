@@ -21,22 +21,22 @@ declare module "@package/dev/engine_room/flywheel/lib/visual" {
     }
     export class $AbstractBlockEntityVisual<T extends $BlockEntity> extends $AbstractVisual implements $BlockEntityVisual<T>, $LightUpdatedVisual {
         isVisible(frustum: $FrustumIntersection): boolean;
-        doDistanceLimitThisFrame(context: $DynamicVisual$Context): boolean;
-        setSectionCollector(sectionCollector: $SectionTrackedVisual$SectionCollector_): void;
         getVisualPosition(): $BlockPos;
+        setSectionCollector(sectionCollector: $SectionTrackedVisual$SectionCollector_): void;
+        doDistanceLimitThisFrame(context: $DynamicVisual$Context): boolean;
         constructor(ctx: $VisualizationContext, blockEntity: T, partialTick: number);
-        set sectionCollector(value: $SectionTrackedVisual$SectionCollector_);
         get visualPosition(): $BlockPos;
+        set sectionCollector(value: $SectionTrackedVisual$SectionCollector_);
     }
     export class $SimpleDynamicVisual {
     }
     export interface $SimpleDynamicVisual extends $DynamicVisual {
-        beginFrame(arg0: $DynamicVisual$Context): void;
         planFrame(): $Plan<$DynamicVisual$Context>;
+        beginFrame(arg0: $DynamicVisual$Context): void;
     }
     export class $AbstractEntityVisual<T extends $Entity> extends $AbstractVisual implements $EntityVisual<T> {
-        distanceSquared(x: number, y: number, z: number): number;
         isVisible(frustum: $FrustumIntersection): boolean;
+        distanceSquared(x: number, y: number, z: number): number;
         getVisualPosition(partialTick: number): $Vector3f;
         getVisualPosition(): $Vector3f;
         constructor(ctx: $VisualizationContext, entity: T, partialTick: number);

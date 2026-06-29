@@ -124,8 +124,8 @@ declare module "@package/net/minecraft/util/datafix/fixes" {
         constructor(outputSchema: $Schema, changesType: boolean);
     }
     export class $VillagerRebuildLevelAndXpFix extends $DataFix {
-        static getMinXpPerLevel(level: number): number;
         makeRule(): $TypeRewriteRule;
+        static getMinXpPerLevel(level: number): number;
         constructor(outputSchema: $Schema, changesType: boolean);
     }
     export class $EntityShulkerRotationFix extends $NamedEntityFix {
@@ -137,9 +137,9 @@ declare module "@package/net/minecraft/util/datafix/fixes" {
         constructor(outputSchema: $Schema, changesType: boolean);
     }
     export class $ItemStackTagFix extends $DataFix {
-        fixItemStackTag<T>(itemStackTag: $Dynamic<T>): $Dynamic<T>;
-        static createFixer(type: $Type<never>, filter: $Predicate_<string>, fixer: $UnaryOperator_<$Dynamic<never>>): $UnaryOperator<$Typed<never>>;
         makeRule(): $TypeRewriteRule;
+        static createFixer(type: $Type<never>, filter: $Predicate_<string>, fixer: $UnaryOperator_<$Dynamic<never>>): $UnaryOperator<$Typed<never>>;
+        fixItemStackTag<T>(itemStackTag: $Dynamic<T>): $Dynamic<T>;
         constructor(outputSchema: $Schema, name: string, idFilter: $Predicate_<string>);
     }
     export class $ForcePoiRebuild extends $DataFix {
@@ -219,11 +219,11 @@ declare module "@package/net/minecraft/util/datafix/fixes" {
         constructor(outputSchema: $Schema, changesType: boolean);
     }
     export class $MissingDimensionFix extends $DataFix {
-        static optionalFields<A>(name: string, element: $Type<A>): $Type<$Pair<$Either<A, $Unit>, $Dynamic<never>>>;
-        static optionalFields<A1, A2>(name1: string, element1: $Type<A1>, name2: string, element2: $Type<A2>): $Type<$Pair<$Either<A1, $Unit>, $Pair<$Either<A2, $Unit>, $Dynamic<never>>>>;
         static fields<A>(name: string, element: $Type<A>): $Type<$Pair<A, $Dynamic<never>>>;
         static flatType(schema: $Schema): $Type<$Pair<$Either<$Pair<$Either<never, $Unit>, $Pair<$Either<$List<$Pair<$Either<never, $Unit>, $Dynamic<never>>>, $Unit>, $Dynamic<never>>>, $Unit>, $Dynamic<never>>>;
         makeRule(): $TypeRewriteRule;
+        static optionalFields<A>(name: string, element: $Type<A>): $Type<$Pair<$Either<A, $Unit>, $Dynamic<never>>>;
+        static optionalFields<A1, A2>(name1: string, element1: $Type<A1>, name2: string, element2: $Type<A2>): $Type<$Pair<$Either<A1, $Unit>, $Pair<$Either<A2, $Unit>, $Dynamic<never>>>>;
         constructor(outputSchema: $Schema, changesType: boolean);
     }
     export class $ChunkRenamesFix extends $DataFix {
@@ -231,8 +231,8 @@ declare module "@package/net/minecraft/util/datafix/fixes" {
         constructor(outputSchema: $Schema);
     }
     export class $AbstractPoiSectionFix extends $DataFix {
-        processRecords<T>(records: $Stream<$Dynamic<T>>): $Stream<$Dynamic<T>>;
         makeRule(): $TypeRewriteRule;
+        processRecords<T>(records: $Stream<$Dynamic<T>>): $Stream<$Dynamic<T>>;
         constructor(outputSchema: $Schema, name: string);
     }
     export class $WorldGenSettingsHeightAndBiomeFix extends $DataFix {
@@ -397,8 +397,8 @@ declare module "@package/net/minecraft/util/datafix/fixes" {
         constructor();
     }
     export class $AttributeModifierIdFix extends $DataFix {
-        static uuidFromIntArray(intArray: number[]): $UUID;
         makeRule(): $TypeRewriteRule;
+        static uuidFromIntArray(intArray: number[]): $UUID;
         constructor(outputSchema: $Schema);
     }
     export class $LevelLegacyWorldGenSettingsFix extends $DataFix {
@@ -414,14 +414,14 @@ declare module "@package/net/minecraft/util/datafix/fixes" {
         constructor(outputSchema: $Schema);
     }
     export class $AbstractUUIDFix extends $DataFix {
-        static createUUIDFromML(dynamic: $Dynamic<never>): ($Dynamic<never>) | undefined;
-        updateNamedChoice(typed: $Typed<never>, choiceName: string, updater: $Function_<$Dynamic<never>, $Dynamic<never>>): $Typed<never>;
-        static replaceUUIDString(dynamic: $Dynamic<never>, mostKey: string, leastKey: string): ($Dynamic<never>) | undefined;
         static replaceUUIDMLTag(dynamic: $Dynamic<never>, mostKey: string, leastKey: string): ($Dynamic<never>) | undefined;
+        updateNamedChoice(typed: $Typed<never>, choiceName: string, updater: $Function_<$Dynamic<never>, $Dynamic<never>>): $Typed<never>;
+        static createUUIDFromML(dynamic: $Dynamic<never>): ($Dynamic<never>) | undefined;
         static createUUIDTag(dynamic: $Dynamic<never>, most: number, arg2: number): ($Dynamic<never>) | undefined;
+        static replaceUUIDString(dynamic: $Dynamic<never>, mostKey: string, leastKey: string): ($Dynamic<never>) | undefined;
+        static createUUIDFromLongs(dynamic: $Dynamic<never>, mostKey: string, leastKey: string): ($Dynamic<never>) | undefined;
         static replaceUUIDLeastMost(dynamic: $Dynamic<never>, mostKey: string, leastKey: string): ($Dynamic<never>) | undefined;
         static createUUIDFromString(dynamic: $Dynamic<never>, uuidKey: string): ($Dynamic<never>) | undefined;
-        static createUUIDFromLongs(dynamic: $Dynamic<never>, mostKey: string, leastKey: string): ($Dynamic<never>) | undefined;
         typeReference: $DSL$TypeReference;
         constructor(outputSchema: $Schema, typeReference: $DSL$TypeReference_);
     }
@@ -476,9 +476,9 @@ declare module "@package/net/minecraft/util/datafix/fixes" {
         constructor(outputSchema: $Schema, changesType: boolean);
     }
     export class $EntityUUIDFix extends $AbstractUUIDFix {
-        static updateLivingEntity(animalTag: $Dynamic<never>): $Dynamic<never>;
-        static updateEntityUUID(animalTag: $Dynamic<never>): $Dynamic<never>;
         makeRule(): $TypeRewriteRule;
+        static updateEntityUUID(animalTag: $Dynamic<never>): $Dynamic<never>;
+        static updateLivingEntity(animalTag: $Dynamic<never>): $Dynamic<never>;
         typeReference: $DSL$TypeReference;
         constructor(outputSchema: $Schema);
     }
@@ -522,15 +522,15 @@ declare module "@package/net/minecraft/util/datafix/fixes" {
     export class $ItemStackComponentizationFix$ItemStackData {
         write(): $Dynamic<never>;
         static read(tag: $Dynamic<never>): ($ItemStackComponentizationFix$ItemStackData) | undefined;
-        is(items: $Set_<string>): boolean;
         is(component: string): boolean;
-        setComponent(component: string, value: $Dynamic<never>): void;
-        setComponent(component: string, value: $OptionalDynamic<never>): void;
-        moveTagToComponent(key: string, component: string, tag: $Dynamic<never>): void;
-        moveTagToComponent(key: string, component: string): void;
-        moveTagInto(oldKey: string, tag: $Dynamic<never>, newKey: string): $Dynamic<never>;
-        fixSubTag(key: string, skipIfEmpty: boolean, fixer: $UnaryOperator_<$Dynamic<never>>): void;
+        is(items: $Set_<string>): boolean;
         removeTag(key: string): $OptionalDynamic<never>;
+        fixSubTag(key: string, skipIfEmpty: boolean, fixer: $UnaryOperator_<$Dynamic<never>>): void;
+        moveTagInto(oldKey: string, tag: $Dynamic<never>, newKey: string): $Dynamic<never>;
+        moveTagToComponent(key: string, component: string): void;
+        moveTagToComponent(key: string, component: string, tag: $Dynamic<never>): void;
+        setComponent(component: string, value: $OptionalDynamic<never>): void;
+        setComponent(component: string, value: $Dynamic<never>): void;
         hasComponent(component: string): boolean;
         tag: $Dynamic<never>;
     }
@@ -591,25 +591,25 @@ declare module "@package/net/minecraft/util/datafix/fixes" {
     export class $BlockStateData {
         static parse(nbt: string): $Dynamic<never>;
         static getTag(id: number): $Dynamic<never>;
-        static bootstrap2(): void;
-        static bootstrap3(): void;
-        static bootstrap0(): void;
-        static bootstrap1(): void;
-        static bootstrap7(): void;
-        static bootstrap9(): void;
-        static bootstrap4(): void;
-        static bootstrap8(): void;
-        static bootstrap5(): void;
-        static bootstrap6(): void;
+        static bootstrap12(): void;
+        static bootstrap14(): void;
+        static bootstrap10(): void;
+        static bootstrap13(): void;
+        static bootstrap15(): void;
+        static bootstrap11(): void;
         static upgradeBlock(id: number): string;
         static upgradeBlock(name: string): string;
         static upgradeBlockStateTag(nbt: $Dynamic<never>): $Dynamic<never>;
-        static bootstrap14(): void;
-        static bootstrap10(): void;
-        static bootstrap12(): void;
-        static bootstrap13(): void;
-        static bootstrap11(): void;
-        static bootstrap15(): void;
+        static bootstrap0(): void;
+        static bootstrap2(): void;
+        static bootstrap1(): void;
+        static bootstrap3(): void;
+        static bootstrap4(): void;
+        static bootstrap7(): void;
+        static bootstrap9(): void;
+        static bootstrap5(): void;
+        static bootstrap6(): void;
+        static bootstrap8(): void;
         static FILTER_ME: string;
         constructor();
     }
@@ -640,11 +640,11 @@ declare module "@package/net/minecraft/util/datafix/fixes" {
         constructor(outputSchema: $Schema, changesType: boolean);
     }
     export class $LeavesFix$Section {
-        isSkippable(): boolean;
         write(data: $Typed<never>): $Typed<never>;
         getIndex(): number;
         getBlock(index: number): number;
         getStateId(name: string, persistent: boolean, distance: number): number;
+        isSkippable(): boolean;
         readStorage(data: $Dynamic<never>): void;
         skippable(): boolean;
         static PROPERTIES_TAG: string;
@@ -737,7 +737,7 @@ declare module "@package/net/minecraft/util/datafix/fixes" {
     /**
      * Values that may be interpreted as {@link $StatsCounterFix$StatType}.
      */
-    export type $StatsCounterFix$StatType_ = { type?: string, typeKey?: string,  } | [type?: string, typeKey?: string, ];
+    export type $StatsCounterFix$StatType_ = { typeKey?: string, type?: string,  } | [typeKey?: string, type?: string, ];
     export class $ColorlessShulkerEntityFix extends $NamedEntityFix {
         constructor(outputSchema: $Schema, changesType: boolean);
     }
@@ -826,10 +826,10 @@ declare module "@package/net/minecraft/util/datafix/fixes" {
         constructor(outputSchema: $Schema, changesType: boolean);
     }
     export class $LeavesFix$LeavesSection extends $LeavesFix$Section {
-        getDistance(index: number): number;
-        setDistance(index: number, block: number, distance: number): void;
         isLeaf(id: number): boolean;
         isLog(id: number): boolean;
+        setDistance(index: number, block: number, distance: number): void;
+        getDistance(index: number): number;
         static PROPERTIES_TAG: string;
         static BLOCK_STATES_TAG: string;
         paletteFinder: $OpticFinder<$List<$Pair<string, $Dynamic<never>>>>;
@@ -1056,10 +1056,10 @@ declare module "@package/net/minecraft/util/datafix/fixes" {
         static RENAMES: $ImmutableMap<string, string>;
     }
     export class $StructuresBecomeConfiguredFix$Conversion extends $Record {
-        biomeMapping(): $Map<string, string>;
-        static biomeMapped(biomeMapping: $Map_<$List_<string>, string>, fallback: string): $StructuresBecomeConfiguredFix$Conversion;
         fallback(): string;
         static trivial(fallback: string): $StructuresBecomeConfiguredFix$Conversion;
+        static biomeMapped(biomeMapping: $Map_<$List_<string>, string>, fallback: string): $StructuresBecomeConfiguredFix$Conversion;
+        biomeMapping(): $Map<string, string>;
         constructor(biomeMapping: $Map_<string, string>, fallback: string);
     }
     /**
@@ -1077,9 +1077,9 @@ declare module "@package/net/minecraft/util/datafix/fixes" {
         constructor(name: string, outputSchema: $Schema, changesType: boolean);
     }
     export class $WorldGenSettingsFix extends $DataFix {
+        makeRule(): $TypeRewriteRule;
         static vanillaLevels<T>(data: $Dynamic<T>, seed: number, arg2: $Dynamic<T>, arg3: boolean): T;
         static defaultOverworld<T>(data: $Dynamic<T>, seed: number): $Dynamic<T>;
-        makeRule(): $TypeRewriteRule;
         constructor(outputSchema: $Schema);
     }
     export class $ChunkBedBlockEntityInjecterFix extends $DataFix {

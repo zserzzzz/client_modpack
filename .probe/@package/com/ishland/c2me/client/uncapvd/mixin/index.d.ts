@@ -5,9 +5,9 @@ declare module "@package/com/ishland/c2me/client/uncapvd/mixin" {
     export class $ISimpleOption<T> {
     }
     export interface $ISimpleOption<T> {
-        setCodec(arg0: $Codec<T>): void;
         setCallbacks(arg0: $OptionInstance$ValueSet<T>): void;
-        set codec(value: $Codec<T>);
+        setCodec(arg0: $Codec<T>): void;
         set callbacks(value: $OptionInstance$ValueSet<T>);
+        set codec(value: $Codec<T>);
     }
 }

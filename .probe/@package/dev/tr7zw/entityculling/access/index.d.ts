@@ -8,9 +8,9 @@ declare module "@package/dev/tr7zw/entityculling/access" {
     export class $EntityRendererInter<T extends $Entity> {
     }
     export interface $EntityRendererInter<T extends $Entity> {
-        entityCullingGetCullingBox(arg0: T): $AABB;
-        shadowShouldShowName(arg0: T): boolean;
         shadowRenderNameTag(arg0: T, arg1: $Component_, arg2: $PoseStack, arg3: $MultiBufferSource_, arg4: number, arg5: number): void;
+        shadowShouldShowName(arg0: T): boolean;
+        entityCullingGetCullingBox(arg0: T): $AABB;
         entityCullingIgnoresCulling(arg0: T): boolean;
     }
 }

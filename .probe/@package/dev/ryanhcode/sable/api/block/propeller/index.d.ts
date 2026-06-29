@@ -13,21 +13,21 @@ declare module "@package/dev/ryanhcode/sable/api/block/propeller" {
         isActive(): boolean;
         getLevel(): $Level;
         getBlockPos(): $BlockPos;
-        getAirflow(): number;
         getThrust(): number;
-        getCurrentAirPressure(): number;
-        getBlockDirection(): $Direction;
+        getAirflow(): number;
         getAirflowScaling(): number;
+        getBlockDirection(): $Direction;
         getScaledThrust(): number;
+        getCurrentAirPressure(): number;
         get active(): boolean;
         get level(): $Level;
         get blockPos(): $BlockPos;
-        get airflow(): number;
         get thrust(): number;
-        get currentAirPressure(): number;
-        get blockDirection(): $Direction;
+        get airflow(): number;
         get airflowScaling(): number;
+        get blockDirection(): $Direction;
         get scaledThrust(): number;
+        get currentAirPressure(): number;
     }
     export class $BlockEntitySubLevelPropellerActor {
         static THRUST_POSITION: $Vector3d;

@@ -61,25 +61,25 @@ declare module "@package/com/simibubi/create/content/fluids/pipes/valve" {
         static TYPE: $BehaviourType<$FluidTransportBehaviour>;
     }
     export class $FluidValveBlock extends $DirectionalAxisKineticBlock implements $IAxisPipe, $IBE<$FluidValveBlockEntity>, $ProperWaterloggedBlock {
-        getBlockEntityType(): $BlockEntityType<$FluidValveBlockEntity>;
-        getBlockEntityClass(): $Class<$FluidValveBlockEntity>;
-        static isOpenAt(arg0: $BlockState_, arg1: $Direction_): boolean;
         getAxis(arg0: $BlockState_): $Direction$Axis;
+        getBlockEntityClass(): $Class<$FluidValveBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$FluidValveBlockEntity>;
         static getPipeAxis(arg0: $BlockState_): $Direction$Axis;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$FluidValveBlockEntity>): void;
+        static isOpenAt(arg0: $BlockState_, arg1: $Direction_): boolean;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FluidValveBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($FluidValveBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FluidValveBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $FluidValveBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
-        fluidState(arg0: $BlockState_): $FluidState;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$FluidValveBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($FluidValveBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FluidValveBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         updateWater(arg0: $LevelAccessor, arg1: $BlockState_, arg2: $BlockPos_): void;
+        fluidState(arg0: $BlockState_): $FluidState;
+        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -113,8 +113,8 @@ declare module "@package/com/simibubi/create/content/fluids/pipes/valve" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$FluidValveBlockEntity>;
         get blockEntityClass(): $Class<$FluidValveBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$FluidValveBlockEntity>;
     }
     export class $FluidValveVisual extends $ShaftVisual<$FluidValveBlockEntity> implements $SimpleDynamicVisual {
         beginFrame(arg0: $DynamicVisual$Context): void;

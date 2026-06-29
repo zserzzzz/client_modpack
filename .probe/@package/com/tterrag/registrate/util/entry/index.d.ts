@@ -20,10 +20,10 @@ import { $BlockEntityType, $BlockEntityType_, $BlockEntity } from "@package/net/
 
 declare module "@package/com/tterrag/registrate/util/entry" {
     export class $ItemProviderEntry<R extends $ItemLike, T extends R> extends $RegistryEntry<R, T> implements $ItemLike {
-        asItem(): $Item;
         is(arg0: $Item_): boolean;
-        asStack(arg0: number): $ItemStack;
         asStack(): $ItemStack;
+        asStack(arg0: number): $ItemStack;
+        asItem(): $Item;
         isIn(arg0: $ItemStack_): boolean;
         constructor(arg0: $AbstractRegistrate<never>, arg1: $DeferredHolder<R, T>);
     }

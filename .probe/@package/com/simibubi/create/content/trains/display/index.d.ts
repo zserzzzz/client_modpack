@@ -28,20 +28,19 @@ import { $Property, $BooleanProperty } from "@package/net/minecraft/world/level/
 import { $IWrenchable } from "@package/com/simibubi/create/content/equipment/wrench";
 import { $PlacementOffset, $IPlacementHelper } from "@package/net/createmod/catnip/placement";
 import { $ResourceKey } from "@package/net/minecraft/resources";
-import { $Block$BlockStatePairKey, $SoundType, $SimpleWaterloggedBlock, $Block } from "@package/net/minecraft/world/level/block";
+import { $Block$BlockStatePairKey, $SimpleWaterloggedBlock, $SoundType, $Block } from "@package/net/minecraft/world/level/block";
 import { $BlockHitResult } from "@package/net/minecraft/world/phys";
 import { $BlockEntityTicker, $BlockEntityType, $BlockEntityType_, $BlockEntity } from "@package/net/minecraft/world/level/block/entity";
 
 declare module "@package/com/simibubi/create/content/trains/display" {
     export class $GlobalTrainDisplayData {
-        static refresh(): void;
         static prepare(arg0: string, arg1: number): $List<$GlobalTrainDisplayData$TrainDeparturePrediction>;
+        static refresh(): void;
         static statusByDestination: $Map<string, $Collection<$GlobalTrainDisplayData$TrainDeparturePrediction>>;
         static updateTick: boolean;
         constructor();
     }
     export class $FlapDisplaySection {
-        refresh(arg0: boolean): void;
         update(arg0: $CompoundTag_, arg1: $HolderLookup$Provider): void;
         static load(arg0: $CompoundTag_, arg1: $HolderLookup$Provider): $FlapDisplaySection;
         write(arg0: $HolderLookup$Provider): $CompoundTag;
@@ -49,6 +48,7 @@ declare module "@package/com/simibubi/create/content/trains/display" {
         tick(arg0: boolean, arg1: $RandomSource): number;
         getText(): $Component;
         setText(arg0: $Component_): void;
+        refresh(arg0: boolean): void;
         rightAligned(): $FlapDisplaySection;
         wideFlaps(): $FlapDisplaySection;
         renderCharsIndividually(): boolean;
@@ -70,22 +70,22 @@ declare module "@package/com/simibubi/create/content/trains/display" {
     }
     export class $FlapDisplayBlock extends $HorizontalKineticBlock implements $IBE<$FlapDisplayBlockEntity>, $IWrenchable, $ICogWheel, $SimpleWaterloggedBlock {
         static getConnection(arg0: $BlockState_, arg1: $Direction_): boolean;
-        getBlockEntityType(): $BlockEntityType<$FlapDisplayBlockEntity>;
-        getBlockEntityClass(): $Class<$FlapDisplayBlockEntity>;
         static setConnection(arg0: $BlockState_, arg1: $Direction_, arg2: boolean): $BlockState;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$FlapDisplayBlockEntity>): void;
+        getBlockEntityClass(): $Class<$FlapDisplayBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$FlapDisplayBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FlapDisplayBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($FlapDisplayBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FlapDisplayBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $FlapDisplayBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        isDedicatedCogWheel(): boolean;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$FlapDisplayBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($FlapDisplayBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FlapDisplayBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         isSmallCog(): boolean;
         isLargeCog(): boolean;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
+        isDedicatedCogWheel(): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
@@ -120,26 +120,26 @@ declare module "@package/com/simibubi/create/content/trains/display" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$FlapDisplayBlockEntity>;
         get blockEntityClass(): $Class<$FlapDisplayBlockEntity>;
-        get dedicatedCogWheel(): boolean;
+        get blockEntityType(): $BlockEntityType<$FlapDisplayBlockEntity>;
         get smallCog(): boolean;
         get largeCog(): boolean;
+        get dedicatedCogWheel(): boolean;
     }
     export class $FlapDisplayBlockEntity extends $KineticBlockEntity {
-        getLines(): $List<$FlapDisplayLayout>;
-        getController(): $FlapDisplayBlockEntity;
         getDirection(): $Direction;
-        setGlowing(arg0: number): void;
-        getLineIndexAt(arg0: number): number;
-        getLineColor(arg0: number): number;
-        applyTextManually(arg0: number, arg1: $Component_): void;
-        isLineGlowing(arg0: number): boolean;
-        initDefaultSections(): void;
-        updateControllerStatus(): void;
-        setColour(arg0: number, arg1: $DyeColor_): void;
-        getMaxCharCount(): number;
+        getController(): $FlapDisplayBlockEntity;
+        getLines(): $List<$FlapDisplayLayout>;
         getMaxCharCount(arg0: number): number;
+        getMaxCharCount(): number;
+        setGlowing(arg0: number): void;
+        setColour(arg0: number, arg1: $DyeColor_): void;
+        updateControllerStatus(): void;
+        initDefaultSections(): void;
+        getLineColor(arg0: number): number;
+        isLineGlowing(arg0: number): boolean;
+        getLineIndexAt(arg0: number): number;
+        applyTextManually(arg0: number, arg1: $Component_): void;
         glowingLines: boolean[];
         level: $Level;
         static ATTACHMENTS_NBT_KEY: string;
@@ -159,22 +159,22 @@ declare module "@package/com/simibubi/create/content/trains/display" {
         lines: $List<$FlapDisplayLayout>;
         preventSpeedUpdate: number;
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
-        get controller(): $FlapDisplayBlockEntity;
         get direction(): $Direction;
+        get controller(): $FlapDisplayBlockEntity;
         set glowing(value: number);
     }
     export class $FlapDisplayBlock$PlacementHelper implements $IPlacementHelper {
         getOffset(arg0: $Player, arg1: $Level_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockHitResult, arg5: $ItemStack_): $PlacementOffset;
-        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
-        matchesState(arg0: $BlockState_): boolean;
-        displayGhost(arg0: $PlacementOffset): void;
         matchesItem(arg0: $ItemStack_): boolean;
+        matchesState(arg0: $BlockState_): boolean;
+        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
+        displayGhost(arg0: $PlacementOffset): void;
     }
     export class $FlapDisplayLayout {
+        getSections(): $List<$FlapDisplaySection>;
         write(arg0: $HolderLookup$Provider): $CompoundTag;
         read(arg0: $CompoundTag_, arg1: $HolderLookup$Provider): void;
         configure(arg0: string, arg1: $List_<$FlapDisplaySection>): void;
-        getSections(): $List<$FlapDisplaySection>;
         loadDefault(arg0: number): void;
         isLayout(arg0: string): boolean;
         constructor(arg0: number);

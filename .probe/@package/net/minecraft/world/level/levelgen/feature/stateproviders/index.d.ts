@@ -32,10 +32,10 @@ declare module "@package/net/minecraft/world/level/levelgen/feature/stateprovide
      */
     export type $BlockStateProviderType_<P> = RegistryTypes.WorldgenBlockStateProviderType;
     export class $BlockStateProvider {
+        static simple(block: $Block_): $SimpleStateProvider;
+        static simple(state: $BlockState_): $SimpleStateProvider;
         type(): $BlockStateProviderType<never>;
         getState(random: $RandomSource, pos: $BlockPos_): $BlockState;
-        static simple(state: $BlockState_): $SimpleStateProvider;
-        static simple(block: $Block_): $SimpleStateProvider;
         static CODEC: $Codec<$BlockStateProvider>;
         constructor();
     }
@@ -70,7 +70,7 @@ declare module "@package/net/minecraft/world/level/levelgen/feature/stateprovide
     /**
      * Values that may be interpreted as {@link $RuleBasedBlockStateProvider$Rule}.
      */
-    export type $RuleBasedBlockStateProvider$Rule_ = { ifTrue?: $BlockPredicate, then?: $BlockStateProvider,  } | [ifTrue?: $BlockPredicate, then?: $BlockStateProvider, ];
+    export type $RuleBasedBlockStateProvider$Rule_ = { then?: $BlockStateProvider, ifTrue?: $BlockPredicate,  } | [then?: $BlockStateProvider, ifTrue?: $BlockPredicate, ];
     export class $NoiseBasedStateProvider extends $BlockStateProvider {
         getNoiseValue(pos: $BlockPos_, delta: number): number;
         static noiseCodec<P extends $NoiseBasedStateProvider>(instance: $RecordCodecBuilder$Instance<P>): $Products$P3<$RecordCodecBuilder$Mu<P>, number, $NormalNoise$NoiseParameters, number>;
@@ -97,11 +97,11 @@ declare module "@package/net/minecraft/world/level/levelgen/feature/stateprovide
         constructor(block: $Block_);
     }
     export class $RuleBasedBlockStateProvider extends $Record {
+        static simple(block: $Block_): $RuleBasedBlockStateProvider;
+        static simple(fallback: $BlockStateProvider): $RuleBasedBlockStateProvider;
         getState(level: $WorldGenLevel, random: $RandomSource, pos: $BlockPos_): $BlockState;
         fallback(): $BlockStateProvider;
         rules(): $List<$RuleBasedBlockStateProvider$Rule>;
-        static simple(block: $Block_): $RuleBasedBlockStateProvider;
-        static simple(fallback: $BlockStateProvider): $RuleBasedBlockStateProvider;
         static CODEC: $Codec<$RuleBasedBlockStateProvider>;
         constructor(arg0: $BlockStateProvider, arg1: $List_<$RuleBasedBlockStateProvider$Rule_>);
     }

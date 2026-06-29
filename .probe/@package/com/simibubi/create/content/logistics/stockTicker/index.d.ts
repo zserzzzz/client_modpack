@@ -57,21 +57,21 @@ import { $StreamCodec } from "@package/net/minecraft/network/codec";
 declare module "@package/com/simibubi/create/content/logistics/stockTicker" {
     export class $StockTickerInteractionHandler {
         static interactWithLogisticsManagerAt(arg0: $Player, arg1: $Level_, arg2: $BlockPos_): boolean;
-        static interactWithLogisticsManager(arg0: $PlayerInteractEvent$EntityInteractSpecific): void;
         static getStockTickerPosition(arg0: $Entity): $BlockPos;
+        static interactWithLogisticsManager(arg0: $PlayerInteractEvent$EntityInteractSpecific): void;
         constructor();
     }
     export class $StockTickerBlockEntity extends $StockCheckingBlockEntity implements $IHaveHoveringInformation, $Clearable {
-        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
-        getLastClientsideStockSnapshotAsSummary(): $InventorySummary;
         clearContent(): void;
-        isKeeperPresent(): boolean;
+        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
         addToTooltip(arg0: $List_<$Component_>, arg1: boolean): boolean;
-        playEffect(): void;
-        getTicksSinceLastUpdate(): number;
-        refreshClientStockSnapshot(): void;
         getReceivedPaymentsHandler(): $IItemHandler;
         getClientStockSnapshot(): $List<$List<$BigItemStack>>;
+        getTicksSinceLastUpdate(): number;
+        refreshClientStockSnapshot(): void;
+        playEffect(): void;
+        getLastClientsideStockSnapshotAsSummary(): $InventorySummary;
+        isKeeperPresent(): boolean;
         receiveStockPacket(arg0: $List_<$BigItemStack>, arg1: boolean): void;
         getIcon(arg0: boolean): $ItemStack;
         worldPosition: $BlockPos;
@@ -81,31 +81,31 @@ declare module "@package/com/simibubi/create/content/logistics/stockTicker" {
         hasComparators: number;
         computerBehaviour: $AbstractComputerBehaviour;
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
-        get lastClientsideStockSnapshotAsSummary(): $InventorySummary;
-        get keeperPresent(): boolean;
-        get ticksSinceLastUpdate(): number;
         get receivedPaymentsHandler(): $IItemHandler;
         get clientStockSnapshot(): $List<$List<$BigItemStack>>;
+        get ticksSinceLastUpdate(): number;
+        get lastClientsideStockSnapshotAsSummary(): $InventorySummary;
+        get keeperPresent(): boolean;
     }
     export class $StockCheckingBlockEntity extends $SmartBlockEntity {
         broadcastPackageRequest(arg0: $LogisticallyLinkedBehaviour$RequestType_, arg1: $PackageOrderWithCrafts_, arg2: $IdentifiedInventory_, arg3: string): boolean;
         broadcastPackageRequest(arg0: $LogisticallyLinkedBehaviour$RequestType_, arg1: $PackageOrder_, arg2: $IdentifiedInventory_, arg3: string): boolean;
-        getRecentSummary(): $InventorySummary;
         getAccurateSummary(): $InventorySummary;
+        getRecentSummary(): $InventorySummary;
         worldPosition: $BlockPos;
         level: $Level;
         static ATTACHMENTS_NBT_KEY: string;
         behaviour: $LogisticallyLinkedBehaviour;
         hasComparators: number;
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
-        get recentSummary(): $InventorySummary;
         get accurateSummary(): $InventorySummary;
+        get recentSummary(): $InventorySummary;
     }
     export class $StockKeeperRequestScreen extends $AbstractSimiContainerScreen<$StockKeeperRequestMenu> {
-        requestSchematicList(): void;
-        getHoveredIngredient(arg0: number, arg1: number): ($Pair<$ItemStack, $Rect2i>) | undefined;
-        isSchematicListMode(): boolean;
         requestCraftable(arg0: $CraftableBigItemStack, arg1: number): void;
+        isSchematicListMode(): boolean;
+        getHoveredIngredient(arg0: number, arg1: number): ($Pair<$ItemStack, $Rect2i>) | undefined;
+        requestSchematicList(): void;
         leftPos: number;
         static MENU_BACKGROUND: $ResourceLocation;
         static INWORLD_FOOTER_SEPARATOR: $ResourceLocation;
@@ -231,7 +231,7 @@ declare module "@package/com/simibubi/create/content/logistics/stockTicker" {
     /**
      * Values that may be interpreted as {@link $LogisticalStockResponsePacket}.
      */
-    export type $LogisticalStockResponsePacket_ = { items?: $List_<$BigItemStack>, pos?: $BlockPos_, lastPacket?: boolean,  } | [items?: $List_<$BigItemStack>, pos?: $BlockPos_, lastPacket?: boolean, ];
+    export type $LogisticalStockResponsePacket_ = { lastPacket?: boolean, items?: $List_<$BigItemStack>, pos?: $BlockPos_,  } | [lastPacket?: boolean, items?: $List_<$BigItemStack>, pos?: $BlockPos_, ];
     export class $StockKeeperLockPacket extends $BlockEntityConfigurationPacket<$StockTickerBlockEntity> {
         static STREAM_CODEC: $StreamCodec<$ByteBuf, $StockKeeperLockPacket>;
         constructor(arg0: $BlockPos_, arg1: boolean);
@@ -340,16 +340,16 @@ declare module "@package/com/simibubi/create/content/logistics/stockTicker" {
         constructor(arg0: $StockKeeperCategoryMenu, arg1: $Inventory, arg2: $Component_);
     }
     export class $PackageOrderWithCrafts extends $Record {
+        static simple(arg0: $List_<$BigItemStack>): $PackageOrderWithCrafts;
         isEmpty(): boolean;
         static empty(): $PackageOrderWithCrafts;
-        orderedStacksMatchOrderedRecipes(): boolean;
-        static simple(arg0: $List_<$BigItemStack>): $PackageOrderWithCrafts;
-        orderedCrafts(): $List<$PackageOrderWithCrafts$CraftingEntry>;
         stacks(): $List<$BigItemStack>;
-        getCraftingInformation(): $List<$BigItemStack>;
         static hasCraftingInformation(arg0: $PackageOrderWithCrafts_): boolean;
-        orderedStacks(): $PackageOrder;
+        getCraftingInformation(): $List<$BigItemStack>;
+        orderedStacksMatchOrderedRecipes(): boolean;
+        orderedCrafts(): $List<$PackageOrderWithCrafts$CraftingEntry>;
         static singleRecipe(arg0: $List_<$BigItemStack>): $PackageOrderWithCrafts;
+        orderedStacks(): $PackageOrder;
         static CODEC: $Codec<$PackageOrderWithCrafts>;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $PackageOrderWithCrafts>;
         constructor(orderedStacks: $PackageOrder_, orderedCrafts: $List_<$PackageOrderWithCrafts$CraftingEntry_>);
@@ -358,7 +358,7 @@ declare module "@package/com/simibubi/create/content/logistics/stockTicker" {
     /**
      * Values that may be interpreted as {@link $PackageOrderWithCrafts}.
      */
-    export type $PackageOrderWithCrafts_ = { orderedCrafts?: $List_<$PackageOrderWithCrafts$CraftingEntry_>, orderedStacks?: $PackageOrder_,  } | [orderedCrafts?: $List_<$PackageOrderWithCrafts$CraftingEntry_>, orderedStacks?: $PackageOrder_, ];
+    export type $PackageOrderWithCrafts_ = { orderedStacks?: $PackageOrder_, orderedCrafts?: $List_<$PackageOrderWithCrafts$CraftingEntry_>,  } | [orderedStacks?: $PackageOrder_, orderedCrafts?: $List_<$PackageOrderWithCrafts$CraftingEntry_>, ];
     export class $StockTickerBlockEntity$RequestMenuProvider implements $MenuProvider {
         getDisplayName(): $Component;
         createMenu(arg0: number, arg1: $Inventory, arg2: $Player): $AbstractContainerMenu;
@@ -406,20 +406,20 @@ declare module "@package/com/simibubi/create/content/logistics/stockTicker" {
         constructor(arg0: $BlockPos_);
     }
     export class $StockTickerBlock extends $HorizontalDirectionalBlock implements $IBE<$StockTickerBlockEntity>, $IWrenchable {
-        getBlockEntityType(): $BlockEntityType<$StockTickerBlockEntity>;
         getBlockEntityClass(): $Class<$StockTickerBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$StockTickerBlockEntity>;
         getHat(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $LivingEntity): $PartialModel;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$StockTickerBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$StockTickerBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($StockTickerBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$StockTickerBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $StockTickerBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$StockTickerBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($StockTickerBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$StockTickerBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -450,8 +450,8 @@ declare module "@package/com/simibubi/create/content/logistics/stockTicker" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$StockTickerBlockEntity>;
         get blockEntityClass(): $Class<$StockTickerBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$StockTickerBlockEntity>;
     }
     export class $StockKeeperCategoryMenu$InactiveSlot extends $Slot {
         container: $Container;

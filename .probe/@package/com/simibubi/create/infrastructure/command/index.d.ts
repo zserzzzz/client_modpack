@@ -121,10 +121,10 @@ declare module "@package/com/simibubi/create/infrastructure/command" {
     }
     export class $ServerLagger {
         tick(): void;
+        setLagging(arg0: boolean): void;
+        isLagging(): boolean;
         getTickTime(): number;
         setTickTime(arg0: number): void;
-        isLagging(): boolean;
-        setLagging(arg0: boolean): void;
         constructor();
     }
 }

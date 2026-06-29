@@ -16,7 +16,7 @@ declare module "@package/net/minecraft/world/level/validation" {
     /**
      * Values that may be interpreted as {@link $ForbiddenSymlinkInfo}.
      */
-    export type $ForbiddenSymlinkInfo_ = { link?: $Path_, target?: $Path_,  } | [link?: $Path_, target?: $Path_, ];
+    export type $ForbiddenSymlinkInfo_ = { target?: $Path_, link?: $Path_,  } | [target?: $Path_, link?: $Path_, ];
     export class $PathAllowList$EntryType {
         static FILESYSTEM: $PathAllowList$EntryType;
         static PREFIX: $PathAllowList$EntryType;
@@ -29,10 +29,10 @@ declare module "@package/net/minecraft/world/level/validation" {
      */
     export type $PathAllowList$EntryType_ = ((arg0: $FileSystem, arg1: string) => $PathMatcher_);
     export class $DirectoryValidator {
-        validateSymlink(directory: $Path_): $List<$ForbiddenSymlinkInfo>;
-        validateSymlink(directory: $Path_, forbiddenSymlinkInfos: $List_<$ForbiddenSymlinkInfo_>): void;
-        validateDirectory(directory: $Path_, validateSymlinks: boolean): $List<$ForbiddenSymlinkInfo>;
         validateKnownDirectory(directory: $Path_, forbiddenSymlinkInfos: $List_<$ForbiddenSymlinkInfo_>): void;
+        validateSymlink(directory: $Path_, forbiddenSymlinkInfos: $List_<$ForbiddenSymlinkInfo_>): void;
+        validateSymlink(directory: $Path_): $List<$ForbiddenSymlinkInfo>;
+        validateDirectory(directory: $Path_, validateSymlinks: boolean): $List<$ForbiddenSymlinkInfo>;
         constructor(symlinkTargetAllowList: $PathMatcher_);
     }
     export class $PathAllowList implements $PathMatcher {

@@ -27,17 +27,17 @@ declare module "@package/net/liopyu/entityjs/util/implementation" {
     export class $ILivingEntityJS {
     }
     export interface $ILivingEntityJS {
-        getAnimatableEntity(): $WrappedAnimatableEntity;
         triggerAnimation(arg0: string, arg1: string): void;
+        getAnimatableEntity(): $WrappedAnimatableEntity;
         get animatableEntity(): $WrappedAnimatableEntity;
     }
     export class $IEntityJS {
     }
     export interface $IEntityJS {
-        isMoving(): boolean;
+        getSyncedData(arg0: string): $Object;
         setSyncedData(arg0: string, arg1: $Object): void;
         addSyncedData(arg0: $EntitySerializerType_, arg1: string, arg2: $Object): void;
-        getSyncedData(arg0: string): $Object;
+        isMoving(): boolean;
         get moving(): boolean;
     }
     export class $IAnimationControllerJS {

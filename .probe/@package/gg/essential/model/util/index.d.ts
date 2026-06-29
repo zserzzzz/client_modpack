@@ -18,46 +18,46 @@ declare module "@package/gg/essential/model/util" {
         constructor(arg0: $DefaultConstructorMarker);
     }
     export class $UMatrixStack$Entry {
-        getNormal(): $MutableMat3;
-        static copy$default(arg0: $UMatrixStack$Entry, arg1: $MutableMat4, arg2: $MutableMat3, arg3: number, arg4: $Object): $UMatrixStack$Entry;
-        deepCopy(): $UMatrixStack$Entry;
-        copy(arg0: $MutableMat4, arg1: $MutableMat3): $UMatrixStack$Entry;
         getModel(): $MutableMat4;
+        copy(arg0: $MutableMat4, arg1: $MutableMat3): $UMatrixStack$Entry;
+        deepCopy(): $UMatrixStack$Entry;
+        static copy$default(arg0: $UMatrixStack$Entry, arg1: $MutableMat4, arg2: $MutableMat3, arg3: number, arg4: $Object): $UMatrixStack$Entry;
+        getNormal(): $MutableMat3;
         component2(): $MutableMat3;
         component1(): $MutableMat4;
         constructor(arg0: $MutableMat4, arg1: $MutableMat3);
-        get normal(): $MutableMat3;
         get model(): $MutableMat4;
+        get normal(): $MutableMat3;
     }
     export class $Color {
-        static "equals-impl0"(arg0: number, arg1: number): boolean;
-        static "toString-impl"(arg0: number): string;
-        static "hashCode-impl"(arg0: number): number;
-        static "equals-impl"(arg0: number, arg1: $Object): boolean;
-        static "box-impl"(arg0: number): $Color;
-        static "constructor-impl"(arg0: number, arg1: number, arg2: number, arg3: number): number;
-        static "constructor-impl"(arg0: number): number;
-        "unbox-impl"(): number;
-        static "constructor-impl$default"(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: $DefaultConstructorMarker): number;
         static "getR-w2LRezQ"(arg0: number): number;
-        static "getA-w2LRezQ"(arg0: number): number;
-        static "copy-ehsoyi0$default"(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: $Object): number;
+        static "getB-w2LRezQ"(arg0: number): number;
         static "copy-ehsoyi0"(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number): number;
         static access$getBLACK$cp(): number;
-        "getRgba-pVg5ArA"(): number;
         static access$getWHITE$cp(): number;
-        static "getArgb-pVg5ArA"(arg0: number): number;
         static "getG-w2LRezQ"(arg0: number): number;
-        static "getB-w2LRezQ"(arg0: number): number;
+        static "getA-w2LRezQ"(arg0: number): number;
+        "getRgba-pVg5ArA"(): number;
+        static "getArgb-pVg5ArA"(arg0: number): number;
+        "unbox-impl"(): number;
+        static "equals-impl0"(arg0: number, arg1: number): boolean;
+        static "constructor-impl$default"(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: $DefaultConstructorMarker): number;
+        static "equals-impl"(arg0: number, arg1: $Object): boolean;
+        static "hashCode-impl"(arg0: number): number;
+        static "toString-impl"(arg0: number): string;
+        static "box-impl"(arg0: number): $Color;
+        static "constructor-impl"(arg0: number): number;
+        static "constructor-impl"(arg0: number, arg1: number, arg2: number, arg3: number): number;
+        static "copy-ehsoyi0$default"(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: $Object): number;
         static Companion: $Color$Companion;
         get rgba-pVg5ArA(): number;
     }
     export class $Color$Companion {
         "getWHITE-yaPNGYs"(): number;
-        "rgba-Z_pCfcY"(arg0: number): number;
-        "fromVec-WvJmvJ8"(arg0: $Vec4): number;
         "fromFloats-MQoBapg"(arg0: number, arg1: number, arg2: number, arg3: number): number;
         "getBLACK-yaPNGYs"(): number;
+        "fromVec-WvJmvJ8"(arg0: $Vec4): number;
+        "rgba-Z_pCfcY"(arg0: number): number;
         constructor(arg0: $DefaultConstructorMarker);
         get WHITE-yaPNGYs(): number;
         get BLACK-yaPNGYs(): number;
@@ -105,32 +105,32 @@ declare module "@package/gg/essential/model/util" {
         get keys(): $Set<K>;
     }
     export class $Quaternion {
-        getZ(): number;
-        getX(): number;
-        static copy$default(arg0: $Quaternion, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: $Object): $Quaternion;
+        invert(): $Quaternion;
         copy(arg0: number, arg1: number, arg2: number, arg3: number): $Quaternion;
         normalize(): $Quaternion;
-        opposite(): $Quaternion;
-        getY(): number;
-        times(arg0: $Vec3): $Vec3;
-        times(arg0: $Quaternion): $Quaternion;
-        getW(): number;
-        invert(): $Quaternion;
         conjugate(): $Quaternion;
-        component2(): number;
-        component3(): number;
+        getY(): number;
+        times(arg0: $Quaternion): $Quaternion;
+        times(arg0: $Vec3): $Vec3;
+        static copy$default(arg0: $Quaternion, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: $Object): $Quaternion;
+        getZ(): number;
+        getX(): number;
+        getW(): number;
+        opposite(): $Quaternion;
         component4(): number;
+        component3(): number;
+        component2(): number;
         component1(): number;
         static access$getIdentity$cp(): $Quaternion;
+        static access$getZ180$cp(): $Quaternion;
+        projectAroundAxis(arg0: $Vec3): $Quaternion;
         static access$getY180$cp(): $Quaternion;
         static access$getX180$cp(): $Quaternion;
-        projectAroundAxis(arg0: $Vec3): $Quaternion;
-        static access$getZ180$cp(): $Quaternion;
         static Companion: $Quaternion$Companion;
         constructor(arg0: number, arg1: number, arg2: number, arg3: number);
+        get y(): number;
         get z(): number;
         get x(): number;
-        get y(): number;
         get w(): number;
     }
     export class $UMatrixStack {
@@ -152,25 +152,25 @@ declare module "@package/gg/essential/model/util" {
     export class $UVertexConsumer {
     }
     export interface $UVertexConsumer {
+        endVertex(): $UVertexConsumer;
+        tex(arg0: number, arg1: number): $UVertexConsumer;
         pos(arg0: $UMatrixStack, arg1: number, arg2: number, arg3: number): $UVertexConsumer;
         norm(arg0: $UMatrixStack, arg1: number, arg2: number, arg3: number): $UVertexConsumer;
-        tex(arg0: number, arg1: number): $UVertexConsumer;
-        endVertex(): $UVertexConsumer;
-        "light-vX8ayIk"(arg0: number): $UVertexConsumer;
         "color-EIFkdBU"(arg0: number): $UVertexConsumer;
+        "light-vX8ayIk"(arg0: number): $UVertexConsumer;
     }
     export class $Quaternion$Companion {
-        getZ180(): $Quaternion;
-        getX180(): $Quaternion;
-        getY180(): $Quaternion;
-        getIdentity(): $Quaternion;
-        fromAxisAngle(arg0: $Vec3, arg1: number): $Quaternion;
         fromLookAt(arg0: $Vec3, arg1: $Vec3): $Quaternion;
+        getZ180(): $Quaternion;
+        getY180(): $Quaternion;
+        getX180(): $Quaternion;
+        fromAxisAngle(arg0: $Vec3, arg1: number): $Quaternion;
         fromRotationMatrix(arg0: $Mat3): $Quaternion;
+        getIdentity(): $Quaternion;
         constructor(arg0: $DefaultConstructorMarker);
         get z180(): $Quaternion;
-        get x180(): $Quaternion;
         get y180(): $Quaternion;
+        get x180(): $Quaternion;
         get identity(): $Quaternion;
     }
     export class $PlayerPoseManager$Companion {

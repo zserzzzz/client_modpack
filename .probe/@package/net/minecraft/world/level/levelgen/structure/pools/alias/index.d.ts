@@ -18,16 +18,16 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/pools/alia
      */
     export type $Random_ = { alias?: $ResourceKey_<$StructureTemplatePool>, targets?: $SimpleWeightedRandomList<$ResourceKey_<$StructureTemplatePool>>,  } | [alias?: $ResourceKey_<$StructureTemplatePool>, targets?: $SimpleWeightedRandomList<$ResourceKey_<$StructureTemplatePool>>, ];
     export class $PoolAliasBinding {
-        static randomGroup(groups: $SimpleWeightedRandomList<$List_<$PoolAliasBinding>>): $RandomGroup;
-        static random(alias: $ResourceKey_<$StructureTemplatePool>, targets: $SimpleWeightedRandomList<$ResourceKey_<$StructureTemplatePool>>): $Random;
         static random(alias: string, targets: $SimpleWeightedRandomList<string>): $Random;
+        static random(alias: $ResourceKey_<$StructureTemplatePool>, targets: $SimpleWeightedRandomList<$ResourceKey_<$StructureTemplatePool>>): $Random;
         static direct(alias: $ResourceKey_<$StructureTemplatePool>, target: $ResourceKey_<$StructureTemplatePool>): $Direct;
         static direct(alias: string, target: string): $Direct;
+        static randomGroup(groups: $SimpleWeightedRandomList<$List_<$PoolAliasBinding>>): $RandomGroup;
         static CODEC: $Codec<$PoolAliasBinding>;
     }
     export interface $PoolAliasBinding {
-        allTargets(): $Stream<$ResourceKey<$StructureTemplatePool>>;
         codec(): $MapCodec<$PoolAliasBinding>;
+        allTargets(): $Stream<$ResourceKey<$StructureTemplatePool>>;
         forEachResolved(random: $RandomSource, stucturePoolKey: $BiConsumer_<$ResourceKey<$StructureTemplatePool>, $ResourceKey<$StructureTemplatePool>>): void;
     }
     export class $RandomGroup extends $Record implements $PoolAliasBinding {
@@ -46,7 +46,7 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/pools/alia
     /**
      * Values that may be interpreted as {@link $Direct}.
      */
-    export type $Direct_ = { alias?: $ResourceKey_<$StructureTemplatePool>, target?: $ResourceKey_<$StructureTemplatePool>,  } | [alias?: $ResourceKey_<$StructureTemplatePool>, target?: $ResourceKey_<$StructureTemplatePool>, ];
+    export type $Direct_ = { target?: $ResourceKey_<$StructureTemplatePool>, alias?: $ResourceKey_<$StructureTemplatePool>,  } | [target?: $ResourceKey_<$StructureTemplatePool>, alias?: $ResourceKey_<$StructureTemplatePool>, ];
     export class $PoolAliasLookup {
         static create(aliases: $List_<$PoolAliasBinding>, pos: $BlockPos_, seed: number): $PoolAliasLookup;
         static EMPTY: $PoolAliasLookup;

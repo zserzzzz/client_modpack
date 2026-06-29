@@ -70,11 +70,11 @@ declare module "@package/com/mojang/realmsclient/gui" {
     }
     export class $RowButton {
         getRight(): number;
-        getBottom(): number;
         onClick(index: number): void;
+        getBottom(): number;
         static rowButtonMouseClicked(list: $RealmsObjectSelectionList<never>, entry: $ObjectSelectionList$Entry<never>, buttons: $List_<$RowButton>, button: number, mouseX: number, arg5: number): void;
-        drawForRowAt(guiGraphics: $GuiGraphics, x: number, y: number, mouseX: number, mouseY: number): void;
         static drawButtonsInRow(guiGraphics: $GuiGraphics, buttons: $List_<$RowButton>, pendingInvitations: $RealmsObjectSelectionList<never>, x: number, y: number, mouseX: number, mouseY: number): void;
+        drawForRowAt(guiGraphics: $GuiGraphics, x: number, y: number, mouseX: number, mouseY: number): void;
         yOffset: number;
         xOffset: number;
         width: number;
@@ -107,12 +107,12 @@ declare module "@package/com/mojang/realmsclient/gui" {
         get empty(): boolean;
     }
     export class $RealmsDataFetcher$ServerListData extends $Record {
-        serverList(): $List<$RealmsServer>;
         availableSnapshotServers(): $List<$RealmsServer>;
+        serverList(): $List<$RealmsServer>;
         constructor(arg0: $List_<$RealmsServer>, arg1: $List_<$RealmsServer>);
     }
     /**
      * Values that may be interpreted as {@link $RealmsDataFetcher$ServerListData}.
      */
-    export type $RealmsDataFetcher$ServerListData_ = { availableSnapshotServers?: $List_<$RealmsServer>, serverList?: $List_<$RealmsServer>,  } | [availableSnapshotServers?: $List_<$RealmsServer>, serverList?: $List_<$RealmsServer>, ];
+    export type $RealmsDataFetcher$ServerListData_ = { serverList?: $List_<$RealmsServer>, availableSnapshotServers?: $List_<$RealmsServer>,  } | [serverList?: $List_<$RealmsServer>, availableSnapshotServers?: $List_<$RealmsServer>, ];
 }

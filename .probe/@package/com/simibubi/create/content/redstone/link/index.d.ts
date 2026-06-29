@@ -44,27 +44,27 @@ declare module "@package/com/simibubi/create/content/redstone/link" {
     export interface $IRedstoneLinkable {
         getLocation(): $BlockPos;
         isAlive(): boolean;
-        isListening(): boolean;
-        getNetworkKey(): $Couple<$RedstoneLinkNetworkHandler$Frequency>;
-        setReceivedStrength(arg0: number): void;
         getTransmittedStrength(): number;
+        setReceivedStrength(arg0: number): void;
+        getNetworkKey(): $Couple<$RedstoneLinkNetworkHandler$Frequency>;
+        isListening(): boolean;
         get location(): $BlockPos;
         get alive(): boolean;
-        get listening(): boolean;
-        get networkKey(): $Couple<$RedstoneLinkNetworkHandler$Frequency>;
-        set receivedStrength(value: number);
         get transmittedStrength(): number;
+        set receivedStrength(value: number);
+        get networkKey(): $Couple<$RedstoneLinkNetworkHandler$Frequency>;
+        get listening(): boolean;
     }
     export class $RedstoneLinkNetworkHandler {
-        getNetworkOf(arg0: $LevelAccessor, arg1: $IRedstoneLinkable): $Set<$IRedstoneLinkable>;
-        onLoadWorld(arg0: $LevelAccessor): void;
-        addToNetwork(arg0: $LevelAccessor, arg1: $IRedstoneLinkable): void;
-        onUnloadWorld(arg0: $LevelAccessor): void;
-        updateNetworkOf(arg0: $LevelAccessor, arg1: $IRedstoneLinkable): void;
-        removeFromNetwork(arg0: $LevelAccessor, arg1: $IRedstoneLinkable): void;
-        static withinRange(arg0: $IRedstoneLinkable, arg1: $IRedstoneLinkable): boolean;
-        hasAnyLoadedPower(arg0: $Couple<$RedstoneLinkNetworkHandler$Frequency>): boolean;
         networksIn(arg0: $LevelAccessor): $Map<$Couple<$RedstoneLinkNetworkHandler$Frequency>, $Set<$IRedstoneLinkable>>;
+        onLoadWorld(arg0: $LevelAccessor): void;
+        onUnloadWorld(arg0: $LevelAccessor): void;
+        static withinRange(arg0: $IRedstoneLinkable, arg1: $IRedstoneLinkable): boolean;
+        removeFromNetwork(arg0: $LevelAccessor, arg1: $IRedstoneLinkable): void;
+        updateNetworkOf(arg0: $LevelAccessor, arg1: $IRedstoneLinkable): void;
+        addToNetwork(arg0: $LevelAccessor, arg1: $IRedstoneLinkable): void;
+        getNetworkOf(arg0: $LevelAccessor, arg1: $IRedstoneLinkable): $Set<$IRedstoneLinkable>;
+        hasAnyLoadedPower(arg0: $Couple<$RedstoneLinkNetworkHandler$Frequency>): boolean;
         globalPowerVersion: $AtomicInteger;
         constructor();
     }
@@ -73,17 +73,17 @@ declare module "@package/com/simibubi/create/content/redstone/link" {
         constructor(arg0: $Function_<$BlockState, $Pair<$Vec3, $Vec3>>, arg1: $Function_<$BlockState, $Vec3>);
     }
     export class $RedstoneLinkBlock extends $WrenchableDirectionalBlock implements $IBE<$RedstoneLinkBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$RedstoneLinkBlockEntity>;
-        getBlockEntityClass(): $Class<$RedstoneLinkBlockEntity>;
-        updateTransmittedSignal(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): void;
         toggleMode(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): $InteractionResult;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$RedstoneLinkBlockEntity>): void;
+        getBlockEntityClass(): $Class<$RedstoneLinkBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$RedstoneLinkBlockEntity>;
+        updateTransmittedSignal(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$RedstoneLinkBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($RedstoneLinkBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$RedstoneLinkBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $RedstoneLinkBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$RedstoneLinkBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($RedstoneLinkBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$RedstoneLinkBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -116,16 +116,16 @@ declare module "@package/com/simibubi/create/content/redstone/link" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$RedstoneLinkBlockEntity>;
         get blockEntityClass(): $Class<$RedstoneLinkBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$RedstoneLinkBlockEntity>;
     }
     export class $RedstoneLinkBlockEntity extends $SmartBlockEntity implements $RedstoneLinkBlockEntityAccessor {
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
-        setSignal(arg0: number): void;
-        getReceivedSignal(): number;
         getSignal(): number;
         transmit(arg0: number): void;
+        setSignal(arg0: number): void;
         updateSelfAndAttached(arg0: $BlockState_): void;
+        getReceivedSignal(): number;
         getLink(): $LinkBehaviour;
         worldPosition: $BlockPos;
         panelSupport: $FactoryPanelSupportBehaviour;
@@ -149,29 +149,29 @@ declare module "@package/com/simibubi/create/content/redstone/link" {
         static receiver(arg0: $SmartBlockEntity, arg1: $Pair<$ValueBoxTransform, $ValueBoxTransform>, arg2: $IntConsumer_): $LinkBehaviour;
         getLocation(): $BlockPos;
         isAlive(): boolean;
+        getTransmittedStrength(): number;
+        setReceivedStrength(arg0: number): void;
+        getNetworkKey(): $Couple<$RedstoneLinkNetworkHandler$Frequency>;
+        isListening(): boolean;
         readFromClipboard(arg0: $HolderLookup$Provider, arg1: $CompoundTag_, arg2: $Player, arg3: $Direction_, arg4: boolean): boolean;
         getClipboardKey(): string;
         writeToClipboard(arg0: $HolderLookup$Provider, arg1: $CompoundTag_, arg2: $Direction_): boolean;
-        isListening(): boolean;
-        getNetworkKey(): $Couple<$RedstoneLinkNetworkHandler$Frequency>;
-        testHit(arg0: boolean, arg1: $Vec3_): boolean;
-        setReceivedStrength(arg0: number): void;
-        getTransmittedStrength(): number;
-        notifySignalChange(): void;
         setFrequency(arg0: boolean, arg1: $ItemStack_): void;
         static transmitter(arg0: $SmartBlockEntity, arg1: $Pair<$ValueBoxTransform, $ValueBoxTransform>, arg2: $IntSupplier_): $LinkBehaviour;
+        testHit(arg0: boolean, arg1: $Vec3_): boolean;
         moveText(arg0: $Vec3_): $LinkBehaviour;
+        notifySignalChange(): void;
         copyItemsFrom(arg0: $LinkBehaviour): void;
         newPosition: boolean;
         blockEntity: $SmartBlockEntity;
         static TYPE: $BehaviourType<$LinkBehaviour>;
         get location(): $BlockPos;
         get alive(): boolean;
-        get clipboardKey(): string;
-        get listening(): boolean;
-        get networkKey(): $Couple<$RedstoneLinkNetworkHandler$Frequency>;
-        set receivedStrength(value: number);
         get transmittedStrength(): number;
+        set receivedStrength(value: number);
+        get networkKey(): $Couple<$RedstoneLinkNetworkHandler$Frequency>;
+        get listening(): boolean;
+        get clipboardKey(): string;
     }
     export class $LinkHandler {
         static onBlockActivated(arg0: $PlayerInteractEvent$RightClickBlock): void;

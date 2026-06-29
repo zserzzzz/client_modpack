@@ -8,7 +8,7 @@ declare module "@package/com/github/argon4w/acceleratedrendering/core/buffers/ac
     }
     export interface $IDrawMethod {
         getCullingProgramSelector(arg0: $VertexFormat): $ICullingProgramSelector;
-        getElementPool(arg0: number): $IElementPool;
         getDrawContextPool(arg0: number): $IDrawContextPool;
+        getElementPool(arg0: number): $IElementPool;
     }
 }

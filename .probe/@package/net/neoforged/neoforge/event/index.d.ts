@@ -46,6 +46,7 @@ import { $Set_, $List, $EnumSet, $Map_, $Collection_, $List_ } from "@package/ja
 import { $PlayerSpawnPhantomsEvent, $AdvancementEvent$AdvancementProgressEvent$ProgressType_, $PlayerEvent, $PlayerRespawnPositionEvent, $BonemealEvent, $ItemTooltipEvent, $ItemEntityPickupEvent$Pre } from "@package/net/neoforged/neoforge/event/entity/player";
 import { $ArtifactVersion } from "@package/org/apache/maven/artifact/versioning";
 import { $BooleanSupplier_, $Consumer_, $Predicate_, $BiPredicate_ } from "@package/java/util/function";
+import { $ObjectSortedSet } from "@package/it/unimi/dsi/fastutil/objects";
 import { $HolderLookup$RegistryLookup, $BlockPos_, $HolderLookup$Provider, $Holder, $Direction_, $NonNullList, $RegistryAccess, $Holder_ } from "@package/net/minecraft/core";
 import { $ChunkHolder, $ServerLevel, $ServerPlayer } from "@package/net/minecraft/server/level";
 import { $ItemEnchantments, $Enchantment, $ItemEnchantments_, $Enchantment_ } from "@package/net/minecraft/world/item/enchantment";
@@ -148,9 +149,20 @@ declare module "@package/net/neoforged/neoforge/event" {
          * If empty, it indicates the user wishes to clear the custom name from the item.
          */
         getName(): string;
-        getRight(): $ItemStack;
-        getLeft(): $ItemStack;
         getOutput(): $ItemStack;
+        getLeft(): $ItemStack;
+        getRight(): $ItemStack;
+        /**
+         * The material cost is how many units of the right input stack are consumed.
+         */
+        getMaterialCost(): number;
+        /**
+         * This is the level cost of this anvil operation.
+         * 
+         * When unchanged, it is guaranteed to be left.getRepairCost() + right.getRepairCost().
+         */
+        getCost(): number;
+        getPlayer(): $Player;
         /**
          * Sets how many right inputs are consumed.
          * 
@@ -162,11 +174,6 @@ declare module "@package/net/neoforged/neoforge/event" {
          * The material cost does not prevent the output from being available.
          */
         setMaterialCost(materialCost: number): void;
-        /**
-         * The material cost is how many units of the right input stack are consumed.
-         */
-        getMaterialCost(): number;
-        getPlayer(): $Player;
         /**
          * Sets the output slot to a specific itemstack.
          */
@@ -181,18 +188,12 @@ declare module "@package/net/neoforged/neoforge/event" {
          * Values will be clamped to the range 0 - MAX_INT.
          */
         setCost(cost: number): void;
-        /**
-         * This is the level cost of this anvil operation.
-         * 
-         * When unchanged, it is guaranteed to be left.getRepairCost() + right.getRepairCost().
-         */
-        getCost(): number;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(left: $ItemStack_, right: $ItemStack_, name: string, cost: number, player: $Player);
         get name(): string;
-        get right(): $ItemStack;
         get left(): $ItemStack;
+        get right(): $ItemStack;
         get player(): $Player;
     }
     /**
@@ -215,10 +216,6 @@ declare module "@package/net/neoforged/neoforge/event" {
          */
         getSlot(): $Slot;
         /**
-         * @return the stack being carried by the mouse This may be empty!
-         */
-        getStackedOnItem(): $ItemStack;
-        /**
          * @return the click action being used By default ClickAction#PRIMARY corresponds to left-click, and ClickAction#SECONDARY is right-click.
          */
         getClickAction(): $ClickAction;
@@ -227,29 +224,33 @@ declare module "@package/net/neoforged/neoforge/event" {
          */
         getCarriedItem(): $ItemStack;
         /**
-         * @return the player doing the item swap attempt
+         * @return the stack being carried by the mouse This may be empty!
          */
-        getPlayer(): $Player;
+        getStackedOnItem(): $ItemStack;
         /**
          * @return a fake slot allowing the listener to see and change what item is being carried
          */
         getCarriedSlotAccess(): $SlotAccess;
-        setCanceled(arg0: boolean): void;
+        /**
+         * @return the player doing the item swap attempt
+         */
+        getPlayer(): $Player;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(carriedItem: $ItemStack_, stackedOnItem: $ItemStack_, slot: $Slot, action: $ClickAction_, player: $Player, carriedSlotAccess: $SlotAccess);
         get slot(): $Slot;
-        get stackedOnItem(): $ItemStack;
         get clickAction(): $ClickAction;
         get carriedItem(): $ItemStack;
-        get player(): $Player;
+        get stackedOnItem(): $ItemStack;
         get carriedSlotAccess(): $SlotAccess;
+        get player(): $Player;
     }
     export class $ItemAttributeModifierEvent$ItemAttributeModifiersBuilder$Key extends $Record {
     }
     /**
      * Values that may be interpreted as {@link $ItemAttributeModifierEvent$ItemAttributeModifiersBuilder$Key}.
      */
-    export type $ItemAttributeModifierEvent$ItemAttributeModifiersBuilder$Key_ = { id?: $ResourceLocation_, attr?: $Holder_<$Attribute>,  } | [id?: $ResourceLocation_, attr?: $Holder_<$Attribute>, ];
+    export type $ItemAttributeModifierEvent$ItemAttributeModifiersBuilder$Key_ = { attr?: $Holder_<$Attribute>, id?: $ResourceLocation_,  } | [attr?: $Holder_<$Attribute>, id?: $ResourceLocation_, ];
     /**
      * VanillaGameEvent is fired on the server whenever one of Vanilla's GameEvents fire.
      * 
@@ -263,28 +264,28 @@ declare module "@package/net/neoforged/neoforge/event" {
         getCause(): $Entity;
         getContext(): $GameEvent$Context;
         getLevel(): $Level;
-        getEventPosition(): $Vec3;
         getVanillaEvent(): $Holder<$GameEvent>;
-        setCanceled(arg0: boolean): void;
+        getEventPosition(): $Vec3;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(level: $Level_, vanillaEvent: $Holder_<$GameEvent>, position: $Vec3_, context: $GameEvent$Context_);
         get cause(): $Entity;
         get context(): $GameEvent$Context;
         get level(): $Level;
-        get eventPosition(): $Vec3;
         get vanillaEvent(): $Holder<$GameEvent>;
+        get eventPosition(): $Vec3;
     }
     export class $ModMismatchEvent$MismatchResolutionResult extends $Record {
         resolver(): $ModContainer;
-        modid(): string;
         versionDifference(): $ModMismatchEvent$MismatchedVersionInfo;
         wasSelfResolved(): boolean;
+        modid(): string;
         constructor(modid: string, versionDifference: $ModMismatchEvent$MismatchedVersionInfo_, resolver: $ModContainer);
     }
     /**
      * Values that may be interpreted as {@link $ModMismatchEvent$MismatchResolutionResult}.
      */
-    export type $ModMismatchEvent$MismatchResolutionResult_ = { resolver?: $ModContainer, modid?: string, versionDifference?: $ModMismatchEvent$MismatchedVersionInfo_,  } | [resolver?: $ModContainer, modid?: string, versionDifference?: $ModMismatchEvent$MismatchedVersionInfo_, ];
+    export type $ModMismatchEvent$MismatchResolutionResult_ = { versionDifference?: $ModMismatchEvent$MismatchedVersionInfo_, resolver?: $ModContainer, modid?: string,  } | [versionDifference?: $ModMismatchEvent$MismatchedVersionInfo_, resolver?: $ModContainer, modid?: string, ];
     /**
      * The event used to modify the default components of an item.
      * 
@@ -338,20 +339,20 @@ declare module "@package/net/neoforged/neoforge/event" {
      */
     export class $RegisterCommandsEvent extends $Event {
         /**
-         * @return the environment the command is being registered for
-         */
-        getCommandSelection(): $Commands$CommandSelection;
-        /**
          * @return the command dispatcher for registering commands to be executed on the client
          */
         getDispatcher(): $CommandDispatcher<$CommandSourceStack>;
+        /**
+         * @return the environment the command is being registered for
+         */
+        getCommandSelection(): $Commands$CommandSelection;
         /**
          * @return the context to build the commands for
          */
         getBuildContext(): $CommandBuildContext;
         constructor(dispatcher: $CommandDispatcher<$CommandSourceStack>, environment: $Commands$CommandSelection_, context: $CommandBuildContext);
-        get commandSelection(): $Commands$CommandSelection;
         get dispatcher(): $CommandDispatcher<$CommandSourceStack>;
+        get commandSelection(): $Commands$CommandSelection;
         get buildContext(): $CommandBuildContext;
     }
     /**
@@ -365,10 +366,6 @@ declare module "@package/net/neoforged/neoforge/event" {
      */
     export class $StatAwardEvent extends $PlayerEvent implements $ICancellableEvent {
         /**
-         * @return the `Stat` being awarded
-         */
-        getStat(): $Stat<never>;
-        /**
          * @return the current value to be awarded to the `Stat`
          */
         getValue(): number;
@@ -377,11 +374,15 @@ declare module "@package/net/neoforged/neoforge/event" {
          */
         setValue(value: number): void;
         /**
+         * @return the `Stat` being awarded
+         */
+        getStat(): $Stat<never>;
+        /**
          * Replaces the `Stat` to be awarded
          */
         setStat(stat: $Stat_<never>): void;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(player: $Player, stat: $Stat_<never>, value: number);
     }
     /**
@@ -409,13 +410,21 @@ declare module "@package/net/neoforged/neoforge/event" {
          */
         build(): $ItemAttributeModifiers;
         /**
+         * @return the default attribute modifiers before changes made by the event
+         */
+        getDefaultModifiers(): $ItemAttributeModifiers;
+        /**
+         * Removes all modifiers for the given attribute.
+         */
+        removeAllModifiersFor(attribute: $Holder_<$Attribute>): boolean;
+        /**
          * @return the item stack whose attribute modifiers are being computed
          */
         getItemStack(): $ItemStack;
         /**
-         * Removes an attribute modifier for the target attribute by id
+         * Adds a new attribute modifier to the given stack, optionally replacing any existing modifiers with the same id.
          */
-        removeModifier(attribute: $Holder_<$Attribute>, id: $ResourceLocation_): boolean;
+        replaceModifier(attribute: $Holder_<$Attribute>, modifier: $AttributeModifier_, slot: $EquipmentSlotGroup_): void;
         /**
          * Adds a new attribute modifier to the given stack. Two modifiers with the same id may not exist for the same attribute, and this method will fail if one exists.
          */
@@ -425,21 +434,13 @@ declare module "@package/net/neoforged/neoforge/event" {
          */
         clearModifiers(): void;
         /**
-         * Adds a new attribute modifier to the given stack, optionally replacing any existing modifiers with the same id.
+         * Removes an attribute modifier for the target attribute by id
          */
-        replaceModifier(attribute: $Holder_<$Attribute>, modifier: $AttributeModifier_, slot: $EquipmentSlotGroup_): void;
-        /**
-         * @return the default attribute modifiers before changes made by the event
-         */
-        getDefaultModifiers(): $ItemAttributeModifiers;
-        /**
-         * Removes all modifiers for the given attribute.
-         */
-        removeAllModifiersFor(attribute: $Holder_<$Attribute>): boolean;
+        removeModifier(attribute: $Holder_<$Attribute>, id: $ResourceLocation_): boolean;
         constructor(stack: $ItemStack_, defaultModifiers: $ItemAttributeModifiers_);
         get modifiers(): $List<$ItemAttributeModifiers$Entry>;
-        get itemStack(): $ItemStack;
         get defaultModifiers(): $ItemAttributeModifiers;
+        get itemStack(): $ItemStack;
     }
     export class $ItemAttributeModifierEvent$ItemAttributeModifiersBuilder {
     }
@@ -477,11 +478,11 @@ declare module "@package/net/neoforged/neoforge/event" {
         /**
          * @return the original volume for the sound to be played at
          */
-        getNewVolume(): number;
+        getNewPitch(): number;
         /**
          * @return the original volume for the sound to be played at
          */
-        getNewPitch(): number;
+        getNewVolume(): number;
         /**
          * @return the sound event to be played
          */
@@ -493,25 +494,25 @@ declare module "@package/net/neoforged/neoforge/event" {
         /**
          * @return the original volume for the sound to be played at
          */
-        getOriginalVolume(): number;
-        /**
-         * @return the original volume for the sound to be played at
-         */
         getOriginalPitch(): number;
         /**
          * Sets the volume the sound will be played at.
          */
-        setNewPitch(newVolume: number): void;
+        setNewVolume(newVolume: number): void;
+        /**
+         * @return the original volume for the sound to be played at
+         */
+        getOriginalVolume(): number;
         /**
          * Sets the volume the sound will be played at.
          */
-        setNewVolume(newVolume: number): void;
-        setCanceled(arg0: boolean): void;
+        setNewPitch(newVolume: number): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(level: $Level_, sound: $Holder_<$SoundEvent>, source: $SoundSource_, volume: number, pitch: number);
         get level(): $Level;
-        get originalVolume(): number;
         get originalPitch(): number;
+        get originalVolume(): number;
     }
     /**
      * The main ResourceManager is recreated on each reload, just after `ReloadableServerResources`'s creation.
@@ -520,10 +521,6 @@ declare module "@package/net/neoforged/neoforge/event" {
      * The event is fired on the `NeoForge#EVENT_BUS`
      */
     export class $AddReloadListenerEvent extends $Event {
-        /**
-         * This context object holds data relevant to the current reload, such as staged tags.
-         */
-        getConditionContext(): $ICondition$IContext;
         getServerResources(): $ReloadableServerResources;
         addListener(listener: $PreparableReloadListener_): void;
         getListeners(): $List<$PreparableReloadListener>;
@@ -532,26 +529,117 @@ declare module "@package/net/neoforged/neoforge/event" {
          * All built-in and dynamic registries are loaded and frozen by this point.
          */
         getRegistryAccess(): $RegistryAccess;
+        /**
+         * This context object holds data relevant to the current reload, such as staged tags.
+         */
+        getConditionContext(): $ICondition$IContext;
         constructor(serverResources: $ReloadableServerResources, registryAccess: $RegistryAccess);
-        get conditionContext(): $ICondition$IContext;
         get serverResources(): $ReloadableServerResources;
         get listeners(): $List<$PreparableReloadListener>;
         get registryAccess(): $RegistryAccess;
+        get conditionContext(): $ICondition$IContext;
     }
     export class $EventHooks {
-        static onChorusFruitTeleport(entity: $LivingEntity, targetX: number, targetY: number, targetZ: number): $EntityTeleportEvent$ChorusFruit;
-        static onPlayerFall(player: $Player, distance: number, multiplier: number): void;
-        static firePlayerTickPre(player: $Player): void;
-        static firePlayerTickPost(player: $Player): void;
-        static getBreakSpeed(player: $Player, state: $BlockState_, original: number, pos: $BlockPos_): number;
-        static onPlayerWakeup(player: $Player, wakeImmediately: boolean, updateLevel: boolean): void;
-        static firePlayerChangedDimensionEvent(player: $Player, fromDim: $ResourceKey_<$Level>, toDim: $ResourceKey_<$Level>): void;
-        static getPlayerTabListDisplayName(player: $Player): $Component;
+        static doPlayerHarvestCheck(player: $Player, state: $BlockState_, level: $BlockGetter, pos: $BlockPos_): boolean;
+        static fireFluidPlaceBlockEvent(level: $LevelAccessor, pos: $BlockPos_, liquidPos: $BlockPos_, state: $BlockState_): $BlockState;
+        static onProjectileImpact(projectile: $Projectile, ray: $HitResult): boolean;
+        /**
+         * Fires `MobDespawnEvent` and returns true if the default logic should be ignored.
+         */
+        static checkMobDespawn(mob: $Mob): boolean;
+        /**
+         * Fires the `BuildCreativeModeTabContentsEvent`.
+         */
+        static onCreativeModeTabBuildContents(tab: $CreativeModeTab_, tabKey: $ResourceKey_<$CreativeModeTab>, originalGenerator: $CreativeModeTab$DisplayItemsGenerator_, params: $CreativeModeTab$ItemDisplayParameters_, output: $CreativeModeTab$Output_): void;
+        static onPistonMovePost(level: $Level_, pos: $BlockPos_, direction: $Direction_, extending: boolean): void;
+        static onPistonMovePre(level: $Level_, pos: $BlockPos_, direction: $Direction_, extending: boolean): boolean;
         static alterGround(arg0: $TreeDecorator$Context, arg1: $List_<$BlockPos_>, arg2: $AlterGroundEvent$StateProvider_): $AlterGroundEvent$StateProvider;
         static onStatAward(player: $Player, stat: $Stat_<never>, value: number): $StatAwardEvent;
+        static onEffectRemoved(entity: $LivingEntity, effectInstance: $MobEffectInstance, cure: $EffectCure): boolean;
+        static onEffectRemoved(entity: $LivingEntity, effect: $Holder_<$MobEffect>, cure: $EffectCure): boolean;
+        static onLivingHeal(entity: $LivingEntity, amount: number): number;
+        /**
+         * Checks if an entity can perform a griefing action.
+         * 
+         * If an entity is provided, this method fires `EntityMobGriefingEvent`.
+         * If an entity is not provided, this method returns the value of `GameRules#RULE_MOBGRIEFING`.
+         */
+        static canEntityGrief(level: $Level_, entity: $Entity): boolean;
+        static getExperienceDrop(entity: $LivingEntity, attackingPlayer: $Player, originalExperience: number): number;
+        static onPlaySoundAtEntity(entity: $Entity, name: $Holder_<$SoundEvent>, category: $SoundSource_, volume: number, pitch: number): $PlayLevelSoundEvent$AtEntity;
+        static onPlaySoundAtPosition(level: $Level_, x: number, y: number, z: number, name: $Holder_<$SoundEvent>, category: $SoundSource_, volume: number, pitch: number): $PlayLevelSoundEvent$AtPosition;
+        /**
+         * Fires `GetEnchantmentLevelEvent` and for a single enchantment, returning the (possibly event-modified) level.
+         */
+        static getEnchantmentLevelSpecific(level: number, stack: $ItemStack_, ench: $Holder_<$Enchantment>): number;
+        static onMultiBlockPlace(entity: $Entity, blockSnapshots: $List_<$BlockSnapshot>, direction: $Direction_): boolean;
+        static onBlockPlace(entity: $Entity, blockSnapshot: $BlockSnapshot, direction: $Direction_): boolean;
+        /**
+         * To be called when an explosion has calculated the knockback velocity
+         * but has not yet added the knockback to the entity caught in blast.
+         */
+        static getExplosionKnockback(level: $Level_, explosion: $Explosion, entity: $Entity, initialVelocity: $Vec3_): $Vec3;
+        static onExplosionDetonate(level: $Level_, explosion: $Explosion, list: $List_<$Entity>, diameter: number): void;
+        static onChorusFruitTeleport(entity: $LivingEntity, targetX: number, targetY: number, targetZ: number): $EntityTeleportEvent$ChorusFruit;
         static onEnderPearlLand(entity: $ServerPlayer, targetX: number, targetY: number, targetZ: number, pearlEntity: $ThrownEnderpearl, attackDamage: number, hitResult: $HitResult): $EntityTeleportEvent$EnderPearl;
         static onEnderTeleport(entity: $LivingEntity, targetX: number, targetY: number, targetZ: number): $EntityTeleportEvent$EnderEntity;
-        static onAnimalTame(animal: $Animal, tamer: $Player): boolean;
+        static canPlayerStartSleeping(player: $ServerPlayer, pos: $BlockPos_, vanillaResult: $Either<$Player$BedSleepingProblem_, $Unit_>): $Either<$Player$BedSleepingProblem, $Unit>;
+        static onItemUseTick(entity: $LivingEntity, item: $ItemStack_, duration: number): number;
+        static onUseItemStop(entity: $LivingEntity, item: $ItemStack_, duration: number): boolean;
+        static onItemUseFinish(entity: $LivingEntity, item: $ItemStack_, duration: number, result: $ItemStack_): $ItemStack;
+        /**
+         * @deprecated
+         */
+        static onItemUseStart(entity: $LivingEntity, item: $ItemStack_, duration: number): number;
+        static onItemUseStart(entity: $LivingEntity, item: $ItemStack_, hand: $InteractionHand_, duration: number): number;
+        static getEntitySizeForge(entity: $Entity, pose: $Pose_, size: $EntityDimensions_): $EntityEvent$Size;
+        static getEntitySizeForge(entity: $Entity, pose: $Pose_, oldSize: $EntityDimensions_, newSize: $EntityDimensions_): $EntityEvent$Size;
+        /**
+         * Fires `Post`. Called from the tail of `LivingEntity#tick()`.
+         */
+        static fireEntityTickPost(entity: $Entity): void;
+        static canMountEntity(entityMounting: $Entity, entityBeingMounted: $Entity, isMounting: boolean): boolean;
+        /**
+         * Fires `Pre`. Called from the head of `LivingEntity#tick()`.
+         */
+        static fireEntityTickPre(entity: $Entity): $EntityTickEvent$Pre;
+        /**
+         * Fires the `ModifyCustomSpawnersEvent`. Returns the custom spawners list.
+         */
+        static getCustomSpawners(serverLevel: $ServerLevel, customSpawners: $List_<$CustomSpawner_>): $List<$CustomSpawner>;
+        static onSleepFinished(level: $ServerLevel, newTime: number, minTime: number): number;
+        static onResourceReload(serverResources: $ReloadableServerResources, registryAccess: $RegistryAccess): $List<$PreparableReloadListener>;
+        /**
+         * Called in `ItemEntity#playerTouch(Player)` before any other processing occurs.
+         * 
+         * Fires `Pre` and returns the event.
+         */
+        static fireItemPickupPre(itemEntity: $ItemEntity, player: $Player): $ItemEntityPickupEvent$Pre;
+        static onItemExpire(entity: $ItemEntity): number;
+        /**
+         * Called in `ItemEntity#playerTouch(Player)` after an item was successfully picked up.
+         * 
+         * Fires `Post`.
+         */
+        static fireItemPickupPost(itemEntity: $ItemEntity, player: $Player, copy: $ItemStack_): void;
+        static onExplosionStart(level: $Level_, explosion: $Explosion): boolean;
+        static onNeighborNotify(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_, arg3: $EnumSet<$Direction_>, arg4: boolean): $BlockEvent$NeighborNotifyEvent;
+        /**
+         * Fires `Pre`. Called from `Minecraft#tick()` and `MinecraftServer#tickChildren(BooleanSupplier)` just before the try block for level tick is entered.
+         */
+        static fireLevelTickPre(level: $Level_, haveTime: $BooleanSupplier_): void;
+        /**
+         * Fires `Pre`. Called from `Minecraft#tick()` and `MinecraftServer#tickChildren(BooleanSupplier)` just before the try block for level tick is entered.
+         */
+        static fireLevelTickPost(level: $Level_, haveTime: $BooleanSupplier_): void;
+        /**
+         * Fires the mob split event. Returns the event for cancellation checking.
+         */
+        static onMobSplit(parent: $Mob, children: $List_<$Mob>): $MobSplitEvent;
+        static firePlayerTickPost(player: $Player): void;
+        static getBreakSpeed(player: $Player, state: $BlockState_, original: number, pos: $BlockPos_): number;
+        static onPlayerFall(player: $Player, distance: number, multiplier: number): void;
+        static onPlayerWakeup(player: $Player, wakeImmediately: boolean, updateLevel: boolean): void;
         /**
          * Finalizes the spawn of a mob by firing the `FinalizeSpawnEvent` and calling `Mob#finalizeSpawn` with the result.
          * 
@@ -580,79 +668,79 @@ declare module "@package/net/neoforged/neoforge/event" {
          * The only code that changes is the `Mob#finalizeSpawn` call.
          */
         static finalizeMobSpawn(mob: $Mob, level: $ServerLevelAccessor, difficulty: $DifficultyInstance, spawnType: $MobSpawnType_, spawnData: $SpawnGroupData): $SpawnGroupData;
-        static onPistonMovePre(level: $Level_, pos: $BlockPos_, direction: $Direction_, extending: boolean): boolean;
-        static onPistonMovePost(level: $Level_, pos: $BlockPos_, direction: $Direction_, extending: boolean): void;
-        static onPlaySoundAtPosition(level: $Level_, x: number, y: number, z: number, name: $Holder_<$SoundEvent>, category: $SoundSource_, volume: number, pitch: number): $PlayLevelSoundEvent$AtPosition;
-        static onPlaySoundAtEntity(entity: $Entity, name: $Holder_<$SoundEvent>, category: $SoundSource_, volume: number, pitch: number): $PlayLevelSoundEvent$AtEntity;
-        static onEffectRemoved(entity: $LivingEntity, effectInstance: $MobEffectInstance, cure: $EffectCure): boolean;
-        static onEffectRemoved(entity: $LivingEntity, effect: $Holder_<$MobEffect>, cure: $EffectCure): boolean;
-        static onLivingHeal(entity: $LivingEntity, amount: number): number;
         /**
-         * Checks if an entity can perform a griefing action.
+         * Fires the `BlockGrowFeatureEvent` and returns the event object.
+         */
+        static fireBlockGrowFeature(level: $LevelAccessor, rand: $RandomSource, pos: $BlockPos_, holder: $Holder_<$ConfiguredFeature<never, never>>): $BlockGrowFeatureEvent;
+        /**
+         * Checks if a fluid is allowed to create a fluid source. This fires the `CreateFluidSourceEvent`.
+         * By default, a fluid can create a source if it returns true to `IFluidStateExtension#canConvertToSource(Level, BlockPos)`
+         */
+        static canCreateFluidSource(level: $Level_, pos: $BlockPos_, state: $BlockState_): boolean;
+        /**
+         * Specialized variant of `#checkSpawnPosition` for spawners, as they have slightly different checks, and pass through the `BaseSpawner` to the event.
+         */
+        static checkSpawnPositionSpawner(mob: $Mob, level: $ServerLevelAccessor, spawnType: $MobSpawnType_, spawnData: $SpawnData_, spawner: $BaseSpawner): boolean;
+        /**
+         * Called when bone meal (or equivalent) is used on a block. Fires the `BonemealEvent` and returns the event.
+         */
+        static fireBonemealEvent(player: $Player, level: $Level_, pos: $BlockPos_, state: $BlockState_, stack: $ItemStack_): $BonemealEvent;
+        static canLivingConvert(entity: $LivingEntity, outcome: $EntityType_<$LivingEntity>, timer: $Consumer_<number>): boolean;
+        static onLivingConvert(entity: $LivingEntity, outcome: $LivingEntity): void;
+        static onArrowNock(item: $ItemStack_, level: $Level_, player: $Player, hand: $InteractionHand_, hasAmmo: boolean): $InteractionResultHolder<$ItemStack>;
+        static onArrowLoose(stack: $ItemStack_, level: $Level_, player: $Player, charge: number, hasAmmo: boolean): number;
+        /**
+         * Finalizes the spawn of a mob by firing the `FinalizeSpawnEvent` and calling `Mob#finalizeSpawn` with the result.
          * 
-         * If an entity is provided, this method fires `EntityMobGriefingEvent`.
-         * If an entity is not provided, this method returns the value of `GameRules#RULE_MOBGRIEFING`.
-         */
-        static canEntityGrief(level: $Level_, entity: $Entity): boolean;
-        static getExperienceDrop(entity: $LivingEntity, attackingPlayer: $Player, originalExperience: number): number;
-        static onItemUseFinish(entity: $LivingEntity, item: $ItemStack_, duration: number, result: $ItemStack_): $ItemStack;
-        static onUseItemStop(entity: $LivingEntity, item: $ItemStack_, duration: number): boolean;
-        static onItemUseTick(entity: $LivingEntity, item: $ItemStack_, duration: number): number;
-        static onItemUseStart(entity: $LivingEntity, item: $ItemStack_, hand: $InteractionHand_, duration: number): number;
-        /**
-         * @deprecated
-         */
-        static onItemUseStart(entity: $LivingEntity, item: $ItemStack_, duration: number): number;
-        static getEntitySizeForge(entity: $Entity, pose: $Pose_, oldSize: $EntityDimensions_, newSize: $EntityDimensions_): $EntityEvent$Size;
-        static getEntitySizeForge(entity: $Entity, pose: $Pose_, size: $EntityDimensions_): $EntityEvent$Size;
-        /**
-         * Fires `Post`. Called from the tail of `LivingEntity#tick()`.
-         */
-        static fireEntityTickPost(entity: $Entity): void;
-        /**
-         * Fires `Pre`. Called from the head of `LivingEntity#tick()`.
-         */
-        static fireEntityTickPre(entity: $Entity): $EntityTickEvent$Pre;
-        static canMountEntity(entityMounting: $Entity, entityBeingMounted: $Entity, isMounting: boolean): boolean;
-        static onPlayerClone(player: $Player, oldPlayer: $Player, wasDeath: boolean): void;
-        static onPlayerSpawnSet(player: $Player, levelKey: $ResourceKey_<$Level>, pos: $BlockPos_, forced: boolean): boolean;
-        static onTrySpawnPortal(level: $LevelAccessor, pos: $BlockPos_, size: ($PortalShape) | undefined): ($PortalShape) | undefined;
-        static onNeighborNotify(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_, arg3: $EnumSet<$Direction_>, arg4: boolean): $BlockEvent$NeighborNotifyEvent;
-        static onExplosionStart(level: $Level_, explosion: $Explosion): boolean;
-        static onSleepFinished(level: $ServerLevel, newTime: number, minTime: number): number;
-        /**
-         * Fires the `ModifyCustomSpawnersEvent`. Returns the custom spawners list.
-         */
-        static getCustomSpawners(serverLevel: $ServerLevel, customSpawners: $List_<$CustomSpawner_>): $List<$CustomSpawner>;
-        static onItemExpire(entity: $ItemEntity): number;
-        /**
-         * Called in `ItemEntity#playerTouch(Player)` before any other processing occurs.
+         * This method is separate since mob spawners perform special finalizeSpawn handling when NBT data is present, but we still want to fire the event.
          * 
-         * Fires `Pre` and returns the event.
+         * This overload is also the only way to pass through an `IOwnedSpawner` instance.
          */
-        static fireItemPickupPre(itemEntity: $ItemEntity, player: $Player): $ItemEntityPickupEvent$Pre;
+        static finalizeMobSpawnSpawner(mob: $Mob, level: $ServerLevelAccessor, difficulty: $DifficultyInstance, spawnType: $MobSpawnType_, spawnData: $SpawnGroupData, spawner: $IOwnedSpawner_, def: boolean): $FinalizeSpawnEvent;
+        static getItemBurnTime(itemStack: $ItemStack_, burnTime: number, recipeType: $RecipeType_<never>): number;
+        static onItemTooltip(itemStack: $ItemStack_, entityPlayer: $Player, list: $List_<$Component_>, flags: $TooltipFlag, context: $Item$TooltipContext): $ItemTooltipEvent;
+        static onPotionBrewed(brewingItemStacks: $NonNullList<$ItemStack_>): void;
+        static onPotionAttemptBrew(stacks: $NonNullList<$ItemStack_>): boolean;
+        static onEnchantmentLevelSet(level: $Level_, pos: $BlockPos_, enchantRow: number, power: number, itemStack: $ItemStack_, enchantmentLevel: number): number;
+        static getAllEnchantmentLevels(arg0: $ItemEnchantments_, arg1: $ItemStack_, arg2: $HolderLookup$RegistryLookup<$Enchantment_>): $ItemEnchantments;
+        static onEntityDestroyBlock(entity: $LivingEntity, pos: $BlockPos_, state: $BlockState_): boolean;
         /**
-         * Called in `ItemEntity#playerTouch(Player)` after an item was successfully picked up.
+         * Fires `SpawnClusterSizeEvent` and returns the size as a result of the event.
          * 
-         * Fires `Post`.
+         * Called in `NaturalSpawner#spawnCategoryForPosition` where `Mob#getMaxSpawnClusterSize()` would normally be called.
          */
-        static fireItemPickupPost(itemEntity: $ItemEntity, player: $Player, copy: $ItemStack_): void;
+        static getMaxSpawnClusterSize(entity: $Mob): number;
         /**
-         * Fires `Pre`. Called from `Minecraft#tick()` and `MinecraftServer#tickChildren(BooleanSupplier)` just before the try block for level tick is entered.
+         * Fires `Pre`. Called from the head of `MinecraftServer#tickServer(BooleanSupplier)`.
          */
-        static fireLevelTickPre(level: $Level_, haveTime: $BooleanSupplier_): void;
+        static fireServerTickPre(haveTime: $BooleanSupplier_, server: $MinecraftServer): void;
+        static onCreateWorldSpawn(level: $Level_, settings: $ServerLevelData): boolean;
         /**
-         * Fires `Pre`. Called from `Minecraft#tick()` and `MinecraftServer#tickChildren(BooleanSupplier)` just before the try block for level tick is entered.
+         * Fires `Pre`. Called from the head of `MinecraftServer#tickServer(BooleanSupplier)`.
          */
-        static fireLevelTickPost(level: $Level_, haveTime: $BooleanSupplier_): void;
+        static fireServerTickPost(haveTime: $BooleanSupplier_, server: $MinecraftServer): void;
+        static firePlayerSmeltedEvent(player: $Player, stack: $ItemStack_): void;
+        static onPlayerBrewedPotion(player: $Player, stack: $ItemStack_): void;
+        static firePlayerCraftingEvent(player: $Player, crafted: $ItemStack_, craftMatrix: $Container): void;
+        static firePlayerChangedDimensionEvent(player: $Player, fromDim: $ResourceKey_<$Level>, toDim: $ResourceKey_<$Level>): void;
+        static getPlayerTabListDisplayName(player: $Player): $Component;
+        static firePlayerTickPre(player: $Player): void;
+        static onPlayerDestroyItem(player: $Player, stack: $ItemStack_, hand: $InteractionHand_): void;
         static canEntityContinueSleeping(arg0: $LivingEntity, arg1: $Player$BedSleepingProblem_): boolean;
         static getPlayerDisplayName(player: $Player, username: $Component_): $Component;
-        static onPlayerDestroyItem(player: $Player, stack: $ItemStack_, hand: $InteractionHand_): void;
+        static onToolUse(originalState: $BlockState_, context: $UseOnContext, itemAbility: $ItemAbility_, simulate: boolean): $BlockState;
+        static onAnimalTame(animal: $Animal, tamer: $Player): boolean;
+        static onTrySpawnPortal(level: $LevelAccessor, pos: $BlockPos_, size: ($PortalShape) | undefined): ($PortalShape) | undefined;
+        static onPlayerSpawnSet(player: $Player, levelKey: $ResourceKey_<$Level>, pos: $BlockPos_, forced: boolean): boolean;
+        static onPlayerClone(player: $Player, oldPlayer: $Player, wasDeath: boolean): void;
         /**
-         * Fires the mob split event. Returns the event for cancellation checking.
+         * Called by `HeartType#forPlayer` to allow for modification of the displayed heart type in the
+         * health bar.
          */
-        static onMobSplit(parent: $Mob, children: $List_<$Mob>): $MobSplitEvent;
-        static onCommandRegister(dispatcher: $CommandDispatcher<$CommandSourceStack>, environment: $Commands$CommandSelection_, context: $CommandBuildContext): void;
+        static firePlayerHeartTypeEvent(player: $Player, heartType: $Gui$HeartType_): $Gui$HeartType;
+        static onEntityStruckByLightning(entity: $Entity, bolt: $LightningBolt): boolean;
+        static onStartEntityTracking(entity: $Entity, player: $Player): void;
+        static onStopEntityTracking(entity: $Entity, player: $Player): void;
         /**
          * Fires the `LootTableLoadEvent` for non-empty loot tables and returns the table if the event was not
          * canceled and the table was not set to `LootTable#EMPTY` in the event. Otherwise returns `null`
@@ -664,132 +752,45 @@ declare module "@package/net/neoforged/neoforge/event" {
          * Use the instead
          */
         static loadLootTable(name: $ResourceLocation_, table: $LootTable): $LootTable;
-        static fireFluidPlaceBlockEvent(level: $LevelAccessor, pos: $BlockPos_, liquidPos: $BlockPos_, state: $BlockState_): $BlockState;
-        /**
-         * Fires the `BuildCreativeModeTabContentsEvent`.
-         */
-        static onCreativeModeTabBuildContents(tab: $CreativeModeTab_, tabKey: $ResourceKey_<$CreativeModeTab>, originalGenerator: $CreativeModeTab$DisplayItemsGenerator_, params: $CreativeModeTab$ItemDisplayParameters_, output: $CreativeModeTab$Output_): void;
-        /**
-         * Called by `HeartType#forPlayer` to allow for modification of the displayed heart type in the
-         * health bar.
-         */
-        static firePlayerHeartTypeEvent(player: $Player, heartType: $Gui$HeartType_): $Gui$HeartType;
-        static onToolUse(originalState: $BlockState_, context: $UseOnContext, itemAbility: $ItemAbility_, simulate: boolean): $BlockState;
-        /**
-         * Checks if a fluid is allowed to create a fluid source. This fires the `CreateFluidSourceEvent`.
-         * By default, a fluid can create a source if it returns true to `IFluidStateExtension#canConvertToSource(Level, BlockPos)`
-         */
-        static canCreateFluidSource(level: $Level_, pos: $BlockPos_, state: $BlockState_): boolean;
-        static canPlayerStartSleeping(player: $ServerPlayer, pos: $BlockPos_, vanillaResult: $Either<$Player$BedSleepingProblem_, $Unit_>): $Either<$Player$BedSleepingProblem, $Unit>;
-        static onMultiBlockPlace(entity: $Entity, blockSnapshots: $List_<$BlockSnapshot>, direction: $Direction_): boolean;
-        static onBlockPlace(entity: $Entity, blockSnapshot: $BlockSnapshot, direction: $Direction_): boolean;
-        static onResourceReload(serverResources: $ReloadableServerResources, registryAccess: $RegistryAccess): $List<$PreparableReloadListener>;
-        static doPlayerHarvestCheck(player: $Player, state: $BlockState_, level: $BlockGetter, pos: $BlockPos_): boolean;
-        /**
-         * Fires the `BlockGrowFeatureEvent` and returns the event object.
-         */
-        static fireBlockGrowFeature(level: $LevelAccessor, rand: $RandomSource, pos: $BlockPos_, holder: $Holder_<$ConfiguredFeature<never, never>>): $BlockGrowFeatureEvent;
-        /**
-         * Finalizes the spawn of a mob by firing the `FinalizeSpawnEvent` and calling `Mob#finalizeSpawn` with the result.
-         * 
-         * This method is separate since mob spawners perform special finalizeSpawn handling when NBT data is present, but we still want to fire the event.
-         * 
-         * This overload is also the only way to pass through an `IOwnedSpawner` instance.
-         */
-        static finalizeMobSpawnSpawner(mob: $Mob, level: $ServerLevelAccessor, difficulty: $DifficultyInstance, spawnType: $MobSpawnType_, spawnData: $SpawnGroupData, spawner: $IOwnedSpawner_, def: boolean): $FinalizeSpawnEvent;
-        static onEnchantmentLevelSet(level: $Level_, pos: $BlockPos_, enchantRow: number, power: number, itemStack: $ItemStack_, enchantmentLevel: number): number;
-        static onPotionAttemptBrew(stacks: $NonNullList<$ItemStack_>): boolean;
-        static getAllEnchantmentLevels(arg0: $ItemEnchantments_, arg1: $ItemStack_, arg2: $HolderLookup$RegistryLookup<$Enchantment_>): $ItemEnchantments;
-        static onEntityDestroyBlock(entity: $LivingEntity, pos: $BlockPos_, state: $BlockState_): boolean;
-        /**
-         * Fires `SpawnClusterSizeEvent` and returns the size as a result of the event.
-         * 
-         * Called in `NaturalSpawner#spawnCategoryForPosition` where `Mob#getMaxSpawnClusterSize()` would normally be called.
-         */
-        static getMaxSpawnClusterSize(entity: $Mob): number;
-        static onAdvancementEarnedEvent(player: $Player, earned: $AdvancementHolder_): void;
-        /**
-         * Fires `GetEnchantmentLevelEvent` and for a single enchantment, returning the (possibly event-modified) level.
-         */
-        static getEnchantmentLevelSpecific(level: number, stack: $ItemStack_, ench: $Holder_<$Enchantment>): number;
-        /**
-         * Fires `MobDespawnEvent` and returns true if the default logic should be ignored.
-         */
-        static checkMobDespawn(mob: $Mob): boolean;
-        static onProjectileImpact(projectile: $Projectile, ray: $HitResult): boolean;
-        static onPotionBrewed(brewingItemStacks: $NonNullList<$ItemStack_>): void;
-        static onItemTooltip(itemStack: $ItemStack_, entityPlayer: $Player, list: $List_<$Component_>, flags: $TooltipFlag, context: $Item$TooltipContext): $ItemTooltipEvent;
-        static getItemBurnTime(itemStack: $ItemStack_, burnTime: number, recipeType: $RecipeType_<never>): number;
-        static onLivingConvert(entity: $LivingEntity, outcome: $LivingEntity): void;
-        static canLivingConvert(entity: $LivingEntity, outcome: $EntityType_<$LivingEntity>, timer: $Consumer_<number>): boolean;
-        static onArrowLoose(stack: $ItemStack_, level: $Level_, player: $Player, charge: number, hasAmmo: boolean): number;
-        static onArrowNock(item: $ItemStack_, level: $Level_, player: $Player, hand: $InteractionHand_, hasAmmo: boolean): $InteractionResultHolder<$ItemStack>;
-        /**
-         * Called when bone meal (or equivalent) is used on a block. Fires the `BonemealEvent` and returns the event.
-         */
-        static fireBonemealEvent(player: $Player, level: $Level_, pos: $BlockPos_, state: $BlockState_, stack: $ItemStack_): $BonemealEvent;
-        static onExplosionDetonate(level: $Level_, explosion: $Explosion, list: $List_<$Entity>, diameter: number): void;
-        /**
-         * To be called when an explosion has calculated the knockback velocity
-         * but has not yet added the knockback to the entity caught in blast.
-         */
-        static getExplosionKnockback(level: $Level_, explosion: $Explosion, entity: $Entity, initialVelocity: $Vec3_): $Vec3;
-        static onEntityStruckByLightning(entity: $Entity, bolt: $LightningBolt): boolean;
-        static onPlayerBrewedPotion(player: $Player, stack: $ItemStack_): void;
-        static firePlayerCraftingEvent(player: $Player, crafted: $ItemStack_, craftMatrix: $Container): void;
-        static firePlayerSmeltedEvent(player: $Player, stack: $ItemStack_): void;
-        /**
-         * Specialized variant of `#checkSpawnPosition` for spawners, as they have slightly different checks, and pass through the `BaseSpawner` to the event.
-         */
-        static checkSpawnPositionSpawner(mob: $Mob, level: $ServerLevelAccessor, spawnType: $MobSpawnType_, spawnData: $SpawnData_, spawner: $BaseSpawner): boolean;
-        static onStartEntityTracking(entity: $Entity, player: $Player): void;
-        static onStopEntityTracking(entity: $Entity, player: $Player): void;
-        static fireChunkTicketLevelUpdated(level: $ServerLevel, chunkPos: number, oldTicketLevel: number, newTicketLevel: number, chunkHolder: $ChunkHolder): void;
-        /**
-         * Called by `PlayerList#respawn(ServerPlayer, boolean)` before creating the new `ServerPlayer`
-         * to fire the `PlayerRespawnPositionEvent`
-         */
-        static firePlayerRespawnPositionEvent(player: $ServerPlayer, dimensionTransition: $DimensionTransition_, fromEndFight: boolean): $PlayerRespawnPositionEvent;
-        /**
-         * Fires `Pre`. Called from the head of `MinecraftServer#tickServer(BooleanSupplier)`.
-         */
-        static fireServerTickPost(haveTime: $BooleanSupplier_, server: $MinecraftServer): void;
-        /**
-         * Fires `Pre`. Called from the head of `MinecraftServer#tickServer(BooleanSupplier)`.
-         */
-        static fireServerTickPre(haveTime: $BooleanSupplier_, server: $MinecraftServer): void;
-        static onCreateWorldSpawn(level: $Level_, settings: $ServerLevelData): boolean;
+        static onCommandRegister(dispatcher: $CommandDispatcher<$CommandSourceStack>, environment: $Commands$CommandSelection_, context: $CommandBuildContext): void;
         /**
          * Internal, should only be called via `SpawnPlacements#checkSpawnRules`.
          */
         static checkSpawnPlacements(entityType: $EntityType_<never>, level: $ServerLevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource, defaultResult: boolean): boolean;
+        static onAdvancementEarnedEvent(player: $Player, earned: $AdvancementHolder_): void;
         static onAdvancementProgressedEvent(arg0: $Player, arg1: $AdvancementHolder_, arg2: $AdvancementProgress, arg3: string, arg4: $AdvancementEvent$AdvancementProgressEvent$ProgressType_): void;
+        static getPotentialSpawns(level: $LevelAccessor, category: $MobCategory_, pos: $BlockPos_, oldList: $WeightedRandomList<$MobSpawnSettings$SpawnerData>): $WeightedRandomList<$MobSpawnSettings$SpawnerData>;
+        static fireChunkWatch(entity: $ServerPlayer, chunk: $LevelChunk, level: $ServerLevel): void;
+        static firePlayerLoggedIn(player: $Player): void;
+        static fireChunkSent(entity: $ServerPlayer, chunk: $LevelChunk, level: $ServerLevel): void;
         /**
          * Checks if the current position of the passed mob is valid for spawning, by firing `PositionCheck`.
          * 
          * The default check is to perform the logical and of `Mob#checkSpawnRules` and `Mob#checkSpawnObstruction`.
          */
         static checkSpawnPosition(mob: $Mob, level: $ServerLevelAccessor, spawnType: $MobSpawnType_): boolean;
-        static fireChunkSent(entity: $ServerPlayer, chunk: $LevelChunk, level: $ServerLevel): void;
         static fireChunkUnWatch(entity: $ServerPlayer, chunkpos: $ChunkPos, level: $ServerLevel): void;
-        static firePlayerLoggedIn(player: $Player): void;
-        static getPotentialSpawns(level: $LevelAccessor, category: $MobCategory_, pos: $BlockPos_, oldList: $WeightedRandomList<$MobSpawnSettings$SpawnerData>): $WeightedRandomList<$MobSpawnSettings$SpawnerData>;
-        static fireChunkWatch(entity: $ServerPlayer, chunk: $LevelChunk, level: $ServerLevel): void;
-        static onPermissionChanged(gameProfile: $GameProfile, newLevel: number, playerList: $PlayerList): boolean;
-        static firePlayerLoadingEvent(player: $Player, playerFileData: $PlayerDataStorage, uuidString: string): void;
-        static firePlayerLoadingEvent(player: $Player, playerDirectory: $File_, uuidString: string): void;
         static firePlayerSavingEvent(player: $Player, playerDirectory: $File_, uuidString: string): void;
-        /**
-         * Called by `PlayerList#respawn(ServerPlayer, boolean)` after creating and initializing the new `ServerPlayer`.
-         */
-        static firePlayerRespawnEvent(player: $ServerPlayer, fromEndFight: boolean): void;
-        static firePlayerLoggedOut(player: $Player): void;
-        static onEntityTeleportCommand(entity: $Entity, targetX: number, targetY: number, targetZ: number): $EntityTeleportEvent$TeleportCommand;
         /**
          * Called from `PhantomSpawner#tick` just before the spawn conditions for phantoms are evaluated.
          * Fires the `PlayerSpawnPhantomsEvent` and returns the event.
          */
         static firePlayerSpawnPhantoms(player: $ServerPlayer, level: $ServerLevel, pos: $BlockPos_): $PlayerSpawnPhantomsEvent;
+        static onPermissionChanged(gameProfile: $GameProfile, newLevel: number, playerList: $PlayerList): boolean;
+        static firePlayerLoggedOut(player: $Player): void;
+        /**
+         * Called by `PlayerList#respawn(ServerPlayer, boolean)` after creating and initializing the new `ServerPlayer`.
+         */
+        static firePlayerRespawnEvent(player: $ServerPlayer, fromEndFight: boolean): void;
+        static firePlayerLoadingEvent(player: $Player, playerFileData: $PlayerDataStorage, uuidString: string): void;
+        static firePlayerLoadingEvent(player: $Player, playerDirectory: $File_, uuidString: string): void;
+        static onEntityTeleportCommand(entity: $Entity, targetX: number, targetY: number, targetZ: number): $EntityTeleportEvent$TeleportCommand;
+        /**
+         * Called by `PlayerList#respawn(ServerPlayer, boolean)` before creating the new `ServerPlayer`
+         * to fire the `PlayerRespawnPositionEvent`
+         */
+        static firePlayerRespawnPositionEvent(player: $ServerPlayer, dimensionTransition: $DimensionTransition_, fromEndFight: boolean): $PlayerRespawnPositionEvent;
+        static fireChunkTicketLevelUpdated(level: $ServerLevel, chunkPos: number, oldTicketLevel: number, newTicketLevel: number, chunkHolder: $ChunkHolder): void;
         static onEntityTeleportSpreadPlayersCommand(entity: $Entity, targetX: number, targetY: number, targetZ: number): $EntityTeleportEvent$SpreadPlayersCommand;
         constructor();
     }
@@ -804,7 +805,7 @@ declare module "@package/net/neoforged/neoforge/event" {
     /**
      * Values that may be interpreted as {@link $ModMismatchEvent$MismatchedVersionInfo}.
      */
-    export type $ModMismatchEvent$MismatchedVersionInfo_ = { newVersion?: $ArtifactVersion, oldVersion?: $ArtifactVersion,  } | [newVersion?: $ArtifactVersion, oldVersion?: $ArtifactVersion, ];
+    export type $ModMismatchEvent$MismatchedVersionInfo_ = { oldVersion?: $ArtifactVersion, newVersion?: $ArtifactVersion,  } | [oldVersion?: $ArtifactVersion, newVersion?: $ArtifactVersion, ];
     /**
      * Fires when a player joins the server or when the reload command is ran,
      * before tags and crafting recipes are sent to the client. Send datapack data
@@ -812,20 +813,20 @@ declare module "@package/net/neoforged/neoforge/event" {
      */
     export class $OnDatapackSyncEvent extends $Event {
         /**
-         * Gets the player that is joining the server, or null when syncing for all players, such as when the reload command runs.
-         */
-        getPlayer(): $ServerPlayer;
-        /**
          * Gets the server's player list, containing all players, when the event fires.
          */
         getPlayerList(): $PlayerList;
+        /**
+         * Gets the player that is joining the server, or null when syncing for all players, such as when the reload command runs.
+         */
+        getPlayer(): $ServerPlayer;
         /**
          * Creates a stream of players that need to receive data during this event, which is the specified player (if present) or all players.
          */
         getRelevantPlayers(): $Stream<$ServerPlayer>;
         constructor(playerList: $PlayerList, player: $ServerPlayer);
-        get player(): $ServerPlayer;
         get playerList(): $PlayerList;
+        get player(): $ServerPlayer;
         get relevantPlayers(): $Stream<$ServerPlayer>;
     }
     /**
@@ -882,9 +883,9 @@ declare module "@package/net/neoforged/neoforge/event" {
      * }
      */
     export class $BlockEntityTypeAddBlocksEvent extends $Event implements $IModBusEvent {
-        modify(arg0: $ResourceKey_<$BlockEntityType<never>>, ...arg1: $Block_[]): void;
         modify(arg0: $BlockEntityType_<never>, ...arg1: $Block_[]): void;
         modify(arg0: $BiPredicate_<$ResourceKey<$BlockEntityType<never>>, $BlockEntityType<never>>, ...arg1: $Block_[]): void;
+        modify(arg0: $ResourceKey_<$BlockEntityType<never>>, ...arg1: $Block_[]): void;
         constructor();
     }
     /**
@@ -898,18 +899,18 @@ declare module "@package/net/neoforged/neoforge/event" {
      * only on the logical server.
      */
     export class $CommandEvent extends $Event implements $ICancellableEvent {
-        setException(exception: $Throwable): void;
         /**
          * @return an exception to be thrown when performing the command, starts null
          */
         getException(): $Throwable;
+        setException(exception: $Throwable): void;
+        setParseResults(parse: $ParseResults<$CommandSourceStack>): void;
         /**
          * @return the parsed command results
          */
         getParseResults(): $ParseResults<$CommandSourceStack>;
-        setParseResults(parse: $ParseResults<$CommandSourceStack>): void;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(parse: $ParseResults<$CommandSourceStack>);
     }
     /**
@@ -945,8 +946,8 @@ declare module "@package/net/neoforged/neoforge/event" {
          * Sets the output slot to a specific itemstack.
          */
         setOutput(output: $ItemStack_): void;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(top: $ItemStack_, bottom: $ItemStack_, xp: number);
     }
     /**
@@ -963,35 +964,35 @@ declare module "@package/net/neoforged/neoforge/event" {
     export class $ModMismatchEvent extends $Event implements $IModBusEvent {
         getResolved(): $Stream<$ModMismatchEvent$MismatchResolutionResult>;
         /**
+         * Marks the mod version mismatch as having been resolved safely by the current mod.
+         */
+        markResolved(modId: string): void;
+        anyResolved(): boolean;
+        getUnresolved(): $Stream<$ModMismatchEvent$MismatchResolutionResult>;
+        anyUnresolved(): boolean;
+        getVersionDifference(modid: string): ($ModMismatchEvent$MismatchedVersionInfo) | undefined;
+        /**
          * Fetch a previous version of a given mod, if it has been mismatched.
          */
         getCurrentVersion(modId: string): $ArtifactVersion;
         /**
-         * Fetches the status of a mod mismatch handling state.
+         * Fetch a previous version of a given mod, if it has been mismatched.
          */
-        wasResolved(modId: string): boolean;
-        getResolver(modid: string): ($ModContainer) | undefined;
+        getPreviousVersion(modId: string): $ArtifactVersion;
         /**
          * Gets the current level directory for the world being loaded.
          * Can be used for file operations and manual modification of mod files before world load.
          */
         getLevelDirectory(): $LevelStorageSource$LevelDirectory;
         /**
-         * Fetch a previous version of a given mod, if it has been mismatched.
+         * Fetches the status of a mod mismatch handling state.
          */
-        getPreviousVersion(modId: string): $ArtifactVersion;
-        getUnresolved(): $Stream<$ModMismatchEvent$MismatchResolutionResult>;
-        anyResolved(): boolean;
-        anyUnresolved(): boolean;
-        /**
-         * Marks the mod version mismatch as having been resolved safely by the current mod.
-         */
-        markResolved(modId: string): void;
-        getVersionDifference(modid: string): ($ModMismatchEvent$MismatchedVersionInfo) | undefined;
+        wasResolved(modId: string): boolean;
+        getResolver(modid: string): ($ModContainer) | undefined;
         constructor(levelDirectory: $LevelStorageSource$LevelDirectory_, previousVersions: $Map_<string, $ArtifactVersion>, missingVersions: $Map_<string, $ArtifactVersion>);
         get resolved(): $Stream<$ModMismatchEvent$MismatchResolutionResult>;
-        get levelDirectory(): $LevelStorageSource$LevelDirectory;
         get unresolved(): $Stream<$ModMismatchEvent$MismatchResolutionResult>;
+        get levelDirectory(): $LevelStorageSource$LevelDirectory;
     }
     /**
      * Fired when a `LootTable` is loaded from JSON.
@@ -1014,8 +1015,8 @@ declare module "@package/net/neoforged/neoforge/event" {
          */
         getRegistries(): $HolderLookup$Provider;
         setTable(table: $LootTable): void;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         /**
          * @deprecated
          */
@@ -1103,14 +1104,6 @@ declare module "@package/net/neoforged/neoforge/event" {
         /**
          * Inserts the new stack at the end of the given tab at this point in time.
          */
-        insertFirst(newEntry: $ItemStack_, visibility: $CreativeModeTab$TabVisibility_): void;
-        /**
-         * Inserts the new entry after the specified existing entry.
-         */
-        insertAfter(existingEntry: $ItemStack_, newEntry: $ItemStack_, visibility: $CreativeModeTab$TabVisibility_): void;
-        /**
-         * Inserts the new stack at the end of the given tab at this point in time.
-         */
         remove(newEntry: $ItemStack_, visibility: $CreativeModeTab$TabVisibility_): void;
         /**
          * Inserts the new stack at the end of the given tab at this point in time.
@@ -1122,29 +1115,41 @@ declare module "@package/net/neoforged/neoforge/event" {
          * Inserts the new entry after the specified existing entry.
          */
         insertBefore(existingEntry: $ItemStack_, newEntry: $ItemStack_, visibility: $CreativeModeTab$TabVisibility_): void;
-        hasPermissions(): boolean;
         /**
-         * @return the creative mode tab currently populating its contents
+         * Inserts the new entry after the specified existing entry.
          */
-        getTab(): $CreativeModeTab;
+        insertAfter(existingEntry: $ItemStack_, newEntry: $ItemStack_, visibility: $CreativeModeTab$TabVisibility_): void;
+        /**
+         * The current immutable ordered set of the parent tab entries in the order to be added to the Creative Menu.
+         * Purely for querying to see what in it. Please use the other event methods for modifications.
+         */
+        getParentEntries(): $ObjectSortedSet<$ItemStack>;
         /**
          * @return the key of the creative mode tab currently populating its contents
          */
         getTabKey(): $ResourceKey<$CreativeModeTab>;
+        hasPermissions(): boolean;
+        /**
+         * Inserts the new stack at the end of the given tab at this point in time.
+         */
+        insertFirst(newEntry: $ItemStack_, visibility: $CreativeModeTab$TabVisibility_): void;
+        /**
+         * @return the creative mode tab currently populating its contents
+         */
+        getTab(): $CreativeModeTab;
         accept(item: $ItemLike_): void;
         accept(item: $ItemLike_, tabVisibility: $CreativeModeTab$TabVisibility_): void;
         accept(stack: $ItemStack_): void;
         acceptAll(stacks: $Collection_<$ItemStack_>): void;
         acceptAll(stacks: $Collection_<$ItemStack_>, tabVisibility: $CreativeModeTab$TabVisibility_): void;
         getSearchEntries(): $InsertableLinkedOpenCustomHashSet<$ItemStack>;
-        getParentEntries(): $InsertableLinkedOpenCustomHashSet<$ItemStack>;
         constructor(tab: $CreativeModeTab_, tabKey: $ResourceKey_<$CreativeModeTab>, parameters: $CreativeModeTab$ItemDisplayParameters_, parentEntries: $InsertableLinkedOpenCustomHashSet<$ItemStack_>, searchEntries: $InsertableLinkedOpenCustomHashSet<$ItemStack_>);
         get parameters(): $CreativeModeTab$ItemDisplayParameters;
         get flags(): $FeatureFlagSet;
-        get tab(): $CreativeModeTab;
+        get parentEntries(): $ObjectSortedSet<$ItemStack>;
         get tabKey(): $ResourceKey<$CreativeModeTab>;
+        get tab(): $CreativeModeTab;
         get searchEntries(): $InsertableLinkedOpenCustomHashSet<$ItemStack>;
-        get parentEntries(): $InsertableLinkedOpenCustomHashSet<$ItemStack>;
     }
     /**
      * This event is `ICancellableEvent`
@@ -1158,7 +1163,9 @@ declare module "@package/net/neoforged/neoforge/event" {
      * if the amount of experience is larger than or equal 0, the vanilla behavior for calculating experience will not run.
      */
     export class $GrindstoneEvent$OnTakeItem extends $GrindstoneEvent implements $ICancellableEvent {
-        getContainerAccess(): $ContainerLevelAccess;
+        getNewTopItem(): $ItemStack;
+        getNewBottomItem(): $ItemStack;
+        getPlayer(): $Player;
         /**
          * Sets the itemstack in the top slot.
          */
@@ -1167,18 +1174,16 @@ declare module "@package/net/neoforged/neoforge/event" {
          * Sets the itemstack in the top slot.
          */
         setNewBottomItem(newTop: $ItemStack_): void;
-        getNewTopItem(): $ItemStack;
-        getNewBottomItem(): $ItemStack;
-        getPlayer(): $Player;
-        setCanceled(arg0: boolean): void;
+        getContainerAccess(): $ContainerLevelAccess;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(arg0: $ContainerLevelAccess_, arg1: $Player, arg2: $ItemStack_, arg3: $ItemStack_, arg4: number);
         /**
          * @deprecated
          */
         constructor(top: $ItemStack_, bottom: $ItemStack_, xp: number);
-        get containerAccess(): $ContainerLevelAccess;
         get player(): $Player;
+        get containerAccess(): $ContainerLevelAccess;
     }
     /**
      * A simple marker event that notifies when the game is about to close.
@@ -1211,22 +1216,22 @@ declare module "@package/net/neoforged/neoforge/event" {
          */
         setMessage(message: $Component_): void;
         /**
-         * @return the username of the player who initiated the chat action
-         */
-        getUsername(): string;
-        /**
          * @return the player who initiated the chat action
          */
         getPlayer(): $ServerPlayer;
         /**
          * @return the username of the player who initiated the chat action
          */
+        getUsername(): string;
+        /**
+         * @return the username of the player who initiated the chat action
+         */
         getRawText(): string;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(player: $ServerPlayer, rawText: string, message: $Component_);
-        get username(): string;
         get player(): $ServerPlayer;
+        get username(): string;
         get rawText(): string;
     }
     export class $AddReloadListenerEvent$WrappedStateAwareListener extends $ContextAwareReloadListener implements $PreparableReloadListener {

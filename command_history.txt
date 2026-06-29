@@ -4,3 +4,5 @@
 /pro
 /probejs
 /reload
+/probejs
+/reload

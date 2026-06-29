@@ -19,16 +19,6 @@ import { $ContextUtils$EntityServerLevelContext, $ContextUtils$LivingEntityConte
 declare module "@package/net/liopyu/entityjs/builders/living/vanilla" {
     export class $DonkeyJSBuilder extends $AnimalEntityBuilder<$DonkeyEntityJS> {
         /**
-         * @param defaultGoals Sets whether the mob should inherit it's goals from it's superclass
-         * Defaults to true.
-         * 
-         * Example usage:
-         * ```javascript
-         * builder.defaultGoals(false);
-         * ```
-         */
-        defaultGoals(arg0: boolean): $DonkeyJSBuilder;
-        /**
          * @param defaultBehaviourGoals Sets whether the mob should inherit it's goal behavior from it's superclass
          * Defaults to true.
          * 
@@ -38,6 +28,16 @@ declare module "@package/net/liopyu/entityjs/builders/living/vanilla" {
          * ```
          */
         defaultBehaviourGoals(arg0: boolean): $DonkeyJSBuilder;
+        /**
+         * @param defaultGoals Sets whether the mob should inherit it's goals from it's superclass
+         * Defaults to true.
+         * 
+         * Example usage:
+         * ```javascript
+         * builder.defaultGoals(false);
+         * ```
+         */
+        defaultGoals(arg0: boolean): $DonkeyJSBuilder;
         partEntityParamsList: $List<$ContextUtils$PartEntityParams<$DonkeyEntityJS>>;
         sourceLine: $SourceLine;
         id: $ResourceLocation;
@@ -74,16 +74,6 @@ declare module "@package/net/liopyu/entityjs/builders/living/vanilla" {
          */
         isSunSensitive(arg0: boolean): $ZombieJSBuilder;
         /**
-         * @param defaultGoals Sets whether the mob should inherit it's goals from it's superclass
-         * Defaults to true.
-         * 
-         * Example usage:
-         * ```javascript
-         * builder.defaultGoals(false);
-         * ```
-         */
-        defaultGoals(arg0: boolean): $ZombieJSBuilder;
-        /**
          * @param defaultBehaviourGoals Sets whether the mob should inherit it's goal behavior from it's superclass
          * Defaults to true.
          * 
@@ -93,6 +83,16 @@ declare module "@package/net/liopyu/entityjs/builders/living/vanilla" {
          * ```
          */
         defaultBehaviourGoals(arg0: boolean): $ZombieJSBuilder;
+        /**
+         * @param defaultGoals Sets whether the mob should inherit it's goals from it's superclass
+         * Defaults to true.
+         * 
+         * Example usage:
+         * ```javascript
+         * builder.defaultGoals(false);
+         * ```
+         */
+        defaultGoals(arg0: boolean): $ZombieJSBuilder;
         partEntityParamsList: $List<$ContextUtils$PartEntityParams<$ZombieEntityJS>>;
         sourceLine: $SourceLine;
         id: $ResourceLocation;
@@ -201,15 +201,15 @@ declare module "@package/net/liopyu/entityjs/builders/living/vanilla" {
     }
     export class $WitherJSBuilder extends $PathfinderMobBuilder<$WitherEntityJS> {
         /**
-         * @param defaultGoals Sets whether the mob should inherit it's goals from it's superclass
+         * @param customServerAiStep Sets whether the mob has its default custom server ai step behavior
          * Defaults to true.
          * 
          * Example usage:
          * ```javascript
-         * builder.defaultGoals(false);
+         * builder.customServerAiStep(false);
          * ```
          */
-        defaultGoals(arg0: boolean): $WitherJSBuilder;
+        customServerAiStep(arg0: boolean): $WitherJSBuilder;
         /**
          * @param attackProjectile Sets the projectile shot by the wither.
          * Defaults to a wither skull.
@@ -221,15 +221,15 @@ declare module "@package/net/liopyu/entityjs/builders/living/vanilla" {
          */
         attackProjectile(arg0: string): $WitherJSBuilder;
         /**
-         * @param customServerAiStep Sets whether the mob has its default custom server ai step behavior
+         * @param defaultGoals Sets whether the mob should inherit it's goals from it's superclass
          * Defaults to true.
          * 
          * Example usage:
          * ```javascript
-         * builder.customServerAiStep(false);
+         * builder.defaultGoals(false);
          * ```
          */
-        customServerAiStep(arg0: boolean): $WitherJSBuilder;
+        defaultGoals(arg0: boolean): $WitherJSBuilder;
         partEntityParamsList: $List<$ContextUtils$PartEntityParams<$WitherEntityJS>>;
         sourceLine: $SourceLine;
         id: $ResourceLocation;
@@ -245,23 +245,6 @@ declare module "@package/net/liopyu/entityjs/builders/living/vanilla" {
         constructor(arg0: $ResourceLocation_);
     }
     export class $ParrotJSBuilder extends $TameableMobBuilder<$ParrotEntityJS> {
-        /**
-         * Sets a Consumer invoked after the entity is tamed
-         * and replaces the logic used to set the UUID of the owner
-         * with the parameter of ContextUtils.PlayerEntityContext callback
-         * 
-         * @param tameOverride A Consumer responsible for determining the uuid to set when the entity is tamed.
-         * 
-         * Example usage:
-         * ```javascript
-         * builder.tameOverride(context => {
-         *     const {entity,player} = context
-         *     // Mimic the vanilla way of setting the uuid when the entity is tamed.
-         *     entity.setOwnerUUID(player.getUUID());
-         * });
-         * ```
-         */
-        tameOverride(arg0: $Consumer_<$ContextUtils$PlayerEntityContext>): $ParrotJSBuilder;
         /**
          * @param defaultGoals Sets whether the mob should inherit it's goals from it's superclass
          * Defaults to true.
@@ -386,6 +369,15 @@ declare module "@package/net/liopyu/entityjs/builders/living/vanilla" {
          */
         setParticleType(arg0: $ParticleType_<never>): $SlimeJSBuilder;
         /**
+         * @param setSquishSound Sets the squish sound
+         * 
+         * Example usage:
+         * ```javascript
+         * builder.setSquishSound("block.azalea.hit");
+         * ```
+         */
+        setSquishSound(arg0: $SoundEvent_): $SlimeJSBuilder;
+        /**
          * @param defaultGoals Sets whether the mob should inherit it's goals from it's superclass
          * Defaults to true.
          * 
@@ -395,15 +387,6 @@ declare module "@package/net/liopyu/entityjs/builders/living/vanilla" {
          * ```
          */
         defaultGoals(arg0: boolean): $SlimeJSBuilder;
-        /**
-         * @param setSquishSound Sets the squish sound
-         * 
-         * Example usage:
-         * ```javascript
-         * builder.setSquishSound("block.azalea.hit");
-         * ```
-         */
-        setSquishSound(arg0: $SoundEvent_): $SlimeJSBuilder;
         partEntityParamsList: $List<$ContextUtils$PartEntityParams<$SlimeEntityJS>>;
         sourceLine: $SourceLine;
         id: $ResourceLocation;
@@ -447,6 +430,19 @@ declare module "@package/net/liopyu/entityjs/builders/living/vanilla" {
     }
     export class $PiglinJSBuilder extends $PathfinderMobBuilder<$PiglinEntityJS> {
         /**
+         * Sets a function to determine if the entity is converting.
+         * 
+         * @param isConverting A Function accepting an entity parameter
+         * 
+         * Example usage:
+         * ```javascript
+         * mobBuilder.isConverting(entity => {
+         *     return entity.age > 500;
+         * });
+         * ```
+         */
+        isConverting(arg0: $Function_<$LivingEntity, $Object>): $PiglinJSBuilder;
+        /**
          * Sets a consumer responsible for spawning an entity after the mob has converted.
          * 
          * @param finishConversion A Function accepting an entity parameter
@@ -461,19 +457,6 @@ declare module "@package/net/liopyu/entityjs/builders/living/vanilla" {
          * ```
          */
         finishConversion(arg0: $Consumer_<$ContextUtils$EntityServerLevelContext>): $PiglinJSBuilder;
-        /**
-         * Sets a function to determine if the entity is converting.
-         * 
-         * @param isConverting A Function accepting an entity parameter
-         * 
-         * Example usage:
-         * ```javascript
-         * mobBuilder.isConverting(entity => {
-         *     return entity.age > 500;
-         * });
-         * ```
-         */
-        isConverting(arg0: $Function_<$LivingEntity, $Object>): $PiglinJSBuilder;
         /**
          * @param defaultGoals Sets whether the mob should inherit it's goals from it's superclass
          * Defaults to true.
@@ -525,6 +508,26 @@ declare module "@package/net/liopyu/entityjs/builders/living/vanilla" {
     }
     export class $CamelJSBuilder extends $AnimalEntityBuilder<$CamelEntityJS> {
         /**
+         * @param defaultBehaviourGoals Sets whether the mob should inherit it's goal behavior from it's superclass
+         * Defaults to true.
+         * 
+         * Example usage:
+         * ```javascript
+         * builder.defaultBehaviourGoals(false);
+         * ```
+         */
+        defaultBehaviourGoals(arg0: boolean): $CamelJSBuilder;
+        /**
+         * @param defaultGoals Sets whether the mob should inherit it's goals from it's superclass
+         * Defaults to true.
+         * 
+         * Example usage:
+         * ```javascript
+         * builder.defaultGoals(false);
+         * ```
+         */
+        defaultGoals(arg0: boolean): $CamelJSBuilder;
+        /**
          * Sets a Consumer invoked after the entity is tamed
          * and replaces the logic used to set the UUID of the owner
          * with the parameter of ContextUtils.PlayerEntityContext callback
@@ -542,16 +545,6 @@ declare module "@package/net/liopyu/entityjs/builders/living/vanilla" {
          */
         tameOverride(arg0: $Consumer_<$ContextUtils$PlayerEntityContext>): $CamelJSBuilder;
         /**
-         * @param defaultGoals Sets whether the mob should inherit it's goals from it's superclass
-         * Defaults to true.
-         * 
-         * Example usage:
-         * ```javascript
-         * builder.defaultGoals(false);
-         * ```
-         */
-        defaultGoals(arg0: boolean): $CamelJSBuilder;
-        /**
          * Sets a Consumer with the parameter of ContextUtils.PlayerEntityContext callback
          * This is fired after the entity is tamed and all tame logic has already taken place.
          * Useful if you don't want to mess with the UUID logic in the tameOverride method.
@@ -566,16 +559,6 @@ declare module "@package/net/liopyu/entityjs/builders/living/vanilla" {
          * ```
          */
         onTamed(arg0: $Consumer_<$ContextUtils$PlayerEntityContext>): $CamelJSBuilder;
-        /**
-         * @param defaultBehaviourGoals Sets whether the mob should inherit it's goal behavior from it's superclass
-         * Defaults to true.
-         * 
-         * Example usage:
-         * ```javascript
-         * builder.defaultBehaviourGoals(false);
-         * ```
-         */
-        defaultBehaviourGoals(arg0: boolean): $CamelJSBuilder;
         partEntityParamsList: $List<$ContextUtils$PartEntityParams<$CamelEntityJS>>;
         sourceLine: $SourceLine;
         id: $ResourceLocation;
@@ -601,6 +584,17 @@ declare module "@package/net/liopyu/entityjs/builders/living/vanilla" {
          * ```
          */
         canConvert(arg0: boolean): $SkeletonJSBuilder;
+        /**
+         * @param isSunBurnTick Sets whether the mob should burn in daylight
+         * 
+         * Example usage:
+         * ```javascript
+         * builder.isSunBurnTick(entity => {
+         *     return false
+         * });
+         * ```
+         */
+        isSunBurnTick(arg0: $Function_<$LivingEntity, $Object>): $SkeletonJSBuilder;
         /**
          * @param setConversionType Sets what mob the entity should convert to after freezing. Must be a Mob.
          * Defaults to "minecraft:stray".
@@ -630,17 +624,6 @@ declare module "@package/net/liopyu/entityjs/builders/living/vanilla" {
          * ```
          */
         defaultGoals(arg0: boolean): $SkeletonJSBuilder;
-        /**
-         * @param isSunBurnTick Sets whether the mob should burn in daylight
-         * 
-         * Example usage:
-         * ```javascript
-         * builder.isSunBurnTick(entity => {
-         *     return false
-         * });
-         * ```
-         */
-        isSunBurnTick(arg0: $Function_<$LivingEntity, $Object>): $SkeletonJSBuilder;
         /**
          * @param setArrow Sets the arrow entity to be fired.
          * Defaults to "minecraft:arrow".
@@ -885,6 +868,26 @@ declare module "@package/net/liopyu/entityjs/builders/living/vanilla" {
     }
     export class $HorseJSBuilder extends $AnimalEntityBuilder<$HorseEntityJS> {
         /**
+         * @param defaultBehaviourGoals Sets whether the mob should inherit it's goal behavior from it's superclass
+         * Defaults to true.
+         * 
+         * Example usage:
+         * ```javascript
+         * builder.defaultBehaviourGoals(false);
+         * ```
+         */
+        defaultBehaviourGoals(arg0: boolean): $HorseJSBuilder;
+        /**
+         * @param defaultGoals Sets whether the mob should inherit it's goals from it's superclass
+         * Defaults to true.
+         * 
+         * Example usage:
+         * ```javascript
+         * builder.defaultGoals(false);
+         * ```
+         */
+        defaultGoals(arg0: boolean): $HorseJSBuilder;
+        /**
          * Sets a Consumer invoked after the entity is tamed
          * and replaces the logic used to set the UUID of the owner
          * with the parameter of ContextUtils.PlayerEntityContext callback
@@ -902,16 +905,6 @@ declare module "@package/net/liopyu/entityjs/builders/living/vanilla" {
          */
         tameOverride(arg0: $Consumer_<$ContextUtils$PlayerEntityContext>): $HorseJSBuilder;
         /**
-         * @param defaultGoals Sets whether the mob should inherit it's goals from it's superclass
-         * Defaults to true.
-         * 
-         * Example usage:
-         * ```javascript
-         * builder.defaultGoals(false);
-         * ```
-         */
-        defaultGoals(arg0: boolean): $HorseJSBuilder;
-        /**
          * Sets a Consumer with the parameter of ContextUtils.PlayerEntityContext callback
          * This is fired after the entity is tamed and all tame logic has already taken place.
          * Useful if you don't want to mess with the UUID logic in the tameOverride method.
@@ -926,16 +919,6 @@ declare module "@package/net/liopyu/entityjs/builders/living/vanilla" {
          * ```
          */
         onTamed(arg0: $Consumer_<$ContextUtils$PlayerEntityContext>): $HorseJSBuilder;
-        /**
-         * @param defaultBehaviourGoals Sets whether the mob should inherit it's goal behavior from it's superclass
-         * Defaults to true.
-         * 
-         * Example usage:
-         * ```javascript
-         * builder.defaultBehaviourGoals(false);
-         * ```
-         */
-        defaultBehaviourGoals(arg0: boolean): $HorseJSBuilder;
         partEntityParamsList: $List<$ContextUtils$PartEntityParams<$HorseEntityJS>>;
         sourceLine: $SourceLine;
         id: $ResourceLocation;

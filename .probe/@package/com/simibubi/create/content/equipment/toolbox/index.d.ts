@@ -3,7 +3,7 @@ import { $MenuBase, $AbstractSimiContainerScreen } from "@package/com/simibubi/c
 import { $Codec, $MapCodec } from "@package/com/mojang/serialization";
 import { $CraftingInput, $CraftingBookCategory_, $CustomRecipe } from "@package/net/minecraft/world/item/crafting";
 import { $CubeMap, $PanoramaRenderer } from "@package/net/minecraft/client/renderer";
-import { $CompoundTag_ } from "@package/net/minecraft/nbt";
+import { $CompoundTag, $CompoundTag_ } from "@package/net/minecraft/nbt";
 import { $Executor } from "@package/java/util/concurrent";
 import { $SmartBlockEntity } from "@package/com/simibubi/create/foundation/blockEntity";
 import { $Entity } from "@package/net/minecraft/world/entity";
@@ -59,14 +59,14 @@ declare module "@package/com/simibubi/create/content/equipment/toolbox" {
     export class $ToolboxHandler {
         static distance(arg0: $Vec3_, arg1: $BlockPos_): number;
         static onLoad(arg0: $ToolboxBlockEntity): void;
-        static withinRange(arg0: $Player, arg1: $ToolboxBlockEntity): boolean;
-        static playerLogin(arg0: $Player): void;
         static unequip(arg0: $Player, arg1: number, arg2: boolean): void;
-        static getMaxRange(arg0: $Player): number;
         static getNearest(arg0: $LevelAccessor, arg1: $Player, arg2: number): $List<$ToolboxBlockEntity>;
         static syncData(arg0: $Player): void;
-        static entityTick(arg0: $Entity, arg1: $Level_): void;
         static onUnload(arg0: $ToolboxBlockEntity): void;
+        static withinRange(arg0: $Player, arg1: $ToolboxBlockEntity): boolean;
+        static playerLogin(arg0: $Player): void;
+        static getMaxRange(arg0: $Player): number;
+        static entityTick(arg0: $Entity, arg1: $Level_): void;
         static toolboxes: $WorldAttached<$WeakHashMap<$BlockPos, $ToolboxBlockEntity>>;
         constructor();
     }
@@ -79,8 +79,8 @@ declare module "@package/com/simibubi/create/content/equipment/toolbox" {
         slot(): number;
         handle(arg0: $ServerPlayer): void;
         getTypeProvider(): $BasePacketPayload$PacketTypeProvider;
-        toolboxPos(): $BlockPos;
         hotbarSlot(): number;
+        toolboxPos(): $BlockPos;
         type(): $CustomPacketPayload$Type<$CustomPacketPayload>;
         toVanillaClientbound(): $ClientboundCustomPayloadPacket;
         toVanillaServerbound(): $ServerboundCustomPayloadPacket;
@@ -91,7 +91,7 @@ declare module "@package/com/simibubi/create/content/equipment/toolbox" {
     /**
      * Values that may be interpreted as {@link $ToolboxEquipPacket}.
      */
-    export type $ToolboxEquipPacket_ = { hotbarSlot?: number, toolboxPos?: $BlockPos_, slot?: number,  } | [hotbarSlot?: number, toolboxPos?: $BlockPos_, slot?: number, ];
+    export type $ToolboxEquipPacket_ = { slot?: number, hotbarSlot?: number, toolboxPos?: $BlockPos_,  } | [slot?: number, hotbarSlot?: number, toolboxPos?: $BlockPos_, ];
     export class $ToolboxSlot extends $SlotItemHandler {
         container: $Container;
         x: number;
@@ -105,21 +105,21 @@ declare module "@package/com/simibubi/create/content/equipment/toolbox" {
         constructor(arg0: $CraftingBookCategory_);
     }
     export class $ToolboxBlockEntity extends $SmartBlockEntity implements $MenuProvider, $Nameable {
-        unequipTracked(): void;
-        isFullyInitialized(): boolean;
-        connectPlayer(arg0: number, arg1: $Player, arg2: number): void;
-        readInventory(arg0: $ToolboxInventory): void;
-        getCustomName(): $Component;
         getName(): $Component;
         getDisplayName(): $Component;
-        getColor(): $DyeColor;
         hasCustomName(): boolean;
-        getUniqueId(): $UUID;
-        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
-        unequip(arg0: number, arg1: $Player, arg2: number, arg3: boolean): void;
-        createMenu(arg0: number, arg1: $Inventory, arg2: $Player): $AbstractContainerMenu;
+        getCustomName(): $Component;
         setCustomName(arg0: $Component_): void;
+        unequip(arg0: number, arg1: $Player, arg2: number, arg3: boolean): void;
+        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
+        connectPlayer(arg0: number, arg1: $Player, arg2: number): void;
+        isFullyInitialized(): boolean;
+        unequipTracked(): void;
+        readInventory(arg0: $ToolboxInventory): void;
+        getColor(): $DyeColor;
         setUniqueId(arg0: $UUID_): void;
+        createMenu(arg0: number, arg1: $Inventory, arg2: $Player): $AbstractContainerMenu;
+        getUniqueId(): $UUID;
         shouldTriggerClientSideContainerClosingOnOpen(): boolean;
         writeClientSideData(arg0: $AbstractContainerMenu, arg1: $RegistryFriendlyByteBuf): void;
         shouldCloseCurrentScreen(): boolean;
@@ -130,9 +130,9 @@ declare module "@package/com/simibubi/create/content/equipment/toolbox" {
         static ATTACHMENTS_NBT_KEY: string;
         hasComparators: number;
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
-        get fullyInitialized(): boolean;
         get name(): $Component;
         get displayName(): $Component;
+        get fullyInitialized(): boolean;
         get color(): $DyeColor;
     }
     export class $ToolboxDisposeAllPacket extends $Record implements $ServerboundPacketPayload {
@@ -152,11 +152,12 @@ declare module "@package/com/simibubi/create/content/equipment/toolbox" {
     export type $ToolboxDisposeAllPacket_ = { toolboxPos?: $BlockPos_,  } | [toolboxPos?: $BlockPos_, ];
     export class $ToolboxInventory extends $ItemStackHandler {
         static cleanItemNBT(arg0: $ItemStack_): $ItemStack;
-        static canItemsShareCompartment(arg0: $ItemStack_, arg1: $ItemStack_): boolean;
         distributeToCompartment(arg0: $ItemStack_, arg1: number, arg2: boolean): $ItemStack;
+        static canItemsShareCompartment(arg0: $ItemStack_, arg1: $ItemStack_): boolean;
         takeFromCompartment(arg0: number, arg1: number, arg2: boolean): $ItemStack;
         settle(arg0: number): void;
         inLimitedMode(arg0: $Consumer_<$ToolboxInventory>): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         /**
          * @deprecated
          */
@@ -263,9 +264,9 @@ declare module "@package/com/simibubi/create/content/equipment/toolbox" {
     }
     export class $ToolboxHandlerClient {
         static renderOverlay(arg0: $GuiGraphics, arg1: $DeltaTracker): void;
+        static onKeyInput(arg0: number, arg1: boolean): void;
         static clientTick(): void;
         static onPickItem(): boolean;
-        static onKeyInput(arg0: number, arg1: boolean): void;
         static OVERLAY: $LayeredDraw$Layer;
         constructor();
     }
@@ -285,8 +286,8 @@ declare module "@package/com/simibubi/create/content/equipment/toolbox" {
      */
     export type $RadialToolboxMenu$State_ = "select_box" | "select_item" | "select_item_unequip" | "detach";
     export class $ToolboxMountedStorage extends $WrapperMountedItemStorage<$ToolboxInventory> {
-        static fromToolbox(arg0: $ToolboxBlockEntity): $ToolboxMountedStorage;
         static fromLegacy(arg0: $HolderLookup$Provider, arg1: $CompoundTag_): $ToolboxMountedStorage;
+        static fromToolbox(arg0: $ToolboxBlockEntity): $ToolboxMountedStorage;
         static CODEC: $MapCodec<$ToolboxMountedStorage>;
         type: $MountedItemStorageType<$MountedItemStorage>;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $MountedItemStorage>;
@@ -300,20 +301,20 @@ declare module "@package/com/simibubi/create/content/equipment/toolbox" {
         constructor();
     }
     export class $ToolboxBlock extends $HorizontalDirectionalBlock implements $SimpleWaterloggedBlock, $IBE<$ToolboxBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$ToolboxBlockEntity>;
         getColor(): $DyeColor;
         getBlockEntityClass(): $Class<$ToolboxBlockEntity>;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
+        getBlockEntityType(): $BlockEntityType<$ToolboxBlockEntity>;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ToolboxBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ToolboxBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ToolboxBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ToolboxBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $ToolboxBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ToolboxBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ToolboxBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ToolboxBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -345,9 +346,9 @@ declare module "@package/com/simibubi/create/content/equipment/toolbox" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties, arg1: $DyeColor_);
-        get blockEntityType(): $BlockEntityType<$ToolboxBlockEntity>;
         get color(): $DyeColor;
         get blockEntityClass(): $Class<$ToolboxBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$ToolboxBlockEntity>;
     }
     export class $ToolboxRenderer extends $SmartBlockEntityRenderer<$ToolboxBlockEntity> {
         constructor(arg0: $BlockEntityRendererProvider$Context);

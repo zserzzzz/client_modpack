@@ -67,11 +67,11 @@ declare module "@package/com/simibubi/create/content/equipment/zapper/terrainzap
         get(arg0: number): number;
         set(arg0: number, arg1: number, arg2: number): void;
         getOffset(arg0: $Vec3_, arg1: $Direction_, arg2: $PlacementOptions_): $BlockPos;
+        redirectTool(arg0: $TerrainTools_): $TerrainTools;
+        getSupportedTools(): $TerrainTools[];
         addToGlobalPositions(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $Direction_, arg3: $Collection_<$BlockPos_>, arg4: $TerrainTools_): $Collection<$BlockPos>;
         hasConnectivityOptions(): boolean;
         hasPlacementOptions(): boolean;
-        redirectTool(arg0: $TerrainTools_): $TerrainTools;
-        getSupportedTools(): $TerrainTools[];
         constructor(arg0: number);
         get supportedTools(): $TerrainTools[];
     }
@@ -79,8 +79,8 @@ declare module "@package/com/simibubi/create/content/equipment/zapper/terrainzap
         run(arg0: $Level_, arg1: $List_<$BlockPos_>, arg2: $Direction_, arg3: $BlockState_, arg4: $CompoundTag_, arg5: $Player): void;
         static values(): $TerrainTools[];
         static valueOf(arg0: string): $TerrainTools;
-        getSerializedName(): string;
         static isReplaceable(arg0: $BlockState_): boolean;
+        getSerializedName(): string;
         requiresSelectedBlock(): boolean;
         getRemappedEnumConstantName(): string;
         static Replace: $TerrainTools;

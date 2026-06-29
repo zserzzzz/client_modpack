@@ -6,8 +6,8 @@ import { $Class } from "@package/java/lang";
 
 declare module "@package/net/neoforged/neoforge/gametest" {
     export class $GameTestHooks {
-        static registerGametests(): void;
         static isGametestEnabled(): boolean;
+        static registerGametests(): void;
         static prefixGameTestTemplate(method: $Method): boolean;
         static getTemplateNamespace(method: $Method): string;
         static isGametestServer(): boolean;

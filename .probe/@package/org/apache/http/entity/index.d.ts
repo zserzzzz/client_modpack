@@ -4,18 +4,18 @@ import { $Charset } from "@package/java/nio/charset";
 
 declare module "@package/org/apache/http/entity" {
     export class $AbstractHttpEntity implements $HttpEntity {
+        setChunked(arg0: boolean): void;
         setContentType(arg0: $Header): void;
         setContentType(arg0: string): void;
         getContentType(): $Header;
         getContentEncoding(): $Header;
+        isChunked(): boolean;
+        setContentEncoding(arg0: string): void;
+        setContentEncoding(arg0: $Header): void;
         /**
          * @deprecated
          */
         consumeContent(): void;
-        setContentEncoding(arg0: $Header): void;
-        setContentEncoding(arg0: string): void;
-        setChunked(arg0: boolean): void;
-        isChunked(): boolean;
     }
     export class $InputStreamEntity extends $AbstractHttpEntity {
         constructor(arg0: $InputStream, arg1: number, arg2: $ContentType);
@@ -24,22 +24,22 @@ declare module "@package/org/apache/http/entity" {
         constructor(arg0: $InputStream);
     }
     export class $ContentType implements $Serializable {
-        withParameters(...arg0: $NameValuePair[]): $ContentType;
         static get(arg0: $HttpEntity): $ContentType;
         static getOrDefault(arg0: $HttpEntity): $ContentType;
         static parse(arg0: string): $ContentType;
         static create(arg0: string, ...arg1: $NameValuePair[]): $ContentType;
+        static create(arg0: string, arg1: $Charset): $ContentType;
         static create(arg0: string): $ContentType;
         static create(arg0: string, arg1: string): $ContentType;
-        static create(arg0: string, arg1: $Charset): $ContentType;
         getParameter(arg0: string): string;
+        withParameters(...arg0: $NameValuePair[]): $ContentType;
         withCharset(arg0: string): $ContentType;
         withCharset(arg0: $Charset): $ContentType;
-        getMimeType(): string;
         getCharset(): $Charset;
+        getMimeType(): string;
+        static getByMimeType(arg0: string): $ContentType;
         static getLenient(arg0: $HttpEntity): $ContentType;
         static getLenientOrDefault(arg0: $HttpEntity): $ContentType;
-        static getByMimeType(arg0: string): $ContentType;
         static TEXT_HTML: $ContentType;
         static WILDCARD: $ContentType;
         static TEXT_XML: $ContentType;
@@ -62,7 +62,7 @@ declare module "@package/org/apache/http/entity" {
         static APPLICATION_XHTML_XML: $ContentType;
         static APPLICATION_XML: $ContentType;
         static TEXT_PLAIN: $ContentType;
-        get mimeType(): string;
         get charset(): $Charset;
+        get mimeType(): string;
     }
 }

@@ -59,8 +59,8 @@ declare module "@package/com/simibubi/create/content/logistics/item/filter/attri
     }
     export class $ItemAttribute {
         static loadStatic(arg0: $CompoundTag_, arg1: $HolderLookup$Provider): $ItemAttribute;
-        static getAllAttributes(arg0: $ItemStack_, arg1: $Level_): $List<$ItemAttribute>;
         static saveStatic(arg0: $ItemAttribute, arg1: $HolderLookup$Provider): $CompoundTag;
+        static getAllAttributes(arg0: $ItemStack_, arg1: $Level_): $List<$ItemAttribute>;
         static CODEC: $Codec<$ItemAttribute>;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ItemAttribute>;
     }
@@ -77,8 +77,8 @@ declare module "@package/com/simibubi/create/content/logistics/item/filter/attri
     export class $ItemAttributeType {
     }
     export interface $ItemAttributeType {
-        createAttribute(): $ItemAttribute;
         codec(): $MapCodec<$ItemAttribute>;
+        createAttribute(): $ItemAttribute;
         streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $ItemAttribute>;
         getAllAttributes(arg0: $ItemStack_, arg1: $Level_): $List<$ItemAttribute>;
     }
@@ -87,8 +87,8 @@ declare module "@package/com/simibubi/create/content/logistics/item/filter/attri
      */
     export type $ItemAttributeType_ = RegistryTypes.CreateItemAttributeType;
     export class $SingletonItemAttribute$Type implements $ItemAttributeType {
-        createAttribute(): $ItemAttribute;
         codec(): $MapCodec<$ItemAttribute>;
+        createAttribute(): $ItemAttribute;
         streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $ItemAttribute>;
         getAllAttributes(arg0: $ItemStack_, arg1: $Level_): $List<$ItemAttribute>;
         constructor(arg0: $Function_<$SingletonItemAttribute$Type, $SingletonItemAttribute>);
@@ -103,5 +103,5 @@ declare module "@package/com/simibubi/create/content/logistics/item/filter/attri
     /**
      * Values that may be interpreted as {@link $ItemAttribute$ItemAttributeEntry}.
      */
-    export type $ItemAttribute$ItemAttributeEntry_ = { attribute?: $ItemAttribute, inverted?: boolean,  } | [attribute?: $ItemAttribute, inverted?: boolean, ];
+    export type $ItemAttribute$ItemAttributeEntry_ = { inverted?: boolean, attribute?: $ItemAttribute,  } | [inverted?: boolean, attribute?: $ItemAttribute, ];
 }

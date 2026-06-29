@@ -13,14 +13,14 @@ declare module "@package/net/minecraft/locale" {
         getOrDefault(id: string): string;
         getOrDefault(key: string, defaultValue: string): string;
         has(id: string): boolean;
-        getComponent(arg0: string): $Component;
         static inject(instance: $Language): void;
+        getComponent(arg0: string): $Component;
         isDefaultRightToLeft(): boolean;
-        static loadFromJson(stream: $InputStream, output: $BiConsumer_<string, string>): void;
-        static loadFromJson(arg0: $InputStream, arg1: $BiConsumer_<string, string>, arg2: $BiConsumer_<string, $Component>): void;
-        getLanguageData(): $Map<string, string>;
         getVisualOrder(text: $List_<$FormattedText>): $List<$FormattedCharSequence>;
         getVisualOrder(text: $FormattedText): $FormattedCharSequence;
+        getLanguageData(): $Map<string, string>;
+        static loadFromJson(arg0: $InputStream, arg1: $BiConsumer_<string, string>, arg2: $BiConsumer_<string, $Component>): void;
+        static loadFromJson(stream: $InputStream, output: $BiConsumer_<string, string>): void;
         static DEFAULT: string;
         constructor();
         static get instance(): $Language;

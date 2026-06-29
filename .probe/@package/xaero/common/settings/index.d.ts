@@ -8,35 +8,48 @@ import { $KeyMapping } from "@package/net/minecraft/client";
 
 declare module "@package/xaero/common/settings" {
     export class $ModSettings {
+        saveSettings(): void;
+        resetEntityRadarBackwardsCompatibilityConfig(): void;
+        loadSettings(arg0: boolean): void;
+        static getTranslation(arg0: boolean): string;
+        getUIScale(arg0: number, arg1: number, arg2: number): number;
+        static canEditIngameSettings(): boolean;
+        resetServerSettings(): void;
         /**
          * @deprecated
          */
-        getMinimap(): boolean;
-        showWaypointsDisabled(): boolean;
-        getUIScale(arg0: number, arg1: number, arg2: number): number;
-        static getTranslation(arg0: boolean): string;
-        static canEditIngameSettings(): boolean;
-        resetServerSettings(): void;
-        getEntityRadarBackwardsCompatibilityConfig(): $EntityRadarBackwardsCompatibilityConfig;
-        deathpointsDisabled(): boolean;
-        minimapDisabled(): boolean;
-        caveMapsDisabled(): boolean;
-        loadSettings(arg0: boolean): void;
+        waypointsGUI(arg0: $WaypointsManager): boolean;
+        waypointsGUI(arg0: $MinimapSession): boolean;
         /**
          * @deprecated
          */
         getLegacySlimeChunksSeed(arg0: $XaeroPath): number;
-        foundOldRadarSettings(): boolean;
         getLoadedWaypointLines(): string;
         removeLoadedWaypointLines(): void;
-        isIgnoreHeightmaps(): boolean;
-        resetEntityRadarBackwardsCompatibilityConfig(): void;
-        getAutoUIScale(): number;
-        getMinimapScale(): number;
+        foundOldRadarSettings(): boolean;
+        loadDefaultSettings(arg0: boolean): void;
+        getEntityRadarBackwardsCompatibilityConfig(): $EntityRadarBackwardsCompatibilityConfig;
         /**
          * @deprecated
          */
-        saveWaypoints(arg0: $WaypointWorld, arg1: boolean): void;
+        getMinimap(): boolean;
+        isIgnoreHeightmaps(): boolean;
+        deathpointsDisabled(): boolean;
+        showWaypointsDisabled(): boolean;
+        caveMapsDisabled(): boolean;
+        minimapDisabled(): boolean;
+        writeSettings(arg0: $PrintWriter): void;
+        removeLegacySlimeChunksSeed(arg0: $XaeroPath): number;
+        /**
+         * @deprecated
+         */
+        getSlimeChunks(arg0: $MinimapSession): boolean;
+        /**
+         * @deprecated
+         */
+        getSlimeChunks(arg0: $WaypointsManager): boolean;
+        getMinimapScale(): number;
+        getAutoUIScale(): number;
         /**
          * @deprecated
          */
@@ -44,20 +57,16 @@ declare module "@package/xaero/common/settings" {
         /**
          * @deprecated
          */
-        getSlimeChunks(arg0: $WaypointsManager): boolean;
-        /**
-         * @deprecated
-         */
-        getSlimeChunks(arg0: $MinimapSession): boolean;
-        readSetting(arg0: string[]): void;
-        /**
-         * @deprecated
-         */
-        isKeyRepeat(arg0: $KeyMapping): boolean;
+        saveWaypoints(arg0: $WaypointWorld, arg1: boolean): void;
         /**
          * @deprecated
          */
         getSlimeChunksSeed(arg0: $XaeroPath): number;
+        readSetting(arg0: string[]): void;
+        /**
+         * @deprecated
+         */
+        setSlimeChunksSeed(arg0: number, arg1: $XaeroPath): void;
         /**
          * @deprecated
          */
@@ -65,17 +74,8 @@ declare module "@package/xaero/common/settings" {
         /**
          * @deprecated
          */
-        setSlimeChunksSeed(arg0: number, arg1: $XaeroPath): void;
+        isKeyRepeat(arg0: $KeyMapping): boolean;
         static setServerSettings(): void;
-        removeLegacySlimeChunksSeed(arg0: $XaeroPath): number;
-        saveSettings(): void;
-        writeSettings(arg0: $PrintWriter): void;
-        loadDefaultSettings(arg0: boolean): void;
-        waypointsGUI(arg0: $MinimapSession): boolean;
-        /**
-         * @deprecated
-         */
-        waypointsGUI(arg0: $WaypointsManager): boolean;
         /**
          * @deprecated
          */
@@ -176,11 +176,11 @@ declare module "@package/xaero/common/settings" {
          */
         static keyToggleRadar: $KeyMapping;
         constructor(arg0: $IXaeroMinimap);
-        get minimap(): boolean;
-        get entityRadarBackwardsCompatibilityConfig(): $EntityRadarBackwardsCompatibilityConfig;
         get loadedWaypointLines(): string;
+        get entityRadarBackwardsCompatibilityConfig(): $EntityRadarBackwardsCompatibilityConfig;
+        get minimap(): boolean;
         get ignoreHeightmaps(): boolean;
-        get autoUIScale(): number;
         get minimapScale(): number;
+        get autoUIScale(): number;
     }
 }

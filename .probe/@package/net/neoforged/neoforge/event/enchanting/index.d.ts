@@ -38,11 +38,11 @@ declare module "@package/net/neoforged/neoforge/event/enchanting" {
         /**
          * Get the row for which the enchantment level is being set
          */
-        getOriginalLevel(): number;
+        getEnchantRow(): number;
         /**
          * Get the row for which the enchantment level is being set
          */
-        getEnchantRow(): number;
+        getOriginalLevel(): number;
         /**
          * Set the new level of the enchantment (0-30)
          */
@@ -52,8 +52,8 @@ declare module "@package/net/neoforged/neoforge/event/enchanting" {
         get item(): $ItemStack;
         get pos(): $BlockPos;
         get power(): number;
-        get originalLevel(): number;
         get enchantRow(): number;
+        get originalLevel(): number;
     }
     /**
      * This event is fired whenever the enchantment level of a particular item is requested for gameplay purposes.
@@ -63,20 +63,20 @@ declare module "@package/net/neoforged/neoforge/event/enchanting" {
      * It is not fired for interactions with NBT, which means these changes will not reflect in the item tooltip.
      */
     export class $GetEnchantmentLevelEvent extends $Event {
-        getLookup(): $HolderLookup$RegistryLookup<$Enchantment>;
         /**
          * Returns the item stack that is being queried against.
          */
         getStack(): $ItemStack;
+        getLookup(): $HolderLookup$RegistryLookup<$Enchantment>;
+        /**
+         * Returns the mutable enchantment->level map.
+         */
+        getEnchantments(): $ItemEnchantments$Mutable;
         /**
          * Attempts to resolve a `Reference` for a target enchantment.
          * Since enchantments are data, they are not guaranteed to exist.
          */
         getHolder(key: $ResourceKey_<$Enchantment>): ($Holder$Reference<$Enchantment>) | undefined;
-        /**
-         * Returns the mutable enchantment->level map.
-         */
-        getEnchantments(): $ItemEnchantments$Mutable;
         /**
          * Helper method around `#getTargetEnchant()` that checks if the target is the specified enchantment, or if the target is null.
          */
@@ -94,8 +94,8 @@ declare module "@package/net/neoforged/neoforge/event/enchanting" {
          */
         getTargetEnchant(): $Holder<$Enchantment>;
         constructor(arg0: $ItemStack_, arg1: $ItemEnchantments$Mutable, arg2: $Holder_<$Enchantment>, arg3: $HolderLookup$RegistryLookup<$Enchantment_>);
-        get lookup(): $HolderLookup$RegistryLookup<$Enchantment>;
         get stack(): $ItemStack;
+        get lookup(): $HolderLookup$RegistryLookup<$Enchantment>;
         get enchantments(): $ItemEnchantments$Mutable;
         get targetEnchant(): $Holder<$Enchantment>;
     }

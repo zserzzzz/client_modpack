@@ -18,8 +18,8 @@ declare module "@package/io/github/mortuusars/exposure/util" {
     export class $TranslatableError extends $Record {
         code(): string;
         key(): string;
-        technical(): $MutableComponent;
         casual(): $MutableComponent;
+        technical(): $MutableComponent;
         static GENERIC: $TranslatableError;
         static CODEC: $Codec<$TranslatableError>;
         static TIMED_OUT: $TranslatableError;
@@ -29,7 +29,7 @@ declare module "@package/io/github/mortuusars/exposure/util" {
     /**
      * Values that may be interpreted as {@link $TranslatableError}.
      */
-    export type $TranslatableError_ = { key?: string, code?: string,  } | [key?: string, code?: string, ];
+    export type $TranslatableError_ = { code?: string, key?: string,  } | [code?: string, key?: string, ];
     export class $ExtraData extends $CompoundTag {
         remove<T>(type: $ExtraData$Type_<T>): void;
         get<T>(type: $ExtraData$Type_<T>): (T) | undefined;
@@ -46,41 +46,41 @@ declare module "@package/io/github/mortuusars/exposure/util" {
         constructor();
     }
     export class $PointOfView extends $Record {
-        static of(holder: $CameraHolder): $PointOfView;
         static of(entity: $Entity): $PointOfView;
+        static of(holder: $CameraHolder): $PointOfView;
         pos(): $Vec3;
         dir(): $Vec3;
         move(x: number, y: number, z: number): $PointOfView;
-        limitMaxDistance(entity: $Entity, distance: number): $PointOfView;
-        limitMaxDistance(holder: $CameraHolder, distance: number): $PointOfView;
-        rotateX(degrees: number): $PointOfView;
-        rotateY(degrees: number): $PointOfView;
         reverseDirection(): $PointOfView;
+        rotateY(degrees: number): $PointOfView;
+        rotateX(degrees: number): $PointOfView;
+        limitMaxDistance(holder: $CameraHolder, distance: number): $PointOfView;
+        limitMaxDistance(entity: $Entity, distance: number): $PointOfView;
         constructor(pos: $Vec3_, dir: $Vec3_);
     }
     /**
      * Values that may be interpreted as {@link $PointOfView}.
      */
-    export type $PointOfView_ = { pos?: $Vec3_, dir?: $Vec3_,  } | [pos?: $Vec3_, dir?: $Vec3_, ];
+    export type $PointOfView_ = { dir?: $Vec3_, pos?: $Vec3_,  } | [dir?: $Vec3_, pos?: $Vec3_, ];
     export class $ExtraData$Type<T> extends $Record {
-        static resourceLocation(key: string): $ExtraData$Type<$ResourceLocation>;
         static intVal(key: string): $ExtraData$Type<number>;
-        static bool(key: string): $ExtraData$Type<boolean>;
         static list<T>(key: string, tagType: number, extractFunc: $Function_<$Tag, T>, packFunc: $Function_<T, $Tag>): $ExtraData$Type<$List<T>>;
         key(): string;
         getter(): $BiFunction<$ExtraData, string, T>;
         setter(): $TriConsumer<$ExtraData, string, T>;
         static string(key: string): $ExtraData$Type<string>;
+        static bool(key: string): $ExtraData$Type<boolean>;
         static doubleVal(key: string): $ExtraData$Type<number>;
         static floatVal(key: string): $ExtraData$Type<number>;
         static stringRepresentable<T extends $StringRepresentable>(key: string, deserializeFunction: $Function_<string, T>): $ExtraData$Type<T>;
-        static vec3(key: string): $ExtraData$Type<$Vec3>;
-        static stringBasedList<T>(key: string, extractFunc: $Function_<string, T>, packFunc: $Function_<T, string>): $ExtraData$Type<$List<T>>;
         static longVal(key: string): $ExtraData$Type<number>;
+        static vec3(key: string): $ExtraData$Type<$Vec3>;
+        static resourceLocation(key: string): $ExtraData$Type<$ResourceLocation>;
+        static stringBasedList<T>(key: string, extractFunc: $Function_<string, T>, packFunc: $Function_<T, string>): $ExtraData$Type<$List<T>>;
         constructor(key: string, getter: $BiFunction_<$ExtraData, string, T>, setter: $TriConsumer_<$ExtraData, string, T>);
     }
     /**
      * Values that may be interpreted as {@link $ExtraData$Type}.
      */
-    export type $ExtraData$Type_<T> = { setter?: $TriConsumer_<$ExtraData, string, any>, getter?: $BiFunction_<$ExtraData, string, any>, key?: string,  } | [setter?: $TriConsumer_<$ExtraData, string, any>, getter?: $BiFunction_<$ExtraData, string, any>, key?: string, ];
+    export type $ExtraData$Type_<T> = { key?: string, setter?: $TriConsumer_<$ExtraData, string, any>, getter?: $BiFunction_<$ExtraData, string, any>,  } | [key?: string, setter?: $TriConsumer_<$ExtraData, string, any>, getter?: $BiFunction_<$ExtraData, string, any>, ];
 }

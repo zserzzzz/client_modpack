@@ -13,7 +13,7 @@ declare module "@package/net/fabricmc/fabric/api/blockview/v2" {
     }
     export interface $FabricBlockView {
         getBlockEntityRenderData(arg0: $BlockPos_): $Object;
-        getBiomeFabric(arg0: $BlockPos_): $Holder<$Biome>;
         hasBiomes(): boolean;
+        getBiomeFabric(arg0: $BlockPos_): $Holder<$Biome>;
     }
 }

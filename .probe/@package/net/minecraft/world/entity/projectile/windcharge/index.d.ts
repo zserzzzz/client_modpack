@@ -1,17 +1,18 @@
 import { $ExplosionDamageCalculator, $Level_ } from "@package/net/minecraft/world/level";
 import { $TagKey } from "@package/net/minecraft/tags";
 import { $ItemStack } from "@package/net/minecraft/world/item";
+import { $CompoundTag } from "@package/net/minecraft/nbt";
 import { $Fluid } from "@package/net/minecraft/world/level/material";
 import { $Breeze } from "@package/net/minecraft/world/entity/monster/breeze";
 import { $EntityType_, $Entity$RemovalReason, $Pose, $PortalProcessor, $Entity } from "@package/net/minecraft/world/entity";
 import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
 import { $Player } from "@package/net/minecraft/world/entity/player";
-import { $AbstractHurtingProjectile, $ItemSupplier } from "@package/net/minecraft/world/entity/projectile";
+import { $ItemSupplier, $AbstractHurtingProjectile } from "@package/net/minecraft/world/entity/projectile";
 import { $UUID } from "@package/java/util";
 import { $RandomSource } from "@package/net/minecraft/util";
 import { $SynchedEntityData, $EntityDataAccessor } from "@package/net/minecraft/network/syncher";
 import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos } from "@package/net/minecraft/core";
+import { $HolderLookup$Provider, $BlockPos } from "@package/net/minecraft/core";
 import { $AtomicInteger } from "@package/java/util/concurrent/atomic";
 import { $Vec3_, $Vec3 } from "@package/net/minecraft/world/phys";
 import { $EntityInLevelCallback } from "@package/net/minecraft/world/level/entity";
@@ -20,6 +21,7 @@ declare module "@package/net/minecraft/world/entity/projectile/windcharge" {
     export class $AbstractWindCharge extends $AbstractHurtingProjectile implements $ItemSupplier {
         getItem(): $ItemStack;
         explode(pos: $Vec3_): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -103,6 +105,7 @@ declare module "@package/net/minecraft/world/entity/projectile/windcharge" {
         get item(): $ItemStack;
     }
     export class $WindCharge extends $AbstractWindCharge {
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -185,6 +188,7 @@ declare module "@package/net/minecraft/world/entity/projectile/windcharge" {
         constructor(entityType: $EntityType_<$AbstractWindCharge>, level: $Level_);
     }
     export class $BreezeWindCharge extends $AbstractWindCharge {
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;

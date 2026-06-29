@@ -63,8 +63,8 @@ declare module "@package/com/simibubi/create/content/logistics" {
     export class $FlapStuffs$Visual {
         update(arg0: number): void;
         "delete"(): void;
-        updateLight(arg0: number): void;
         collectCrumblingInstances(arg0: $Consumer_<$Instance>): void;
+        updateLight(arg0: number): void;
         constructor(arg0: $InstancerProvider_, arg1: $Matrix4fc, arg2: $Vec3_, arg3: $Model);
     }
     export class $AddressEditBox extends $EditBox {

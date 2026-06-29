@@ -3,7 +3,7 @@ declare module "@package/dev/simulated_team/simulated/mixin_interface/tooltip_fl
     export class $TooltipFlagExtension {
     }
     export interface $TooltipFlagExtension {
-        simulated$getCreativeSearch(): boolean;
         simulated$setCreativeSearch(arg0: boolean): void;
+        simulated$getCreativeSearch(): boolean;
     }
 }

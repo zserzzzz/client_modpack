@@ -8,9 +8,9 @@ declare module "@package/com/soytutta/mynethersdelight/common/utility" {
     export class $EntityDropChanceAccessor {
     }
     export interface $EntityDropChanceAccessor {
-        callGenerateLoot(arg0: $DamageSource_): $List<$ItemStack>;
-        callSetDropChance(arg0: $EquipmentSlot_, arg1: number): void;
         callDropCustomDeathLoot(arg0: $ServerLevel, arg1: $DamageSource_, arg2: boolean): void;
         callGetEquipmentDropChance(arg0: $EquipmentSlot_): number;
+        callGenerateLoot(arg0: $DamageSource_): $List<$ItemStack>;
+        callSetDropChance(arg0: $EquipmentSlot_, arg1: number): void;
     }
 }

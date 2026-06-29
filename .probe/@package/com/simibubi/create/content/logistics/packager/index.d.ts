@@ -43,15 +43,15 @@ export * as repackager from "@package/com/simibubi/create/content/logistics/pack
 
 declare module "@package/com/simibubi/create/content/logistics/packager" {
     export class $PackagerBlock extends $WrenchableDirectionalBlock implements $IBE<$PackagerBlockEntity>, $IWrenchable {
-        getBlockEntityType(): $BlockEntityType<$PackagerBlockEntity>;
         getBlockEntityClass(): $Class<$PackagerBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$PackagerBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$PackagerBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$PackagerBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($PackagerBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$PackagerBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $PackagerBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$PackagerBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($PackagerBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$PackagerBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         static LINKED: $BooleanProperty;
         explosionResistance: number;
@@ -84,8 +84,8 @@ declare module "@package/com/simibubi/create/content/logistics/packager" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$PackagerBlockEntity>;
         get blockEntityClass(): $Class<$PackagerBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$PackagerBlockEntity>;
     }
     export class $PackagerGenerator extends $SpecialBlockStateGen {
         constructor();
@@ -96,21 +96,21 @@ declare module "@package/com/simibubi/create/content/logistics/packager" {
         constructor();
     }
     export class $PackagerBlockEntity extends $SmartBlockEntity implements $Clearable {
-        activate(): void;
-        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
         clearContent(): void;
-        triggerStockCheck(): void;
-        flashLink(): void;
+        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
+        activate(): void;
         unwrapBox(arg0: $ItemStack_, arg1: boolean): boolean;
-        isTargetingSameInventory(arg0: $IdentifiedInventory_): boolean;
+        triggerStockCheck(): void;
         recheckIfLinksPresent(): void;
+        isTargetingSameInventory(arg0: $IdentifiedInventory_): boolean;
+        flashLink(): void;
         redstoneModeActive(): boolean;
-        isTooBusyFor(arg0: $LogisticallyLinkedBehaviour$RequestType_): boolean;
         attemptToSend(arg0: $List_<$PackagingRequest_>): void;
-        getAvailableItems(): $InventorySummary;
+        isTooBusyFor(arg0: $LogisticallyLinkedBehaviour$RequestType_): boolean;
         updateSignAddress(): void;
-        getRenderedBox(): $ItemStack;
         getTrayOffset(arg0: number): number;
+        getAvailableItems(): $InventorySummary;
+        getRenderedBox(): $ItemStack;
         targetInventory: $InvManipulationBehaviour;
         level: $Level;
         previouslyUnwrapped: $ItemStack;
@@ -138,8 +138,8 @@ declare module "@package/com/simibubi/create/content/logistics/packager" {
         constructor();
     }
     export class $PackagerVisual<T extends $PackagerBlockEntity> extends $AbstractBlockEntityVisual<T> implements $SimpleDynamicVisual {
-        animate(arg0: number): void;
         beginFrame(arg0: $DynamicVisual$Context): void;
+        animate(arg0: number): void;
         planFrame(): $Plan<$DynamicVisual$Context>;
         tray: $TransformedInstance;
         hatch: $TransformedInstance;
@@ -148,43 +148,43 @@ declare module "@package/com/simibubi/create/content/logistics/packager" {
         constructor(arg0: $VisualizationContext, arg1: T, arg2: number);
     }
     export class $PackagerItemHandler implements $IItemHandlerModifiable {
+        getStackInSlot(arg0: number): $ItemStack;
+        getSlots(): number;
+        setStackInSlot(arg0: number, arg1: $ItemStack_): void;
+        insertItem(arg0: number, arg1: $ItemStack_, arg2: boolean): $ItemStack;
+        extractItem(arg0: number, arg1: number, arg2: boolean): $ItemStack;
         getSlotLimit(arg0: number): number;
         isItemValid(arg0: number, arg1: $ItemStack_): boolean;
-        extractItem(arg0: number, arg1: number, arg2: boolean): $ItemStack;
-        getSlots(): number;
-        getStackInSlot(arg0: number): $ItemStack;
-        insertItem(arg0: number, arg1: $ItemStack_, arg2: boolean): $ItemStack;
-        setStackInSlot(arg0: number, arg1: $ItemStack_): void;
-        kjs$isMutable(): boolean;
         kjs$setStackInSlot(slot: number, stack: $ItemStack_): void;
-        kjs$self(): $IItemHandler;
+        kjs$isMutable(): boolean;
         kjs$getBlock(level: $Level_): $LevelBlock;
-        getHeight(): number;
-        insertItem(stack: $ItemStack_, simulate: boolean): $ItemStack;
+        kjs$self(): $IItemHandler;
         setChanged(): void;
+        insertItem(stack: $ItemStack_, simulate: boolean): $ItemStack;
         asContainer(): $Container;
-        countNonEmpty(): number;
         countNonEmpty(match: $ItemPredicate_): number;
-        getWidth(): number;
-        isEmpty(): boolean;
-        count(): number;
-        count(match: $ItemPredicate_): number;
-        find(match: $ItemPredicate_): number;
-        find(): number;
+        countNonEmpty(): number;
+        getHeight(): number;
+        getAllItems(): $List<$ItemStack>;
         clear(match: $ItemPredicate_): void;
         clear(): void;
-        getAllItems(): $List<$ItemStack>;
+        find(match: $ItemPredicate_): number;
+        find(): number;
+        count(): number;
+        count(match: $ItemPredicate_): number;
+        isEmpty(): boolean;
+        getWidth(): number;
         insertItem(slot: number, stack: $ItemStack_, simulate: boolean): $ItemStack;
-        extractItem(slot: number, amount: number, simulate: boolean): $ItemStack;
-        isItemValid(slot: number, stack: $ItemStack_): boolean;
         getStackInSlot(slot: number): $ItemStack;
+        isItemValid(slot: number, stack: $ItemStack_): boolean;
+        extractItem(slot: number, amount: number, simulate: boolean): $ItemStack;
         getSlotLimit(slot: number): number;
         getSlots(): number;
         constructor(arg0: $PackagerBlockEntity);
         get height(): number;
-        get width(): number;
-        get empty(): boolean;
         get allItems(): $List<$ItemStack>;
+        get empty(): boolean;
+        get width(): number;
     }
     export class $IdentifiedInventory extends $Record {
         handler(): $IItemHandler;
@@ -194,39 +194,39 @@ declare module "@package/com/simibubi/create/content/logistics/packager" {
     /**
      * Values that may be interpreted as {@link $IdentifiedInventory}.
      */
-    export type $IdentifiedInventory_ = { handler?: $IItemHandler, identifier?: $InventoryIdentifier_,  } | [handler?: $IItemHandler, identifier?: $InventoryIdentifier_, ];
+    export type $IdentifiedInventory_ = { identifier?: $InventoryIdentifier_, handler?: $IItemHandler,  } | [identifier?: $InventoryIdentifier_, handler?: $IItemHandler, ];
     export class $PackagerRenderer extends $SmartBlockEntityRenderer<$PackagerBlockEntity> {
+        static getHatchModel(arg0: $PackagerBlockEntity): $PartialModel;
         static getTrayModel(arg0: $BlockState_): $PartialModel;
         static isHatchOpen(arg0: $PackagerBlockEntity): boolean;
-        static getHatchModel(arg0: $PackagerBlockEntity): $PartialModel;
         constructor(arg0: $BlockEntityRendererProvider$Context);
     }
     export class $InventorySummary {
+        getTotalCount(): number;
         getStacks(): $List<$BigItemStack>;
         isEmpty(): boolean;
         add(arg0: $ItemStack_, arg1: number): void;
         add(arg0: $InventorySummary): void;
-        add(arg0: $BigItemStack): void;
         add(arg0: $ItemStack_): void;
+        add(arg0: $BigItemStack): void;
         copy(): $InventorySummary;
         erase(arg0: $ItemStack_): boolean;
-        getTotalCount(): number;
-        divideAndSendTo(arg0: $ServerPlayer, arg1: $BlockPos_): void;
+        getStacksByCount(): $List<$BigItemStack>;
         getCountOf(arg0: $ItemStack_): number;
         getItemMap(): $Map<$Item, $List<$BigItemStack>>;
-        getStacksByCount(): $List<$BigItemStack>;
+        divideAndSendTo(arg0: $ServerPlayer, arg1: $BlockPos_): void;
         addAllBigItemStacks(arg0: $List_<$BigItemStack>): void;
-        addAllItemStacks(arg0: $List_<$ItemStack_>): void;
         getTotalOfMatching(arg0: $Predicate_<$ItemStack>): number;
+        addAllItemStacks(arg0: $List_<$ItemStack_>): void;
         static CODEC: $Codec<$InventorySummary>;
         contributingLinks: number;
         static EMPTY: $InventorySummary;
         constructor();
+        get totalCount(): number;
         get stacks(): $List<$BigItemStack>;
         get empty(): boolean;
-        get totalCount(): number;
-        get itemMap(): $Map<$Item, $List<$BigItemStack>>;
         get stacksByCount(): $List<$BigItemStack>;
+        get itemMap(): $Map<$Item, $List<$BigItemStack>>;
     }
     export class $PackagingRequest extends $Record {
         context(): $PackageOrderWithCrafts;
@@ -237,9 +237,9 @@ declare module "@package/com/simibubi/create/content/logistics/packager" {
         address(): string;
         subtract(arg0: number): void;
         item(): $ItemStack;
-        orderId(): number;
-        linkIndex(): number;
         finalLink(): $MutableBoolean;
+        linkIndex(): number;
+        orderId(): number;
         packageCounter(): $MutableInt;
         constructor(item: $ItemStack_, count: $MutableInt, address: string, linkIndex: number, finalLink: $MutableBoolean, packageCounter: $MutableInt, orderId: number, context: $PackageOrderWithCrafts_);
         get empty(): boolean;
@@ -247,5 +247,5 @@ declare module "@package/com/simibubi/create/content/logistics/packager" {
     /**
      * Values that may be interpreted as {@link $PackagingRequest}.
      */
-    export type $PackagingRequest_ = { item?: $ItemStack_, finalLink?: $MutableBoolean, context?: $PackageOrderWithCrafts_, count?: $MutableInt, orderId?: number, linkIndex?: number, packageCounter?: $MutableInt, address?: string,  } | [item?: $ItemStack_, finalLink?: $MutableBoolean, context?: $PackageOrderWithCrafts_, count?: $MutableInt, orderId?: number, linkIndex?: number, packageCounter?: $MutableInt, address?: string, ];
+    export type $PackagingRequest_ = { orderId?: number, linkIndex?: number, packageCounter?: $MutableInt, address?: string, item?: $ItemStack_, finalLink?: $MutableBoolean, context?: $PackageOrderWithCrafts_, count?: $MutableInt,  } | [orderId?: number, linkIndex?: number, packageCounter?: $MutableInt, address?: string, item?: $ItemStack_, finalLink?: $MutableBoolean, context?: $PackageOrderWithCrafts_, count?: $MutableInt, ];
 }

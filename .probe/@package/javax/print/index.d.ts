@@ -7,17 +7,17 @@ export * as event from "@package/javax/print/event";
 
 declare module "@package/javax/print" {
     export class $DocFlavor implements $Serializable, $Cloneable {
+        getMediaSubtype(): string;
+        getRepresentationClassName(): string;
         getParameter(arg0: string): string;
         getMimeType(): string;
         getMediaType(): string;
-        getMediaSubtype(): string;
-        getRepresentationClassName(): string;
         static hostEncoding: string;
         constructor(arg0: string, arg1: string);
-        get mimeType(): string;
-        get mediaType(): string;
         get mediaSubtype(): string;
         get representationClassName(): string;
+        get mimeType(): string;
+        get mediaType(): string;
     }
     export class $PrintService {
     }
@@ -73,8 +73,8 @@ declare module "@package/javax/print" {
         get streamForBytes(): $InputStream;
     }
     export class $ServiceUIFactory {
-        getUI(arg0: number, arg1: string): $Object;
         getUIClassNamesForRole(arg0: number): string[];
+        getUI(arg0: number, arg1: string): $Object;
         static ABOUT_UIROLE: number;
         static PANEL_UI: string;
         static RESERVED_UIROLE: number;

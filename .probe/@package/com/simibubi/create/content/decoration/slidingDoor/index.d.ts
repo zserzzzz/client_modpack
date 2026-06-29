@@ -44,23 +44,23 @@ declare module "@package/com/simibubi/create/content/decoration/slidingDoor" {
         tick(arg0: $MovementContext): void;
         mustTickWhileDisabled(): boolean;
         isActive(arg0: $MovementContext): boolean;
-        stopMoving(arg0: $MovementContext): void;
         /**
          * @deprecated
          */
         dropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
-        getActiveAreaOffset(arg0: $MovementContext): $Vec3;
-        renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
         onDisabledByControls(arg0: $MovementContext): void;
-        collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
-        onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
-        cancelStall(arg0: $MovementContext): void;
+        renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
+        getActiveAreaOffset(arg0: $MovementContext): $Vec3;
+        disableBlockEntityRendering(): boolean;
         startMoving(arg0: $MovementContext): void;
         visitNewPosition(arg0: $MovementContext, arg1: $BlockPos_): void;
-        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
         canBeDisabledVia(arg0: $MovementContext): $ItemStack;
+        collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
+        onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
         writeExtraData(arg0: $MovementContext): void;
-        disableBlockEntityRendering(): boolean;
+        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
+        cancelStall(arg0: $MovementContext): void;
+        stopMoving(arg0: $MovementContext): void;
         constructor();
     }
     export class $SlidingDoorShapes {
@@ -102,26 +102,26 @@ declare module "@package/com/simibubi/create/content/decoration/slidingDoor" {
      */
     export type $DoorControl_ = "all" | "north" | "east" | "south" | "west" | "none";
     export class $SlidingDoorBlock extends $DoorBlock implements $IWrenchable, $IBE<$SlidingDoorBlockEntity>, $IHaveBigOutline {
-        getBlockEntityType(): $BlockEntityType<$SlidingDoorBlockEntity>;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        static glass(arg0: $BlockBehaviour$Properties, arg1: boolean): $SlidingDoorBlock;
+        static stone(arg0: $BlockBehaviour$Properties, arg1: boolean): $SlidingDoorBlock;
+        getBlockEntityClass(): $Class<$SlidingDoorBlockEntity>;
+        isFoldingDoor(): boolean;
         static isDoorPowered(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_): boolean;
         deferUpdate(arg0: $LevelAccessor, arg1: $BlockPos_): void;
-        getBlockEntityClass(): $Class<$SlidingDoorBlockEntity>;
-        static glass(arg0: $BlockBehaviour$Properties, arg1: boolean): $SlidingDoorBlock;
-        static isDoubleDoor(arg0: $BlockState_, arg1: $DoorHingeSide_, arg2: $Direction_, arg3: $BlockState_): boolean;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        isFoldingDoor(): boolean;
-        static stone(arg0: $BlockBehaviour$Properties, arg1: boolean): $SlidingDoorBlock;
+        getBlockEntityType(): $BlockEntityType<$SlidingDoorBlockEntity>;
         static metal(arg0: $BlockBehaviour$Properties, arg1: boolean): $SlidingDoorBlock;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        static isDoubleDoor(arg0: $BlockState_, arg1: $DoorHingeSide_, arg2: $Direction_, arg3: $BlockState_): boolean;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$SlidingDoorBlockEntity>): void;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SlidingDoorBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($SlidingDoorBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SlidingDoorBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $SlidingDoorBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$SlidingDoorBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($SlidingDoorBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SlidingDoorBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         static SOUTH_AABB: $VoxelShape;
         explosionResistance: number;
@@ -165,8 +165,8 @@ declare module "@package/com/simibubi/create/content/decoration/slidingDoor" {
         static GLASS_SET_TYPE: $Supplier<$BlockSetType>;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties, arg1: $BlockSetType_, arg2: boolean);
-        get blockEntityType(): $BlockEntityType<$SlidingDoorBlockEntity>;
         get blockEntityClass(): $Class<$SlidingDoorBlockEntity>;
         get foldingDoor(): boolean;
+        get blockEntityType(): $BlockEntityType<$SlidingDoorBlockEntity>;
     }
 }

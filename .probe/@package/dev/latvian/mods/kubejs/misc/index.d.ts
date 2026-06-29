@@ -24,22 +24,22 @@ import { $StreamCodec } from "@package/net/minecraft/network/codec";
 
 declare module "@package/dev/latvian/mods/kubejs/misc" {
     export class $PotionBuilder extends $BuilderBase<$Potion> {
+        addEffect(effect: $MobEffectInstance): this;
+        effect(effect: $Holder_<$MobEffect>, duration: number, amplifier: number, ambient: boolean, visible: boolean, showIcon: boolean): this;
         effect(effect: $Holder_<$MobEffect>, duration: number, amplifier: number, ambient: boolean, visible: boolean, showIcon: boolean, hiddenEffect: $MobEffectInstance): this;
         effect(effect: $Holder_<$MobEffect>, duration: number, amplifier: number): this;
-        effect(effect: $Holder_<$MobEffect>, duration: number, amplifier: number, ambient: boolean, visible: boolean, showIcon: boolean): this;
         effect(effect: $Holder_<$MobEffect>, duration: number, amplifier: number, ambient: boolean, visible: boolean): this;
-        effect(effect: $Holder_<$MobEffect>): this;
         effect(effect: $Holder_<$MobEffect>, duration: number): this;
-        addEffect(effect: $MobEffectInstance): this;
+        effect(effect: $Holder_<$MobEffect>): this;
         registryKey: $ResourceKey<$Registry<$Potion>>;
         sourceLine: $SourceLine;
         id: $ResourceLocation;
         constructor(i: $ResourceLocation_);
     }
     export class $ParticleTypeBuilder extends $BuilderBase<$ParticleType<never>> {
+        codec(c: $MapCodec_<$ParticleOptions_>): this;
         textures(textures: $List_<string>): this;
         texture(texture: string): this;
-        codec(c: $MapCodec_<$ParticleOptions_>): this;
         overrideLimiter(o: boolean): this;
         streamCodec(s: $StreamCodec<$RegistryFriendlyByteBuf, $ParticleOptions_>): this;
         registryKey: $ResourceKey<$Registry<$ParticleType<never>>>;
@@ -68,8 +68,8 @@ declare module "@package/dev/latvian/mods/kubejs/misc" {
         constructor(builder: $MobEffectBuilder);
     }
     export class $VillagerProfessionBuilder extends $BuilderBase<$VillagerProfession> {
-        requestedItems(t: $Item_[]): this;
         secondaryPoi(t: $Block_[]): this;
+        requestedItems(t: $Item_[]): this;
         workSound(t: $SoundEvent_): this;
         poiType(t: $ResourceLocation_): this;
         poiTypeTag(t: $ResourceLocation_): this;
@@ -97,9 +97,9 @@ declare module "@package/dev/latvian/mods/kubejs/misc" {
         constructor(id: $ResourceLocation_);
     }
     export class $BasicParticleType extends $SimpleParticleType {
-        getType(): $ParticleType<never>;
+        getType(): $SimpleParticleType;
         constructor(bl: boolean);
-        get type(): $ParticleType<never>;
+        get type(): $SimpleParticleType;
     }
     export class $VillagerTypeBuilder extends $BuilderBase<$VillagerType> {
         registryKey: $ResourceKey<$Registry<$VillagerType>>;
@@ -114,8 +114,8 @@ declare module "@package/dev/latvian/mods/kubejs/misc" {
         category(c: $MobEffectCategory_): this;
         modifyAttribute(attribute: $ResourceLocation_, id: $ResourceLocation_, amount: number, operation: $AttributeModifier$Operation_): this;
         beneficial(): this;
-        effectTick(effectTick: $MobEffectBuilder$EffectEntityCallback_): this;
         harmful(): this;
+        effectTick(effectTick: $MobEffectBuilder$EffectEntityCallback_): this;
         registryKey: $ResourceKey<$Registry<$MobEffect>>;
         sourceLine: $SourceLine;
         id: $ResourceLocation;

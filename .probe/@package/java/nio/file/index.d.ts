@@ -49,11 +49,11 @@ declare module "@package/java/nio/file" {
     export class $WatchKey {
     }
     export interface $WatchKey {
-        watchable(): $Watchable;
         reset(): boolean;
         cancel(): void;
         isValid(): boolean;
         pollEvents(): $List<$WatchEvent<never>>;
+        watchable(): $Watchable;
         get valid(): boolean;
     }
     export class $LinkOption extends $Enum<$LinkOption> implements $OpenOption, $CopyOption {

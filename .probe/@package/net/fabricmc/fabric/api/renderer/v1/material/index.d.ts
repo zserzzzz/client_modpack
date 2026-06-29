@@ -32,13 +32,13 @@ declare module "@package/net/fabricmc/fabric/api/renderer/v1/material" {
     export class $MaterialView {
     }
     export interface $MaterialView {
-        shadeMode(): $ShadeMode;
-        blendMode(): $BlendMode;
-        disableColorIndex(): boolean;
-        disableDiffuse(): boolean;
         ambientOcclusion(): $TriState;
-        glint(): $TriState;
+        disableDiffuse(): boolean;
+        disableColorIndex(): boolean;
+        blendMode(): $BlendMode;
         emissive(): boolean;
+        glint(): $TriState;
+        shadeMode(): $ShadeMode;
     }
     export class $RenderMaterial {
         static MATERIAL_STANDARD: $ResourceLocation;

@@ -6,8 +6,8 @@ declare module "@package/dev/kir/cubeswithoutborders/client" {
         static get instance(): $FullscreenManager;
     }
     export interface $FullscreenManager {
-        setFullscreenMode(arg0: $FullscreenMode_): void;
         getFullscreenMode(): $FullscreenMode;
+        setFullscreenMode(arg0: $FullscreenMode_): void;
     }
     export class $FullscreenMode extends $Enum<$FullscreenMode> {
         static get(id: number): $FullscreenMode;

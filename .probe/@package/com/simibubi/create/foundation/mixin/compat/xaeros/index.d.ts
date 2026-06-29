@@ -4,8 +4,8 @@ declare module "@package/com/simibubi/create/foundation/mixin/compat/xaeros" {
     export class $XaeroFullscreenMapAccessor {
     }
     export interface $XaeroFullscreenMapAccessor {
-        create$getCameraZ(): number;
         create$getCameraX(): number;
+        create$getCameraZ(): number;
         create$getScale(): number;
         create$getMapProcessor(): $MapProcessor;
     }

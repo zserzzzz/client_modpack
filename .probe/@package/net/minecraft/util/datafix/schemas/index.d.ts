@@ -347,8 +347,8 @@ declare module "@package/net/minecraft/util/datafix/schemas" {
         constructor(versionKey: number, parent: $Schema);
     }
     export class $V99 extends $Schema {
-        static addNames<T>(tag: $Dynamic<T>, blockEntityRenames: $Map_<string, string>, entityRenames: $Map_<string, string>): T;
         static equipment(schema: $Schema): $TypeTemplate;
+        static addNames<T>(tag: $Dynamic<T>, blockEntityRenames: $Map_<string, string>, entityRenames: $Map_<string, string>): T;
         static registerInventory(schema: $Schema, map: $Map_<string, $Supplier_<$TypeTemplate>>, name: string): void;
         static registerMob(schema: $Schema, map: $Map_<string, $Supplier_<$TypeTemplate>>, name: string): void;
         static registerMinecart(schema: $Schema, map: $Map_<string, $Supplier_<$TypeTemplate>>, name: string): void;

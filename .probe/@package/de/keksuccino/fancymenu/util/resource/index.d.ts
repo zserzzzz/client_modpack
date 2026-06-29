@@ -22,9 +22,9 @@ declare module "@package/de/keksuccino/fancymenu/util/resource" {
         open(): $InputStream;
         waitForReady(arg0: number): void;
         isReady(): boolean;
-        waitForLoadingCompletedOrFailed(arg0: number): void;
         isLoadingCompleted(): boolean;
         isLoadingFailed(): boolean;
+        waitForLoadingCompletedOrFailed(arg0: number): void;
         get closed(): boolean;
         get ready(): boolean;
         get loadingCompleted(): boolean;
@@ -35,14 +35,14 @@ declare module "@package/de/keksuccino/fancymenu/util/resource" {
         static FULLY_TRANSPARENT_TEXTURE: $ResourceLocation;
     }
     export interface $RenderableResource extends $Resource {
-        getHeight(): number;
-        getResourceLocation(): $ResourceLocation;
         reset(): void;
         getWidth(): number;
+        getHeight(): number;
+        getResourceLocation(): $ResourceLocation;
         getAspectRatio(): $AspectRatio;
+        get width(): number;
         get height(): number;
         get resourceLocation(): $ResourceLocation;
-        get width(): number;
         get aspectRatio(): $AspectRatio;
     }
 }

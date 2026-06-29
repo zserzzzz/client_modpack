@@ -1,5 +1,6 @@
 import { $MultiBufferSource_ } from "@package/net/minecraft/client/renderer";
 import { $Codec } from "@package/com/mojang/serialization";
+import { $CompoundTag } from "@package/net/minecraft/nbt";
 import { $EntityType_, $Pose, $PortalProcessor, $Entity, $EntityDimensions, $Entity$RemovalReason, $LivingEntity, $WalkAnimationState, $EntityType$Builder } from "@package/net/minecraft/world/entity";
 import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
 import { $CustomPacketPayload$Type, $CustomPacketPayload } from "@package/net/minecraft/network/protocol/common/custom";
@@ -13,7 +14,7 @@ import { $RandomSource } from "@package/net/minecraft/util";
 import { $Plan } from "@package/dev/engine_room/flywheel/api/task";
 import { $InteractionResultHolder, $InteractionHand, $InteractionHand_ } from "@package/net/minecraft/world";
 import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos } from "@package/net/minecraft/core";
+import { $HolderLookup$Provider, $BlockPos } from "@package/net/minecraft/core";
 import { $Brain } from "@package/net/minecraft/world/entity/ai";
 import { $RegistryFriendlyByteBuf } from "@package/net/minecraft/network";
 import { $Record, $Object } from "@package/java/lang";
@@ -46,15 +47,16 @@ declare module "@package/com/simibubi/create/content/logistics/box" {
     export class $PackageEntity extends $LivingEntity implements $IEntityWithComplexSpawn {
         getAddress(): string;
         static build(arg0: $EntityType$Builder<never>): $EntityType$Builder<never>;
-        static fromItemStack(arg0: $Level_, arg1: $Vec3_, arg2: $ItemStack_): $PackageEntity;
-        static centerPackage(arg0: $Entity, arg1: $Vec3_): boolean;
         readSpawnData(arg0: $RegistryFriendlyByteBuf): void;
         writeSpawnData(arg0: $RegistryFriendlyByteBuf): void;
-        setBox(arg0: $ItemStack_): void;
         static createPackageAttributes(): $AttributeSupplier$Builder;
         decreaseInsertionTimer(arg0: $Vec3_): boolean;
+        static centerPackage(arg0: $Entity, arg1: $Vec3_): boolean;
         static fromDroppedItem(arg0: $Level_, arg1: $Entity, arg2: $ItemStack_): $PackageEntity;
         getBox(): $ItemStack;
+        setBox(arg0: $ItemStack_): void;
+        static fromItemStack(arg0: $Level_, arg1: $Vec3_, arg2: $ItemStack_): $PackageEntity;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         lastHurtByPlayerTime: number;
         autoSpinAttackItemStack: $ItemStack;
         lerpYRot: number;
@@ -208,11 +210,11 @@ declare module "@package/com/simibubi/create/content/logistics/box" {
     }
     export class $PackageItem$PackageOrderData extends $Record {
         isFinal(): boolean;
-        orderId(): number;
-        linkIndex(): number;
-        fragmentIndex(): number;
         isFinalLink(): boolean;
         orderContext(): $PackageOrderWithCrafts;
+        fragmentIndex(): number;
+        linkIndex(): number;
+        orderId(): number;
         static CODEC: $Codec<$PackageItem$PackageOrderData>;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $PackageItem$PackageOrderData>;
         constructor(arg0: number, arg1: number, arg2: boolean, arg3: number, arg4: boolean, arg5: ($PackageOrderWithCrafts_) | undefined);
@@ -223,7 +225,7 @@ declare module "@package/com/simibubi/create/content/logistics/box" {
     /**
      * Values that may be interpreted as {@link $PackageItem$PackageOrderData}.
      */
-    export type $PackageItem$PackageOrderData_ = { isFinalLink?: boolean, linkIndex?: number, orderContext?: $PackageOrderWithCrafts_, fragmentIndex?: number, orderId?: number, isFinal?: boolean,  } | [isFinalLink?: boolean, linkIndex?: number, orderContext?: $PackageOrderWithCrafts_, fragmentIndex?: number, orderId?: number, isFinal?: boolean, ];
+    export type $PackageItem$PackageOrderData_ = { fragmentIndex?: number, orderId?: number, isFinal?: boolean, isFinalLink?: boolean, linkIndex?: number, orderContext?: $PackageOrderWithCrafts_,  } | [fragmentIndex?: number, orderId?: number, isFinal?: boolean, isFinalLink?: boolean, linkIndex?: number, orderContext?: $PackageOrderWithCrafts_, ];
     export class $PackageVisual extends $AbstractEntityVisual<$PackageEntity> implements $SimpleDynamicVisual {
         beginFrame(arg0: $DynamicVisual$Context): void;
         planFrame(): $Plan<$DynamicVisual$Context>;
@@ -231,9 +233,6 @@ declare module "@package/com/simibubi/create/content/logistics/box" {
         constructor(arg0: $VisualizationContext, arg1: $PackageEntity, arg2: number);
     }
     export class $PackageItem extends $Item {
-        static getHeight(arg0: $ItemStack_): number;
-        static containing(arg0: $List_<$ItemStack_>): $ItemStack;
-        static containing(arg0: $ItemStackHandler): $ItemStack;
         static isFinal(arg0: $ItemStack_): boolean;
         open(arg0: $Level_, arg1: $Player, arg2: $InteractionHand_): $InteractionResultHolder<$ItemStack>;
         static isPackage(arg0: $ItemStack_): boolean;
@@ -241,19 +240,22 @@ declare module "@package/com/simibubi/create/content/logistics/box" {
         static getIndex(arg0: $ItemStack_): number;
         static getContents(arg0: $ItemStack_): $ItemStackHandler;
         static getWidth(arg0: $ItemStack_): number;
+        static getHeight(arg0: $ItemStack_): number;
         static setOrder(arg0: $ItemStack_, arg1: number, arg2: number, arg3: boolean, arg4: number, arg5: boolean, arg6: $PackageOrderWithCrafts_): void;
+        static containing(arg0: $ItemStackHandler): $ItemStack;
+        static containing(arg0: $List_<$ItemStack_>): $ItemStack;
         static matchAddress(arg0: $ItemStack_, arg1: string): boolean;
         static matchAddress(arg0: string, arg1: string): boolean;
-        static getOrderId(arg0: $ItemStack_): number;
-        static addAddress(arg0: $ItemStack_, arg1: string): void;
-        static hasOrderData(arg0: $ItemStack_): boolean;
-        static getPackageVelocity(arg0: number): number;
+        static addOrderContext(arg0: $ItemStack_, arg1: $PackageOrderWithCrafts_): void;
+        static getLinkIndex(arg0: $ItemStack_): number;
+        static isFinalLink(arg0: $ItemStack_): boolean;
         static clearAddress(arg0: $ItemStack_): void;
+        static hasOrderData(arg0: $ItemStack_): boolean;
         static getOrderContext(arg0: $ItemStack_): $PackageOrderWithCrafts;
         static getHookDistance(arg0: $ItemStack_): number;
-        static isFinalLink(arg0: $ItemStack_): boolean;
-        static getLinkIndex(arg0: $ItemStack_): number;
-        static addOrderContext(arg0: $ItemStack_, arg1: $PackageOrderWithCrafts_): void;
+        static getPackageVelocity(arg0: number): number;
+        static getOrderId(arg0: $ItemStack_): number;
+        static addAddress(arg0: $ItemStack_, arg1: string): void;
         static SLOTS: number;
         static BASE_ATTACK_DAMAGE_ID: $ResourceLocation;
         static DEFAULT_MAX_STACK_SIZE: number;
@@ -297,7 +299,7 @@ declare module "@package/com/simibubi/create/content/logistics/box" {
     /**
      * Values that may be interpreted as {@link $PackageDestroyPacket}.
      */
-    export type $PackageDestroyPacket_ = { box?: $ItemStack_, location?: $Vec3_,  } | [box?: $ItemStack_, location?: $Vec3_, ];
+    export type $PackageDestroyPacket_ = { location?: $Vec3_, box?: $ItemStack_,  } | [location?: $Vec3_, box?: $ItemStack_, ];
     export class $PackageStyles$PackageStyle extends $Record {
         type(): string;
         width(): number;
@@ -313,7 +315,7 @@ declare module "@package/com/simibubi/create/content/logistics/box" {
     /**
      * Values that may be interpreted as {@link $PackageStyles$PackageStyle}.
      */
-    export type $PackageStyles$PackageStyle_ = { type?: string, riggingOffset?: number, height?: number, rare?: boolean, width?: number,  } | [type?: string, riggingOffset?: number, height?: number, rare?: boolean, width?: number, ];
+    export type $PackageStyles$PackageStyle_ = { width?: number, type?: string, riggingOffset?: number, height?: number, rare?: boolean,  } | [width?: number, type?: string, riggingOffset?: number, height?: number, rare?: boolean, ];
     export class $PackageStyles {
         static getRandomBox(): $ItemStack;
         static getDefaultBox(): $ItemStack;

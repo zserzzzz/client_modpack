@@ -35,18 +35,18 @@ declare module "@package/com/simibubi/create/content/kinetics/mixer" {
         constructor(arg0: $VisualizationContext, arg1: $MechanicalMixerBlockEntity, arg2: number);
     }
     export class $MechanicalMixerBlock extends $KineticBlock implements $IBE<$MechanicalMixerBlockEntity>, $ICogWheel {
-        getBlockEntityType(): $BlockEntityType<$MechanicalMixerBlockEntity>;
         getBlockEntityClass(): $Class<$MechanicalMixerBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$MechanicalMixerBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$MechanicalMixerBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$MechanicalMixerBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($MechanicalMixerBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$MechanicalMixerBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $MechanicalMixerBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        isDedicatedCogWheel(): boolean;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$MechanicalMixerBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($MechanicalMixerBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$MechanicalMixerBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         isSmallCog(): boolean;
         isLargeCog(): boolean;
+        isDedicatedCogWheel(): boolean;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -76,19 +76,19 @@ declare module "@package/com/simibubi/create/content/kinetics/mixer" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$MechanicalMixerBlockEntity>;
         get blockEntityClass(): $Class<$MechanicalMixerBlockEntity>;
-        get dedicatedCogWheel(): boolean;
+        get blockEntityType(): $BlockEntityType<$MechanicalMixerBlockEntity>;
         get smallCog(): boolean;
         get largeCog(): boolean;
+        get dedicatedCogWheel(): boolean;
     }
     export class $MixingRecipe extends $BasinRecipe {
         constructor(arg0: $ProcessingRecipeParams);
     }
     export class $MechanicalMixerBlockEntity extends $BasinOperatingBlockEntity {
-        getRenderedHeadRotationSpeed(arg0: number): number;
         renderParticles(): void;
         getRenderedHeadOffset(arg0: number): number;
+        getRenderedHeadRotationSpeed(arg0: number): number;
         basinRemoved: boolean;
         runningTicks: number;
         level: $Level;

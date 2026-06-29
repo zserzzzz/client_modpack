@@ -322,19 +322,19 @@ declare module "@package/com/simibubi/create/content/decoration/palettes" {
      */
     export type $PaletteBlockPattern$CTs_ = "pillar" | "cap" | "layered";
     export class $PaletteBlockPattern {
-        getTexture(arg0: number): string;
-        isTranslucent(): boolean;
-        addRecipes(arg0: $NonNullSupplier_<$Block>, arg1: $DataGenContext<$Block_, $Block_>, arg2: $RegistrateRecipeProvider): void;
-        cubeAll(arg0: string): $PaletteBlockPattern$IBlockStateProvider;
         cubeColumn(arg0: string): $PaletteBlockPattern$IBlockStateProvider;
-        cubeBottomTop(arg0: string): $PaletteBlockPattern$IBlockStateProvider;
+        cubeAll(arg0: string): $PaletteBlockPattern$IBlockStateProvider;
+        isTranslucent(): boolean;
+        getTexture(arg0: number): string;
         pillar(arg0: string): $PaletteBlockPattern$IBlockStateProvider;
+        addRecipes(arg0: $NonNullSupplier_<$Block>, arg1: $DataGenContext<$Block_, $Block_>, arg2: $RegistrateRecipeProvider): void;
+        cubeBottomTop(arg0: string): $PaletteBlockPattern$IBlockStateProvider;
         getBlockStateGenerator(): $PaletteBlockPattern$IPatternBlockStateGenerator;
-        getBlockTags(): $TagKey<$Block>[];
         getItemTags(): $TagKey<$Item>[];
+        getBlockTags(): $TagKey<$Block>[];
         getBlockFactory(): $NonNullFunction<$BlockBehaviour$Properties, $Block>;
-        getPartials(): $PaletteBlockPartial<$Block>[];
         createCTBehaviour(arg0: string): ($Supplier<$ConnectedTextureBehaviour>) | undefined;
+        getPartials(): $PaletteBlockPartial<$Block>[];
         static CUT: $PaletteBlockPattern;
         static STANDARD_RANGE: $PaletteBlockPattern[];
         static VANILLA_RANGE: $PaletteBlockPattern[];
@@ -346,8 +346,8 @@ declare module "@package/com/simibubi/create/content/decoration/palettes" {
         constructor();
         get translucent(): boolean;
         get blockStateGenerator(): $PaletteBlockPattern$IPatternBlockStateGenerator;
-        get blockTags(): $TagKey<$Block>[];
         get itemTags(): $TagKey<$Item>[];
+        get blockTags(): $TagKey<$Block>[];
         get blockFactory(): $NonNullFunction<$BlockBehaviour$Properties, $Block>;
         get partials(): $PaletteBlockPartial<$Block>[];
     }

@@ -14,31 +14,11 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
     export class $Char2DoubleFunction {
     }
     export interface $Char2DoubleFunction extends $Function<string, number>, $IntToDoubleFunction {
-        defaultReturnValue(arg0: number): void;
-        defaultReturnValue(): number;
-        andThenObject<T>(arg0: $Double2ObjectFunction_<T>): $Char2ObjectFunction<T>;
-        andThenByte(arg0: $Double2ByteFunction_): $Char2ByteFunction;
-        andThenLong(arg0: $Double2LongFunction_): $Char2LongFunction;
-        composeFloat(arg0: $Float2CharFunction_): $Float2DoubleFunction;
-        composeByte(arg0: $Byte2CharFunction_): $Byte2DoubleFunction;
-        andThenDouble(arg0: $Double2DoubleFunction_): $Char2DoubleFunction;
-        andThenChar(arg0: $Double2CharFunction_): $Char2CharFunction;
-        composeDouble(arg0: $Double2CharFunction_): $Double2DoubleFunction;
-        andThenFloat(arg0: $Double2FloatFunction_): $Char2FloatFunction;
-        composeChar(arg0: $Char2CharFunction_): $Char2DoubleFunction;
-        composeShort(arg0: $Short2CharFunction_): $Short2DoubleFunction;
-        composeObject<T>(arg0: $Object2CharFunction_<T>): $Object2DoubleFunction<T>;
-        andThenShort(arg0: $Double2ShortFunction_): $Char2ShortFunction;
-        composeLong(arg0: $Long2CharFunction_): $Long2DoubleFunction;
-        composeReference<T>(arg0: $Reference2CharFunction_<T>): $Reference2DoubleFunction<T>;
-        andThenReference<T>(arg0: $Double2ReferenceFunction_<T>): $Char2ReferenceFunction<T>;
-        andThenInt(arg0: $Double2IntFunction_): $Char2IntFunction;
-        composeInt(arg0: $Int2CharFunction_): $Int2DoubleFunction;
-        remove(arg0: string): number;
         /**
          * @deprecated
          */
         remove(arg0: $Object): number;
+        remove(arg0: string): number;
         /**
          * @deprecated
          */
@@ -71,6 +51,26 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
          * @deprecated
          */
         andThen<T>(arg0: $Function_<number, T>): $Function$1<string, T>;
+        andThenInt(arg0: $Double2IntFunction_): $Char2IntFunction;
+        composeInt(arg0: $Int2CharFunction_): $Int2DoubleFunction;
+        composeDouble(arg0: $Double2CharFunction_): $Double2DoubleFunction;
+        composeShort(arg0: $Short2CharFunction_): $Short2DoubleFunction;
+        composeLong(arg0: $Long2CharFunction_): $Long2DoubleFunction;
+        andThenByte(arg0: $Double2ByteFunction_): $Char2ByteFunction;
+        andThenFloat(arg0: $Double2FloatFunction_): $Char2FloatFunction;
+        andThenReference<T>(arg0: $Double2ReferenceFunction_<T>): $Char2ReferenceFunction<T>;
+        composeByte(arg0: $Byte2CharFunction_): $Byte2DoubleFunction;
+        composeFloat(arg0: $Float2CharFunction_): $Float2DoubleFunction;
+        andThenObject<T>(arg0: $Double2ObjectFunction_<T>): $Char2ObjectFunction<T>;
+        andThenLong(arg0: $Double2LongFunction_): $Char2LongFunction;
+        composeObject<T>(arg0: $Object2CharFunction_<T>): $Object2DoubleFunction<T>;
+        andThenShort(arg0: $Double2ShortFunction_): $Char2ShortFunction;
+        andThenDouble(arg0: $Double2DoubleFunction_): $Char2DoubleFunction;
+        composeChar(arg0: $Char2CharFunction_): $Char2DoubleFunction;
+        andThenChar(arg0: $Double2CharFunction_): $Char2CharFunction;
+        composeReference<T>(arg0: $Reference2CharFunction_<T>): $Reference2DoubleFunction<T>;
+        defaultReturnValue(arg0: number): void;
+        defaultReturnValue(): number;
     }
     /**
      * Values that may be interpreted as {@link $Char2DoubleFunction}.
@@ -80,42 +80,22 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
         static identity(): $Char2CharFunction;
     }
     export interface $Char2CharFunction extends $Function<string, string>, $IntUnaryOperator {
-        defaultReturnValue(): string;
-        defaultReturnValue(arg0: string): void;
-        andThenObject<T>(arg0: $Char2ObjectFunction_<T>): $Char2ObjectFunction<T>;
-        andThenByte(arg0: $Char2ByteFunction_): $Char2ByteFunction;
-        andThenLong(arg0: $Char2LongFunction_): $Char2LongFunction;
-        composeFloat(arg0: $Float2CharFunction_): $Float2CharFunction;
-        composeByte(arg0: $Byte2CharFunction_): $Byte2CharFunction;
-        andThenDouble(arg0: $Char2DoubleFunction_): $Char2DoubleFunction;
-        andThenChar(arg0: $Char2CharFunction_): $Char2CharFunction;
-        composeDouble(arg0: $Double2CharFunction_): $Double2CharFunction;
-        andThenFloat(arg0: $Char2FloatFunction_): $Char2FloatFunction;
-        composeChar(arg0: $Char2CharFunction_): $Char2CharFunction;
-        composeShort(arg0: $Short2CharFunction_): $Short2CharFunction;
-        composeObject<T>(arg0: $Object2CharFunction_<T>): $Object2CharFunction<T>;
-        andThenShort(arg0: $Char2ShortFunction_): $Char2ShortFunction;
-        composeLong(arg0: $Long2CharFunction_): $Long2CharFunction;
-        composeReference<T>(arg0: $Reference2CharFunction_<T>): $Reference2CharFunction<T>;
-        andThenReference<T>(arg0: $Char2ReferenceFunction_<T>): $Char2ReferenceFunction<T>;
-        andThenInt(arg0: $Char2IntFunction_): $Char2IntFunction;
-        composeInt(arg0: $Int2CharFunction_): $Int2CharFunction;
+        remove(arg0: string): string;
         /**
          * @deprecated
          */
         remove(arg0: $Object): string;
-        remove(arg0: string): string;
         get(arg0: string): string;
+        put(arg0: string, arg1: string): string;
         /**
          * @deprecated
          */
         put(arg0: string, arg1: string): string;
-        put(arg0: string, arg1: string): string;
-        containsKey(arg0: string): boolean;
         /**
          * @deprecated
          */
         containsKey(arg0: $Object): boolean;
+        containsKey(arg0: string): boolean;
         /**
          * @deprecated
          */
@@ -133,6 +113,26 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
          * @deprecated
          */
         andThen<T>(arg0: $Function_<string, T>): $Function$1<string, T>;
+        andThenInt(arg0: $Char2IntFunction_): $Char2IntFunction;
+        composeInt(arg0: $Int2CharFunction_): $Int2CharFunction;
+        composeDouble(arg0: $Double2CharFunction_): $Double2CharFunction;
+        composeShort(arg0: $Short2CharFunction_): $Short2CharFunction;
+        composeLong(arg0: $Long2CharFunction_): $Long2CharFunction;
+        andThenByte(arg0: $Char2ByteFunction_): $Char2ByteFunction;
+        andThenFloat(arg0: $Char2FloatFunction_): $Char2FloatFunction;
+        andThenReference<T>(arg0: $Char2ReferenceFunction_<T>): $Char2ReferenceFunction<T>;
+        composeByte(arg0: $Byte2CharFunction_): $Byte2CharFunction;
+        composeFloat(arg0: $Float2CharFunction_): $Float2CharFunction;
+        andThenObject<T>(arg0: $Char2ObjectFunction_<T>): $Char2ObjectFunction<T>;
+        andThenLong(arg0: $Char2LongFunction_): $Char2LongFunction;
+        composeObject<T>(arg0: $Object2CharFunction_<T>): $Object2CharFunction<T>;
+        andThenShort(arg0: $Char2ShortFunction_): $Char2ShortFunction;
+        andThenDouble(arg0: $Char2DoubleFunction_): $Char2DoubleFunction;
+        composeChar(arg0: $Char2CharFunction_): $Char2CharFunction;
+        andThenChar(arg0: $Char2CharFunction_): $Char2CharFunction;
+        composeReference<T>(arg0: $Reference2CharFunction_<T>): $Reference2CharFunction<T>;
+        defaultReturnValue(arg0: string): void;
+        defaultReturnValue(): string;
     }
     /**
      * Values that may be interpreted as {@link $Char2CharFunction}.
@@ -141,36 +141,16 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
     export class $Char2ObjectFunction<V> {
     }
     export interface $Char2ObjectFunction<V> extends $Function<string, V>, $IntFunction<V> {
-        defaultReturnValue(arg0: V): void;
-        defaultReturnValue(): V;
-        andThenObject<T>(arg0: $Object2ObjectFunction_<V, T>): $Char2ObjectFunction<T>;
-        andThenByte(arg0: $Object2ByteFunction_<V>): $Char2ByteFunction;
-        andThenLong(arg0: $Object2LongFunction_<V>): $Char2LongFunction;
-        composeFloat(arg0: $Float2CharFunction_): $Float2ObjectFunction<V>;
-        composeByte(arg0: $Byte2CharFunction_): $Byte2ObjectFunction<V>;
-        andThenDouble(arg0: $Object2DoubleFunction_<V>): $Char2DoubleFunction;
-        andThenChar(arg0: $Object2CharFunction_<V>): $Char2CharFunction;
-        composeDouble(arg0: $Double2CharFunction_): $Double2ObjectFunction<V>;
-        andThenFloat(arg0: $Object2FloatFunction_<V>): $Char2FloatFunction;
-        composeChar(arg0: $Char2CharFunction_): $Char2ObjectFunction<V>;
-        composeShort(arg0: $Short2CharFunction_): $Short2ObjectFunction<V>;
-        composeObject<T>(arg0: $Object2CharFunction_<T>): $Object2ObjectFunction<T, V>;
-        andThenShort(arg0: $Object2ShortFunction_<V>): $Char2ShortFunction;
-        composeLong(arg0: $Long2CharFunction_): $Long2ObjectFunction<V>;
-        composeReference<T>(arg0: $Reference2CharFunction_<T>): $Reference2ObjectFunction<T, V>;
-        andThenReference<T>(arg0: $Object2ReferenceFunction_<V, T>): $Char2ReferenceFunction<T>;
-        andThenInt(arg0: $Object2IntFunction_<V>): $Char2IntFunction;
-        composeInt(arg0: $Int2CharFunction_): $Int2ObjectFunction<V>;
-        /**
-         * @deprecated
-         */
-        remove(arg0: $Object): V;
         remove(arg0: string): V;
         /**
          * @deprecated
          */
-        get(arg0: $Object): V;
+        remove(arg0: $Object): V;
         get(arg0: string): V;
+        /**
+         * @deprecated
+         */
+        get(arg0: $Object): V;
         put(arg0: string, arg1: V): V;
         /**
          * @deprecated
@@ -180,11 +160,11 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
          * @deprecated
          */
         apply(arg0: number): V;
+        containsKey(arg0: string): boolean;
         /**
          * @deprecated
          */
         containsKey(arg0: $Object): boolean;
-        containsKey(arg0: string): boolean;
         /**
          * @deprecated
          */
@@ -194,6 +174,26 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
          * @deprecated
          */
         compose<T>(arg0: $Function_<T, string>): $Function$1<T, V>;
+        andThenInt(arg0: $Object2IntFunction_<V>): $Char2IntFunction;
+        composeInt(arg0: $Int2CharFunction_): $Int2ObjectFunction<V>;
+        composeDouble(arg0: $Double2CharFunction_): $Double2ObjectFunction<V>;
+        composeShort(arg0: $Short2CharFunction_): $Short2ObjectFunction<V>;
+        composeLong(arg0: $Long2CharFunction_): $Long2ObjectFunction<V>;
+        andThenByte(arg0: $Object2ByteFunction_<V>): $Char2ByteFunction;
+        andThenFloat(arg0: $Object2FloatFunction_<V>): $Char2FloatFunction;
+        andThenReference<T>(arg0: $Object2ReferenceFunction_<V, T>): $Char2ReferenceFunction<T>;
+        composeByte(arg0: $Byte2CharFunction_): $Byte2ObjectFunction<V>;
+        composeFloat(arg0: $Float2CharFunction_): $Float2ObjectFunction<V>;
+        andThenObject<T>(arg0: $Object2ObjectFunction_<V, T>): $Char2ObjectFunction<T>;
+        andThenLong(arg0: $Object2LongFunction_<V>): $Char2LongFunction;
+        composeObject<T>(arg0: $Object2CharFunction_<T>): $Object2ObjectFunction<T, V>;
+        andThenShort(arg0: $Object2ShortFunction_<V>): $Char2ShortFunction;
+        andThenDouble(arg0: $Object2DoubleFunction_<V>): $Char2DoubleFunction;
+        composeChar(arg0: $Char2CharFunction_): $Char2ObjectFunction<V>;
+        andThenChar(arg0: $Object2CharFunction_<V>): $Char2CharFunction;
+        composeReference<T>(arg0: $Reference2CharFunction_<T>): $Reference2ObjectFunction<T, V>;
+        defaultReturnValue(arg0: V): void;
+        defaultReturnValue(): V;
     }
     /**
      * Values that may be interpreted as {@link $Char2ObjectFunction}.
@@ -202,31 +202,11 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
     export class $Char2BooleanFunction {
     }
     export interface $Char2BooleanFunction extends $Function<string, boolean>, $IntPredicate {
-        defaultReturnValue(arg0: boolean): void;
-        defaultReturnValue(): boolean;
-        andThenObject<T>(arg0: $Boolean2ObjectFunction_<T>): $Char2ObjectFunction<T>;
-        andThenByte(arg0: $Boolean2ByteFunction_): $Char2ByteFunction;
-        andThenLong(arg0: $Boolean2LongFunction_): $Char2LongFunction;
-        composeFloat(arg0: $Float2CharFunction_): $Float2BooleanFunction;
-        composeByte(arg0: $Byte2CharFunction_): $Byte2BooleanFunction;
-        andThenDouble(arg0: $Boolean2DoubleFunction_): $Char2DoubleFunction;
-        andThenChar(arg0: $Boolean2CharFunction_): $Char2CharFunction;
-        composeDouble(arg0: $Double2CharFunction_): $Double2BooleanFunction;
-        andThenFloat(arg0: $Boolean2FloatFunction_): $Char2FloatFunction;
-        composeChar(arg0: $Char2CharFunction_): $Char2BooleanFunction;
-        composeShort(arg0: $Short2CharFunction_): $Short2BooleanFunction;
-        composeObject<T>(arg0: $Object2CharFunction_<T>): $Object2BooleanFunction<T>;
-        andThenShort(arg0: $Boolean2ShortFunction_): $Char2ShortFunction;
-        composeLong(arg0: $Long2CharFunction_): $Long2BooleanFunction;
-        composeReference<T>(arg0: $Reference2CharFunction_<T>): $Reference2BooleanFunction<T>;
-        andThenReference<T>(arg0: $Boolean2ReferenceFunction_<T>): $Char2ReferenceFunction<T>;
-        andThenInt(arg0: $Boolean2IntFunction_): $Char2IntFunction;
-        composeInt(arg0: $Int2CharFunction_): $Int2BooleanFunction;
-        remove(arg0: string): boolean;
         /**
          * @deprecated
          */
-        get(arg0: $Object): boolean;
+        remove(arg0: $Object): boolean;
+        remove(arg0: string): boolean;
         get(arg0: string): boolean;
         put(arg0: string, arg1: boolean): boolean;
         /**
@@ -237,16 +217,16 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
          * @deprecated
          */
         test(arg0: number): boolean;
+        containsKey(arg0: string): boolean;
         /**
          * @deprecated
          */
         containsKey(arg0: $Object): boolean;
-        containsKey(arg0: string): boolean;
-        getOrDefault(arg0: string, arg1: boolean): boolean;
         /**
          * @deprecated
          */
         getOrDefault(arg0: $Object, arg1: boolean): boolean;
+        getOrDefault(arg0: string, arg1: boolean): boolean;
         /**
          * @deprecated
          */
@@ -255,6 +235,26 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
          * @deprecated
          */
         andThen<T>(arg0: $Function_<boolean, T>): $Function$1<string, T>;
+        andThenInt(arg0: $Boolean2IntFunction_): $Char2IntFunction;
+        composeInt(arg0: $Int2CharFunction_): $Int2BooleanFunction;
+        composeDouble(arg0: $Double2CharFunction_): $Double2BooleanFunction;
+        composeShort(arg0: $Short2CharFunction_): $Short2BooleanFunction;
+        composeLong(arg0: $Long2CharFunction_): $Long2BooleanFunction;
+        andThenByte(arg0: $Boolean2ByteFunction_): $Char2ByteFunction;
+        andThenFloat(arg0: $Boolean2FloatFunction_): $Char2FloatFunction;
+        andThenReference<T>(arg0: $Boolean2ReferenceFunction_<T>): $Char2ReferenceFunction<T>;
+        composeByte(arg0: $Byte2CharFunction_): $Byte2BooleanFunction;
+        composeFloat(arg0: $Float2CharFunction_): $Float2BooleanFunction;
+        andThenObject<T>(arg0: $Boolean2ObjectFunction_<T>): $Char2ObjectFunction<T>;
+        andThenLong(arg0: $Boolean2LongFunction_): $Char2LongFunction;
+        composeObject<T>(arg0: $Object2CharFunction_<T>): $Object2BooleanFunction<T>;
+        andThenShort(arg0: $Boolean2ShortFunction_): $Char2ShortFunction;
+        andThenDouble(arg0: $Boolean2DoubleFunction_): $Char2DoubleFunction;
+        composeChar(arg0: $Char2CharFunction_): $Char2BooleanFunction;
+        andThenChar(arg0: $Boolean2CharFunction_): $Char2CharFunction;
+        composeReference<T>(arg0: $Reference2CharFunction_<T>): $Reference2BooleanFunction<T>;
+        defaultReturnValue(arg0: boolean): void;
+        defaultReturnValue(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $Char2BooleanFunction}.
@@ -263,31 +263,11 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
     export class $Char2LongFunction {
     }
     export interface $Char2LongFunction extends $Function<string, number>, $IntToLongFunction {
-        defaultReturnValue(arg0: number): void;
-        defaultReturnValue(): number;
-        andThenObject<T>(arg0: $Long2ObjectFunction_<T>): $Char2ObjectFunction<T>;
-        andThenByte(arg0: $Long2ByteFunction_): $Char2ByteFunction;
-        andThenLong(arg0: $Long2LongFunction_): $Char2LongFunction;
-        composeFloat(arg0: $Float2CharFunction_): $Float2LongFunction;
-        composeByte(arg0: $Byte2CharFunction_): $Byte2LongFunction;
-        andThenDouble(arg0: $Long2DoubleFunction_): $Char2DoubleFunction;
-        andThenChar(arg0: $Long2CharFunction_): $Char2CharFunction;
-        composeDouble(arg0: $Double2CharFunction_): $Double2LongFunction;
-        andThenFloat(arg0: $Long2FloatFunction_): $Char2FloatFunction;
-        composeChar(arg0: $Char2CharFunction_): $Char2LongFunction;
-        composeShort(arg0: $Short2CharFunction_): $Short2LongFunction;
-        composeObject<T>(arg0: $Object2CharFunction_<T>): $Object2LongFunction<T>;
-        andThenShort(arg0: $Long2ShortFunction_): $Char2ShortFunction;
-        composeLong(arg0: $Long2CharFunction_): $Long2LongFunction;
-        composeReference<T>(arg0: $Reference2CharFunction_<T>): $Reference2LongFunction<T>;
-        andThenReference<T>(arg0: $Long2ReferenceFunction_<T>): $Char2ReferenceFunction<T>;
-        andThenInt(arg0: $Long2IntFunction_): $Char2IntFunction;
-        composeInt(arg0: $Int2CharFunction_): $Int2LongFunction;
-        remove(arg0: string): number;
         /**
          * @deprecated
          */
         remove(arg0: $Object): number;
+        remove(arg0: string): number;
         /**
          * @deprecated
          */
@@ -320,6 +300,26 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
          * @deprecated
          */
         andThen<T>(arg0: $Function_<number, T>): $Function$1<string, T>;
+        andThenInt(arg0: $Long2IntFunction_): $Char2IntFunction;
+        composeInt(arg0: $Int2CharFunction_): $Int2LongFunction;
+        composeDouble(arg0: $Double2CharFunction_): $Double2LongFunction;
+        composeShort(arg0: $Short2CharFunction_): $Short2LongFunction;
+        composeLong(arg0: $Long2CharFunction_): $Long2LongFunction;
+        andThenByte(arg0: $Long2ByteFunction_): $Char2ByteFunction;
+        andThenFloat(arg0: $Long2FloatFunction_): $Char2FloatFunction;
+        andThenReference<T>(arg0: $Long2ReferenceFunction_<T>): $Char2ReferenceFunction<T>;
+        composeByte(arg0: $Byte2CharFunction_): $Byte2LongFunction;
+        composeFloat(arg0: $Float2CharFunction_): $Float2LongFunction;
+        andThenObject<T>(arg0: $Long2ObjectFunction_<T>): $Char2ObjectFunction<T>;
+        andThenLong(arg0: $Long2LongFunction_): $Char2LongFunction;
+        composeObject<T>(arg0: $Object2CharFunction_<T>): $Object2LongFunction<T>;
+        andThenShort(arg0: $Long2ShortFunction_): $Char2ShortFunction;
+        andThenDouble(arg0: $Long2DoubleFunction_): $Char2DoubleFunction;
+        composeChar(arg0: $Char2CharFunction_): $Char2LongFunction;
+        andThenChar(arg0: $Long2CharFunction_): $Char2CharFunction;
+        composeReference<T>(arg0: $Reference2CharFunction_<T>): $Reference2LongFunction<T>;
+        defaultReturnValue(arg0: number): void;
+        defaultReturnValue(): number;
     }
     /**
      * Values that may be interpreted as {@link $Char2LongFunction}.
@@ -328,31 +328,11 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
     export class $Char2IntFunction {
     }
     export interface $Char2IntFunction extends $Function<string, number>, $IntUnaryOperator {
-        defaultReturnValue(arg0: number): void;
-        defaultReturnValue(): number;
-        andThenObject<T>(arg0: $Int2ObjectFunction_<T>): $Char2ObjectFunction<T>;
-        andThenByte(arg0: $Int2ByteFunction_): $Char2ByteFunction;
-        andThenLong(arg0: $Int2LongFunction_): $Char2LongFunction;
-        composeFloat(arg0: $Float2CharFunction_): $Float2IntFunction;
-        composeByte(arg0: $Byte2CharFunction_): $Byte2IntFunction;
-        andThenDouble(arg0: $Int2DoubleFunction_): $Char2DoubleFunction;
-        andThenChar(arg0: $Int2CharFunction_): $Char2CharFunction;
-        composeDouble(arg0: $Double2CharFunction_): $Double2IntFunction;
-        andThenFloat(arg0: $Int2FloatFunction_): $Char2FloatFunction;
-        composeChar(arg0: $Char2CharFunction_): $Char2IntFunction;
-        composeShort(arg0: $Short2CharFunction_): $Short2IntFunction;
-        composeObject<T>(arg0: $Object2CharFunction_<T>): $Object2IntFunction<T>;
-        andThenShort(arg0: $Int2ShortFunction_): $Char2ShortFunction;
-        composeLong(arg0: $Long2CharFunction_): $Long2IntFunction;
-        composeReference<T>(arg0: $Reference2CharFunction_<T>): $Reference2IntFunction<T>;
-        andThenReference<T>(arg0: $Int2ReferenceFunction_<T>): $Char2ReferenceFunction<T>;
-        andThenInt(arg0: $Int2IntFunction_): $Char2IntFunction;
-        composeInt(arg0: $Int2CharFunction_): $Int2IntFunction;
-        remove(arg0: string): number;
         /**
          * @deprecated
          */
         remove(arg0: $Object): number;
+        remove(arg0: string): number;
         /**
          * @deprecated
          */
@@ -385,6 +365,26 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
          * @deprecated
          */
         andThen<T>(arg0: $Function_<number, T>): $Function$1<string, T>;
+        andThenInt(arg0: $Int2IntFunction_): $Char2IntFunction;
+        composeInt(arg0: $Int2CharFunction_): $Int2IntFunction;
+        composeDouble(arg0: $Double2CharFunction_): $Double2IntFunction;
+        composeShort(arg0: $Short2CharFunction_): $Short2IntFunction;
+        composeLong(arg0: $Long2CharFunction_): $Long2IntFunction;
+        andThenByte(arg0: $Int2ByteFunction_): $Char2ByteFunction;
+        andThenFloat(arg0: $Int2FloatFunction_): $Char2FloatFunction;
+        andThenReference<T>(arg0: $Int2ReferenceFunction_<T>): $Char2ReferenceFunction<T>;
+        composeByte(arg0: $Byte2CharFunction_): $Byte2IntFunction;
+        composeFloat(arg0: $Float2CharFunction_): $Float2IntFunction;
+        andThenObject<T>(arg0: $Int2ObjectFunction_<T>): $Char2ObjectFunction<T>;
+        andThenLong(arg0: $Int2LongFunction_): $Char2LongFunction;
+        composeObject<T>(arg0: $Object2CharFunction_<T>): $Object2IntFunction<T>;
+        andThenShort(arg0: $Int2ShortFunction_): $Char2ShortFunction;
+        andThenDouble(arg0: $Int2DoubleFunction_): $Char2DoubleFunction;
+        composeChar(arg0: $Char2CharFunction_): $Char2IntFunction;
+        andThenChar(arg0: $Int2CharFunction_): $Char2CharFunction;
+        composeReference<T>(arg0: $Reference2CharFunction_<T>): $Reference2IntFunction<T>;
+        defaultReturnValue(arg0: number): void;
+        defaultReturnValue(): number;
     }
     /**
      * Values that may be interpreted as {@link $Char2IntFunction}.
@@ -393,36 +393,16 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
     export class $Char2ReferenceFunction<V> {
     }
     export interface $Char2ReferenceFunction<V> extends $Function<string, V>, $IntFunction<V> {
-        defaultReturnValue(arg0: V): void;
-        defaultReturnValue(): V;
-        andThenObject<T>(arg0: $Reference2ObjectFunction_<V, T>): $Char2ObjectFunction<T>;
-        andThenByte(arg0: $Reference2ByteFunction_<V>): $Char2ByteFunction;
-        andThenLong(arg0: $Reference2LongFunction_<V>): $Char2LongFunction;
-        composeFloat(arg0: $Float2CharFunction_): $Float2ReferenceFunction<V>;
-        composeByte(arg0: $Byte2CharFunction_): $Byte2ReferenceFunction<V>;
-        andThenDouble(arg0: $Reference2DoubleFunction_<V>): $Char2DoubleFunction;
-        andThenChar(arg0: $Reference2CharFunction_<V>): $Char2CharFunction;
-        composeDouble(arg0: $Double2CharFunction_): $Double2ReferenceFunction<V>;
-        andThenFloat(arg0: $Reference2FloatFunction_<V>): $Char2FloatFunction;
-        composeChar(arg0: $Char2CharFunction_): $Char2ReferenceFunction<V>;
-        composeShort(arg0: $Short2CharFunction_): $Short2ReferenceFunction<V>;
-        composeObject<T>(arg0: $Object2CharFunction_<T>): $Object2ReferenceFunction<T, V>;
-        andThenShort(arg0: $Reference2ShortFunction_<V>): $Char2ShortFunction;
-        composeLong(arg0: $Long2CharFunction_): $Long2ReferenceFunction<V>;
-        composeReference<T>(arg0: $Reference2CharFunction_<T>): $Reference2ReferenceFunction<T, V>;
-        andThenReference<T>(arg0: $Reference2ReferenceFunction_<V, T>): $Char2ReferenceFunction<T>;
-        andThenInt(arg0: $Reference2IntFunction_<V>): $Char2IntFunction;
-        composeInt(arg0: $Int2CharFunction_): $Int2ReferenceFunction<V>;
-        /**
-         * @deprecated
-         */
-        remove(arg0: $Object): V;
         remove(arg0: string): V;
         /**
          * @deprecated
          */
-        get(arg0: $Object): V;
+        remove(arg0: $Object): V;
         get(arg0: string): V;
+        /**
+         * @deprecated
+         */
+        get(arg0: $Object): V;
         put(arg0: string, arg1: V): V;
         /**
          * @deprecated
@@ -432,11 +412,11 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
          * @deprecated
          */
         apply(arg0: number): V;
+        containsKey(arg0: string): boolean;
         /**
          * @deprecated
          */
         containsKey(arg0: $Object): boolean;
-        containsKey(arg0: string): boolean;
         /**
          * @deprecated
          */
@@ -446,6 +426,26 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
          * @deprecated
          */
         compose<T>(arg0: $Function_<T, string>): $Function$1<T, V>;
+        andThenInt(arg0: $Reference2IntFunction_<V>): $Char2IntFunction;
+        composeInt(arg0: $Int2CharFunction_): $Int2ReferenceFunction<V>;
+        composeDouble(arg0: $Double2CharFunction_): $Double2ReferenceFunction<V>;
+        composeShort(arg0: $Short2CharFunction_): $Short2ReferenceFunction<V>;
+        composeLong(arg0: $Long2CharFunction_): $Long2ReferenceFunction<V>;
+        andThenByte(arg0: $Reference2ByteFunction_<V>): $Char2ByteFunction;
+        andThenFloat(arg0: $Reference2FloatFunction_<V>): $Char2FloatFunction;
+        andThenReference<T>(arg0: $Reference2ReferenceFunction_<V, T>): $Char2ReferenceFunction<T>;
+        composeByte(arg0: $Byte2CharFunction_): $Byte2ReferenceFunction<V>;
+        composeFloat(arg0: $Float2CharFunction_): $Float2ReferenceFunction<V>;
+        andThenObject<T>(arg0: $Reference2ObjectFunction_<V, T>): $Char2ObjectFunction<T>;
+        andThenLong(arg0: $Reference2LongFunction_<V>): $Char2LongFunction;
+        composeObject<T>(arg0: $Object2CharFunction_<T>): $Object2ReferenceFunction<T, V>;
+        andThenShort(arg0: $Reference2ShortFunction_<V>): $Char2ShortFunction;
+        andThenDouble(arg0: $Reference2DoubleFunction_<V>): $Char2DoubleFunction;
+        composeChar(arg0: $Char2CharFunction_): $Char2ReferenceFunction<V>;
+        andThenChar(arg0: $Reference2CharFunction_<V>): $Char2CharFunction;
+        composeReference<T>(arg0: $Reference2CharFunction_<T>): $Reference2ReferenceFunction<T, V>;
+        defaultReturnValue(arg0: V): void;
+        defaultReturnValue(): V;
     }
     /**
      * Values that may be interpreted as {@link $Char2ReferenceFunction}.
@@ -454,31 +454,11 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
     export class $Char2ByteFunction {
     }
     export interface $Char2ByteFunction extends $Function<string, number>, $IntUnaryOperator {
-        defaultReturnValue(arg0: number): void;
-        defaultReturnValue(): number;
-        andThenObject<T>(arg0: $Byte2ObjectFunction_<T>): $Char2ObjectFunction<T>;
-        andThenByte(arg0: $Byte2ByteFunction_): $Char2ByteFunction;
-        andThenLong(arg0: $Byte2LongFunction_): $Char2LongFunction;
-        composeFloat(arg0: $Float2CharFunction_): $Float2ByteFunction;
-        composeByte(arg0: $Byte2CharFunction_): $Byte2ByteFunction;
-        andThenDouble(arg0: $Byte2DoubleFunction_): $Char2DoubleFunction;
-        andThenChar(arg0: $Byte2CharFunction_): $Char2CharFunction;
-        composeDouble(arg0: $Double2CharFunction_): $Double2ByteFunction;
-        andThenFloat(arg0: $Byte2FloatFunction_): $Char2FloatFunction;
-        composeChar(arg0: $Char2CharFunction_): $Char2ByteFunction;
-        composeShort(arg0: $Short2CharFunction_): $Short2ByteFunction;
-        composeObject<T>(arg0: $Object2CharFunction_<T>): $Object2ByteFunction<T>;
-        andThenShort(arg0: $Byte2ShortFunction_): $Char2ShortFunction;
-        composeLong(arg0: $Long2CharFunction_): $Long2ByteFunction;
-        composeReference<T>(arg0: $Reference2CharFunction_<T>): $Reference2ByteFunction<T>;
-        andThenReference<T>(arg0: $Byte2ReferenceFunction_<T>): $Char2ReferenceFunction<T>;
-        andThenInt(arg0: $Byte2IntFunction_): $Char2IntFunction;
-        composeInt(arg0: $Int2CharFunction_): $Int2ByteFunction;
-        remove(arg0: string): number;
         /**
          * @deprecated
          */
         remove(arg0: $Object): number;
+        remove(arg0: string): number;
         /**
          * @deprecated
          */
@@ -511,6 +491,26 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
          * @deprecated
          */
         andThen<T>(arg0: $Function_<number, T>): $Function$1<string, T>;
+        andThenInt(arg0: $Byte2IntFunction_): $Char2IntFunction;
+        composeInt(arg0: $Int2CharFunction_): $Int2ByteFunction;
+        composeDouble(arg0: $Double2CharFunction_): $Double2ByteFunction;
+        composeShort(arg0: $Short2CharFunction_): $Short2ByteFunction;
+        composeLong(arg0: $Long2CharFunction_): $Long2ByteFunction;
+        andThenByte(arg0: $Byte2ByteFunction_): $Char2ByteFunction;
+        andThenFloat(arg0: $Byte2FloatFunction_): $Char2FloatFunction;
+        andThenReference<T>(arg0: $Byte2ReferenceFunction_<T>): $Char2ReferenceFunction<T>;
+        composeByte(arg0: $Byte2CharFunction_): $Byte2ByteFunction;
+        composeFloat(arg0: $Float2CharFunction_): $Float2ByteFunction;
+        andThenObject<T>(arg0: $Byte2ObjectFunction_<T>): $Char2ObjectFunction<T>;
+        andThenLong(arg0: $Byte2LongFunction_): $Char2LongFunction;
+        composeObject<T>(arg0: $Object2CharFunction_<T>): $Object2ByteFunction<T>;
+        andThenShort(arg0: $Byte2ShortFunction_): $Char2ShortFunction;
+        andThenDouble(arg0: $Byte2DoubleFunction_): $Char2DoubleFunction;
+        composeChar(arg0: $Char2CharFunction_): $Char2ByteFunction;
+        andThenChar(arg0: $Byte2CharFunction_): $Char2CharFunction;
+        composeReference<T>(arg0: $Reference2CharFunction_<T>): $Reference2ByteFunction<T>;
+        defaultReturnValue(arg0: number): void;
+        defaultReturnValue(): number;
     }
     /**
      * Values that may be interpreted as {@link $Char2ByteFunction}.
@@ -519,31 +519,11 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
     export class $Char2ShortFunction {
     }
     export interface $Char2ShortFunction extends $Function<string, number>, $IntUnaryOperator {
-        defaultReturnValue(arg0: number): void;
-        defaultReturnValue(): number;
-        andThenObject<T>(arg0: $Short2ObjectFunction_<T>): $Char2ObjectFunction<T>;
-        andThenByte(arg0: $Short2ByteFunction_): $Char2ByteFunction;
-        andThenLong(arg0: $Short2LongFunction_): $Char2LongFunction;
-        composeFloat(arg0: $Float2CharFunction_): $Float2ShortFunction;
-        composeByte(arg0: $Byte2CharFunction_): $Byte2ShortFunction;
-        andThenDouble(arg0: $Short2DoubleFunction_): $Char2DoubleFunction;
-        andThenChar(arg0: $Short2CharFunction_): $Char2CharFunction;
-        composeDouble(arg0: $Double2CharFunction_): $Double2ShortFunction;
-        andThenFloat(arg0: $Short2FloatFunction_): $Char2FloatFunction;
-        composeChar(arg0: $Char2CharFunction_): $Char2ShortFunction;
-        composeShort(arg0: $Short2CharFunction_): $Short2ShortFunction;
-        composeObject<T>(arg0: $Object2CharFunction_<T>): $Object2ShortFunction<T>;
-        andThenShort(arg0: $Short2ShortFunction_): $Char2ShortFunction;
-        composeLong(arg0: $Long2CharFunction_): $Long2ShortFunction;
-        composeReference<T>(arg0: $Reference2CharFunction_<T>): $Reference2ShortFunction<T>;
-        andThenReference<T>(arg0: $Short2ReferenceFunction_<T>): $Char2ReferenceFunction<T>;
-        andThenInt(arg0: $Short2IntFunction_): $Char2IntFunction;
-        composeInt(arg0: $Int2CharFunction_): $Int2ShortFunction;
-        remove(arg0: string): number;
         /**
          * @deprecated
          */
         remove(arg0: $Object): number;
+        remove(arg0: string): number;
         /**
          * @deprecated
          */
@@ -576,6 +556,26 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
          * @deprecated
          */
         andThen<T>(arg0: $Function_<number, T>): $Function$1<string, T>;
+        andThenInt(arg0: $Short2IntFunction_): $Char2IntFunction;
+        composeInt(arg0: $Int2CharFunction_): $Int2ShortFunction;
+        composeDouble(arg0: $Double2CharFunction_): $Double2ShortFunction;
+        composeShort(arg0: $Short2CharFunction_): $Short2ShortFunction;
+        composeLong(arg0: $Long2CharFunction_): $Long2ShortFunction;
+        andThenByte(arg0: $Short2ByteFunction_): $Char2ByteFunction;
+        andThenFloat(arg0: $Short2FloatFunction_): $Char2FloatFunction;
+        andThenReference<T>(arg0: $Short2ReferenceFunction_<T>): $Char2ReferenceFunction<T>;
+        composeByte(arg0: $Byte2CharFunction_): $Byte2ShortFunction;
+        composeFloat(arg0: $Float2CharFunction_): $Float2ShortFunction;
+        andThenObject<T>(arg0: $Short2ObjectFunction_<T>): $Char2ObjectFunction<T>;
+        andThenLong(arg0: $Short2LongFunction_): $Char2LongFunction;
+        composeObject<T>(arg0: $Object2CharFunction_<T>): $Object2ShortFunction<T>;
+        andThenShort(arg0: $Short2ShortFunction_): $Char2ShortFunction;
+        andThenDouble(arg0: $Short2DoubleFunction_): $Char2DoubleFunction;
+        composeChar(arg0: $Char2CharFunction_): $Char2ShortFunction;
+        andThenChar(arg0: $Short2CharFunction_): $Char2CharFunction;
+        composeReference<T>(arg0: $Reference2CharFunction_<T>): $Reference2ShortFunction<T>;
+        defaultReturnValue(arg0: number): void;
+        defaultReturnValue(): number;
     }
     /**
      * Values that may be interpreted as {@link $Char2ShortFunction}.
@@ -584,31 +584,11 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
     export class $Char2FloatFunction {
     }
     export interface $Char2FloatFunction extends $Function<string, number>, $IntToDoubleFunction {
-        defaultReturnValue(arg0: number): void;
-        defaultReturnValue(): number;
-        andThenObject<T>(arg0: $Float2ObjectFunction_<T>): $Char2ObjectFunction<T>;
-        andThenByte(arg0: $Float2ByteFunction_): $Char2ByteFunction;
-        andThenLong(arg0: $Float2LongFunction_): $Char2LongFunction;
-        composeFloat(arg0: $Float2CharFunction_): $Float2FloatFunction;
-        composeByte(arg0: $Byte2CharFunction_): $Byte2FloatFunction;
-        andThenDouble(arg0: $Float2DoubleFunction_): $Char2DoubleFunction;
-        andThenChar(arg0: $Float2CharFunction_): $Char2CharFunction;
-        composeDouble(arg0: $Double2CharFunction_): $Double2FloatFunction;
-        andThenFloat(arg0: $Float2FloatFunction_): $Char2FloatFunction;
-        composeChar(arg0: $Char2CharFunction_): $Char2FloatFunction;
-        composeShort(arg0: $Short2CharFunction_): $Short2FloatFunction;
-        composeObject<T>(arg0: $Object2CharFunction_<T>): $Object2FloatFunction<T>;
-        andThenShort(arg0: $Float2ShortFunction_): $Char2ShortFunction;
-        composeLong(arg0: $Long2CharFunction_): $Long2FloatFunction;
-        composeReference<T>(arg0: $Reference2CharFunction_<T>): $Reference2FloatFunction<T>;
-        andThenReference<T>(arg0: $Float2ReferenceFunction_<T>): $Char2ReferenceFunction<T>;
-        andThenInt(arg0: $Float2IntFunction_): $Char2IntFunction;
-        composeInt(arg0: $Int2CharFunction_): $Int2FloatFunction;
-        remove(arg0: string): number;
         /**
          * @deprecated
          */
         remove(arg0: $Object): number;
+        remove(arg0: string): number;
         /**
          * @deprecated
          */
@@ -641,6 +621,26 @@ declare module "@package/it/unimi/dsi/fastutil/chars" {
          * @deprecated
          */
         andThen<T>(arg0: $Function_<number, T>): $Function$1<string, T>;
+        andThenInt(arg0: $Float2IntFunction_): $Char2IntFunction;
+        composeInt(arg0: $Int2CharFunction_): $Int2FloatFunction;
+        composeDouble(arg0: $Double2CharFunction_): $Double2FloatFunction;
+        composeShort(arg0: $Short2CharFunction_): $Short2FloatFunction;
+        composeLong(arg0: $Long2CharFunction_): $Long2FloatFunction;
+        andThenByte(arg0: $Float2ByteFunction_): $Char2ByteFunction;
+        andThenFloat(arg0: $Float2FloatFunction_): $Char2FloatFunction;
+        andThenReference<T>(arg0: $Float2ReferenceFunction_<T>): $Char2ReferenceFunction<T>;
+        composeByte(arg0: $Byte2CharFunction_): $Byte2FloatFunction;
+        composeFloat(arg0: $Float2CharFunction_): $Float2FloatFunction;
+        andThenObject<T>(arg0: $Float2ObjectFunction_<T>): $Char2ObjectFunction<T>;
+        andThenLong(arg0: $Float2LongFunction_): $Char2LongFunction;
+        composeObject<T>(arg0: $Object2CharFunction_<T>): $Object2FloatFunction<T>;
+        andThenShort(arg0: $Float2ShortFunction_): $Char2ShortFunction;
+        andThenDouble(arg0: $Float2DoubleFunction_): $Char2DoubleFunction;
+        composeChar(arg0: $Char2CharFunction_): $Char2FloatFunction;
+        andThenChar(arg0: $Float2CharFunction_): $Char2CharFunction;
+        composeReference<T>(arg0: $Reference2CharFunction_<T>): $Reference2FloatFunction<T>;
+        defaultReturnValue(arg0: number): void;
+        defaultReturnValue(): number;
     }
     /**
      * Values that may be interpreted as {@link $Char2FloatFunction}.

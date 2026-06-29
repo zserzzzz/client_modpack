@@ -34,12 +34,12 @@ declare module "@package/net/minecraft/world/entity/ai/goal/target" {
         constructor(tameAnimal: $TamableAnimal);
     }
     export class $HurtByTargetGoal extends $TargetGoal {
+        setAlertOthers(...reinforcementTypes: $Class<never>[]): $HurtByTargetGoal;
+        alertOther(mob: $Mob, target: $LivingEntity): void;
         /**
          * Execute a one shot task or start executing a continuous task
          */
         alertOthers(): void;
-        alertOther(mob: $Mob, target: $LivingEntity): void;
-        setAlertOthers(...reinforcementTypes: $Class<never>[]): $HurtByTargetGoal;
         mob: $Mob;
         mustSee: boolean;
         unseenMemoryTicks: number;
@@ -50,12 +50,12 @@ declare module "@package/net/minecraft/world/entity/ai/goal/target" {
         constructor(mob: T, alertOthersOfSameType: boolean);
     }
     export class $TargetGoal extends $Goal {
-        getFollowDistance(): number;
         setUnseenMemoryTicks(unseenMemoryTicks: number): $TargetGoal;
         /**
          * Checks if this is a suitable target.
          */
         canAttack(potentialTarget: $LivingEntity | null, targetPredicate: $TargetingConditions): boolean;
+        getFollowDistance(): number;
         mob: $Mob;
         mustSee: boolean;
         unseenMemoryTicks: number;
@@ -102,11 +102,11 @@ declare module "@package/net/minecraft/world/entity/ai/goal/target" {
     }
     export class $NearestAttackableTargetGoal<T extends $LivingEntity> extends $TargetGoal {
         setTarget(target: $LivingEntity | null): void;
+        getTargetSearchArea(targetDistance: number): $AABB;
         /**
          * Execute a one shot task or start executing a continuous task
          */
         findTarget(): void;
-        getTargetSearchArea(targetDistance: number): $AABB;
         randomInterval: number;
         mob: $Mob;
         mustSee: boolean;

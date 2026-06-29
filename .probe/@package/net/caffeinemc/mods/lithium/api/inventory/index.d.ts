@@ -22,9 +22,9 @@ declare module "@package/net/caffeinemc/mods/lithium/api/inventory" {
     export class $LithiumInventory {
     }
     export interface $LithiumInventory extends $Container {
+        generateLootLithium(): void;
         getInventoryLithium(): $NonNullList<$ItemStack>;
         setInventoryLithium(arg0: $NonNullList<$ItemStack_>): void;
-        generateLootLithium(): void;
     }
     export class $LithiumTransferConditionInventory {
     }

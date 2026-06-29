@@ -24,11 +24,11 @@ declare module "@package/net/fabricmc/fabric/api/item/v1" {
     export class $FabricItem {
     }
     export interface $FabricItem {
-        allowContinuingBlockBreaking(arg0: $Player, arg1: $ItemStack_, arg2: $ItemStack_): boolean;
         allowComponentsUpdateAnimation(arg0: $Player, arg1: $InteractionHand_, arg2: $ItemStack_, arg3: $ItemStack_): boolean;
-        getCreatorNamespace(arg0: $ItemStack_): string;
-        canBeEnchantedWith(arg0: $ItemStack_, arg1: $Holder_<$Enchantment>, arg2: $EnchantingContext_): boolean;
+        allowContinuingBlockBreaking(arg0: $Player, arg1: $ItemStack_, arg2: $ItemStack_): boolean;
         getRecipeRemainder(arg0: $ItemStack_): $ItemStack;
+        canBeEnchantedWith(arg0: $ItemStack_, arg1: $Holder_<$Enchantment>, arg2: $EnchantingContext_): boolean;
+        getCreatorNamespace(arg0: $ItemStack_): string;
     }
     export class $EquipmentSlotProvider {
     }
@@ -51,23 +51,23 @@ declare module "@package/net/fabricmc/fabric/api/item/v1" {
     export class $FabricComponentMapBuilder {
     }
     export interface $FabricComponentMapBuilder {
+        getOrEmpty<T>(arg0: $DataComponentType_<$List_<T>>): $List<T>;
         getOrCreate<T>(arg0: $DataComponentType_<T>, arg1: $Supplier_<T>): T;
         getOrDefault<T>(arg0: $DataComponentType_<T>, arg1: T): T;
-        getOrEmpty<T>(arg0: $DataComponentType_<$List_<T>>): $List<T>;
     }
     export class $FabricItemStack {
     }
     export interface $FabricItemStack extends $IItemStackExtension {
-        getCreatorNamespace(): string;
-        canBeEnchantedWith(arg0: $Holder_<$Enchantment>, arg1: $EnchantingContext_): boolean;
         getRecipeRemainder(): $ItemStack;
-        get creatorNamespace(): string;
+        canBeEnchantedWith(arg0: $Holder_<$Enchantment>, arg1: $EnchantingContext_): boolean;
+        getCreatorNamespace(): string;
         get recipeRemainder(): $ItemStack;
+        get creatorNamespace(): string;
     }
     export class $FabricItem$Settings {
     }
     export interface $FabricItem$Settings {
-        customDamage(arg0: $CustomDamageHandler_): $Item$Properties;
         equipmentSlot(arg0: $EquipmentSlotProvider_): $Item$Properties;
+        customDamage(arg0: $CustomDamageHandler_): $Item$Properties;
     }
 }

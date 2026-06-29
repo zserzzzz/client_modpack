@@ -22,5 +22,5 @@ declare module "@package/dev/simulated_team/simulated/content/blocks/auger_shaft
     /**
      * Values that may be interpreted as {@link $AugerDistributor}.
      */
-    export type $AugerDistributor_ = { receivers?: $List_<$ItemReciever>, harvesters?: $List_<$BlockHarvester>, index?: $MutableInt,  } | [receivers?: $List_<$ItemReciever>, harvesters?: $List_<$BlockHarvester>, index?: $MutableInt, ];
+    export type $AugerDistributor_ = { index?: $MutableInt, receivers?: $List_<$ItemReciever>, harvesters?: $List_<$BlockHarvester>,  } | [index?: $MutableInt, receivers?: $List_<$ItemReciever>, harvesters?: $List_<$BlockHarvester>, ];
 }

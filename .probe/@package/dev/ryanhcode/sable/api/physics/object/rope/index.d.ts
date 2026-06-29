@@ -12,18 +12,18 @@ import { $Vector3dc, $Vector3d } from "@package/org/joml";
 declare module "@package/dev/ryanhcode/sable/api/physics/object/rope" {
     export class $RopePhysicsObject implements $ArbitraryPhysicsObject {
         isActive(): boolean;
-        onUnloaded(arg0: $SubLevelHoldingChunkMap, arg1: $ChunkPos): void;
+        wakeUp(): void;
+        setAttachment(arg0: $RopeHandle$AttachmentPoint_, arg1: $Vector3dc, arg2: $ServerSubLevel): void;
+        getBoundingBox(arg0: $BoundingBox3d): void;
+        updatePose(): void;
         onRemoved(): void;
         onAddition(arg0: $SubLevelPhysicsSystem): void;
-        updatePose(): void;
-        getPoints(): $ObjectList<$Vector3d>;
-        wakeUp(): void;
-        getBoundingBox(arg0: $BoundingBox3d): void;
-        removeFirstPoint(): void;
         addPoint(arg0: $Vector3dc): void;
+        getPoints(): $ObjectList<$Vector3d>;
         getCollisionRadius(): number;
+        removeFirstPoint(): void;
         setFirstSegmentLength(arg0: number): void;
-        setAttachment(arg0: $RopeHandle$AttachmentPoint_, arg1: $Vector3dc, arg2: $ServerSubLevel): void;
+        onUnloaded(arg0: $SubLevelHoldingChunkMap, arg1: $ChunkPos): void;
         constructor(arg0: $Collection_<$Vector3d>, arg1: number);
         get active(): boolean;
         get points(): $ObjectList<$Vector3d>;
@@ -34,12 +34,12 @@ declare module "@package/dev/ryanhcode/sable/api/physics/object/rope" {
     }
     export interface $RopeHandle {
         remove(): void;
-        readPose(arg0: $List_<$Vector3d>): void;
         wakeUp(): void;
-        removeFirstPoint(): void;
-        addPoint(arg0: $Vector3dc): void;
-        setFirstSegmentLength(arg0: number): void;
+        readPose(arg0: $List_<$Vector3d>): void;
         setAttachment(arg0: $RopeHandle$AttachmentPoint_, arg1: $Vector3dc, arg2: $ServerSubLevel): void;
+        addPoint(arg0: $Vector3dc): void;
+        removeFirstPoint(): void;
+        setFirstSegmentLength(arg0: number): void;
         set firstSegmentLength(value: number);
     }
     export class $RopeHandle$AttachmentPoint extends $Enum<$RopeHandle$AttachmentPoint> {

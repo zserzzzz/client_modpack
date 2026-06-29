@@ -43,16 +43,16 @@ export * as render from "@package/com/simibubi/create/foundation/item/render";
 
 declare module "@package/com/simibubi/create/foundation/item" {
     export class $TooltipHelper {
+        static makeProgressBar(arg0: number, arg1: number): string;
+        static cutStringTextComponent(arg0: string, arg1: $FontHelper$Palette_): $List<$Component>;
+        static cutStringTextComponent(arg0: string, arg1: $Style, arg2: $Style): $List<$Component>;
+        static cutStringTextComponent(arg0: string, arg1: $Style, arg2: $Style, arg3: number): $List<$Component>;
         static styleFromColor(arg0: number): $Style;
         static styleFromColor(arg0: $ChatFormatting_): $Style;
         static addHint(arg0: $List_<$Component_>, arg1: string, ...arg2: $Object[]): void;
         static cutTextComponent(arg0: $Component_, arg1: $Style, arg2: $Style, arg3: number): $List<$Component>;
-        static cutTextComponent(arg0: $Component_, arg1: $FontHelper$Palette_): $List<$Component>;
         static cutTextComponent(arg0: $Component_, arg1: $Style, arg2: $Style): $List<$Component>;
-        static cutStringTextComponent(arg0: string, arg1: $FontHelper$Palette_): $List<$Component>;
-        static cutStringTextComponent(arg0: string, arg1: $Style, arg2: $Style): $List<$Component>;
-        static cutStringTextComponent(arg0: string, arg1: $Style, arg2: $Style, arg3: number): $List<$Component>;
-        static makeProgressBar(arg0: number, arg1: number): string;
+        static cutTextComponent(arg0: $Component_, arg1: $FontHelper$Palette_): $List<$Component>;
         static holdShift(arg0: $FontHelper$Palette_, arg1: boolean): $MutableComponent;
         static MAX_WIDTH_PER_LINE: number;
         constructor();
@@ -70,8 +70,8 @@ declare module "@package/com/simibubi/create/foundation/item" {
         constructor(arg0: $Item$Properties, arg1: $TagKey_<$Item>);
     }
     export class $KineticStats implements $TooltipModifier {
-        modify(arg0: $ItemTooltipEvent): void;
         static create(arg0: $Item_): $KineticStats;
+        modify(arg0: $ItemTooltipEvent): void;
         static getKineticStats(arg0: $Block_, arg1: $Player): $List<$Component>;
         andThen(arg0: $TooltipModifier_): $TooltipModifier;
         constructor(arg0: $Block_);
@@ -79,28 +79,28 @@ declare module "@package/com/simibubi/create/foundation/item" {
     export class $SmartInventory$SyncedStackHandler extends $ItemStackHandler {
     }
     export class $SmartInventory extends $ItemHandlerContainer implements $IItemHandlerModifiable, $INBTSerializable<$CompoundTag> {
-        whenContentsChanged(arg0: $Consumer_<number>): $SmartInventory;
+        getStackInSlot(arg0: number): $ItemStack;
+        deserializeNBT(arg0: $HolderLookup$Provider, arg1: $CompoundTag_): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
+        getSlots(): number;
+        setStackInSlot(arg0: number, arg1: $ItemStack_): void;
+        insertItem(arg0: number, arg1: $ItemStack_, arg2: boolean): $ItemStack;
+        getStackLimit(arg0: number, arg1: $ItemStack_): number;
+        extractItem(arg0: number, arg1: number, arg2: boolean): $ItemStack;
         getSlotLimit(arg0: number): number;
         isItemValid(arg0: number, arg1: $ItemStack_): boolean;
-        extractItem(arg0: number, arg1: number, arg2: boolean): $ItemStack;
-        deserializeNBT(arg0: $HolderLookup$Provider, arg1: $CompoundTag_): void;
-        getSlots(): number;
-        allowInsertion(): $SmartInventory;
-        getStackInSlot(arg0: number): $ItemStack;
-        insertItem(arg0: number, arg1: $ItemStack_, arg2: boolean): $ItemStack;
-        setStackInSlot(arg0: number, arg1: $ItemStack_): void;
-        getStackLimit(arg0: number, arg1: $ItemStack_): number;
-        allowExtraction(): $SmartInventory;
-        forbidInsertion(): $SmartInventory;
         withMaxStackSize(arg0: number): $SmartInventory;
+        allowInsertion(): $SmartInventory;
+        forbidInsertion(): $SmartInventory;
+        whenContentsChanged(arg0: $Consumer_<number>): $SmartInventory;
+        allowExtraction(): $SmartInventory;
         forbidExtraction(): $SmartInventory;
         kjs$self(): $IItemHandler;
-        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
-        constructor(arg0: number, arg1: $SyncedBlockEntity, arg2: number, arg3: boolean, arg4: $BiPredicate_<number, $ItemStack>);
         constructor(arg0: $IItemHandlerModifiable, arg1: number, arg2: boolean);
-        constructor(arg0: number, arg1: $SyncedBlockEntity);
-        constructor(arg0: number, arg1: $SyncedBlockEntity, arg2: $BiPredicate_<number, $ItemStack>);
+        constructor(arg0: number, arg1: $SyncedBlockEntity, arg2: number, arg3: boolean, arg4: $BiPredicate_<number, $ItemStack>);
         constructor(arg0: number, arg1: $SyncedBlockEntity, arg2: number, arg3: boolean);
+        constructor(arg0: number, arg1: $SyncedBlockEntity, arg2: $BiPredicate_<number, $ItemStack>);
+        constructor(arg0: number, arg1: $SyncedBlockEntity);
         get slots(): number;
     }
     export class $ItemHelper$ExtractionCountMode extends $Enum<$ItemHelper$ExtractionCountMode> {
@@ -128,8 +128,8 @@ declare module "@package/com/simibubi/create/foundation/item" {
         static REGISTRY: $SimpleRegistry<$Item, $TooltipModifier>;
     }
     export interface $TooltipModifier {
-        modify(arg0: $ItemTooltipEvent): void;
         andThen(arg0: $TooltipModifier_): $TooltipModifier;
+        modify(arg0: $ItemTooltipEvent): void;
     }
     /**
      * Values that may be interpreted as {@link $TooltipModifier}.
@@ -150,9 +150,9 @@ declare module "@package/com/simibubi/create/foundation/item" {
         forEach(arg0: $ItemSlots$SlotConsumer_): void;
         getSize(): number;
         setSize(arg0: number): void;
-        toHandler<T extends $IItemHandlerModifiable>(arg0: $IntFunction_<T>): T;
-        static fromHandler(arg0: $IItemHandler): $ItemSlots;
         toBoxedMap(): $Map<number, $ItemStack>;
+        static fromHandler(arg0: $IItemHandler): $ItemSlots;
+        toHandler<T extends $IItemHandlerModifiable>(arg0: $IntFunction_<T>): T;
         static fromBoxedMap(arg0: $Map_<number, $ItemStack_>): $ItemSlots;
         static maxSizeCodec(arg0: number): $Codec<$ItemSlots>;
         static CODEC: $Codec<$ItemSlots>;
@@ -201,30 +201,30 @@ declare module "@package/com/simibubi/create/foundation/item" {
         constructor(arg0: $FontHelper$Palette_);
     }
     export class $ItemHelper {
-        static calcRedstoneFromInventory(arg0: $IItemHandler): number;
-        static extract(arg0: $IItemHandler, arg1: $Predicate_<$ItemStack>, arg2: number, arg3: boolean): $ItemStack;
         static extract(arg0: $IItemHandler, arg1: $Predicate_<$ItemStack>, arg2: boolean): $ItemStack;
-        static extract(arg0: $IItemHandler, arg1: $Predicate_<$ItemStack>, arg2: $Function_<$ItemStack, number>, arg3: boolean): $ItemStack;
+        static extract(arg0: $IItemHandler, arg1: $Predicate_<$ItemStack>, arg2: number, arg3: boolean): $ItemStack;
         static extract(arg0: $IItemHandler, arg1: $Predicate_<$ItemStack>, arg2: $ItemHelper$ExtractionCountMode_, arg3: number, arg4: boolean): $ItemStack;
-        static containerContentsFromHandler(arg0: $ItemStackHandler): $ItemContainerContents;
-        static calcRedstoneFromBlockEntity<T extends $IBE<$BlockEntity>>(arg0: T, arg1: $Level_, arg2: $BlockPos_): number;
-        static sameItem(arg0: $ItemStack_, arg1: $ItemStack_): boolean;
+        static extract(arg0: $IItemHandler, arg1: $Predicate_<$ItemStack>, arg2: $Function_<$ItemStack, number>, arg3: boolean): $ItemStack;
         static dropContents(arg0: $Level_, arg1: $BlockPos_, arg2: $IItemHandler): void;
-        static copyContents(arg0: $IItemHandler, arg1: $IItemHandlerModifiable): void;
+        static containerContentsFromHandler(arg0: $ItemStackHandler): $ItemContainerContents;
+        static sameItem(arg0: $ItemStack_, arg1: $ItemStack_): boolean;
         static addToList(arg0: $ItemStack_, arg1: $List_<$ItemStack_>): void;
-        static findFirstMatchingSlotIndex(arg0: $IItemHandler, arg1: $Predicate_<$ItemStack>): number;
-        static canItemStackAmountsStack(arg0: $ItemStack_, arg1: $ItemStack_): boolean;
-        static fromItemEntity(arg0: $Entity): $ItemStack;
+        static isSameInventory(arg0: $IItemHandler, arg1: $IItemHandler): boolean;
+        static calcRedstoneFromBlockEntity<T extends $IBE<$BlockEntity>>(arg0: T, arg1: $Level_, arg2: $BlockPos_): number;
         static condenseIngredients(arg0: $NonNullList<$Ingredient_>): $List<$Pair<$Ingredient, $MutableInt>>;
         static limitCountToMaxStackSize(arg0: $ItemStack_, arg1: boolean): $ItemStack;
-        static isSameInventory(arg0: $IItemHandler, arg1: $IItemHandler): boolean;
-        static fillItemStackHandler(arg0: $ItemContainerContents, arg1: $ItemStackHandler): void;
         static matchAllIngredients(arg0: $NonNullList<$Ingredient_>): boolean;
-        static multipliedOutput(arg0: $ItemStack_, arg1: $ItemStack_): $List<$ItemStack>;
-        static sameItemPredicate(arg0: $ItemStack_): $Predicate<$ItemStack>;
-        static findFirstMatch(arg0: $IItemHandler, arg1: $Predicate_<$ItemStack>): $ItemStack;
-        static matchIngredients(arg0: $Ingredient_, arg1: $Ingredient_): boolean;
+        static fromItemEntity(arg0: $Entity): $ItemStack;
         static getNonEmptyStacks(arg0: $ItemStackHandler): $List<$ItemStack>;
+        static copyContents(arg0: $IItemHandler, arg1: $IItemHandlerModifiable): void;
+        static calcRedstoneFromInventory(arg0: $IItemHandler): number;
+        static canItemStackAmountsStack(arg0: $ItemStack_, arg1: $ItemStack_): boolean;
+        static findFirstMatchingSlotIndex(arg0: $IItemHandler, arg1: $Predicate_<$ItemStack>): number;
+        static fillItemStackHandler(arg0: $ItemContainerContents, arg1: $ItemStackHandler): void;
+        static matchIngredients(arg0: $Ingredient_, arg1: $Ingredient_): boolean;
+        static sameItemPredicate(arg0: $ItemStack_): $Predicate<$ItemStack>;
+        static multipliedOutput(arg0: $ItemStack_, arg1: $ItemStack_): $List<$ItemStack>;
+        static findFirstMatch(arg0: $IItemHandler, arg1: $Predicate_<$ItemStack>): $ItemStack;
         constructor();
     }
     export class $ItemDescription$Modifier implements $TooltipModifier {
@@ -235,8 +235,8 @@ declare module "@package/com/simibubi/create/foundation/item" {
     export class $CustomUseEffectsItem {
     }
     export interface $CustomUseEffectsItem {
-        triggerUseEffects(arg0: $ItemStack_, arg1: $LivingEntity, arg2: number, arg3: $RandomSource): boolean;
         shouldTriggerUseEffects(arg0: $ItemStack_, arg1: $LivingEntity): $TriState;
+        triggerUseEffects(arg0: $ItemStack_, arg1: $LivingEntity, arg2: number, arg3: $RandomSource): boolean;
     }
     /**
      * Values that may be interpreted as {@link $CustomUseEffectsItem}.
@@ -246,22 +246,22 @@ declare module "@package/com/simibubi/create/foundation/item" {
         lines(): $ImmutableList<$Component>;
         static create(arg0: string, arg1: $FontHelper$Palette_): $ItemDescription;
         static create(arg0: $Item_, arg1: $FontHelper$Palette_): $ItemDescription;
-        getCurrentLines(): $ImmutableList<$Component>;
-        static referKey(arg0: $ItemLike_, arg1: $Supplier_<$ItemLike>): void;
-        static useKey(arg0: $Item_, arg1: $Supplier_<string>): void;
         static useKey(arg0: $ItemLike_, arg1: string): void;
-        static getTooltipTranslationKey(arg0: $Item_): string;
-        linesOnCtrl(): $ImmutableList<$Component>;
-        static canFillBuilder(arg0: string): boolean;
+        static useKey(arg0: $Item_, arg1: $Supplier_<string>): void;
+        static referKey(arg0: $ItemLike_, arg1: $Supplier_<$ItemLike>): void;
         static fillBuilder(arg0: $ItemDescription$Builder, arg1: string): void;
         linesOnShift(): $ImmutableList<$Component>;
+        linesOnCtrl(): $ImmutableList<$Component>;
+        static canFillBuilder(arg0: string): boolean;
+        getCurrentLines(): $ImmutableList<$Component>;
+        static getTooltipTranslationKey(arg0: $Item_): string;
         constructor(lines: $ImmutableList<$Component_>, linesOnShift: $ImmutableList<$Component_>, linesOnCtrl: $ImmutableList<$Component_>);
         get currentLines(): $ImmutableList<$Component>;
     }
     /**
      * Values that may be interpreted as {@link $ItemDescription}.
      */
-    export type $ItemDescription_ = { linesOnShift?: $ImmutableList<$Component_>, lines?: $ImmutableList<$Component_>, linesOnCtrl?: $ImmutableList<$Component_>,  } | [linesOnShift?: $ImmutableList<$Component_>, lines?: $ImmutableList<$Component_>, linesOnCtrl?: $ImmutableList<$Component_>, ];
+    export type $ItemDescription_ = { linesOnCtrl?: $ImmutableList<$Component_>, linesOnShift?: $ImmutableList<$Component_>, lines?: $ImmutableList<$Component_>,  } | [linesOnCtrl?: $ImmutableList<$Component_>, linesOnShift?: $ImmutableList<$Component_>, lines?: $ImmutableList<$Component_>, ];
     export class $CustomArmPoseItem {
     }
     export interface $CustomArmPoseItem {
@@ -272,42 +272,42 @@ declare module "@package/com/simibubi/create/foundation/item" {
      */
     export type $CustomArmPoseItem_ = ((arg0: $ItemStack, arg1: $AbstractClientPlayer, arg2: $InteractionHand) => $HumanoidModel$ArmPose_);
     export class $ItemHandlerWrapper implements $IItemHandlerModifiable {
+        getStackInSlot(arg0: number): $ItemStack;
+        getSlots(): number;
+        setStackInSlot(arg0: number, arg1: $ItemStack_): void;
+        insertItem(arg0: number, arg1: $ItemStack_, arg2: boolean): $ItemStack;
+        extractItem(arg0: number, arg1: number, arg2: boolean): $ItemStack;
         getSlotLimit(arg0: number): number;
         isItemValid(arg0: number, arg1: $ItemStack_): boolean;
-        extractItem(arg0: number, arg1: number, arg2: boolean): $ItemStack;
-        getSlots(): number;
-        getStackInSlot(arg0: number): $ItemStack;
-        insertItem(arg0: number, arg1: $ItemStack_, arg2: boolean): $ItemStack;
-        setStackInSlot(arg0: number, arg1: $ItemStack_): void;
-        kjs$isMutable(): boolean;
         kjs$setStackInSlot(slot: number, stack: $ItemStack_): void;
-        kjs$self(): $IItemHandler;
+        kjs$isMutable(): boolean;
         kjs$getBlock(level: $Level_): $LevelBlock;
-        getHeight(): number;
-        insertItem(stack: $ItemStack_, simulate: boolean): $ItemStack;
+        kjs$self(): $IItemHandler;
         setChanged(): void;
+        insertItem(stack: $ItemStack_, simulate: boolean): $ItemStack;
         asContainer(): $Container;
-        countNonEmpty(): number;
         countNonEmpty(match: $ItemPredicate_): number;
-        getWidth(): number;
-        isEmpty(): boolean;
-        count(): number;
-        count(match: $ItemPredicate_): number;
-        find(match: $ItemPredicate_): number;
-        find(): number;
+        countNonEmpty(): number;
+        getHeight(): number;
+        getAllItems(): $List<$ItemStack>;
         clear(match: $ItemPredicate_): void;
         clear(): void;
-        getAllItems(): $List<$ItemStack>;
+        find(match: $ItemPredicate_): number;
+        find(): number;
+        count(): number;
+        count(match: $ItemPredicate_): number;
+        isEmpty(): boolean;
+        getWidth(): number;
         insertItem(slot: number, stack: $ItemStack_, simulate: boolean): $ItemStack;
-        extractItem(slot: number, amount: number, simulate: boolean): $ItemStack;
-        isItemValid(slot: number, stack: $ItemStack_): boolean;
         getStackInSlot(slot: number): $ItemStack;
+        isItemValid(slot: number, stack: $ItemStack_): boolean;
+        extractItem(slot: number, amount: number, simulate: boolean): $ItemStack;
         getSlotLimit(slot: number): number;
         getSlots(): number;
         constructor(arg0: $IItemHandlerModifiable);
         get height(): number;
-        get width(): number;
-        get empty(): boolean;
         get allItems(): $List<$ItemStack>;
+        get empty(): boolean;
+        get width(): number;
     }
 }

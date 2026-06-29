@@ -42,14 +42,14 @@ declare module "@package/com/mojang/brigadier" {
         getString(): string;
         getRemaining(): string;
         getCursor(): number;
-        getTotalLength(): number;
         getRemainingLength(): number;
+        getTotalLength(): number;
         getRead(): string;
         get string(): string;
         get remaining(): string;
         get cursor(): number;
-        get totalLength(): number;
         get remainingLength(): number;
+        get totalLength(): number;
         get read(): string;
     }
     export class $ResultConsumer<S> {
@@ -90,21 +90,21 @@ declare module "@package/com/mojang/brigadier" {
      */
     export type $RedirectModifier_<S> = ((arg0: $CommandContext<S>) => $Collection_<S>);
     export class $CommandDispatcher<S> {
-        getCompletionSuggestions(arg0: $ParseResults<S>): $CompletableFuture<$Suggestions>;
-        getCompletionSuggestions(arg0: $ParseResults<S>, arg1: number): $CompletableFuture<$Suggestions>;
         register(arg0: $LiteralArgumentBuilder<S>): $LiteralCommandNode<S>;
         execute(arg0: $ParseResults<S>): number;
-        execute(arg0: string, arg1: S): number;
         execute(arg0: $StringReader, arg1: S): number;
+        execute(arg0: string, arg1: S): number;
         parse(arg0: $StringReader, arg1: S): $ParseResults<S>;
         parse(arg0: string, arg1: S): $ParseResults<S>;
         getRoot(): $RootCommandNode<S>;
         getPath(arg0: $CommandNode<S>): $Collection<string>;
         findNode(arg0: $Collection_<string>): $CommandNode<S>;
+        setConsumer(arg0: $ResultConsumer_<S>): void;
+        getCompletionSuggestions(arg0: $ParseResults<S>): $CompletableFuture<$Suggestions>;
+        getCompletionSuggestions(arg0: $ParseResults<S>, arg1: number): $CompletableFuture<$Suggestions>;
+        getAllUsage(arg0: $CommandNode<S>, arg1: S, arg2: boolean): string[];
         getSmartUsage(arg0: $CommandNode<S>, arg1: S): $Map<$CommandNode<S>, string>;
         findAmbiguities(arg0: $AmbiguityConsumer_<S>): void;
-        getAllUsage(arg0: $CommandNode<S>, arg1: S, arg2: boolean): string[];
-        setConsumer(arg0: $ResultConsumer_<S>): void;
         static ARGUMENT_SEPARATOR: string;
         static ARGUMENT_SEPARATOR_CHAR: string;
         constructor(arg0: $RootCommandNode<S>);
@@ -128,33 +128,33 @@ declare module "@package/com/mojang/brigadier" {
         readString(): string;
         getString(): string;
         getRemaining(): string;
+        readQuotedString(): string;
+        readUnquotedString(): string;
         getCursor(): number;
         skipWhitespace(): void;
-        readUnquotedString(): string;
-        readQuotedString(): string;
         static isAllowedNumber(arg0: string): boolean;
         readStringUntil(arg0: string): string;
-        getTotalLength(): number;
-        getRemainingLength(): number;
         static isQuotedStringStart(arg0: string): boolean;
         static isAllowedInUnquotedString(arg0: string): boolean;
+        getRemainingLength(): number;
+        getTotalLength(): number;
         getRead(): string;
         setCursor(arg0: number): void;
         constructor(arg0: $StringReader);
         constructor(arg0: string);
         get string(): string;
         get remaining(): string;
-        get totalLength(): number;
         get remainingLength(): number;
+        get totalLength(): number;
     }
     export class $ParseResults<S> {
-        getExceptions(): $Map<$CommandNode<S>, $CommandSyntaxException>;
         getContext(): $CommandContextBuilder<S>;
         getReader(): $ImmutableStringReader;
+        getExceptions(): $Map<$CommandNode<S>, $CommandSyntaxException>;
         constructor(arg0: $CommandContextBuilder<S>, arg1: $ImmutableStringReader, arg2: $Map_<$CommandNode<S>, $CommandSyntaxException>);
         constructor(arg0: $CommandContextBuilder<S>);
-        get exceptions(): $Map<$CommandNode<S>, $CommandSyntaxException>;
         get context(): $CommandContextBuilder<S>;
         get reader(): $ImmutableStringReader;
+        get exceptions(): $Map<$CommandNode<S>, $CommandSyntaxException>;
     }
 }

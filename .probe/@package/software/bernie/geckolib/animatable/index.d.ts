@@ -8,22 +8,22 @@ declare module "@package/software/bernie/geckolib/animatable" {
     export class $GeoAnimatable {
     }
     export interface $GeoAnimatable {
-        getBoneResetTime(): number;
-        getTick(arg0: $Object): number;
+        animatableCacheOverride(): $AnimatableInstanceCache;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
         getAnimatableInstanceCache(): $AnimatableInstanceCache;
-        animatableCacheOverride(): $AnimatableInstanceCache;
+        getTick(arg0: $Object): number;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        get boneResetTime(): number;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get boneResetTime(): number;
     }
     export class $GeoEntity {
     }
     export interface $GeoEntity extends $GeoAnimatable {
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        getTick(arg0: $Object): number;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
-        getTick(arg0: $Object): number;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
     }
 }

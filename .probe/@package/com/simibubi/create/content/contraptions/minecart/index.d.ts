@@ -46,18 +46,18 @@ declare module "@package/com/simibubi/create/content/contraptions/minecart" {
     }
     export class $CouplingHandler {
         static status(arg0: $Player, arg1: string): void;
-        static preventEntitiesFromMoutingOccupiedCart(arg0: $EntityMountEvent): void;
-        static tryToCoupleCarts(arg0: $Player, arg1: $Level_, arg2: number, arg3: number): boolean;
         static forEachLoadedCoupling(arg0: $Level_, arg1: $Consumer_<$Couple<$MinecartController>>): void;
         static getNextInCouplingChain(arg0: $Level_, arg1: $MinecartController, arg2: boolean): $MinecartController;
+        static tryToCoupleCarts(arg0: $Player, arg1: $Level_, arg2: number, arg3: number): boolean;
+        static preventEntitiesFromMoutingOccupiedCart(arg0: $EntityMountEvent): void;
         constructor();
     }
     export class $CouplingPhysics {
         static tick(arg0: $Level_): void;
-        static softCollisionStep(arg0: $Level_, arg1: $Couple<$AbstractMinecart>, arg2: number): void;
-        static followLinkOnRail(arg0: $Vec3_, arg1: $Vec3_, arg2: number, arg3: $Vec3_): $Vec3;
         static tickCoupling(arg0: $Level_, arg1: $Couple<$MinecartController>): void;
         static hardCollisionStep(arg0: $Level_, arg1: $Couple<$AbstractMinecart>, arg2: number): void;
+        static followLinkOnRail(arg0: $Vec3_, arg1: $Vec3_, arg2: number, arg3: $Vec3_): $Vec3;
+        static softCollisionStep(arg0: $Level_, arg1: $Couple<$AbstractMinecart>, arg2: number): void;
         constructor();
     }
     export class $CouplingCreationPacket extends $Record implements $ServerboundPacketPayload {
@@ -102,9 +102,9 @@ declare module "@package/com/simibubi/create/content/contraptions/minecart" {
     }
     export class $MinecartSim2020 {
         static getRailVec(arg0: $RailShape_): $Vec3;
-        static moveCartAlongTrack(arg0: $AbstractMinecart, arg1: $Vec3_, arg2: $BlockPos_, arg3: $BlockState_): void;
-        static canAddMotion(arg0: $AbstractMinecart): boolean;
         static predictNextPositionOf(arg0: $AbstractMinecart): $Vec3;
+        static canAddMotion(arg0: $AbstractMinecart): boolean;
+        static moveCartAlongTrack(arg0: $AbstractMinecart, arg1: $Vec3_, arg2: $BlockPos_, arg3: $BlockState_): void;
         constructor();
     }
     export class $TrainCargoManager$CargoTankWrapper extends $MountedFluidStorageWrapper {

@@ -18,10 +18,10 @@ export * as events from "@package/net/minecraft/client/telemetry/events";
 
 declare module "@package/net/minecraft/client/telemetry" {
     export class $ClientTelemetryManager implements $AutoCloseable {
-        getOutsideSessionSender(): $TelemetryEventSender;
         close(): void;
-        getLogDirectory(): $Path;
+        getOutsideSessionSender(): $TelemetryEventSender;
         createWorldSessionManager(newWorld: boolean, worldLoadDuration: $Duration_ | null, minigameName: string | null): $WorldSessionTelemetryManager;
+        getLogDirectory(): $Path;
         constructor(minecraft: $Minecraft, userApiService: $UserApiService, user: $User);
         get outsideSessionSender(): $TelemetryEventSender;
         get logDirectory(): $Path;
@@ -50,9 +50,9 @@ declare module "@package/net/minecraft/client/telemetry" {
     export class $WorldSessionTelemetryManager {
         setTime(time: number): void;
         tick(): void;
-        onDisconnect(): void;
-        onPlayerInfoReceived(gameType: $GameType_, isHardcore: boolean): void;
         onServerBrandReceived(serverBrand: string): void;
+        onPlayerInfoReceived(gameType: $GameType_, isHardcore: boolean): void;
+        onDisconnect(): void;
         onAdvancementDone(level: $Level_, advancement: $AdvancementHolder_): void;
         worldSessionStart(): void;
         constructor(sender: $TelemetryEventSender_, newWorld: boolean, worldLoadDuration: $Duration_ | null, minigameName: string | null);
@@ -91,20 +91,20 @@ declare module "@package/net/minecraft/client/telemetry" {
         openLogger(): $CompletableFuture<($TelemetryEventLogger) | undefined>;
     }
     export class $TelemetryProperty<T> extends $Record {
-        static gameLoadMeasurement(id: string, exportKey: string): $TelemetryProperty<$GameLoadTimesEvent$Measurement>;
-        static bool(id: string, exportKey: string): $TelemetryProperty<boolean>;
+        codec(): $Codec<T>;
         id(): string;
         static create<T>(id: string, exportKey: string, codec: $Codec<T>, exporter: $TelemetryProperty$Exporter_<T>): $TelemetryProperty<T>;
         static makeLong(id: string, exportKey: string): $TelemetryProperty<number>;
         static string(id: string, exportKey: string): $TelemetryProperty<string>;
         "export"(propertyMap: $TelemetryPropertyMap, container: $TelemetryPropertyContainer): void;
         static integer(id: string, exportKey: string): $TelemetryProperty<number>;
-        static longSamples(id: string, exportKey: string): $TelemetryProperty<$LongList>;
-        exporter(): $TelemetryProperty$Exporter<T>;
-        static uuid(id: string, exportKey: string): $TelemetryProperty<$UUID>;
+        static bool(id: string, exportKey: string): $TelemetryProperty<boolean>;
         title(): $MutableComponent;
-        codec(): $Codec<T>;
+        static uuid(id: string, exportKey: string): $TelemetryProperty<$UUID>;
         exportKey(): string;
+        exporter(): $TelemetryProperty$Exporter<T>;
+        static gameLoadMeasurement(id: string, exportKey: string): $TelemetryProperty<$GameLoadTimesEvent$Measurement>;
+        static longSamples(id: string, exportKey: string): $TelemetryProperty<$LongList>;
         static RENDER_TIME_SAMPLES: $TelemetryProperty<$LongList>;
         static LOAD_TIME_BOOTSTRAP_MS: $TelemetryProperty<$GameLoadTimesEvent$Measurement>;
         static USED_MEMORY_SAMPLES: $TelemetryProperty<$LongList>;
@@ -141,7 +141,7 @@ declare module "@package/net/minecraft/client/telemetry" {
     /**
      * Values that may be interpreted as {@link $TelemetryProperty}.
      */
-    export type $TelemetryProperty_<T> = { exporter?: $TelemetryProperty$Exporter_<any>, codec?: $Codec<any>, id?: string, exportKey?: string,  } | [exporter?: $TelemetryProperty$Exporter_<any>, codec?: $Codec<any>, id?: string, exportKey?: string, ];
+    export type $TelemetryProperty_<T> = { id?: string, exportKey?: string, exporter?: $TelemetryProperty$Exporter_<any>, codec?: $Codec<any>,  } | [id?: string, exportKey?: string, exporter?: $TelemetryProperty$Exporter_<any>, codec?: $Codec<any>, ];
     export class $TelemetryPropertyMap {
         get<T>(key: $TelemetryProperty_<T>): T;
         static builder(): $TelemetryPropertyMap$Builder;
@@ -170,6 +170,7 @@ declare module "@package/net/minecraft/client/telemetry" {
      */
     export type $TelemetryProperty$GameMode_ = "survival" | "creative" | "adventure" | "spectator" | "hardcore";
     export class $TelemetryEventType {
+        codec(): $MapCodec<$TelemetryEventInstance>;
         static values(): $List<$TelemetryEventType>;
         static builder(id: string, exportKey: string): $TelemetryEventType$Builder;
         contains<T>(property: $TelemetryProperty_<T>): boolean;
@@ -178,7 +179,6 @@ declare module "@package/net/minecraft/client/telemetry" {
         "export"(session: $TelemetrySession, propertyMap: $TelemetryPropertyMap): $TelemetryEvent;
         description(): $MutableComponent;
         title(): $MutableComponent;
-        codec(): $MapCodec<$TelemetryEventInstance>;
         isOptIn(): boolean;
         static CODEC: $Codec<$TelemetryEventType>;
         static WORLD_LOADED: $TelemetryEventType;
@@ -192,18 +192,18 @@ declare module "@package/net/minecraft/client/telemetry" {
         get optIn(): boolean;
     }
     export class $TelemetryEventType$Builder {
-        optIn(): $TelemetryEventType$Builder;
         register(): $TelemetryEventType;
-        define<T>(property: $TelemetryProperty_<T>): $TelemetryEventType$Builder;
+        optIn(): $TelemetryEventType$Builder;
         defineAll(properties: $List_<$TelemetryProperty_<never>>): $TelemetryEventType$Builder;
+        define<T>(property: $TelemetryProperty_<T>): $TelemetryEventType$Builder;
         constructor(id: string, exportKey: string);
     }
     export class $TelemetryEventSender {
         static DISABLED: $TelemetryEventSender;
     }
     export interface $TelemetryEventSender {
-        send(eventType: $TelemetryEventType, arg1: $Consumer_<$TelemetryPropertyMap$Builder>): void;
         decorate(arg0: $Consumer_<$TelemetryPropertyMap$Builder>): $TelemetryEventSender;
+        send(eventType: $TelemetryEventType, arg1: $Consumer_<$TelemetryPropertyMap$Builder>): void;
     }
     /**
      * Values that may be interpreted as {@link $TelemetryEventSender}.

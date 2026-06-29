@@ -52,8 +52,8 @@ declare module "@package/net/minecraft/world/level/entity" {
     export interface $EntityPersistentStorage<T> extends $AutoCloseable {
         flush(synchronize: boolean): void;
         close(): void;
-        loadEntities(pos: $ChunkPos): $CompletableFuture<$ChunkEntities<T>>;
         storeEntities(entities: $ChunkEntities<T>): void;
+        loadEntities(pos: $ChunkPos): $CompletableFuture<$ChunkEntities<T>>;
     }
     export class $ChunkStatusUpdateListener {
     }
@@ -74,16 +74,16 @@ declare module "@package/net/minecraft/world/level/entity" {
         getEntities(bounds: $AABB_, consumer: $AbortableIterationConsumer_<$Object>): $AbortableIterationConsumer$Continuation;
         getStatus(): $Visibility;
         updateChunkStatus(chunkStatus: $Visibility_): $Visibility;
+        lithium$getPos(): number;
         lithium$setPos(arg0: number): void;
-        lithium$listenToMovementOnce(arg0: $SectionedEntityMovementTracker<any, any>, arg1: number): void;
-        localvar$cjc000$lithium$swapStatus(chunkStatus: $Visibility_): $Visibility;
-        lithium$trackEntityMovement(arg0: number, arg1: number): void;
-        lithium$removeListenToMovementOnce(arg0: $SectionedEntityMovementTracker<any, any>, arg1: number): void;
+        lithium$removeListener(arg0: $EntitySectionStorage<any>, arg1: $SectionedEntityMovementTracker<any, any>): void;
         lithium$addListener(arg0: $SectionedEntityMovementTracker<any, any>): void;
         lithium$getChangeTime(arg0: number): number;
-        lithium$removeListener(arg0: $EntitySectionStorage<any>, arg1: $SectionedEntityMovementTracker<any, any>): void;
         modifyReturnValue$cjc000$lithium$modifyIsEmpty(arg0: boolean): boolean;
-        lithium$getPos(): number;
+        lithium$trackEntityMovement(arg0: number, arg1: number): void;
+        lithium$removeListenToMovementOnce(arg0: $SectionedEntityMovementTracker<any, any>, arg1: number): void;
+        localvar$cjc000$lithium$swapStatus(chunkStatus: $Visibility_): $Visibility;
+        lithium$listenToMovementOnce(arg0: $SectionedEntityMovementTracker<any, any>, arg1: number): void;
         getCollection(): $ClassInstanceMultiMap<$Object>;
         constructor(entityClazz: $Class<$Object>, chunkStatus: $Visibility_);
         get empty(): boolean;
@@ -93,8 +93,8 @@ declare module "@package/net/minecraft/world/level/entity" {
     export class $PersistentEntitySectionManager$Callback implements $EntityInLevelCallback, $ToggleableMovementTracker {
     }
     export class $EntityTypeTest<B, T extends B> {
-        static forClass<B, T extends B>(clazz: $Class<T>): $EntityTypeTest<B, T>;
         static forExactClass<B, T extends B>(clazz: $Class<T>): $EntityTypeTest<B, T>;
+        static forClass<B, T extends B>(clazz: $Class<T>): $EntityTypeTest<B, T>;
     }
     export interface $EntityTypeTest<B, T extends B> {
         tryCast(entity: B): T;
@@ -104,32 +104,32 @@ declare module "@package/net/minecraft/world/level/entity" {
     export class $EntityAccess {
     }
     export interface $EntityAccess {
-        shouldBeSaved(): boolean;
-        isAlwaysTicking(): boolean;
         getId(): number;
-        setLevelCallback(levelCallback: $EntityInLevelCallback): void;
-        blockPosition(): $BlockPos;
-        getUUID(): $UUID;
-        setRemoved(removalReason: $Entity$RemovalReason_): void;
         getSelfAndPassengers(): $Stream<$EntityAccess>;
         getPassengersAndSelf(): $Stream<$EntityAccess>;
+        setLevelCallback(levelCallback: $EntityInLevelCallback): void;
         getBoundingBox(): $AABB;
-        get alwaysTicking(): boolean;
+        blockPosition(): $BlockPos;
+        shouldBeSaved(): boolean;
+        isAlwaysTicking(): boolean;
+        setRemoved(removalReason: $Entity$RemovalReason_): void;
+        getUUID(): $UUID;
         get id(): number;
-        set levelCallback(value: $EntityInLevelCallback);
-        get UUID(): $UUID;
-        set removed(value: $Entity$RemovalReason_);
         get selfAndPassengers(): $Stream<$EntityAccess>;
         get passengersAndSelf(): $Stream<$EntityAccess>;
+        set levelCallback(value: $EntityInLevelCallback);
         get boundingBox(): $AABB;
+        get alwaysTicking(): boolean;
+        set removed(value: $Entity$RemovalReason_);
+        get UUID(): $UUID;
     }
     export class $EntityLookup<T extends $EntityAccess> {
         remove(entity: T): void;
         add(entity: T): void;
         count(): number;
-        getEntities<U extends T>(test: $EntityTypeTest<T, U>, consumer: $AbortableIterationConsumer_<U>): void;
         getEntity(uuid: $UUID_): T;
         getEntity(id: number): T;
+        getEntities<U extends T>(test: $EntityTypeTest<T, U>, consumer: $AbortableIterationConsumer_<U>): void;
         getAllEntities(): $Iterable<T>;
         constructor();
         get allEntities(): $Iterable<T>;
@@ -149,38 +149,38 @@ declare module "@package/net/minecraft/world/level/entity" {
     }
     export interface $LevelCallback<T> {
         onDestroyed(entity: T): void;
+        onCreated(entity: T): void;
         onTickingStart(entity: T): void;
         onTickingEnd(entity: T): void;
+        onTrackingEnd(entity: T): void;
         onSectionChange(entity: T): void;
         onTrackingStart(entity: T): void;
-        onTrackingEnd(entity: T): void;
-        onCreated(entity: T): void;
     }
     export class $PersistentEntitySectionManager<T extends $EntityAccess> implements $AutoCloseable, $PersistentEntitySectionManagerAccessor<any>, $PersistentEntitySectionManagerAccessor$2<any>, $PersistentEntitySectionManagerAccessor$1<any>, $IServerEntityManager, $ITryFlushable {
-        stopTicking(entity: $Object): void;
-        startTicking(entity: $Object): void;
         count(): number;
         close(): void;
         isLoaded(uuid: $UUID_): boolean;
         tick(): void;
+        stopTicking(entity: $Object): void;
+        startTicking(entity: $Object): void;
+        addLegacyChunkEntities(entities: $Stream<$Object>): void;
         addWorldGenChunkEntities(entities: $Stream<$Object>): void;
         addNewEntityWithoutEvent(entity: $Object): boolean;
-        addLegacyChunkEntities(entities: $Stream<$Object>): void;
-        gatherStats(): string;
         updateChunkStatus(pos: $ChunkPos, visibility: $Visibility_): void;
         updateChunkStatus(chunkPos: $ChunkPos, fullChunkStatus: $FullChunkStatus_): void;
-        canPositionTick(chunkPos: $ChunkPos): boolean;
-        canPositionTick(pos: $BlockPos_): boolean;
-        getEntityGetter(): $LevelEntityGetter<$Object>;
-        dumpSections(writer: $Writer): void;
-        areEntitiesLoaded(chunkPos: number): boolean;
         addNewEntity(entity: $Object): boolean;
+        getEntityGetter(): $LevelEntityGetter<$Object>;
+        areEntitiesLoaded(chunkPos: number): boolean;
+        dumpSections(writer: $Writer): void;
+        canPositionTick(pos: $BlockPos_): boolean;
+        canPositionTick(chunkPos: $ChunkPos): boolean;
         c2me$tryFlush(): boolean;
+        gatherStats(): string;
         autoSave(): void;
         saveAll(): void;
-        static getEffectiveStatus<T extends $EntityAccess>(entity: T, visibility: $Visibility_): $Visibility;
         startTracking(entity: $Object): void;
         removeSectionIfEmpty(sectionKey: number, arg1: $EntitySection<$Object>): void;
+        static getEffectiveStatus<T extends $EntityAccess>(entity: T, visibility: $Visibility_): $Visibility;
         stopTracking(entity: $Object): void;
         getCache(): $EntitySectionStorage<$Object>;
         invokeGetLoadedChunks(): $LongSet;
@@ -210,25 +210,25 @@ declare module "@package/net/minecraft/world/level/entity" {
         count(): number;
         getEntities<U extends T>(test: $EntityTypeTest<$Object, U>, bounds: $AABB_, consumer: $AbortableIterationConsumer_<U>): void;
         getEntities(boundingBox: $AABB_, consumer: $AbortableIterationConsumer_<$Object>): void;
-        getAllChunksWithExistingSections(): $LongSet;
+        getSection(sectionPos: number): $EntitySection<$Object>;
+        getExistingSectionsInChunk(pos: number): $Stream<$EntitySection<$Object>>;
         getExistingSectionPositionsInChunk(pos: number): $LongStream;
         forEachAccessibleNonEmptySection(boundingBox: $AABB_, consumer: $AbortableIterationConsumer_<$EntitySection<$Object>>): void;
-        getSection(sectionPos: number): $EntitySection<$Object>;
+        getAllChunksWithExistingSections(): $LongSet;
         getOrCreateSection(sectionPos: number): $EntitySection<$Object>;
-        getExistingSectionsInChunk(pos: number): $Stream<$EntitySection<$Object>>;
-        lithium$IterateEntitiesInTrackedSections(): $Iterable<any>;
         handler$chf000$lithium$forEachInBox(arg0: $AABB_, arg1: $AbortableIterationConsumer_<any>, arg2: $CallbackInfo, arg3: number, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number): void;
+        lithium$IterateEntitiesInTrackedSections(): $Iterable<any>;
         constructor(entityClass: $Class<$Object>, initialSectionVisibility: $Long2ObjectFunction_<$Visibility>);
         get allChunksWithExistingSections(): $LongSet;
     }
     export class $TransientEntitySectionManager$Callback implements $EntityInLevelCallback {
     }
     export class $TransientEntitySectionManager<T extends $EntityAccess> implements $TransientEntitySectionManagerAccessor<any> {
+        count(): number;
         stopTicking(pos: $ChunkPos): void;
         startTicking(pos: $ChunkPos): void;
-        count(): number;
-        gatherStats(): string;
         getEntityGetter(): $LevelEntityGetter<$Object>;
+        gatherStats(): string;
         addEntity(entity: $Object): void;
         removeSectionIfEmpty(section: number, arg1: $EntitySection<$Object>): void;
         getCache(): $EntitySectionStorage<$Object>;

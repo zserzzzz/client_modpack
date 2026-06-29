@@ -15,23 +15,15 @@ declare module "@package/gg/essential/model/backend" {
     export class $RenderBackend {
     }
     export interface $RenderBackend {
-        deleteTexture(arg0: $RenderBackend$Texture): void;
         createTexture(arg0: string, arg1: number, arg2: number): $RenderBackend$Texture;
-        readTexture(arg0: string, arg1: number[], arg2: $Continuation<$RenderBackend$Texture>): $Object;
+        deleteTexture(arg0: $RenderBackend$Texture): void;
         blitTexture(arg0: $RenderBackend$Texture, arg1: $Iterable_<$RenderBackend$BlitOp>): void;
+        readTexture(arg0: string, arg1: number[], arg2: $Continuation<$RenderBackend$Texture>): $Object;
     }
     export class $PlayerPose implements $Map<$EnumPart, $PlayerPose$Part>, $KMappedMarker {
-        component7(): $PlayerPose$Part;
-        component6(): $PlayerPose$Part;
-        getBody(): $PlayerPose$Part;
-        component11(): $PlayerPose$Part;
-        component10(): $PlayerPose$Part;
-        component12(): boolean;
-        static copy$default(arg0: $PlayerPose, arg1: $PlayerPose$Part, arg2: $PlayerPose$Part, arg3: $PlayerPose$Part, arg4: $PlayerPose$Part, arg5: $PlayerPose$Part, arg6: $PlayerPose$Part, arg7: $PlayerPose$Part, arg8: $PlayerPose$Part, arg9: $PlayerPose$Part, arg10: $PlayerPose$Part, arg11: $PlayerPose$Part, arg12: boolean, arg13: number, arg14: $Object): $PlayerPose;
-        remove(arg0: $Object): $PlayerPose$Part;
         remove(arg0: $Object, arg1: $Object): boolean;
+        remove(arg0: $Object): $PlayerPose$Part;
         size(): number;
-        get(arg0: $Object): $PlayerPose$Part;
         get(arg0: $EnumPart_): $PlayerPose$Part;
         put(arg0: $EnumPart_, arg1: $PlayerPose$Part): $PlayerPose$Part;
         values(): $Collection<$PlayerPose$Part>;
@@ -45,8 +37,8 @@ declare module "@package/gg/essential/model/backend" {
         putAll(arg0: $Map_<$EnumPart_, $PlayerPose$Part>): void;
         putIfAbsent(arg0: $EnumPart_, arg1: $PlayerPose$Part): $PlayerPose$Part;
         compute(arg0: $EnumPart_, arg1: $BiFunction_<$EnumPart, $PlayerPose$Part, $PlayerPose$Part>): $PlayerPose$Part;
-        containsKey(arg0: $EnumPart_): boolean;
         containsKey(arg0: $Object): boolean;
+        containsKey(arg0: $EnumPart_): boolean;
         computeIfAbsent(arg0: $EnumPart_, arg1: $Function_<$EnumPart, $PlayerPose$Part>): $PlayerPose$Part;
         keySet(): $Set<$EnumPart>;
         containsValue(arg0: $PlayerPose$Part): boolean;
@@ -57,45 +49,52 @@ declare module "@package/gg/essential/model/backend" {
         getEntries(): $Set<$Map$Entry<$EnumPart, $PlayerPose$Part>>;
         getKeys(): $Set<$EnumPart>;
         getChild(): boolean;
+        getBody(): $PlayerPose$Part;
         getValues(): $Collection<$PlayerPose$Part>;
-        component8(): $PlayerPose$Part;
-        component9(): $PlayerPose$Part;
-        getCape(): $PlayerPose$Part;
-        getHead(): $PlayerPose$Part;
-        component2(): $PlayerPose$Part;
-        component3(): $PlayerPose$Part;
-        component4(): $PlayerPose$Part;
-        component5(): $PlayerPose$Part;
-        component1(): $PlayerPose$Part;
+        static copy$default(arg0: $PlayerPose, arg1: $PlayerPose$Part, arg2: $PlayerPose$Part, arg3: $PlayerPose$Part, arg4: $PlayerPose$Part, arg5: $PlayerPose$Part, arg6: $PlayerPose$Part, arg7: $PlayerPose$Part, arg8: $PlayerPose$Part, arg9: $PlayerPose$Part, arg10: $PlayerPose$Part, arg11: $PlayerPose$Part, arg12: boolean, arg13: number, arg14: $Object): $PlayerPose;
         withoutAttachments(): $PlayerPose;
+        getHead(): $PlayerPose$Part;
+        component6(): $PlayerPose$Part;
+        component7(): $PlayerPose$Part;
+        getCape(): $PlayerPose$Part;
+        component9(): $PlayerPose$Part;
+        component8(): $PlayerPose$Part;
+        component4(): $PlayerPose$Part;
+        component3(): $PlayerPose$Part;
+        component5(): $PlayerPose$Part;
+        component2(): $PlayerPose$Part;
         getLeftShoulderEntity(): $PlayerPose$Part;
         getRightShoulderEntity(): $PlayerPose$Part;
-        mapParts(arg0: $Function2_<$EnumPart, $PlayerPose$Part, $PlayerPose$Part>): $PlayerPose;
-        getLeftArm(): $PlayerPose$Part;
-        getLeftLeg(): $PlayerPose$Part;
+        component10(): $PlayerPose$Part;
+        component11(): $PlayerPose$Part;
+        component12(): boolean;
+        component1(): $PlayerPose$Part;
+        getRightArm(): $PlayerPose$Part;
         getRightLeg(): $PlayerPose$Part;
         getRightWing(): $PlayerPose$Part;
-        getRightArm(): $PlayerPose$Part;
         getLeftWing(): $PlayerPose$Part;
+        mapParts(arg0: $Function2_<$EnumPart, $PlayerPose$Part, $PlayerPose$Part>): $PlayerPose;
+        getLeftLeg(): $PlayerPose$Part;
+        getLeftArm(): $PlayerPose$Part;
         forEach(arg0: $BiConsumer_<$EnumPart, $PlayerPose$Part>): void;
         getOrDefault(arg0: $Object, arg1: $PlayerPose$Part): $PlayerPose$Part;
         static Companion: $PlayerPose$Companion;
         constructor(arg0: $PlayerPose$Part, arg1: $PlayerPose$Part, arg2: $PlayerPose$Part, arg3: $PlayerPose$Part, arg4: $PlayerPose$Part, arg5: $PlayerPose$Part, arg6: $PlayerPose$Part, arg7: $PlayerPose$Part, arg8: $PlayerPose$Part, arg9: $PlayerPose$Part, arg10: $PlayerPose$Part, arg11: boolean);
-        get body(): $PlayerPose$Part;
         get empty(): boolean;
         get entries(): $Set<$Map$Entry<$EnumPart, $PlayerPose$Part>>;
         get keys(): $Set<$EnumPart>;
         get child(): boolean;
-        get cape(): $PlayerPose$Part;
+        get body(): $PlayerPose$Part;
         get head(): $PlayerPose$Part;
+        get cape(): $PlayerPose$Part;
         get leftShoulderEntity(): $PlayerPose$Part;
         get rightShoulderEntity(): $PlayerPose$Part;
-        get leftArm(): $PlayerPose$Part;
-        get leftLeg(): $PlayerPose$Part;
+        get rightArm(): $PlayerPose$Part;
         get rightLeg(): $PlayerPose$Part;
         get rightWing(): $PlayerPose$Part;
-        get rightArm(): $PlayerPose$Part;
         get leftWing(): $PlayerPose$Part;
+        get leftLeg(): $PlayerPose$Part;
+        get leftArm(): $PlayerPose$Part;
     }
     export class $RenderBackend$VertexConsumerProvider {
     }
@@ -107,40 +106,40 @@ declare module "@package/gg/essential/model/backend" {
      */
     export type $RenderBackend$VertexConsumerProvider_ = ((arg0: $RenderBackend$Texture, arg1: boolean, arg2: $Function1<$UVertexConsumer, $Unit>) => void);
     export class $PlayerPose$Part {
-        component7(): $Mat4;
-        component6(): number;
-        static copy$default(arg0: $PlayerPose$Part, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: $Mat4, arg8: number, arg9: $Object): $PlayerPose$Part;
         offset(arg0: $Vec3): $PlayerPose$Part;
         copy(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: $Mat4): $PlayerPose$Part;
         getExtra(): $Mat4;
+        static copy$default(arg0: $PlayerPose$Part, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: $Mat4, arg8: number, arg9: $Object): $PlayerPose$Part;
+        component6(): number;
+        component7(): $Mat4;
         getRotation(): $Quaternion;
-        component2(): number;
-        component3(): number;
         component4(): number;
+        component3(): number;
         component5(): number;
+        component2(): number;
         static access$getZERO$cp(): $PlayerPose$Part;
         component1(): number;
-        getPivotX(): number;
-        getPivotY(): number;
-        getPivotZ(): number;
-        getRotateAngleZ(): number;
-        getRotateAngleY(): number;
-        getRotateAngleX(): number;
         getPivot(): $Vec3;
+        getPivotZ(): number;
+        getPivotY(): number;
+        getPivotX(): number;
+        getRotateAngleZ(): number;
+        getRotateAngleX(): number;
+        getRotateAngleY(): number;
         static access$getMISSING$cp(): $PlayerPose$Part;
         static Companion: $PlayerPose$Part$Companion;
-        constructor(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: $Mat4);
         constructor();
         constructor(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: $Mat4, arg7: number, arg8: $DefaultConstructorMarker);
+        constructor(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: $Mat4);
         get extra(): $Mat4;
         get rotation(): $Quaternion;
-        get pivotX(): number;
-        get pivotY(): number;
-        get pivotZ(): number;
-        get rotateAngleZ(): number;
-        get rotateAngleY(): number;
-        get rotateAngleX(): number;
         get pivot(): $Vec3;
+        get pivotZ(): number;
+        get pivotY(): number;
+        get pivotX(): number;
+        get rotateAngleZ(): number;
+        get rotateAngleX(): number;
+        get rotateAngleY(): number;
     }
     export class $RenderBackend$CommandQueue {
     }
@@ -154,10 +153,10 @@ declare module "@package/gg/essential/model/backend" {
     export class $RenderBackend$Texture {
     }
     export interface $RenderBackend$Texture {
-        getHeight(): number;
         getWidth(): number;
-        get height(): number;
+        getHeight(): number;
         get width(): number;
+        get height(): number;
     }
     export class $PlayerPose$Part$Companion {
         getZERO(): $PlayerPose$Part;
@@ -172,29 +171,29 @@ declare module "@package/gg/essential/model/backend" {
         constructor(arg0: $DefaultConstructorMarker);
     }
     export class $RenderBackend$BlitOp {
-        getHeight(): number;
-        component7(): number;
-        component6(): number;
-        static copy$default(arg0: $RenderBackend$BlitOp, arg1: $RenderBackend$Texture, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: $Object): $RenderBackend$BlitOp;
         copy(arg0: $RenderBackend$Texture, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number): $RenderBackend$BlitOp;
+        static copy$default(arg0: $RenderBackend$BlitOp, arg1: $RenderBackend$Texture, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: $Object): $RenderBackend$BlitOp;
+        component6(): number;
+        component7(): number;
         getWidth(): number;
+        getHeight(): number;
+        component4(): number;
+        component3(): number;
+        component5(): number;
         getSrc(): $RenderBackend$Texture;
         component2(): number;
-        component3(): number;
-        component4(): number;
-        component5(): number;
         component1(): $RenderBackend$Texture;
-        getSrcY(): number;
-        getDestX(): number;
         getSrcX(): number;
+        getSrcY(): number;
         getDestY(): number;
+        getDestX(): number;
         constructor(arg0: $RenderBackend$Texture, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number);
-        get height(): number;
         get width(): number;
+        get height(): number;
         get src(): $RenderBackend$Texture;
-        get srcY(): number;
-        get destX(): number;
         get srcX(): number;
+        get srcY(): number;
         get destY(): number;
+        get destX(): number;
     }
 }

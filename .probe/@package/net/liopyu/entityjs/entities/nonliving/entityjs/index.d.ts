@@ -1,51 +1,53 @@
+import { $CompoundTag } from "@package/net/minecraft/nbt";
+import { $SerializableDataTicket } from "@package/software/bernie/geckolib/constant/dataticket";
+import { $EntityType_, $Entity$RemovalReason, $LivingEntity, $Pose, $PortalProcessor, $EntityType, $Entity } from "@package/net/minecraft/world/entity";
+import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
+import { $UUID, $List } from "@package/java/util";
+import { $AnimatableManager$ControllerRegistrar_ } from "@package/software/bernie/geckolib/animation";
+import { $RandomSource } from "@package/net/minecraft/util";
+import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
+import { $HolderLookup$Provider, $BlockPos } from "@package/net/minecraft/core";
+import { $BaseNonAnimatableEntityBuilder, $BaseEntityBuilder } from "@package/net/liopyu/entityjs/builders/nonliving";
+import { $AnimatableInstanceCache } from "@package/software/bernie/geckolib/animatable/instance";
+import { $Object } from "@package/java/lang";
+import { $EntityInLevelCallback } from "@package/net/minecraft/world/level/entity";
 import { $Level_ } from "@package/net/minecraft/world/level";
 import { $IntOpenHashSet } from "@package/it/unimi/dsi/fastutil/ints";
 import { $TagKey } from "@package/net/minecraft/tags";
 import { $ItemStack_, $ItemStack } from "@package/net/minecraft/world/item";
 import { $Fluid } from "@package/net/minecraft/world/level/material";
-import { $SerializableDataTicket } from "@package/software/bernie/geckolib/constant/dataticket";
 import { $PartEntity } from "@package/net/neoforged/neoforge/entity";
-import { $EntityType_, $Entity$RemovalReason, $LivingEntity, $Pose, $PortalProcessor, $EntityType, $Entity } from "@package/net/minecraft/world/entity";
-import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
-import { $UUID, $List } from "@package/java/util";
 import { $ThrowableItemProjectile, $ItemSupplier, $AbstractArrow, $AbstractArrow$Pickup } from "@package/net/minecraft/world/entity/projectile";
 import { $GeoAnimatable, $GeoEntity } from "@package/software/bernie/geckolib/animatable";
 import { $ArrowEntityJSBuilder, $PartBuilder, $ProjectileAnimatableJSBuilder, $ProjectileEntityJSBuilder, $BaseEntityJSBuilder } from "@package/net/liopyu/entityjs/builders/nonliving/entityjs";
-import { $AnimatableManager$ControllerRegistrar_ } from "@package/software/bernie/geckolib/animation";
-import { $RandomSource } from "@package/net/minecraft/util";
 import { $SynchedEntityData, $EntityDataAccessor } from "@package/net/minecraft/network/syncher";
-import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos } from "@package/net/minecraft/core";
-import { $BaseNonAnimatableEntityBuilder, $BaseEntityBuilder } from "@package/net/liopyu/entityjs/builders/nonliving";
 import { $AtomicInteger } from "@package/java/util/concurrent/atomic";
-import { $AnimatableInstanceCache } from "@package/software/bernie/geckolib/animatable/instance";
-import { $Object } from "@package/java/lang";
 import { $Vec3 } from "@package/net/minecraft/world/phys";
-import { $EntityInLevelCallback } from "@package/net/minecraft/world/level/entity";
 
 declare module "@package/net/liopyu/entityjs/entities/nonliving/entityjs" {
     export class $IArrowEntityJS {
     }
     export interface $IArrowEntityJS {
-        getArrowBuilder(): $BaseNonAnimatableEntityBuilder<never>;
         setPickUpItem(arg0: $ItemStack_): void;
-        get arrowBuilder(): $BaseNonAnimatableEntityBuilder<never>;
+        getArrowBuilder(): $BaseNonAnimatableEntityBuilder<never>;
         set pickUpItem(value: $ItemStack_);
+        get arrowBuilder(): $BaseNonAnimatableEntityBuilder<never>;
     }
     export class $ProjectileAnimatableJS extends $ThrowableItemProjectile implements $IAnimatableJSNL, $ItemSupplier {
         entityName(): string;
-        getBuilder(): $BaseEntityBuilder<never>;
         getAnimatableInstanceCache(): $AnimatableInstanceCache;
-        getTick(arg0: $Object): number;
-        getTypeId(): string;
+        getBuilder(): $BaseEntityBuilder<never>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): string;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -128,6 +130,7 @@ declare module "@package/net/liopyu/entityjs/entities/nonliving/entityjs" {
     export class $PartEntityJS<T extends $LivingEntity> extends $PartEntity<T> {
         entityName(): string;
         movePart(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number): void;
+        serializeNBT(arg0: $HolderLookup$Provider): T;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -207,27 +210,28 @@ declare module "@package/net/liopyu/entityjs/entities/nonliving/entityjs" {
     }
     export interface $IAnimatableJSNL extends $GeoAnimatable, $GeoEntity {
         getType(): $EntityType<never>;
-        getBuilder(): $BaseEntityBuilder<never>;
-        getTick(arg0: $Object): number;
-        getTypeId(): string;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
         getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        getTypeId(): string;
+        getTick(arg0: $Object): number;
+        getBuilder(): $BaseEntityBuilder<never>;
         get type(): $EntityType<never>;
-        get builder(): $BaseEntityBuilder<never>;
-        get typeId(): string;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get typeId(): string;
+        get builder(): $BaseEntityBuilder<never>;
     }
     export class $ArrowEntityJS extends $AbstractArrow implements $IArrowEntityJS {
         entityName(): string;
-        getKnockback(): number;
-        isMoving(): boolean;
-        setDamageFunction(): number;
-        setKnockback(arg0: number): void;
         /**
          * @deprecated
          */
         setPickUpItem(arg0: $ItemStack_): void;
+        getKnockback(): number;
+        isMoving(): boolean;
+        setKnockback(arg0: number): void;
+        setDamageFunction(): number;
         getArrowBuilder(): $BaseNonAnimatableEntityBuilder<never>;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -308,16 +312,17 @@ declare module "@package/net/liopyu/entityjs/entities/nonliving/entityjs" {
         static BASE_SAFE_FALL_DISTANCE: number;
         wasTouchingWater: boolean;
         horizontalCollision: boolean;
-        constructor(arg0: $ArrowEntityJSBuilder, arg1: $EntityType_<$AbstractArrow>, arg2: $Level_);
         constructor(arg0: $Level_, arg1: $ArrowEntityJSBuilder);
         constructor(arg0: $ArrowEntityJSBuilder, arg1: $Level_, arg2: $LivingEntity, arg3: $ItemStack_, arg4: $ItemStack_ | null);
-        get moving(): boolean;
+        constructor(arg0: $ArrowEntityJSBuilder, arg1: $EntityType_<$AbstractArrow>, arg2: $Level_);
         set pickUpItem(value: $ItemStack_);
+        get moving(): boolean;
         get arrowBuilder(): $BaseNonAnimatableEntityBuilder<never>;
     }
     export class $ProjectileEntityJS extends $ThrowableItemProjectile implements $IProjectileEntityJS, $ItemSupplier {
         entityName(): string;
         getProjectileBuilder(): $BaseNonAnimatableEntityBuilder<never>;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -407,18 +412,19 @@ declare module "@package/net/liopyu/entityjs/entities/nonliving/entityjs" {
     export type $IProjectileEntityJS_ = (() => $BaseNonAnimatableEntityBuilder<never>);
     export class $BaseEntityJS extends $Entity implements $IAnimatableJSNL {
         entityName(): string;
-        getBuilder(): $BaseEntityBuilder<never>;
         getAnimatableInstanceCache(): $AnimatableInstanceCache;
-        getTick(arg0: $Object): number;
-        getTypeId(): string;
+        getBuilder(): $BaseEntityBuilder<never>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): string;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -489,8 +495,8 @@ declare module "@package/net/liopyu/entityjs/entities/nonliving/entityjs" {
         wasTouchingWater: boolean;
         horizontalCollision: boolean;
         constructor(arg0: $BaseEntityJSBuilder, arg1: $EntityType_<never>, arg2: $Level_);
-        get builder(): $BaseEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseEntityBuilder<never>;
         get typeId(): string;
         get boneResetTime(): number;
     }

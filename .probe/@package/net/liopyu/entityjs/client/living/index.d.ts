@@ -13,11 +13,11 @@ declare module "@package/net/liopyu/entityjs/client/living" {
     export class $CustomKubeJSEntityRenderer<T extends $LivingEntity> extends $GeoEntityRenderer<T> {
         entityName(): string;
         render(arg0: T, arg1: number, arg2: number, arg3: $PoseStack, arg4: $MultiBufferSource_, arg5: number): void;
-        getTextureLocation(arg0: T): $ResourceLocation;
         getRenderType(arg0: T, arg1: $ResourceLocation_, arg2: $MultiBufferSource_ | null, arg3: number): $RenderType;
+        getTextureLocation(arg0: T): $ResourceLocation;
+        scaleModelForRender(arg0: number, arg1: number, arg2: $PoseStack, arg3: T, arg4: $BakedGeoModel_, arg5: boolean, arg6: number, arg7: number, arg8: number): void;
         getScaleWidth(): number;
         getScaleHeight(): number;
-        scaleModelForRender(arg0: number, arg1: number, arg2: $PoseStack, arg3: T, arg4: $BakedGeoModel_, arg5: boolean, arg6: number, arg7: number, arg8: number): void;
         shadowRadius: number;
         static LEASH_RENDER_STEPS: number;
         entityRenderDispatcher: $EntityRenderDispatcher;
@@ -30,12 +30,12 @@ declare module "@package/net/liopyu/entityjs/client/living" {
     export class $KubeJSEntityRenderer<T extends $LivingEntity> extends $GeoEntityRenderer<T> {
         entityName(): string;
         render(arg0: T, arg1: number, arg2: number, arg3: $PoseStack, arg4: $MultiBufferSource_, arg5: number): void;
-        getTextureLocation(arg0: T): $ResourceLocation;
         getRenderType(arg0: T, arg1: $ResourceLocation_, arg2: $MultiBufferSource_ | null, arg3: number): $RenderType;
+        getTextureLocation(arg0: T): $ResourceLocation;
+        scaleModelForRender(arg0: number, arg1: number, arg2: $PoseStack, arg3: T, arg4: $BakedGeoModel_, arg5: boolean, arg6: number, arg7: number, arg8: number): void;
         getScaleWidth(): number;
         getScaleHeight(): number;
         renderFinal(arg0: $PoseStack, arg1: T, arg2: $BakedGeoModel_, arg3: $MultiBufferSource_, arg4: $VertexConsumer, arg5: number, arg6: number, arg7: number, arg8: number): void;
-        scaleModelForRender(arg0: number, arg1: number, arg2: $PoseStack, arg3: T, arg4: $BakedGeoModel_, arg5: boolean, arg6: number, arg7: number, arg8: number): void;
         shadowRadius: number;
         static LEASH_RENDER_STEPS: number;
         entityRenderDispatcher: $EntityRenderDispatcher;

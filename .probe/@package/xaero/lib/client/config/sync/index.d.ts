@@ -15,33 +15,33 @@ declare module "@package/xaero/lib/client/config/sync" {
     export class $SyncedConfigManager extends $SingleConfigManager<$Config> {
         reset(): void;
         setSynchronizer(arg0: $ClientConfigChannelSynchronizer): void;
-        confirmEdit(arg0: $ConfigProfile): void;
-        getEditedProfile(): $ConfigProfile;
-        confirmChannelPresenceOnServer(): void;
-        getDesiredEditedProfileId(): string;
-        getProfileInfoManager(): $SyncedConfigProfileInfoManager;
-        isChannelPresentOnServer(): boolean;
         setDesiredEditedProfileId(arg0: string): void;
-        receiveEditedProfile(arg0: $ConfigProfile): void;
         isSyncingEditedProfile(): boolean;
+        isChannelPresentOnServer(): boolean;
+        getProfileInfoManager(): $SyncedConfigProfileInfoManager;
+        getDesiredEditedProfileId(): string;
+        receiveEditedProfile(arg0: $ConfigProfile): void;
         setSyncingEditedProfile(arg0: boolean): void;
+        confirmChannelPresenceOnServer(): void;
+        getEditedProfile(): $ConfigProfile;
+        confirmEdit(arg0: $ConfigProfile): void;
         resetEdit(): void;
         logger: $Logger;
         set synchronizer(value: $ClientConfigChannelSynchronizer);
-        get editedProfile(): $ConfigProfile;
-        get profileInfoManager(): $SyncedConfigProfileInfoManager;
         get channelPresentOnServer(): boolean;
+        get profileInfoManager(): $SyncedConfigProfileInfoManager;
+        get editedProfile(): $ConfigProfile;
     }
     export class $ClientConfigChannelSynchronizer extends $CommonConfigChannelSynchronizer {
         reset(): void;
-        onConfigProfileInfoPacket(arg0: $List_<$ConfigProfileInfoPacket$Entry>, arg1: string, arg2: boolean): void;
+        createProfile(arg0: string, arg1: string, arg2: string): void;
+        changeDefaultEnforcedProfileId(arg0: string): void;
+        onDeleteConfigProfilePacket(arg0: string): void;
+        requestProfile(arg0: string): void;
+        syncDirtyOptions(arg0: $ConfigProfile): void;
         onEnforcedConfigPacket(arg0: boolean, arg1: $Iterable_<$AbstractConfigPacket$OptionEntry>): void;
         onEditProfilePacket(arg0: string, arg1: $Iterable_<$AbstractConfigPacket$OptionEntry>): void;
-        onDeleteConfigProfilePacket(arg0: string): void;
-        changeDefaultEnforcedProfileId(arg0: string): void;
-        createProfile(arg0: string, arg1: string, arg2: string): void;
-        syncDirtyOptions(arg0: $ConfigProfile): void;
-        requestProfile(arg0: string): void;
+        onConfigProfileInfoPacket(arg0: $List_<$ConfigProfileInfoPacket$Entry>, arg1: string, arg2: boolean): void;
         deleteProfile(arg0: string): void;
         logger: $Logger;
         constructor(arg0: $ConfigOptionManager, arg1: $SyncedConfigManager, arg2: $Logger);

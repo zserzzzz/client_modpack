@@ -10,7 +10,7 @@ import { $Object2ByteLinkedOpenHashMap } from "@package/it/unimi/dsi/fastutil/ob
 import { $BlockPos, $BlockPos_, $Direction, $IdMapper } from "@package/net/minecraft/core";
 import { $StateDefinition, $BlockState_, $BlockBehaviour$Properties, $BlockState } from "@package/net/minecraft/world/level/block/state";
 import { $BlockEntityRendererProvider$Context } from "@package/net/minecraft/client/renderer/blockentity";
-import { $ProperWaterloggedBlock, $IBE, $WrenchableDirectionalBlock } from "@package/com/simibubi/create/foundation/block";
+import { $IBE, $ProperWaterloggedBlock, $WrenchableDirectionalBlock } from "@package/com/simibubi/create/foundation/block";
 import { $ThreadLocal, $Class } from "@package/java/lang";
 import { $LootTable } from "@package/net/minecraft/world/level/storage/loot";
 import { $Level, $BlockGetter, $LevelAccessor, $Level_ } from "@package/net/minecraft/world/level";
@@ -29,23 +29,23 @@ declare module "@package/com/simibubi/create/content/redstone/deskBell" {
         constructor(arg0: $BlockEntityRendererProvider$Context);
     }
     export class $DeskBellBlock extends $WrenchableDirectionalBlock implements $ProperWaterloggedBlock, $IBE<$DeskBellBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$DeskBellBlockEntity>;
-        getBlockEntityClass(): $Class<$DeskBellBlockEntity>;
         playSound(arg0: $Player, arg1: $LevelAccessor, arg2: $BlockPos_): void;
+        getBlockEntityClass(): $Class<$DeskBellBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$DeskBellBlockEntity>;
         unPress(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): void;
-        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
-        fluidState(arg0: $BlockState_): $FluidState;
         updateWater(arg0: $LevelAccessor, arg1: $BlockState_, arg2: $BlockPos_): void;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$DeskBellBlockEntity>): void;
+        fluidState(arg0: $BlockState_): $FluidState;
+        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$DeskBellBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($DeskBellBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$DeskBellBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $DeskBellBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$DeskBellBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($DeskBellBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$DeskBellBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
@@ -79,8 +79,8 @@ declare module "@package/com/simibubi/create/content/redstone/deskBell" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$DeskBellBlockEntity>;
         get blockEntityClass(): $Class<$DeskBellBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$DeskBellBlockEntity>;
     }
     export class $DeskBellBlockEntity extends $SmartBlockEntity {
         ding(): void;

@@ -34,9 +34,9 @@ declare module "@package/net/minecraft/network/syncher" {
         static forValueType<T>(arg0: $StreamCodec<$RegistryFriendlyByteBuf, T>): $EntityDataSerializer<T>;
     }
     export interface $EntityDataSerializer<T> {
+        codec(): $StreamCodec<$RegistryFriendlyByteBuf, T>;
         copy(value: T): T;
         createAccessor(id: number): $EntityDataAccessor<T>;
-        codec(): $StreamCodec<$RegistryFriendlyByteBuf, T>;
     }
     /**
      * Values that may be interpreted as {@link $EntityDataSerializer}.
@@ -58,12 +58,12 @@ declare module "@package/net/minecraft/network/syncher" {
      * Registry for `EntityDataSerializer`.
      */
     export class $EntityDataSerializers {
+        static getSerializer(id: number): $EntityDataSerializer<never>;
         static getSerializedId(serializer: $EntityDataSerializer_<never>): number;
         /**
          * @deprecated
          */
         static registerSerializer(serializer: $EntityDataSerializer_<never>): void;
-        static getSerializer(id: number): $EntityDataSerializer<never>;
         static FLOAT: $EntityDataSerializer<number>;
         static PARTICLE: $EntityDataSerializer<$ParticleOptions>;
         static PARTICLES: $EntityDataSerializer<$List<$ParticleOptions>>;
@@ -111,24 +111,24 @@ declare module "@package/net/minecraft/network/syncher" {
      */
     export type $EntityDataSerializer$ForValueType_<T> = (() => void);
     export class $SynchedEntityData$DataValue<T> extends $Record {
-        serializer(): $EntityDataSerializer<T>;
         value(): T;
         id(): number;
         write(buffer: $RegistryFriendlyByteBuf): void;
         static read(buffer: $RegistryFriendlyByteBuf, id: number): $SynchedEntityData$DataValue<never>;
         static create<T>(dataAccessor: $EntityDataAccessor_<T>, value: T): $SynchedEntityData$DataValue<T>;
+        serializer(): $EntityDataSerializer<T>;
         constructor(id: number, serializer: $EntityDataSerializer_<T>, value: T);
     }
     /**
      * Values that may be interpreted as {@link $SynchedEntityData$DataValue}.
      */
-    export type $SynchedEntityData$DataValue_<T> = { serializer?: $EntityDataSerializer_<any>, value?: any, id?: number,  } | [serializer?: $EntityDataSerializer_<any>, value?: any, id?: number, ];
+    export type $SynchedEntityData$DataValue_<T> = { value?: any, id?: number, serializer?: $EntityDataSerializer_<any>,  } | [value?: any, id?: number, serializer?: $EntityDataSerializer_<any>, ];
     /**
      * A Key for `SynchedEntityData`.
      */
     export class $EntityDataAccessor<T> extends $Record {
-        serializer(): $EntityDataSerializer<T>;
         id(): number;
+        serializer(): $EntityDataSerializer<T>;
         constructor(id: number, serializer: $EntityDataSerializer_<T>);
     }
     /**
@@ -161,6 +161,10 @@ declare module "@package/net/minecraft/network/syncher" {
          */
         assignValues(entries: $List_<$SynchedEntityData$DataValue_<never>>): void;
         /**
+         * Gets all data entries which have changed since the last check and clears their dirty flag.
+         */
+        getNonDefaultValues(): $List<$SynchedEntityData$DataValue<never>>;
+        /**
          * Register a piece of data to be kept in sync for an entity class.
          * This method must be called during a static initializer of an entity class and the first parameter of this method must be that entity class.
          */
@@ -169,10 +173,6 @@ declare module "@package/net/minecraft/network/syncher" {
          * Gets all data entries which have changed since the last check and clears their dirty flag.
          */
         packDirty(): $List<$SynchedEntityData$DataValue<never>>;
-        /**
-         * Gets all data entries which have changed since the last check and clears their dirty flag.
-         */
-        getNonDefaultValues(): $List<$SynchedEntityData$DataValue<never>>;
         static ID_REGISTRY: $ClassTreeIdRegistry;
         itemsById: $SynchedEntityData$DataItem<never>[];
         constructor(entity: $SyncedDataHolder, itemsById: $SynchedEntityData$DataItem<never>[]);

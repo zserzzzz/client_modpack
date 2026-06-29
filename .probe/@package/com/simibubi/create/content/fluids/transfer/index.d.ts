@@ -33,7 +33,7 @@ declare module "@package/com/simibubi/create/content/fluids/transfer" {
     /**
      * Values that may be interpreted as {@link $FluidManipulationBehaviour$BlockPosEntry}.
      */
-    export type $FluidManipulationBehaviour$BlockPosEntry_ = { pos?: $BlockPos_, distance?: number,  } | [pos?: $BlockPos_, distance?: number, ];
+    export type $FluidManipulationBehaviour$BlockPosEntry_ = { distance?: number, pos?: $BlockPos_,  } | [distance?: number, pos?: $BlockPos_, ];
     export class $GenericItemEmptying {
         static emptyItem(arg0: $Level_, arg1: $ItemStack_, arg2: boolean): $Pair<$FluidStack, $ItemStack>;
         static canItemBeEmptied(arg0: $Level_, arg1: $ItemStack_): boolean;
@@ -56,8 +56,8 @@ declare module "@package/com/simibubi/create/content/fluids/transfer" {
     export class $FluidSplashPacket extends $Record implements $ClientboundPacketPayload {
         pos(): $BlockPos;
         handle(arg0: $LocalPlayer): void;
-        getTypeProvider(): $BasePacketPayload$PacketTypeProvider;
         fluid(): $FluidStack;
+        getTypeProvider(): $BasePacketPayload$PacketTypeProvider;
         handleInternal(arg0: $Player): void;
         type(): $CustomPacketPayload$Type<$CustomPacketPayload>;
         toVanillaClientbound(): $ClientboundCustomPayloadPacket;
@@ -72,17 +72,17 @@ declare module "@package/com/simibubi/create/content/fluids/transfer" {
     export type $FluidSplashPacket_ = { pos?: $BlockPos_, fluid?: $FluidStack_,  } | [pos?: $BlockPos_, fluid?: $FluidStack_, ];
     export class $FillingRecipe extends $StandardProcessingRecipe<$SingleRecipeInput> implements $IAssemblyRecipe {
         matches(arg0: $SingleRecipeInput_, arg1: $Level_): boolean;
-        addAssemblyFluidIngredients(arg0: $List_<$SizedFluidIngredient>): void;
         addAssemblyIngredients(arg0: $List_<$Ingredient_>): void;
-        getDescriptionForAssembly(): $Component;
         addRequiredMachines(arg0: $Set_<$ItemLike_>): void;
-        getJEISubCategory(): $Supplier<$Supplier<$SequencedAssemblySubCategory>>;
+        getDescriptionForAssembly(): $Component;
+        addAssemblyFluidIngredients(arg0: $List_<$SizedFluidIngredient>): void;
         getRequiredFluid(): $SizedFluidIngredient;
+        getJEISubCategory(): $Supplier<$Supplier<$SequencedAssemblySubCategory>>;
         supportsAssembly(): boolean;
         constructor(arg0: $ProcessingRecipeParams);
         get descriptionForAssembly(): $Component;
-        get JEISubCategory(): $Supplier<$Supplier<$SequencedAssemblySubCategory>>;
         get requiredFluid(): $SizedFluidIngredient;
+        get JEISubCategory(): $Supplier<$Supplier<$SequencedAssemblySubCategory>>;
     }
     export class $FluidFillingBehaviour extends $FluidManipulationBehaviour {
         tryDeposit(arg0: $Fluid_, arg1: $BlockPos_, arg2: boolean): boolean;
@@ -92,9 +92,9 @@ declare module "@package/com/simibubi/create/content/fluids/transfer" {
     }
     export class $FluidDrainingBehaviour extends $FluidManipulationBehaviour {
         revalidate(arg0: $BlockPos_): void;
-        getDrainableFluid(arg0: $BlockPos_): $FluidStack;
-        rebuildContext(arg0: $BlockPos_): void;
         pullNext(arg0: $BlockPos_, arg1: boolean): boolean;
+        rebuildContext(arg0: $BlockPos_): void;
+        getDrainableFluid(arg0: $BlockPos_): $FluidStack;
         blockEntity: $SmartBlockEntity;
         static TYPE: $BehaviourType<$FluidDrainingBehaviour>;
         constructor(arg0: $SmartBlockEntity);
@@ -109,9 +109,9 @@ declare module "@package/com/simibubi/create/content/fluids/transfer" {
         constructor();
     }
     export class $GenericItemFilling {
-        static fillItem(arg0: $Level_, arg1: number, arg2: $ItemStack_, arg3: $FluidStack_): $ItemStack;
-        static canItemBeFilled(arg0: $Level_, arg1: $ItemStack_): boolean;
         static getRequiredAmountForItem(arg0: $Level_, arg1: $ItemStack_, arg2: $FluidStack_): number;
+        static canItemBeFilled(arg0: $Level_, arg1: $ItemStack_): boolean;
+        static fillItem(arg0: $Level_, arg1: number, arg2: $ItemStack_, arg3: $FluidStack_): $ItemStack;
         static isFluidHandlerValid(arg0: $ItemStack_, arg1: $IFluidHandlerItem): boolean;
         constructor();
     }

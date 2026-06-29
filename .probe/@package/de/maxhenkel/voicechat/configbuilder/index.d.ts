@@ -10,16 +10,16 @@ declare module "@package/de/maxhenkel/voicechat/configbuilder" {
     export interface $ConfigBuilder {
         entry<T>(arg0: string, arg1: T, ...arg2: string[]): $ConfigEntry<T>;
         header(...arg0: string[]): $ConfigBuilder;
-        enumEntry<E extends $Enum<E>>(arg0: string, arg1: E, ...arg2: string[]): $EnumConfigEntry<E>;
         doubleEntry(arg0: string, arg1: number, arg2: number, arg3: number, ...arg4: string[]): $DoubleConfigEntry;
         doubleEntry(arg0: string, arg1: number, ...arg2: string[]): $DoubleConfigEntry;
-        booleanEntry(arg0: string, arg1: boolean, ...arg2: string[]): $BooleanConfigEntry;
-        stringEntry(arg0: string, arg1: string, ...arg2: string[]): $StringConfigEntry;
         integerEntry(arg0: string, arg1: number, ...arg2: string[]): $IntegerConfigEntry;
         integerEntry(arg0: string, arg1: number, arg2: number, arg3: number, ...arg4: string[]): $IntegerConfigEntry;
-        longEntry(arg0: string, arg1: number, arg2: number, arg3: number, ...arg4: string[]): $LongConfigEntry;
-        longEntry(arg0: string, arg1: number, ...arg2: string[]): $LongConfigEntry;
+        booleanEntry(arg0: string, arg1: boolean, ...arg2: string[]): $BooleanConfigEntry;
+        stringEntry(arg0: string, arg1: string, ...arg2: string[]): $StringConfigEntry;
+        enumEntry<E extends $Enum<E>>(arg0: string, arg1: E, ...arg2: string[]): $EnumConfigEntry<E>;
         floatEntry(arg0: string, arg1: number, arg2: number, arg3: number, ...arg4: string[]): $FloatConfigEntry;
         floatEntry(arg0: string, arg1: number, ...arg2: string[]): $FloatConfigEntry;
+        longEntry(arg0: string, arg1: number, arg2: number, arg3: number, ...arg4: string[]): $LongConfigEntry;
+        longEntry(arg0: string, arg1: number, ...arg2: string[]): $LongConfigEntry;
     }
 }

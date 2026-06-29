@@ -29,9 +29,9 @@ declare module "@package/net/minecraft/server/packs/resources" {
         static EMPTY: $ResourceProvider;
     }
     export interface $ResourceProvider {
-        getResourceOrThrow(location: $ResourceLocation_): $Resource;
         getResource(location: $ResourceLocation_): ($Resource) | undefined;
         open(location: $ResourceLocation_): $InputStream;
+        getResourceOrThrow(location: $ResourceLocation_): $Resource;
         openAsReader(location: $ResourceLocation_): $BufferedReader;
     }
     /**
@@ -99,7 +99,7 @@ declare module "@package/net/minecraft/server/packs/resources" {
     /**
      * Values that may be interpreted as {@link $FallbackResourceManager$1ResourceWithSourceAndIndex}.
      */
-    export type $FallbackResourceManager$1ResourceWithSourceAndIndex_ = { resource?: $IoSupplier_<$InputStream>, packIndex?: number, packResources?: $PackResources,  } | [resource?: $IoSupplier_<$InputStream>, packIndex?: number, packResources?: $PackResources, ];
+    export type $FallbackResourceManager$1ResourceWithSourceAndIndex_ = { packResources?: $PackResources, resource?: $IoSupplier_<$InputStream>, packIndex?: number,  } | [packResources?: $PackResources, resource?: $IoSupplier_<$InputStream>, packIndex?: number, ];
     export class $FallbackResourceManager$LeakedResourceWarningInputStream extends $FilterInputStream {
     }
     export class $ResourceMetadata {
@@ -108,8 +108,8 @@ declare module "@package/net/minecraft/server/packs/resources" {
         static EMPTY: $ResourceMetadata;
     }
     export interface $ResourceMetadata {
-        copySections(serializers: $Collection_<$MetadataSectionSerializer<never>>): $ResourceMetadata;
         getSection<T>(serializer: $MetadataSectionSerializer<T>): (T) | undefined;
+        copySections(serializers: $Collection_<$MetadataSectionSerializer<never>>): $ResourceMetadata;
     }
     /**
      * Values that may be interpreted as {@link $ResourceMetadata}.
@@ -118,25 +118,25 @@ declare module "@package/net/minecraft/server/packs/resources" {
     export class $ResourceManagerReloadListener {
     }
     export interface $ResourceManagerReloadListener extends $PreparableReloadListener {
-        onResourceManagerReload(resourceManager: $ResourceManager): void;
         reload(stage: $PreparableReloadListener$PreparationBarrier_, resourceManager: $ResourceManager, preparationsProfiler: $ProfilerFiller, reloadProfiler: $ProfilerFiller, backgroundExecutor: $Executor_, gameExecutor: $Executor_): $CompletableFuture<void>;
+        onResourceManagerReload(resourceManager: $ResourceManager): void;
     }
     /**
      * Values that may be interpreted as {@link $ResourceManagerReloadListener}.
      */
     export type $ResourceManagerReloadListener_ = ((arg0: $ResourceManager) => void);
     export class $MultiPackResourceManager implements $CloseableResourceManager, $LifecycledResourceManagerImplExtension, $FabricLifecycledResourceManager {
-        listResourceStacks(path: string, filter: $Predicate_<$ResourceLocation>): $Map<$ResourceLocation, $List<$Resource>>;
         getResource(location: $ResourceLocation_): ($Resource) | undefined;
         close(): void;
-        listResources(path: string, filter: $Predicate_<$ResourceLocation>): $Map<$ResourceLocation, $Resource>;
-        getNamespaces(): $Set<string>;
-        getResourceStack(location: $ResourceLocation_): $List<$Resource>;
+        listResourceStacks(path: string, filter: $Predicate_<$ResourceLocation>): $Map<$ResourceLocation, $List<$Resource>>;
         continuity$getRedirectHandler(): $ResourceRedirectHandler;
+        getNamespaces(): $Set<string>;
+        listResources(path: string, filter: $Predicate_<$ResourceLocation>): $Map<$ResourceLocation, $Resource>;
         fabric_getResourceType(): $PackType;
         listPacks(): $Stream<$PackResources>;
-        getResourceOrThrow(location: $ResourceLocation_): $Resource;
+        getResourceStack(location: $ResourceLocation_): $List<$Resource>;
         open(location: $ResourceLocation_): $InputStream;
+        getResourceOrThrow(location: $ResourceLocation_): $Resource;
         openAsReader(location: $ResourceLocation_): $BufferedReader;
         namespacedManagers: $Map<string, $FallbackResourceManager>;
         packs: $List<$PackResources>;
@@ -168,19 +168,19 @@ declare module "@package/net/minecraft/server/packs/resources" {
      */
     export type $FallbackResourceManager$PackEntry_ = { filter?: $Predicate_<$ResourceLocation>, resources?: $PackResources, name?: string,  } | [filter?: $Predicate_<$ResourceLocation>, resources?: $PackResources, name?: string, ];
     export class $FallbackResourceManager implements $ResourceManager {
-        listResourceStacks(path: string, filter: $Predicate_<$ResourceLocation>): $Map<$ResourceLocation, $List<$Resource>>;
         getResource(location: $ResourceLocation_): ($Resource) | undefined;
-        push(resources: $PackResources): void;
         push(resources: $PackResources, filter: $Predicate_<$ResourceLocation>): void;
-        static parseMetadata(streamSupplier: $IoSupplier_<$InputStream>): $ResourceMetadata;
-        listResources(path: string, filter: $Predicate_<$ResourceLocation>): $Map<$ResourceLocation, $Resource>;
+        push(resources: $PackResources): void;
+        listResourceStacks(path: string, filter: $Predicate_<$ResourceLocation>): $Map<$ResourceLocation, $List<$Resource>>;
         getNamespaces(): $Set<string>;
-        getResourceStack(location: $ResourceLocation_): $List<$Resource>;
-        listPacks(): $Stream<$PackResources>;
+        listResources(path: string, filter: $Predicate_<$ResourceLocation>): $Map<$ResourceLocation, $Resource>;
         pushFilterOnly(name: string, filter: $Predicate_<$ResourceLocation>): void;
+        static parseMetadata(streamSupplier: $IoSupplier_<$InputStream>): $ResourceMetadata;
+        listPacks(): $Stream<$PackResources>;
+        getResourceStack(location: $ResourceLocation_): $List<$Resource>;
         static getMetadataLocation(location: $ResourceLocation_): $ResourceLocation;
-        getResourceOrThrow(location: $ResourceLocation_): $Resource;
         open(location: $ResourceLocation_): $InputStream;
+        getResourceOrThrow(location: $ResourceLocation_): $Resource;
         openAsReader(location: $ResourceLocation_): $BufferedReader;
         fallbacks: $List<$FallbackResourceManager$PackEntry>;
         static LOGGER: $Logger;
@@ -203,16 +203,16 @@ declare module "@package/net/minecraft/server/packs/resources" {
         constructor(name: string, preperationResult: $ProfileResults, reloadResult: $ProfileResults, preperationNanos: $AtomicLong, reloadNanos: $AtomicLong);
     }
     export class $ResourceManager$Empty extends $Enum<$ResourceManager$Empty> implements $ResourceManager {
-        listResourceStacks(arg0: string, arg1: $Predicate_<$ResourceLocation>): $Map<$ResourceLocation, $List<$Resource>>;
         static values(): $ResourceManager$Empty[];
         static valueOf(arg0: string): $ResourceManager$Empty;
         getResource(arg0: $ResourceLocation_): ($Resource) | undefined;
-        listResources(arg0: string, arg1: $Predicate_<$ResourceLocation>): $Map<$ResourceLocation, $Resource>;
+        listResourceStacks(arg0: string, arg1: $Predicate_<$ResourceLocation>): $Map<$ResourceLocation, $List<$Resource>>;
         getNamespaces(): $Set<string>;
-        getResourceStack(arg0: $ResourceLocation_): $List<$Resource>;
+        listResources(arg0: string, arg1: $Predicate_<$ResourceLocation>): $Map<$ResourceLocation, $Resource>;
         listPacks(): $Stream<$PackResources>;
-        getResourceOrThrow(arg0: $ResourceLocation_): $Resource;
+        getResourceStack(arg0: $ResourceLocation_): $List<$Resource>;
         open(arg0: $ResourceLocation_): $InputStream;
+        getResourceOrThrow(arg0: $ResourceLocation_): $Resource;
         openAsReader(arg0: $ResourceLocation_): $BufferedReader;
         static INSTANCE: $ResourceManager$Empty;
         get namespaces(): $Set<string>;
@@ -226,20 +226,20 @@ declare module "@package/net/minecraft/server/packs/resources" {
     /**
      * Values that may be interpreted as {@link $FallbackResourceManager$EntryStack}.
      */
-    export type $FallbackResourceManager$EntryStack_ = { fileLocation?: $ResourceLocation_, metadataLocation?: $ResourceLocation_, fileSources?: $List_<$FallbackResourceManager$ResourceWithSource_>, metaSources?: $Map_<$PackResources, $IoSupplier_<$InputStream>>,  } | [fileLocation?: $ResourceLocation_, metadataLocation?: $ResourceLocation_, fileSources?: $List_<$FallbackResourceManager$ResourceWithSource_>, metaSources?: $Map_<$PackResources, $IoSupplier_<$InputStream>>, ];
+    export type $FallbackResourceManager$EntryStack_ = { fileSources?: $List_<$FallbackResourceManager$ResourceWithSource_>, metaSources?: $Map_<$PackResources, $IoSupplier_<$InputStream>>, fileLocation?: $ResourceLocation_, metadataLocation?: $ResourceLocation_,  } | [fileSources?: $List_<$FallbackResourceManager$ResourceWithSource_>, metaSources?: $Map_<$PackResources, $IoSupplier_<$InputStream>>, fileLocation?: $ResourceLocation_, metadataLocation?: $ResourceLocation_, ];
     export class $ReloadableResourceManager implements $ResourceManager, $AutoCloseable, $PipelineReloadableResourceManagerAccessor, $ReloadableResourceManagerImplAccessor {
-        registerReloadListener(listener: $PreparableReloadListener_): void;
-        listResourceStacks(path: string, filter: $Predicate_<$ResourceLocation>): $Map<$ResourceLocation, $List<$Resource>>;
         getResource(location: $ResourceLocation_): ($Resource) | undefined;
         close(): void;
-        listResources(path: string, filter: $Predicate_<$ResourceLocation>): $Map<$ResourceLocation, $Resource>;
-        getNamespaces(): $Set<string>;
-        createReload(backgroundExecutor: $Executor_, gameExecutor: $Executor_, waitingFor: $CompletableFuture<$Unit_>, resourcePacks: $List_<$PackResources>): $ReloadInstance;
-        getResourceStack(location: $ResourceLocation_): $List<$Resource>;
+        listResourceStacks(path: string, filter: $Predicate_<$ResourceLocation>): $Map<$ResourceLocation, $List<$Resource>>;
         registerReloadListenerIfNotPresent(listener: $PreparableReloadListener_): void;
+        getNamespaces(): $Set<string>;
+        listResources(path: string, filter: $Predicate_<$ResourceLocation>): $Map<$ResourceLocation, $Resource>;
+        createReload(backgroundExecutor: $Executor_, gameExecutor: $Executor_, waitingFor: $CompletableFuture<$Unit_>, resourcePacks: $List_<$PackResources>): $ReloadInstance;
+        registerReloadListener(listener: $PreparableReloadListener_): void;
         listPacks(): $Stream<$PackResources>;
-        getResourceOrThrow(location: $ResourceLocation_): $Resource;
+        getResourceStack(location: $ResourceLocation_): $List<$Resource>;
         open(location: $ResourceLocation_): $InputStream;
+        getResourceOrThrow(location: $ResourceLocation_): $Resource;
         openAsReader(location: $ResourceLocation_): $BufferedReader;
         getListeners(): $List<$PreparableReloadListener>;
         getActiveManager(): $CloseableResourceManager;
@@ -258,26 +258,26 @@ declare module "@package/net/minecraft/server/packs/resources" {
          * Performs any reloading that can be done off-thread, such as file IO
          */
         prepare(resourceManager: $ResourceManager, profiler: $ProfilerFiller): T;
-        fabric_getRegistryLookup(): $HolderLookup$Provider;
         fabric_applyResourceConditions(arg0: $ResourceManager, arg1: $ProfilerFiller, arg2: $Object, arg3: $HolderLookup$Provider): void;
+        fabric_getRegistryLookup(): $HolderLookup$Provider;
         constructor();
     }
     export class $ResourceManager {
     }
     export interface $ResourceManager extends $ResourceProvider {
         listResourceStacks(path: string, filter: $Predicate_<$ResourceLocation>): $Map<$ResourceLocation, $List<$Resource>>;
-        listResources(path: string, filter: $Predicate_<$ResourceLocation>): $Map<$ResourceLocation, $Resource>;
         getNamespaces(): $Set<string>;
-        getResourceStack(location: $ResourceLocation_): $List<$Resource>;
+        listResources(path: string, filter: $Predicate_<$ResourceLocation>): $Map<$ResourceLocation, $Resource>;
         listPacks(): $Stream<$PackResources>;
+        getResourceStack(location: $ResourceLocation_): $List<$Resource>;
         get namespaces(): $Set<string>;
     }
     export class $Resource implements $FabricResource {
         source(): $PackResources;
         open(): $InputStream;
         metadata(): $ResourceMetadata;
-        sourcePackId(): string;
         openAsReader(): $BufferedReader;
+        sourcePackId(): string;
         knownPackInfo(): ($KnownPack) | undefined;
         getFabricPackSource(): $PackSource;
         constructor(source: $PackResources, streamSupplier: $IoSupplier_<$InputStream>, metadataSupplier: $IoSupplier_<$ResourceMetadata>);

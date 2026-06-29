@@ -1,5 +1,6 @@
 import { $GoalSelector } from "@package/net/minecraft/world/entity/ai/goal";
 import { $MoveControl, $MoveControl$Operation, $LookControl, $JumpControl, $BodyRotationControl } from "@package/net/minecraft/world/entity/ai/control";
+import { $CompoundTag } from "@package/net/minecraft/nbt";
 import { $EntityType_, $Pose, $PortalProcessor, $PlayerRideableJumping, $AnimationState, $EntityDimensions, $Entity$RemovalReason, $Saddleable, $WalkAnimationState, $Mob } from "@package/net/minecraft/world/entity";
 import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
 import { $AttributeSupplier$Builder } from "@package/net/minecraft/world/entity/ai/attributes";
@@ -10,7 +11,7 @@ import { $InteractionHand, $SimpleContainer } from "@package/net/minecraft/world
 import { $Predicate } from "@package/java/util/function";
 import { $ServerLevel } from "@package/net/minecraft/server/level";
 import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos } from "@package/net/minecraft/core";
+import { $HolderLookup$Provider, $BlockPos } from "@package/net/minecraft/core";
 import { $Brain, $Brain$Provider } from "@package/net/minecraft/world/entity/ai";
 import { $PathNavigation } from "@package/net/minecraft/world/entity/ai/navigation";
 import { $Object } from "@package/java/lang";
@@ -54,10 +55,10 @@ declare module "@package/net/minecraft/world/entity/animal/camel" {
         lookAtCooldown: number;
     }
     export class $CamelAi {
-        static initMemories(camel: $Camel, random: $RandomSource): void;
-        static updateActivity(camel: $Camel): void;
         static brainProvider(): $Brain$Provider<$Camel>;
+        static updateActivity(camel: $Camel): void;
         static makeBrain(brain: $Brain<$Camel>): $Brain<never>;
+        static initMemories(camel: $Camel, random: $RandomSource): void;
         static getTemptations(): $Predicate<$ItemStack>;
         constructor();
         static get temptations(): $Predicate<$ItemStack>;
@@ -76,7 +77,31 @@ declare module "@package/net/minecraft/world/entity/animal/camel" {
         constructor(minimalPoseSeconds: number);
     }
     export class $Camel extends $AbstractHorse implements $PlayerRideableJumping, $Saddleable {
+        /**
+         * If a rider of this entity can interact with this entity. Should return true on the
+         * ridden entity if so.
+         */
+        isDashing(): boolean;
+        setDashing(dashing: boolean): void;
+        /**
+         * Called to update the entity's position/logic.
+         */
+        standUp(): void;
+        /**
+         * Called to update the entity's position/logic.
+         */
+        sitDown(): void;
         static createAttributes(): $AttributeSupplier$Builder;
+        /**
+         * If a rider of this entity can interact with this entity. Should return true on the
+         * ridden entity if so.
+         */
+        isInPoseTransition(): boolean;
+        /**
+         * If a rider of this entity can interact with this entity. Should return true on the
+         * ridden entity if so.
+         */
+        canCamelChangePose(): boolean;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
@@ -96,32 +121,9 @@ declare module "@package/net/minecraft/world/entity/animal/camel" {
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
          */
-        canCamelChangePose(): boolean;
-        /**
-         * If a rider of this entity can interact with this entity. Should return true on the
-         * ridden entity if so.
-         */
-        isInPoseTransition(): boolean;
-        resetLastPoseChangeTick(lastPoseChangeTick: number): void;
-        /**
-         * If a rider of this entity can interact with this entity. Should return true on the
-         * ridden entity if so.
-         */
         isCamelVisuallySitting(): boolean;
-        /**
-         * If a rider of this entity can interact with this entity. Should return true on the
-         * ridden entity if so.
-         */
-        isDashing(): boolean;
-        /**
-         * Called to update the entity's position/logic.
-         */
-        standUp(): void;
-        setDashing(dashing: boolean): void;
-        /**
-         * Called to update the entity's position/logic.
-         */
-        sitDown(): void;
+        resetLastPoseChangeTick(lastPoseChangeTick: number): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         sitAnimationState: $AnimationState;
@@ -316,9 +318,9 @@ declare module "@package/net/minecraft/world/entity/animal/camel" {
         static BASE_SAFE_FALL_DISTANCE: number;
         age: number;
         constructor(entityType: $EntityType_<$Camel>, level: $Level_);
+        get inPoseTransition(): boolean;
         get camelSitting(): boolean;
         get poseTime(): number;
-        get inPoseTransition(): boolean;
         get camelVisuallySitting(): boolean;
     }
 }

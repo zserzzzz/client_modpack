@@ -25,30 +25,30 @@ import { $Player } from "@package/net/minecraft/world/entity/player";
 import { $ICogWheel } from "@package/com/simibubi/create/content/kinetics/simpleRelays";
 import { $DirectionProperty } from "@package/net/minecraft/world/level/block/state/properties";
 import { $ResourceKey } from "@package/net/minecraft/resources";
-import { $Block$BlockStatePairKey, $SimpleWaterloggedBlock, $SoundType, $Block } from "@package/net/minecraft/world/level/block";
+import { $Block$BlockStatePairKey, $SoundType, $SimpleWaterloggedBlock, $Block } from "@package/net/minecraft/world/level/block";
 import { $BlockEntityTicker, $BlockEntityType, $BlockEntityType_, $BlockEntity } from "@package/net/minecraft/world/level/block/entity";
 import { $PipeConnection, $FluidTransportBehaviour$UpdatePhase, $FluidTransportBehaviour } from "@package/com/simibubi/create/content/fluids";
 
 declare module "@package/com/simibubi/create/content/fluids/pump" {
     export class $PumpBlock extends $DirectionalKineticBlock implements $SimpleWaterloggedBlock, $ICogWheel, $IBE<$PumpBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$PumpBlockEntity>;
-        static isPump(arg0: $BlockState_): boolean;
         getBlockEntityClass(): $Class<$PumpBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$PumpBlockEntity>;
         static isOpenAt(arg0: $BlockState_, arg1: $Direction_): boolean;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
+        static isPump(arg0: $BlockState_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
-        isDedicatedCogWheel(): boolean;
         isSmallCog(): boolean;
         isLargeCog(): boolean;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$PumpBlockEntity>): void;
+        isDedicatedCogWheel(): boolean;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$PumpBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($PumpBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$PumpBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $PumpBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$PumpBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($PumpBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$PumpBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -80,11 +80,11 @@ declare module "@package/com/simibubi/create/content/fluids/pump" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$PumpBlockEntity>;
         get blockEntityClass(): $Class<$PumpBlockEntity>;
-        get dedicatedCogWheel(): boolean;
+        get blockEntityType(): $BlockEntityType<$PumpBlockEntity>;
         get smallCog(): boolean;
         get largeCog(): boolean;
+        get dedicatedCogWheel(): boolean;
     }
     export class $PumpBlockEntity$PumpFluidTransferBehaviour extends $FluidTransportBehaviour {
         phase: $FluidTransportBehaviour$UpdatePhase;
@@ -95,8 +95,8 @@ declare module "@package/com/simibubi/create/content/fluids/pump" {
     }
     export class $PumpBlockEntity extends $KineticBlockEntity {
         updatePressureChange(): void;
-        updatePipesOnSide(arg0: $Direction_): void;
         isSideAccessible(arg0: $Direction_): boolean;
+        updatePipesOnSide(arg0: $Direction_): void;
         isPullingOnSide(arg0: boolean): boolean;
         sequenceContext: $SequencedGearshiftBlockEntity$SequenceContext;
         networkDirty: boolean;

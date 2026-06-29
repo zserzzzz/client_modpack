@@ -38,13 +38,13 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/schema/postprocessing" {
         type(): $RecipePostProcessorType<never>;
         component(): $RecipeComponent<never>;
         process(ctx: $RecipeValidationContext, recipe: $KubeRecipe): void;
-        keyName(): string;
         patternName(): string;
+        keyName(): string;
         static TYPE: $RecipePostProcessorType<$KeyPatternCleanupPostProcessor>;
         constructor(patternName: string, keyName: string, component: $RecipeComponent<never>);
     }
     /**
      * Values that may be interpreted as {@link $KeyPatternCleanupPostProcessor}.
      */
-    export type $KeyPatternCleanupPostProcessor_ = { patternName?: string, keyName?: string, component?: $RecipeComponent<never>,  } | [patternName?: string, keyName?: string, component?: $RecipeComponent<never>, ];
+    export type $KeyPatternCleanupPostProcessor_ = { component?: $RecipeComponent<never>, patternName?: string, keyName?: string,  } | [component?: $RecipeComponent<never>, patternName?: string, keyName?: string, ];
 }

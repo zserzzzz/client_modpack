@@ -19,12 +19,12 @@ declare module "@package/com/simibubi/create/content/redstone/rail" {
         constructor();
     }
     export class $ControllerRailBlock extends $BaseRailBlock implements $IWrenchable {
-        static getAccelerationVector(arg0: $BlockState_): $Vec3i;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
+        static getAccelerationVector(arg0: $BlockState_): $Vec3i;
         static isStateBackwards(arg0: $BlockState_): boolean;
         static isReversedSlope(arg0: $BlockState_): boolean;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];

@@ -32,9 +32,9 @@ declare module "@package/dev/latvian/mods/kubejs/item/creativetab" {
      */
     export type $CreativeTabContentSupplier_ = ((showRestrictedItems: boolean) => $ItemPredicate_);
     export class $CreativeTabCallbackForge extends $Record implements $CreativeTabCallback {
-        addAfter(order: $ItemStack_, items: $ItemStack_[], visibility: $CreativeModeTab$TabVisibility_): void;
         remove(filter: $ItemPredicate_, removeParent: boolean, removeSearch: boolean): void;
         event(): $BuildCreativeModeTabContentsEvent;
+        addAfter(order: $ItemStack_, items: $ItemStack_[], visibility: $CreativeModeTab$TabVisibility_): void;
         addBefore(order: $ItemStack_, items: $ItemStack_[], visibility: $CreativeModeTab$TabVisibility_): void;
         constructor(event: $BuildCreativeModeTabContentsEvent);
     }
@@ -43,8 +43,8 @@ declare module "@package/dev/latvian/mods/kubejs/item/creativetab" {
      */
     export type $CreativeTabCallbackForge_ = { event?: $BuildCreativeModeTabContentsEvent,  } | [event?: $BuildCreativeModeTabContentsEvent, ];
     export class $CreativeTabBuilder extends $BuilderBase<$CreativeModeTab> {
-        content(content: $CreativeTabContentSupplier_): this;
         icon(icon: $CreativeTabIconSupplier_): this;
+        content(content: $CreativeTabContentSupplier_): this;
         registryKey: $ResourceKey<$Registry<$CreativeModeTab>>;
         sourceLine: $SourceLine;
         id: $ResourceLocation;
@@ -60,23 +60,17 @@ declare module "@package/dev/latvian/mods/kubejs/item/creativetab" {
      */
     export type $CreativeTabContentSupplier$Wrapper_ = { supplier?: $CreativeTabContentSupplier_,  } | [supplier?: $CreativeTabContentSupplier_, ];
     export class $CreativeTabKubeEvent implements $KubeEvent {
-        addAfter(order: $ItemStack_, items: $ItemStack_[], visibility: $CreativeModeTab$TabVisibility_): void;
-        addAfter(order: $ItemStack_, items: $ItemStack_[]): void;
         remove(filter: $ItemPredicate_): void;
-        add(items: $ItemStack_[]): void;
         add(items: $ItemStack_[], visibility: $CreativeModeTab$TabVisibility_): void;
+        add(items: $ItemStack_[]): void;
+        setDisplayName(component: $Component_): void;
+        setIcon(icon: $ItemStack_): void;
+        addAfter(order: $ItemStack_, items: $ItemStack_[]): void;
+        addAfter(order: $ItemStack_, items: $ItemStack_[], visibility: $CreativeModeTab$TabVisibility_): void;
         addBefore(order: $ItemStack_, items: $ItemStack_[], visibility: $CreativeModeTab$TabVisibility_): void;
         addBefore(order: $ItemStack_, items: $ItemStack_[]): void;
-        setIcon(icon: $ItemStack_): void;
-        setDisplayName(component: $Component_): void;
         removeFromSearch(filter: $ItemPredicate_): void;
         removeFromParent(filter: $ItemPredicate_): void;
-        /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -84,11 +78,11 @@ declare module "@package/dev/latvian/mods/kubejs/item/creativetab" {
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -96,22 +90,28 @@ declare module "@package/dev/latvian/mods/kubejs/item/creativetab" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         tab: $CreativeModeTab;
         showRestrictedItems: boolean;
         constructor(tab: $CreativeModeTab_, showRestrictedItems: boolean, callback: $CreativeTabCallback);
-        set icon(value: $ItemStack_);
         set displayName(value: $Component_);
+        set icon(value: $ItemStack_);
     }
     export class $KubeJSCreativeTabs {
         static TAB: $Supplier<$CreativeModeTab>;
@@ -133,8 +133,8 @@ declare module "@package/dev/latvian/mods/kubejs/item/creativetab" {
     export class $CreativeTabCallback {
     }
     export interface $CreativeTabCallback {
-        addAfter(order: $ItemStack_, items: $ItemStack_[], visibility: $CreativeModeTab$TabVisibility_): void;
         remove(filter: $ItemPredicate_, removeParent: boolean, removeSearch: boolean): void;
+        addAfter(order: $ItemStack_, items: $ItemStack_[], visibility: $CreativeModeTab$TabVisibility_): void;
         addBefore(order: $ItemStack_, items: $ItemStack_[], visibility: $CreativeModeTab$TabVisibility_): void;
     }
 }

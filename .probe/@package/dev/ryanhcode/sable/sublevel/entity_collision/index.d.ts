@@ -8,16 +8,16 @@ import { $Vector3dc } from "@package/org/joml";
 declare module "@package/dev/ryanhcode/sable/sublevel/entity_collision" {
     export class $SubLevelEntityCollision$FirstCollisionInfo extends $Record {
         block(): $BlockState;
-        localLocation(): $Vector3dc;
-        globalDirection(): $Vector3dc;
-        bouncy(): boolean;
         horizontal(): boolean;
+        globalDirection(): $Vector3dc;
+        localLocation(): $Vector3dc;
+        bouncy(): boolean;
         constructor(localLocation: $Vector3dc, globalDirection: $Vector3dc, horizontal: boolean, bouncy: boolean, block: $BlockState_);
     }
     /**
      * Values that may be interpreted as {@link $SubLevelEntityCollision$FirstCollisionInfo}.
      */
-    export type $SubLevelEntityCollision$FirstCollisionInfo_ = { bouncy?: boolean, localLocation?: $Vector3dc, globalDirection?: $Vector3dc, horizontal?: boolean, block?: $BlockState_,  } | [bouncy?: boolean, localLocation?: $Vector3dc, globalDirection?: $Vector3dc, horizontal?: boolean, block?: $BlockState_, ];
+    export type $SubLevelEntityCollision$FirstCollisionInfo_ = { globalDirection?: $Vector3dc, horizontal?: boolean, block?: $BlockState_, bouncy?: boolean, localLocation?: $Vector3dc,  } | [globalDirection?: $Vector3dc, horizontal?: boolean, block?: $BlockState_, bouncy?: boolean, localLocation?: $Vector3dc, ];
     export class $SubLevelEntityCollision$CollisionInfo {
         trackingSubLevel: $SubLevel;
         subLevelHorizontalCollision: boolean;

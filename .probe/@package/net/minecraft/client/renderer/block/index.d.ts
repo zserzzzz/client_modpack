@@ -28,33 +28,33 @@ export * as model from "@package/net/minecraft/client/renderer/block/model";
 declare module "@package/net/minecraft/client/renderer/block" {
     export class $ModelBlockRenderer$Cache implements $ModelBlockRendererCacheExtension {
         enable(): void;
-        disable(): void;
         getShadeBrightness(state: $BlockState_, level: $BlockAndTintGetter, pos: $BlockPos_): number;
+        disable(): void;
         getLightColor(state: $BlockState_, level: $BlockAndTintGetter, pos: $BlockPos_): number;
         sable$setOnSubLevel(arg0: boolean): void;
         sable$getOnSubLevel(): boolean;
     }
     export class $BlockRenderDispatcher implements $ResourceManagerReloadListener, $IdentifiableResourceReloadListener {
-        onResourceManagerReload(resourceManager: $ResourceManager): void;
         getBlockModelShaper(): $BlockModelShaper;
-        /**
-         * @deprecated
-         */
-        renderSingleBlock(state: $BlockState_, poseStack: $PoseStack, bufferSource: $MultiBufferSource_, packedLight: number, packedOverlay: number): void;
-        renderSingleBlock(arg0: $BlockState_, arg1: $PoseStack, arg2: $MultiBufferSource_, arg3: number, arg4: number, arg5: $ModelData, arg6: $RenderType): void;
-        getBlockModel(state: $BlockState_): $BakedModel;
+        onResourceManagerReload(resourceManager: $ResourceManager): void;
         getFabricId(): $ResourceLocation;
-        getLiquidBlockRenderer(): $LiquidBlockRenderer;
-        getModelRenderer(): $ModelBlockRenderer;
-        getFabricDependencies(): $Collection<any>;
         /**
          * @deprecated
          */
         renderBreakingTexture(state: $BlockState_, pos: $BlockPos_, level: $BlockAndTintGetter, poseStack: $PoseStack, consumer: $VertexConsumer): void;
         renderBreakingTexture(arg0: $BlockState_, arg1: $BlockPos_, arg2: $BlockAndTintGetter, arg3: $PoseStack, arg4: $VertexConsumer, arg5: $ModelData): void;
+        getFabricDependencies(): $Collection<any>;
+        getBlockModel(state: $BlockState_): $BakedModel;
+        /**
+         * @deprecated
+         */
+        renderSingleBlock(state: $BlockState_, poseStack: $PoseStack, bufferSource: $MultiBufferSource_, packedLight: number, packedOverlay: number): void;
+        renderSingleBlock(arg0: $BlockState_, arg1: $PoseStack, arg2: $MultiBufferSource_, arg3: number, arg4: number, arg5: $ModelData, arg6: $RenderType): void;
+        getModelRenderer(): $ModelBlockRenderer;
+        getLiquidBlockRenderer(): $LiquidBlockRenderer;
+        renderLiquid(pos: $BlockPos_, level: $BlockAndTintGetter, consumer: $VertexConsumer, blockState: $BlockState_, fluidState: $FluidState): void;
         renderBatched(arg0: $BlockState_, arg1: $BlockPos_, arg2: $BlockAndTintGetter, arg3: $PoseStack, arg4: $VertexConsumer, arg5: boolean, arg6: $RandomSource, arg7: $ModelData, arg8: $RenderType): void;
         renderBatched(state: $BlockState_, pos: $BlockPos_, level: $BlockAndTintGetter, poseStack: $PoseStack, consumer: $VertexConsumer, checkSides: boolean, random: $RandomSource): void;
-        renderLiquid(pos: $BlockPos_, level: $BlockAndTintGetter, consumer: $VertexConsumer, blockState: $BlockState_, fluidState: $FluidState): void;
         wrapMethod$cmo000$aeronautics$renderBreakingTexture(arg0: $BlockState_, arg1: $BlockPos_, arg2: $BlockAndTintGetter, arg3: $PoseStack, arg4: $VertexConsumer, arg5: $ModelData, arg6: $Operation_<any>): void;
         reload(preparationBarrier: $PreparableReloadListener$PreparationBarrier_, resourceManager: $ResourceManager, preparationsProfiler: $ProfilerFiller, reloadProfiler: $ProfilerFiller, backgroundExecutor: $Executor_, gameExecutor: $Executor_): $CompletableFuture<void>;
         getName(): string;
@@ -62,8 +62,8 @@ declare module "@package/net/minecraft/client/renderer/block" {
         constructor(blockModelShaper: $BlockModelShaper, blockEntityRenderer: $BlockEntityWithoutLevelRenderer, blockColors: $BlockColors);
         get blockModelShaper(): $BlockModelShaper;
         get fabricId(): $ResourceLocation;
-        get liquidBlockRenderer(): $LiquidBlockRenderer;
         get fabricDependencies(): $Collection<any>;
+        get liquidBlockRenderer(): $LiquidBlockRenderer;
         get name(): string;
     }
     export class $ModelBlockRenderer$AmbientVertexRemap extends $Enum<$ModelBlockRenderer$AmbientVertexRemap> {
@@ -86,70 +86,70 @@ declare module "@package/net/minecraft/client/renderer/block" {
     export type $ModelBlockRenderer$SizeInfo_ = "down" | "up" | "north" | "south" | "west" | "east" | "flip_down" | "flip_up" | "flip_north" | "flip_south" | "flip_west" | "flip_east";
     export class $ModelBlockRenderer implements $ExtendedBlockModelRenderer {
         static clearCache(): void;
-        /**
-         * Calculates the shape and corresponding flags for the specified `direction` and `vertices`, storing the resulting shape in the specified `shape` array and the shape flags in `shapeFlags`.
-         */
-        calculateShape(level: $BlockAndTintGetter, state: $BlockState_, pos: $BlockPos_, vertices: number[], direction: $Direction_, shape: number[] | null, shapeFlags: $BitSet): void;
         renderModel(arg0: $PoseStack$Pose, arg1: $VertexConsumer, arg2: $BlockState_ | null, arg3: $BakedModel, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: $ModelData, arg10: $RenderType): void;
         /**
          * @deprecated
          */
         renderModel(pose: $PoseStack$Pose, consumer: $VertexConsumer, state: $BlockState_ | null, model: $BakedModel, red: number, green: number, blue: number, packedLight: number, packedOverlay: number): void;
-        tesselateBlock(arg0: $BlockAndTintGetter, arg1: $BakedModel, arg2: $BlockState_, arg3: $BlockPos_, arg4: $PoseStack, arg5: $VertexConsumer, arg6: boolean, arg7: $RandomSource, arg8: number, arg9: number, arg10: $ModelData, arg11: $RenderType): void;
+        wrapOperation$gha000$sable$getShade(arg0: $BlockAndTintGetter, arg1: $Direction_, arg2: boolean, arg3: $Operation_<any>): number;
+        /**
+         * Calculates the shape and corresponding flags for the specified `direction` and `vertices`, storing the resulting shape in the specified `shape` array and the shape flags in `shapeFlags`.
+         */
+        calculateShape(level: $BlockAndTintGetter, state: $BlockState_, pos: $BlockPos_, vertices: number[], direction: $Direction_, shape: number[] | null, shapeFlags: $BitSet): void;
         /**
          * @deprecated
          */
         tesselateBlock(level: $BlockAndTintGetter, model: $BakedModel, state: $BlockState_, pos: $BlockPos_, poseStack: $PoseStack, consumer: $VertexConsumer, checkSides: boolean, random: $RandomSource, seed: number, arg9: number): void;
-        moreculling$renderQuad(arg0: $PoseStack$Pose, arg1: $VertexConsumer, arg2: number, arg3: number, arg4: number, arg5: number, arg6: $BakedQuad, arg7: number, arg8: number): void;
-        wrapOperation$gha000$sable$getShade(arg0: $BlockAndTintGetter, arg1: $Direction_, arg2: boolean, arg3: $Operation_<any>): number;
+        tesselateBlock(arg0: $BlockAndTintGetter, arg1: $BakedModel, arg2: $BlockState_, arg3: $BlockPos_, arg4: $PoseStack, arg5: $VertexConsumer, arg6: boolean, arg7: $RandomSource, arg8: number, arg9: number, arg10: $ModelData, arg11: $RenderType): void;
+        handler$bpn000$acceleratedrendering$renderModelFast(arg0: $PoseStack$Pose, arg1: $VertexConsumer, arg2: $BlockState_, arg3: $BakedModel, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: $ModelData, arg10: $RenderType, arg11: $CallbackInfo): void;
         static enableCaching(): void;
         /**
          * @deprecated
          */
-        tesselateWithAO(level: $BlockAndTintGetter, model: $BakedModel, state: $BlockState_, pos: $BlockPos_, poseStack: $PoseStack, consumer: $VertexConsumer, checkSides: boolean, random: $RandomSource, seed: number, arg9: number): void;
-        tesselateWithAO(arg0: $BlockAndTintGetter, arg1: $BakedModel, arg2: $BlockState_, arg3: $BlockPos_, arg4: $PoseStack, arg5: $VertexConsumer, arg6: boolean, arg7: $RandomSource, arg8: number, arg9: number, arg10: $ModelData, arg11: $RenderType): void;
+        tesselateWithoutAO(level: $BlockAndTintGetter, model: $BakedModel, state: $BlockState_, pos: $BlockPos_, poseStack: $PoseStack, consumer: $VertexConsumer, checkSides: boolean, random: $RandomSource, seed: number, arg9: number): void;
         tesselateWithoutAO(arg0: $BlockAndTintGetter, arg1: $BakedModel, arg2: $BlockState_, arg3: $BlockPos_, arg4: $PoseStack, arg5: $VertexConsumer, arg6: boolean, arg7: $RandomSource, arg8: number, arg9: number, arg10: $ModelData, arg11: $RenderType): void;
+        tesselateWithAO(arg0: $BlockAndTintGetter, arg1: $BakedModel, arg2: $BlockState_, arg3: $BlockPos_, arg4: $PoseStack, arg5: $VertexConsumer, arg6: boolean, arg7: $RandomSource, arg8: number, arg9: number, arg10: $ModelData, arg11: $RenderType): void;
         /**
          * @deprecated
          */
-        tesselateWithoutAO(level: $BlockAndTintGetter, model: $BakedModel, state: $BlockState_, pos: $BlockPos_, poseStack: $PoseStack, consumer: $VertexConsumer, checkSides: boolean, random: $RandomSource, seed: number, arg9: number): void;
+        tesselateWithAO(level: $BlockAndTintGetter, model: $BakedModel, state: $BlockState_, pos: $BlockPos_, poseStack: $PoseStack, consumer: $VertexConsumer, checkSides: boolean, random: $RandomSource, seed: number, arg9: number): void;
+        moreculling$renderModelForFace(arg0: $PoseStack$Pose, arg1: $VertexConsumer, arg2: $BlockState_, arg3: $BakedModel, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number, arg10: $Direction_): void;
+        moreculling$renderQuadsForFace(arg0: $PoseStack$Pose, arg1: $VertexConsumer, arg2: number, arg3: number, arg4: number, arg5: number, arg6: $List_<any>, arg7: number, arg8: number, arg9: $Direction_): void;
         moreculling$renderModelFor3Faces(arg0: $PoseStack$Pose, arg1: $VertexConsumer, arg2: $BlockState_, arg3: $BakedModel, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number, arg10: $Direction_, arg11: $Direction_, arg12: $Direction_): void;
+        moreculling$renderModelForFaces(arg0: $PoseStack$Pose, arg1: $VertexConsumer, arg2: $BlockState_, arg3: $BakedModel, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number, arg10: $Direction_[]): void;
+        moreculling$renderQuadsForFaces(arg0: $PoseStack$Pose, arg1: $VertexConsumer, arg2: number, arg3: number, arg4: number, arg5: number, arg6: $List_<any>, arg7: number, arg8: number, arg9: $Direction_[]): void;
         moreculling$renderModelWithoutFace(arg0: $PoseStack$Pose, arg1: $VertexConsumer, arg2: $BlockState_, arg3: $BakedModel, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number, arg10: $Direction_): void;
         moreculling$renderQuadsWithoutFace(arg0: $PoseStack$Pose, arg1: $VertexConsumer, arg2: number, arg3: number, arg4: number, arg5: number, arg6: $List_<any>, arg7: number, arg8: number, arg9: $Direction_): void;
-        moreculling$renderQuadsForFace(arg0: $PoseStack$Pose, arg1: $VertexConsumer, arg2: number, arg3: number, arg4: number, arg5: number, arg6: $List_<any>, arg7: number, arg8: number, arg9: $Direction_): void;
-        moreculling$renderModelForFace(arg0: $PoseStack$Pose, arg1: $VertexConsumer, arg2: $BlockState_, arg3: $BakedModel, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number, arg10: $Direction_): void;
         moreculling$renderQuadsFor3Faces(arg0: $PoseStack$Pose, arg1: $VertexConsumer, arg2: number, arg3: number, arg4: number, arg5: number, arg6: $List_<any>, arg7: number, arg8: number, arg9: $Direction_, arg10: $Direction_, arg11: $Direction_): void;
-        moreculling$renderQuadsForFaces(arg0: $PoseStack$Pose, arg1: $VertexConsumer, arg2: number, arg3: number, arg4: number, arg5: number, arg6: $List_<any>, arg7: number, arg8: number, arg9: $Direction_[]): void;
-        moreculling$renderModelForFaces(arg0: $PoseStack$Pose, arg1: $VertexConsumer, arg2: $BlockState_, arg3: $BakedModel, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number, arg10: $Direction_[]): void;
-        handler$bpn000$acceleratedrendering$renderModelFast(arg0: $PoseStack$Pose, arg1: $VertexConsumer, arg2: $BlockState_, arg3: $BakedModel, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: $ModelData, arg10: $RenderType, arg11: $CallbackInfo): void;
+        moreculling$renderQuad(arg0: $PoseStack$Pose, arg1: $VertexConsumer, arg2: number, arg3: number, arg4: number, arg5: number, arg6: $BakedQuad, arg7: number, arg8: number): void;
         static CACHE: $ThreadLocal<$ModelBlockRenderer$Cache>;
         static DIRECTIONS: $Direction[];
         constructor(blockColors: $BlockColors);
     }
     export class $BlockModelShaper implements $BlockModelShaperAccessor {
-        getTexture(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): $TextureAtlasSprite;
-        static stateToModelLocation(location: $ResourceLocation_, state: $BlockState_): $ModelResourceLocation;
         static stateToModelLocation(state: $BlockState_): $ModelResourceLocation;
+        static stateToModelLocation(location: $ResourceLocation_, state: $BlockState_): $ModelResourceLocation;
         getModelManager(): $ModelManager;
         getBlockModel(state: $BlockState_): $BakedModel;
         /**
          * @deprecated
          */
         getParticleIcon(state: $BlockState_): $TextureAtlasSprite;
-        replaceCache(modelByStateCache: $Map_<$BlockState_, $BakedModel>): void;
+        getTexture(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): $TextureAtlasSprite;
         static statePropertiesToString(propertyValues: $Map_<$Property<never>, $Comparable_<never>>): string;
+        replaceCache(modelByStateCache: $Map_<$BlockState_, $BakedModel>): void;
         getModels(): $Map<$BlockState, $BakedModel>;
         constructor(modelManager: $ModelManager);
         get modelManager(): $ModelManager;
         get models(): $Map<$BlockState, $BakedModel>;
     }
     export class $LiquidBlockRenderer {
-        tesselate(level: $BlockAndTintGetter, pos: $BlockPos_, buffer: $VertexConsumer, blockState: $BlockState_, fluidState: $FluidState): void;
-        static shouldRenderFace(arg0: $BlockAndTintGetter, arg1: $BlockPos_, arg2: $FluidState, arg3: $BlockState_, arg4: $Direction_, arg5: $BlockState_): boolean;
         static shouldRenderFace(level: $BlockAndTintGetter, pos: $BlockPos_, fluidState: $FluidState, blockState: $BlockState_, side: $Direction_, neighborFluid: $FluidState): boolean;
+        static shouldRenderFace(arg0: $BlockAndTintGetter, arg1: $BlockPos_, arg2: $FluidState, arg3: $BlockState_, arg4: $Direction_, arg5: $BlockState_): boolean;
+        tesselate(level: $BlockAndTintGetter, pos: $BlockPos_, buffer: $VertexConsumer, blockState: $BlockState_, fluidState: $FluidState): void;
         setupSprites(): void;
-        handler$zel000$fabric_rendering_fluids_v1$onResourceReloadReturn(arg0: $CallbackInfo): void;
         handler$zel000$fabric_rendering_fluids_v1$onHeadRender(arg0: $BlockAndTintGetter, arg1: $BlockPos_, arg2: $VertexConsumer, arg3: $BlockState_, arg4: $FluidState, arg5: $CallbackInfo): void;
+        handler$zel000$fabric_rendering_fluids_v1$onResourceReloadReturn(arg0: $CallbackInfo): void;
         constructor();
     }
     export class $ModelBlockRenderer$AdjacencyInfo extends $Enum<$ModelBlockRenderer$AdjacencyInfo> {

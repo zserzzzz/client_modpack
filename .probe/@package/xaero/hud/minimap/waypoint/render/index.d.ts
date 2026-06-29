@@ -28,20 +28,20 @@ declare module "@package/xaero/hud/minimap/waypoint/render" {
         constructor();
     }
     export class $WaypointMapRenderer extends $MinimapElementRenderer<$Waypoint, $WaypointMapRenderContext> {
-        renderElement(arg0: $Waypoint, arg1: boolean, arg2: boolean, arg3: number, arg4: number, arg5: number, arg6: number, arg7: $MinimapElementRenderInfo, arg8: $GuiGraphics, arg9: $MultiBufferSource$BufferSource): boolean;
-        /**
-         * @deprecated
-         */
-        updateWaypointCollection(): void;
-        /**
-         * @deprecated
-         */
-        drawSetChange(arg0: $WaypointsManager, arg1: $GuiGraphics, arg2: $Window): void;
-        drawSetChange(arg0: $MinimapSession, arg1: $GuiGraphics, arg2: $Window): void;
         drawIconOnGUI(arg0: $GuiGraphics, arg1: $MinimapRendererHelper, arg2: $Waypoint, arg3: number, arg4: number, arg5: number, arg6: $MultiBufferSource$BufferSource, arg7: $VertexConsumer, arg8: $VertexConsumer): void;
         /**
          * @deprecated
          */
         drawIconOnGUI(arg0: $GuiGraphics, arg1: $MinimapRendererHelper, arg2: $Waypoint, arg3: number, arg4: number, arg5: $MultiBufferSource$BufferSource, arg6: $VertexConsumer, arg7: $VertexConsumer): void;
+        /**
+         * @deprecated
+         */
+        updateWaypointCollection(): void;
+        drawSetChange(arg0: $MinimapSession, arg1: $GuiGraphics, arg2: $Window): void;
+        /**
+         * @deprecated
+         */
+        drawSetChange(arg0: $WaypointsManager, arg1: $GuiGraphics, arg2: $Window): void;
+        renderElement(arg0: $Waypoint, arg1: boolean, arg2: boolean, arg3: number, arg4: number, arg5: number, arg6: number, arg7: $MinimapElementRenderInfo, arg8: $GuiGraphics, arg9: $MultiBufferSource$BufferSource): boolean;
     }
 }

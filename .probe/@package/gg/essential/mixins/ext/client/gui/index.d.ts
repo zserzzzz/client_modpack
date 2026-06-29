@@ -7,9 +7,9 @@ declare module "@package/gg/essential/mixins/ext/client/gui" {
     export class $SelectionListWithDividers<T extends $GuiEventListener> {
     }
     export interface $SelectionListWithDividers<T extends $GuiEventListener> {
-        essential$setDividers(dividers: $Map_<number, T>): void;
         getEssential$offsetDividers(): $TreeMap<number, T>;
         setEssential$offsetDividers(arg0: $TreeMap<number, T>): void;
+        essential$setDividers(dividers: $Map_<number, T>): void;
     }
     export class $ServerListEntryNormalExt {
     }
@@ -20,8 +20,8 @@ declare module "@package/gg/essential/mixins/ext/client/gui" {
     export class $GuiMultiplayerExt {
     }
     export interface $GuiMultiplayerExt {
-        essential$close(): void;
         essential$refresh(): void;
+        essential$close(): void;
         essential$getEssentialGui(): $EssentialMultiplayerGui;
     }
 }

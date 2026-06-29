@@ -44,26 +44,26 @@ declare module "@package/net/mehvahdjukaar/polytone/mixins/neoforge" {
     export class $CreativeTabAccessor {
     }
     export interface $CreativeTabAccessor {
+        setTabsImage(arg0: $ResourceLocation_): void;
+        setDisplayName(arg0: $Component_): void;
+        setBeforeTabs(arg0: $List_<$ResourceLocation_>): void;
+        setAfterTabs(arg0: $List_<$ResourceLocation_>): void;
+        setCanScroll(arg0: boolean): void;
+        setShowTitle(arg0: boolean): void;
+        setSearchBarWidth(arg0: number): void;
+        setHasSearchBar(arg0: boolean): void;
         setBackgroundTexture(arg0: $ResourceLocation_): void;
         setIcon(arg0: $ItemStack_): void;
-        setHasSearchBar(arg0: boolean): void;
-        setSearchBarWidth(arg0: number): void;
-        setBeforeTabs(arg0: $List_<$ResourceLocation_>): void;
-        setTabsImage(arg0: $ResourceLocation_): void;
-        setAfterTabs(arg0: $List_<$ResourceLocation_>): void;
-        setShowTitle(arg0: boolean): void;
-        setCanScroll(arg0: boolean): void;
-        setDisplayName(arg0: $Component_): void;
+        set tabsImage(value: $ResourceLocation_);
+        set displayName(value: $Component_);
+        set beforeTabs(value: $List_<$ResourceLocation_>);
+        set afterTabs(value: $List_<$ResourceLocation_>);
+        set canScroll(value: boolean);
+        set showTitle(value: boolean);
+        set searchBarWidth(value: number);
+        set hasSearchBar(value: boolean);
         set backgroundTexture(value: $ResourceLocation_);
         set icon(value: $ItemStack_);
-        set hasSearchBar(value: boolean);
-        set searchBarWidth(value: number);
-        set beforeTabs(value: $List_<$ResourceLocation_>);
-        set tabsImage(value: $ResourceLocation_);
-        set afterTabs(value: $List_<$ResourceLocation_>);
-        set showTitle(value: boolean);
-        set canScroll(value: boolean);
-        set displayName(value: $Component_);
     }
     export class $BlockColorsAccessor {
     }

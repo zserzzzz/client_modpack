@@ -20,7 +20,7 @@ declare module "@package/me/pepperbell/continuity/client/mixinterface" {
     export class $SpriteExtension {
     }
     export interface $SpriteExtension {
-        continuity$getEmissiveSprite(): $TextureAtlasSprite;
         continuity$setEmissiveSprite(arg0: $TextureAtlasSprite): void;
+        continuity$getEmissiveSprite(): $TextureAtlasSprite;
     }
 }

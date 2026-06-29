@@ -69,31 +69,26 @@ declare module "@package/net/neoforged/neoforge/common/damagesource" {
      */
     export class $DamageContainer {
         /**
-         * @return the number of ticks this entity will be invulnerable after damage is applied
-         */
-        getPostAttackInvulnerabilityTicks(): number;
-        getReduction(arg0: $DamageContainer$Reduction_): number;
-        /**
-         * @return the value passed into `LivingEntity#hurt(DamageSource, float)` before any modifications are made
-         */
-        getNewDamage(): number;
-        setReduction(arg0: $DamageContainer$Reduction_, arg1: number): void;
-        /**
          * @return the damage source for this damage sequence
          */
         getSource(): $DamageSource;
-        setBlockedDamage(event: $LivingShieldBlockEvent): void;
         /**
          * @return the value passed into `LivingEntity#hurt(DamageSource, float)` before any modifications are made
          */
         getBlockedDamage(): number;
+        setBlockedDamage(event: $LivingShieldBlockEvent): void;
         /**
          * This sets the current damage value for the entity at the stage of the damage sequence in which it is set.
          * Subsequent steps in the damage sequence will use and modify this value accordingly. If this is called in
          * the final step of the sequence, this value will be applied against the entity's health.
          */
         setNewDamage(damage: number): void;
-        addModifier(arg0: $DamageContainer$Reduction_, arg1: $IReductionFunction_): void;
+        /**
+         * @return the value passed into `LivingEntity#hurt(DamageSource, float)` before any modifications are made
+         */
+        getNewDamage(): number;
+        getReduction(arg0: $DamageContainer$Reduction_): number;
+        setReduction(arg0: $DamageContainer$Reduction_, arg1: number): void;
         /**
          * @return the value passed into `LivingEntity#hurt(DamageSource, float)` before any modifications are made
          */
@@ -102,6 +97,11 @@ declare module "@package/net/neoforged/neoforge/common/damagesource" {
          * @return the value passed into `LivingEntity#hurt(DamageSource, float)` before any modifications are made
          */
         getShieldDamage(): number;
+        addModifier(arg0: $DamageContainer$Reduction_, arg1: $IReductionFunction_): void;
+        /**
+         * @return the number of ticks this entity will be invulnerable after damage is applied
+         */
+        getPostAttackInvulnerabilityTicks(): number;
         /**
          * Explicitly sets the invulnerability ticks after the damage has been applied.
          */

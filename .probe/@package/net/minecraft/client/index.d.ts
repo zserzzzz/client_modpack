@@ -137,30 +137,17 @@ export * as profiling from "@package/net/minecraft/client/profiling";
 
 declare module "@package/net/minecraft/client" {
     export class $MouseHandler implements $IMixinMouseHandler, $MouseHandlerAccessor, $MouseHandlerAccessor$1, $MouseHelperAccessor {
-        /**
-         * Will set the focus to ingame if the Minecraft window is the active with focus. Also clears any GUI screen currently displayed
-         */
-        handleAccumulatedMovement(): void;
         setup(windowPointer: number): void;
-        ypos(): number;
-        xpos(): number;
-        /**
-         * Will set the focus to ingame if the Minecraft window is the active with focus. Also clears any GUI screen currently displayed
-         */
-        setIgnoreFirstMove(): void;
-        /**
-         * Will set the focus to ingame if the Minecraft window is the active with focus. Also clears any GUI screen currently displayed
-         */
-        cursorEntered(): void;
-        /**
-         * Will set the focus to ingame if the Minecraft window is the active with focus. Also clears any GUI screen currently displayed
-         */
-        releaseMouse(): void;
         /**
          * Returns `true` if the mouse is grabbed.
          */
         isRightPressed(): boolean;
-        getXVelocity(): number;
+        /**
+         * Will set the focus to ingame if the Minecraft window is the active with focus. Also clears any GUI screen currently displayed
+         */
+        handleAccumulatedMovement(): void;
+        xpos(): number;
+        ypos(): number;
         /**
          * Returns `true` if the mouse is grabbed.
          */
@@ -169,33 +156,46 @@ declare module "@package/net/minecraft/client" {
          * Returns `true` if the mouse is grabbed.
          */
         isMiddlePressed(): boolean;
+        getXVelocity(): number;
         getYVelocity(): number;
         /**
          * Will set the focus to ingame if the Minecraft window is the active with focus. Also clears any GUI screen currently displayed
          */
-        grabMouse(): void;
+        releaseMouse(): void;
+        /**
+         * Will set the focus to ingame if the Minecraft window is the active with focus. Also clears any GUI screen currently displayed
+         */
+        setIgnoreFirstMove(): void;
+        /**
+         * Will set the focus to ingame if the Minecraft window is the active with focus. Also clears any GUI screen currently displayed
+         */
+        cursorEntered(): void;
         wrapWithCondition$bkf000$vista$onMoveMouse(arg0: $LocalPlayer, arg1: number, arg2: number): boolean;
         handler$eng000$ok_zoomer$applyZoomChanges(arg0: number, arg1: $CallbackInfo, arg2: $LocalDoubleRef, arg3: $LocalDoubleRef, arg4: number): void;
+        /**
+         * Will set the focus to ingame if the Minecraft window is the active with focus. Also clears any GUI screen currently displayed
+         */
+        grabMouse(): void;
+        create$setYPos(movementTime: number): void;
+        create$setXPos(movementTime: number): void;
         /**
          * Returns `true` if the mouse is grabbed.
          */
         isMouseGrabbed(): boolean;
-        create$setYPos(movementTime: number): void;
-        create$setXPos(movementTime: number): void;
-        setMouseX(movementTime: number): void;
-        setMouseY(movementTime: number): void;
         getActiveButtonKonkrete(): number;
+        setMouseY(movementTime: number): void;
+        setMouseX(movementTime: number): void;
         constructor(minecraft: $Minecraft);
         set up(value: number);
         get rightPressed(): boolean;
-        get XVelocity(): number;
         get leftPressed(): boolean;
         get middlePressed(): boolean;
+        get XVelocity(): number;
         get YVelocity(): number;
         get mouseGrabbed(): boolean;
-        set mouseX(value: number);
-        set mouseY(value: number);
         get activeButtonKonkrete(): number;
+        set mouseY(value: number);
+        set mouseX(value: number);
     }
     export class $User {
         getName(): string;
@@ -215,9 +215,9 @@ declare module "@package/net/minecraft/client" {
         get clientId(): (string) | undefined;
     }
     export class $ClientRecipeBook extends $RecipeBook {
+        getCollections(): $List<$RecipeCollection>;
         setupCollections(recipes: $Iterable_<$RecipeHolder<never>>, registryAccess: $RegistryAccess): void;
         getCollection(categories: $RecipeBookCategories_): $List<$RecipeCollection>;
-        getCollections(): $List<$RecipeCollection>;
         highlight: $Set<$ResourceLocation>;
         known: $Set<$ResourceLocation>;
         constructor();
@@ -287,16 +287,16 @@ declare module "@package/net/minecraft/client" {
      */
     export type $GraphicsStatus_ = "fast" | "fancy" | "fabulous";
     export class $InputType extends $Enum<$InputType> {
+        isKeyboard(): boolean;
         static values(): $InputType[];
         static valueOf(arg0: string): $InputType;
         isMouse(): boolean;
-        isKeyboard(): boolean;
         static MOUSE: $InputType;
         static KEYBOARD_TAB: $InputType;
         static NONE: $InputType;
         static KEYBOARD_ARROW: $InputType;
-        get mouse(): boolean;
         get keyboard(): boolean;
+        get mouse(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $InputType}.
@@ -321,11 +321,11 @@ declare module "@package/net/minecraft/client" {
      */
     export type $AttackIndicatorStatus_ = "off" | "crosshair" | "hotbar";
     export class $OptionInstance$LazyEnum<T> extends $Record implements $OptionInstance$CycleableValueSet<T> {
+        codec(): $Codec<T>;
+        valueListSupplier(): $CycleButton$ValueListSupplier<T>;
         values(): $Supplier<$List<T>>;
         validateValue(): $Function<T, (T) | undefined>;
         validateValue(arg0: T): (T) | undefined;
-        codec(): $Codec<T>;
-        valueListSupplier(): $CycleButton$ValueListSupplier<T>;
         constructor(arg0: $Supplier_<$List<T>>, arg1: $Function_<T, (T) | undefined>, arg2: $Codec<T>);
     }
     /**
@@ -342,7 +342,7 @@ declare module "@package/net/minecraft/client" {
     /**
      * Values that may be interpreted as {@link $PeriodicNotificationManager$Notification}.
      */
-    export type $PeriodicNotificationManager$Notification_ = { period?: number, title?: string, message?: string, delay?: number,  } | [period?: number, title?: string, message?: string, delay?: number, ];
+    export type $PeriodicNotificationManager$Notification_ = { delay?: number, period?: number, title?: string, message?: string,  } | [delay?: number, period?: number, title?: string, message?: string, ];
     export class $StringSplitter$WidthLimitedCharSink implements $FormattedCharSink {
     }
     export class $GameNarrator$NarratorInitException extends $SilentInitException {
@@ -354,19 +354,19 @@ declare module "@package/net/minecraft/client" {
     }
     export interface $DeltaTracker {
         getGameTimeDeltaPartialTick(runsNormally: boolean): number;
-        getRealtimeDeltaTicks(): number;
         getGameTimeDeltaTicks(): number;
-        get realtimeDeltaTicks(): number;
+        getRealtimeDeltaTicks(): number;
         get gameTimeDeltaTicks(): number;
+        get realtimeDeltaTicks(): number;
     }
     export class $Screenshot {
         close(): $File;
+        static takeScreenshot(framebuffer: $RenderTarget): $NativeImage;
+        static grab(gameDirectory: $File_, screenshotName: string | null, buffer: $RenderTarget, messageConsumer: $Consumer_<$Component>): void;
         /**
          * Saves a screenshot in the game directory with a time-stamped filename.
          */
         static grab(gameDirectory: $File_, buffer: $RenderTarget, messageConsumer: $Consumer_<$Component>): void;
-        static grab(gameDirectory: $File_, screenshotName: string | null, buffer: $RenderTarget, messageConsumer: $Consumer_<$Component>): void;
-        static takeScreenshot(framebuffer: $RenderTarget): $NativeImage;
         addRegion(buffer: $ByteBuffer, width: number, height: number, rowWidth: number, rowHeight: number): void;
         saveRow(): void;
         static SCREENSHOT_DIR: string;
@@ -377,15 +377,8 @@ declare module "@package/net/minecraft/client" {
     export interface $OptionInstance$IntRangeBase extends $OptionInstance$SliderableValueSet<number> {
     }
     export class $Options implements $IMixinOptions, $GameOptionsAccessor {
-        notificationDisplayTime(): $OptionInstance<number>;
-        telemetryOptInExtra(): $OptionInstance<boolean>;
-        getEffectiveRenderDistance(): number;
-        dumpOptionsForReport(): string;
-        getSoundSourceOptionInstance(soundSource: $SoundSource_): $OptionInstance<number>;
-        chatOpacity(): $OptionInstance<number>;
-        getSoundSourceVolume(category: $SoundSource_): number;
-        hideLightningFlash(): $OptionInstance<boolean>;
-        static isTrue(value: string): boolean;
+        fov(): $OptionInstance<number>;
+        chatLinks(): $OptionInstance<boolean>;
         load(arg0: boolean): void;
         /**
          * Send a client info packet with settings information to the server
@@ -396,105 +389,112 @@ declare module "@package/net/minecraft/client" {
          */
         save(): void;
         getFile(): $File;
+        static isTrue(value: string): boolean;
+        touchscreen(): $OptionInstance<boolean>;
+        damageTiltStrength(): $OptionInstance<number>;
+        screenEffectScale(): $OptionInstance<number>;
+        fovEffectScale(): $OptionInstance<number>;
+        loadSelectedResourcePacks(resourcePackList: $PackRepository): void;
+        dumpOptionsForReport(): string;
+        getEffectiveRenderDistance(): number;
+        telemetryOptInExtra(): $OptionInstance<boolean>;
+        hideLightningFlash(): $OptionInstance<boolean>;
+        static genericValueOrOffLabel(text: $Component_, value: number): $Component;
         static isFalse(value: string): boolean;
+        getCloudsType(): $CloudStatus;
+        menuBackgroundBlurriness(): $OptionInstance<number>;
+        prioritizeChunkUpdates(): $OptionInstance<$PrioritizeChunkUpdates>;
+        autoJump(): $OptionInstance<boolean>;
+        bobView(): $OptionInstance<boolean>;
         darkMojangStudiosBackground(): $OptionInstance<boolean>;
         setKey(keyBinding: $KeyMapping, input: $InputConstants$Key): void;
-        gamma(): $OptionInstance<number>;
-        loadSelectedResourcePacks(resourcePackList: $PackRepository): void;
-        chatScale(): $OptionInstance<number>;
-        chatWidth(): $OptionInstance<number>;
         simulationDistance(): $OptionInstance<number>;
-        reducedDebugInfo(): $OptionInstance<boolean>;
-        getBackgroundColor(chatColor: number): number;
+        gamma(): $OptionInstance<number>;
+        getSoundSourceVolume(category: $SoundSource_): number;
+        getMenuBackgroundBlurriness(): number;
         getBackgroundColor(opacity: number): number;
-        framerateLimit(): $OptionInstance<number>;
-        mipmapLevels(): $OptionInstance<number>;
+        getBackgroundColor(chatColor: number): number;
         enableVsync(): $OptionInstance<boolean>;
-        glintStrength(): $OptionInstance<number>;
+        framerateLimit(): $OptionInstance<number>;
         rawMouseInput(): $OptionInstance<boolean>;
+        mipmapLevels(): $OptionInstance<number>;
+        glintStrength(): $OptionInstance<number>;
         forceUnicodeFont(): $OptionInstance<boolean>;
+        biomeBlendRadius(): $OptionInstance<number>;
         graphicsMode(): $OptionInstance<$GraphicsStatus>;
         cloudStatus(): $OptionInstance<$CloudStatus>;
-        biomeBlendRadius(): $OptionInstance<number>;
-        setCameraType(pointOfView: $CameraType_): void;
         getCameraType(): $CameraType;
-        chatVisibility(): $OptionInstance<$ChatVisiblity>;
-        renderDistance(): $OptionInstance<number>;
+        setCameraType(pointOfView: $CameraType_): void;
         ambientOcclusion(): $OptionInstance<boolean>;
-        screenEffectScale(): $OptionInstance<number>;
-        damageTiltStrength(): $OptionInstance<number>;
-        touchscreen(): $OptionInstance<boolean>;
-        fovEffectScale(): $OptionInstance<number>;
-        chatLinksPrompt(): $OptionInstance<boolean>;
-        bobView(): $OptionInstance<boolean>;
-        fov(): $OptionInstance<number>;
-        textBackgroundOpacity(): $OptionInstance<number>;
-        menuBackgroundBlurriness(): $OptionInstance<number>;
-        mainHand(): $OptionInstance<$HumanoidArm>;
-        chatColors(): $OptionInstance<boolean>;
+        chatVisibility(): $OptionInstance<$ChatVisiblity>;
+        reducedDebugInfo(): $OptionInstance<boolean>;
+        renderDistance(): $OptionInstance<number>;
+        getBackgroundOpacity(opacity: number): number;
+        buildPlayerInformation(): $ClientInformation;
         discreteMouseScroll(): $OptionInstance<boolean>;
-        mouseWheelSensitivity(): $OptionInstance<number>;
-        darknessEffectScale(): $OptionInstance<number>;
-        backgroundForChatOnly(): $OptionInstance<boolean>;
-        japaneseGlyphVariants(): $OptionInstance<boolean>;
-        chatHeightUnfocused(): $OptionInstance<number>;
-        static genericValueOrOffLabel(text: $Component_, value: number): $Component;
         realmsNotifications(): $OptionInstance<boolean>;
+        chatHeightUnfocused(): $OptionInstance<number>;
+        darknessEffectScale(): $OptionInstance<number>;
+        mouseWheelSensitivity(): $OptionInstance<number>;
+        japaneseGlyphVariants(): $OptionInstance<boolean>;
+        backgroundForChatOnly(): $OptionInstance<boolean>;
         showAutosaveIndicator(): $OptionInstance<boolean>;
         updateResourcePacks(resourcePackList: $PackRepository): void;
         entityDistanceScaling(): $OptionInstance<number>;
-        getCloudsType(): $CloudStatus;
-        getMenuBackgroundBlurriness(): number;
-        narrator(): $OptionInstance<$NarratorStatus>;
-        fullscreen(): $OptionInstance<boolean>;
-        chatDelay(): $OptionInstance<number>;
-        guiScale(): $OptionInstance<number>;
-        particles(): $OptionInstance<$ParticleStatus>;
-        chatLinks(): $OptionInstance<boolean>;
-        prioritizeChunkUpdates(): $OptionInstance<$PrioritizeChunkUpdates>;
-        hideSplashTexts(): $OptionInstance<boolean>;
-        operatorItemsTab(): $OptionInstance<boolean>;
-        glintSpeed(): $OptionInstance<number>;
-        hideMatchedNames(): $OptionInstance<boolean>;
-        sensitivity(): $OptionInstance<number>;
-        showSubtitles(): $OptionInstance<boolean>;
-        highContrast(): $OptionInstance<boolean>;
-        /**
-         * Returns `true` if the client connect to a server using the native transport system.
-         */
-        useNativeTransport(): boolean;
-        entityShadows(): $OptionInstance<boolean>;
-        directionalAudio(): $OptionInstance<boolean>;
-        invertYMouse(): $OptionInstance<boolean>;
-        panoramaSpeed(): $OptionInstance<number>;
-        narratorHotkey(): $OptionInstance<boolean>;
-        chatHeightFocused(): $OptionInstance<number>;
-        chatLineSpacing(): $OptionInstance<number>;
-        toggleCrouch(): $OptionInstance<boolean>;
-        allowServerListing(): $OptionInstance<boolean>;
-        toggleSprint(): $OptionInstance<boolean>;
-        autoSuggestions(): $OptionInstance<boolean>;
-        onlyShowSecureChat(): $OptionInstance<boolean>;
-        attackIndicator(): $OptionInstance<$AttackIndicatorStatus>;
-        soundDevice(): $OptionInstance<string>;
+        isModelPartEnabled(playerModelPart: $PlayerModelPart_): boolean;
+        static genericValueLabel(text: $Component_, value: $Component_): $Component;
+        static genericValueLabel(text: $Component_, value: number): $Component;
         toggleModelPart(modelPart: $PlayerModelPart_, enable: boolean): void;
         /**
          * Send a client info packet with settings information to the server
          */
         broadcastOptions(): void;
-        isModelPartEnabled(playerModelPart: $PlayerModelPart_): boolean;
-        static genericValueLabel(text: $Component_, value: number): $Component;
-        static genericValueLabel(text: $Component_, value: $Component_): $Component;
+        narratorHotkey(): $OptionInstance<boolean>;
+        showSubtitles(): $OptionInstance<boolean>;
+        chatLineSpacing(): $OptionInstance<number>;
+        invertYMouse(): $OptionInstance<boolean>;
+        directionalAudio(): $OptionInstance<boolean>;
+        toggleCrouch(): $OptionInstance<boolean>;
+        toggleSprint(): $OptionInstance<boolean>;
+        hideMatchedNames(): $OptionInstance<boolean>;
+        entityShadows(): $OptionInstance<boolean>;
+        panoramaSpeed(): $OptionInstance<number>;
+        chatHeightFocused(): $OptionInstance<number>;
+        attackIndicator(): $OptionInstance<$AttackIndicatorStatus>;
+        onlyShowSecureChat(): $OptionInstance<boolean>;
+        highContrast(): $OptionInstance<boolean>;
+        sensitivity(): $OptionInstance<number>;
+        /**
+         * Returns `true` if the client connect to a server using the native transport system.
+         */
+        useNativeTransport(): boolean;
+        autoSuggestions(): $OptionInstance<boolean>;
+        allowServerListing(): $OptionInstance<boolean>;
+        soundDevice(): $OptionInstance<string>;
+        chatColors(): $OptionInstance<boolean>;
+        mainHand(): $OptionInstance<$HumanoidArm>;
+        notificationDisplayTime(): $OptionInstance<number>;
         setServerRenderDistance(serverRenderDistance: number): void;
-        autoJump(): $OptionInstance<boolean>;
-        buildPlayerInformation(): $ClientInformation;
-        getBackgroundOpacity(opacity: number): number;
+        chatLinksPrompt(): $OptionInstance<boolean>;
+        getSoundSourceOptionInstance(soundSource: $SoundSource_): $OptionInstance<number>;
+        chatOpacity(): $OptionInstance<number>;
         /**
          * Send a client info packet with settings information to the server
          */
         onboardingAccessibilityFinished(): void;
-        setKeyBindings(arg0: $KeyMapping[]): void;
+        operatorItemsTab(): $OptionInstance<boolean>;
+        hideSplashTexts(): $OptionInstance<boolean>;
+        glintSpeed(): $OptionInstance<number>;
+        textBackgroundOpacity(): $OptionInstance<number>;
+        chatDelay(): $OptionInstance<number>;
+        narrator(): $OptionInstance<$NarratorStatus>;
+        fullscreen(): $OptionInstance<boolean>;
+        guiScale(): $OptionInstance<number>;
+        particles(): $OptionInstance<$ParticleStatus>;
+        chatScale(): $OptionInstance<number>;
+        chatWidth(): $OptionInstance<number>;
         getModelPartsFancyMenu(): $Set<$PlayerModelPart>;
+        setKeyBindings(arg0: $KeyMapping[]): void;
         invokeProcessOptionsFancyMenu(accessor: $Options$FieldAccess): void;
         tutorialStep: $TutorialSteps;
         static RENDER_DISTANCE_REALLY_FAR: number;
@@ -555,21 +555,21 @@ declare module "@package/net/minecraft/client" {
         keyDown: $KeyMapping;
         hideGui: boolean;
         constructor(minecraft: $Minecraft, gameDirectory: $File_);
-        get effectiveRenderDistance(): number;
         get file(): $File;
+        get effectiveRenderDistance(): number;
         get cloudsType(): $CloudStatus;
         set serverRenderDistance(value: number);
-        set keyBindings(value: $KeyMapping[]);
         get modelPartsFancyMenu(): $Set<$PlayerModelPart>;
+        set keyBindings(value: $KeyMapping[]);
     }
     export class $ResourceLoadStateTracker$ReloadState {
     }
     export class $OptionInstance$IntRange extends $Record implements $OptionInstance$IntRangeBase {
-        maxInclusive(): number;
-        minInclusive(): number;
-        validateValue(value: number): (number) | undefined;
         codec(): $Codec<number>;
+        validateValue(value: number): (number) | undefined;
         applyValueImmediately(): boolean;
+        minInclusive(): number;
+        maxInclusive(): number;
         createButton(tooltipSupplier: $OptionInstance$TooltipSupplier_<number>, options: $Options, x: number, y: number, width: number, onValueChanged: $Consumer_<number>): $Function<$OptionInstance<number>, $AbstractWidget>;
         constructor(minInclusive: number, maxInclusive: number);
         constructor(arg0: number, arg1: number, arg2: boolean);
@@ -577,7 +577,7 @@ declare module "@package/net/minecraft/client" {
     /**
      * Values that may be interpreted as {@link $OptionInstance$IntRange}.
      */
-    export type $OptionInstance$IntRange_ = { minInclusive?: number, maxInclusive?: number, applyValueImmediately?: boolean,  } | [minInclusive?: number, maxInclusive?: number, applyValueImmediately?: boolean, ];
+    export type $OptionInstance$IntRange_ = { applyValueImmediately?: boolean, minInclusive?: number, maxInclusive?: number,  } | [applyValueImmediately?: boolean, minInclusive?: number, maxInclusive?: number, ];
     export class $ToggleKeyMapping extends $KeyMapping {
         /**
          * Completely recalculates whether any keybinds are held, from scratch.
@@ -614,14 +614,14 @@ declare module "@package/net/minecraft/client" {
      */
     export type $PrioritizeChunkUpdates_ = "none" | "player_affected" | "nearby";
     export class $OptionInstance$UnitDouble extends $Enum<$OptionInstance$UnitDouble> implements $OptionInstance$SliderableValueSet<number> {
+        xmap<R>(encoder: $DoubleFunction_<R>, decoder: $ToDoubleFunction_<R>): $OptionInstance$SliderableValueSet<R>;
+        codec(): $Codec<number>;
         static values(): $OptionInstance$UnitDouble[];
         static valueOf(arg0: string): $OptionInstance$UnitDouble;
         validateValue(value: number): (number) | undefined;
-        codec(): $Codec<number>;
-        xmap<R>(encoder: $DoubleFunction_<R>, decoder: $ToDoubleFunction_<R>): $OptionInstance$SliderableValueSet<R>;
         toSliderValue(value: number): number;
-        createButton(tooltipSupplier: $OptionInstance$TooltipSupplier_<number>, options: $Options, x: number, y: number, width: number, onValueChanged: $Consumer_<number>): $Function<$OptionInstance<number>, $AbstractWidget>;
         applyValueImmediately(): boolean;
+        createButton(tooltipSupplier: $OptionInstance$TooltipSupplier_<number>, options: $Options, x: number, y: number, width: number, onValueChanged: $Consumer_<number>): $Function<$OptionInstance<number>, $AbstractWidget>;
         fromSliderValue(value: number): number;
         static INSTANCE: $OptionInstance$UnitDouble;
     }
@@ -631,17 +631,17 @@ declare module "@package/net/minecraft/client" {
     export type $OptionInstance$UnitDouble_ = "instance";
     export class $DeltaTracker$Timer implements $DeltaTracker, $TimerAccessor$1, $TimerAccessor, $DynamicRenderTickCounterAccessor {
         getGameTimeDeltaPartialTick(runsNormally: boolean): number;
-        getRealtimeDeltaTicks(): number;
+        getGameTimeDeltaTicks(): number;
+        updateFrozenState(frozen: boolean): void;
         advanceTime(time: number, arg1: boolean): number;
         updatePauseState(frozen: boolean): void;
-        updateFrozenState(frozen: boolean): void;
-        getGameTimeDeltaTicks(): number;
-        getDeltaTickResidual(): number;
+        getRealtimeDeltaTicks(): number;
         catnip$getDeltaTickResidual(): number;
+        getDeltaTickResidual(): number;
         essential$getRawTickDelta(): number;
         constructor(ticksPerSecond: number, time: number, arg2: $FloatUnaryOperator_);
-        get realtimeDeltaTicks(): number;
         get gameTimeDeltaTicks(): number;
+        get realtimeDeltaTicks(): number;
         get deltaTickResidual(): number;
     }
     export class $CameraType extends $Enum<$CameraType> {
@@ -663,8 +663,8 @@ declare module "@package/net/minecraft/client" {
     export class $GuiMessage$Line extends $Record implements $HeadRenderable {
         tag(): $GuiMessageTag;
         content(): $FormattedCharSequence;
-        addedTime(): number;
         endOfEntry(): boolean;
+        addedTime(): number;
         chatheads$getHeadData(): $HeadData;
         handler$bgb000$chat_heads$chatheads$setOwnerForFirstLine(callbackInfo: $CallbackInfo): void;
         chatheads$headData: $HeadData;
@@ -673,14 +673,14 @@ declare module "@package/net/minecraft/client" {
     /**
      * Values that may be interpreted as {@link $GuiMessage$Line}.
      */
-    export type $GuiMessage$Line_ = { content?: $FormattedCharSequence_, endOfEntry?: boolean, addedTime?: number, tag?: $GuiMessageTag_,  } | [content?: $FormattedCharSequence_, endOfEntry?: boolean, addedTime?: number, tag?: $GuiMessageTag_, ];
+    export type $GuiMessage$Line_ = { tag?: $GuiMessageTag_, content?: $FormattedCharSequence_, endOfEntry?: boolean, addedTime?: number,  } | [tag?: $GuiMessageTag_, content?: $FormattedCharSequence_, endOfEntry?: boolean, addedTime?: number, ];
     export class $GameNarrator {
         updateNarratorStatus(status: $NarratorStatus_): void;
         clear(): void;
         destroy(): void;
         isActive(): boolean;
-        checkStatus(narratorEnabled: boolean): void;
         say(message: $Component_): void;
+        checkStatus(narratorEnabled: boolean): void;
         sayNow(message: string): void;
         sayNow(message: $Component_): void;
         sayChat(message: $Component_): void;
@@ -689,46 +689,46 @@ declare module "@package/net/minecraft/client" {
         get active(): boolean;
     }
     export class $OptionInstance$ClampingLazyMaxIntRange extends $Record implements $OptionInstance$IntRangeBase, $OptionInstance$SliderableOrCyclableValueSet<number> {
-        maxInclusive(): number;
-        minInclusive(): number;
-        validateValue(value: number): (number) | undefined;
         codec(): $Codec<number>;
-        encodableMaxInclusive(): number;
         valueListSupplier(): $CycleButton$ValueListSupplier<number>;
-        maxSupplier(): $IntSupplier;
+        validateValue(value: number): (number) | undefined;
+        encodableMaxInclusive(): number;
+        minInclusive(): number;
+        maxInclusive(): number;
         createCycleButton(): boolean;
-        createButton(tooltipSupplier: $OptionInstance$TooltipSupplier_<number>, options: $Options, x: number, y: number, width: number, onValueChanged: $Consumer_<number>): $Function<$OptionInstance<number>, $AbstractWidget>;
+        maxSupplier(): $IntSupplier;
         applyValueImmediately(): boolean;
+        createButton(tooltipSupplier: $OptionInstance$TooltipSupplier_<number>, options: $Options, x: number, y: number, width: number, onValueChanged: $Consumer_<number>): $Function<$OptionInstance<number>, $AbstractWidget>;
         constructor(arg0: number, arg1: $IntSupplier_, arg2: number);
     }
     /**
      * Values that may be interpreted as {@link $OptionInstance$ClampingLazyMaxIntRange}.
      */
-    export type $OptionInstance$ClampingLazyMaxIntRange_ = { maxSupplier?: $IntSupplier_, minInclusive?: number, encodableMaxInclusive?: number,  } | [maxSupplier?: $IntSupplier_, minInclusive?: number, encodableMaxInclusive?: number, ];
+    export type $OptionInstance$ClampingLazyMaxIntRange_ = { encodableMaxInclusive?: number, maxSupplier?: $IntSupplier_, minInclusive?: number,  } | [encodableMaxInclusive?: number, maxSupplier?: $IntSupplier_, minInclusive?: number, ];
     export class $OptionInstance$SliderableValueSet<T> {
     }
     export interface $OptionInstance$SliderableValueSet<T> extends $OptionInstance$ValueSet<T> {
-        createButton(tooltipSupplier: $OptionInstance$TooltipSupplier_<T>, options: $Options, x: number, y: number, width: number, onValueChanged: $Consumer_<T>): $Function<$OptionInstance<T>, $AbstractWidget>;
-        fromSliderValue(value: number): T;
-        toSliderValue(value: T): number;
         applyValueImmediately(): boolean;
+        createButton(tooltipSupplier: $OptionInstance$TooltipSupplier_<T>, options: $Options, x: number, y: number, width: number, onValueChanged: $Consumer_<T>): $Function<$OptionInstance<T>, $AbstractWidget>;
+        toSliderValue(value: T): number;
+        fromSliderValue(value: number): T;
     }
     export class $GuiMessageTag extends $Record {
+        icon(): $GuiMessageTag$Icon;
         static system(): $GuiMessageTag;
         text(): $Component;
-        icon(): $GuiMessageTag$Icon;
-        logTag(): string;
-        indicatorColor(): number;
         static systemSinglePlayer(): $GuiMessageTag;
+        indicatorColor(): number;
+        logTag(): string;
         static chatError(): $GuiMessageTag;
-        static chatModified(originalText: string): $GuiMessageTag;
         static chatNotSecure(): $GuiMessageTag;
+        static chatModified(originalText: string): $GuiMessageTag;
         constructor(arg0: number, arg1: $GuiMessageTag$Icon_ | null, arg2: $Component_ | null, arg3: string | null);
     }
     /**
      * Values that may be interpreted as {@link $GuiMessageTag}.
      */
-    export type $GuiMessageTag_ = { icon?: $GuiMessageTag$Icon_, logTag?: string, text?: $Component_, indicatorColor?: number,  } | [icon?: $GuiMessageTag$Icon_, logTag?: string, text?: $Component_, indicatorColor?: number, ];
+    export type $GuiMessageTag_ = { indicatorColor?: number, icon?: $GuiMessageTag$Icon_, logTag?: string, text?: $Component_,  } | [indicatorColor?: number, icon?: $GuiMessageTag$Icon_, logTag?: string, text?: $Component_, ];
     export class $Options$OptionAccess {
     }
     export interface $Options$OptionAccess {
@@ -743,10 +743,10 @@ declare module "@package/net/minecraft/client" {
         constructor(notifications: $ResourceLocation_, selector: $Object2BooleanFunction_<string>);
     }
     export class $GuiMessage extends $Record implements $HeadRenderable {
+        icon(): $GuiMessageTag$Icon;
         signature(): $MessageSignature;
         tag(): $GuiMessageTag;
         content(): $Component;
-        icon(): $GuiMessageTag$Icon;
         addedTime(): number;
         chatheads$setHeadData(headData: $HeadData_): void;
         chatheads$getHeadData(): $HeadData;
@@ -756,13 +756,13 @@ declare module "@package/net/minecraft/client" {
     /**
      * Values that may be interpreted as {@link $GuiMessage}.
      */
-    export type $GuiMessage_ = { content?: $Component_, signature?: $MessageSignature_, addedTime?: number, tag?: $GuiMessageTag_,  } | [content?: $Component_, signature?: $MessageSignature_, addedTime?: number, tag?: $GuiMessageTag_, ];
+    export type $GuiMessage_ = { tag?: $GuiMessageTag_, content?: $Component_, signature?: $MessageSignature_, addedTime?: number,  } | [tag?: $GuiMessageTag_, content?: $Component_, signature?: $MessageSignature_, addedTime?: number, ];
     export class $RecipeBookCategories extends $Enum<$RecipeBookCategories> implements $IExtensibleEnum, $RecipeBookCategoriesAccessor {
         static values(): $RecipeBookCategories[];
         static valueOf(arg0: string): $RecipeBookCategories;
-        static getExtensionInfo(): $ExtensionInfo;
         static getCategories(recipeBookType: $RecipeBookType_): $List<$RecipeBookCategories>;
-        static setAGGREGATE_CATEGORIES$connector_$md$942995$0(arg0: $Map_<any, any>): void;
+        static setAGGREGATE_CATEGORIES$connector_$md$c99f8a$0(arg0: $Map_<any, any>): void;
+        static getExtensionInfo(): $ExtensionInfo;
         getIconItems(): $List<$ItemStack>;
         static CRAFTING_REDSTONE: $RecipeBookCategories;
         static FARMERSDELIGHT_COOKING_SEARCH: $RecipeBookCategories;
@@ -791,8 +791,8 @@ declare module "@package/net/minecraft/client" {
         static BLAST_FURNACE_SEARCH: $RecipeBookCategories;
         static UNKNOWN: $RecipeBookCategories;
         static FURNACE_MISC: $RecipeBookCategories;
+        static set AGGREGATE_CATEGORIES$connector_$md$c99f8a$0(value: $Map_<any, any>);
         static get extensionInfo(): $ExtensionInfo;
-        static set AGGREGATE_CATEGORIES$connector_$md$942995$0(value: $Map_<any, any>);
         get iconItems(): $List<$ItemStack>;
     }
     /**
@@ -800,10 +800,10 @@ declare module "@package/net/minecraft/client" {
      */
     export type $RecipeBookCategories_ = "crafting_search" | "crafting_building_blocks" | "crafting_redstone" | "crafting_equipment" | "crafting_misc" | "furnace_search" | "furnace_food" | "furnace_blocks" | "furnace_misc" | "blast_furnace_search" | "blast_furnace_blocks" | "blast_furnace_misc" | "smoker_search" | "smoker_food" | "stonecutter" | "smithing" | "campfire" | "unknown" | "farmersdelight_cooking_drinks" | "farmersdelight_cooking_meals" | "farmersdelight_cooking_misc" | "farmersdelight_cooking_search";
     export class $OptionInstance$Enum<T> extends $Record implements $OptionInstance$CycleableValueSet<T> {
-        values(): $List<T>;
-        validateValue(arg0: T): (T) | undefined;
         codec(): $Codec<T>;
         valueListSupplier(): $CycleButton$ValueListSupplier<T>;
+        values(): $List<T>;
+        validateValue(arg0: T): (T) | undefined;
         constructor(arg0: $List_<T>, arg1: $Codec<T>);
     }
     /**
@@ -825,47 +825,47 @@ declare module "@package/net/minecraft/client" {
         constructor(path: $Path_);
     }
     export class $Camera implements $CameraZoomExtension, $CameraWaterOcclusionExtension {
-        sable$setZoomAmount(arg0: number): void;
-        getRoll(): number;
-        sable$setIgnoreOcclusion(arg0: boolean): void;
-        sable$isIgnoreOcclusion(): boolean;
-        getLookVector(): $Vector3f;
         getPosition(): $Vec3;
         reset(): void;
         setup(level: $BlockGetter, entity: $Entity, detached: boolean, thirdPersonReverse: boolean, partialTick: number): void;
         move(zoom: number, dy: number, dx: number): void;
         tick(): void;
         rotation(): $Quaternionf;
-        getEntity(): $Entity;
-        isInitialized(): boolean;
-        getLeftVector(): $Vector3f;
-        getBlockAtCamera(): $BlockState;
-        sable$getZoomAmount(): number;
-        getUpVector(): $Vector3f;
-        sable$isOccluded(): boolean;
-        getFluidInCamera(): $FogType;
         getPartialTickTime(): number;
-        getMaxZoom(maxZoom: number): number;
-        getYRot(): number;
-        getXRot(): number;
+        getFluidInCamera(): $FogType;
+        getEntity(): $Entity;
+        sable$setZoomAmount(arg0: number): void;
         handler$gjh001$sable$getFluidInCamera(arg0: $CallbackInfoReturnable<any>): void;
-        handler$bjg000$vista$setupCannonCamera(arg0: $BlockGetter, arg1: $Entity, arg2: boolean, arg3: boolean, arg4: number, arg5: $CallbackInfo): void;
         handler$gia000$sable$getFluidInCamera(arg0: $CallbackInfoReturnable<any>): void;
+        handler$bjg000$vista$setupCannonCamera(arg0: $BlockGetter, arg1: $Entity, arg2: boolean, arg3: boolean, arg4: number, arg5: $CallbackInfo): void;
+        getBlockPosition(): $BlockPos;
+        getUpVector(): $Vector3f;
+        isInitialized(): boolean;
         handler$zcp000$sodium_extra$noLerp(arg0: $CallbackInfo): void;
         handler$gof000$sable$rotateView(arg0: number, arg1: number, arg2: number, arg3: $CallbackInfo): void;
-        isDetached(): boolean;
-        getBlockPosition(): $BlockPos;
-        /**
-         * Sets the position and blockpos of the active render
-         */
-        setPosition(x: number, arg1: number, y: number): void;
-        setPosition(pos: $Vec3_): void;
+        setRotation(zoom: number, dy: number, dx: number): void;
         /**
          * @deprecated
          */
         setRotation(yRot: number, xRot: number): void;
-        setRotation(zoom: number, dy: number, dx: number): void;
+        isDetached(): boolean;
+        getLookVector(): $Vector3f;
+        sable$getZoomAmount(): number;
+        setPosition(pos: $Vec3_): void;
+        /**
+         * Sets the position and blockpos of the active render
+         */
+        setPosition(x: number, arg1: number, y: number): void;
+        getXRot(): number;
+        getYRot(): number;
         getNearPlane(): $Camera$NearPlane;
+        sable$isOccluded(): boolean;
+        getLeftVector(): $Vector3f;
+        getBlockAtCamera(): $BlockState;
+        getRoll(): number;
+        sable$setIgnoreOcclusion(arg0: boolean): void;
+        sable$isIgnoreOcclusion(): boolean;
+        getMaxZoom(maxZoom: number): number;
         eyeHeightOld: number;
         static FOG_DISTANCE_SCALE: number;
         level: $BlockGetter;
@@ -874,18 +874,18 @@ declare module "@package/net/minecraft/client" {
         static $assertionsDisabled: boolean;
         entity: $Entity;
         constructor();
-        get roll(): number;
+        get partialTickTime(): number;
+        get fluidInCamera(): $FogType;
+        get blockPosition(): $BlockPos;
+        get upVector(): $Vector3f;
+        get detached(): boolean;
         get lookVector(): $Vector3f;
+        get XRot(): number;
+        get YRot(): number;
+        get nearPlane(): $Camera$NearPlane;
         get leftVector(): $Vector3f;
         get blockAtCamera(): $BlockState;
-        get upVector(): $Vector3f;
-        get fluidInCamera(): $FogType;
-        get partialTickTime(): number;
-        get YRot(): number;
-        get XRot(): number;
-        get detached(): boolean;
-        get blockPosition(): $BlockPos;
-        get nearPlane(): $Camera$NearPlane;
+        get roll(): number;
     }
     export class $StringSplitter$LinePosConsumer {
     }
@@ -910,8 +910,8 @@ declare module "@package/net/minecraft/client" {
      */
     export type $User$Type_ = "legacy" | "mojang" | "msa";
     export class $Minecraft$GameLoadCookie extends $Record {
-        realmsClient(): $RealmsClient;
         quickPlayData(): $GameConfig$QuickPlayData;
+        realmsClient(): $RealmsClient;
         constructor(realmsClient: $RealmsClient, quickPlayData: $GameConfig$QuickPlayData_);
     }
     /**
@@ -919,24 +919,24 @@ declare module "@package/net/minecraft/client" {
      */
     export type $Minecraft$GameLoadCookie_ = { quickPlayData?: $GameConfig$QuickPlayData_, realmsClient?: $RealmsClient,  } | [quickPlayData?: $GameConfig$QuickPlayData_, realmsClient?: $RealmsClient, ];
     export class $OptionInstance<T> implements $OptionInstanceAccessor<any>, $ISimpleOption<any> {
+        codec(): $Codec<$Object>;
         get(): $Object;
         values(): $OptionInstance$ValueSet<$Object>;
         set(value: $Object): void;
-        static createBoolean(key: string, initialValue: boolean, onValueUpdate: $Consumer_<boolean>): $OptionInstance<boolean>;
-        static createBoolean(caption: string, tooltip: $OptionInstance$TooltipSupplier_<boolean>, valueStringifier: $OptionInstance$CaptionBasedToString_<boolean>, initialValue: boolean, onValueUpdate: $Consumer_<boolean>): $OptionInstance<boolean>;
-        static createBoolean(caption: string, tooltip: $OptionInstance$TooltipSupplier_<boolean>, initialValue: boolean): $OptionInstance<boolean>;
-        static createBoolean(key: string, initialValue: boolean): $OptionInstance<boolean>;
-        static createBoolean(caption: string, tooltip: $OptionInstance$TooltipSupplier_<boolean>, initialValue: boolean, onValueUpdate: $Consumer_<boolean>): $OptionInstance<boolean>;
-        codec(): $Codec<$Object>;
-        static noTooltip<T>(): $OptionInstance$TooltipSupplier<T>;
         static cachedConstantTooltip<T>(message: $Component_): $OptionInstance$TooltipSupplier<T>;
-        createButton(options: $Options): $AbstractWidget;
+        static createBoolean(key: string, initialValue: boolean, onValueUpdate: $Consumer_<boolean>): $OptionInstance<boolean>;
+        static createBoolean(caption: string, tooltip: $OptionInstance$TooltipSupplier_<boolean>, initialValue: boolean, onValueUpdate: $Consumer_<boolean>): $OptionInstance<boolean>;
+        static createBoolean(caption: string, tooltip: $OptionInstance$TooltipSupplier_<boolean>, valueStringifier: $OptionInstance$CaptionBasedToString_<boolean>, initialValue: boolean, onValueUpdate: $Consumer_<boolean>): $OptionInstance<boolean>;
+        static createBoolean(key: string, initialValue: boolean): $OptionInstance<boolean>;
+        static createBoolean(caption: string, tooltip: $OptionInstance$TooltipSupplier_<boolean>, initialValue: boolean): $OptionInstance<boolean>;
+        static forOptionEnum<T extends $OptionEnum>(): $OptionInstance$CaptionBasedToString<T>;
         createButton(options: $Options, x: number, y: number, width: number, onValueChanged: $Consumer_<$Object>): $AbstractWidget;
         createButton(options: $Options, x: number, y: number, width: number): $AbstractWidget;
-        static forOptionEnum<T extends $OptionEnum>(): $OptionInstance$CaptionBasedToString<T>;
-        setCodec(arg0: $Codec<$Object>): void;
+        createButton(options: $Options): $AbstractWidget;
+        static noTooltip<T>(): $OptionInstance$TooltipSupplier<T>;
         setCallbacks(arg0: $OptionInstance$ValueSet<$Object>): void;
         getInitialValue(): $Object;
+        setCodec(arg0: $Codec<$Object>): void;
         caption: $Component;
         static BOOLEAN_VALUES: $OptionInstance$Enum<boolean>;
         value: $Object;
@@ -954,108 +954,7 @@ declare module "@package/net/minecraft/client" {
         get string(): string;
     }
     export class $Minecraft extends $ReentrantBlockableEventLoop<$Runnable> implements $WindowEventHandler, $IMinecraftExtension, $MinecraftClientAccessor, $IXaeroMinimapMinecraftClient, $IWorldMapMinecraftClient, $MinecraftClientAccessor$1, $MinecraftClientKJS, $MinecraftAccessor, $IMixinMinecraft, $MinecraftExt$1, $MinecraftExt, $MinecraftAccessor$1 {
-        setOverlay(loadingGui: $Overlay | null): void;
-        getWindow(): $Window;
-        getTimer(): $DeltaTracker;
-        shouldEntityAppearGlowing(entity: $Entity): boolean;
-        /**
-         * Returns `true` if there is only one player playing, and the current server is the integrated one.
-         */
-        telemetryOptInExtra(): boolean;
-        createWorldOpenFlows(): $WorldOpenFlows;
-        /**
-         * Returns `true` if there is only one player playing, and the current server is the integrated one.
-         */
-        showOnlyReducedInfo(): boolean;
-        updateReportEnvironment(reportEnvironment: $ReportEnvironment_): void;
-        getMinecraftSessionService(): $MinecraftSessionService;
-        getPlayerSocialManager(): $PlayerSocialManager;
-        /**
-         * Returns `true` if there is only one player playing, and the current server is the integrated one.
-         */
-        isTextFilteringEnabled(): boolean;
-        /**
-         * Shuts down the minecraft applet by stopping the resource downloads, and clearing up GL stuff. Called when the application (or web page) is exited.
-         */
-        prepareForMultiplayer(): void;
-        getResourcePackRepository(): $PackRepository;
-        getResourcePackDirectory(): $Path;
-        /**
-         * Gets the sprite uploader used for paintings.
-         */
-        getPaintingTextures(): $PaintingTextureManager;
-        getSituationalMusic(): $Music;
-        /**
-         * Returns `true` if there is only one player playing, and the current server is the integrated one.
-         */
-        static useShaderTransparency(): boolean;
-        /**
-         * Returns `true` if there is only one player playing, and the current server is the integrated one.
-         */
-        extraTelemetryAvailable(): boolean;
-        getDownloadedPackSource(): $DownloadedPackSource;
-        getMapDecorationTextures(): $MapDecorationTextureManager;
-        grabPanoramixScreenshot(gameDirectory: $File_, width: number, height: number): $Component;
-        /**
-         * Returns `true` if there is only one player playing, and the current server is the integrated one.
-         */
-        static useAmbientOcclusion(): boolean;
-        getGpuWarnlistManager(): $GpuWarnlistManager;
-        getProgressListener(): $StoringChunkProgressListener;
-        /**
-         * Gets the sprite uploader used for potions.
-         */
-        getMobEffectTextures(): $MobEffectTextureManager;
-        getEssential$executor(): $Executor;
-        getScheduledEvents(): $ScheduledEvents;
-        getXaeroWorldMap_fps(): number;
-        getXaeroMinimap_fps(): number;
-        getReportingContext(): $ReportingContext;
-        /**
-         * Returns `true` if there is only one player playing, and the current server is the integrated one.
-         */
-        canValidateProfileKeys(): boolean;
-        /**
-         * Returns the currently running integrated server
-         */
-        getSingleplayerServer(): $IntegratedServer;
-        /**
-         * Returns `true` if there is only one player playing, and the current server is the integrated one.
-         */
-        hasSingleplayerServer(): boolean;
-        debugClientMetricsStart(logger: $Consumer_<$Component>): boolean;
-        /**
-         * Update debugProfilerName in response to number keys in debug screen
-         */
-        debugFpsMeterKeyPress(keyCount: number): void;
-        reloadResourcePacks(): $CompletableFuture<void>;
-        emergencySaveAndCrash(report: $CrashReport): void;
-        getMainRenderTarget(): $RenderTarget;
-        clearResourcePacksOnError(throwable: $Throwable, errorMessage: $Component_ | null, gameLoadCookie: $Minecraft$GameLoadCookie_ | null): void;
-        handler$bdn002$veil$close(arg0: $CallbackInfo): void;
-        getTelemetryManager(): $ClientTelemetryManager;
-        getProfileKeyPairManager(): $ProfileKeyPairManager;
-        /**
-         * Shuts down the minecraft applet by stopping the resource downloads, and clearing up GL stuff. Called when the application (or web page) is exited.
-         */
-        disconnect(): void;
-        disconnect(nextScreen: $Screen): void;
-        disconnect(nextScreen: $Screen, keepResourcePacks: boolean): void;
-        getVanillaPackResources(): $VanillaPackResources;
-        handler$efa000$xaeroworldmap$onRunTickStart(arg0: $CallbackInfo): void;
-        handler$iga000$essential$fireGuiOpenedEvent(screen: $Screen, info: $CallbackInfo): void;
-        handler$zlo000$iris$trackLastDimensionOnLeave(arg0: $Screen, arg1: $CallbackInfo): void;
-        handler$bih000$exposure$disconnect(nextScreen: $Screen, keepResourcePacks: boolean, ci: $CallbackInfo): void;
-        handler$bcl000$veil$beginFrame(arg0: $CallbackInfo): void;
-        /**
-         * Shuts down the minecraft applet by stopping the resource downloads, and clearing up GL stuff. Called when the application (or web page) is exited.
-         */
-        clearDownloadedResourcePacks(): void;
-        handler$bcl000$veil$endFrame(arg0: $CallbackInfo): void;
-        constant$hpd000$essential$modify(value: number): number;
-        getBlockEntityRenderDispatcher(): $BlockEntityRenderDispatcher;
-        getProfileKeySignatureValidator(): $SignatureValidator;
-        static getFPS$sodium_extra_$md$942995$0(): number;
+        getProfiler(): $ProfilerFiller;
         /**
          * Shuts down the minecraft applet by stopping the resource downloads, and clearing up GL stuff. Called when the application (or web page) is exited.
          */
@@ -1077,50 +976,113 @@ declare module "@package/net/minecraft/client" {
          */
         tick(): void;
         setLevel(level: $ClientLevel, reason: $ReceivingLevelScreen$Reason_): void;
-        getProxy(): $Proxy;
-        static crash(minecraft: $Minecraft | null, gameDirectory: $File_, crashReport: $CrashReport): void;
-        getProfiler(): $ProfilerFiller;
+        getEntityRenderDispatcher(): $EntityRenderDispatcher;
+        getTelemetryManager(): $ClientTelemetryManager;
+        getProfileKeyPairManager(): $ProfileKeyPairManager;
+        /**
+         * Returns `true` if there is only one player playing, and the current server is the integrated one.
+         */
+        hasSingleplayerServer(): boolean;
+        debugClientMetricsStart(logger: $Consumer_<$Component>): boolean;
+        handler$bdn002$veil$close(arg0: $CallbackInfo): void;
+        reloadResourcePacks(): $CompletableFuture<void>;
+        getMainRenderTarget(): $RenderTarget;
+        clearResourcePacksOnError(throwable: $Throwable, errorMessage: $Component_ | null, gameLoadCookie: $Minecraft$GameLoadCookie_ | null): void;
+        /**
+         * Returns the currently running integrated server
+         */
+        getSingleplayerServer(): $IntegratedServer;
+        emergencySaveAndCrash(report: $CrashReport): void;
+        /**
+         * Update debugProfilerName in response to number keys in debug screen
+         */
+        debugFpsMeterKeyPress(keyCount: number): void;
+        getResourcePackDirectory(): $Path;
+        getMinecraftSessionService(): $MinecraftSessionService;
+        getMapDecorationTextures(): $MapDecorationTextureManager;
+        /**
+         * Shuts down the minecraft applet by stopping the resource downloads, and clearing up GL stuff. Called when the application (or web page) is exited.
+         */
+        prepareForMultiplayer(): void;
+        updateReportEnvironment(reportEnvironment: $ReportEnvironment_): void;
+        /**
+         * Returns `true` if there is only one player playing, and the current server is the integrated one.
+         */
+        static useShaderTransparency(): boolean;
+        /**
+         * Returns `true` if there is only one player playing, and the current server is the integrated one.
+         */
+        showOnlyReducedInfo(): boolean;
+        getDownloadedPackSource(): $DownloadedPackSource;
+        shouldEntityAppearGlowing(entity: $Entity): boolean;
+        /**
+         * Returns `true` if there is only one player playing, and the current server is the integrated one.
+         */
+        static useAmbientOcclusion(): boolean;
+        getResourcePackRepository(): $PackRepository;
+        grabPanoramixScreenshot(gameDirectory: $File_, width: number, height: number): $Component;
+        createWorldOpenFlows(): $WorldOpenFlows;
+        /**
+         * Returns `true` if there is only one player playing, and the current server is the integrated one.
+         */
+        extraTelemetryAvailable(): boolean;
+        getGpuWarnlistManager(): $GpuWarnlistManager;
+        getSituationalMusic(): $Music;
+        /**
+         * Returns `true` if there is only one player playing, and the current server is the integrated one.
+         */
+        telemetryOptInExtra(): boolean;
+        /**
+         * Gets the sprite uploader used for paintings.
+         */
+        getPaintingTextures(): $PaintingTextureManager;
+        /**
+         * Gets the sprite uploader used for potions.
+         */
+        getMobEffectTextures(): $MobEffectTextureManager;
+        getProgressListener(): $StoringChunkProgressListener;
+        getPlayerSocialManager(): $PlayerSocialManager;
+        /**
+         * Returns `true` if there is only one player playing, and the current server is the integrated one.
+         */
+        isTextFilteringEnabled(): boolean;
+        getEssential$executor(): $Executor;
+        getReportingContext(): $ReportingContext;
+        /**
+         * Returns `true` if there is only one player playing, and the current server is the integrated one.
+         */
+        canValidateProfileKeys(): boolean;
+        getXaeroMinimap_fps(): number;
+        getXaeroWorldMap_fps(): number;
+        getScheduledEvents(): $ScheduledEvents;
+        disconnect(nextScreen: $Screen, keepResourcePacks: boolean): void;
+        disconnect(nextScreen: $Screen): void;
+        /**
+         * Shuts down the minecraft applet by stopping the resource downloads, and clearing up GL stuff. Called when the application (or web page) is exited.
+         */
+        disconnect(): void;
         /**
          * Returns `true` if there is only one player playing, and the current server is the integrated one.
          */
         isRunning(): boolean;
-        getEntityRenderDispatcher(): $EntityRenderDispatcher;
+        static crash(minecraft: $Minecraft | null, gameDirectory: $File_, crashReport: $CrashReport): void;
+        handler$bcl000$veil$endFrame(arg0: $CallbackInfo): void;
+        /**
+         * Shuts down the minecraft applet by stopping the resource downloads, and clearing up GL stuff. Called when the application (or web page) is exited.
+         */
+        clearDownloadedResourcePacks(): void;
+        handler$bih000$exposure$disconnect(nextScreen: $Screen, keepResourcePacks: boolean, ci: $CallbackInfo): void;
+        constant$hpd000$essential$modify(value: number): number;
+        handler$bcl000$veil$beginFrame(arg0: $CallbackInfo): void;
+        getProfileKeySignatureValidator(): $SignatureValidator;
+        getBlockEntityRenderDispatcher(): $BlockEntityRenderDispatcher;
+        static getFPS$sodium_extra_$md$c99f8a$0(): number;
+        setOverlay(loadingGui: $Overlay | null): void;
+        getWindow(): $Window;
+        getTimer(): $DeltaTracker;
+        getVanillaPackResources(): $VanillaPackResources;
         getCurrentServer(): $ServerData;
-        localvar$igb000$essential$displayGuiScreen(screen: $Screen): $Screen;
-        handler$hcm004$distanthorizons$close(ci: $CallbackInfo): void;
-        handler$dhn000$polytone$changeToast(message: $Component_, ci: $CallbackInfo, modifiableMessage: $LocalRef<any>): void;
-        handler$igb000$essential$displayGuiScreen(screen: $Screen, info: $CallbackInfo): void;
-        modify$efa000$xaeroworldmap$onRenderCall(arg0: boolean): boolean;
-        handler$bih000$exposure$onSetScreen(screen: $Screen, ci: $CallbackInfo): void;
-        handler$ggl000$sable$postCycleCameraType(arg0: $CallbackInfo): void;
-        handler$bih000$exposure$onStartAttack(cir: $CallbackInfoReturnable<any>): void;
-        handler$bih000$exposure$onStartUseItem(ci: $CallbackInfo): void;
-        handler$bih000$exposure$onLevelUnload(newLevel: $ClientLevel, reason: $ReceivingLevelScreen$Reason_, ci: $CallbackInfo): void;
-        handler$blp000$transition$fillReport(theCrash: $CrashReport, ci: $CallbackInfoReturnable<any>): void;
-        getHotbarManager(): $HotbarManager;
-        getItemColors(): $ItemColors;
-        /**
-         * Returns `true` if there is only one player playing, and the current server is the integrated one.
-         */
-        isWindowActive(): boolean;
-        getSkinManager(): $SkinManager;
-        setCameraEntity(viewingEntity: $Entity): void;
-        getTutorial(): $Tutorial;
-        /**
-         * Update debugProfilerName in response to number keys in debug screen
-         */
-        updateMaxMipLevel(keyCount: number): void;
-        getChatListener(): $ChatListener;
-        getLastInputType(): $InputType;
-        getEntityModels(): $EntityModelSet;
-        getBlockColors(): $BlockColors;
-        getNarrator(): $GameNarrator;
-        getFixerUpper(): $DataFixer;
-        getSplashManager(): $SplashManager;
-        /**
-         * Gets the version that Minecraft was launched under (the name of a version JSON). Specified via the `--version` flag.
-         */
-        getTitle(): string;
+        getTextureManager(): $TextureManager;
         getGuiSprites(): $GuiSpriteManager;
         getItemRenderer(): $ItemRenderer;
         renderBuffers(): $RenderBuffers;
@@ -1128,122 +1090,163 @@ declare module "@package/net/minecraft/client" {
         /**
          * Returns `true` if there is only one player playing, and the current server is the integrated one.
          */
-        allowsMultiplayer(): boolean;
-        quickPlayLog(): $QuickPlayLog;
+        isLocalServer(): boolean;
+        directoryValidator(): $DirectoryValidator;
         /**
          * Returns `true` if there is only one player playing, and the current server is the integrated one.
          */
-        isLocalServer(): boolean;
-        commandHistory(): $CommandHistory;
-        setWindowActive(leftClick: boolean): void;
-        /**
-         * Shuts down the minecraft applet by stopping the resource downloads, and clearing up GL stuff. Called when the application (or web page) is exited.
-         */
-        updateFontOptions(): void;
-        getBlockRenderer(): $BlockRenderDispatcher;
-        directoryValidator(): $DirectoryValidator;
+        allowsMultiplayer(): boolean;
+        quickPlayLog(): $QuickPlayLog;
         doWorldLoad(levelStorage: $LevelStorageSource$LevelStorageAccess, packRepository: $PackRepository, worldStem: $WorldStem_, newWorld: boolean): void;
+        commandHistory(): $CommandHistory;
+        getBlockRenderer(): $BlockRenderDispatcher;
         /**
          * Returns `true` if there is only one player playing, and the current server is the integrated one.
          */
         isGameLoadFinished(): boolean;
-        getDebugOverlay(): $DebugScreenOverlay;
-        /**
-         * Shuts down the minecraft applet by stopping the resource downloads, and clearing up GL stuff. Called when the application (or web page) is exited.
-         */
-        resizeDisplay(): void;
-        /**
-         * Gets the version that Minecraft was launched under (the name of a version JSON). Specified via the `--version` flag.
-         */
-        getLaunchedVersion(): string;
-        /**
-         * Gets the version that Minecraft was launched under (the name of a version JSON). Specified via the `--version` flag.
-         */
-        getVersionType(): string;
         /**
          * Shuts down the minecraft applet by stopping the resource downloads, and clearing up GL stuff. Called when the application (or web page) is exited.
          */
         updateTitle(): void;
         static checkModStatus(): $ModCheck;
+        multiplayerBan(): $BanDetails;
+        setWindowActive(leftClick: boolean): void;
+        /**
+         * Shuts down the minecraft applet by stopping the resource downloads, and clearing up GL stuff. Called when the application (or web page) is exited.
+         */
+        resizeDisplay(): void;
+        /**
+         * Shuts down the minecraft applet by stopping the resource downloads, and clearing up GL stuff. Called when the application (or web page) is exited.
+         */
+        updateFontOptions(): void;
+        delayCrashRaw(report: $CrashReport): void;
+        /**
+         * Gets the version that Minecraft was launched under (the name of a version JSON). Specified via the `--version` flag.
+         */
+        getVersionType(): string;
         /**
          * Returns `true` if there is only one player playing, and the current server is the integrated one.
          */
         isEnforceUnicode(): boolean;
         getModelManager(): $ModelManager;
-        delayCrashRaw(report: $CrashReport): void;
-        multiplayerBan(): $BanDetails;
         /**
-         * Shuts down the minecraft applet by stopping the resource downloads, and clearing up GL stuff. Called when the application (or web page) is exited.
+         * Gets the version that Minecraft was launched under (the name of a version JSON). Specified via the `--version` flag.
          */
-        cursorEntered(): void;
-        getFrameTimeNs(): number;
-        setLastInputType(lastInputType: $InputType_): void;
+        getLaunchedVersion(): string;
+        getDebugOverlay(): $DebugScreenOverlay;
         /**
          * Returns the save loader that is currently being used
          */
         getLevelSource(): $LevelStorageSource;
         getChatStatus(): $Minecraft$ChatStatus;
+        setLastInputType(lastInputType: $InputType_): void;
+        /**
+         * Shuts down the minecraft applet by stopping the resource downloads, and clearing up GL stuff. Called when the application (or web page) is exited.
+         */
+        cursorEntered(): void;
+        getFrameTimeNs(): number;
+        /**
+         * Return the musicTicker's instance
+         */
+        getMusicManager(): $MusicManager;
+        getCameraEntity(): $Entity;
         /**
          * Shuts down the minecraft applet by stopping the resource downloads, and clearing up GL stuff. Called when the application (or web page) is exited.
          */
         handleKeybinds(): void;
         /**
-         * Return the musicTicker's instance
-         */
-        getMusicManager(): $MusicManager;
-        /**
          * Returns `true` if there is only one player playing, and the current server is the integrated one.
          */
         allowsRealms(): boolean;
-        getGpuUtilization(): number;
-        forceSetScreen(nextScreen: $Screen): void;
-        getCameraEntity(): $Entity;
-        /**
-         * Returns `true` if there is only one player playing, and the current server is the integrated one.
-         */
-        allowsTelemetry(): boolean;
         clearClientLevel(nextScreen: $Screen): void;
-        /**
-         * Returns `true` if there is only one player playing, and the current server is the integrated one.
-         */
-        isNameBanned(): boolean;
         /**
          * Returns `true` if there is only one player playing, and the current server is the integrated one.
          */
         static useFancyGraphics(): boolean;
         /**
-         * Gets the version that Minecraft was launched under (the name of a version JSON). Specified via the `--version` flag.
+         * Returns `true` if there is only one player playing, and the current server is the integrated one.
          */
-        static getLauncherBrand(): string;
+        allowsTelemetry(): boolean;
+        getGpuUtilization(): number;
         /**
          * Returns `true` if there is only one player playing, and the current server is the integrated one.
          */
         static renderNames(): boolean;
-        delayTextureReload(): $CompletableFuture<void>;
+        /**
+         * Returns `true` if there is only one player playing, and the current server is the integrated one.
+         */
+        isNameBanned(): boolean;
+        forceSetScreen(nextScreen: $Screen): void;
+        addCustomNbtData(stack: $ItemStack_, blockEntity: $BlockEntity, registryAccess: $RegistryAccess): void;
+        getGameProfile(): $GameProfile;
+        getSkinManager(): $SkinManager;
+        getTextureAtlas(location: $ResourceLocation_): $Function<$ResourceLocation, $TextureAtlasSprite>;
         /**
          * Returns `true` if there is only one player playing, and the current server is the integrated one.
          */
         isSingleplayer(): boolean;
-        isLocalPlayer(playerUUID: $UUID_): boolean;
-        getGameProfile(): $GameProfile;
+        getSplashManager(): $SplashManager;
+        /**
+         * Update debugProfilerName in response to number keys in debug screen
+         */
+        updateMaxMipLevel(keyCount: number): void;
+        delayTextureReload(): $CompletableFuture<void>;
         getLanguageManager(): $LanguageManager;
-        getTextureAtlas(location: $ResourceLocation_): $Function<$ResourceLocation, $TextureAtlasSprite>;
+        setCameraEntity(viewingEntity: $Entity): void;
+        getFixerUpper(): $DataFixer;
+        getBlockColors(): $BlockColors;
+        /**
+         * Returns `true` if there is only one player playing, and the current server is the integrated one.
+         */
+        isWindowActive(): boolean;
+        /**
+         * Gets the version that Minecraft was launched under (the name of a version JSON). Specified via the `--version` flag.
+         */
+        static getLauncherBrand(): string;
         getSoundManager(): $SoundManager;
-        addCustomNbtData(stack: $ItemStack_, blockEntity: $BlockEntity, registryAccess: $RegistryAccess): void;
+        getHotbarManager(): $HotbarManager;
+        isLocalPlayer(playerUUID: $UUID_): boolean;
+        getTutorial(): $Tutorial;
+        getEntityModels(): $EntityModelSet;
+        getChatListener(): $ChatListener;
+        getLastInputType(): $InputType;
+        getNarrator(): $GameNarrator;
+        getItemColors(): $ItemColors;
+        /**
+         * Gets the version that Minecraft was launched under (the name of a version JSON). Specified via the `--version` flag.
+         */
+        getTitle(): string;
+        getProxy(): $Proxy;
+        localvar$igb000$essential$displayGuiScreen(screen: $Screen): $Screen;
+        modify$efa000$xaeroworldmap$onRenderCall(arg0: boolean): boolean;
+        handler$bih000$exposure$onSetScreen(screen: $Screen, ci: $CallbackInfo): void;
+        handler$igb000$essential$displayGuiScreen(screen: $Screen, info: $CallbackInfo): void;
+        handler$dhn000$polytone$changeToast(message: $Component_, ci: $CallbackInfo, modifiableMessage: $LocalRef<any>): void;
+        handler$hcm004$distanthorizons$close(ci: $CallbackInfo): void;
+        handler$bih000$exposure$onStartAttack(cir: $CallbackInfoReturnable<any>): void;
+        handler$blp000$transition$fillReport(theCrash: $CrashReport, ci: $CallbackInfoReturnable<any>): void;
+        handler$bih000$exposure$onStartUseItem(ci: $CallbackInfo): void;
+        handler$bih000$exposure$onLevelUnload(newLevel: $ClientLevel, reason: $ReceivingLevelScreen$Reason_, ci: $CallbackInfo): void;
+        handler$ggl000$sable$postCycleCameraType(arg0: $CallbackInfo): void;
         getResourceManager(): $ResourceManager;
+        handler$efa000$xaeroworldmap$onRunTickStart(arg0: $CallbackInfo): void;
+        handler$iga000$essential$fireGuiOpenedEvent(screen: $Screen, info: $CallbackInfo): void;
+        handler$zlo000$iris$trackLastDimensionOnLeave(arg0: $Screen, arg1: $CallbackInfo): void;
+        handler$bnb000$acceleratedrendering$bindAcceleratedBufferSources(arg0: $GameConfig, arg1: $CallbackInfo): void;
+        localvar$hop000$fabric_events_interaction_v0$modifyItemPick(arg0: $ItemStack_): $ItemStack;
         handler$hop000$fabric_events_interaction_v0$cancelItemPick(arg0: $CallbackInfo): void;
         modifyReturnValue$bih000$exposure$onGetMainRenderTarget(original: $RenderTarget): $RenderTarget;
         handler$bnd000$acceleratedrendering$setDebugContext(arg0: $GameConfig, arg1: $CallbackInfo): void;
-        getTextureManager(): $TextureManager;
-        delayCrash(report: $CrashReport): void;
-        setScreen(nextScreen: $Screen | null): void;
-        getToasts(): $ToastComponent;
+        modifyExpressionValue$iad000$essential$modifyMultiplayerWindowTitleOther(original: string): string;
+        modifyExpressionValue$iad000$essential$modifyMultiplayerWindowTitleLAN(original: string): string;
+        static fillReport(minecraft: $Minecraft | null, languageManager: $LanguageManager | null, launchVersion: string, options: $Options | null, report: $CrashReport): void;
         /**
          * Adds core server Info (GL version, Texture pack, isModded, type), and the worldInfo to the crash report.
          */
         fillReport(theCrash: $CrashReport): $CrashReport;
-        static fillReport(minecraft: $Minecraft | null, languageManager: $LanguageManager | null, launchVersion: string, options: $Options | null, report: $CrashReport): void;
-        pauseGame(leftClick: boolean): void;
+        setScreen(nextScreen: $Screen | null): void;
+        getToasts(): $ToastComponent;
+        delayCrash(report: $CrashReport): void;
         getFps(): number;
         getUser(): $User;
         isBlocked(playerUUID: $UUID_): boolean;
@@ -1251,16 +1254,13 @@ declare module "@package/net/minecraft/client" {
          * Returns `true` if there is only one player playing, and the current server is the integrated one.
          */
         isDemo(): boolean;
+        pauseGame(leftClick: boolean): void;
         /**
          * Returns `true` if there is only one player playing, and the current server is the integrated one.
          */
         isPaused(): boolean;
         getOverlay(): $Overlay;
         setSession(session: $User): void;
-        modifyExpressionValue$iad000$essential$modifyMultiplayerWindowTitleLAN(original: string): string;
-        modifyExpressionValue$iad000$essential$modifyMultiplayerWindowTitleOther(original: string): string;
-        handler$bnb000$acceleratedrendering$bindAcceleratedBufferSources(arg0: $GameConfig, arg1: $CallbackInfo): void;
-        localvar$hop000$fabric_events_interaction_v0$modifyItemPick(arg0: $ItemStack_): $ItemStack;
         /**
          * Retrieves the `Locale` set by the player.
          * Useful for creating string and number formatters.
@@ -1271,6 +1271,8 @@ declare module "@package/net/minecraft/client" {
          */
         popGuiLayer(): void;
         pushGuiLayer(nextScreen: $Screen): void;
+        setActivePostShader(id: $ResourceLocation_): void;
+        setCurrentScreen(nextScreen: $Screen): void;
         getKeyBindPressedTicks(id: string): number;
         /**
          * Runs the specified console command client-side with the player's permission level. The command won't output any logs in chat nor console.
@@ -1278,54 +1280,52 @@ declare module "@package/net/minecraft/client" {
          * @param command The console command. Slash at the beginning is optional.
          */
         runCommandSilent(defaultText: string): void;
-        setActivePostShader(id: $ResourceLocation_): void;
+        isKeyMappingDown(key: $KeyMapping): boolean;
+        getCurrentScreen(): $Screen;
+        getBlockTextureAtlas(): $Function<$ResourceLocation, $TextureAtlasSprite>;
+        setStatusMessage(message: $Component_): void;
         /**
          * Gets the version that Minecraft was launched under (the name of a version JSON). Specified via the `--version` flag.
          */
         getCurrentWorldName(): string;
-        isKeyMappingDown(key: $KeyMapping): boolean;
-        getBlockTextureAtlas(): $Function<$ResourceLocation, $TextureAtlasSprite>;
-        getCurrentScreen(): $Screen;
-        setCurrentScreen(nextScreen: $Screen): void;
-        setStatusMessage(message: $Component_): void;
         getParticleTextureAtlas(): $Function<$ResourceLocation, $TextureAtlasSprite>;
-        getName(): $Component;
-        setTitle(defaultText: string): void;
+        /**
+         * Returns `true` if there is only one player playing, and the current server is the integrated one.
+         */
+        isAltDown(): boolean;
+        /**
+         * Returns `true` if there is only one player playing, and the current server is the integrated one.
+         */
+        isShiftDown(): boolean;
         /**
          * Runs the specified console command client-side with the player's permission level.
          * 
          * @param command The console command. Slash at the beginning is optional.
          */
         runCommand(defaultText: string): void;
-        isKeyDown(keyName: string): boolean;
+        getName(): $Component;
+        setTitle(defaultText: string): void;
         isKeyDown(key: number): boolean;
-        isKeyBindDown(id: string): boolean;
-        /**
-         * Returns `true` if there is only one player playing, and the current server is the integrated one.
-         */
-        isShiftDown(): boolean;
+        isKeyDown(keyName: string): boolean;
         /**
          * Returns `true` if there is only one player playing, and the current server is the integrated one.
          */
         isCtrlDown(): boolean;
-        /**
-         * Returns `true` if there is only one player playing, and the current server is the integrated one.
-         */
-        isAltDown(): boolean;
-        tell(message: $Component_): void;
+        isKeyBindDown(id: string): boolean;
         /**
          * Return the singleton Minecraft instance for the game
          */
         self(): $Minecraft;
+        tell(message: $Component_): void;
         scheduleInTicks(ticks: $TickDuration_, callback: $ScheduledEvents$Callback_): $ScheduledEvents$ScheduledEvent;
         scheduleRepeating(timer: $TemporalAmount_, callback: $ScheduledEvents$Callback_): $ScheduledEvents$ScheduledEvent;
         scheduleRepeatingInTicks(ticks: $TickDuration_, callback: $ScheduledEvents$Callback_): $ScheduledEvents$ScheduledEvent;
         schedule(timer: $TemporalAmount_, callback: $ScheduledEvents$Callback_): $ScheduledEvents$ScheduledEvent;
         getDisplayName(): $Component;
-        openChatScreenFancyMenu(defaultText: string): void;
-        setGameProfileFuture(arg0: $CompletableFuture<$ProfileResult_>): void;
-        getReloadStateTrackerFancyMenu(): $ResourceLoadStateTracker;
         getConnection(): $Connection;
+        setGameProfileFuture(arg0: $CompletableFuture<$ProfileResult_>): void;
+        openChatScreenFancyMenu(defaultText: string): void;
+        getReloadStateTrackerFancyMenu(): $ResourceLoadStateTracker;
         /**
          * Update debugProfilerName in response to number keys in debug screen
          */
@@ -1369,69 +1369,69 @@ declare module "@package/net/minecraft/client" {
         smartCull: boolean;
         font: $Font;
         constructor(gameConfig: $GameConfig);
-        get window(): $Window;
-        get timer(): $DeltaTracker;
-        get minecraftSessionService(): $MinecraftSessionService;
-        get playerSocialManager(): $PlayerSocialManager;
-        get textFilteringEnabled(): boolean;
-        get resourcePackRepository(): $PackRepository;
-        get resourcePackDirectory(): $Path;
-        get paintingTextures(): $PaintingTextureManager;
-        get situationalMusic(): $Music;
-        get downloadedPackSource(): $DownloadedPackSource;
-        get mapDecorationTextures(): $MapDecorationTextureManager;
-        get gpuWarnlistManager(): $GpuWarnlistManager;
-        get progressListener(): $StoringChunkProgressListener;
-        get mobEffectTextures(): $MobEffectTextureManager;
-        get essential$executor(): $Executor;
-        get scheduledEvents(): $ScheduledEvents;
-        get xaeroWorldMap_fps(): number;
-        get xaeroMinimap_fps(): number;
-        get reportingContext(): $ReportingContext;
-        get singleplayerServer(): $IntegratedServer;
+        get profiler(): $ProfilerFiller;
+        get entityRenderDispatcher(): $EntityRenderDispatcher;
         get telemetryManager(): $ClientTelemetryManager;
         get profileKeyPairManager(): $ProfileKeyPairManager;
-        get vanillaPackResources(): $VanillaPackResources;
-        get blockEntityRenderDispatcher(): $BlockEntityRenderDispatcher;
-        get profileKeySignatureValidator(): $SignatureValidator;
-        static get FPS$sodium_extra_$md$942995$0(): number;
-        get proxy(): $Proxy;
-        get profiler(): $ProfilerFiller;
+        get singleplayerServer(): $IntegratedServer;
+        get resourcePackDirectory(): $Path;
+        get minecraftSessionService(): $MinecraftSessionService;
+        get mapDecorationTextures(): $MapDecorationTextureManager;
+        get downloadedPackSource(): $DownloadedPackSource;
+        get resourcePackRepository(): $PackRepository;
+        get gpuWarnlistManager(): $GpuWarnlistManager;
+        get situationalMusic(): $Music;
+        get paintingTextures(): $PaintingTextureManager;
+        get mobEffectTextures(): $MobEffectTextureManager;
+        get progressListener(): $StoringChunkProgressListener;
+        get playerSocialManager(): $PlayerSocialManager;
+        get textFilteringEnabled(): boolean;
+        get essential$executor(): $Executor;
+        get reportingContext(): $ReportingContext;
+        get xaeroMinimap_fps(): number;
+        get xaeroWorldMap_fps(): number;
+        get scheduledEvents(): $ScheduledEvents;
         get running(): boolean;
-        get entityRenderDispatcher(): $EntityRenderDispatcher;
+        get profileKeySignatureValidator(): $SignatureValidator;
+        get blockEntityRenderDispatcher(): $BlockEntityRenderDispatcher;
+        static get FPS$sodium_extra_$md$c99f8a$0(): number;
+        get window(): $Window;
+        get timer(): $DeltaTracker;
+        get vanillaPackResources(): $VanillaPackResources;
         get currentServer(): $ServerData;
-        get hotbarManager(): $HotbarManager;
-        get skinManager(): $SkinManager;
-        get tutorial(): $Tutorial;
-        get chatListener(): $ChatListener;
-        get entityModels(): $EntityModelSet;
-        get blockColors(): $BlockColors;
-        get narrator(): $GameNarrator;
-        get fixerUpper(): $DataFixer;
-        get splashManager(): $SplashManager;
+        get textureManager(): $TextureManager;
         get guiSprites(): $GuiSpriteManager;
         get itemRenderer(): $ItemRenderer;
         get localServer(): boolean;
         get blockRenderer(): $BlockRenderDispatcher;
         get gameLoadFinished(): boolean;
-        get debugOverlay(): $DebugScreenOverlay;
-        get launchedVersion(): string;
         get versionType(): string;
         get enforceUnicode(): boolean;
         get modelManager(): $ModelManager;
-        get frameTimeNs(): number;
+        get launchedVersion(): string;
+        get debugOverlay(): $DebugScreenOverlay;
         get levelSource(): $LevelStorageSource;
         get chatStatus(): $Minecraft$ChatStatus;
+        get frameTimeNs(): number;
         get musicManager(): $MusicManager;
         get gpuUtilization(): number;
         get nameBanned(): boolean;
-        static get launcherBrand(): string;
-        get singleplayer(): boolean;
         get gameProfile(): $GameProfile;
+        get skinManager(): $SkinManager;
+        get singleplayer(): boolean;
+        get splashManager(): $SplashManager;
         get languageManager(): $LanguageManager;
+        get fixerUpper(): $DataFixer;
+        get blockColors(): $BlockColors;
+        static get launcherBrand(): string;
         get soundManager(): $SoundManager;
+        get hotbarManager(): $HotbarManager;
+        get tutorial(): $Tutorial;
+        get entityModels(): $EntityModelSet;
+        get chatListener(): $ChatListener;
+        get narrator(): $GameNarrator;
+        get proxy(): $Proxy;
         get resourceManager(): $ResourceManager;
-        get textureManager(): $TextureManager;
         get toasts(): $ToastComponent;
         get fps(): number;
         get user(): $User;
@@ -1440,36 +1440,36 @@ declare module "@package/net/minecraft/client" {
         set session(value: $User);
         get locale(): $Locale;
         set activePostShader(value: $ResourceLocation_);
-        get currentWorldName(): string;
         get blockTextureAtlas(): $Function<$ResourceLocation, $TextureAtlasSprite>;
         set statusMessage(value: $Component_);
+        get currentWorldName(): string;
         get particleTextureAtlas(): $Function<$ResourceLocation, $TextureAtlasSprite>;
+        get altDown(): boolean;
         get shiftDown(): boolean;
         get ctrlDown(): boolean;
-        get altDown(): boolean;
         get displayName(): $Component;
+        get connection(): $Connection;
         set gameProfileFuture(value: $CompletableFuture<$ProfileResult_>);
         get reloadStateTrackerFancyMenu(): $ResourceLoadStateTracker;
-        get connection(): $Connection;
     }
     export class $Camera$NearPlane {
-        getTopRight(): $Vec3;
         getPointOnPlane(leftScale: number, upScale: number): $Vec3;
         getBottomLeft(): $Vec3;
         getBottomRight(): $Vec3;
+        getTopRight(): $Vec3;
         getTopLeft(): $Vec3;
         forward: $Vec3;
         constructor(forward: $Vec3_, left: $Vec3_, up: $Vec3_);
-        get topRight(): $Vec3;
         get bottomLeft(): $Vec3;
         get bottomRight(): $Vec3;
+        get topRight(): $Vec3;
         get topLeft(): $Vec3;
     }
     export class $GuiMessageTag$Icon extends $Enum<$GuiMessageTag$Icon> {
         static values(): $GuiMessageTag$Icon[];
         static valueOf(arg0: string): $GuiMessageTag$Icon;
         draw(guiGraphics: $GuiGraphics, x: number, y: number): void;
-        static create$nochatreports_$md$942995$0(arg0: string, arg1: number, arg2: $ResourceLocation_, arg3: number, arg4: number): $GuiMessageTag$Icon;
+        static create$nochatreports_$md$c99f8a$0(arg0: string, arg1: number, arg2: $ResourceLocation_, arg3: number, arg4: number): $GuiMessageTag$Icon;
         static CHAT_MODIFIED: $GuiMessageTag$Icon;
         sprite: $ResourceLocation;
         width: number;
@@ -1482,13 +1482,13 @@ declare module "@package/net/minecraft/client" {
     export class $KeyboardHandler {
         setup(window: number): void;
         tick(): void;
+        getClipboard(): string;
         setClipboard(string: string): void;
-        handler$djc000$emi$onKey(window: number, key: number, scancode: number, action: number, modifiers: number, info: $CallbackInfo): void;
-        handler$djc000$emi$onChar(window: number, codePoint: number, modifiers: number, info: $CallbackInfo): void;
+        keyPress(windowPointer: number, arg1: number, key: number, scanCode: number, action: number): void;
         handler$bbf000$veil$handleChunkDebugKeys(arg0: number, arg1: $CallbackInfoReturnable<any>): void;
         handler$bbf000$veil$printChunkDebugKeys(arg0: number, arg1: $CallbackInfoReturnable<any>): void;
-        keyPress(windowPointer: number, arg1: number, key: number, scanCode: number, action: number): void;
-        getClipboard(): string;
+        handler$djc000$emi$onKey(window: number, key: number, scancode: number, action: number, modifiers: number, info: $CallbackInfo): void;
+        handler$djc000$emi$onChar(window: number, codePoint: number, modifiers: number, info: $CallbackInfo): void;
         handler$bkc000$vista$supp$onKeyPressCancellable(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: $CallbackInfo): void;
         cached_key_FancyMenu: number;
         cached_scanCode_FancyMenu: number;
@@ -1511,10 +1511,10 @@ declare module "@package/net/minecraft/client" {
      */
     export type $StringSplitter$WidthProvider_ = ((arg0: number, arg1: $Style) => number);
     export class $ResourceLoadStateTracker {
-        finishReload(): void;
         startReload(reloadReason: $ResourceLoadStateTracker$ReloadReason_, packs: $List_<$PackResources>): void;
         startRecovery(error: $Throwable): void;
         fillCrashReport(report: $CrashReport): void;
+        finishReload(): void;
         constructor();
     }
     export class $StringSplitter$LineBreakFinder implements $FormattedCharSink {
@@ -1537,8 +1537,8 @@ declare module "@package/net/minecraft/client" {
     export class $OptionInstance$ValueSet<T> {
     }
     export interface $OptionInstance$ValueSet<T> {
-        validateValue(value: T): (T) | undefined;
         codec(): $Codec<T>;
+        validateValue(value: T): (T) | undefined;
         createButton(tooltipSupplier: $OptionInstance$TooltipSupplier_<T>, options: $Options, x: number, y: number, width: number, onValueChanged: $Consumer_<T>): $Function<$OptionInstance<T>, $AbstractWidget>;
     }
     export class $ComponentCollector {
@@ -1557,64 +1557,50 @@ declare module "@package/net/minecraft/client" {
         static get clientModName(): string;
     }
     export class $OptionInstance$AltEnum<T> extends $Record implements $OptionInstance$CycleableValueSet<T> {
-        values(): $List<T>;
-        validateValue(arg0: T): (T) | undefined;
         codec(): $Codec<T>;
-        altValues(): $List<T>;
         valueListSupplier(): $CycleButton$ValueListSupplier<T>;
         valueSetter(): $OptionInstance$CycleableValueSet$ValueSetter<T>;
+        values(): $List<T>;
+        validateValue(arg0: T): (T) | undefined;
         altCondition(): $BooleanSupplier;
+        altValues(): $List<T>;
         constructor(arg0: $List_<T>, arg1: $List_<T>, arg2: $BooleanSupplier_, arg3: $OptionInstance$CycleableValueSet$ValueSetter_<T>, arg4: $Codec<T>);
     }
     /**
      * Values that may be interpreted as {@link $OptionInstance$AltEnum}.
      */
-    export type $OptionInstance$AltEnum_<T> = { altValues?: $List_<any>, codec?: $Codec<any>, valueSetter?: $OptionInstance$CycleableValueSet$ValueSetter_<any>, altCondition?: $BooleanSupplier_, values?: $List_<any>,  } | [altValues?: $List_<any>, codec?: $Codec<any>, valueSetter?: $OptionInstance$CycleableValueSet$ValueSetter_<any>, altCondition?: $BooleanSupplier_, values?: $List_<any>, ];
+    export type $OptionInstance$AltEnum_<T> = { altCondition?: $BooleanSupplier_, values?: $List_<any>, altValues?: $List_<any>, codec?: $Codec<any>, valueSetter?: $OptionInstance$CycleableValueSet$ValueSetter_<any>,  } | [altCondition?: $BooleanSupplier_, values?: $List_<any>, altValues?: $List_<any>, codec?: $Codec<any>, valueSetter?: $OptionInstance$CycleableValueSet$ValueSetter_<any>, ];
     export class $StringSplitter$FlatComponents {
     }
     export class $StringSplitter {
-        splitLines(content: $FormattedText, maxWidth: number, style: $Style): $List<$FormattedText>;
-        splitLines(content: string, maxWidth: number, style: $Style): $List<$FormattedText>;
-        splitLines(content: string, maxWidth: number, style: $Style, withNewLines: boolean, linePos: $StringSplitter$LinePosConsumer_): void;
-        splitLines(content: $FormattedText, maxWidth: number, style: $Style, prefix: $FormattedText): $List<$FormattedText>;
-        splitLines(content: $FormattedText, maxWidth: number, style: $Style, splitifier: $BiConsumer_<$FormattedText, boolean>): void;
-        componentStyleAtWidth(content: $FormattedText, maxWidth: number): $Style;
-        componentStyleAtWidth(content: $FormattedCharSequence_, maxWidth: number): $Style;
-        stringWidth(content: $FormattedCharSequence_): number;
         stringWidth(content: $FormattedText): number;
         stringWidth(content: string | null): number;
+        stringWidth(content: $FormattedCharSequence_): number;
+        splitLines(content: string, maxWidth: number, style: $Style, withNewLines: boolean, linePos: $StringSplitter$LinePosConsumer_): void;
+        splitLines(content: string, maxWidth: number, style: $Style): $List<$FormattedText>;
+        splitLines(content: $FormattedText, maxWidth: number, style: $Style): $List<$FormattedText>;
+        splitLines(content: $FormattedText, maxWidth: number, style: $Style, prefix: $FormattedText): $List<$FormattedText>;
+        splitLines(content: $FormattedText, maxWidth: number, style: $Style, splitifier: $BiConsumer_<$FormattedText, boolean>): void;
+        componentStyleAtWidth(content: $FormattedCharSequence_, maxWidth: number): $Style;
+        componentStyleAtWidth(content: $FormattedText, maxWidth: number): $Style;
+        headByWidth(content: $FormattedText, maxWidth: number, style: $Style): $FormattedText;
+        static getWordPosition(content: string, skipCount: number, cursorPoint: number, includeWhitespace: boolean): number;
+        plainIndexAtWidth(content: string, maxWidth: number, style: $Style): number;
+        findLineBreak(content: string, maxWidth: number, style: $Style): number;
         plainHeadByWidth(content: string, maxWidth: number, style: $Style): string;
         plainTailByWidth(content: string, maxWidth: number, style: $Style): string;
-        headByWidth(content: $FormattedText, maxWidth: number, style: $Style): $FormattedText;
         formattedHeadByWidth(content: string, maxWidth: number, style: $Style): string;
         formattedIndexByWidth(content: string, maxWidth: number, style: $Style): number;
-        static getWordPosition(content: string, skipCount: number, cursorPoint: number, includeWhitespace: boolean): number;
-        findLineBreak(content: string, maxWidth: number, style: $Style): number;
-        plainIndexAtWidth(content: string, maxWidth: number, style: $Style): number;
         widthProvider: $StringSplitter$WidthProvider;
         constructor(widthProvider: $StringSplitter$WidthProvider_);
     }
     export class $PeriodicNotificationManager$NotificationTask extends $TimerTask {
     }
     export class $KeyMapping implements $Comparable<$KeyMapping>, $IKeyMappingExtension, $KeyMappingAccessor, $AccessKeyMapping, $KeyMappingsAccessor, $KeyBindingAccessor$1, $KeyBindingAccessor$2, $KeyBindingAccessor {
-        getKeyConflictContext(): $IKeyConflictContext;
-        setKeyModifierAndCode(keyModifier: $KeyModifier_, keyCode: $InputConstants$Key): void;
-        getDefaultKeyModifier(): $KeyModifier;
-        setKeyConflictContext(keyConflictContext: $IKeyConflictContext): void;
-        /**
-         * @return the display name of this key mapping
-         * Defaults to a translatable component of the name.
-         */
-        getTranslatedKeyMessage(): $Component;
         /**
          * Completely recalculates whether any keybinds are held, from scratch.
          */
-        static resetMapping(): void;
-        getKeyModifier(): $KeyModifier;
-        /**
-         * Returns `true` if the `KeyMapping` is set to a mouse key and the key matches.
-         */
-        matchesMouse(key: number): boolean;
+        static releaseAll(): void;
         getName(): string;
         compareTo(arg0: $KeyMapping): number;
         matches(keysym: number, scancode: number): boolean;
@@ -1627,14 +1613,10 @@ declare module "@package/net/minecraft/client" {
          * Completely recalculates whether any keybinds are held, from scratch.
          */
         static setAll(): void;
-        setKey(key: $InputConstants$Key): void;
         getCategory(): string;
+        setKey(key: $InputConstants$Key): void;
         setDown(value: boolean): void;
-        saveString(): string;
-        /**
-         * Completely recalculates whether any keybinds are held, from scratch.
-         */
-        static releaseAll(): void;
+        getDefaultKey(): $InputConstants$Key;
         /**
          * Returns a supplier which gets a keybind's current binding (eg, `key.forward` returns W by default), or the keybind's name if no such keybind exists (eg, `key.invalid` returns key.invalid)
          */
@@ -1643,11 +1625,36 @@ declare module "@package/net/minecraft/client" {
          * Returns `true` on the initial key press. For continuous querying use `isKeyDown()`. Should be used in key events.
          */
         consumeClick(): boolean;
-        getDefaultKey(): $InputConstants$Key;
         /**
          * Returns `true` if the supplied `KeyMapping` conflicts with this
          */
         same(binding: $KeyMapping): boolean;
+        static fabric_getCategoryMap$fabric_key_binding_api_v1_$md$c99f8a$2(): $Map<any, any>;
+        getDefaultKeyModifier(): $KeyModifier;
+        /**
+         * @return the display name of this key mapping
+         * Defaults to a translatable component of the name.
+         */
+        getTranslatedKeyMessage(): $Component;
+        getKeyConflictContext(): $IKeyConflictContext;
+        setKeyModifierAndCode(keyModifier: $KeyModifier_, keyCode: $InputConstants$Key): void;
+        setKeyConflictContext(keyConflictContext: $IKeyConflictContext): void;
+        /**
+         * Completely recalculates whether any keybinds are held, from scratch.
+         */
+        static resetToggleKeys(): void;
+        /**
+         * Returns `true` if the `KeyMapping` is set to a mouse key and the key matches.
+         */
+        matchesMouse(key: number): boolean;
+        /**
+         * Completely recalculates whether any keybinds are held, from scratch.
+         */
+        static resetMapping(): void;
+        getKeyModifier(): $KeyModifier;
+        saveString(): string;
+        static getKeybinds$essential_$md$c99f8a$3(): $Map<any, any>;
+        static getAll$clientsort_$md$c99f8a$0(): $Map<any, any>;
         /**
          * Returns `true` on the initial key press. For continuous querying use `isKeyDown()`. Should be used in key events.
          */
@@ -1658,25 +1665,6 @@ declare module "@package/net/minecraft/client" {
         isUnbound(): boolean;
         static click(key: $InputConstants$Key): void;
         /**
-         * Completely recalculates whether any keybinds are held, from scratch.
-         */
-        static resetToggleKeys(): void;
-        static getKeybinds$essential_$md$942995$3(): $Map<any, any>;
-        static fabric_getCategoryMap$fabric_key_binding_api_v1_$md$942995$2(): $Map<any, any>;
-        static getAll$clientsort_$md$942995$0(): $Map<any, any>;
-        /**
-         * Returns `true` if the supplied `KeyMapping` conflicts with this
-         */
-        hasKeyModifierConflict(binding: $KeyMapping): boolean;
-        /**
-         * @return true if the key conflict context and modifier are active and the keyCode matches this binding, false otherwise
-         */
-        isActiveAndMatches(keyCode: $InputConstants$Key): boolean;
-        /**
-         * Returns `true` on the initial key press. For continuous querying use `isKeyDown()`. Should be used in key events.
-         */
-        isConflictContextAndModifierActive(): boolean;
-        /**
          * @return the display name of this key mapping
          * Defaults to a translatable component of the name.
          */
@@ -1685,16 +1673,28 @@ declare module "@package/net/minecraft/client" {
          * Completely recalculates whether any keybinds are held, from scratch.
          */
         setToDefault(): void;
+        /**
+         * Returns `true` on the initial key press. For continuous querying use `isKeyDown()`. Should be used in key events.
+         */
+        isConflictContextAndModifierActive(): boolean;
+        /**
+         * Returns `true` if the supplied `KeyMapping` conflicts with this
+         */
+        hasKeyModifierConflict(binding: $KeyMapping): boolean;
+        /**
+         * @return true if the key conflict context and modifier are active and the keyCode matches this binding, false otherwise
+         */
+        isActiveAndMatches(keyCode: $InputConstants$Key): boolean;
+        getKey(): $InputConstants$Key;
+        fabric_getTimesPressed(): number;
         getBoundKey(): $InputConstants$Key;
-        fabric_getBoundKey(): $InputConstants$Key;
         clientsort$getKey(): $InputConstants$Key;
         /**
          * Completely recalculates whether any keybinds are held, from scratch.
          */
         invokeUnpressKey(): void;
+        fabric_getBoundKey(): $InputConstants$Key;
         controlling$getKey(): $InputConstants$Key;
-        fabric_getTimesPressed(): number;
-        getKey(): $InputConstants$Key;
         static ALL: $Map<string, $KeyMapping>;
         static CATEGORY_INTERFACE: string;
         static CATEGORY_MULTIPLAYER: string;
@@ -1704,33 +1704,33 @@ declare module "@package/net/minecraft/client" {
         static CATEGORY_MISC: string;
         key: $InputConstants$Key;
         static CATEGORY_INVENTORY: string;
-        constructor(arg0: string, arg1: $IKeyConflictContext, arg2: $KeyModifier_, arg3: $InputConstants$Type_, arg4: number, arg5: string);
-        constructor(arg0: string, arg1: $IKeyConflictContext, arg2: $InputConstants$Type_, arg3: number, arg4: string);
-        constructor(arg0: string, arg1: $IKeyConflictContext, arg2: $InputConstants$Key, arg3: string);
-        constructor(arg0: string, arg1: $IKeyConflictContext, arg2: $KeyModifier_, arg3: $InputConstants$Key, arg4: string);
-        constructor(name: string, type: $InputConstants$Type_, keyCode: number, category: string);
         constructor(name: string, keyCode: number, category: string);
-        get defaultKeyModifier(): $KeyModifier;
-        get translatedKeyMessage(): $Component;
-        get keyModifier(): $KeyModifier;
+        constructor(name: string, type: $InputConstants$Type_, keyCode: number, category: string);
+        constructor(arg0: string, arg1: $IKeyConflictContext, arg2: $InputConstants$Key, arg3: string);
+        constructor(arg0: string, arg1: $IKeyConflictContext, arg2: $InputConstants$Type_, arg3: number, arg4: string);
+        constructor(arg0: string, arg1: $IKeyConflictContext, arg2: $KeyModifier_, arg3: $InputConstants$Type_, arg4: number, arg5: string);
+        constructor(arg0: string, arg1: $IKeyConflictContext, arg2: $KeyModifier_, arg3: $InputConstants$Key, arg4: string);
         get name(): string;
         get default(): boolean;
         get category(): string;
         get defaultKey(): $InputConstants$Key;
+        get defaultKeyModifier(): $KeyModifier;
+        get translatedKeyMessage(): $Component;
+        get keyModifier(): $KeyModifier;
+        static get keybinds$essential_$md$c99f8a$3(): $Map<any, any>;
+        static get all$clientsort_$md$c99f8a$0(): $Map<any, any>;
         get unbound(): boolean;
-        static get keybinds$essential_$md$942995$3(): $Map<any, any>;
-        static get all$clientsort_$md$942995$0(): $Map<any, any>;
-        get conflictContextAndModifierActive(): boolean;
         get displayName(): $Component;
+        get conflictContextAndModifierActive(): boolean;
         get boundKey(): $InputConstants$Key;
     }
     export class $DeltaTracker$DefaultValue implements $DeltaTracker {
         getGameTimeDeltaPartialTick(runsNormally: boolean): number;
-        getRealtimeDeltaTicks(): number;
         getGameTimeDeltaTicks(): number;
+        getRealtimeDeltaTicks(): number;
         constructor(value: number);
-        get realtimeDeltaTicks(): number;
         get gameTimeDeltaTicks(): number;
+        get realtimeDeltaTicks(): number;
     }
     export class $Options$FieldAccess {
     }
@@ -1743,8 +1743,8 @@ declare module "@package/net/minecraft/client" {
     }
     export class $DebugQueryHandler {
         handleResponse(transactionId: number, tag: $CompoundTag_ | null): boolean;
-        queryBlockEntityTag(pos: $BlockPos_, tag: $Consumer_<$CompoundTag>): void;
         queryEntityTag(entId: number, tag: $Consumer_<$CompoundTag>): void;
+        queryBlockEntityTag(pos: $BlockPos_, tag: $Consumer_<$CompoundTag>): void;
         constructor(connection: $ClientPacketListener);
     }
     export class $NarratorStatus extends $Enum<$NarratorStatus> {
@@ -1752,8 +1752,8 @@ declare module "@package/net/minecraft/client" {
         static values(): $NarratorStatus[];
         static valueOf(arg0: string): $NarratorStatus;
         getId(): number;
-        static byId(id: number): $NarratorStatus;
         shouldNarrateSystem(): boolean;
+        static byId(id: number): $NarratorStatus;
         shouldNarrateChat(): boolean;
         static SYSTEM: $NarratorStatus;
         static ALL: $NarratorStatus;

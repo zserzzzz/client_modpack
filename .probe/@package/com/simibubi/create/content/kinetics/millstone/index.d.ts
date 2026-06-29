@@ -31,9 +31,9 @@ import { $RegisterCapabilitiesEvent } from "@package/net/neoforged/neoforge/capa
 declare module "@package/com/simibubi/create/content/kinetics/millstone" {
     export class $MillstoneBlockEntity extends $KineticBlockEntity implements $Clearable {
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
-        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
-        spawnParticles(): void;
         clearContent(): void;
+        spawnParticles(): void;
+        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
         getProcessingSpeed(): number;
         level: $Level;
         inputInv: $ItemStackHandler;
@@ -63,19 +63,19 @@ declare module "@package/com/simibubi/create/content/kinetics/millstone" {
         constructor(arg0: $BlockEntityRendererProvider$Context);
     }
     export class $MillstoneBlock extends $KineticBlock implements $IBE<$MillstoneBlockEntity>, $ICogWheel {
-        getBlockEntityType(): $BlockEntityType<$MillstoneBlockEntity>;
         getBlockEntityClass(): $Class<$MillstoneBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$MillstoneBlockEntity>;
         wrapOperation$glb000$sable$checkForSubLevels(arg0: $Entity, arg1: $Operation_<any>): $BlockPos;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$MillstoneBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$MillstoneBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($MillstoneBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$MillstoneBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $MillstoneBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        isDedicatedCogWheel(): boolean;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$MillstoneBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($MillstoneBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$MillstoneBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         isSmallCog(): boolean;
         isLargeCog(): boolean;
+        isDedicatedCogWheel(): boolean;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -105,10 +105,10 @@ declare module "@package/com/simibubi/create/content/kinetics/millstone" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$MillstoneBlockEntity>;
         get blockEntityClass(): $Class<$MillstoneBlockEntity>;
-        get dedicatedCogWheel(): boolean;
+        get blockEntityType(): $BlockEntityType<$MillstoneBlockEntity>;
         get smallCog(): boolean;
         get largeCog(): boolean;
+        get dedicatedCogWheel(): boolean;
     }
 }

@@ -23,25 +23,29 @@ declare module "@package/dev/latvian/mods/kubejs/block/callback" {
         getLevel(): $Level;
         getBlock(): $LevelBlock;
         getBlockState(): $BlockState;
-        getExplosion(): $Explosion;
         getRadius(): number;
-        getAffectedPlayers(): $List<$Player>;
+        getExplosion(): $Explosion;
         getIgniter(): $LivingEntity;
+        getAffectedPlayers(): $List<$Player>;
         constructor(level: $Level_, pos: $BlockPos_, explosion: $Explosion);
         get cause(): $Entity;
         get level(): $Level;
         get block(): $LevelBlock;
         get blockState(): $BlockState;
-        get explosion(): $Explosion;
         get radius(): number;
-        get affectedPlayers(): $List<$Player>;
+        get explosion(): $Explosion;
         get igniter(): $LivingEntity;
+        get affectedPlayers(): $List<$Player>;
     }
     export class $BlockStateModifyCallback {
         /**
          * Cycles the property
          */
         cycle<T extends $Comparable<T>>(property: $Property<T>): $BlockStateModifyCallback;
+        /**
+         * Mirror the block using the specified Mirror
+         */
+        mirror(mirror: $Mirror_): $BlockStateModifyCallback;
         /**
          * Gets the value of the pased in property
          */
@@ -51,13 +55,13 @@ declare module "@package/dev/latvian/mods/kubejs/block/callback" {
          */
         getValue<T extends $Comparable<T>>(property: $Property<T>): T;
         /**
-         * Sets the value of the specified boolean property
-         */
-        set(property: $BooleanProperty, value: boolean): $BlockStateModifyCallback;
-        /**
          * Sets the value of the specified integer property
          */
         set(property: $IntegerProperty, value: number): $BlockStateModifyCallback;
+        /**
+         * Sets the value of the specified boolean property
+         */
+        set(property: $BooleanProperty, value: boolean): $BlockStateModifyCallback;
         /**
          * Sets the value of the specified enum property
          */
@@ -86,10 +90,6 @@ declare module "@package/dev/latvian/mods/kubejs/block/callback" {
          * Checks if this block has the specified property
          */
         hasProperty<T extends $Comparable<T>>(property: $Property<T>): boolean;
-        /**
-         * Mirror the block using the specified Mirror
-         */
-        mirror(mirror: $Mirror_): $BlockStateModifyCallback;
         populateNeighbours(map: $Map_<$Map_<$Property<never>, $Comparable_<never>>, $BlockState_>): $BlockStateModifyCallback;
         /**
          * Gets the value of the passed in property as an Optional. If the property does not exist in this block the Optional will be empty
@@ -134,10 +134,6 @@ declare module "@package/dev/latvian/mods/kubejs/block/callback" {
     }
     export class $BlockStateMirrorCallback extends $BlockStateModifyCallback {
         /**
-         * Gets the rotation of the direction passed in relative to this mirror
-         */
-        getRotation(dir: $Direction_): $Rotation;
-        /**
          * Mirrors the direction passed in
          */
         mirror(dir: $Direction_): $Direction;
@@ -145,17 +141,13 @@ declare module "@package/dev/latvian/mods/kubejs/block/callback" {
          * Gets the Mirror
          */
         getMirror(): $Mirror;
+        /**
+         * Gets the rotation of the direction passed in relative to this mirror
+         */
+        getRotation(dir: $Direction_): $Rotation;
         constructor(state: $BlockState_, mirror: $Mirror_);
     }
     export class $BlockStateModifyPlacementCallback extends $BlockStateModifyCallback {
-        /**
-         * Set if this block is waterlogged or not
-         */
-        waterlogged(waterlogged: boolean): $BlockStateModifyPlacementCallback;
-        /**
-         * Set this block as waterlogged if it is in water
-         */
-        waterlogged(): $BlockStateModifyPlacementCallback;
         /**
          * Gets the level
          */
@@ -165,6 +157,22 @@ declare module "@package/dev/latvian/mods/kubejs/block/callback" {
          */
         getItem(): $ItemStack;
         /**
+         * Gets the position in the block-space of where it was clicked
+         */
+        getClickLocation(): $Vec3;
+        /**
+         * Gets the facing direction of the clicked block face
+         */
+        getClickedFace(): $Direction;
+        /**
+         * Gets the clicked position in world
+         */
+        getClickedPos(): $BlockPos;
+        /**
+         * Gets the player placing the block, if available
+         */
+        getPlayer(): $Player;
+        /**
          * Gets the vertical direction (UP/DOWN) closest to where the player is currently looking
          */
         getNearestLookingVerticalDirection(): $Direction;
@@ -173,96 +181,88 @@ declare module "@package/dev/latvian/mods/kubejs/block/callback" {
          */
         getNearestLookingDirections(): $Direction[];
         /**
-         * Get the horizontal rotation of the player
+         * Gets the direction closes to where the player is currently looking
          */
-        getRotation(): number;
-        /**
-         * Returns if the player is using the 'secondary' function of this item. Basically checks if they are holding shift
-         */
-        isSecondaryUseActive(): boolean;
-        /**
-         * Returns if the hit posiiton in the block-space is inside the 1x1x1 cube of the block
-         */
-        isInside(): boolean;
-        /**
-         * Gets the hand that is placing the block
-         */
-        getHand(): $InteractionHand;
-        /**
-         * Gets the position in the block-space of where it was clicked
-         */
-        getClickLocation(): $Vec3;
-        /**
-         * Returns if the block being placed thinks it can be placed here. This is used for replacement checks, like placing blocks in water or tall grass
-         */
-        canPlace(): boolean;
-        /**
-         * Checks if this block is in water
-         */
-        isInWater(): boolean;
+        getNearestLookingDirection(): $Direction;
         /**
          * Gets the nearest horizontal direction to where the player is looking. NORTH if there is no player
          */
         getHorizontalDirection(): $Direction;
         /**
-         * Gets the direction closes to where the player is currently looking
-         */
-        getNearestLookingDirection(): $Direction;
-        /**
          * Returns if the block being placed is replacing the block clicked
          */
         replacingClickedOnBlock(): boolean;
         /**
-         * Gets the player placing the block, if available
+         * Checks if this block is in water
          */
-        getPlayer(): $Player;
+        isInWater(): boolean;
         /**
-         * Gets the clicked position in world
+         * Get the horizontal rotation of the player
          */
-        getClickedPos(): $BlockPos;
+        getRotation(): number;
         /**
-         * Gets the facing direction of the clicked block face
+         * Set this block as waterlogged if it is in water
          */
-        getClickedFace(): $Direction;
+        waterlogged(): $BlockStateModifyPlacementCallback;
         /**
-         * Gets the clicked block
+         * Set if this block is waterlogged or not
          */
-        getClickedBlock(): $LevelBlock;
+        waterlogged(waterlogged: boolean): $BlockStateModifyPlacementCallback;
         /**
-         * Checks if the position clicked has a specified fluid there
+         * Returns if the block being placed thinks it can be placed here. This is used for replacement checks, like placing blocks in water or tall grass
          */
-        isClickedPosIn(fluid: $Fluid_): boolean;
+        canPlace(): boolean;
+        /**
+         * Returns if the player is using the 'secondary' function of this item. Basically checks if they are holding shift
+         */
+        isSecondaryUseActive(): boolean;
+        /**
+         * Gets the hand that is placing the block
+         */
+        getHand(): $InteractionHand;
+        /**
+         * Returns if the hit posiiton in the block-space is inside the 1x1x1 cube of the block
+         */
+        isInside(): boolean;
+        /**
+         * Gets the FluidSate at the clicked position
+         */
+        getFluidStateAtClickedPos(): $FluidState;
         /**
          * Checks if the block currently occupying the position this is being placed in is the same block type.
          * Used for things like candles, where multiple can be in the same block-space.
          */
         isReplacingSelf(): boolean;
         /**
-         * Gets the FluidSate at the clicked position
+         * Checks if the position clicked has a specified fluid there
          */
-        getFluidStateAtClickedPos(): $FluidState;
+        isClickedPosIn(fluid: $Fluid_): boolean;
+        /**
+         * Gets the clicked block
+         */
+        getClickedBlock(): $LevelBlock;
         minecraftBlock: $Block;
         context: $BlockPlaceContext;
         block: $LevelBlock;
         constructor(context: $BlockPlaceContext, block: $Block_);
         get level(): $Level;
         get item(): $ItemStack;
+        get clickLocation(): $Vec3;
+        get clickedFace(): $Direction;
+        get clickedPos(): $BlockPos;
+        get player(): $Player;
         get nearestLookingVerticalDirection(): $Direction;
         get nearestLookingDirections(): $Direction[];
+        get nearestLookingDirection(): $Direction;
+        get horizontalDirection(): $Direction;
+        get inWater(): boolean;
         get rotation(): number;
         get secondaryUseActive(): boolean;
-        get inside(): boolean;
         get hand(): $InteractionHand;
-        get clickLocation(): $Vec3;
-        get inWater(): boolean;
-        get horizontalDirection(): $Direction;
-        get nearestLookingDirection(): $Direction;
-        get player(): $Player;
-        get clickedPos(): $BlockPos;
-        get clickedFace(): $Direction;
-        get clickedBlock(): $LevelBlock;
-        get replacingSelf(): boolean;
+        get inside(): boolean;
         get fluidStateAtClickedPos(): $FluidState;
+        get replacingSelf(): boolean;
+        get clickedBlock(): $LevelBlock;
     }
     export class $RandomTickCallback {
         getLevel(): $Level;
@@ -291,57 +291,57 @@ declare module "@package/dev/latvian/mods/kubejs/block/callback" {
          */
         getEntity(): $Entity;
         /**
-         * Returns the block's position
-         */
-        getPos(): $BlockPos;
-        /**
          * Returns if the entity is suppressing bouncing (for players this is true if the player is crouching)
          */
         isSuppressingBounce(): boolean;
+        /**
+         * Returns the block's position
+         */
+        getPos(): $BlockPos;
         constructor(level: $Level_, entity: $Entity, pos: $BlockPos_, state: $BlockState_);
         get state(): $BlockState;
         get level(): $Level;
         get block(): $LevelBlock;
         get entity(): $Entity;
-        get pos(): $BlockPos;
         get suppressingBounce(): boolean;
+        get pos(): $BlockPos;
     }
     export class $CanBeReplacedCallback {
         getLevel(): $Level;
         getItem(): $ItemStack;
+        getClickLocation(): $Vec3;
+        getClickedFace(): $Direction;
+        getClickedPos(): $BlockPos;
+        getPlayer(): $Player;
         getNearestLookingVerticalDirection(): $Direction;
         getNearestLookingDirections(): $Direction[];
+        getNearestLookingDirection(): $Direction;
+        getHorizontalDirection(): $Direction;
         getRotation(): number;
         isSecondaryUseActive(): boolean;
-        isInside(): boolean;
-        getHand(): $InteractionHand;
-        getClickLocation(): $Vec3;
         canBeReplaced(): boolean;
-        getHorizontalDirection(): $Direction;
-        getNearestLookingDirection(): $Direction;
-        getPlayer(): $Player;
-        getClickedPos(): $BlockPos;
-        getClickedFace(): $Direction;
-        getClickedBlock(): $LevelBlock;
-        isClickedPosIn(fluid: $Fluid_): boolean;
+        getHand(): $InteractionHand;
+        isInside(): boolean;
         getFluidStateAtClickedPos(): $FluidState;
+        isClickedPosIn(fluid: $Fluid_): boolean;
+        getClickedBlock(): $LevelBlock;
         constructor(blockPlaceContext: $BlockPlaceContext, state: $BlockState_);
         get level(): $Level;
         get item(): $ItemStack;
+        get clickLocation(): $Vec3;
+        get clickedFace(): $Direction;
+        get clickedPos(): $BlockPos;
+        get player(): $Player;
         get nearestLookingVerticalDirection(): $Direction;
         get nearestLookingDirections(): $Direction[];
+        get nearestLookingDirection(): $Direction;
+        get horizontalDirection(): $Direction;
         get rotation(): number;
         get secondaryUseActive(): boolean;
-        get inside(): boolean;
         get hand(): $InteractionHand;
-        get clickLocation(): $Vec3;
-        get horizontalDirection(): $Direction;
-        get nearestLookingDirection(): $Direction;
-        get player(): $Player;
-        get clickedPos(): $BlockPos;
-        get clickedFace(): $Direction;
-        get clickedBlock(): $LevelBlock;
+        get inside(): boolean;
         get fluidStateAtClickedPos(): $FluidState;
+        get clickedBlock(): $LevelBlock;
     }
     export class $BlockStateRotateCallback extends $BlockStateModifyCallback {
         /**

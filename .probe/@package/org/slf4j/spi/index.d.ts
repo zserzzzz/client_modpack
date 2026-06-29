@@ -14,12 +14,12 @@ declare module "@package/org/slf4j/spi" {
         log(arg0: string, arg1: $Object, arg2: $Object): void;
         setCause(arg0: $Throwable): $LoggingEventBuilder;
         addMarker(arg0: $Marker): $LoggingEventBuilder;
-        addArgument(arg0: $Object): $LoggingEventBuilder;
-        addArgument(arg0: $Supplier_<never>): $LoggingEventBuilder;
-        addKeyValue(arg0: string, arg1: $Object): $LoggingEventBuilder;
-        addKeyValue(arg0: string, arg1: $Supplier_<$Object>): $LoggingEventBuilder;
         setMessage(arg0: $Supplier_<string>): $LoggingEventBuilder;
         setMessage(arg0: string): $LoggingEventBuilder;
+        addArgument(arg0: $Supplier_<never>): $LoggingEventBuilder;
+        addArgument(arg0: $Object): $LoggingEventBuilder;
+        addKeyValue(arg0: string, arg1: $Supplier_<$Object>): $LoggingEventBuilder;
+        addKeyValue(arg0: string, arg1: $Object): $LoggingEventBuilder;
         set cause(value: $Throwable);
     }
 }

@@ -2,8 +2,8 @@ import { $SceneBuildingUtil, $SceneBuilder } from "@package/net/createmod/ponder
 
 declare module "@package/com/simibubi/create/infrastructure/ponder/scenes/trains" {
     export class $TrackScenes {
-        static chunks(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
         static portal(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
+        static chunks(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
         static placement(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
         constructor();
     }
@@ -17,9 +17,9 @@ declare module "@package/com/simibubi/create/infrastructure/ponder/scenes/trains
         constructor();
     }
     export class $TrainSignalScenes {
+        static signaling(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
         static redstone(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
         static placement(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
-        static signaling(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
         constructor();
     }
     export class $TrainStationScenes {

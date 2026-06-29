@@ -11,19 +11,19 @@ declare module "@package/net/fabricmc/fabric/api/client/model/loading/v1" {
     export class $ModelModifier$BeforeBake$Context {
     }
     export interface $ModelModifier$BeforeBake$Context {
-        textureGetter(): $Function<$Material, $TextureAtlasSprite>;
         loader(): $ModelBakery;
         settings(): $ModelState;
-        resourceId(): $ResourceLocation;
         topLevelId(): $ModelResourceLocation;
         baker(): $ModelBaker;
+        textureGetter(): $Function<$Material, $TextureAtlasSprite>;
+        resourceId(): $ResourceLocation;
     }
     export class $ModelModifier$OnLoad$Context {
     }
     export interface $ModelModifier$OnLoad$Context {
         loader(): $ModelBakery;
-        resourceId(): $ResourceLocation;
         topLevelId(): $ModelResourceLocation;
+        resourceId(): $ResourceLocation;
         getOrLoadModel(arg0: $ResourceLocation_): $UnbakedModel;
     }
     export class $ModelLoadingPlugin {
@@ -48,13 +48,13 @@ declare module "@package/net/fabricmc/fabric/api/client/model/loading/v1" {
     export class $ModelModifier$AfterBake$Context {
     }
     export interface $ModelModifier$AfterBake$Context {
-        textureGetter(): $Function<$Material, $TextureAtlasSprite>;
         loader(): $ModelBakery;
         settings(): $ModelState;
-        resourceId(): $ResourceLocation;
         topLevelId(): $ModelResourceLocation;
-        sourceModel(): $UnbakedModel;
         baker(): $ModelBaker;
+        textureGetter(): $Function<$Material, $TextureAtlasSprite>;
+        resourceId(): $ResourceLocation;
+        sourceModel(): $UnbakedModel;
     }
     export class $ModelResolver {
     }
@@ -101,13 +101,13 @@ declare module "@package/net/fabricmc/fabric/api/client/model/loading/v1" {
     export class $ModelLoadingPlugin$Context {
     }
     export interface $ModelLoadingPlugin$Context {
-        registerBlockStateResolver(arg0: $Block_, arg1: $BlockStateResolver_): void;
-        modifyModelBeforeBake(): $Event<$ModelModifier$BeforeBake>;
+        addModels(...arg0: $ResourceLocation_[]): void;
+        addModels(arg0: $Collection_<$ResourceLocation_>): void;
         modifyModelAfterBake(): $Event<$ModelModifier$AfterBake>;
+        modifyModelBeforeBake(): $Event<$ModelModifier$BeforeBake>;
+        registerBlockStateResolver(arg0: $Block_, arg1: $BlockStateResolver_): void;
         resolveModel(): $Event<$ModelResolver>;
         modifyModelOnLoad(): $Event<$ModelModifier$OnLoad>;
-        addModels(arg0: $Collection_<$ResourceLocation_>): void;
-        addModels(...arg0: $ResourceLocation_[]): void;
     }
     export class $FabricBakedModelManager {
     }

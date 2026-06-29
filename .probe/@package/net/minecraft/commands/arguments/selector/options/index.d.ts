@@ -18,8 +18,8 @@ declare module "@package/net/minecraft/commands/arguments/selector/options" {
     export class $EntitySelectorOptions {
         static get(parser: $EntitySelectorParser, id: string, cursor: number): $EntitySelectorOptions$Modifier;
         static register(id: string, handler: $EntitySelectorOptions$Modifier_, predicate: $Predicate_<$EntitySelectorParser>, tooltip: $Component_): void;
-        static suggestNames(parser: $EntitySelectorParser, builder: $SuggestionsBuilder): void;
         static bootStrap(): void;
+        static suggestNames(parser: $EntitySelectorParser, builder: $SuggestionsBuilder): void;
         static ERROR_LEVEL_NEGATIVE: $SimpleCommandExceptionType;
         static ERROR_LIMIT_TOO_SMALL: $SimpleCommandExceptionType;
         static ERROR_INAPPLICABLE_OPTION: $DynamicCommandExceptionType;

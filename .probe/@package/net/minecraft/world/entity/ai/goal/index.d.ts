@@ -113,6 +113,11 @@ declare module "@package/net/minecraft/world/entity/ai/goal" {
          * Attempts to start each goal based on if it can be used, or stop it if it can't.
          */
         tick(): void;
+        disableControlFlag(flag: $Goal$Flag_): void;
+        removeAllGoals(filter: $Predicate_<$Goal>): void;
+        tickRunningGoals(tickAllRunning: boolean): void;
+        getAvailableGoals(): $Set<$WrappedGoal>;
+        enableControlFlag(flag: $Goal$Flag_): void;
         setControlFlag(flag: $Goal$Flag_, enabled: boolean): void;
         /**
          * Add a goal to the GoalSelector with a certain priority. Lower numbers are higher priority.
@@ -122,11 +127,6 @@ declare module "@package/net/minecraft/world/entity/ai/goal" {
          * Remove the goal from the GoalSelector. This must be the same object as the goal you are trying to remove, which may not always be accessible.
          */
         removeGoal(goal: $Goal): void;
-        removeAllGoals(filter: $Predicate_<$Goal>): void;
-        disableControlFlag(flag: $Goal$Flag_): void;
-        tickRunningGoals(tickAllRunning: boolean): void;
-        enableControlFlag(flag: $Goal$Flag_): void;
-        getAvailableGoals(): $Set<$WrappedGoal>;
         constructor(profiler: $Supplier_<$ProfilerFiller>);
         get availableGoals(): $Set<$WrappedGoal>;
     }
@@ -171,6 +171,10 @@ declare module "@package/net/minecraft/world/entity/ai/goal" {
          * Returns whether an in-progress EntityAIBase should continue executing
          */
         findNearestBlock(): boolean;
+        /**
+         * Return `true` to set given position as destination
+         */
+        isValidTarget(level: $LevelReader, pos: $BlockPos_): boolean;
         nextStartTick(creature: $PathfinderMob): number;
         /**
          * Returns whether an in-progress EntityAIBase should continue executing
@@ -182,10 +186,6 @@ declare module "@package/net/minecraft/world/entity/ai/goal" {
         moveMobToBlock(): void;
         acceptedDistance(): number;
         getMoveToTarget(): $BlockPos;
-        /**
-         * Return `true` to set given position as destination
-         */
-        isValidTarget(level: $LevelReader, pos: $BlockPos_): boolean;
         lithium$findNearestBlock(arg0: $Predicate_<any>, arg1: $BiPredicate_<any, any>, arg2: boolean): boolean;
         /**
          * Returns whether an in-progress EntityAIBase should continue executing
@@ -363,11 +363,11 @@ declare module "@package/net/minecraft/world/entity/ai/goal" {
         get running(): boolean;
     }
     export class $FleeSunGoal extends $Goal {
+        getHidePos(): $Vec3;
         /**
          * Returns whether an in-progress EntityAIBase should continue executing
          */
         setWantedPos(): boolean;
-        getHidePos(): $Vec3;
         mob: $PathfinderMob;
         constructor(mob: $PathfinderMob, speedModifier: number);
         get hidePos(): $Vec3;
@@ -407,19 +407,19 @@ declare module "@package/net/minecraft/world/entity/ai/goal" {
         constructor(mob: $PathfinderMob);
     }
     export class $PanicGoal extends $Goal {
-        lookForWater(level: $BlockGetter, entity: $Entity, range: number): $BlockPos;
-        /**
-         * Returns whether an in-progress EntityAIBase should continue executing
-         */
-        findRandomPosition(): boolean;
-        /**
-         * Returns whether an in-progress EntityAIBase should continue executing
-         */
-        shouldPanic(): boolean;
         /**
          * Returns whether an in-progress EntityAIBase should continue executing
          */
         isRunning(): boolean;
+        /**
+         * Returns whether an in-progress EntityAIBase should continue executing
+         */
+        findRandomPosition(): boolean;
+        lookForWater(level: $BlockGetter, entity: $Entity, range: number): $BlockPos;
+        /**
+         * Returns whether an in-progress EntityAIBase should continue executing
+         */
+        shouldPanic(): boolean;
         static WATER_CHECK_DISTANCE_VERTICAL: number;
         speedModifier: number;
         posX: number;
@@ -444,26 +444,25 @@ declare module "@package/net/minecraft/world/entity/ai/goal" {
         constructor(tamable: $TamableAnimal, speedModifier: number, arg2: number, startDistance: number);
     }
     export class $MeleeAttackGoal extends $Goal {
-        getAttackInterval(): number;
-        canPerformAttack(entity: $LivingEntity): boolean;
-        /**
-         * Returns whether an in-progress EntityAIBase should continue executing
-         */
-        isTimeToAttack(): boolean;
+        checkAndPerformAttack(target: $LivingEntity): void;
         getTicksUntilNextAttack(): number;
         /**
          * Execute a one shot task or start executing a continuous task
          */
         resetAttackCooldown(): void;
-        checkAndPerformAttack(target: $LivingEntity): void;
+        /**
+         * Returns whether an in-progress EntityAIBase should continue executing
+         */
+        isTimeToAttack(): boolean;
+        getAttackInterval(): number;
+        canPerformAttack(entity: $LivingEntity): boolean;
         mob: $PathfinderMob;
         constructor(mob: $PathfinderMob, speedModifier: number, arg2: boolean);
-        get attackInterval(): number;
-        get timeToAttack(): boolean;
         get ticksUntilNextAttack(): number;
+        get timeToAttack(): boolean;
+        get attackInterval(): number;
     }
     export class $Goal {
-        setFlags(flagSet: $EnumSet<$Goal$Flag_>): void;
         /**
          * Called when the goal is about to start executing
          */
@@ -481,20 +480,21 @@ declare module "@package/net/minecraft/world/entity/ai/goal" {
          */
         tick(): void;
         getFlags(): $EnumSet<$Goal$Flag>;
-        /**
-         * @return whether the goal should continue executing
-         */
-        isInterruptable(): boolean;
-        /**
-         * @return whether the goal should continue executing
-         */
-        canContinueToUse(): boolean;
-        adjustedTickDelay(adjustment: number): number;
-        static reducedTickDelay(adjustment: number): number;
+        setFlags(flagSet: $EnumSet<$Goal$Flag_>): void;
         /**
          * @return whether the goal should continue executing
          */
         requiresUpdateEveryTick(): boolean;
+        /**
+         * @return whether the goal should continue executing
+         */
+        isInterruptable(): boolean;
+        adjustedTickDelay(adjustment: number): number;
+        /**
+         * @return whether the goal should continue executing
+         */
+        canContinueToUse(): boolean;
+        static reducedTickDelay(adjustment: number): number;
         constructor();
         get interruptable(): boolean;
     }

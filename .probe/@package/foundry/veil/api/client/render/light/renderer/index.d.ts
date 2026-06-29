@@ -18,13 +18,13 @@ declare module "@package/foundry/veil/api/client/render/light/renderer" {
         get lightData(): T;
     }
     export class $LightRenderer implements $NativeResource {
-        addDebugInfo(arg0: $Consumer_<string>): void;
         free(): void;
+        addDebugInfo(arg0: $Consumer_<string>): void;
         render(arg0: $CullFrustum, arg1: $AdvancedFbo): boolean;
+        getRenderers(): $Map<$LightTypeRegistry$LightType<never>, $LightTypeRenderer<never>>;
         addLight<T extends $LightData>(arg0: $LightRenderHandle<T>): $LightRenderHandle<T>;
         addLight<T extends $LightData>(arg0: T): $LightRenderHandle<T>;
         getLights<T extends $LightData>(arg0: $LightTypeRegistry$LightType_<T>): $Collection<$LightRenderHandle<T>>;
-        getRenderers(): $Map<$LightTypeRegistry$LightType<never>, $LightTypeRenderer<never>>;
         close(): void;
         constructor();
         get renderers(): $Map<$LightTypeRegistry$LightType<never>, $LightTypeRenderer<never>>;
@@ -34,12 +34,12 @@ declare module "@package/foundry/veil/api/client/render/light/renderer" {
         static createInvertedCube(arg0: $VertexConsumer): void;
     }
     export interface $LightTypeRenderer<T extends $LightData> extends $NativeResource {
+        steal(arg0: $LightRenderHandle<T>): $LightRenderHandle<T>;
         addLight(arg0: T): $LightRenderHandle<T>;
         getLights(): $Collection<$LightRenderHandle<T>>;
-        steal(arg0: $LightRenderHandle<T>): $LightRenderHandle<T>;
         getVisibleLights(): number;
-        renderLights(arg0: $LightRenderer): void;
         prepareLights(arg0: $LightRenderer, arg1: $CullFrustum): void;
+        renderLights(arg0: $LightRenderer): void;
         get lights(): $Collection<$LightRenderHandle<T>>;
         get visibleLights(): number;
     }

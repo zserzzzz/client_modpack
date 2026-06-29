@@ -22,30 +22,30 @@ declare module "@package/net/irisshaders/iris/mixin" {
     export interface $LevelRendererAccessor {
         getLevel(): $ClientLevel;
         getEntityRenderDispatcher(): $EntityRenderDispatcher;
-        invokeDoesMobEffectBlockSky(arg0: $Camera): boolean;
-        getDestructionProgress(): $Long2ObjectMap<$SortedSet<$BlockDestructionProgress>>;
-        shouldRegenerateClouds(): boolean;
-        setShouldRegenerateClouds(arg0: boolean): void;
-        invokeRenderSectionLayer(arg0: $RenderType, arg1: number, arg2: number, arg3: number, arg4: $Matrix4f, arg5: $Matrix4f): void;
-        invokeSetupRender(arg0: $Camera, arg1: $Frustum, arg2: boolean, arg3: boolean): void;
-        getRenderBuffers(): $RenderBuffers;
-        invokeRenderEntity(arg0: $Entity, arg1: number, arg2: number, arg3: number, arg4: number, arg5: $PoseStack, arg6: $MultiBufferSource_): void;
         setRenderBuffers(arg0: $RenderBuffers): void;
+        invokeSetupRender(arg0: $Camera, arg1: $Frustum, arg2: boolean, arg3: boolean): void;
+        invokeRenderEntity(arg0: $Entity, arg1: number, arg2: number, arg3: number, arg4: number, arg5: $PoseStack, arg6: $MultiBufferSource_): void;
+        getRenderBuffers(): $RenderBuffers;
+        invokeRenderSectionLayer(arg0: $RenderType, arg1: number, arg2: number, arg3: number, arg4: $Matrix4f, arg5: $Matrix4f): void;
+        shouldRegenerateClouds(): boolean;
+        getDestructionProgress(): $Long2ObjectMap<$SortedSet<$BlockDestructionProgress>>;
+        setShouldRegenerateClouds(arg0: boolean): void;
+        invokeDoesMobEffectBlockSky(arg0: $Camera): boolean;
         get level(): $ClientLevel;
         get entityRenderDispatcher(): $EntityRenderDispatcher;
         get destructionProgress(): $Long2ObjectMap<$SortedSet<$BlockDestructionProgress>>;
     }
     export class $GlStateManagerAccessor {
+        static getActiveTexture(): number;
         static getCOLOR_MASK(): $GlStateManager$ColorMask;
         static getTEXTURES(): $GlStateManager$TextureState[];
-        static getDEPTH(): $GlStateManager$DepthState;
         static getBLEND(): $GlStateManager$BlendState;
-        static getActiveTexture(): number;
+        static getDEPTH(): $GlStateManager$DepthState;
+        static get activeTexture(): number;
         static get COLOR_MASK(): $GlStateManager$ColorMask;
         static get TEXTURES(): $GlStateManager$TextureState[];
-        static get DEPTH(): $GlStateManager$DepthState;
         static get BLEND(): $GlStateManager$BlendState;
-        static get activeTexture(): number;
+        static get DEPTH(): $GlStateManager$DepthState;
     }
     export interface $GlStateManagerAccessor {
     }
@@ -75,15 +75,15 @@ declare module "@package/net/irisshaders/iris/mixin" {
     export class $GameRendererAccessor {
     }
     export interface $GameRendererAccessor {
+        shouldRenderBlockOutlineA(): boolean;
+        getRenderHand(): boolean;
+        invokeBobView(arg0: $PoseStack, arg1: number): void;
+        invokeBobHurt(arg0: $PoseStack, arg1: number): void;
         getPanoramicMode(): boolean;
         invokeGetFov(arg0: $Camera, arg1: number, arg2: boolean): number;
-        invokeBobHurt(arg0: $PoseStack, arg1: number): void;
-        invokeBobView(arg0: $PoseStack, arg1: number): void;
-        getRenderHand(): boolean;
         getBlurEffect(): $PostChain;
-        shouldRenderBlockOutlineA(): boolean;
-        get panoramicMode(): boolean;
         get renderHand(): boolean;
+        get panoramicMode(): boolean;
         get blurEffect(): $PostChain;
     }
 }

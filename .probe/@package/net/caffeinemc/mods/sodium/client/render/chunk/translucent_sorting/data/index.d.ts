@@ -9,10 +9,10 @@ declare module "@package/net/caffeinemc/mods/sodium/client/render/chunk/transluc
     export class $TranslucentData {
         getSortType(): $SortType;
         prepareTrigger(arg0: boolean): void;
+        static vertexCountToQuadCount(arg0: number): number;
         static writeQuadVertexIndexes(arg0: $IntBuffer, arg1: number): void;
         static writeQuadVertexIndexes(arg0: $IntBuffer, arg1: number[]): void;
         static quadCountToIndexBytes(arg0: number): number;
-        static vertexCountToQuadCount(arg0: number): number;
         static indexBytesToQuadCount(arg0: number): number;
         static VERTICES_PER_QUAD: number;
         static BYTES_PER_QUAD: number;

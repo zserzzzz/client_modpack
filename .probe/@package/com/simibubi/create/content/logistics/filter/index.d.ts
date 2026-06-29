@@ -95,8 +95,8 @@ declare module "@package/com/simibubi/create/content/logistics/filter" {
         static empty(): $FilterItemStack;
         item(): $ItemStack;
         serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
-        isFilterItem(): boolean;
         fluid(arg0: $Level_): $FluidStack;
+        isFilterItem(): boolean;
         get filterItem(): boolean;
     }
     export class $PackageFilterItem extends $FilterItem {
@@ -361,14 +361,14 @@ declare module "@package/com/simibubi/create/content/logistics/filter" {
         static regular(arg0: $Item$Properties): $ListFilterItem;
         createMenu(arg0: number, arg1: $Inventory, arg2: $Player): $AbstractContainerMenu;
         makeSummary(arg0: $ItemStack_): $List<$Component>;
-        static testDirect(arg0: $ItemStack_, arg1: $ItemStack_, arg2: boolean): boolean;
+        makeStackWrapper(arg0: $ItemStack_): $FilterItemStack;
         static doPackagesHaveSameData(arg0: $ItemStack_, arg1: $ItemStack_): boolean;
         getFilterItems(arg0: $ItemStack_): $ItemStack[];
-        makeStackWrapper(arg0: $ItemStack_): $FilterItemStack;
+        static testDirect(arg0: $ItemStack_, arg1: $ItemStack_, arg2: boolean): boolean;
         shouldTriggerClientSideContainerClosingOnOpen(): boolean;
-        createCopy(arg0: $ItemStack_, arg1: number): $ItemStack;
         canCopyToItem(arg0: $ItemStack_): boolean;
         canCopyFromItem(arg0: $ItemStack_): boolean;
+        createCopy(arg0: $ItemStack_, arg1: number): $ItemStack;
         writeClientSideData(arg0: $AbstractContainerMenu, arg1: $RegistryFriendlyByteBuf): void;
         shouldCloseCurrentScreen(): boolean;
         callMakeSummary(arg0: $ItemStack_): $List<$Component>;
@@ -428,7 +428,7 @@ declare module "@package/com/simibubi/create/content/logistics/filter" {
     /**
      * Values that may be interpreted as {@link $FilterScreenPacket}.
      */
-    export type $FilterScreenPacket_ = { data?: $CompoundTag_, option?: $FilterScreenPacket$Option_,  } | [data?: $CompoundTag_, option?: $FilterScreenPacket$Option_, ];
+    export type $FilterScreenPacket_ = { option?: $FilterScreenPacket$Option_, data?: $CompoundTag_,  } | [option?: $FilterScreenPacket$Option_, data?: $CompoundTag_, ];
     export class $PackageFilterMenu extends $AbstractFilterMenu {
         static create(arg0: number, arg1: $Inventory, arg2: $ItemStack_): $PackageFilterMenu;
         quickcraftSlots: $Set<$Slot>;

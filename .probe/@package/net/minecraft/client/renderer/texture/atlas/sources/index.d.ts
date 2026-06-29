@@ -58,10 +58,10 @@ declare module "@package/net/minecraft/client/renderer/texture/atlas/sources" {
     }
     export class $PalettedPermutations$PalettedSpriteSupplier extends $Record implements $SpriteSource$SpriteSupplier {
         apply(arg0: $SpriteResourceLoader_): $SpriteContents;
-        baseImage(): $LazyLoadedImage;
-        discard(): void;
         palette(): $Supplier<$IntUnaryOperator>;
+        discard(): void;
         permutationLocation(): $ResourceLocation;
+        baseImage(): $LazyLoadedImage;
         compose<V>(arg0: $Function_<V, $SpriteResourceLoader>): $Function<V, $SpriteContents>;
         andThen<V>(arg0: $Function_<$SpriteContents, V>): $Function<$SpriteResourceLoader, V>;
         constructor(arg0: $LazyLoadedImage, arg1: $Supplier_<$IntUnaryOperator>, arg2: $ResourceLocation_);
@@ -69,18 +69,18 @@ declare module "@package/net/minecraft/client/renderer/texture/atlas/sources" {
     /**
      * Values that may be interpreted as {@link $PalettedPermutations$PalettedSpriteSupplier}.
      */
-    export type $PalettedPermutations$PalettedSpriteSupplier_ = { permutationLocation?: $ResourceLocation_, baseImage?: $LazyLoadedImage, palette?: $Supplier_<$IntUnaryOperator>,  } | [permutationLocation?: $ResourceLocation_, baseImage?: $LazyLoadedImage, palette?: $Supplier_<$IntUnaryOperator>, ];
+    export type $PalettedPermutations$PalettedSpriteSupplier_ = { baseImage?: $LazyLoadedImage, palette?: $Supplier_<$IntUnaryOperator>, permutationLocation?: $ResourceLocation_,  } | [baseImage?: $LazyLoadedImage, palette?: $Supplier_<$IntUnaryOperator>, permutationLocation?: $ResourceLocation_, ];
     export class $Unstitcher$Region extends $Record {
-        sprite(): $ResourceLocation;
         x(): number;
         y(): number;
         width(): number;
         height(): number;
+        sprite(): $ResourceLocation;
         static CODEC: $Codec<$Unstitcher$Region>;
         constructor(arg0: $ResourceLocation_, arg1: number, arg2: number, arg3: number, arg4: number);
     }
     /**
      * Values that may be interpreted as {@link $Unstitcher$Region}.
      */
-    export type $Unstitcher$Region_ = { y?: number, x?: number, height?: number, sprite?: $ResourceLocation_, width?: number,  } | [y?: number, x?: number, height?: number, sprite?: $ResourceLocation_, width?: number, ];
+    export type $Unstitcher$Region_ = { width?: number, y?: number, x?: number, height?: number, sprite?: $ResourceLocation_,  } | [width?: number, y?: number, x?: number, height?: number, sprite?: $ResourceLocation_, ];
 }

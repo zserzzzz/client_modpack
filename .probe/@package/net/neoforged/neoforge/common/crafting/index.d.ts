@@ -1,7 +1,7 @@
 import { $JsonElement } from "@package/com/google/gson";
 import { $ItemLike_, $ItemLike } from "@package/net/minecraft/world/level";
 import { $TagKey, $TagKey_ } from "@package/net/minecraft/tags";
-import { $Recipe, $Ingredient_, $Ingredient } from "@package/net/minecraft/world/item/crafting";
+import { $Recipe, $Ingredient, $Ingredient_ } from "@package/net/minecraft/world/item/crafting";
 import { $Item_, $Item, $ItemStack_, $ItemStack } from "@package/net/minecraft/world/item";
 import { $MapCodec_, $Codec, $MapCodec } from "@package/com/mojang/serialization";
 import { $RecipeOutput } from "@package/net/minecraft/data/recipes";
@@ -26,44 +26,44 @@ import { $StreamCodec } from "@package/net/minecraft/network/codec";
 
 declare module "@package/net/neoforged/neoforge/common/crafting" {
     export class $DifferenceIngredient extends $Record implements $ICustomIngredient, $CustomIngredientKJS {
-        isSimple(): boolean;
         base(): $Ingredient;
         test(arg0: $ItemStack_): boolean;
         static of(arg0: $Ingredient_, arg1: $Ingredient_): $Ingredient;
         getType(): $IngredientType<never>;
-        getItems(): $Stream<$ItemStack>;
-        subtracted(): $Ingredient;
+        isSimple(): boolean;
         kjs$canBeUsedForMatching(): boolean;
+        subtracted(): $Ingredient;
+        getItems(): $Stream<$ItemStack>;
         toVanilla(): $Ingredient;
-        kjs$getStackArray(): $ItemStack[];
-        kjs$asIngredient(): $Ingredient;
         kjs$getDisplayStacks(): $ItemStackSet;
+        kjs$asIngredient(): $Ingredient;
+        kjs$getStackArray(): $ItemStack[];
+        isWildcard(): boolean;
         getItemStream(): $Stream<$Item>;
-        getFirst(): $ItemStack;
-        getItemIds(): $Set<string>;
-        getStacks(): $ItemStackSet;
         getItemTypes(): $Set<$Item>;
         testItem(item: $Item_): boolean;
-        isWildcard(): boolean;
+        getItemIds(): $Set<string>;
+        getFirst(): $ItemStack;
+        getStacks(): $ItemStackSet;
         or(arg0: $Predicate_<$ItemStack>): $Predicate<$ItemStack>;
         negate(): $Predicate<$ItemStack>;
         and(arg0: $Predicate_<$ItemStack>): $Predicate<$ItemStack>;
         static CODEC: $MapCodec<$DifferenceIngredient>;
         constructor(base: $Ingredient_, subtracted: $Ingredient_);
-        get simple(): boolean;
         get type(): $IngredientType<never>;
+        get simple(): boolean;
         get items(): $Stream<$ItemStack>;
-        get itemStream(): $Stream<$Item>;
-        get first(): $ItemStack;
-        get itemIds(): $Set<string>;
-        get stacks(): $ItemStackSet;
-        get itemTypes(): $Set<$Item>;
         get wildcard(): boolean;
+        get itemStream(): $Stream<$Item>;
+        get itemTypes(): $Set<$Item>;
+        get itemIds(): $Set<string>;
+        get first(): $ItemStack;
+        get stacks(): $ItemStackSet;
     }
     /**
      * Values that may be interpreted as {@link $DifferenceIngredient}.
      */
-    export type $DifferenceIngredient_ = { subtracted?: $Ingredient_, base?: $Ingredient_,  } | [subtracted?: $Ingredient_, base?: $Ingredient_, ];
+    export type $DifferenceIngredient_ = { base?: $Ingredient_, subtracted?: $Ingredient_,  } | [base?: $Ingredient_, subtracted?: $Ingredient_, ];
     export class $CraftingHelper {
         static makeIngredientMapCodec(): $MapCodec<$Ingredient>;
         static makeIngredientCodec(allowEmpty: boolean): $Codec<$Ingredient>;
@@ -89,78 +89,78 @@ declare module "@package/net/neoforged/neoforge/common/crafting" {
      * This should only be used when there is no way an item tag can be used in your use case
      */
     export class $BlockTagIngredient implements $ICustomIngredient {
-        isSimple(): boolean;
         test(stack: $ItemStack_): boolean;
         getType(): $IngredientType<never>;
         getTag(): $TagKey<$Block>;
+        isSimple(): boolean;
         getItems(): $Stream<$ItemStack>;
         /**
          * @return a new `Ingredient` behaving as defined by this custom ingredient
          */
         toVanilla(): $Ingredient;
-        kjs$getStackArray(): $ItemStack[];
+        kjs$canBeUsedForMatching(): boolean;
+        kjs$getDisplayStacks(): $ItemStackSet;
         /**
          * @return a new `Ingredient` behaving as defined by this custom ingredient
          */
         kjs$asIngredient(): $Ingredient;
-        kjs$getDisplayStacks(): $ItemStackSet;
-        kjs$canBeUsedForMatching(): boolean;
+        kjs$getStackArray(): $ItemStack[];
+        isWildcard(): boolean;
         getItemStream(): $Stream<$Item>;
-        getFirst(): $ItemStack;
-        getItemIds(): $Set<string>;
-        getStacks(): $ItemStackSet;
         getItemTypes(): $Set<$Item>;
         testItem(item: $Item_): boolean;
-        isWildcard(): boolean;
+        getItemIds(): $Set<string>;
+        getFirst(): $ItemStack;
+        getStacks(): $ItemStackSet;
         or(arg0: $Predicate_<$ItemStack>): $Predicate<$ItemStack>;
         negate(): $Predicate<$ItemStack>;
         and(arg0: $Predicate_<$ItemStack>): $Predicate<$ItemStack>;
         static CODEC: $MapCodec<$BlockTagIngredient>;
         constructor(tag: $TagKey_<$Block>);
-        get simple(): boolean;
         get type(): $IngredientType<never>;
         get tag(): $TagKey<$Block>;
+        get simple(): boolean;
         get items(): $Stream<$ItemStack>;
-        get itemStream(): $Stream<$Item>;
-        get first(): $ItemStack;
-        get itemIds(): $Set<string>;
-        get stacks(): $ItemStackSet;
-        get itemTypes(): $Set<$Item>;
         get wildcard(): boolean;
+        get itemStream(): $Stream<$Item>;
+        get itemTypes(): $Set<$Item>;
+        get itemIds(): $Set<string>;
+        get first(): $ItemStack;
+        get stacks(): $ItemStackSet;
     }
     export class $IntersectionIngredient extends $Record implements $ICustomIngredient, $CustomIngredientKJS {
-        isSimple(): boolean;
         test(arg0: $ItemStack_): boolean;
         static of(...arg0: $Ingredient_[]): $Ingredient;
         getType(): $IngredientType<never>;
         children(): $List<$Ingredient>;
-        getItems(): $Stream<$ItemStack>;
+        isSimple(): boolean;
         kjs$canBeUsedForMatching(): boolean;
+        getItems(): $Stream<$ItemStack>;
         toVanilla(): $Ingredient;
-        kjs$getStackArray(): $ItemStack[];
-        kjs$asIngredient(): $Ingredient;
         kjs$getDisplayStacks(): $ItemStackSet;
+        kjs$asIngredient(): $Ingredient;
+        kjs$getStackArray(): $ItemStack[];
+        isWildcard(): boolean;
         getItemStream(): $Stream<$Item>;
-        getFirst(): $ItemStack;
-        getItemIds(): $Set<string>;
-        getStacks(): $ItemStackSet;
         getItemTypes(): $Set<$Item>;
         testItem(item: $Item_): boolean;
-        isWildcard(): boolean;
+        getItemIds(): $Set<string>;
+        getFirst(): $ItemStack;
+        getStacks(): $ItemStackSet;
         or(arg0: $Predicate_<$ItemStack>): $Predicate<$ItemStack>;
         negate(): $Predicate<$ItemStack>;
         and(arg0: $Predicate_<$ItemStack>): $Predicate<$ItemStack>;
         static CODEC: $MapCodec<$IntersectionIngredient>;
         constructor(children: $List_<$Ingredient_>);
-        get simple(): boolean;
         get type(): $IngredientType<never>;
+        get simple(): boolean;
         get items(): $Stream<$ItemStack>;
-        get itemStream(): $Stream<$Item>;
-        get first(): $ItemStack;
-        get itemIds(): $Set<string>;
-        get stacks(): $ItemStackSet;
-        get itemTypes(): $Set<$Item>;
         get wildcard(): boolean;
+        get itemStream(): $Stream<$Item>;
+        get itemTypes(): $Set<$Item>;
+        get itemIds(): $Set<string>;
+        get first(): $ItemStack;
+        get stacks(): $ItemStackSet;
     }
     /**
      * Values that may be interpreted as {@link $IntersectionIngredient}.
@@ -173,28 +173,28 @@ declare module "@package/net/neoforged/neoforge/common/crafting" {
      * match if the item's tags contain all of the elements of the provided one, while allowing for additional elements to exist.
      */
     export class $DataComponentIngredient implements $ICustomIngredient {
-        isSimple(): boolean;
         test(stack: $ItemStack_): boolean;
+        static of(arg0: boolean, arg1: $DataComponentMap_, ...arg2: $Holder_<$Item>[]): $Ingredient;
         static of<T>(arg0: boolean, arg1: $Supplier_<$DataComponentType<T>>, arg2: T, ...arg3: $ItemLike_[]): $Ingredient;
-        static of(arg0: boolean, arg1: $DataComponentMap_, ...arg2: $ItemLike_[]): $Ingredient;
+        static of<T>(arg0: boolean, arg1: $DataComponentType_<T>, arg2: T, ...arg3: $ItemLike_[]): $Ingredient;
         /**
          * Creates a new ingredient matching any item from the list, containing the given components
          */
         static of(strict: boolean, predicate: $DataComponentPredicate, items: $HolderSet_<$Item>): $Ingredient;
+        static of(arg0: boolean, arg1: $DataComponentPredicate, ...arg2: $ItemLike_[]): $Ingredient;
+        static of(arg0: boolean, arg1: $DataComponentPredicate, ...arg2: $Holder_<$Item>[]): $Ingredient;
         /**
          * Creates a new ingredient matching any item from the list, containing the given components
          */
         static of(strict: boolean, map: $DataComponentMap_, items: $HolderSet_<$Item>): $Ingredient;
-        static of(arg0: boolean, arg1: $DataComponentPredicate, ...arg2: $Holder_<$Item>[]): $Ingredient;
-        static of(arg0: boolean, arg1: $DataComponentPredicate, ...arg2: $ItemLike_[]): $Ingredient;
-        static of(arg0: boolean, arg1: $DataComponentMap_, ...arg2: $Holder_<$Item>[]): $Ingredient;
+        static of(arg0: boolean, arg1: $DataComponentMap_, ...arg2: $ItemLike_[]): $Ingredient;
         /**
          * Creates a new ingredient matching the given item, containing the given components
          */
         static of(strict: boolean, stack: $ItemStack_): $Ingredient;
-        static of<T>(arg0: boolean, arg1: $DataComponentType_<T>, arg2: T, ...arg3: $ItemLike_[]): $Ingredient;
         getType(): $IngredientType<never>;
         isStrict(): boolean;
+        isSimple(): boolean;
         items(): $HolderSet<$Item>;
         components(): $DataComponentPredicate;
         getItems(): $Stream<$ItemStack>;
@@ -202,68 +202,68 @@ declare module "@package/net/neoforged/neoforge/common/crafting" {
          * @return a new `Ingredient` behaving as defined by this custom ingredient
          */
         toVanilla(): $Ingredient;
-        kjs$getStackArray(): $ItemStack[];
+        kjs$canBeUsedForMatching(): boolean;
+        kjs$getDisplayStacks(): $ItemStackSet;
         /**
          * @return a new `Ingredient` behaving as defined by this custom ingredient
          */
         kjs$asIngredient(): $Ingredient;
-        kjs$getDisplayStacks(): $ItemStackSet;
-        kjs$canBeUsedForMatching(): boolean;
+        kjs$getStackArray(): $ItemStack[];
+        isWildcard(): boolean;
         getItemStream(): $Stream<$Item>;
-        getFirst(): $ItemStack;
-        getItemIds(): $Set<string>;
-        getStacks(): $ItemStackSet;
         getItemTypes(): $Set<$Item>;
         testItem(item: $Item_): boolean;
-        isWildcard(): boolean;
+        getItemIds(): $Set<string>;
+        getFirst(): $ItemStack;
+        getStacks(): $ItemStackSet;
         or(arg0: $Predicate_<$ItemStack>): $Predicate<$ItemStack>;
         negate(): $Predicate<$ItemStack>;
         and(arg0: $Predicate_<$ItemStack>): $Predicate<$ItemStack>;
         static CODEC: $MapCodec<$DataComponentIngredient>;
         constructor(items: $HolderSet_<$Item>, components: $DataComponentPredicate, strict: boolean);
-        get simple(): boolean;
         get type(): $IngredientType<never>;
         get strict(): boolean;
-        get itemStream(): $Stream<$Item>;
-        get first(): $ItemStack;
-        get itemIds(): $Set<string>;
-        get stacks(): $ItemStackSet;
-        get itemTypes(): $Set<$Item>;
+        get simple(): boolean;
         get wildcard(): boolean;
+        get itemStream(): $Stream<$Item>;
+        get itemTypes(): $Set<$Item>;
+        get itemIds(): $Set<string>;
+        get first(): $ItemStack;
+        get stacks(): $ItemStackSet;
     }
     export class $CompoundIngredient extends $Record implements $ICustomIngredient, $CustomIngredientKJS {
-        isSimple(): boolean;
         test(arg0: $ItemStack_): boolean;
         static of(...arg0: $Ingredient_[]): $Ingredient;
         getType(): $IngredientType<never>;
         children(): $List<$Ingredient>;
-        getItems(): $Stream<$ItemStack>;
+        isSimple(): boolean;
         kjs$canBeUsedForMatching(): boolean;
+        getItems(): $Stream<$ItemStack>;
         toVanilla(): $Ingredient;
-        kjs$getStackArray(): $ItemStack[];
-        kjs$asIngredient(): $Ingredient;
         kjs$getDisplayStacks(): $ItemStackSet;
+        kjs$asIngredient(): $Ingredient;
+        kjs$getStackArray(): $ItemStack[];
+        isWildcard(): boolean;
         getItemStream(): $Stream<$Item>;
-        getFirst(): $ItemStack;
-        getItemIds(): $Set<string>;
-        getStacks(): $ItemStackSet;
         getItemTypes(): $Set<$Item>;
         testItem(item: $Item_): boolean;
-        isWildcard(): boolean;
+        getItemIds(): $Set<string>;
+        getFirst(): $ItemStack;
+        getStacks(): $ItemStackSet;
         or(arg0: $Predicate_<$ItemStack>): $Predicate<$ItemStack>;
         negate(): $Predicate<$ItemStack>;
         and(arg0: $Predicate_<$ItemStack>): $Predicate<$ItemStack>;
         static CODEC: $MapCodec<$CompoundIngredient>;
         constructor(children: $List_<$Ingredient_>);
-        get simple(): boolean;
         get type(): $IngredientType<never>;
+        get simple(): boolean;
         get items(): $Stream<$ItemStack>;
-        get itemStream(): $Stream<$Item>;
-        get first(): $ItemStack;
-        get itemIds(): $Set<string>;
-        get stacks(): $ItemStackSet;
-        get itemTypes(): $Set<$Item>;
         get wildcard(): boolean;
+        get itemStream(): $Stream<$Item>;
+        get itemTypes(): $Set<$Item>;
+        get itemIds(): $Set<string>;
+        get first(): $ItemStack;
+        get stacks(): $ItemStackSet;
     }
     /**
      * Values that may be interpreted as {@link $CompoundIngredient}.
@@ -284,10 +284,6 @@ declare module "@package/net/neoforged/neoforge/common/crafting" {
     }
     export interface $ICustomIngredient extends $CustomIngredientKJS {
         /**
-         * Returns whether this ingredient always requires direct stack testing.
-         */
-        isSimple(): boolean;
-        /**
          * Checks if a stack matches this ingredient.
          * The stack **must not** be modified in any way.
          */
@@ -298,6 +294,14 @@ declare module "@package/net/neoforged/neoforge/common/crafting" {
          * The type must be registered to `NeoForgeRegistries#INGREDIENT_TYPES`.
          */
         getType(): $IngredientType<never>;
+        /**
+         * Returns whether this ingredient always requires direct stack testing.
+         */
+        isSimple(): boolean;
+        /**
+         * @return a new `Ingredient` behaving as defined by this custom ingredient
+         */
+        toVanilla(): $Ingredient;
         /**
          * @return the list of stacks that this ingredient accepts
          * 
@@ -313,12 +317,8 @@ declare module "@package/net/neoforged/neoforge/common/crafting" {
          * Note: no caching needs to be done by the implementation, this is already handled by the ingredient itself.
          */
         getItems(): $Stream<$ItemStack>;
-        /**
-         * @return a new `Ingredient` behaving as defined by this custom ingredient
-         */
-        toVanilla(): $Ingredient;
-        get simple(): boolean;
         get type(): $IngredientType<never>;
+        get simple(): boolean;
         get items(): $Stream<$ItemStack>;
     }
     /**
@@ -341,16 +341,16 @@ declare module "@package/net/neoforged/neoforge/common/crafting" {
          */
         static of(tag: $TagKey_<$Item>, count: number): $SizedIngredient;
         count(): number;
+        ingredient(): $Ingredient;
         /**
          * Returns a list of the stacks from this `#ingredient`, with an updated `#count`.
          */
         getItems(): $ItemStack[];
-        ingredient(): $Ingredient;
-        matches(cx: $RecipeMatchContext, item: $ItemStack_, exact: boolean): boolean;
         matches(cx: $RecipeMatchContext, arg1: $Ingredient_, exact: boolean): boolean;
-        kjs$self(): $SizedIngredient;
+        matches(cx: $RecipeMatchContext, item: $ItemStack_, exact: boolean): boolean;
         replaceThisWith(cx: $RecipeScriptContext, arg1: $Object): $Object;
         kjs$asIngredient(): $Ingredient;
+        kjs$self(): $SizedIngredient;
         kjs$toFlatJson(): $JsonElement;
         kjs$toNestedJson(): $JsonElement;
         matches(cx: $RecipeMatchContext, itemLike: $ItemLike_, exact: boolean): boolean;
@@ -368,8 +368,8 @@ declare module "@package/net/neoforged/neoforge/common/crafting" {
     export class $IngredientType<T extends $ICustomIngredient> extends $Record {
         codec(): $MapCodec<T>;
         streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, T>;
-        constructor(arg0: $MapCodec_<T>);
         constructor(codec: $MapCodec_<T>, streamCodec: $StreamCodec<$RegistryFriendlyByteBuf, T>);
+        constructor(arg0: $MapCodec_<T>);
     }
     /**
      * Values that may be interpreted as {@link $IngredientType}.

@@ -23,8 +23,8 @@ declare module "@package/dev/engine_room/flywheel/api/visualization" {
     export class $VisualEmbedding {
     }
     export interface $VisualEmbedding extends $VisualizationContext {
-        transforms(arg0: $Matrix4fc, arg1: $Matrix3fc): void;
         "delete"(): void;
+        transforms(arg0: $Matrix4fc, arg1: $Matrix3fc): void;
     }
     export class $VisualizationLevel {
     }

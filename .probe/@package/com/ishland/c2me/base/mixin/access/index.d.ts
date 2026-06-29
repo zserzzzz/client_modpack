@@ -126,18 +126,18 @@ declare module "@package/com/ishland/c2me/base/mixin/access" {
     export class $IStructureStart {
     }
     export interface $IStructureStart {
-        getStructure(): $Structure;
-        getReferences(): number;
         getChildren(): $PiecesContainer;
-        get structure(): $Structure;
-        get references(): number;
+        getReferences(): number;
+        getStructure(): $Structure;
         get children(): $PiecesContainer;
+        get references(): number;
+        get structure(): $Structure;
     }
     export class $IServerLightingProvider {
     }
     export interface $IServerLightingProvider {
-        invokeEnqueue(arg0: number, arg1: number, arg2: $IntSupplier_, arg3: $ThreadedLevelLightEngine$TaskType_, arg4: $Runnable_): void;
         invokeUpdateChunkStatus(arg0: $ChunkPos): void;
+        invokeEnqueue(arg0: number, arg1: number, arg2: $IntSupplier_, arg3: $ThreadedLevelLightEngine$TaskType_, arg4: $Runnable_): void;
     }
     export class $IRegionFile {
     }
@@ -169,10 +169,10 @@ declare module "@package/com/ishland/c2me/base/mixin/access" {
     export class $IBlendingData {
     }
     export interface $IBlendingData {
-        getSurfaceHeights(): number[];
         getOldHeightLimit(): $LevelHeightAccessor;
-        get surfaceHeights(): number[];
+        getSurfaceHeights(): number[];
         get oldHeightLimit(): $LevelHeightAccessor;
+        get surfaceHeights(): number[];
     }
     export class $IChunkTickScheduler<T> {
     }
@@ -189,8 +189,8 @@ declare module "@package/com/ishland/c2me/base/mixin/access" {
     export class $ISimpleRandom {
     }
     export interface $ISimpleRandom {
-        invokeSetSeed(arg0: number): void;
         getSeed(): number;
+        invokeSetSeed(arg0: number): void;
         get seed(): number;
     }
     export class $ISimpleTickScheduler<T> {
@@ -202,23 +202,23 @@ declare module "@package/com/ishland/c2me/base/mixin/access" {
     export class $IChunkTicketManager {
     }
     export interface $IChunkTicketManager {
-        getSimulationDistanceTracker(): $TickingTracker;
         getNearbyChunkTicketUpdater(): $DistanceManager$PlayerTicketTracker;
-        invokeSetWatchDistance(arg0: number): void;
         getTicketsByPosition(): $Long2ObjectOpenHashMap<$SortedArraySet<$Ticket<never>>>;
         getPlayersByChunkPos(): $Long2ObjectMap<$ObjectSet<$ServerPlayer>>;
-        get simulationDistanceTracker(): $TickingTracker;
+        invokeSetWatchDistance(arg0: number): void;
+        getSimulationDistanceTracker(): $TickingTracker;
         get nearbyChunkTicketUpdater(): $DistanceManager$PlayerTicketTracker;
         get ticketsByPosition(): $Long2ObjectOpenHashMap<$SortedArraySet<$Ticket<never>>>;
         get playersByChunkPos(): $Long2ObjectMap<$ObjectSet<$ServerPlayer>>;
+        get simulationDistanceTracker(): $TickingTracker;
     }
     export class $IUpgradeData {
     }
     export interface $IUpgradeData {
-        getSidesToUpgrade(): $EnumSet<$Direction8>;
         getCenterIndicesToUpgrade(): number[][];
-        get sidesToUpgrade(): $EnumSet<$Direction8>;
+        getSidesToUpgrade(): $EnumSet<$Direction8>;
         get centerIndicesToUpgrade(): number[][];
+        get sidesToUpgrade(): $EnumSet<$Direction8>;
     }
     export class $IPerlinNoiseSampler {
     }
@@ -237,44 +237,44 @@ declare module "@package/com/ishland/c2me/base/mixin/access" {
     export class $IInterpolatedNoiseSampler {
     }
     export interface $IInterpolatedNoiseSampler {
-        getScaledYScale(): number;
-        getXzFactor(): number;
         getScaledXzScale(): number;
+        getXzFactor(): number;
+        getScaledYScale(): number;
         getMaxValue(): number;
-        getUpperInterpolatedNoise(): $PerlinNoise;
-        getSmearScaleMultiplier(): number;
-        getLowerInterpolatedNoise(): $PerlinNoise;
-        getInterpolationNoise(): $PerlinNoise;
         getYFactor(): number;
         getXzScale(): number;
         getYScale(): number;
-        get scaledYScale(): number;
-        get xzFactor(): number;
+        getSmearScaleMultiplier(): number;
+        getLowerInterpolatedNoise(): $PerlinNoise;
+        getInterpolationNoise(): $PerlinNoise;
+        getUpperInterpolatedNoise(): $PerlinNoise;
         get scaledXzScale(): number;
+        get xzFactor(): number;
+        get scaledYScale(): number;
         get maxValue(): number;
-        get upperInterpolatedNoise(): $PerlinNoise;
-        get smearScaleMultiplier(): number;
-        get lowerInterpolatedNoise(): $PerlinNoise;
-        get interpolationNoise(): $PerlinNoise;
         get YFactor(): number;
         get xzScale(): number;
         get YScale(): number;
+        get smearScaleMultiplier(): number;
+        get lowerInterpolatedNoise(): $PerlinNoise;
+        get interpolationNoise(): $PerlinNoise;
+        get upperInterpolatedNoise(): $PerlinNoise;
     }
     export class $IStructurePiece {
     }
     export interface $IStructurePiece {
         getType(): $StructurePieceType;
-        getRotation(): $Rotation;
         getMirror(): $Mirror;
         getChainLength(): number;
         getBoundingBox(): $BoundingBox;
         getFacing(): $Direction;
+        getRotation(): $Rotation;
         get type(): $StructurePieceType;
-        get rotation(): $Rotation;
         get mirror(): $Mirror;
         get chainLength(): number;
         get boundingBox(): $BoundingBox;
         get facing(): $Direction;
+        get rotation(): $Rotation;
     }
     export class $IXoroshiro128PlusPlusRandomDeriver {
     }
@@ -296,44 +296,44 @@ declare module "@package/com/ishland/c2me/base/mixin/access" {
     export class $IChunkNoiseSampler {
     }
     export interface $IChunkNoiseSampler {
-        getHorizontalCellBlockCount(): number;
-        getStartBlockX(): number;
-        getStartBlockY(): number;
         getStartBiomeZ(): number;
-        getCellBlockX(): number;
-        getCellBlockZ(): number;
-        getStartBlockZ(): number;
+        getStartBiomeX(): number;
         getMinimumCellY(): number;
         getCellBlockY(): number;
-        getStartBiomeX(): number;
+        getCellBlockX(): number;
+        getCellBlockZ(): number;
+        getStartBlockX(): number;
+        getStartBlockZ(): number;
+        getStartBlockY(): number;
+        getHorizontalCellBlockCount(): number;
         getIsInInterpolationLoop(): boolean;
         getVerticalCellBlockCount(): number;
         getVerticalCellCount(): number;
-        getHorizontalCellCount(): number;
         getIsSamplingForCaches(): boolean;
-        get horizontalCellBlockCount(): number;
-        get startBlockX(): number;
-        get startBlockY(): number;
+        getHorizontalCellCount(): number;
         get startBiomeZ(): number;
-        get cellBlockX(): number;
-        get cellBlockZ(): number;
-        get startBlockZ(): number;
+        get startBiomeX(): number;
         get minimumCellY(): number;
         get cellBlockY(): number;
-        get startBiomeX(): number;
+        get cellBlockX(): number;
+        get cellBlockZ(): number;
+        get startBlockX(): number;
+        get startBlockZ(): number;
+        get startBlockY(): number;
+        get horizontalCellBlockCount(): number;
         get isInInterpolationLoop(): boolean;
         get verticalCellBlockCount(): number;
         get verticalCellCount(): number;
-        get horizontalCellCount(): number;
         get isSamplingForCaches(): boolean;
+        get horizontalCellCount(): number;
     }
     export class $IXoroshiro128PlusPlusRandomImpl {
     }
     export interface $IXoroshiro128PlusPlusRandomImpl {
         getSeedLo(): number;
         setSeedLo(arg0: number): void;
-        getSeedHi(): number;
         setSeedHi(arg0: number): void;
+        getSeedHi(): number;
     }
     export class $IServerChunkManager {
     }
@@ -357,15 +357,15 @@ declare module "@package/com/ishland/c2me/base/mixin/access" {
     export class $IFlowableFluid {
     }
     export interface $IFlowableFluid {
-        invokeGetLevelDecreasePerBlock(arg0: $LevelReader): number;
-        invokeReceivesFlow(arg0: $Direction_, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $BlockPos_, arg5: $BlockState_): boolean;
         invokeIsMatchingAndStill(arg0: $FluidState): boolean;
+        invokeReceivesFlow(arg0: $Direction_, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $BlockPos_, arg5: $BlockState_): boolean;
+        invokeGetLevelDecreasePerBlock(arg0: $LevelReader): number;
     }
     export class $IVersionedChunkStorage {
     }
     export interface $IVersionedChunkStorage {
-        invokeGetStorageKey(): $RegionStorageInfo;
         getWorker(): $IOWorker;
+        invokeGetStorageKey(): $RegionStorageInfo;
         get worker(): $IOWorker;
     }
     export class $IStorageIoWorker {
@@ -396,32 +396,32 @@ declare module "@package/com/ishland/c2me/base/mixin/access" {
     export class $IThreadedAnvilChunkStorage {
     }
     export interface $IThreadedAnvilChunkStorage {
-        getWorldGenerationProgressListener(): $ChunkProgressListener;
         getMainThreadExecutor(): $BlockableEventLoop<$Runnable>;
-        invokeGetUpdatedChunkNbt(arg0: $ChunkPos): $CompletableFuture<($CompoundTag) | undefined>;
-        getChunkToNextSaveTimeMs(): $Long2LongMap;
-        invokeGetChunkHolder(arg0: number): $ChunkHolder;
-        getTotalChunksLoadedCount(): $AtomicInteger;
-        invokeOnChunkStatusChange(arg0: $ChunkPos, arg1: $FullChunkStatus_): void;
-        setChunkHolderListDirty(arg0: boolean): void;
-        getPointOfInterestStorage(): $PoiManager;
-        getCurrentChunkHolders(): $Long2ObjectLinkedOpenHashMap<$ChunkHolder>;
-        getLightingProvider(): $ThreadedLevelLightEngine;
-        getGenerationContext(): $WorldGenContext;
-        invokeSendToPlayers(arg0: $LevelChunk): void;
         getWorld(): $ServerLevel;
-        invokeUpdateHolderMap(): boolean;
         invokeSave(arg0: $ChunkAccess): boolean;
-        get worldGenerationProgressListener(): $ChunkProgressListener;
+        getWorldGenerationProgressListener(): $ChunkProgressListener;
+        invokeUpdateHolderMap(): boolean;
+        getLightingProvider(): $ThreadedLevelLightEngine;
+        getPointOfInterestStorage(): $PoiManager;
+        invokeSendToPlayers(arg0: $LevelChunk): void;
+        getGenerationContext(): $WorldGenContext;
+        invokeOnChunkStatusChange(arg0: $ChunkPos, arg1: $FullChunkStatus_): void;
+        invokeGetChunkHolder(arg0: number): $ChunkHolder;
+        getCurrentChunkHolders(): $Long2ObjectLinkedOpenHashMap<$ChunkHolder>;
+        setChunkHolderListDirty(arg0: boolean): void;
+        getChunkToNextSaveTimeMs(): $Long2LongMap;
+        getTotalChunksLoadedCount(): $AtomicInteger;
+        invokeGetUpdatedChunkNbt(arg0: $ChunkPos): $CompletableFuture<($CompoundTag) | undefined>;
         get mainThreadExecutor(): $BlockableEventLoop<$Runnable>;
+        get world(): $ServerLevel;
+        get worldGenerationProgressListener(): $ChunkProgressListener;
+        get lightingProvider(): $ThreadedLevelLightEngine;
+        get pointOfInterestStorage(): $PoiManager;
+        get generationContext(): $WorldGenContext;
+        get currentChunkHolders(): $Long2ObjectLinkedOpenHashMap<$ChunkHolder>;
+        set chunkHolderListDirty(value: boolean);
         get chunkToNextSaveTimeMs(): $Long2LongMap;
         get totalChunksLoadedCount(): $AtomicInteger;
-        set chunkHolderListDirty(value: boolean);
-        get pointOfInterestStorage(): $PoiManager;
-        get currentChunkHolders(): $Long2ObjectLinkedOpenHashMap<$ChunkHolder>;
-        get lightingProvider(): $ThreadedLevelLightEngine;
-        get generationContext(): $WorldGenContext;
-        get world(): $ServerLevel;
     }
     export class $IDensityFunctionTypesWeirdScaledSamplerRarityValueMapper {
     }
@@ -460,14 +460,14 @@ declare module "@package/com/ishland/c2me/base/mixin/access" {
     export class $IOctavePerlinNoiseSampler {
     }
     export interface $IOctavePerlinNoiseSampler {
-        getOctaveSamplers(): $ImprovedNoise[];
         getAmplitudes(): $DoubleList;
         getLacunarity(): number;
         getPersistence(): number;
-        get octaveSamplers(): $ImprovedNoise[];
+        getOctaveSamplers(): $ImprovedNoise[];
         get amplitudes(): $DoubleList;
         get lacunarity(): number;
         get persistence(): number;
+        get octaveSamplers(): $ImprovedNoise[];
     }
     export class $IWorldChunk {
     }
@@ -492,10 +492,10 @@ declare module "@package/com/ishland/c2me/base/mixin/access" {
     export class $IChunkSection {
     }
     export interface $IChunkSection {
-        getBiomeContainer(): $PalettedContainerRO<$Holder<$Biome>>;
         getBlockStateContainer(): $PalettedContainer<$BlockState>;
-        get biomeContainer(): $PalettedContainerRO<$Holder<$Biome>>;
+        getBiomeContainer(): $PalettedContainerRO<$Holder<$Biome>>;
         get blockStateContainer(): $PalettedContainer<$BlockState>;
+        get biomeContainer(): $PalettedContainerRO<$Holder<$Biome>>;
     }
     export class $IChunkHolder {
     }
@@ -516,7 +516,7 @@ declare module "@package/com/ishland/c2me/base/mixin/access" {
     export class $IWeightedListEntry {
     }
     export interface $IWeightedListEntry {
-        invokeSetShuffledOrder(arg0: number): void;
         invokeGetShuffledOrder(): number;
+        invokeSetShuffledOrder(arg0: number): void;
     }
 }

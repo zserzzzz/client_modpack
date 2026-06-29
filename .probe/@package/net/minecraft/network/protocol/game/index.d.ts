@@ -81,20 +81,18 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundSetBorderSizePacket>;
         constructor(worldBorder: $WorldBorder);
         get size(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundPlayerPositionPacket implements $Packet<$ClientGamePacketListener> {
-        getZ(): number;
-        getX(): number;
         type(): $PacketType<$ClientboundPlayerPositionPacket>;
         getId(): number;
         /**
@@ -102,31 +100,33 @@ declare module "@package/net/minecraft/network/protocol/game" {
          */
         handle(handler: $ClientGamePacketListener): void;
         getY(): number;
-        getYRot(): number;
-        getXRot(): number;
+        getZ(): number;
+        getX(): number;
         /**
          * Returns a set of which fields are relative. Items in this set indicate that the value is a relative change applied to the player's position, rather than an exact value.
          */
         getRelativeArguments(): $Set<$RelativeMovement>;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getXRot(): number;
+        getYRot(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundPlayerPositionPacket>;
         constructor(x: number, arg1: number, y: number, arg3: number, z: number, arg5: $Set_<$RelativeMovement_>, yRot: number);
-        get z(): number;
-        get x(): number;
         get id(): number;
         get y(): number;
-        get YRot(): number;
-        get XRot(): number;
+        get z(): number;
+        get x(): number;
         get relativeArguments(): $Set<$RelativeMovement>;
-        get skippable(): boolean;
+        get XRot(): number;
+        get YRot(): number;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundCommandSuggestionPacket implements $Packet<$ServerGamePacketListener> {
         type(): $PacketType<$ServerboundCommandSuggestionPacket>;
@@ -139,17 +139,17 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundCommandSuggestionPacket>;
         constructor(id: number, command: string);
         get id(): number;
         get command(): string;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundSignUpdatePacket implements $Packet<$ServerGamePacketListener> {
         type(): $PacketType<$ServerboundSignUpdatePacket>;
@@ -157,27 +157,27 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ServerGamePacketListener): void;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isFrontText(): boolean;
         getLines(): string[];
         getPos(): $BlockPos;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isFrontText(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundSignUpdatePacket>;
         constructor(pos: $BlockPos_, isFrontText: boolean, line1: string, line2: string, line3: string, line4: string);
-        get frontText(): boolean;
         get lines(): string[];
         get pos(): $BlockPos;
-        get skippable(): boolean;
+        get frontText(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundBossEventPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundBossEventPacket>;
@@ -190,21 +190,21 @@ declare module "@package/net/minecraft/network/protocol/game" {
         static encodeProperties(darkenScreen: boolean, playMusic: boolean, createWorldFog: boolean): number;
         static createRemovePacket(id: $UUID_): $ClientboundBossEventPacket;
         static createUpdatePropertiesPacket(event: $BossEvent): $ClientboundBossEventPacket;
-        static createUpdateStylePacket(event: $BossEvent): $ClientboundBossEventPacket;
         static createUpdateProgressPacket(event: $BossEvent): $ClientboundBossEventPacket;
+        static createUpdateStylePacket(event: $BossEvent): $ClientboundBossEventPacket;
         static createUpdateNamePacket(event: $BossEvent): $ClientboundBossEventPacket;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static REMOVE_OPERATION: $ClientboundBossEventPacket$Operation;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundBossEventPacket>;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundRotateHeadPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundRotateHeadPacket>;
@@ -217,16 +217,16 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundRotateHeadPacket>;
         constructor(entity: $Entity, yHeadRot: number);
         get YHeadRot(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundInitializeBorderPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundInitializeBorderPacket>;
@@ -234,34 +234,34 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Passes this Packet on to the PacketListener for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
-        getNewSize(): number;
         getWarningBlocks(): number;
         getWarningTime(): number;
-        getOldSize(): number;
-        getNewCenterZ(): number;
-        getLerpTime(): number;
-        getNewCenterX(): number;
+        getNewSize(): number;
         getNewAbsoluteMaxSize(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getNewCenterZ(): number;
+        getNewCenterX(): number;
+        getLerpTime(): number;
+        getOldSize(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundInitializeBorderPacket>;
         constructor(worldBorder: $WorldBorder);
-        get newSize(): number;
         get warningBlocks(): number;
         get warningTime(): number;
-        get oldSize(): number;
-        get newCenterZ(): number;
-        get lerpTime(): number;
-        get newCenterX(): number;
+        get newSize(): number;
         get newAbsoluteMaxSize(): number;
-        get skippable(): boolean;
+        get newCenterZ(): number;
+        get newCenterX(): number;
+        get lerpTime(): number;
+        get oldSize(): number;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundChunkBatchFinishedPacket extends $Record implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundChunkBatchFinishedPacket>;
@@ -273,15 +273,15 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundChunkBatchFinishedPacket>;
         constructor(arg0: number);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundChunkBatchFinishedPacket}.
@@ -298,34 +298,34 @@ declare module "@package/net/minecraft/network/protocol/game" {
         getOffset(): $BlockPos;
         getSeed(): number;
         getData(): string;
-        getMode(): $StructureMode;
-        getRotation(): $Rotation;
-        getPos(): $BlockPos;
         getMirror(): $Mirror;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isShowAir(): boolean;
+        getMode(): $StructureMode;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isIgnoreEntities(): boolean;
         getIntegrity(): number;
+        getRotation(): $Rotation;
+        getPos(): $BlockPos;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isShowAir(): boolean;
+        getUpdateType(): $StructureBlockEntity$UpdateType;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isShowBoundingBox(): boolean;
-        getUpdateType(): $StructureBlockEntity$UpdateType;
-        handler$bmo000$hugestructureblocks$writeInts(buf: $FriendlyByteBuf, ci: $CallbackInfo): void;
         handler$bmo000$hugestructureblocks$readInts(buf: $FriendlyByteBuf, ci: $CallbackInfo): void;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        handler$bmo000$hugestructureblocks$writeInts(buf: $FriendlyByteBuf, ci: $CallbackInfo): void;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundSetStructureBlockPacket>;
         constructor(pos: $BlockPos_, updateType: $StructureBlockEntity$UpdateType_, mode: $StructureMode_, name: string, offset: $BlockPos_, size: $Vec3i, mirror: $Mirror_, rotation: $Rotation_, data: string, ignoreEntities: boolean, showAir: boolean, showBoundingBox: boolean, integrity: number, seed: number);
         get name(): string;
@@ -333,17 +333,17 @@ declare module "@package/net/minecraft/network/protocol/game" {
         get offset(): $BlockPos;
         get seed(): number;
         get data(): string;
-        get mode(): $StructureMode;
-        get rotation(): $Rotation;
-        get pos(): $BlockPos;
         get mirror(): $Mirror;
-        get showAir(): boolean;
+        get mode(): $StructureMode;
         get ignoreEntities(): boolean;
         get integrity(): number;
-        get showBoundingBox(): boolean;
+        get rotation(): $Rotation;
+        get pos(): $BlockPos;
+        get showAir(): boolean;
         get updateType(): $StructureBlockEntity$UpdateType;
-        get skippable(): boolean;
+        get showBoundingBox(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundBlockUpdatePacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundBlockUpdatePacket>;
@@ -356,18 +356,18 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundBlockUpdatePacket>;
         constructor(pos: $BlockPos_, blockState: $BlockState_);
         constructor(blockGetter: $BlockGetter, pos: $BlockPos_);
         get blockState(): $BlockState;
         get pos(): $BlockPos;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundSetObjectivePacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundSetObjectivePacket>;
@@ -383,11 +383,11 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static METHOD_ADD: number;
         static METHOD_REMOVE: number;
         static METHOD_CHANGE: number;
@@ -398,8 +398,8 @@ declare module "@package/net/minecraft/network/protocol/game" {
         get numberFormat(): ($NumberFormat) | undefined;
         get renderType(): $ObjectiveCriteria$RenderType;
         get objectiveName(): string;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundJigsawGeneratePacket implements $Packet<$ServerGamePacketListener> {
         type(): $PacketType<$ServerboundJigsawGeneratePacket>;
@@ -408,34 +408,34 @@ declare module "@package/net/minecraft/network/protocol/game" {
          */
         handle(handler: $ServerGamePacketListener): void;
         levels(): number;
-        getPos(): $BlockPos;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         keepJigsaws(): boolean;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getPos(): $BlockPos;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundJigsawGeneratePacket>;
         constructor(pos: $BlockPos_, levels: number, keepJigsaws: boolean);
         get pos(): $BlockPos;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundMovePlayerPacket implements $Packet<$ServerGamePacketListener>, $ServerboundMovePlayerPacketExtension {
-        getZ(defaultValue: number): number;
-        getX(defaultValue: number): number;
         type(): $PacketType<$ServerboundMovePlayerPacket>;
         /**
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ServerGamePacketListener): void;
         getY(defaultValue: number): number;
+        getZ(defaultValue: number): number;
+        getX(defaultValue: number): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
@@ -448,17 +448,17 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Whether decoding errors will be ignored for this packet.
          */
         isOnGround(): boolean;
-        getYRot(defaultValue: number): number;
         getXRot(defaultValue: number): number;
+        getYRot(defaultValue: number): number;
         sable$handle(arg0: $ServerPlayer): void;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         onGround: boolean;
         yRot: number;
         x: number;
@@ -468,8 +468,8 @@ declare module "@package/net/minecraft/network/protocol/game" {
         z: number;
         hasPos: boolean;
         constructor(x: number, arg1: number, y: number, arg3: number, z: number, arg5: boolean, yRot: boolean, xRot: boolean);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundPlayerInfoUpdatePacket$Action$Writer {
     }
@@ -482,20 +482,20 @@ declare module "@package/net/minecraft/network/protocol/game" {
     export type $ClientboundPlayerInfoUpdatePacket$Action$Writer_ = ((arg0: $RegistryFriendlyByteBuf, arg1: $ClientboundPlayerInfoUpdatePacket$Entry) => void);
     export class $ClientboundLightUpdatePacketData {
         write(buffer: $FriendlyByteBuf): void;
-        getSkyUpdates(): $List<number[]>;
         getSkyYMask(): $BitSet;
-        getEmptySkyYMask(): $BitSet;
-        getEmptyBlockYMask(): $BitSet;
-        getBlockYMask(): $BitSet;
         getBlockUpdates(): $List<number[]>;
+        getEmptySkyYMask(): $BitSet;
+        getBlockYMask(): $BitSet;
+        getEmptyBlockYMask(): $BitSet;
+        getSkyUpdates(): $List<number[]>;
         constructor(chunkPos: $ChunkPos, lightEngine: $LevelLightEngine, skyLight: $BitSet | null, blockLight: $BitSet | null);
         constructor(buffer: $FriendlyByteBuf, x: number, z: number);
-        get skyUpdates(): $List<number[]>;
         get skyYMask(): $BitSet;
-        get emptySkyYMask(): $BitSet;
-        get emptyBlockYMask(): $BitSet;
-        get blockYMask(): $BitSet;
         get blockUpdates(): $List<number[]>;
+        get emptySkyYMask(): $BitSet;
+        get blockYMask(): $BitSet;
+        get emptyBlockYMask(): $BitSet;
+        get skyUpdates(): $List<number[]>;
     }
     export class $ClientboundSetDisplayObjectivePacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundSetDisplayObjectivePacket>;
@@ -508,38 +508,38 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundSetDisplayObjectivePacket>;
         constructor(slot: $DisplaySlot_, objective: $Objective | null);
         get slot(): $DisplaySlot;
         get objectiveName(): string;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundClientCommandPacket implements $Packet<$ServerGamePacketListener> {
+        getAction(): $ServerboundClientCommandPacket$Action;
         type(): $PacketType<$ServerboundClientCommandPacket>;
         /**
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ServerGamePacketListener): void;
-        getAction(): $ServerboundClientCommandPacket$Action;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundClientCommandPacket>;
         constructor(action: $ServerboundClientCommandPacket$Action_);
         get action(): $ServerboundClientCommandPacket$Action;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundSetTitleTextPacket extends $Record implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundSetTitleTextPacket>;
@@ -551,15 +551,15 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundSetTitleTextPacket>;
         constructor(text: $Component_);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundSetTitleTextPacket}.
@@ -575,15 +575,15 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundChatAckPacket>;
         constructor(arg0: number);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ServerboundChatAckPacket}.
@@ -599,16 +599,16 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundOpenBookPacket>;
         constructor(hand: $InteractionHand_);
         get hand(): $InteractionHand;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundGameEventPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundGameEventPacket>;
@@ -621,11 +621,11 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static DEMO_PARAM_HINT_4: number;
         static DEMO_PARAM_HINT_3: number;
         static STOP_RAINING: $ClientboundGameEventPacket$Type;
@@ -649,33 +649,33 @@ declare module "@package/net/minecraft/network/protocol/game" {
         constructor(event: $ClientboundGameEventPacket$Type, param: number);
         get event(): $ClientboundGameEventPacket$Type;
         get param(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundUseItemOnPacket implements $Packet<$ServerGamePacketListener> {
-        getSequence(): number;
         type(): $PacketType<$ServerboundUseItemOnPacket>;
         /**
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ServerGamePacketListener): void;
-        getHand(): $InteractionHand;
+        getSequence(): number;
         getHitResult(): $BlockHitResult;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getHand(): $InteractionHand;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundUseItemOnPacket>;
         constructor(hand: $InteractionHand_, blockHit: $BlockHitResult, sequence: number);
         get sequence(): number;
-        get hand(): $InteractionHand;
         get hitResult(): $BlockHitResult;
-        get skippable(): boolean;
+        get hand(): $InteractionHand;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundSetCameraPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundSetCameraPacket>;
@@ -687,73 +687,73 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundSetCameraPacket>;
         constructor(cameraEntity: $Entity);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundBossEventPacket$AddOperation implements $ClientboundBossEventPacket$Operation {
     }
     export class $ClientboundSetChunkCacheCenterPacket implements $Packet<$ClientGamePacketListener> {
-        getZ(): number;
-        getX(): number;
         type(): $PacketType<$ClientboundSetChunkCacheCenterPacket>;
         /**
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getZ(): number;
+        getX(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundSetChunkCacheCenterPacket>;
         constructor(x: number, z: number);
         get z(): number;
         get x(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundInteractPacket$Action {
     }
     export interface $ServerboundInteractPacket$Action {
     }
     export class $ServerboundChatCommandSignedPacket extends $Record implements $Packet<$ServerGamePacketListener> {
-        salt(): number;
         type(): $PacketType<$ServerboundChatCommandSignedPacket>;
         /**
          * Passes this Packet on to the PacketListener for processing.
          */
         handle(handler: $ServerGamePacketListener): void;
         command(): string;
+        salt(): number;
         timeStamp(): $Instant;
         lastSeenMessages(): $LastSeenMessages$Update;
         argumentSignatures(): $ArgumentSignatures;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundChatCommandSignedPacket>;
         constructor(arg0: string, arg1: $Instant, arg2: number, arg3: $ArgumentSignatures_, arg4: $LastSeenMessages$Update_);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ServerboundChatCommandSignedPacket}.
      */
-    export type $ServerboundChatCommandSignedPacket_ = { command?: string, salt?: number, argumentSignatures?: $ArgumentSignatures_, lastSeenMessages?: $LastSeenMessages$Update_, timeStamp?: $Instant,  } | [command?: string, salt?: number, argumentSignatures?: $ArgumentSignatures_, lastSeenMessages?: $LastSeenMessages$Update_, timeStamp?: $Instant, ];
+    export type $ServerboundChatCommandSignedPacket_ = { argumentSignatures?: $ArgumentSignatures_, lastSeenMessages?: $LastSeenMessages$Update_, timeStamp?: $Instant, command?: string, salt?: number,  } | [argumentSignatures?: $ArgumentSignatures_, lastSeenMessages?: $LastSeenMessages$Update_, timeStamp?: $Instant, command?: string, salt?: number, ];
     export class $ClientboundCommandsPacket$NodeStub {
     }
     export interface $ClientboundCommandsPacket$NodeStub {
@@ -781,17 +781,17 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundProjectilePowerPacket>;
         constructor(id: number, accelerationPower: number);
         get id(): number;
         get accelerationPower(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundSwingPacket implements $Packet<$ServerGamePacketListener> {
         type(): $PacketType<$ServerboundSwingPacket>;
@@ -803,16 +803,16 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundSwingPacket>;
         constructor(hand: $InteractionHand_);
         get hand(): $InteractionHand;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundOpenScreenPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundOpenScreenPacket>;
@@ -821,22 +821,22 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
-        getContainerId(): number;
         getTitle(): $Component;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getContainerId(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundOpenScreenPacket>;
         constructor(containerId: number, menuType: $MenuType_<never>, title: $Component_);
-        get containerId(): number;
         get title(): $Component;
-        get skippable(): boolean;
+        get containerId(): number;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundSelectAdvancementsTabPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundSelectAdvancementsTabPacket>;
@@ -848,16 +848,16 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundSelectAdvancementsTabPacket>;
         constructor(tab: $ResourceLocation_ | null);
         get tab(): $ResourceLocation;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundResetScorePacket extends $Record implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundResetScorePacket>;
@@ -870,25 +870,21 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundResetScorePacket>;
         constructor(arg0: string, arg1: string | null);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundResetScorePacket}.
      */
     export type $ClientboundResetScorePacket_ = { objectiveName?: string, owner?: string,  } | [objectiveName?: string, owner?: string, ];
     export class $ClientboundMapItemDataPacket extends $Record implements $Packet<$ClientGamePacketListener>, $IMapDataPacketExtension {
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        locked(): boolean;
         type(): $PacketType<$ClientboundMapItemDataPacket>;
         scale(): number;
         /**
@@ -896,52 +892,57 @@ declare module "@package/net/minecraft/network/protocol/game" {
          */
         handle(handler: $ClientGamePacketListener): void;
         decorations(): ($List<$MapDecoration>) | undefined;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        locked(): boolean;
+        mapId(): $MapId;
         colorPatch(): ($MapItemSavedData$MapPatch) | undefined;
-        moonlight$getDirtyCustomData(): $Optional<any>;
         /**
          * Sets new MapData from the packet to given MapData param
          */
         applyToMap(mapData: $MapItemSavedData): void;
-        mapId(): $MapId;
-        moonlight$getCustomDecorations(): $Optional<any>;
-        moonlight$setCustomDecorations(arg0: $Optional<any>): void;
-        moonlight$setDirtyCustomData(arg0: $Optional<any>): void;
+        moonlight$getDirtyCustomData(): $Optional<any>;
+        moonlight$getMapCenterZ(): number;
         moonlight$getDimension(): $ResourceLocation;
         moonlight$setDimension(arg0: $ResourceLocation_): void;
-        moonlight$getMapCenterZ(): number;
-        moonlight$setMapCenter(arg0: number, arg1: number): void;
         moonlight$getMapCenterX(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        moonlight$setMapCenter(arg0: number, arg1: number): void;
+        moonlight$getCustomDecorations(): $Optional<any>;
+        moonlight$setDirtyCustomData(arg0: $Optional<any>): void;
+        moonlight$setCustomDecorations(arg0: $Optional<any>): void;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundMapItemDataPacket>;
         constructor(mapId: $MapId_, scale: number, locked: boolean, decorations: $Collection_<$MapDecoration_> | null, colorPatch: $MapItemSavedData$MapPatch_ | null);
         constructor(arg0: $MapId_, arg1: number, arg2: boolean, arg3: ($List_<$MapDecoration_>) | undefined, arg4: ($MapItemSavedData$MapPatch_) | undefined);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundMapItemDataPacket}.
      */
-    export type $ClientboundMapItemDataPacket_ = { mapId?: $MapId_, scale?: number, colorPatch?: ($MapItemSavedData$MapPatch_) | undefined, decorations?: ($List_<$MapDecoration_>) | undefined, locked?: boolean,  } | [mapId?: $MapId_, scale?: number, colorPatch?: ($MapItemSavedData$MapPatch_) | undefined, decorations?: ($List_<$MapDecoration_>) | undefined, locked?: boolean, ];
+    export type $ClientboundMapItemDataPacket_ = { decorations?: ($List_<$MapDecoration_>) | undefined, locked?: boolean, mapId?: $MapId_, scale?: number, colorPatch?: ($MapItemSavedData$MapPatch_) | undefined,  } | [decorations?: ($List_<$MapDecoration_>) | undefined, locked?: boolean, mapId?: $MapId_, scale?: number, colorPatch?: ($MapItemSavedData$MapPatch_) | undefined, ];
     export class $VecDeltaCodec {
-        setBase(base: $Vec3_): void;
         decode(x: number, arg1: number, y: number): $Vec3;
         static decode(value: number): number;
         static encode(value: number): number;
         delta(value: $Vec3_): $Vec3;
         getBase(): $Vec3;
+        setBase(base: $Vec3_): void;
         encodeZ(value: $Vec3_): number;
         encodeY(value: $Vec3_): number;
         encodeX(value: $Vec3_): number;
         constructor();
     }
     export class $ServerboundPlayerCommandPacket implements $Packet<$ServerGamePacketListener> {
+        getAction(): $ServerboundPlayerCommandPacket$Action;
         type(): $PacketType<$ServerboundPlayerCommandPacket>;
         getId(): number;
         /**
@@ -949,28 +950,27 @@ declare module "@package/net/minecraft/network/protocol/game" {
          */
         handle(handler: $ServerGamePacketListener): void;
         getData(): number;
-        getAction(): $ServerboundPlayerCommandPacket$Action;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isSkippable(): boolean;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isTerminal(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundPlayerCommandPacket>;
         constructor(entity: $Entity, action: $ServerboundPlayerCommandPacket$Action_, data: number);
         constructor(entity: $Entity, action: $ServerboundPlayerCommandPacket$Action_);
+        get action(): $ServerboundPlayerCommandPacket$Action;
         get id(): number;
         get data(): number;
-        get action(): $ServerboundPlayerCommandPacket$Action;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundStartConfigurationPacket implements $Packet<$ClientGamePacketListener> {
-        isTerminal(): boolean;
         type(): $PacketType<$ClientboundStartConfigurationPacket>;
         handle(arg0: $ClientGamePacketListener): void;
+        isTerminal(): boolean;
         isSkippable(): boolean;
         static INSTANCE: $ClientboundStartConfigurationPacket;
         static STREAM_CODEC: $StreamCodec<$ByteBuf, $ClientboundStartConfigurationPacket>;
@@ -987,15 +987,15 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundForgetLevelChunkPacket>;
         constructor(arg0: $ChunkPos);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundForgetLevelChunkPacket}.
@@ -1011,18 +1011,19 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundSetBorderWarningDistancePacket>;
         constructor(worldBorder: $WorldBorder);
         get warningBlocks(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundTickingStatePacket extends $Record implements $Packet<$ClientGamePacketListener> {
+        tickRate(): number;
         type(): $PacketType<$ClientboundTickingStatePacket>;
         static from(tickRateManager: $TickRateManager): $ClientboundTickingStatePacket;
         /**
@@ -1033,25 +1034,24 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Whether decoding errors will be ignored for this packet.
          */
         isFrozen(): boolean;
-        tickRate(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundTickingStatePacket>;
         constructor(arg0: number, arg1: boolean);
         get frozen(): boolean;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundTickingStatePacket}.
      */
-    export type $ClientboundTickingStatePacket_ = { isFrozen?: boolean, tickRate?: number,  } | [isFrozen?: boolean, tickRate?: number, ];
+    export type $ClientboundTickingStatePacket_ = { tickRate?: number, isFrozen?: boolean,  } | [tickRate?: number, isFrozen?: boolean, ];
     export class $ClientboundSetCarriedItemPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundSetCarriedItemPacket>;
         getSlot(): number;
@@ -1062,16 +1062,16 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundSetCarriedItemPacket>;
         constructor(slot: number);
         get slot(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundChunksBiomesPacket$ChunkBiomeData extends $Record {
         buffer(): number[];
@@ -1087,7 +1087,7 @@ declare module "@package/net/minecraft/network/protocol/game" {
     /**
      * Values that may be interpreted as {@link $ClientboundChunksBiomesPacket$ChunkBiomeData}.
      */
-    export type $ClientboundChunksBiomesPacket$ChunkBiomeData_ = { pos?: $ChunkPos, buffer?: number[],  } | [pos?: $ChunkPos, buffer?: number[], ];
+    export type $ClientboundChunksBiomesPacket$ChunkBiomeData_ = { buffer?: number[], pos?: $ChunkPos,  } | [buffer?: number[], pos?: $ChunkPos, ];
     export class $ClientboundPlayerInfoRemovePacket extends $Record implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundPlayerInfoRemovePacket>;
         /**
@@ -1098,15 +1098,15 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundPlayerInfoRemovePacket>;
         constructor(arg0: $List_<$UUID_>);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundPlayerInfoRemovePacket}.
@@ -1122,15 +1122,15 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundSetActionBarTextPacket>;
         constructor(text: $Component_);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundSetActionBarTextPacket}.
@@ -1151,16 +1151,16 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundRenameItemPacket>;
         constructor(name: string);
         get name(): string;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundLevelChunkPacketData$BlockEntityTagOutput {
     }
@@ -1177,24 +1177,24 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
-        getSaturation(): number;
         getHealth(): number;
+        getSaturation(): number;
         getFood(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundSetHealthPacket>;
         constructor(health: number, food: number, saturation: number);
-        get saturation(): number;
         get health(): number;
+        get saturation(): number;
         get food(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundMerchantOffersPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundMerchantOffersPacket>;
@@ -1202,64 +1202,64 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
-        getVillagerXp(): number;
-        getContainerId(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        canRestock(): boolean;
         getOffers(): $MerchantOffers;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        showProgress(): boolean;
+        canRestock(): boolean;
+        getContainerId(): number;
         getVillagerLevel(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        showProgress(): boolean;
+        getVillagerXp(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundMerchantOffersPacket>;
         constructor(containerId: number, offers: $MerchantOffers, villagerLevel: number, villagerXp: number, showProgress: boolean, canRestock: boolean);
-        get villagerXp(): number;
-        get containerId(): number;
         get offers(): $MerchantOffers;
+        get containerId(): number;
         get villagerLevel(): number;
-        get skippable(): boolean;
+        get villagerXp(): number;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundLevelChunkPacketData {
         write(buffer: $RegistryFriendlyByteBuf): void;
-        getReadBuffer(): $FriendlyByteBuf;
         getHeightmaps(): $CompoundTag;
+        getReadBuffer(): $FriendlyByteBuf;
         getBlockEntitiesTagsConsumer(chunkX: number, chunkZ: number): $Consumer<$ClientboundLevelChunkPacketData$BlockEntityTagOutput>;
         static extractChunkData(buffer: $FriendlyByteBuf, chunk: $LevelChunk): void;
         constructor(levelChunk: $LevelChunk);
         constructor(buffer: $RegistryFriendlyByteBuf, x: number, z: number);
-        get readBuffer(): $FriendlyByteBuf;
         get heightmaps(): $CompoundTag;
+        get readBuffer(): $FriendlyByteBuf;
     }
     export class $ClientboundSetPlayerTeamPacket$Parameters {
         write(buffer: $RegistryFriendlyByteBuf): void;
         getDisplayName(): $Component;
-        getPlayerSuffix(): $Component;
-        getCollisionRule(): string;
-        getPlayerPrefix(): $Component;
-        getColor(): $ChatFormatting;
         getOptions(): number;
+        getColor(): $ChatFormatting;
         getNametagVisibility(): string;
+        getPlayerPrefix(): $Component;
+        getCollisionRule(): string;
+        getPlayerSuffix(): $Component;
         constructor(team: $PlayerTeam);
         constructor(buffer: $RegistryFriendlyByteBuf);
         get displayName(): $Component;
-        get playerSuffix(): $Component;
-        get collisionRule(): string;
-        get playerPrefix(): $Component;
-        get color(): $ChatFormatting;
         get options(): number;
+        get color(): $ChatFormatting;
         get nametagVisibility(): string;
+        get playerPrefix(): $Component;
+        get collisionRule(): string;
+        get playerSuffix(): $Component;
     }
     /**
      * PacketListener for the server side of the PLAY protocol.
@@ -1268,106 +1268,106 @@ declare module "@package/net/minecraft/network/protocol/game" {
     }
     export interface $ServerGamePacketListener extends $ServerPingPacketListener, $ServerCommonPacketListener, $IServerGamePacketListenerExtension {
         protocol(): $ConnectionProtocol;
-        handleAnimate(packet: $ServerboundSwingPacket): void;
         handlePickItem(packet: $ServerboundPickItemPacket): void;
+        /**
+         * This method is only called for manual tab-completion (the minecraft:ask_server suggestion provider).
+         */
+        handleCustomCommandSuggestions(packet: $ServerboundCommandSuggestionPacket): void;
+        handleContainerSlotStateChanged(packet: $ServerboundContainerSlotStateChangedPacket_): void;
+        handleRecipeBookSeenRecipePacket(packet: $ServerboundRecipeBookSeenRecipePacket): void;
+        /**
+         * Updates which quickbar slot is selected
+         */
+        handleSetCarriedItem(packet: $ServerboundSetCarriedItemPacket): void;
+        /**
+         * Processes a player starting/stopping flying
+         */
+        handlePlayerAbilities(packet: $ServerboundPlayerAbilitiesPacket): void;
+        /**
+         * Processes the client closing windows (container)
+         */
+        handleContainerClose(packet: $ServerboundContainerClosePacket): void;
+        handleChangeDifficulty(packet: $ServerboundChangeDifficultyPacket): void;
+        handleAnimate(packet: $ServerboundSwingPacket): void;
         /**
          * Processes clients perspective on player positioning and/or orientation
          */
         handleMovePlayer(packet: $ServerboundMovePlayerPacket): void;
-        /**
-         * Process chat messages (broadcast back to clients) and commands (executes)
-         */
-        handleChat(packet: $ServerboundChatPacket_): void;
-        handleMoveVehicle(packet: $ServerboundMoveVehiclePacket): void;
         handlePlaceRecipe(packet: $ServerboundPlaceRecipePacket): void;
-        handleSetJigsawBlock(packet: $ServerboundSetJigsawBlockPacket): void;
-        handleSetCommandMinecart(packet: $ServerboundSetCommandMinecartPacket): void;
-        handleBlockEntityTagQuery(packet: $ServerboundBlockEntityTagQueryPacket): void;
-        /**
-         * Processes a range of action-types: sneaking, sprinting, waking from sleep, opening the inventory or setting jump height of the horse the player is riding
-         */
-        handlePlayerCommand(packet: $ServerboundPlayerCommandPacket): void;
-        handleSignedChatCommand(packet: $ServerboundChatCommandSignedPacket_): void;
+        handleMoveVehicle(packet: $ServerboundMoveVehiclePacket): void;
         handleAcceptTeleportPacket(packet: $ServerboundAcceptTeleportationPacket): void;
-        handleJigsawGenerate(packet: $ServerboundJigsawGeneratePacket): void;
-        handleEntityTagQuery(packet: $ServerboundEntityTagQueryPacket): void;
-        /**
-         * Processes the client status updates: respawn attempt from player, opening statistics or achievements, or acquiring 'open inventory' achievement
-         */
-        handleClientCommand(packet: $ServerboundClientCommandPacket): void;
-        /**
-         * Executes a container/inventory slot manipulation as indicated by the packet. Sends the serverside result if they didn't match the indicated result and prevents further manipulation by the player until he confirms that it has the same open container/inventory
-         */
-        handleContainerClick(packet: $ServerboundContainerClickPacket): void;
-        /**
-         * Enchants the item identified by the packet given some convoluted conditions (matching window, which should/shouldn't be in use?)
-         */
-        handleContainerButtonClick(packet: $ServerboundContainerButtonClickPacket_): void;
+        handleBlockEntityTagQuery(packet: $ServerboundBlockEntityTagQueryPacket): void;
         handleSetCommandBlock(packet: $ServerboundSetCommandBlockPacket): void;
-        handleSeenAdvancements(packet: $ServerboundSeenAdvancementsPacket): void;
-        /**
-         * Update the server with an ItemStack in a slot.
-         */
-        handleSetCreativeModeSlot(packet: $ServerboundSetCreativeModeSlotPacket_): void;
-        handleLockDifficulty(packet: $ServerboundLockDifficultyPacket): void;
-        handleChatSessionUpdate(packet: $ServerboundChatSessionUpdatePacket_): void;
         handleSetBeaconPacket(packet: $ServerboundSetBeaconPacket_): void;
+        handleJigsawGenerate(packet: $ServerboundJigsawGeneratePacket): void;
+        handleSeenAdvancements(packet: $ServerboundSeenAdvancementsPacket): void;
+        handleSetCommandMinecart(packet: $ServerboundSetCommandMinecartPacket): void;
         handleSetStructureBlock(packet: $ServerboundSetStructureBlockPacket): void;
-        handleChunkBatchReceived(packet: $ServerboundChunkBatchReceivedPacket_): void;
-        /**
-         * Processes player movement input. Includes walking, strafing, jumping, and sneaking. Excludes riding and toggling flying/sprinting.
-         */
-        handlePlayerInput(packet: $ServerboundPlayerInputPacket): void;
-        handleRenameItem(packet: $ServerboundRenameItemPacket): void;
-        handleSelectTrade(packet: $ServerboundSelectTradePacket): void;
+        handleSetJigsawBlock(packet: $ServerboundSetJigsawBlockPacket): void;
+        handleEntityTagQuery(packet: $ServerboundEntityTagQueryPacket): void;
+        handleTeleportToEntityPacket(packet: $ServerboundTeleportToEntityPacket): void;
+        handleConfigurationAcknowledged(packet: $ServerboundConfigurationAcknowledgedPacket): void;
+        handleDebugSampleSubscription(packet: $ServerboundDebugSampleSubscriptionPacket_): void;
+        handleChatCommand(packet: $ServerboundChatCommandPacket_): void;
         handleUseItemOn(packet: $ServerboundUseItemOnPacket): void;
+        handlePaddleBoat(packet: $ServerboundPaddleBoatPacket): void;
+        /**
+         * Processes the player initiating/stopping digging on a particular spot, as well as a player dropping items
+         */
+        handlePlayerAction(packet: $ServerboundPlayerActionPacket): void;
+        handleSignUpdate(packet: $ServerboundSignUpdatePacket): void;
+        handleChatAck(packet: $ServerboundChatAckPacket_): void;
         /**
          * Called when a client is using an item while not pointing at a block, but simply using an item
          */
         handleUseItem(packet: $ServerboundUseItemPacket): void;
-        handleSignUpdate(packet: $ServerboundSignUpdatePacket): void;
         /**
          * Processes left and right clicks on entities
          */
         handleInteract(packet: $ServerboundInteractPacket): void;
         /**
-         * Processes the player initiating/stopping digging on a particular spot, as well as a player dropping items
+         * Process chat messages (broadcast back to clients) and commands (executes)
          */
-        handlePlayerAction(packet: $ServerboundPlayerActionPacket): void;
-        handleChatCommand(packet: $ServerboundChatCommandPacket_): void;
-        handleChatAck(packet: $ServerboundChatAckPacket_): void;
-        handlePaddleBoat(packet: $ServerboundPaddleBoatPacket): void;
-        handleEditBook(packet: $ServerboundEditBookPacket_): void;
-        handleTeleportToEntityPacket(packet: $ServerboundTeleportToEntityPacket): void;
-        handleContainerSlotStateChanged(packet: $ServerboundContainerSlotStateChangedPacket_): void;
-        handleRecipeBookSeenRecipePacket(packet: $ServerboundRecipeBookSeenRecipePacket): void;
-        handleDebugSampleSubscription(packet: $ServerboundDebugSampleSubscriptionPacket_): void;
-        /**
-         * This method is only called for manual tab-completion (the minecraft:ask_server suggestion provider).
-         */
-        handleCustomCommandSuggestions(packet: $ServerboundCommandSuggestionPacket): void;
-        handleConfigurationAcknowledged(packet: $ServerboundConfigurationAcknowledgedPacket): void;
+        handleChat(packet: $ServerboundChatPacket_): void;
         handleRecipeBookChangeSettingsPacket(packet: $ServerboundRecipeBookChangeSettingsPacket): void;
+        handleEditBook(packet: $ServerboundEditBookPacket_): void;
+        handleSelectTrade(packet: $ServerboundSelectTradePacket): void;
         /**
-         * Updates which quickbar slot is selected
+         * Processes player movement input. Includes walking, strafing, jumping, and sneaking. Excludes riding and toggling flying/sprinting.
          */
-        handleSetCarriedItem(packet: $ServerboundSetCarriedItemPacket): void;
-        handleChangeDifficulty(packet: $ServerboundChangeDifficultyPacket): void;
+        handlePlayerInput(packet: $ServerboundPlayerInputPacket): void;
+        handleRenameItem(packet: $ServerboundRenameItemPacket): void;
         /**
-         * Processes the client closing windows (container)
+         * Update the server with an ItemStack in a slot.
          */
-        handleContainerClose(packet: $ServerboundContainerClosePacket): void;
+        handleSetCreativeModeSlot(packet: $ServerboundSetCreativeModeSlotPacket_): void;
         /**
-         * Processes a player starting/stopping flying
+         * Enchants the item identified by the packet given some convoluted conditions (matching window, which should/shouldn't be in use?)
          */
-        handlePlayerAbilities(packet: $ServerboundPlayerAbilitiesPacket): void;
+        handleContainerButtonClick(packet: $ServerboundContainerButtonClickPacket_): void;
+        /**
+         * Executes a container/inventory slot manipulation as indicated by the packet. Sends the serverside result if they didn't match the indicated result and prevents further manipulation by the player until he confirms that it has the same open container/inventory
+         */
+        handleContainerClick(packet: $ServerboundContainerClickPacket): void;
+        /**
+         * Processes the client status updates: respawn attempt from player, opening statistics or achievements, or acquiring 'open inventory' achievement
+         */
+        handleClientCommand(packet: $ServerboundClientCommandPacket): void;
+        handleLockDifficulty(packet: $ServerboundLockDifficultyPacket): void;
+        handleChatSessionUpdate(packet: $ServerboundChatSessionUpdatePacket_): void;
+        handleChunkBatchReceived(packet: $ServerboundChunkBatchReceivedPacket_): void;
+        /**
+         * Processes a range of action-types: sneaking, sprinting, waking from sleep, opening the inventory or setting jump height of the horse the player is riding
+         */
+        handlePlayerCommand(packet: $ServerboundPlayerCommandPacket): void;
+        handleSignedChatCommand(packet: $ServerboundChatCommandSignedPacket_): void;
     }
     export class $ServerboundInteractPacket$Handler {
     }
     export interface $ServerboundInteractPacket$Handler {
-        onInteraction(hand: $InteractionHand_): void;
-        onInteraction(hand: $InteractionHand_, interactionLocation: $Vec3_): void;
         onAttack(): void;
+        onInteraction(hand: $InteractionHand_, interactionLocation: $Vec3_): void;
+        onInteraction(hand: $InteractionHand_): void;
     }
     export class $ServerboundMovePlayerPacket$StatusOnly extends $ServerboundMovePlayerPacket {
         onGround: boolean;
@@ -1416,32 +1416,32 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTrackOutput(): boolean;
+        isConditional(): boolean;
         getMode(): $CommandBlockEntity$Mode;
         getPos(): $BlockPos;
         getCommand(): string;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isConditional(): boolean;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        isTrackOutput(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundSetCommandBlockPacket>;
         constructor(pos: $BlockPos_, command: string, mode: $CommandBlockEntity$Mode_, trackOutput: boolean, conditional: boolean, automatic: boolean);
         get automatic(): boolean;
-        get trackOutput(): boolean;
+        get conditional(): boolean;
         get mode(): $CommandBlockEntity$Mode;
         get pos(): $BlockPos;
         get command(): string;
-        get conditional(): boolean;
-        get skippable(): boolean;
+        get trackOutput(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundPlaceRecipePacket implements $Packet<$ServerGamePacketListener> {
         type(): $PacketType<$ServerboundPlaceRecipePacket>;
@@ -1458,18 +1458,18 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundPlaceRecipePacket>;
         constructor(containerId: number, recipe: $RecipeHolder_<never>, shiftDown: boolean);
         get containerId(): number;
         get recipe(): $ResourceLocation;
         get shiftDown(): boolean;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundHurtAnimationPacket extends $Record implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundHurtAnimationPacket>;
@@ -1482,59 +1482,56 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundHurtAnimationPacket>;
         constructor(arg0: number, arg1: number);
         constructor(entity: $LivingEntity);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundHurtAnimationPacket}.
      */
     export type $ClientboundHurtAnimationPacket_ = { yaw?: number, id?: number,  } | [yaw?: number, id?: number, ];
     export class $ServerboundSetCreativeModeSlotPacket extends $Record implements $Packet<$ServerGamePacketListener> {
-        itemStack(): $ItemStack;
         type(): $PacketType<$ServerboundSetCreativeModeSlotPacket>;
         /**
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ServerGamePacketListener): void;
+        itemStack(): $ItemStack;
         slotNum(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ServerboundSetCreativeModeSlotPacket>;
         constructor(slotNum: number, itemStack: $ItemStack_);
         constructor(arg0: number, arg1: $ItemStack_);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ServerboundSetCreativeModeSlotPacket}.
      */
-    export type $ServerboundSetCreativeModeSlotPacket_ = { slotNum?: number, itemStack?: $ItemStack_,  } | [slotNum?: number, itemStack?: $ItemStack_, ];
+    export type $ServerboundSetCreativeModeSlotPacket_ = { itemStack?: $ItemStack_, slotNum?: number,  } | [itemStack?: $ItemStack_, slotNum?: number, ];
     export class $ClientboundUpdateMobEffectPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundUpdateMobEffectPacket>;
         /**
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
-        getEffect(): $Holder<$MobEffect>;
         getEntityId(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        effectShowsIcon(): boolean;
+        getEffect(): $Holder<$MobEffect>;
+        getEffectDurationTicks(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
@@ -1543,30 +1540,33 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
+        effectShowsIcon(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
         isEffectAmbient(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isEffectVisible(): boolean;
-        getEffectDurationTicks(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundUpdateMobEffectPacket>;
         constructor(entityId: number, effect: $MobEffectInstance, blend: boolean);
-        get effect(): $Holder<$MobEffect>;
         get entityId(): number;
+        get effect(): $Holder<$MobEffect>;
+        get effectDurationTicks(): number;
         get effectAmplifier(): number;
         get effectAmbient(): boolean;
         get effectVisible(): boolean;
-        get effectDurationTicks(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundInteractPacket$ActionType extends $Enum<$ServerboundInteractPacket$ActionType> {
     }
@@ -1586,24 +1586,24 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
-        getContainerId(): number;
-        getInventoryColumns(): number;
         getEntityId(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getInventoryColumns(): number;
+        getContainerId(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundHorseScreenOpenPacket>;
         constructor(containerId: number, size: number, entityId: number);
-        get containerId(): number;
-        get inventoryColumns(): number;
         get entityId(): number;
-        get skippable(): boolean;
+        get inventoryColumns(): number;
+        get containerId(): number;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundSetCommandMinecartPacket implements $Packet<$ServerGamePacketListener> {
         type(): $PacketType<$ServerboundSetCommandMinecartPacket>;
@@ -1611,30 +1611,28 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ServerGamePacketListener): void;
+        getCommandBlock(level: $Level_): $BaseCommandBlock;
+        getCommand(): string;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTrackOutput(): boolean;
-        getCommand(): string;
-        getCommandBlock(level: $Level_): $BaseCommandBlock;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundSetCommandMinecartPacket>;
         constructor(entity: number, command: string, trackOutput: boolean);
-        get trackOutput(): boolean;
         get command(): string;
-        get skippable(): boolean;
+        get trackOutput(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundPlayerAbilitiesPacket implements $Packet<$ClientGamePacketListener> {
-        getFlyingSpeed(): number;
-        getWalkingSpeed(): number;
         type(): $PacketType<$ClientboundPlayerAbilitiesPacket>;
         /**
          * Passes this Packet on to the NetHandler for processing.
@@ -1644,6 +1642,8 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Whether decoding errors will be ignored for this packet.
          */
         isInvulnerable(): boolean;
+        getWalkingSpeed(): number;
+        getFlyingSpeed(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
@@ -1651,27 +1651,27 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        canFly(): boolean;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
         canInstabuild(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        canFly(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         flyingSpeed: number;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundPlayerAbilitiesPacket>;
         constructor(abilities: $Abilities);
-        get walkingSpeed(): number;
         get invulnerable(): boolean;
+        get walkingSpeed(): number;
         get flying(): boolean;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundUpdateRecipesPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundUpdateRecipesPacket>;
@@ -1683,16 +1683,16 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundUpdateRecipesPacket>;
         constructor(recipes: $Collection_<$RecipeHolder_<never>>);
         get recipes(): $List<$RecipeHolder<never>>;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundPaddleBoatPacket implements $Packet<$ServerGamePacketListener> {
         type(): $PacketType<$ServerboundPaddleBoatPacket>;
@@ -1703,25 +1703,25 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        getRight(): boolean;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
         getLeft(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        getRight(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundPaddleBoatPacket>;
         constructor(left: boolean, right: boolean);
-        get right(): boolean;
         get left(): boolean;
-        get skippable(): boolean;
+        get right(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundBossEventPacket$UpdateProgressOperation extends $Record implements $ClientboundBossEventPacket$Operation {
     }
@@ -1740,16 +1740,16 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundEntityEventPacket>;
         constructor(entity: $Entity, eventId: number);
         get eventId(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundUpdateAttributesPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundUpdateAttributesPacket>;
@@ -1762,17 +1762,17 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundUpdateAttributesPacket>;
         constructor(entityId: number, attributes: $Collection_<$AttributeInstance>);
         get values(): $List<$ClientboundUpdateAttributesPacket$AttributeSnapshot>;
         get entityId(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundCommandsPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundCommandsPacket>;
@@ -1784,15 +1784,15 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundCommandsPacket>;
         constructor(root: $RootCommandNode<$SharedSuggestionProvider>);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundCommandsPacket$LiteralNodeStub implements $ClientboundCommandsPacket$NodeStub {
     }
@@ -1807,23 +1807,19 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundStopSoundPacket>;
         constructor(name: $ResourceLocation_ | null, source: $SoundSource_ | null);
         get name(): $ResourceLocation;
         get source(): $SoundSource;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundRecipeBookChangeSettingsPacket implements $Packet<$ServerGamePacketListener> {
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isFiltering(): boolean;
         type(): $PacketType<$ServerboundRecipeBookChangeSettingsPacket>;
         /**
          * Whether decoding errors will be ignored for this packet.
@@ -1833,29 +1829,33 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ServerGamePacketListener): void;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isFiltering(): boolean;
         getBookType(): $RecipeBookType;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundRecipeBookChangeSettingsPacket>;
         constructor(bookType: $RecipeBookType_, isOpen: boolean, isFiltering: boolean);
-        get filtering(): boolean;
         get open(): boolean;
+        get filtering(): boolean;
         get bookType(): $RecipeBookType;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundCommandsPacket$Entry {
     }
     export class $ServerboundConfigurationAcknowledgedPacket implements $Packet<$ServerGamePacketListener> {
-        isTerminal(): boolean;
         type(): $PacketType<$ServerboundConfigurationAcknowledgedPacket>;
         handle(arg0: $ServerGamePacketListener): void;
+        isTerminal(): boolean;
         isSkippable(): boolean;
         static INSTANCE: $ServerboundConfigurationAcknowledgedPacket;
         static STREAM_CODEC: $StreamCodec<$ByteBuf, $ServerboundConfigurationAcknowledgedPacket>;
@@ -1872,15 +1872,15 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundSetSubtitleTextPacket>;
         constructor(text: $Component_);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundSetSubtitleTextPacket}.
@@ -1898,26 +1898,26 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundRemoveMobEffectPacket>;
         constructor(arg0: number, arg1: $Holder_<$MobEffect>);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundRemoveMobEffectPacket}.
      */
-    export type $ClientboundRemoveMobEffectPacket_ = { entityId?: number, effect?: $Holder_<$MobEffect>,  } | [entityId?: number, effect?: $Holder_<$MobEffect>, ];
+    export type $ClientboundRemoveMobEffectPacket_ = { effect?: $Holder_<$MobEffect>, entityId?: number,  } | [effect?: $Holder_<$MobEffect>, entityId?: number, ];
     export class $ClientboundMoveEntityPacket$Pos extends $ClientboundMoveEntityPacket implements $PacketActuallyInSubLevelExtension {
-        sable$setActuallyInSubLevel(arg0: boolean): void;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         sable$isActuallyInSubLevel(): boolean;
+        sable$setActuallyInSubLevel(arg0: boolean): void;
         onGround: boolean;
         yRot: number;
         za: number;
@@ -1931,7 +1931,6 @@ declare module "@package/net/minecraft/network/protocol/game" {
         constructor(entityId: number, xa: number, ya: number, za: number, onGround: boolean);
     }
     export class $ClientboundChangeDifficultyPacket implements $Packet<$ClientGamePacketListener> {
-        getDifficulty(): $Difficulty;
         type(): $PacketType<$ClientboundChangeDifficultyPacket>;
         /**
          * Passes this Packet on to the NetHandler for processing.
@@ -1941,20 +1940,21 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Whether decoding errors will be ignored for this packet.
          */
         isLocked(): boolean;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getDifficulty(): $Difficulty;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundChangeDifficultyPacket>;
         constructor(difficulty: $Difficulty_, locked: boolean);
-        get difficulty(): $Difficulty;
         get locked(): boolean;
-        get skippable(): boolean;
+        get difficulty(): $Difficulty;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundSetEntityMotionPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundSetEntityMotionPacket>;
@@ -1969,11 +1969,11 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundSetEntityMotionPacket>;
         constructor(id: number, deltaMovement: $Vec3_);
         constructor(entity: $Entity);
@@ -1981,36 +1981,36 @@ declare module "@package/net/minecraft/network/protocol/game" {
         get ya(): number;
         get za(): number;
         get xa(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundPlayerActionPacket implements $Packet<$ServerGamePacketListener> {
-        getSequence(): number;
+        getAction(): $ServerboundPlayerActionPacket$Action;
         type(): $PacketType<$ServerboundPlayerActionPacket>;
         /**
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ServerGamePacketListener): void;
+        getSequence(): number;
         getDirection(): $Direction;
-        getAction(): $ServerboundPlayerActionPacket$Action;
         getPos(): $BlockPos;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundPlayerActionPacket>;
         constructor(action: $ServerboundPlayerActionPacket$Action_, pos: $BlockPos_, direction: $Direction_);
         constructor(action: $ServerboundPlayerActionPacket$Action_, pos: $BlockPos_, direction: $Direction_, sequence: number);
+        get action(): $ServerboundPlayerActionPacket$Action;
         get sequence(): number;
         get direction(): $Direction;
-        get action(): $ServerboundPlayerActionPacket$Action;
         get pos(): $BlockPos;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundSetEquipmentPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundSetEquipmentPacket>;
@@ -2023,21 +2023,19 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundSetEquipmentPacket>;
         constructor(entity: number, slots: $List_<$Pair<$EquipmentSlot_, $ItemStack_>>);
         get entity(): number;
         get slots(): $List<$Pair<$EquipmentSlot, $ItemStack>>;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundAddEntityPacket implements $Packet<$ClientGamePacketListener> {
-        getZ(): number;
-        getX(): number;
         type(): $PacketType<$ClientboundAddEntityPacket>;
         getId(): number;
         getType(): $EntityType<never>;
@@ -2048,39 +2046,41 @@ declare module "@package/net/minecraft/network/protocol/game" {
         getData(): number;
         getY(): number;
         getYHeadRot(): number;
-        getUUID(): $UUID;
-        getYRot(): number;
-        getXRot(): number;
+        getZ(): number;
+        getX(): number;
         getYa(): number;
         getZa(): number;
         getXa(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getUUID(): $UUID;
+        getXRot(): number;
+        getYRot(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundAddEntityPacket>;
-        constructor(entity: $Entity, serverEntity: $ServerEntity);
-        constructor(entity: $Entity, serverEntity: $ServerEntity, data: number);
-        constructor(entity: $Entity, data: number, pos: $BlockPos_);
         constructor(id: number, uuid: $UUID_, x: number, arg3: number, y: number, arg5: number, z: number, arg7: $EntityType_<never>, xRot: number, yRot: $Vec3_, type: number);
-        get z(): number;
-        get x(): number;
+        constructor(entity: $Entity, data: number, pos: $BlockPos_);
+        constructor(entity: $Entity, serverEntity: $ServerEntity, data: number);
+        constructor(entity: $Entity, serverEntity: $ServerEntity);
         get id(): number;
         get data(): number;
         get y(): number;
         get YHeadRot(): number;
-        get UUID(): $UUID;
-        get YRot(): number;
-        get XRot(): number;
+        get z(): number;
+        get x(): number;
         get ya(): number;
         get za(): number;
         get xa(): number;
-        get skippable(): boolean;
+        get UUID(): $UUID;
+        get XRot(): number;
+        get YRot(): number;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundPlayerCommandPacket$Action extends $Enum<$ServerboundPlayerCommandPacket$Action> {
         static values(): $ServerboundPlayerCommandPacket$Action[];
@@ -2112,28 +2112,28 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundLockDifficultyPacket>;
         constructor(locked: boolean);
         get locked(): boolean;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundPlayerCombatKillPacket extends $Record implements $Packet<$ClientGamePacketListener> {
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
         type(): $PacketType<$ClientboundPlayerCombatKillPacket>;
         message(): $Component;
         /**
          * Passes this Packet on to the PacketListener for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         playerId(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
@@ -2176,36 +2176,37 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundCommandSuggestionsPacket>;
         constructor(id: number, suggestions: $Suggestions);
         constructor(arg0: number, arg1: number, arg2: number, arg3: $List_<$ClientboundCommandSuggestionsPacket$Entry_>);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundCommandSuggestionsPacket}.
      */
-    export type $ClientboundCommandSuggestionsPacket_ = { suggestions?: $List_<$ClientboundCommandSuggestionsPacket$Entry_>, length?: number, id?: number, start?: number,  } | [suggestions?: $List_<$ClientboundCommandSuggestionsPacket$Entry_>, length?: number, id?: number, start?: number, ];
+    export type $ClientboundCommandSuggestionsPacket_ = { id?: number, start?: number, suggestions?: $List_<$ClientboundCommandSuggestionsPacket$Entry_>, length?: number,  } | [id?: number, start?: number, suggestions?: $List_<$ClientboundCommandSuggestionsPacket$Entry_>, length?: number, ];
     export class $ClientboundChunkBatchStartPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundChunkBatchStartPacket>;
         handle(arg0: $ClientGamePacketListener): void;
-        isSkippable(): boolean;
         isTerminal(): boolean;
+        isSkippable(): boolean;
         static INSTANCE: $ClientboundChunkBatchStartPacket;
         static STREAM_CODEC: $StreamCodec<$ByteBuf, $ClientboundChunkBatchStartPacket>;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundBossEventPacket$Operation {
     }
     export interface $ClientboundBossEventPacket$Operation {
     }
     export class $ClientboundSetScorePacket extends $Record implements $Packet<$ClientGamePacketListener> {
+        score(): number;
         type(): $PacketType<$ClientboundSetScorePacket>;
         owner(): string;
         /**
@@ -2214,25 +2215,24 @@ declare module "@package/net/minecraft/network/protocol/game" {
         handle(handler: $ClientGamePacketListener): void;
         display(): ($Component) | undefined;
         numberFormat(): ($NumberFormat) | undefined;
-        score(): number;
         objectiveName(): string;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundSetScorePacket>;
         constructor(arg0: string, arg1: string, arg2: number, arg3: ($Component_) | undefined, arg4: ($NumberFormat) | undefined);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundSetScorePacket}.
      */
-    export type $ClientboundSetScorePacket_ = { score?: number, numberFormat?: ($NumberFormat) | undefined, owner?: string, objectiveName?: string, display?: ($Component_) | undefined,  } | [score?: number, numberFormat?: ($NumberFormat) | undefined, owner?: string, objectiveName?: string, display?: ($Component_) | undefined, ];
+    export type $ClientboundSetScorePacket_ = { owner?: string, objectiveName?: string, display?: ($Component_) | undefined, score?: number, numberFormat?: ($NumberFormat) | undefined,  } | [owner?: string, objectiveName?: string, display?: ($Component_) | undefined, score?: number, numberFormat?: ($NumberFormat) | undefined, ];
     export class $ServerboundEntityTagQueryPacket implements $Packet<$ServerGamePacketListener> {
         type(): $PacketType<$ServerboundEntityTagQueryPacket>;
         /**
@@ -2244,17 +2244,17 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundEntityTagQueryPacket>;
         constructor(transactionId: number, entityId: number);
         get entityId(): number;
         get transactionId(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundCommandSuggestionsPacket$Entry extends $Record {
         text(): string;
@@ -2265,7 +2265,7 @@ declare module "@package/net/minecraft/network/protocol/game" {
     /**
      * Values that may be interpreted as {@link $ClientboundCommandSuggestionsPacket$Entry}.
      */
-    export type $ClientboundCommandSuggestionsPacket$Entry_ = { tooltip?: ($Component_) | undefined, text?: string,  } | [tooltip?: ($Component_) | undefined, text?: string, ];
+    export type $ClientboundCommandSuggestionsPacket$Entry_ = { text?: string, tooltip?: ($Component_) | undefined,  } | [text?: string, tooltip?: ($Component_) | undefined, ];
     export class $ServerboundBlockEntityTagQueryPacket implements $Packet<$ServerGamePacketListener> {
         type(): $PacketType<$ServerboundBlockEntityTagQueryPacket>;
         /**
@@ -2277,17 +2277,17 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundBlockEntityTagQueryPacket>;
         constructor(transactionId: number, pos: $BlockPos_);
         get pos(): $BlockPos;
         get transactionId(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $GamePacketTypes {
         static CLIENTBOUND_SET_EXPERIENCE: $PacketType<$ClientboundSetExperiencePacket>;
@@ -2468,15 +2468,15 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundClearTitlesPacket>;
         constructor(resetTimes: boolean);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundContainerButtonClickPacket extends $Record implements $Packet<$ServerGamePacketListener> {
         type(): $PacketType<$ServerboundContainerButtonClickPacket>;
@@ -2484,25 +2484,25 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ServerGamePacketListener): void;
-        buttonId(): number;
         containerId(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        buttonId(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundContainerButtonClickPacket>;
         constructor(containerId: number, buttonId: number);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ServerboundContainerButtonClickPacket}.
      */
-    export type $ServerboundContainerButtonClickPacket_ = { containerId?: number, buttonId?: number,  } | [containerId?: number, buttonId?: number, ];
+    export type $ServerboundContainerButtonClickPacket_ = { buttonId?: number, containerId?: number,  } | [buttonId?: number, containerId?: number, ];
     export class $ClientboundSetBorderWarningDelayPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundSetBorderWarningDelayPacket>;
         /**
@@ -2513,16 +2513,16 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundSetBorderWarningDelayPacket>;
         constructor(worldBorder: $WorldBorder);
         get warningDelay(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundMoveEntityPacket$Rot extends $ClientboundMoveEntityPacket {
         onGround: boolean;
@@ -2544,23 +2544,23 @@ declare module "@package/net/minecraft/network/protocol/game" {
          */
         handle(handler: $ClientGamePacketListener): void;
         getNewSize(): number;
-        getOldSize(): number;
         getLerpTime(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getOldSize(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundSetBorderLerpSizePacket>;
         constructor(worldBorder: $WorldBorder);
         get newSize(): number;
-        get oldSize(): number;
         get lerpTime(): number;
-        get skippable(): boolean;
+        get oldSize(): number;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundMovePlayerPacket$Rot extends $ServerboundMovePlayerPacket {
         onGround: boolean;
@@ -2584,16 +2584,16 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundContainerClosePacket>;
         constructor(containerId: number);
         get containerId(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundChatCommandPacket extends $Record implements $Packet<$ServerGamePacketListener> {
         type(): $PacketType<$ServerboundChatCommandPacket>;
@@ -2605,15 +2605,15 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundChatCommandPacket>;
         constructor(arg0: string);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ServerboundChatCommandPacket}.
@@ -2629,15 +2629,15 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundDebugSampleSubscriptionPacket>;
         constructor(arg0: $RemoteDebugSampleType_);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ServerboundDebugSampleSubscriptionPacket}.
@@ -2656,8 +2656,6 @@ declare module "@package/net/minecraft/network/protocol/game" {
     export class $ClientboundBossEventPacket$UpdateStyleOperation implements $ClientboundBossEventPacket$Operation {
     }
     export class $ClientboundSoundPacket implements $Packet<$ClientGamePacketListener> {
-        getZ(): number;
-        getX(): number;
         type(): $PacketType<$ClientboundSoundPacket>;
         /**
          * Passes this Packet on to the NetHandler for processing.
@@ -2666,30 +2664,32 @@ declare module "@package/net/minecraft/network/protocol/game" {
         getSeed(): number;
         getSource(): $SoundSource;
         getY(): number;
+        getZ(): number;
+        getX(): number;
         getPitch(): number;
         getVolume(): number;
         getSound(): $Holder<$SoundEvent>;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static LOCATION_ACCURACY: number;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundSoundPacket>;
         constructor(sound: $Holder_<$SoundEvent>, source: $SoundSource_, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number);
-        get z(): number;
-        get x(): number;
         get seed(): number;
         get source(): $SoundSource;
         get y(): number;
+        get z(): number;
+        get x(): number;
         get pitch(): number;
         get volume(): number;
         get sound(): $Holder<$SoundEvent>;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundRecipeBookSeenRecipePacket implements $Packet<$ServerGamePacketListener> {
         type(): $PacketType<$ServerboundRecipeBookSeenRecipePacket>;
@@ -2701,45 +2701,45 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundRecipeBookSeenRecipePacket>;
         constructor(recipe: $RecipeHolder_<never>);
         get recipe(): $ResourceLocation;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundMoveVehiclePacket implements $Packet<$ClientGamePacketListener> {
-        getZ(): number;
-        getX(): number;
         type(): $PacketType<$ClientboundMoveVehiclePacket>;
         /**
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
         getY(): number;
-        getYRot(): number;
+        getZ(): number;
+        getX(): number;
         getXRot(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getYRot(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundMoveVehiclePacket>;
         constructor(vehicle: $Entity);
+        get y(): number;
         get z(): number;
         get x(): number;
-        get y(): number;
-        get YRot(): number;
         get XRot(): number;
-        get skippable(): boolean;
+        get YRot(): number;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundContainerSlotStateChangedPacket extends $Record implements $Packet<$ServerGamePacketListener> {
         type(): $PacketType<$ServerboundContainerSlotStateChangedPacket>;
@@ -2756,23 +2756,21 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundContainerSlotStateChangedPacket>;
         constructor(arg0: number, arg1: number, arg2: boolean);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ServerboundContainerSlotStateChangedPacket}.
      */
-    export type $ServerboundContainerSlotStateChangedPacket_ = { containerId?: number, newState?: boolean, slotId?: number,  } | [containerId?: number, newState?: boolean, slotId?: number, ];
+    export type $ServerboundContainerSlotStateChangedPacket_ = { slotId?: number, containerId?: number, newState?: boolean,  } | [slotId?: number, containerId?: number, newState?: boolean, ];
     export class $ClientboundAddExperienceOrbPacket implements $Packet<$ClientGamePacketListener> {
-        getZ(): number;
-        getX(): number;
         type(): $PacketType<$ClientboundAddExperienceOrbPacket>;
         getValue(): number;
         getId(): number;
@@ -2781,23 +2779,25 @@ declare module "@package/net/minecraft/network/protocol/game" {
          */
         handle(handler: $ClientGamePacketListener): void;
         getY(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getZ(): number;
+        getX(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundAddExperienceOrbPacket>;
         constructor(orb: $ExperienceOrb, entity: $ServerEntity);
-        get z(): number;
-        get x(): number;
         get value(): number;
         get id(): number;
         get y(): number;
-        get skippable(): boolean;
+        get z(): number;
+        get x(): number;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundSetTimePacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundSetTimePacket>;
@@ -2810,17 +2810,17 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundSetTimePacket>;
         constructor(gameTime: number, arg1: number, dayTime: boolean);
         get gameTime(): number;
         get dayTime(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundAwardStatsPacket extends $Record implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundAwardStatsPacket>;
@@ -2832,15 +2832,15 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundAwardStatsPacket>;
         constructor(stats: $Object2IntMap<$Stat_<never>>);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundAwardStatsPacket}.
@@ -2860,15 +2860,15 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundBlockChangedAckPacket>;
         constructor(arg0: number);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundBlockChangedAckPacket}.
@@ -2887,16 +2887,16 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundPlayerInfoUpdatePacket>;
-        constructor(actions: $EnumSet<$ClientboundPlayerInfoUpdatePacket$Action_>, players: $Collection_<$ServerPlayer>);
         constructor(action: $ClientboundPlayerInfoUpdatePacket$Action_, player: $ServerPlayer);
-        get skippable(): boolean;
+        constructor(actions: $EnumSet<$ClientboundPlayerInfoUpdatePacket$Action_>, players: $Collection_<$ServerPlayer>);
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundDamageEventPacket extends $Record implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundDamageEventPacket>;
@@ -2907,22 +2907,22 @@ declare module "@package/net/minecraft/network/protocol/game" {
         sourceType(): $Holder<$DamageType>;
         getSource(level: $Level_): $DamageSource;
         entityId(): number;
-        sourcePosition(): ($Vec3) | undefined;
         sourceDirectId(): number;
         sourceCauseId(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        sourcePosition(): ($Vec3) | undefined;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundDamageEventPacket>;
         constructor(arg0: number, arg1: $Holder_<$DamageType>, arg2: number, arg3: number, arg4: ($Vec3_) | undefined);
         constructor(entity: $Entity, damageSource: $DamageSource_);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundDamageEventPacket}.
@@ -2934,26 +2934,26 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
-        getContainerId(): number;
         getCarriedItem(): $ItemStack;
-        getItems(): $List<$ItemStack>;
         getStateId(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getContainerId(): number;
+        getItems(): $List<$ItemStack>;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundContainerSetContentPacket>;
         constructor(containerId: number, stateId: number, items: $NonNullList<$ItemStack_>, carriedItem: $ItemStack_);
-        get containerId(): number;
         get carriedItem(): $ItemStack;
-        get items(): $List<$ItemStack>;
         get stateId(): number;
-        get skippable(): boolean;
+        get containerId(): number;
+        get items(): $List<$ItemStack>;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundGameEventPacket$Type {
         static TYPES: $Int2ObjectMap<$ClientboundGameEventPacket$Type>;
@@ -2977,27 +2977,27 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * First parameter of the block event. The meaning of this value depends on the block.
          */
-        getB1(): number;
+        getB0(): number;
         /**
          * First parameter of the block event. The meaning of this value depends on the block.
          */
-        getB0(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getB1(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundBlockEventPacket>;
         constructor(pos: $BlockPos_, block: $Block_, b0: number, b1: number);
         get block(): $Block;
         get pos(): $BlockPos;
-        get b1(): number;
         get b0(): number;
-        get skippable(): boolean;
+        get b1(): number;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundSetSimulationDistancePacket extends $Record implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundSetSimulationDistancePacket>;
@@ -3009,15 +3009,15 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundSetSimulationDistancePacket>;
         constructor(arg0: number);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundSetSimulationDistancePacket}.
@@ -3031,77 +3031,77 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
-        getPlayers(): $Collection<string>;
         static createAddOrModifyPacket(team: $PlayerTeam, useAdd: boolean): $ClientboundSetPlayerTeamPacket;
         getTeamAction(): $ClientboundSetPlayerTeamPacket$Action;
         getPlayerAction(): $ClientboundSetPlayerTeamPacket$Action;
+        getPlayers(): $Collection<string>;
         static createPlayerPacket(team: $PlayerTeam, playerName: string, action: $ClientboundSetPlayerTeamPacket$Action_): $ClientboundSetPlayerTeamPacket;
         static createRemovePacket(team: $PlayerTeam): $ClientboundSetPlayerTeamPacket;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundSetPlayerTeamPacket>;
         get name(): string;
         get parameters(): ($ClientboundSetPlayerTeamPacket$Parameters) | undefined;
-        get players(): $Collection<string>;
         get teamAction(): $ClientboundSetPlayerTeamPacket$Action;
         get playerAction(): $ClientboundSetPlayerTeamPacket$Action;
-        get skippable(): boolean;
+        get players(): $Collection<string>;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $DebugPackets {
-        static sendStructurePacket(level: $WorldGenLevel, structureStart: $StructureStart): void;
+        static sendGoalSelector(level: $Level_, mob: $Mob, goalSelector: $GoalSelector): void;
+        static sendPoiRemovedPacket(level: $ServerLevel, pos: $BlockPos_): void;
+        static sendPathFindingPacket(level: $Level_, mob: $Mob, path: $Path | null, maxDistanceToWaypoint: number): void;
+        static sendPoiAddedPacket(level: $ServerLevel, pos: $BlockPos_): void;
+        static sendPoiTicketCountPacket(level: $ServerLevel, pos: $BlockPos_): void;
+        static sendHiveInfo(level: $Level_, pos: $BlockPos_, blockState: $BlockState_, hiveBlockEntity: $BeehiveBlockEntity): void;
+        static sendEntityBrain(livingEntity: $LivingEntity): void;
+        static sendNeighborsUpdatePacket(level: $Level_, pos: $BlockPos_): void;
         static sendBeeInfo(bee: $Bee): void;
         static sendBreezeInfo(breeze: $Breeze): void;
-        static sendPoiRemovedPacket(level: $ServerLevel, pos: $BlockPos_): void;
-        static sendPoiAddedPacket(level: $ServerLevel, pos: $BlockPos_): void;
-        static sendPathFindingPacket(level: $Level_, mob: $Mob, path: $Path | null, maxDistanceToWaypoint: number): void;
-        static sendNeighborsUpdatePacket(level: $Level_, pos: $BlockPos_): void;
-        static sendGoalSelector(level: $Level_, mob: $Mob, goalSelector: $GoalSelector): void;
-        static sendEntityBrain(livingEntity: $LivingEntity): void;
-        static sendHiveInfo(level: $Level_, pos: $BlockPos_, blockState: $BlockState_, hiveBlockEntity: $BeehiveBlockEntity): void;
-        static sendPoiTicketCountPacket(level: $ServerLevel, pos: $BlockPos_): void;
+        static sendStructurePacket(level: $WorldGenLevel, structureStart: $StructureStart): void;
         static sendGameEventInfo(level: $Level_, gameEvent: $Holder_<$GameEvent>, pos: $Vec3_): void;
-        static sendRaids(level: $ServerLevel, raids: $Collection_<$Raid>): void;
         static sendPoiPacketsForChunk(level: $ServerLevel, chunkPos: $ChunkPos): void;
         static sendGameTestAddMarker(level: $ServerLevel, pos: $BlockPos_, text: string, color: number, lifetimeMillis: number): void;
-        static sendGameTestClearPacket(level: $ServerLevel): void;
         static sendGameEventListenerInfo(level: $Level_, gameEventListener: $GameEventListener): void;
+        static sendGameTestClearPacket(level: $ServerLevel): void;
+        static sendRaids(level: $ServerLevel, raids: $Collection_<$Raid>): void;
         constructor();
     }
     export class $ClientboundCommandsPacket$ArgumentNodeStub implements $ClientboundCommandsPacket$NodeStub {
     }
     export class $ClientboundRecipePacket implements $Packet<$ClientGamePacketListener> {
-        getBookSettings(): $RecipeBookSettings;
         type(): $PacketType<$ClientboundRecipePacket>;
         getState(): $ClientboundRecipePacket$State;
         /**
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
+        getBookSettings(): $RecipeBookSettings;
         getRecipes(): $List<$ResourceLocation>;
         getHighlights(): $List<$ResourceLocation>;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundRecipePacket>;
         constructor(state: $ClientboundRecipePacket$State_, recipes: $Collection_<$ResourceLocation_>, toHighlight: $Collection_<$ResourceLocation_>, bookSettings: $RecipeBookSettings);
-        get bookSettings(): $RecipeBookSettings;
         get state(): $ClientboundRecipePacket$State;
+        get bookSettings(): $RecipeBookSettings;
         get recipes(): $List<$ResourceLocation>;
         get highlights(): $List<$ResourceLocation>;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundDeleteChatPacket extends $Record implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundDeleteChatPacket>;
@@ -3113,15 +3113,15 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundDeleteChatPacket>;
         constructor(arg0: $MessageSignature$Packed_);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundDeleteChatPacket}.
@@ -3133,24 +3133,24 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
+        getAmount(): number;
         getPlayerId(): number;
         getItemId(): number;
-        getAmount(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundTakeItemEntityPacket>;
         constructor(itemId: number, playerId: number, amount: number);
+        get amount(): number;
         get playerId(): number;
         get itemId(): number;
-        get amount(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundContainerSetSlotPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundContainerSetSlotPacket>;
@@ -3160,26 +3160,26 @@ declare module "@package/net/minecraft/network/protocol/game" {
          */
         handle(handler: $ClientGamePacketListener): void;
         getItem(): $ItemStack;
-        getContainerId(): number;
         getStateId(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getContainerId(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static CARRIED_ITEM: number;
         static PLAYER_INVENTORY: number;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundContainerSetSlotPacket>;
         constructor(containerId: number, stateId: number, slot: number, itemStack: $ItemStack_);
         get slot(): number;
         get item(): $ItemStack;
-        get containerId(): number;
         get stateId(): number;
-        get skippable(): boolean;
+        get containerId(): number;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundSetBeaconPacket extends $Record implements $Packet<$ServerGamePacketListener> {
         type(): $PacketType<$ServerboundSetBeaconPacket>;
@@ -3192,15 +3192,15 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ServerboundSetBeaconPacket>;
         constructor(primary: ($Holder_<$MobEffect>) | undefined, secondary: ($Holder_<$MobEffect>) | undefined);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ServerboundSetBeaconPacket}.
@@ -3220,16 +3220,16 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundBlockEntityDataPacket>;
         get tag(): $CompoundTag;
         get pos(): $BlockPos;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundSectionBlocksUpdatePacket implements $Packet<$ClientGamePacketListener>, $IXaeroMinimapSMultiBlockChangePacket, $IWorldMapSMultiBlockChangePacket {
         type(): $PacketType<$ClientboundSectionBlocksUpdatePacket>;
@@ -3243,15 +3243,15 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundSectionBlocksUpdatePacket>;
         constructor(sectionPos: $SectionPos, positions: $ShortSet, section: $LevelChunkSection);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundSetEntityLinkPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundSetEntityLinkPacket>;
@@ -3264,17 +3264,17 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundSetEntityLinkPacket>;
         constructor(source: $Entity, destination: $Entity | null);
         get sourceId(): number;
         get destId(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundChatSessionUpdatePacket extends $Record implements $Packet<$ServerGamePacketListener> {
         type(): $PacketType<$ServerboundChatSessionUpdatePacket>;
@@ -3286,25 +3286,21 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundChatSessionUpdatePacket>;
         constructor(arg0: $RemoteChatSession$Data_);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ServerboundChatSessionUpdatePacket}.
      */
     export type $ServerboundChatSessionUpdatePacket_ = { chatSession?: $RemoteChatSession$Data_,  } | [chatSession?: $RemoteChatSession$Data_, ];
     export class $ClientboundPlayerChatPacket extends $Record implements $Packet<$ClientGamePacketListener> {
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
         signature(): $MessageSignature;
         index(): number;
         type(): $PacketType<$ClientboundPlayerChatPacket>;
@@ -3313,6 +3309,10 @@ declare module "@package/net/minecraft/network/protocol/game" {
          */
         handle(handler: $ClientGamePacketListener): void;
         body(): $SignedMessageBody$Packed;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         unsignedContent(): $Component;
         chatType(): $ChatType$Bound;
         filterMask(): $FilterMask;
@@ -3329,7 +3329,7 @@ declare module "@package/net/minecraft/network/protocol/game" {
     /**
      * Values that may be interpreted as {@link $ClientboundPlayerChatPacket}.
      */
-    export type $ClientboundPlayerChatPacket_ = { unsignedContent?: $Component_, chatType?: $ChatType$Bound_, signature?: $MessageSignature_, body?: $SignedMessageBody$Packed_, sender?: $UUID_, filterMask?: $FilterMask, index?: number,  } | [unsignedContent?: $Component_, chatType?: $ChatType$Bound_, signature?: $MessageSignature_, body?: $SignedMessageBody$Packed_, sender?: $UUID_, filterMask?: $FilterMask, index?: number, ];
+    export type $ClientboundPlayerChatPacket_ = { body?: $SignedMessageBody$Packed_, sender?: $UUID_, filterMask?: $FilterMask, index?: number, unsignedContent?: $Component_, chatType?: $ChatType$Bound_, signature?: $MessageSignature_,  } | [body?: $SignedMessageBody$Packed_, sender?: $UUID_, filterMask?: $FilterMask, index?: number, unsignedContent?: $Component_, chatType?: $ChatType$Bound_, signature?: $MessageSignature_, ];
     export class $ClientboundCooldownPacket extends $Record implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundCooldownPacket>;
         duration(): number;
@@ -3341,15 +3341,15 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundCooldownPacket>;
         constructor(item: $Item_, duration: number);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundCooldownPacket}.
@@ -3359,33 +3359,33 @@ declare module "@package/net/minecraft/network/protocol/game" {
         constructor();
     }
     export class $ServerboundMoveVehiclePacket implements $Packet<$ServerGamePacketListener> {
-        getZ(): number;
-        getX(): number;
         type(): $PacketType<$ServerboundMoveVehiclePacket>;
         /**
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ServerGamePacketListener): void;
         getY(): number;
-        getYRot(): number;
+        getZ(): number;
+        getX(): number;
         getXRot(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getYRot(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundMoveVehiclePacket>;
         constructor(vehicle: $Entity);
+        get y(): number;
         get z(): number;
         get x(): number;
-        get y(): number;
-        get YRot(): number;
         get XRot(): number;
-        get skippable(): boolean;
+        get YRot(): number;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundTickingStepPacket extends $Record implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundTickingStepPacket>;
@@ -3398,25 +3398,25 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundTickingStepPacket>;
         constructor(arg0: number);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundTickingStepPacket}.
      */
     export type $ClientboundTickingStepPacket_ = { tickSteps?: number,  } | [tickSteps?: number, ];
     export class $ClientboundDisguisedChatPacket extends $Record implements $Packet<$ClientGamePacketListener> {
-        isSkippable(): boolean;
         type(): $PacketType<$ClientboundDisguisedChatPacket>;
         message(): $Component;
         handle(arg0: $ClientGamePacketListener): void;
+        isSkippable(): boolean;
         chatType(): $ChatType$Bound;
         isTerminal(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundDisguisedChatPacket>;
@@ -3438,26 +3438,18 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundSetCarriedItemPacket>;
         constructor(slot: number);
         get slot(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundLevelParticlesPacket implements $Packet<$ClientGamePacketListener> {
-        /**
-         * Gets the x coordinate to spawn the particle.
-         */
-        getZ(): number;
-        /**
-         * Gets the x coordinate to spawn the particle.
-         */
-        getX(): number;
         type(): $PacketType<$ClientboundLevelParticlesPacket>;
         /**
          * Gets the amount of particles to spawn
@@ -3468,14 +3460,26 @@ declare module "@package/net/minecraft/network/protocol/game" {
          */
         handle(handler: $ClientGamePacketListener): void;
         /**
+         * Gets the x coordinate to spawn the particle.
+         */
+        getY(): number;
+        /**
+         * Gets the x coordinate to spawn the particle.
+         */
+        getZ(): number;
+        /**
+         * Gets the x coordinate to spawn the particle.
+         */
+        getX(): number;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isOverrideLimiter(): boolean;
+        /**
          * Gets the speed of the particle animation (used in client side rendering).
          */
         getMaxSpeed(): number;
         getParticle(): $ParticleOptions;
-        /**
-         * Gets the x coordinate to spawn the particle.
-         */
-        getY(): number;
         /**
          * Gets the speed of the particle animation (used in client side rendering).
          */
@@ -3491,29 +3495,25 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isOverrideLimiter(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isSkippable(): boolean;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isTerminal(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundLevelParticlesPacket>;
         constructor<T extends $ParticleOptions>(particle: T, overrideLimiter: boolean, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number, xDist: number, yDist: number);
+        get count(): number;
+        get y(): number;
         get z(): number;
         get x(): number;
-        get count(): number;
+        get overrideLimiter(): boolean;
         get maxSpeed(): number;
         get particle(): $ParticleOptions;
-        get y(): number;
         get YDist(): number;
         get XDist(): number;
         get ZDist(): number;
-        get overrideLimiter(): boolean;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundPlayerLookAtPacket implements $Packet<$ClientGamePacketListener> {
         getPosition(level: $Level_): $Vec3;
@@ -3526,17 +3526,17 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundPlayerLookAtPacket>;
         constructor(fromAnchor: $EntityAnchorArgument$Anchor_, entity: $Entity, toAnchor: $EntityAnchorArgument$Anchor_);
         constructor(fromAnchor: $EntityAnchorArgument$Anchor_, x: number, arg2: number, y: number);
         get fromAnchor(): $EntityAnchorArgument$Anchor;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundCustomChatCompletionsPacket extends $Record implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundCustomChatCompletionsPacket>;
@@ -3549,40 +3549,40 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundCustomChatCompletionsPacket>;
         constructor(arg0: $ClientboundCustomChatCompletionsPacket$Action_, arg1: $List_<string>);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundCustomChatCompletionsPacket}.
      */
     export type $ClientboundCustomChatCompletionsPacket_ = { entries?: $List_<string>, action?: $ClientboundCustomChatCompletionsPacket$Action_,  } | [entries?: $List_<string>, action?: $ClientboundCustomChatCompletionsPacket$Action_, ];
     export class $ServerboundChangeDifficultyPacket implements $Packet<$ServerGamePacketListener> {
-        getDifficulty(): $Difficulty;
         type(): $PacketType<$ServerboundChangeDifficultyPacket>;
         /**
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ServerGamePacketListener): void;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getDifficulty(): $Difficulty;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundChangeDifficultyPacket>;
         constructor(difficulty: $Difficulty_);
         get difficulty(): $Difficulty;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundSetTitlesAnimationPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundSetTitlesAnimationPacket>;
@@ -3591,48 +3591,48 @@ declare module "@package/net/minecraft/network/protocol/game" {
          */
         handle(handler: $ClientGamePacketListener): void;
         getStay(): number;
-        getFadeIn(): number;
         getFadeOut(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getFadeIn(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundSetTitlesAnimationPacket>;
         constructor(fadeIn: number, stay: number, fadeOut: number);
         get stay(): number;
-        get fadeIn(): number;
         get fadeOut(): number;
-        get skippable(): boolean;
+        get fadeIn(): number;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundSeenAdvancementsPacket implements $Packet<$ServerGamePacketListener> {
-        static closedScreen(): $ServerboundSeenAdvancementsPacket;
+        getAction(): $ServerboundSeenAdvancementsPacket$Action;
         type(): $PacketType<$ServerboundSeenAdvancementsPacket>;
         /**
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ServerGamePacketListener): void;
-        getAction(): $ServerboundSeenAdvancementsPacket$Action;
+        static closedScreen(): $ServerboundSeenAdvancementsPacket;
         getTab(): $ResourceLocation;
         static openedTab(advancement: $AdvancementHolder_): $ServerboundSeenAdvancementsPacket;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundSeenAdvancementsPacket>;
         constructor(action: $ServerboundSeenAdvancementsPacket$Action_, tab: $ResourceLocation_ | null);
         get action(): $ServerboundSeenAdvancementsPacket$Action;
         get tab(): $ResourceLocation;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundInteractPacket implements $Packet<$ServerGamePacketListener> {
         type(): $PacketType<$ServerboundInteractPacket>;
@@ -3642,26 +3642,26 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ServerGamePacketListener): void;
-        static createInteractionPacket(entity: $Entity, usingSecondaryAction: boolean, hand: $InteractionHand_, interactionLocation: $Vec3_): $ServerboundInteractPacket;
-        static createInteractionPacket(entity: $Entity, usingSecondaryAction: boolean, hand: $InteractionHand_): $ServerboundInteractPacket;
         static createAttackPacket(entity: $Entity, usingSecondaryAction: boolean): $ServerboundInteractPacket;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isUsingSecondaryAction(): boolean;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        static createInteractionPacket(entity: $Entity, usingSecondaryAction: boolean, hand: $InteractionHand_, interactionLocation: $Vec3_): $ServerboundInteractPacket;
+        static createInteractionPacket(entity: $Entity, usingSecondaryAction: boolean, hand: $InteractionHand_): $ServerboundInteractPacket;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundInteractPacket>;
         static ATTACK_ACTION: $ServerboundInteractPacket$Action;
         get usingSecondaryAction(): boolean;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundPlayerAbilitiesPacket implements $Packet<$ServerGamePacketListener> {
         type(): $PacketType<$ServerboundPlayerAbilitiesPacket>;
@@ -3676,16 +3676,16 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundPlayerAbilitiesPacket>;
         constructor(abilities: $Abilities);
         get flying(): boolean;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundTeleportToEntityPacket implements $Packet<$ServerGamePacketListener> {
         type(): $PacketType<$ServerboundTeleportToEntityPacket>;
@@ -3697,25 +3697,25 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundTeleportToEntityPacket>;
         constructor(uuid: $UUID_);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundPlayerCombatEnterPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundPlayerCombatEnterPacket>;
         handle(arg0: $ClientGamePacketListener): void;
-        isSkippable(): boolean;
         isTerminal(): boolean;
+        isSkippable(): boolean;
         static INSTANCE: $ClientboundPlayerCombatEnterPacket;
         static STREAM_CODEC: $StreamCodec<$ByteBuf, $ClientboundPlayerCombatEnterPacket>;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundPlayerInfoUpdatePacket$Action extends $Enum<$ClientboundPlayerInfoUpdatePacket$Action> {
         static values(): $ClientboundPlayerInfoUpdatePacket$Action[];
@@ -3748,51 +3748,51 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
-        shouldKeep(data: number): boolean;
         commonPlayerSpawnInfo(): $CommonPlayerSpawnInfo;
+        shouldKeep(data: number): boolean;
         dataToKeep(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static KEEP_ALL_DATA: number;
         static KEEP_ENTITY_DATA: number;
         static KEEP_ATTRIBUTE_MODIFIERS: number;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundRespawnPacket>;
         constructor(arg0: $CommonPlayerSpawnInfo_, arg1: number);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundRespawnPacket}.
      */
-    export type $ClientboundRespawnPacket_ = { dataToKeep?: number, commonPlayerSpawnInfo?: $CommonPlayerSpawnInfo_,  } | [dataToKeep?: number, commonPlayerSpawnInfo?: $CommonPlayerSpawnInfo_, ];
+    export type $ClientboundRespawnPacket_ = { commonPlayerSpawnInfo?: $CommonPlayerSpawnInfo_, dataToKeep?: number,  } | [commonPlayerSpawnInfo?: $CommonPlayerSpawnInfo_, dataToKeep?: number, ];
     export class $ClientboundSetPassengersPacket implements $Packet<$ClientGamePacketListener> {
-        getPassengers(): number[];
         type(): $PacketType<$ClientboundSetPassengersPacket>;
         /**
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
+        getPassengers(): number[];
         getVehicle(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundSetPassengersPacket>;
         constructor(vehicle: $Entity);
         get passengers(): number[];
         get vehicle(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundPlaceGhostRecipePacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundPlaceGhostRecipePacket>;
@@ -3805,17 +3805,17 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundPlaceGhostRecipePacket>;
         constructor(containerId: number, recipe: $RecipeHolder_<never>);
         get containerId(): number;
         get recipe(): $ResourceLocation;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $DebugEntityNameGenerator {
         static getEntityName(uuid: $UUID_): string;
@@ -3823,11 +3823,11 @@ declare module "@package/net/minecraft/network/protocol/game" {
         constructor();
     }
     export class $ClientboundSystemChatPacket extends $Record implements $Packet<$ClientGamePacketListener> {
-        isSkippable(): boolean;
+        overlay(): boolean;
         type(): $PacketType<$ClientboundSystemChatPacket>;
         handle(arg0: $ClientGamePacketListener): void;
         content(): $Component;
-        overlay(): boolean;
+        isSkippable(): boolean;
         isTerminal(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundSystemChatPacket>;
         constructor(arg0: $Component_, arg1: boolean);
@@ -3837,7 +3837,7 @@ declare module "@package/net/minecraft/network/protocol/game" {
     /**
      * Values that may be interpreted as {@link $ClientboundSystemChatPacket}.
      */
-    export type $ClientboundSystemChatPacket_ = { overlay?: boolean, content?: $Component_,  } | [overlay?: boolean, content?: $Component_, ];
+    export type $ClientboundSystemChatPacket_ = { content?: $Component_, overlay?: boolean,  } | [content?: $Component_, overlay?: boolean, ];
     export class $ClientboundUpdateAdvancementsPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundUpdateAdvancementsPacket>;
         /**
@@ -3845,8 +3845,8 @@ declare module "@package/net/minecraft/network/protocol/game" {
          */
         handle(handler: $ClientGamePacketListener): void;
         getProgress(): $Map<$ResourceLocation, $AdvancementProgress>;
-        getRemoved(): $Set<$ResourceLocation>;
         getAdded(): $List<$AdvancementHolder>;
+        getRemoved(): $Set<$ResourceLocation>;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
@@ -3854,18 +3854,18 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundUpdateAdvancementsPacket>;
         constructor(reset: boolean, added: $Collection_<$AdvancementHolder_>, removed: $Set_<$ResourceLocation_>, progress: $Map_<$ResourceLocation_, $AdvancementProgress>);
         get progress(): $Map<$ResourceLocation, $AdvancementProgress>;
-        get removed(): $Set<$ResourceLocation>;
         get added(): $List<$AdvancementHolder>;
-        get skippable(): boolean;
+        get removed(): $Set<$ResourceLocation>;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundAcceptTeleportationPacket implements $Packet<$ServerGamePacketListener> {
         type(): $PacketType<$ServerboundAcceptTeleportationPacket>;
@@ -3877,56 +3877,56 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundAcceptTeleportationPacket>;
         constructor(id: number);
         get id(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundPlayerInputPacket implements $Packet<$ServerGamePacketListener> {
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isShiftKeyDown(): boolean;
         type(): $PacketType<$ServerboundPlayerInputPacket>;
         /**
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ServerGamePacketListener): void;
-        getXxa(): number;
-        getZza(): number;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isShiftKeyDown(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isJumping(): boolean;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getZza(): number;
+        getXxa(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundPlayerInputPacket>;
         constructor(xxa: number, zza: number, isJumping: boolean, isShiftKeyDown: boolean);
         get shiftKeyDown(): boolean;
-        get xxa(): number;
-        get zza(): number;
         get jumping(): boolean;
-        get skippable(): boolean;
+        get zza(): number;
+        get xxa(): number;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundMoveEntityPacket$PosRot extends $ClientboundMoveEntityPacket implements $PacketActuallyInSubLevelExtension {
-        sable$setActuallyInSubLevel(arg0: boolean): void;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         sable$isActuallyInSubLevel(): boolean;
+        sable$setActuallyInSubLevel(arg0: boolean): void;
         onGround: boolean;
         yRot: number;
         za: number;
@@ -3945,24 +3945,24 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
-        getExperienceLevel(): number;
-        getTotalExperience(): number;
         getExperienceProgress(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getTotalExperience(): number;
+        getExperienceLevel(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundSetExperiencePacket>;
         constructor(experienceProgress: number, totalExperience: number, experienceLevel: number);
-        get experienceLevel(): number;
-        get totalExperience(): number;
         get experienceProgress(): number;
-        get skippable(): boolean;
+        get totalExperience(): number;
+        get experienceLevel(): number;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundPlayerCombatEndPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundPlayerCombatEndPacket>;
@@ -3973,32 +3973,32 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundPlayerCombatEndPacket>;
         constructor(duration: number);
         constructor(combatTracker: $CombatTracker);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundPlayerInfoUpdatePacket$Entry extends $Record {
         latency(): number;
         profile(): $GameProfile;
         displayName(): $Component;
-        chatSession(): $RemoteChatSession$Data;
         profileId(): $UUID;
-        gameMode(): $GameType;
         listed(): boolean;
+        gameMode(): $GameType;
+        chatSession(): $RemoteChatSession$Data;
         constructor(player: $ServerPlayer);
         constructor(arg0: $UUID_, arg1: $GameProfile | null, arg2: boolean, arg3: number, arg4: $GameType_, arg5: $Component_ | null, arg6: $RemoteChatSession$Data_ | null);
     }
     /**
      * Values that may be interpreted as {@link $ClientboundPlayerInfoUpdatePacket$Entry}.
      */
-    export type $ClientboundPlayerInfoUpdatePacket$Entry_ = { listed?: boolean, chatSession?: $RemoteChatSession$Data_, profile?: $GameProfile, latency?: number, displayName?: $Component_, profileId?: $UUID_, gameMode?: $GameType_,  } | [listed?: boolean, chatSession?: $RemoteChatSession$Data_, profile?: $GameProfile, latency?: number, displayName?: $Component_, profileId?: $UUID_, gameMode?: $GameType_, ];
+    export type $ClientboundPlayerInfoUpdatePacket$Entry_ = { latency?: number, displayName?: $Component_, profileId?: $UUID_, gameMode?: $GameType_, listed?: boolean, chatSession?: $RemoteChatSession$Data_, profile?: $GameProfile,  } | [latency?: number, displayName?: $Component_, profileId?: $UUID_, gameMode?: $GameType_, listed?: boolean, chatSession?: $RemoteChatSession$Data_, profile?: $GameProfile, ];
     export class $ClientboundBlockDestructionPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundBlockDestructionPacket>;
         getId(): number;
@@ -4011,18 +4011,18 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundBlockDestructionPacket>;
         constructor(id: number, pos: $BlockPos_, progress: number);
         get id(): number;
         get progress(): number;
         get pos(): $BlockPos;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundSetPlayerTeamPacket$Action extends $Enum<$ClientboundSetPlayerTeamPacket$Action> {
         static values(): $ClientboundSetPlayerTeamPacket$Action[];
@@ -4038,18 +4038,13 @@ declare module "@package/net/minecraft/network/protocol/game" {
      * @param showDeathScreen Set to false when the doImmediateRespawn gamerule is true
      */
     export class $ClientboundLoginPacket extends $Record implements $Packet<$ClientGamePacketListener>, $SJoinGamePacketAccessor {
-        chunkRadius(): number;
         type(): $PacketType<$ClientboundLoginPacket>;
         /**
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
         levels(): $Set<$ResourceKey<$Level>>;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        hardcore(): boolean;
-        playerId(): number;
+        chunkRadius(): number;
         simulationDistance(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
@@ -4058,8 +4053,8 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        enforcesSecureChat(): boolean;
-        maxPlayers(): number;
+        hardcore(): boolean;
+        commonPlayerSpawnInfo(): $CommonPlayerSpawnInfo;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
@@ -4068,27 +4063,31 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Whether decoding errors will be ignored for this packet.
          */
         showDeathScreen(): boolean;
-        commonPlayerSpawnInfo(): $CommonPlayerSpawnInfo;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        enforcesSecureChat(): boolean;
+        maxPlayers(): number;
+        playerId(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         getMaxPlayers(): number;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundLoginPacket>;
         constructor(playerId: number, hardcore: boolean, levels: $Set_<$ResourceKey_<$Level>>, maxPlayers: number, chunkRadius: number, simulationDistance: number, reducedDebugInfo: boolean, showDeathScreen: boolean, doLimitedCrafting: boolean, commonPlayerSpawnInfo: $CommonPlayerSpawnInfo_, enforcesSecureChat: boolean);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundLoginPacket}.
      */
-    export type $ClientboundLoginPacket_ = { levels?: $Set_<$ResourceKey_<$Level>>, simulationDistance?: number, commonPlayerSpawnInfo?: $CommonPlayerSpawnInfo_, hardcore?: boolean, playerId?: number, showDeathScreen?: boolean, maxPlayers?: number, reducedDebugInfo?: boolean, chunkRadius?: number, doLimitedCrafting?: boolean, enforcesSecureChat?: boolean,  } | [levels?: $Set_<$ResourceKey_<$Level>>, simulationDistance?: number, commonPlayerSpawnInfo?: $CommonPlayerSpawnInfo_, hardcore?: boolean, playerId?: number, showDeathScreen?: boolean, maxPlayers?: number, reducedDebugInfo?: boolean, chunkRadius?: number, doLimitedCrafting?: boolean, enforcesSecureChat?: boolean, ];
+    export type $ClientboundLoginPacket_ = { reducedDebugInfo?: boolean, chunkRadius?: number, doLimitedCrafting?: boolean, enforcesSecureChat?: boolean, levels?: $Set_<$ResourceKey_<$Level>>, simulationDistance?: number, commonPlayerSpawnInfo?: $CommonPlayerSpawnInfo_, hardcore?: boolean, playerId?: number, showDeathScreen?: boolean, maxPlayers?: number,  } | [reducedDebugInfo?: boolean, chunkRadius?: number, doLimitedCrafting?: boolean, enforcesSecureChat?: boolean, levels?: $Set_<$ResourceKey_<$Level>>, simulationDistance?: number, commonPlayerSpawnInfo?: $CommonPlayerSpawnInfo_, hardcore?: boolean, playerId?: number, showDeathScreen?: boolean, maxPlayers?: number, ];
     export class $ServerboundChatPacket extends $Record implements $Packet<$ServerGamePacketListener>, $CPacketChatMessageAccessor {
-        salt(): number;
         signature(): $MessageSignature;
         type(): $PacketType<$ServerboundChatPacket>;
         message(): string;
@@ -4096,26 +4095,27 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ServerGamePacketListener): void;
+        salt(): number;
         timeStamp(): $Instant;
         lastSeenMessages(): $LastSeenMessages$Update;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         setMessage(arg0: string): void;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundChatPacket>;
         constructor(arg0: string, arg1: $Instant, arg2: number, arg3: $MessageSignature_ | null, arg4: $LastSeenMessages$Update_);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ServerboundChatPacket}.
      */
-    export type $ServerboundChatPacket_ = { salt?: number, lastSeenMessages?: $LastSeenMessages$Update_, message?: string, signature?: $MessageSignature_, timeStamp?: $Instant,  } | [salt?: number, lastSeenMessages?: $LastSeenMessages$Update_, message?: string, signature?: $MessageSignature_, timeStamp?: $Instant, ];
+    export type $ServerboundChatPacket_ = { lastSeenMessages?: $LastSeenMessages$Update_, message?: string, signature?: $MessageSignature_, timeStamp?: $Instant, salt?: number,  } | [lastSeenMessages?: $LastSeenMessages$Update_, message?: string, signature?: $MessageSignature_, timeStamp?: $Instant, salt?: number, ];
     export class $ClientboundSetDefaultSpawnPositionPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundSetDefaultSpawnPositionPacket>;
         /**
@@ -4127,17 +4127,17 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundSetDefaultSpawnPositionPacket>;
         constructor(pos: $BlockPos_, angle: number);
         get pos(): $BlockPos;
         get angle(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundSetEntityDataPacket extends $Record implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundSetEntityDataPacket>;
@@ -4150,16 +4150,16 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static EOF_MARKER: number;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundSetEntityDataPacket>;
         constructor(arg0: number, arg1: $List_<$SynchedEntityData$DataValue_<never>>);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundSetEntityDataPacket}.
@@ -4178,20 +4178,20 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundTabListPacket>;
         constructor(header: $Component_, footer: $Component_);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundTabListPacket}.
      */
-    export type $ClientboundTabListPacket_ = { footer?: $Component_, header?: $Component_,  } | [footer?: $Component_, header?: $Component_, ];
+    export type $ClientboundTabListPacket_ = { header?: $Component_, footer?: $Component_,  } | [header?: $Component_, footer?: $Component_, ];
     export class $ClientboundSoundEntityPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundSoundEntityPacket>;
         getId(): number;
@@ -4207,11 +4207,11 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundSoundEntityPacket>;
         constructor(sound: $Holder_<$SoundEvent>, source: $SoundSource_, entity: $Entity, volume: number, pitch: number, seed: number);
         get id(): number;
@@ -4220,8 +4220,8 @@ declare module "@package/net/minecraft/network/protocol/game" {
         get pitch(): number;
         get volume(): number;
         get sound(): $Holder<$SoundEvent>;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundOpenSignEditorPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundOpenSignEditorPacket>;
@@ -4229,25 +4229,25 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isFrontText(): boolean;
         getPos(): $BlockPos;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isFrontText(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundOpenSignEditorPacket>;
         constructor(pos: $BlockPos_, isFrontText: boolean);
-        get frontText(): boolean;
         get pos(): $BlockPos;
-        get skippable(): boolean;
+        get frontText(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundRecipePacket$State extends $Enum<$ClientboundRecipePacket$State> {
         static values(): $ClientboundRecipePacket$State[];
@@ -4261,59 +4261,59 @@ declare module "@package/net/minecraft/network/protocol/game" {
      */
     export type $ClientboundRecipePacket$State_ = "init" | "add" | "remove";
     export class $ClientboundExplodePacket implements $Packet<$ClientGamePacketListener> {
-        getZ(): number;
-        getX(): number;
         type(): $PacketType<$ClientboundExplodePacket>;
         /**
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
+        getY(): number;
+        getSmallExplosionParticles(): $ParticleOptions;
+        getLargeExplosionParticles(): $ParticleOptions;
+        getExplosionSound(): $Holder<$SoundEvent>;
+        getZ(): number;
+        getX(): number;
+        getBlockInteraction(): $Explosion$BlockInteraction;
+        getKnockbackX(): number;
         getKnockbackZ(): number;
         getKnockbackY(): number;
-        getKnockbackX(): number;
-        getY(): number;
-        getLargeExplosionParticles(): $ParticleOptions;
-        getSmallExplosionParticles(): $ParticleOptions;
-        getExplosionSound(): $Holder<$SoundEvent>;
-        getToBlow(): $List<$BlockPos>;
         getPower(): number;
-        getBlockInteraction(): $Explosion$BlockInteraction;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getToBlow(): $List<$BlockPos>;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundExplodePacket>;
         constructor(x: number, arg1: number, y: number, arg3: number, z: $List_<$BlockPos_>, arg5: $Vec3_ | null, power: $Explosion$BlockInteraction_, toBlow: $ParticleOptions_, knockback: $ParticleOptions_, blockInteraction: $Holder_<$SoundEvent>);
+        get y(): number;
+        get smallExplosionParticles(): $ParticleOptions;
+        get largeExplosionParticles(): $ParticleOptions;
+        get explosionSound(): $Holder<$SoundEvent>;
         get z(): number;
         get x(): number;
+        get blockInteraction(): $Explosion$BlockInteraction;
+        get knockbackX(): number;
         get knockbackZ(): number;
         get knockbackY(): number;
-        get knockbackX(): number;
-        get y(): number;
-        get largeExplosionParticles(): $ParticleOptions;
-        get smallExplosionParticles(): $ParticleOptions;
-        get explosionSound(): $Holder<$SoundEvent>;
-        get toBlow(): $List<$BlockPos>;
         get power(): number;
-        get blockInteraction(): $Explosion$BlockInteraction;
-        get skippable(): boolean;
+        get toBlow(): $List<$BlockPos>;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $CommonPlayerSpawnInfo extends $Record {
-        lastDeathLocation(): ($GlobalPos) | undefined;
-        dimension(): $ResourceKey<$Level>;
         write(buffer: $RegistryFriendlyByteBuf): void;
         isDebug(): boolean;
         seed(): number;
+        dimension(): $ResourceKey<$Level>;
         portalCooldown(): number;
+        lastDeathLocation(): ($GlobalPos) | undefined;
         previousGameType(): $GameType;
-        dimensionType(): $Holder<$DimensionType>;
         isFlat(): boolean;
         gameType(): $GameType;
+        dimensionType(): $Holder<$DimensionType>;
         constructor(buffer: $RegistryFriendlyByteBuf);
         constructor(arg0: $Holder_<$DimensionType>, arg1: $ResourceKey_<$Level>, arg2: number, arg3: $GameType_, arg4: $GameType_ | null, arg5: boolean, arg6: boolean, arg7: ($GlobalPos_) | undefined, arg8: number);
         get debug(): boolean;
@@ -4322,7 +4322,7 @@ declare module "@package/net/minecraft/network/protocol/game" {
     /**
      * Values that may be interpreted as {@link $CommonPlayerSpawnInfo}.
      */
-    export type $CommonPlayerSpawnInfo_ = { seed?: number, dimensionType?: $Holder_<$DimensionType>, isFlat?: boolean, gameType?: $GameType_, isDebug?: boolean, lastDeathLocation?: ($GlobalPos_) | undefined, dimension?: $ResourceKey_<$Level>, previousGameType?: $GameType_, portalCooldown?: number,  } | [seed?: number, dimensionType?: $Holder_<$DimensionType>, isFlat?: boolean, gameType?: $GameType_, isDebug?: boolean, lastDeathLocation?: ($GlobalPos_) | undefined, dimension?: $ResourceKey_<$Level>, previousGameType?: $GameType_, portalCooldown?: number, ];
+    export type $CommonPlayerSpawnInfo_ = { lastDeathLocation?: ($GlobalPos_) | undefined, dimension?: $ResourceKey_<$Level>, previousGameType?: $GameType_, portalCooldown?: number, seed?: number, dimensionType?: $Holder_<$DimensionType>, isFlat?: boolean, gameType?: $GameType_, isDebug?: boolean,  } | [lastDeathLocation?: ($GlobalPos_) | undefined, dimension?: $ResourceKey_<$Level>, previousGameType?: $GameType_, portalCooldown?: number, seed?: number, dimensionType?: $Holder_<$DimensionType>, isFlat?: boolean, gameType?: $GameType_, isDebug?: boolean, ];
     export class $ClientboundLevelChunkPacketData$BlockEntityInfo {
     }
     export class $ClientboundCustomChatCompletionsPacket$Action extends $Enum<$ClientboundCustomChatCompletionsPacket$Action> {
@@ -4362,31 +4362,31 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ServerGamePacketListener): void;
-        getFinalState(): string;
         getPos(): $BlockPos;
-        getPlacementPriority(): number;
-        getSelectionPriority(): number;
         getJoint(): $JigsawBlockEntity$JointType;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getSelectionPriority(): number;
+        getPlacementPriority(): number;
+        getFinalState(): string;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundSetJigsawBlockPacket>;
         constructor(pos: $BlockPos_, name: $ResourceLocation_, target: $ResourceLocation_, pool: $ResourceLocation_, finalState: string, joint: $JigsawBlockEntity$JointType_, selectionPriority: number, placementPriority: number);
         get name(): $ResourceLocation;
         get pool(): $ResourceLocation;
         get target(): $ResourceLocation;
-        get finalState(): string;
         get pos(): $BlockPos;
-        get placementPriority(): number;
-        get selectionPriority(): number;
         get joint(): $JigsawBlockEntity$JointType;
-        get skippable(): boolean;
+        get selectionPriority(): number;
+        get placementPriority(): number;
+        get finalState(): string;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundBossEventPacket$UpdateNameOperation extends $Record implements $ClientboundBossEventPacket$Operation {
     }
@@ -4404,20 +4404,18 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundSelectTradePacket>;
         constructor(item: number);
         get item(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundTeleportEntityPacket implements $Packet<$ClientGamePacketListener>, $PacketActuallyInSubLevelExtension {
-        getZ(): number;
-        getX(): number;
         type(): $PacketType<$ClientboundTeleportEntityPacket>;
         getId(): number;
         /**
@@ -4425,6 +4423,12 @@ declare module "@package/net/minecraft/network/protocol/game" {
          */
         handle(handler: $ClientGamePacketListener): void;
         getY(): number;
+        getZ(): number;
+        getX(): number;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        sable$isActuallyInSubLevel(): boolean;
         getyRot(): number;
         getxRot(): number;
         /**
@@ -4435,26 +4439,22 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        sable$isActuallyInSubLevel(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isSkippable(): boolean;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isTerminal(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundTeleportEntityPacket>;
         constructor(entity: $Entity);
-        get z(): number;
-        get x(): number;
         get id(): number;
         get y(): number;
+        get z(): number;
+        get x(): number;
         get yRot(): number;
         get xRot(): number;
         get onGround(): boolean;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundMoveEntityPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundMoveEntityPacket>;
@@ -4463,8 +4463,9 @@ declare module "@package/net/minecraft/network/protocol/game" {
          */
         handle(handler: $ClientGamePacketListener): void;
         getEntity(level: $Level_): $Entity;
-        getyRot(): number;
-        getxRot(): number;
+        getYa(): number;
+        getZa(): number;
+        getXa(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
@@ -4473,21 +4474,20 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Whether decoding errors will be ignored for this packet.
          */
         hasRotation(): boolean;
+        getyRot(): number;
+        getxRot(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isOnGround(): boolean;
-        getYa(): number;
-        getZa(): number;
-        getXa(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         onGround: boolean;
         yRot: number;
         za: number;
@@ -4498,8 +4498,8 @@ declare module "@package/net/minecraft/network/protocol/game" {
         entityId: number;
         hasPos: boolean;
         constructor(entityId: number, xa: number, ya: number, za: number, yRot: number, xRot: number, onGround: boolean, hasRot: boolean, hasPos: boolean);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundContainerSetDataPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundContainerSetDataPacket>;
@@ -4513,18 +4513,18 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundContainerSetDataPacket>;
         constructor(containerId: number, id: number, value: number);
         get value(): number;
         get id(): number;
         get containerId(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundDebugSamplePacket extends $Record implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundDebugSamplePacket>;
@@ -4532,20 +4532,20 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Passes this Packet on to the PacketListener for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
-        sample(): number[];
         debugSampleType(): $RemoteDebugSampleType;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        sample(): number[];
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundDebugSamplePacket>;
         constructor(arg0: number[], arg1: $RemoteDebugSampleType_);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundDebugSamplePacket}.
@@ -4561,16 +4561,16 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundContainerClosePacket>;
         constructor(containerId: number);
         get containerId(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundInteractPacket$InteractionAction implements $ServerboundInteractPacket$Action {
     }
@@ -4582,51 +4582,51 @@ declare module "@package/net/minecraft/network/protocol/game" {
          */
         handle(handler: $ClientGamePacketListener): void;
         getData(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isGlobalEvent(): boolean;
         getPos(): $BlockPos;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isGlobalEvent(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundLevelEventPacket>;
         constructor(type: number, pos: $BlockPos_, data: number, globalEvent: boolean);
         get data(): number;
-        get globalEvent(): boolean;
         get pos(): $BlockPos;
-        get skippable(): boolean;
+        get globalEvent(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundLightUpdatePacket implements $Packet<$ClientGamePacketListener> {
-        getZ(): number;
-        getX(): number;
         type(): $PacketType<$ClientboundLightUpdatePacket>;
         /**
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
+        getZ(): number;
+        getX(): number;
         getLightData(): $ClientboundLightUpdatePacketData;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundLightUpdatePacket>;
         constructor(chunkPos: $ChunkPos, lightEngine: $LevelLightEngine, skyLight: $BitSet | null, blockLight: $BitSet | null);
         get z(): number;
         get x(): number;
         get lightData(): $ClientboundLightUpdatePacketData;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundEditBookPacket extends $Record implements $Packet<$ServerGamePacketListener> {
         slot(): number;
@@ -4640,21 +4640,21 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static MAX_BYTES_PER_CHAR: number;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundEditBookPacket>;
         constructor(slot: number, pages: $List_<string>, title: (string) | undefined);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ServerboundEditBookPacket}.
      */
-    export type $ServerboundEditBookPacket_ = { pages?: $List_<string>, title?: (string) | undefined, slot?: number,  } | [pages?: $List_<string>, title?: (string) | undefined, slot?: number, ];
+    export type $ServerboundEditBookPacket_ = { title?: (string) | undefined, slot?: number, pages?: $List_<string>,  } | [title?: (string) | undefined, slot?: number, pages?: $List_<string>, ];
     export class $ClientboundSetChunkCacheRadiusPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundSetChunkCacheRadiusPacket>;
         /**
@@ -4665,28 +4665,28 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundSetChunkCacheRadiusPacket>;
         constructor(radius: number);
         get radius(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundTagQueryPacket implements $Packet<$ClientGamePacketListener> {
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
         type(): $PacketType<$ClientboundTagQueryPacket>;
         /**
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
         getTag(): $CompoundTag;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         getTransactionId(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
@@ -4694,37 +4694,37 @@ declare module "@package/net/minecraft/network/protocol/game" {
         isTerminal(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundTagQueryPacket>;
         constructor(transactionId: number, tag: $CompoundTag_ | null);
-        get skippable(): boolean;
         get tag(): $CompoundTag;
+        get skippable(): boolean;
         get transactionId(): number;
         get terminal(): boolean;
     }
     export class $ClientboundLevelChunkWithLightPacket implements $Packet<$ClientGamePacketListener> {
-        getZ(): number;
-        getX(): number;
         type(): $PacketType<$ClientboundLevelChunkWithLightPacket>;
         /**
          * Passes this Packet on to the PacketListener for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
-        getLightData(): $ClientboundLightUpdatePacketData;
+        getZ(): number;
+        getX(): number;
         getChunkData(): $ClientboundLevelChunkPacketData;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getLightData(): $ClientboundLightUpdatePacketData;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ClientboundLevelChunkWithLightPacket>;
         constructor(chunk: $LevelChunk, lightEngine: $LevelLightEngine, skyLight: $BitSet | null, blockLight: $BitSet | null);
         get z(): number;
         get x(): number;
-        get lightData(): $ClientboundLightUpdatePacketData;
         get chunkData(): $ClientboundLevelChunkPacketData;
-        get skippable(): boolean;
+        get lightData(): $ClientboundLightUpdatePacketData;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundChunkBatchReceivedPacket extends $Record implements $Packet<$ServerGamePacketListener> {
         type(): $PacketType<$ServerboundChunkBatchReceivedPacket>;
@@ -4736,15 +4736,15 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundChunkBatchReceivedPacket>;
         constructor(arg0: number);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ServerboundChunkBatchReceivedPacket}.
@@ -4762,16 +4762,16 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundPickItemPacket>;
         constructor(slot: number);
         get slot(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundServerDataPacket extends $Record implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundServerDataPacket>;
@@ -4784,15 +4784,15 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$ByteBuf, $ClientboundServerDataPacket>;
         constructor(motd: $Component_, iconBytes: (number[]) | undefined);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundServerDataPacket}.
@@ -4809,15 +4809,15 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundChunksBiomesPacket>;
         constructor(arg0: $List_<$ClientboundChunksBiomesPacket$ChunkBiomeData_>);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundChunksBiomesPacket}.
@@ -4833,44 +4833,44 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundRemoveEntitiesPacket>;
         constructor(...entityIds: number[]);
         constructor(entityIds: $IntList);
         get entityIds(): $IntList;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundUseItemPacket implements $Packet<$ServerGamePacketListener> {
-        getSequence(): number;
         type(): $PacketType<$ServerboundUseItemPacket>;
         /**
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ServerGamePacketListener): void;
-        getHand(): $InteractionHand;
-        getYRot(): number;
+        getSequence(): number;
         getXRot(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getYRot(): number;
+        getHand(): $InteractionHand;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ServerboundUseItemPacket>;
         constructor(hand: $InteractionHand_, sequence: number, yRot: number, xRot: number);
         get sequence(): number;
-        get hand(): $InteractionHand;
-        get YRot(): number;
         get XRot(): number;
-        get skippable(): boolean;
+        get YRot(): number;
+        get hand(): $InteractionHand;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * PacketListener for the client side of the PLAY protocol.
@@ -4878,213 +4878,213 @@ declare module "@package/net/minecraft/network/protocol/game" {
     export class $ClientGamePacketListener {
     }
     export interface $ClientGamePacketListener extends $ClientPongPacketListener, $ClientCommonPacketListener {
+        protocol(): $ConnectionProtocol;
+        handleDamageEvent(packet: $ClientboundDamageEventPacket_): void;
         /**
          * Invokes the entities' handleUpdateHealth method which is implemented in LivingBase (hurt/death), MinecartMobSpawner (spawn delay), FireworkRocket & MinecartTNT (explosion), IronGolem (throwing,...), Witch (spawn particles), Zombie (villager transformation), Animal (breeding mode particles), Horse (breeding/smoke particles), Sheep (...), Tameable (...), Villager (particles for breeding mode, angry and happy), Wolf (...)
          */
         handleEntityEvent(packet: $ClientboundEntityEventPacket): void;
-        protocol(): $ConnectionProtocol;
-        handleGameEvent(packet: $ClientboundGameEventPacket): void;
-        handleSetEquipment(packet: $ClientboundSetEquipmentPacket): void;
-        /**
-         * Triggers Block.onBlockEventReceived, which is implemented in BlockPistonBase for extension/retraction, BlockNote for setting the instrument (including audiovisual feedback) and in BlockContainer to set the number of players accessing a (Ender)Chest
-         */
-        handleBlockEvent(packet: $ClientboundBlockEventPacket): void;
-        handleCommands(packet: $ClientboundCommandsPacket): void;
-        /**
-         * Initiates a new explosion (sound, particles, drop spawn) for the affected blocks indicated by the packet.
-         */
-        handleExplosion(packet: $ClientboundExplodePacket): void;
-        handleLevelEvent(packet: $ClientboundLevelEventPacket): void;
-        handleSetSpawn(packet: $ClientboundSetDefaultSpawnPositionPacket): void;
-        /**
-         * Updates the worlds MapStorage with the specified MapData for the specified map-identifier and invokes a MapItemRenderer for it
-         */
-        handleMapItemData(packet: $ClientboundMapItemDataPacket_): void;
-        handleSetTime(packet: $ClientboundSetTimePacket): void;
-        /**
-         * Renders a specified animation: Waking up a player, a living entity swinging its currently held item, being hurt or receiving a critical hit by normal or magical means
-         */
-        handleAnimate(packet: $ClientboundAnimatePacket): void;
-        handleSetHealth(packet: $ClientboundSetHealthPacket): void;
-        handleRespawn(packet: $ClientboundRespawnPacket_): void;
-        handleSystemChat(packet: $ClientboundSystemChatPacket_): void;
-        handleOpenScreen(packet: $ClientboundOpenScreenPacket): void;
-        handleChunksBiomes(packet: $ClientboundChunksBiomesPacket_): void;
-        handleDeleteChat(packet: $ClientboundDeleteChatPacket_): void;
-        handlePlayerChat(packet: $ClientboundPlayerChatPacket_): void;
-        /**
-         * Updates the block and metadata and generates a blockupdate (and notify the clients)
-         */
-        handleBlockUpdate(packet: $ClientboundBlockUpdatePacket): void;
-        handleSetBorderWarningDistance(packet: $ClientboundSetBorderWarningDistancePacket): void;
-        handleProjectilePowerPacket(packet: $ClientboundProjectilePowerPacket): void;
-        handleCustomChatCompletions(packet: $ClientboundCustomChatCompletionsPacket_): void;
-        handleUpdateAdvancementsPacket(packet: $ClientboundUpdateAdvancementsPacket): void;
-        handleSelectAdvancementsTab(packet: $ClientboundSelectAdvancementsTabPacket): void;
-        handleSetSimulationDistance(packet: $ClientboundSetSimulationDistancePacket_): void;
-        handleSetBorderWarningDelay(packet: $ClientboundSetBorderWarningDelayPacket): void;
-        handleSetEntityPassengersPacket(packet: $ClientboundSetPassengersPacket): void;
-        handleDamageEvent(packet: $ClientboundDamageEventPacket_): void;
-        handleBlockChangedAck(packet: $ClientboundBlockChangedAckPacket_): void;
-        /**
-         * Registers some server properties (gametype,hardcore-mode,terraintype,difficulty,player limit), creates a new WorldClient and sets the player initial dimension
-         */
-        handleLogin(packet: $ClientboundLoginPacket_): void;
-        handleTickingStep(packet: $ClientboundTickingStepPacket_): void;
-        /**
-         * Updates the specified entity's position by the specified relative moment and absolute rotation. Note that subclassing of the packet allows for the specification of a subset of this data (e.g. only rel. position, abs. rotation or both).
-         */
-        handleMoveEntity(packet: $ClientboundMoveEntityPacket): void;
-        /**
-         * Updates the direction in which the specified entity is looking, normally this head rotation is independent of the rotation of the entity itself
-         */
-        handleRotateMob(packet: $ClientboundRotateHeadPacket): void;
-        handleMovePlayer(packet: $ClientboundPlayerPositionPacket): void;
-        handleTickingState(packet: $ClientboundTickingStatePacket_): void;
-        /**
-         * Spawns an instance of the objecttype indicated by the packet and sets its position and momentum
-         */
-        handleAddEntity(packet: $ClientboundAddEntityPacket): void;
-        handleSetCamera(packet: $ClientboundSetCameraPacket): void;
-        handleSoundEvent(packet: $ClientboundSoundPacket): void;
-        setActionBarText(packet: $ClientboundSetActionBarTextPacket_): void;
-        setSubtitleText(packet: $ClientboundSetSubtitleTextPacket_): void;
-        handleMoveVehicle(packet: $ClientboundMoveVehiclePacket): void;
-        handleOpenBook(packet: $ClientboundOpenBookPacket): void;
-        handleLookAt(packet: $ClientboundPlayerLookAtPacket): void;
-        handleServerData(packet: $ClientboundServerDataPacket_): void;
-        setTitlesAnimation(packet: $ClientboundSetTitlesAnimationPacket): void;
-        handleItemCooldown(packet: $ClientboundCooldownPacket_): void;
-        /**
-         * Updates the players statistics or achievements
-         */
-        handleAwardStats(packet: $ClientboundAwardStatsPacket_): void;
-        handleBossUpdate(packet: $ClientboundBossEventPacket): void;
-        setTitleText(packet: $ClientboundSetTitleTextPacket_): void;
-        handleTitlesClear(packet: $ClientboundClearTitlesPacket): void;
-        /**
-         * May create a scoreboard objective, remove an objective from the scoreboard or update an objectives' displayname
-         */
-        handleAddObjective(packet: $ClientboundSetObjectivePacket): void;
-        handleResetScore(packet: $ClientboundResetScorePacket_): void;
-        handlePlaceRecipe(packet: $ClientboundPlaceGhostRecipePacket): void;
-        handleBundlePacket(packet: $ClientboundBundlePacket): void;
-        handleDebugSample(packet: $ClientboundDebugSamplePacket_): void;
-        /**
-         * Either updates the score with a specified value or removes the score for an objective
-         */
-        handleSetScore(packet: $ClientboundSetScorePacket_): void;
-        /**
-         * Updates the NBTTagCompound metadata of instances of the following entitytypes: Mob spawners, command blocks, beacons, skulls, flowerpot
-         */
-        handleBlockEntityData(packet: $ClientboundBlockEntityDataPacket): void;
-        handleRemoveMobEffect(packet: $ClientboundRemoveMobEffectPacket_): void;
-        handlePlayerInfoRemove(packet: $ClientboundPlayerInfoRemovePacket_): void;
-        handlePlayerInfoUpdate(packet: $ClientboundPlayerInfoUpdatePacket): void;
-        /**
-         * Received from the servers PlayerManager if between 1 and 64 blocks in a chunk are changed. If only one block requires an update, the server sends S23PacketBlockChange and if 64 or more blocks are changed, the server sends S21PacketChunkData
-         */
-        handleChunkBlocksUpdate(packet: $ClientboundSectionBlocksUpdatePacket): void;
-        handleUpdateRecipes(packet: $ClientboundUpdateRecipesPacket): void;
-        handleTagQueryPacket(packet: $ClientboundTagQueryPacket): void;
-        handlePlayerCombatEnd(packet: $ClientboundPlayerCombatEndPacket): void;
-        handleRemoveEntities(packet: $ClientboundRemoveEntitiesPacket): void;
-        /**
-         * Handles the placement of a specified ItemStack in a specified container/inventory slot
-         */
-        handleContainerContent(packet: $ClientboundContainerSetContentPacket): void;
-        /**
-         * Creates a sign in the specified location if it didn't exist and opens the GUI to edit its text
-         */
-        handleOpenSignEditor(packet: $ClientboundOpenSignEditorPacket): void;
-        handleLevelChunkWithLight(packet: $ClientboundLevelChunkWithLightPacket): void;
-        handleEntityLinkPacket(packet: $ClientboundSetEntityLinkPacket): void;
-        /**
-         * Updates which hotbar slot of the player is currently selected
-         */
-        handleSetCarriedItem(packet: $ClientboundSetCarriedItemPacket): void;
-        /**
-         * Updates all registered IWorldAccess instances with destroyBlockInWorldPartially
-         */
-        handleBlockDestruction(packet: $ClientboundBlockDestructionPacket): void;
-        handleStopSoundEvent(packet: $ClientboundStopSoundPacket): void;
-        handleUpdateMobEffect(packet: $ClientboundUpdateMobEffectPacket): void;
-        handlePlayerCombatKill(packet: $ClientboundPlayerCombatKillPacket_): void;
-        handleInitializeBorder(packet: $ClientboundInitializeBorderPacket): void;
-        handleSetBorderSize(packet: $ClientboundSetBorderSizePacket): void;
-        handleDisguisedChat(packet: $ClientboundDisguisedChatPacket_): void;
-        handleTabListCustomisation(packet: $ClientboundTabListPacket_): void;
-        /**
-         * This method is only called for manual tab-completion (the minecraft:ask_server suggestion provider).
-         */
-        handleCommandSuggestions(packet: $ClientboundCommandSuggestionsPacket_): void;
-        handleForgetLevelChunk(packet: $ClientboundForgetLevelChunkPacket_): void;
-        handlePlayerCombatEnter(packet: $ClientboundPlayerCombatEnterPacket): void;
-        /**
-         * Sets the progressbar of the opened window to the specified value
-         */
-        handleContainerSetData(packet: $ClientboundContainerSetDataPacket): void;
-        handleChangeDifficulty(packet: $ClientboundChangeDifficultyPacket): void;
-        handleSetBorderCenter(packet: $ClientboundSetBorderCenterPacket): void;
-        handleHurtAnimation(packet: $ClientboundHurtAnimationPacket_): void;
-        /**
-         * Resets the ItemStack held in hand and closes the window that is opened
-         */
-        handleContainerClose(packet: $ClientboundContainerClosePacket): void;
-        /**
-         * Handles picking up an ItemStack or dropping one in your inventory or an open (non-creative) container
-         */
-        handleContainerSetSlot(packet: $ClientboundContainerSetSlotPacket): void;
-        handleSetExperience(packet: $ClientboundSetExperiencePacket): void;
-        handleHorseScreenOpen(packet: $ClientboundHorseScreenOpenPacket): void;
-        handleAddOrRemoveRecipes(packet: $ClientboundRecipePacket): void;
-        handleSetBorderLerpSize(packet: $ClientboundSetBorderLerpSizePacket): void;
-        handleTakeItemEntity(packet: $ClientboundTakeItemEntityPacket): void;
-        handleConfigurationStart(packet: $ClientboundStartConfigurationPacket): void;
-        /**
-         * Sets the velocity of the specified entity to the specified value
-         */
-        handleSetEntityMotion(packet: $ClientboundSetEntityMotionPacket): void;
         /**
          * Spawns an experience orb and sets its value (amount of XP)
          */
         handleAddExperienceOrb(packet: $ClientboundAddExperienceOrbPacket): void;
         /**
-         * Updates an entity's position and rotation as specified by the packet
+         * Sets the velocity of the specified entity to the specified value
          */
-        handleTeleportEntity(packet: $ClientboundTeleportEntityPacket): void;
+        handleSetEntityMotion(packet: $ClientboundSetEntityMotionPacket): void;
         /**
          * Invoked when the server registers new proximate objects in your watchlist or when objects in your watchlist have changed -> Registers any changes locally
          */
         handleSetEntityData(packet: $ClientboundSetEntityDataPacket_): void;
-        handleChunkBatchFinished(packet: $ClientboundChunkBatchFinishedPacket_): void;
-        handleSetChunkCacheRadius(packet: $ClientboundSetChunkCacheRadiusPacket): void;
+        /**
+         * Updates an entity's position and rotation as specified by the packet
+         */
+        handleTeleportEntity(packet: $ClientboundTeleportEntityPacket): void;
+        /**
+         * Updates which hotbar slot of the player is currently selected
+         */
+        handleSetCarriedItem(packet: $ClientboundSetCarriedItemPacket): void;
+        handleRemoveEntities(packet: $ClientboundRemoveEntitiesPacket): void;
+        handleSetExperience(packet: $ClientboundSetExperiencePacket): void;
+        handlePlayerCombatEnter(packet: $ClientboundPlayerCombatEnterPacket): void;
+        handleTabListCustomisation(packet: $ClientboundTabListPacket_): void;
+        /**
+         * Updates all registered IWorldAccess instances with destroyBlockInWorldPartially
+         */
+        handleBlockDestruction(packet: $ClientboundBlockDestructionPacket): void;
+        /**
+         * Handles picking up an ItemStack or dropping one in your inventory or an open (non-creative) container
+         */
+        handleContainerSetSlot(packet: $ClientboundContainerSetSlotPacket): void;
+        handleUpdateMobEffect(packet: $ClientboundUpdateMobEffectPacket): void;
+        handleSetBorderSize(packet: $ClientboundSetBorderSizePacket): void;
+        handleStopSoundEvent(packet: $ClientboundStopSoundPacket): void;
+        handleInitializeBorder(packet: $ClientboundInitializeBorderPacket): void;
+        handlePlayerAbilities(packet: $ClientboundPlayerAbilitiesPacket): void;
         handleSoundEntityEvent(packet: $ClientboundSoundEntityPacket): void;
+        handleTagQueryPacket(packet: $ClientboundTagQueryPacket): void;
+        handleTakeItemEntity(packet: $ClientboundTakeItemEntityPacket): void;
+        /**
+         * Creates a sign in the specified location if it didn't exist and opens the GUI to edit its text
+         */
+        handleOpenSignEditor(packet: $ClientboundOpenSignEditorPacket): void;
+        handleSetBorderLerpSize(packet: $ClientboundSetBorderLerpSizePacket): void;
+        /**
+         * Updates the NBTTagCompound metadata of instances of the following entitytypes: Mob spawners, command blocks, beacons, skulls, flowerpot
+         */
+        handleBlockEntityData(packet: $ClientboundBlockEntityDataPacket): void;
+        handlePlayerInfoRemove(packet: $ClientboundPlayerInfoRemovePacket_): void;
+        handleDisguisedChat(packet: $ClientboundDisguisedChatPacket_): void;
+        handleLevelChunkWithLight(packet: $ClientboundLevelChunkWithLightPacket): void;
+        handleEntityLinkPacket(packet: $ClientboundSetEntityLinkPacket): void;
+        handleUpdateRecipes(packet: $ClientboundUpdateRecipesPacket): void;
+        /**
+         * Handles the placement of a specified ItemStack in a specified container/inventory slot
+         */
+        handleContainerContent(packet: $ClientboundContainerSetContentPacket): void;
+        /**
+         * Sets the progressbar of the opened window to the specified value
+         */
+        handleContainerSetData(packet: $ClientboundContainerSetDataPacket): void;
+        handlePlayerCombatKill(packet: $ClientboundPlayerCombatKillPacket_): void;
+        handleSetBorderCenter(packet: $ClientboundSetBorderCenterPacket): void;
+        handleRemoveMobEffect(packet: $ClientboundRemoveMobEffectPacket_): void;
+        handlePlayerInfoUpdate(packet: $ClientboundPlayerInfoUpdatePacket): void;
+        handleForgetLevelChunk(packet: $ClientboundForgetLevelChunkPacket_): void;
+        handleHorseScreenOpen(packet: $ClientboundHorseScreenOpenPacket): void;
+        handleAddOrRemoveRecipes(packet: $ClientboundRecipePacket): void;
+        handleConfigurationStart(packet: $ClientboundStartConfigurationPacket): void;
+        /**
+         * Resets the ItemStack held in hand and closes the window that is opened
+         */
+        handleContainerClose(packet: $ClientboundContainerClosePacket): void;
+        handleHurtAnimation(packet: $ClientboundHurtAnimationPacket_): void;
+        /**
+         * Received from the servers PlayerManager if between 1 and 64 blocks in a chunk are changed. If only one block requires an update, the server sends S23PacketBlockChange and if 64 or more blocks are changed, the server sends S21PacketChunkData
+         */
+        handleChunkBlocksUpdate(packet: $ClientboundSectionBlocksUpdatePacket): void;
+        handlePlayerCombatEnd(packet: $ClientboundPlayerCombatEndPacket): void;
+        handleChangeDifficulty(packet: $ClientboundChangeDifficultyPacket): void;
+        /**
+         * This method is only called for manual tab-completion (the minecraft:ask_server suggestion provider).
+         */
+        handleCommandSuggestions(packet: $ClientboundCommandSuggestionsPacket_): void;
+        handleMerchantOffers(packet: $ClientboundMerchantOffersPacket): void;
+        handleChunkBatchStart(packet: $ClientboundChunkBatchStartPacket): void;
+        handleSetChunkCacheCenter(packet: $ClientboundSetChunkCacheCenterPacket): void;
+        /**
+         * Removes or sets the ScoreObjective to be displayed at a particular scoreboard position (list, sidebar, below name)
+         */
+        handleSetDisplayObjective(packet: $ClientboundSetDisplayObjectivePacket): void;
+        /**
+         * Updates a team managed by the scoreboard: Create/Remove the team registration, Register/Remove the player-team-memberships, Set team displayname/prefix/suffix and/or whether friendly fire is enabled
+         */
+        handleSetPlayerTeamPacket(packet: $ClientboundSetPlayerTeamPacket): void;
+        /**
+         * Updates en entity's attributes and their respective modifiers, which are used for speed bonuses (player sprinting, animals fleeing, baby speed), weapon/tool attackDamage, hostiles followRange randomization, zombie maxHealth and knockback resistance as well as reinforcement spawning chance.
+         */
+        handleUpdateAttributes(packet: $ClientboundUpdateAttributesPacket): void;
+        handleSetChunkCacheRadius(packet: $ClientboundSetChunkCacheRadiusPacket): void;
+        handleLightUpdatePacket(packet: $ClientboundLightUpdatePacket): void;
+        handleChunkBatchFinished(packet: $ClientboundChunkBatchFinishedPacket_): void;
         /**
          * Spawns a specified number of particles at the specified location with a randomized displacement according to specified bounds
          */
         handleParticleEvent(packet: $ClientboundLevelParticlesPacket): void;
         /**
-         * Removes or sets the ScoreObjective to be displayed at a particular scoreboard position (list, sidebar, below name)
+         * Registers some server properties (gametype,hardcore-mode,terraintype,difficulty,player limit), creates a new WorldClient and sets the player initial dimension
          */
-        handleSetDisplayObjective(packet: $ClientboundSetDisplayObjectivePacket): void;
-        handleMerchantOffers(packet: $ClientboundMerchantOffersPacket): void;
+        handleLogin(packet: $ClientboundLoginPacket_): void;
+        handleTickingState(packet: $ClientboundTickingStatePacket_): void;
         /**
-         * Updates a team managed by the scoreboard: Create/Remove the team registration, Register/Remove the player-team-memberships, Set team displayname/prefix/suffix and/or whether friendly fire is enabled
+         * Renders a specified animation: Waking up a player, a living entity swinging its currently held item, being hurt or receiving a critical hit by normal or magical means
          */
-        handleSetPlayerTeamPacket(packet: $ClientboundSetPlayerTeamPacket): void;
-        handleChunkBatchStart(packet: $ClientboundChunkBatchStartPacket): void;
+        handleAnimate(packet: $ClientboundAnimatePacket): void;
         /**
-         * Updates en entity's attributes and their respective modifiers, which are used for speed bonuses (player sprinting, animals fleeing, baby speed), weapon/tool attackDamage, hostiles followRange randomization, zombie maxHealth and knockback resistance as well as reinforcement spawning chance.
+         * Updates the block and metadata and generates a blockupdate (and notify the clients)
          */
-        handleUpdateAttributes(packet: $ClientboundUpdateAttributesPacket): void;
-        handleLightUpdatePacket(packet: $ClientboundLightUpdatePacket): void;
-        handleSetChunkCacheCenter(packet: $ClientboundSetChunkCacheCenterPacket): void;
-        handlePlayerAbilities(packet: $ClientboundPlayerAbilitiesPacket): void;
-        set actionBarText(value: $ClientboundSetActionBarTextPacket_);
-        set subtitleText(value: $ClientboundSetSubtitleTextPacket_);
-        set titlesAnimation(value: $ClientboundSetTitlesAnimationPacket);
+        handleBlockUpdate(packet: $ClientboundBlockUpdatePacket): void;
+        /**
+         * Updates the direction in which the specified entity is looking, normally this head rotation is independent of the rotation of the entity itself
+         */
+        handleRotateMob(packet: $ClientboundRotateHeadPacket): void;
+        handleSetHealth(packet: $ClientboundSetHealthPacket): void;
+        handleMovePlayer(packet: $ClientboundPlayerPositionPacket): void;
+        handleRespawn(packet: $ClientboundRespawnPacket_): void;
+        /**
+         * Initiates a new explosion (sound, particles, drop spawn) for the affected blocks indicated by the packet.
+         */
+        handleExplosion(packet: $ClientboundExplodePacket): void;
+        handleTickingStep(packet: $ClientboundTickingStepPacket_): void;
+        /**
+         * Updates the specified entity's position by the specified relative moment and absolute rotation. Note that subclassing of the packet allows for the specification of a subset of this data (e.g. only rel. position, abs. rotation or both).
+         */
+        handleMoveEntity(packet: $ClientboundMoveEntityPacket): void;
+        handleDeleteChat(packet: $ClientboundDeleteChatPacket_): void;
+        handleSystemChat(packet: $ClientboundSystemChatPacket_): void;
+        handleSetTime(packet: $ClientboundSetTimePacket): void;
+        handleSetSpawn(packet: $ClientboundSetDefaultSpawnPositionPacket): void;
+        handlePlayerChat(packet: $ClientboundPlayerChatPacket_): void;
+        handleChunksBiomes(packet: $ClientboundChunksBiomesPacket_): void;
+        /**
+         * Spawns an instance of the objecttype indicated by the packet and sets its position and momentum
+         */
+        handleAddEntity(packet: $ClientboundAddEntityPacket): void;
+        setTitleText(packet: $ClientboundSetTitleTextPacket_): void;
+        /**
+         * Updates the worlds MapStorage with the specified MapData for the specified map-identifier and invokes a MapItemRenderer for it
+         */
+        handleMapItemData(packet: $ClientboundMapItemDataPacket_): void;
+        handleCommands(packet: $ClientboundCommandsPacket): void;
+        handleSetCamera(packet: $ClientboundSetCameraPacket): void;
+        handleServerData(packet: $ClientboundServerDataPacket_): void;
+        handleOpenScreen(packet: $ClientboundOpenScreenPacket): void;
+        handleTitlesClear(packet: $ClientboundClearTitlesPacket): void;
+        handleLookAt(packet: $ClientboundPlayerLookAtPacket): void;
+        /**
+         * Updates the players statistics or achievements
+         */
+        handleAwardStats(packet: $ClientboundAwardStatsPacket_): void;
+        setActionBarText(packet: $ClientboundSetActionBarTextPacket_): void;
+        handleLevelEvent(packet: $ClientboundLevelEventPacket): void;
+        handleSetEquipment(packet: $ClientboundSetEquipmentPacket): void;
+        /**
+         * Triggers Block.onBlockEventReceived, which is implemented in BlockPistonBase for extension/retraction, BlockNote for setting the instrument (including audiovisual feedback) and in BlockContainer to set the number of players accessing a (Ender)Chest
+         */
+        handleBlockEvent(packet: $ClientboundBlockEventPacket): void;
+        handlePlaceRecipe(packet: $ClientboundPlaceGhostRecipePacket): void;
+        handleBossUpdate(packet: $ClientboundBossEventPacket): void;
+        handleOpenBook(packet: $ClientboundOpenBookPacket): void;
+        handleSoundEvent(packet: $ClientboundSoundPacket): void;
+        setTitlesAnimation(packet: $ClientboundSetTitlesAnimationPacket): void;
+        setSubtitleText(packet: $ClientboundSetSubtitleTextPacket_): void;
+        /**
+         * Either updates the score with a specified value or removes the score for an objective
+         */
+        handleSetScore(packet: $ClientboundSetScorePacket_): void;
+        handleItemCooldown(packet: $ClientboundCooldownPacket_): void;
+        /**
+         * May create a scoreboard objective, remove an objective from the scoreboard or update an objectives' displayname
+         */
+        handleAddObjective(packet: $ClientboundSetObjectivePacket): void;
+        handleMoveVehicle(packet: $ClientboundMoveVehiclePacket): void;
+        handleResetScore(packet: $ClientboundResetScorePacket_): void;
+        handleDebugSample(packet: $ClientboundDebugSamplePacket_): void;
+        handleBundlePacket(packet: $ClientboundBundlePacket): void;
+        handleGameEvent(packet: $ClientboundGameEventPacket): void;
+        handleProjectilePowerPacket(packet: $ClientboundProjectilePowerPacket): void;
+        handleSetSimulationDistance(packet: $ClientboundSetSimulationDistancePacket_): void;
+        handleSetEntityPassengersPacket(packet: $ClientboundSetPassengersPacket): void;
+        handleSetBorderWarningDelay(packet: $ClientboundSetBorderWarningDelayPacket): void;
+        handleSelectAdvancementsTab(packet: $ClientboundSelectAdvancementsTabPacket): void;
+        handleCustomChatCompletions(packet: $ClientboundCustomChatCompletionsPacket_): void;
+        handleSetBorderWarningDistance(packet: $ClientboundSetBorderWarningDistancePacket): void;
+        handleUpdateAdvancementsPacket(packet: $ClientboundUpdateAdvancementsPacket): void;
+        handleBlockChangedAck(packet: $ClientboundBlockChangedAckPacket_): void;
         set titleText(value: $ClientboundSetTitleTextPacket_);
+        set actionBarText(value: $ClientboundSetActionBarTextPacket_);
+        set titlesAnimation(value: $ClientboundSetTitlesAnimationPacket);
+        set subtitleText(value: $ClientboundSetSubtitleTextPacket_);
     }
     export class $ClientboundSetBorderCenterPacket implements $Packet<$ClientGamePacketListener> {
         type(): $PacketType<$ClientboundSetBorderCenterPacket>;
@@ -5097,17 +5097,17 @@ declare module "@package/net/minecraft/network/protocol/game" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundSetBorderCenterPacket>;
         constructor(worldBorder: $WorldBorder);
         get newCenterZ(): number;
         get newCenterX(): number;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerboundContainerClickPacket implements $Packet<$ServerGamePacketListener> {
         type(): $PacketType<$ServerboundContainerClickPacket>;
@@ -5115,49 +5115,49 @@ declare module "@package/net/minecraft/network/protocol/game" {
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ServerGamePacketListener): void;
-        getContainerId(): number;
         getCarriedItem(): $ItemStack;
-        getSlotNum(): number;
         getStateId(): number;
+        getContainerId(): number;
         getChangedSlots(): $Int2ObjectMap<$ItemStack>;
-        getButtonNum(): number;
         getClickType(): $ClickType;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
+        getButtonNum(): number;
+        getSlotNum(): number;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ServerboundContainerClickPacket>;
         constructor(containerId: number, stateId: number, slotNum: number, buttonNum: number, clickType: $ClickType_, carriedItem: $ItemStack_, changedSlots: $Int2ObjectMap<$ItemStack_>);
-        get containerId(): number;
         get carriedItem(): $ItemStack;
-        get slotNum(): number;
         get stateId(): number;
+        get containerId(): number;
         get changedSlots(): $Int2ObjectMap<$ItemStack>;
-        get buttonNum(): number;
         get clickType(): $ClickType;
-        get skippable(): boolean;
+        get buttonNum(): number;
+        get slotNum(): number;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ClientboundAnimatePacket implements $Packet<$ClientGamePacketListener> {
+        getAction(): number;
         type(): $PacketType<$ClientboundAnimatePacket>;
         getId(): number;
         /**
          * Passes this Packet on to the NetHandler for processing.
          */
         handle(handler: $ClientGamePacketListener): void;
-        getAction(): number;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
         isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         static CRITICAL_HIT: number;
         static MAGIC_CRITICAL_HIT: number;
         static SWING_MAIN_HAND: number;
@@ -5165,10 +5165,10 @@ declare module "@package/net/minecraft/network/protocol/game" {
         static WAKE_UP: number;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundAnimatePacket>;
         constructor(entity: $Entity, action: number);
-        get id(): number;
         get action(): number;
-        get skippable(): boolean;
+        get id(): number;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerPacketListener {
         static LOGGER: $Logger;

@@ -12,12 +12,12 @@ import { $DispenserBlockEntity } from "@package/net/minecraft/world/level/block/
 
 declare module "@package/net/minecraft/core/dispenser" {
     export class $DefaultDispenseItemBehavior implements $DispenseItemBehavior {
-        dispense(blockSource: $BlockSource_, item: $ItemStack_): $ItemStack;
         execute(blockSource: $BlockSource_, item: $ItemStack_): $ItemStack;
+        playAnimation(blockSource: $BlockSource_, direction: $Direction_): void;
+        static spawnItem(level: $Level_, stack: $ItemStack_, speed: number, facing: $Direction_, position: $Position): void;
         playSound(blockSource: $BlockSource_): void;
         consumeWithRemainder(blockSource: $BlockSource_, stack: $ItemStack_, remainder: $ItemStack_): $ItemStack;
-        static spawnItem(level: $Level_, stack: $ItemStack_, speed: number, facing: $Direction_, position: $Position): void;
-        playAnimation(blockSource: $BlockSource_, direction: $Direction_): void;
+        dispense(blockSource: $BlockSource_, item: $ItemStack_): $ItemStack;
         constructor();
     }
     export class $ShulkerBoxDispenseBehavior extends $OptionalDispenseItemBehavior {
@@ -28,17 +28,17 @@ declare module "@package/net/minecraft/core/dispenser" {
         constructor(type: $Boat$Type_, isChestBoat: boolean);
     }
     export class $BlockSource extends $Record {
+        center(): $Vec3;
         state(): $BlockState;
         pos(): $BlockPos;
         level(): $ServerLevel;
-        center(): $Vec3;
         blockEntity(): $DispenserBlockEntity;
         constructor(arg0: $ServerLevel, arg1: $BlockPos_, arg2: $BlockState_, arg3: $DispenserBlockEntity);
     }
     /**
      * Values that may be interpreted as {@link $BlockSource}.
      */
-    export type $BlockSource_ = { state?: $BlockState_, blockEntity?: $DispenserBlockEntity, pos?: $BlockPos_, level?: $ServerLevel,  } | [state?: $BlockState_, blockEntity?: $DispenserBlockEntity, pos?: $BlockPos_, level?: $ServerLevel, ];
+    export type $BlockSource_ = { level?: $ServerLevel, state?: $BlockState_, blockEntity?: $DispenserBlockEntity, pos?: $BlockPos_,  } | [level?: $ServerLevel, state?: $BlockState_, blockEntity?: $DispenserBlockEntity, pos?: $BlockPos_, ];
     export class $ShearsDispenseItemBehavior extends $OptionalDispenseItemBehavior {
         constructor();
     }
@@ -60,8 +60,8 @@ declare module "@package/net/minecraft/core/dispenser" {
      */
     export type $DispenseItemBehavior_ = ((arg0: $BlockSource, arg1: $ItemStack) => $ItemStack_);
     export class $ProjectileDispenseBehavior extends $DefaultDispenseItemBehavior implements $ProjectileDispenseBehaviorAccessor {
-        create$getProjectileItem(): $ProjectileItem;
         create$getDispenseConfig(): $ProjectileItem$DispenseConfig;
+        create$getProjectileItem(): $ProjectileItem;
         constructor(projectile: $Item_);
     }
 }

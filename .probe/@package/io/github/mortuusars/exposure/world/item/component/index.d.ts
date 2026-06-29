@@ -10,8 +10,8 @@ declare module "@package/io/github/mortuusars/exposure/world/item/component" {
     export class $StoredItemStack {
         isEmpty(): boolean;
         getItem(): $Item;
-        getForReading(): $ItemStack;
         getCopy(): $ItemStack;
+        getForReading(): $ItemStack;
         getItemAndStackCopy<T extends $Item>(): $ItemAndStack<T>;
         mapIf<T, R>(clazz: $Class<T>, func: $BiFunction_<T, $ItemStack, R>): (R) | undefined;
         static CODEC: $Codec<$StoredItemStack>;
@@ -20,8 +20,8 @@ declare module "@package/io/github/mortuusars/exposure/world/item/component" {
         constructor(stack: $ItemStack_);
         get empty(): boolean;
         get item(): $Item;
-        get forReading(): $ItemStack;
         get copy(): $ItemStack;
+        get forReading(): $ItemStack;
         get itemAndStackCopy(): $ItemAndStack<T>;
     }
 }

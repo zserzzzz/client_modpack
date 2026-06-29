@@ -8,13 +8,13 @@ declare module "@package/xaero/lib/common/permission" {
         getType(): $Class<T>;
         getDisplayName(): $Component;
         getComment(): $Component;
-        getActualPath(): string;
         getDefaultPath(): string;
+        getActualPath(): string;
         get modId(): string;
         get type(): $Class<T>;
         get displayName(): $Component;
         get comment(): $Component;
-        get actualPath(): string;
         get defaultPath(): string;
+        get actualPath(): string;
     }
 }

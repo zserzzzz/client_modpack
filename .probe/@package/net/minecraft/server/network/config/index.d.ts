@@ -9,9 +9,9 @@ import { $List_, $Set_ } from "@package/java/util";
 
 declare module "@package/net/minecraft/server/network/config" {
     export class $SynchronizeRegistriesTask implements $ConfigurationTask {
-        handleResponse(packs: $List_<$KnownPack_>, packetSender: $Consumer_<$Packet<never>>): void;
         type(): $ConfigurationTask$Type;
         start(task: $Consumer_<$Packet<never>>): void;
+        handleResponse(packs: $List_<$KnownPack_>, packetSender: $Consumer_<$Packet<never>>): void;
         handler$fnb000$fabric_resource_loader_v0$syncRegistryAndTags(arg0: $Consumer_<any>, arg1: $Set_<any>, arg2: $CallbackInfo): void;
         handler$fnb000$fabric_resource_loader_v0$onSelectKnownPacks(arg0: $List_<any>, arg1: $Consumer_<any>, arg2: $CallbackInfo): void;
         static TYPE: $ConfigurationTask$Type;

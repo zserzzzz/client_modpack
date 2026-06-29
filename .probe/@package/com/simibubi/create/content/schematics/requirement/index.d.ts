@@ -28,21 +28,21 @@ declare module "@package/com/simibubi/create/content/schematics/requirement" {
         constructor(arg0: $ItemStack_, arg1: $ItemRequirement$ItemUseType_);
     }
     export class $ItemRequirement {
-        getRequiredItems(): $List<$ItemRequirement$StackRequirement>;
         isEmpty(): boolean;
         static of(arg0: $Entity): $ItemRequirement;
         static of(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
         isInvalid(): boolean;
         union(arg0: $ItemRequirement): $ItemRequirement;
+        getRequiredItems(): $List<$ItemRequirement$StackRequirement>;
         static NONE: $ItemRequirement;
         static INVALID: $ItemRequirement;
         constructor(arg0: $ItemRequirement$ItemUseType_, arg1: $List_<$ItemStack_>);
         constructor(arg0: $ItemRequirement$ItemUseType_, arg1: $Item_);
-        constructor(arg0: $List_<$ItemRequirement$StackRequirement>);
-        constructor(arg0: $ItemRequirement$StackRequirement);
         constructor(arg0: $ItemRequirement$ItemUseType_, arg1: $ItemStack_);
-        get requiredItems(): $List<$ItemRequirement$StackRequirement>;
+        constructor(arg0: $ItemRequirement$StackRequirement);
+        constructor(arg0: $List_<$ItemRequirement$StackRequirement>);
         get empty(): boolean;
         get invalid(): boolean;
+        get requiredItems(): $List<$ItemRequirement$StackRequirement>;
     }
 }

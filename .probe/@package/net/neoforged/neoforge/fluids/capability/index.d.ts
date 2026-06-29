@@ -14,13 +14,18 @@ declare module "@package/net/neoforged/neoforge/fluids/capability" {
     export class $IFluidHandler {
     }
     export interface $IFluidHandler {
-        /**
-         * Returns the number of fluid storage units ("tanks") available
-         */
-        getTanks(): number;
-        drain(arg0: $FluidStack_, arg1: $IFluidHandler$FluidAction_): $FluidStack;
         drain(arg0: number, arg1: $IFluidHandler$FluidAction_): $FluidStack;
+        drain(arg0: $FluidStack_, arg1: $IFluidHandler$FluidAction_): $FluidStack;
         fill(arg0: $FluidStack_, arg1: $IFluidHandler$FluidAction_): number;
+        /**
+         * Retrieves the maximum fluid amount for a given tank.
+         */
+        getTankCapacity(tank: number): number;
+        /**
+         * This function is a way to determine which fluids can exist inside a given handler. General purpose tanks will
+         * basically always return TRUE for this.
+         */
+        isFluidValid(tank: number, stack: $FluidStack_): boolean;
         /**
          * Returns the FluidStack in a given tank.
          * 
@@ -32,14 +37,9 @@ declare module "@package/net/neoforged/neoforge/fluids/capability" {
          */
         getFluidInTank(tank: number): $FluidStack;
         /**
-         * Retrieves the maximum fluid amount for a given tank.
+         * Returns the number of fluid storage units ("tanks") available
          */
-        getTankCapacity(tank: number): number;
-        /**
-         * This function is a way to determine which fluids can exist inside a given handler. General purpose tanks will
-         * basically always return TRUE for this.
-         */
-        isFluidValid(tank: number, stack: $FluidStack_): boolean;
+        getTanks(): number;
         get tanks(): number;
     }
     export class $IFluidHandler$FluidAction extends $Enum<$IFluidHandler$FluidAction> {

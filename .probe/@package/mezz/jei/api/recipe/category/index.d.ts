@@ -16,21 +16,18 @@ declare module "@package/mezz/jei/api/recipe/category" {
     export class $IRecipeCategory<T> {
     }
     export interface $IRecipeCategory<T> {
-        getHeight(): number;
-        onDisplayedIngredientsUpdate(arg0: T, arg1: $List_<$IRecipeSlotDrawable>, arg2: $IFocusGroup): void;
         getCodec(arg0: $ICodecHelper, arg1: $IRecipeManager): $Codec<T>;
-        getWidth(): number;
-        getRecipeType(): $RecipeType<T>;
-        needsRecipeBorder(): boolean;
-        draw(arg0: T, arg1: $IRecipeSlotsView_, arg2: $GuiGraphics, arg3: number, arg4: number): void;
-        setRecipe(arg0: $IRecipeLayoutBuilder, arg1: T, arg2: $IFocusGroup): void;
-        getTitle(): $Component;
-        isHandled(arg0: T): boolean;
         /**
          * @deprecated
          */
         getBackground(): $IDrawable;
+        getWidth(): number;
         getIcon(): $IDrawable;
+        getTitle(): $Component;
+        getHeight(): number;
+        draw(arg0: T, arg1: $IRecipeSlotsView_, arg2: $GuiGraphics, arg3: number, arg4: number): void;
+        getTooltip(arg0: $ITooltipBuilder, arg1: T, arg2: $IRecipeSlotsView_, arg3: number, arg4: number): void;
+        onDisplayedIngredientsUpdate(arg0: T, arg1: $List_<$IRecipeSlotDrawable>, arg2: $IFocusGroup): void;
         /**
          * @deprecated
          */
@@ -44,13 +41,16 @@ declare module "@package/mezz/jei/api/recipe/category" {
          */
         createRecipeExtras(arg0: $IRecipeExtrasBuilder, arg1: T, arg2: $IRecipeSlotsView_, arg3: $IFocusGroup): void;
         createRecipeExtras(arg0: $IRecipeExtrasBuilder, arg1: T, arg2: $IFocusGroup): void;
-        getTooltip(arg0: $ITooltipBuilder, arg1: T, arg2: $IRecipeSlotsView_, arg3: number, arg4: number): void;
+        isHandled(arg0: T): boolean;
         getRegistryName(arg0: T): $ResourceLocation;
-        get height(): number;
-        get width(): number;
-        get recipeType(): $RecipeType<T>;
-        get title(): $Component;
+        getRecipeType(): $RecipeType<T>;
+        setRecipe(arg0: $IRecipeLayoutBuilder, arg1: T, arg2: $IFocusGroup): void;
+        needsRecipeBorder(): boolean;
         get background(): $IDrawable;
+        get width(): number;
         get icon(): $IDrawable;
+        get title(): $Component;
+        get height(): number;
+        get recipeType(): $RecipeType<T>;
     }
 }

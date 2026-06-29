@@ -3,9 +3,9 @@ declare module "@package/org/spongepowered/asm/service" {
     export class $ITransformer {
     }
     export interface $ITransformer {
-        isDelegationExcluded(): boolean;
         getName(): string;
-        get delegationExcluded(): boolean;
+        isDelegationExcluded(): boolean;
         get name(): string;
+        get delegationExcluded(): boolean;
     }
 }

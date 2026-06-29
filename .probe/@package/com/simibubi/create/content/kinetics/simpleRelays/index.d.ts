@@ -62,36 +62,36 @@ declare module "@package/com/simibubi/create/content/kinetics/simpleRelays" {
     export class $CogwheelBlockItem$LargeCogHelper extends $CogwheelBlockItem$DiagonalCogHelper {
     }
     export class $ICogWheel {
-        static isDedicatedCogItem(arg0: $ItemStack_): boolean;
-        static isSmallCogItem(arg0: $ItemStack_): boolean;
-        static isLargeCogItem(arg0: $ItemStack_): boolean;
-        static isDedicatedCogWheel(arg0: $Block_): boolean;
         static isSmallCog(arg0: $Block_): boolean;
         static isSmallCog(arg0: $BlockState_): boolean;
         static isLargeCog(arg0: $Block_): boolean;
         static isLargeCog(arg0: $BlockState_): boolean;
+        static isDedicatedCogWheel(arg0: $Block_): boolean;
+        static isDedicatedCogItem(arg0: $ItemStack_): boolean;
+        static isLargeCogItem(arg0: $ItemStack_): boolean;
+        static isSmallCogItem(arg0: $ItemStack_): boolean;
     }
     export interface $ICogWheel extends $IRotate {
-        isDedicatedCogWheel(): boolean;
         isSmallCog(): boolean;
         isLargeCog(): boolean;
+        isDedicatedCogWheel(): boolean;
     }
     export class $AbstractShaftBlock extends $RotatedPillarKineticBlock implements $IBE<$KineticBlockEntity>, $ProperWaterloggedBlock {
         getBlockEntityClass(): $Class<$KineticBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$KineticBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$KineticBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($KineticBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$KineticBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $KineticBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
-        fluidState(arg0: $BlockState_): $FluidState;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$KineticBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($KineticBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$KineticBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         updateWater(arg0: $LevelAccessor, arg1: $BlockState_, arg2: $BlockPos_): void;
+        fluidState(arg0: $BlockState_): $FluidState;
+        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -140,25 +140,25 @@ declare module "@package/com/simibubi/create/content/kinetics/simpleRelays" {
     }
     export class $CogwheelBlockItem$IntegratedLargeCogHelper implements $IPlacementHelper {
         getOffset(arg0: $Player, arg1: $Level_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockHitResult): $PlacementOffset;
-        getStatePredicate(): $Predicate<$BlockState>;
         getItemPredicate(): $Predicate<$ItemStack>;
+        getStatePredicate(): $Predicate<$BlockState>;
         getOffset(arg0: $Player, arg1: $Level_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockHitResult, arg5: $ItemStack_): $PlacementOffset;
-        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
-        matchesState(arg0: $BlockState_): boolean;
-        displayGhost(arg0: $PlacementOffset): void;
         matchesItem(arg0: $ItemStack_): boolean;
+        matchesState(arg0: $BlockState_): boolean;
+        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
+        displayGhost(arg0: $PlacementOffset): void;
         constructor();
-        get statePredicate(): $Predicate<$BlockState>;
         get itemPredicate(): $Predicate<$ItemStack>;
+        get statePredicate(): $Predicate<$BlockState>;
     }
     export class $CogwheelBlockItem$DiagonalCogHelper implements $IPlacementHelper {
         getOffset(arg0: $Player, arg1: $Level_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockHitResult): $PlacementOffset;
         getStatePredicate(): $Predicate<$BlockState>;
         getOffset(arg0: $Player, arg1: $Level_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockHitResult, arg5: $ItemStack_): $PlacementOffset;
-        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
-        matchesState(arg0: $BlockState_): boolean;
-        displayGhost(arg0: $PlacementOffset): void;
         matchesItem(arg0: $ItemStack_): boolean;
+        matchesState(arg0: $BlockState_): boolean;
+        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
+        displayGhost(arg0: $PlacementOffset): void;
         constructor();
         get statePredicate(): $Predicate<$BlockState>;
     }
@@ -179,8 +179,8 @@ declare module "@package/com/simibubi/create/content/kinetics/simpleRelays" {
     export class $ShaftBlock extends $AbstractSimpleShaftBlock implements $EncasableBlock {
         static pickCorrectShaftType(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): $BlockState;
         static isShaft(arg0: $BlockState_): boolean;
-        tryEncase(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $ItemStack_, arg4: $Player, arg5: $InteractionHand_, arg6: $BlockHitResult): $ItemInteractionResult;
         playEncaseSound(arg0: $Level_, arg1: $BlockPos_): void;
+        tryEncase(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $ItemStack_, arg4: $Player, arg5: $InteractionHand_, arg6: $BlockHitResult): $ItemInteractionResult;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -215,12 +215,12 @@ declare module "@package/com/simibubi/create/content/kinetics/simpleRelays" {
     export class $CogWheelBlock extends $AbstractSimpleShaftBlock implements $ICogWheel, $EncasableBlock {
         static small(arg0: $BlockBehaviour$Properties): $CogWheelBlock;
         static large(arg0: $BlockBehaviour$Properties): $CogWheelBlock;
-        static isValidCogwheelPosition(arg0: boolean, arg1: $LevelReader, arg2: $BlockPos_, arg3: $Direction$Axis_): boolean;
-        isDedicatedCogWheel(): boolean;
         isSmallCog(): boolean;
         isLargeCog(): boolean;
-        tryEncase(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $ItemStack_, arg4: $Player, arg5: $InteractionHand_, arg6: $BlockHitResult): $ItemInteractionResult;
+        isDedicatedCogWheel(): boolean;
+        static isValidCogwheelPosition(arg0: boolean, arg1: $LevelReader, arg2: $BlockPos_, arg3: $Direction$Axis_): boolean;
         playEncaseSound(arg0: $Level_, arg1: $BlockPos_): void;
+        tryEncase(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $ItemStack_, arg4: $Player, arg5: $InteractionHand_, arg6: $BlockHitResult): $ItemInteractionResult;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -249,26 +249,26 @@ declare module "@package/com/simibubi/create/content/kinetics/simpleRelays" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         static AXIS: $EnumProperty<$Direction$Axis>;
-        get dedicatedCogWheel(): boolean;
         get smallCog(): boolean;
         get largeCog(): boolean;
+        get dedicatedCogWheel(): boolean;
     }
     export class $CogwheelBlockItem$IntegratedSmallCogHelper implements $IPlacementHelper {
         getOffset(arg0: $Player, arg1: $Level_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockHitResult): $PlacementOffset;
-        getStatePredicate(): $Predicate<$BlockState>;
         getItemPredicate(): $Predicate<$ItemStack>;
+        getStatePredicate(): $Predicate<$BlockState>;
         getOffset(arg0: $Player, arg1: $Level_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockHitResult, arg5: $ItemStack_): $PlacementOffset;
-        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
-        matchesState(arg0: $BlockState_): boolean;
-        displayGhost(arg0: $PlacementOffset): void;
         matchesItem(arg0: $ItemStack_): boolean;
+        matchesState(arg0: $BlockState_): boolean;
+        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
+        displayGhost(arg0: $PlacementOffset): void;
         constructor();
-        get statePredicate(): $Predicate<$BlockState>;
         get itemPredicate(): $Predicate<$ItemStack>;
+        get statePredicate(): $Predicate<$BlockState>;
     }
     export class $BracketedKineticBlockEntityRenderer extends $KineticBlockEntityRenderer<$BracketedKineticBlockEntity> {
-        static getAngleForLargeCogShaft(arg0: $SimpleKineticBlockEntity, arg1: $Direction$Axis_): number;
         static getShaftAngleOffset(arg0: $Direction$Axis_, arg1: $BlockPos_): number;
+        static getAngleForLargeCogShaft(arg0: $SimpleKineticBlockEntity, arg1: $Direction$Axis_): number;
         static KINETIC_BLOCK: $SuperByteBufferCache$Compartment<$BlockState>;
         static rainbowMode: boolean;
         constructor(arg0: $BlockEntityRendererProvider$Context);

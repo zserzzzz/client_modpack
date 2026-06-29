@@ -24,8 +24,8 @@ declare module "@package/net/minecraft/world/level/storage/loot/entries" {
     export class $LootPoolEntryContainer implements $ComposableEntryContainer, $LootPoolEntryAccessor {
         validate(validationContext: $ValidationContext): void;
         getType(): $LootPoolEntryType;
-        canRun(lootContext: $LootContext): boolean;
         static commonFields<T extends $LootPoolEntryContainer>(instance: $RecordCodecBuilder$Instance<T>): $Products$P1<$RecordCodecBuilder$Mu<T>, $List<$LootItemCondition>>;
+        canRun(lootContext: $LootContext): boolean;
         getConditions(): $List<$LootItemCondition>;
         conditions: $List<$LootItemCondition>;
         constructor(conditions: $List_<$LootItemCondition>);
@@ -35,15 +35,15 @@ declare module "@package/net/minecraft/world/level/storage/loot/entries" {
      * A LootPoolEntryContainer that expands into a single LootPoolEntry.
      */
     export class $LootPoolSingletonContainer extends $LootPoolEntryContainer implements $LeafEntryAccessor {
+        static simpleBuilder(entryBuilder: $LootPoolSingletonContainer$EntryConstructor_): $LootPoolSingletonContainer$Builder<never>;
+        static singletonFields<T extends $LootPoolSingletonContainer>(instance: $RecordCodecBuilder$Instance<T>): $Products$P4<$RecordCodecBuilder$Mu<T>, number, number, $List<$LootItemCondition>, $List<$LootItemFunction>>;
         /**
          * Generate the loot stacks of this entry.
          * Contrary to the method name this method does not always generate one stack, it can also generate zero or multiple stacks.
          */
         createItemStack(stackConsumer: $Consumer_<$ItemStack>, lootContext: $LootContext): void;
-        static simpleBuilder(entryBuilder: $LootPoolSingletonContainer$EntryConstructor_): $LootPoolSingletonContainer$Builder<never>;
-        static singletonFields<T extends $LootPoolSingletonContainer>(instance: $RecordCodecBuilder$Instance<T>): $Products$P4<$RecordCodecBuilder$Mu<T>, number, number, $List<$LootItemCondition>, $List<$LootItemFunction>>;
-        getFunctions(): $List<$LootItemFunction>;
         getWeight(): number;
+        getFunctions(): $List<$LootItemFunction>;
         compositeFunction: $BiFunction<$ItemStack, $LootContext, $ItemStack>;
         functions: $List<$LootItemFunction>;
         weight: number;
@@ -181,14 +181,14 @@ declare module "@package/net/minecraft/world/level/storage/loot/entries" {
     }
     export interface $LootPoolEntry {
         /**
+         * Gets the effective weight based on the loot entry's weight and quality multiplied by looter's luck.
+         */
+        getWeight(luck: number): number;
+        /**
          * Generate the loot stacks of this entry.
          * Contrary to the method name this method does not always generate one stack, it can also generate zero or multiple stacks.
          */
         createItemStack(stackConsumer: $Consumer_<$ItemStack>, lootContext: $LootContext): void;
-        /**
-         * Gets the effective weight based on the loot entry's weight and quality multiplied by looter's luck.
-         */
-        getWeight(luck: number): number;
     }
     export class $LootPoolSingletonContainer$Builder<T extends $LootPoolSingletonContainer$Builder<T>> extends $LootPoolEntryContainer$Builder<T> implements $FunctionUserBuilder<T> {
         getFunctions(): $List<$LootItemFunction>;
@@ -275,15 +275,15 @@ declare module "@package/net/minecraft/world/level/storage/loot/entries" {
      */
     export type $ComposableEntryContainer_ = (() => void);
     export class $LootPoolEntryContainer$Builder<T extends $LootPoolEntryContainer$Builder<T>> implements $ConditionUserBuilder<T> {
-        append(childBuilder: $LootPoolEntryContainer$Builder<never>): $EntryGroup$Builder;
-        unwrap(): T;
-        build(): $LootPoolEntryContainer;
-        getConditions(): $List<$LootItemCondition>;
         then(childBuilder: $LootPoolEntryContainer$Builder<never>): $SequentialEntry$Builder;
+        append(childBuilder: $LootPoolEntryContainer$Builder<never>): $EntryGroup$Builder;
+        build(): $LootPoolEntryContainer;
+        when(conditionBuilder: $LootItemCondition$Builder_): T;
+        getConditions(): $List<$LootItemCondition>;
         getThis(): T;
         otherwise(childBuilder: $LootPoolEntryContainer$Builder<never>): $AlternativesEntry$Builder;
         when<E>(builderSources: $Iterable_<E>, toBuilderFunction: $Function_<E, $LootItemCondition$Builder>): T;
-        when(conditionBuilder: $LootItemCondition$Builder_): T;
+        unwrap(): T;
         constructor();
         get conditions(): $List<$LootItemCondition>;
         get this(): T;

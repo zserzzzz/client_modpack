@@ -7,16 +7,16 @@ export * as rule from "@package/xaero/hud/category/rule";
 declare module "@package/xaero/hud/category" {
     export class $FilterObjectCategory<E, P, D extends $FilterObjectCategoryData<D>, C extends $FilterObjectCategory<E, P, D, C>> extends $ObjectCategory<D, C> {
         getIncludeInSuperCategory(): boolean;
-        getExcludeList<S>(arg0: $ObjectCategoryListRuleType<E, P, S>): $ObjectCategoryExcludeList<E, P, S>;
-        getExcludeLists(): $List<$ObjectCategoryExcludeList<E, P, never>>;
-        getBaseRule(): $ObjectCategoryRule<E, P>;
-        getIncludeList<S>(arg0: $ObjectCategoryListRuleType<E, P, S>): $ObjectCategoryIncludeList<E, P, S>;
         getIncludeLists(): $List<$ObjectCategoryIncludeList<E, P, never>>;
+        getIncludeList<S>(arg0: $ObjectCategoryListRuleType<E, P, S>): $ObjectCategoryIncludeList<E, P, S>;
+        getExcludeList<S>(arg0: $ObjectCategoryListRuleType<E, P, S>): $ObjectCategoryExcludeList<E, P, S>;
+        getBaseRule(): $ObjectCategoryRule<E, P>;
+        getExcludeLists(): $List<$ObjectCategoryExcludeList<E, P, never>>;
         getExcludeMode(): $ExcludeListMode;
         get includeInSuperCategory(): boolean;
-        get excludeLists(): $List<$ObjectCategoryExcludeList<E, P, never>>;
-        get baseRule(): $ObjectCategoryRule<E, P>;
         get includeLists(): $List<$ObjectCategoryIncludeList<E, P, never>>;
+        get baseRule(): $ObjectCategoryRule<E, P>;
+        get excludeLists(): $List<$ObjectCategoryExcludeList<E, P, never>>;
         get excludeMode(): $ExcludeListMode;
     }
 }

@@ -18,7 +18,6 @@ declare module "@package/net/minecraft/world/flag" {
      */
     export type $FeatureElement_ = (() => $FeatureFlagSet);
     export class $FeatureFlagSet {
-        isSubsetOf(set: $FeatureFlagSet): boolean;
         intersects(set: $FeatureFlagSet): boolean;
         isEmpty(): boolean;
         join(other: $FeatureFlagSet): $FeatureFlagSet;
@@ -28,6 +27,7 @@ declare module "@package/net/minecraft/world/flag" {
         contains(flag: $FeatureFlag): boolean;
         static create(universe: $FeatureFlagUniverse, flags: $Collection_<$FeatureFlag>): $FeatureFlagSet;
         subtract(other: $FeatureFlagSet): $FeatureFlagSet;
+        isSubsetOf(set: $FeatureFlagSet): boolean;
         static MAX_CONTAINER_SIZE: number;
         get empty(): boolean;
     }
@@ -70,12 +70,12 @@ declare module "@package/net/minecraft/world/flag" {
         constructor(arg0: $FeatureFlagUniverse, arg1: number, arg2: number, arg3: boolean);
     }
     export class $FeatureFlagRegistry {
+        codec(): $Codec<$FeatureFlagSet>;
         subset(...flags: $FeatureFlag[]): $FeatureFlagSet;
+        hasAnyModdedFlags(): boolean;
         getAllFlags(): $Map<$ResourceLocation, $FeatureFlag>;
         getFlag(arg0: $ResourceLocation_): $FeatureFlag;
         allFlags(): $FeatureFlagSet;
-        hasAnyModdedFlags(): boolean;
-        codec(): $Codec<$FeatureFlagSet>;
         toNames(set: $FeatureFlagSet): $Set<$ResourceLocation>;
         isSubset(set: $FeatureFlagSet): boolean;
         fromNames(names: $Iterable_<$ResourceLocation>, onError: $Consumer_<$ResourceLocation>): $FeatureFlagSet;

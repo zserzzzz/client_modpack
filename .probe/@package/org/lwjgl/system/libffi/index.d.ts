@@ -17,28 +17,28 @@ declare module "@package/org/lwjgl/system/libffi" {
         constructor(arg0: number, arg1: number);
     }
     export class $FFIType extends $Struct<$FFIType> implements $NativeResource {
-        static nelements(arg0: number, arg1: number): $PointerBuffer;
-        static nelements(arg0: number, arg1: $PointerBuffer | null): void;
-        static ntype(arg0: number, arg1: number): void;
-        static ntype(arg0: number): number;
-        static nalignment(arg0: number): number;
-        static nalignment(arg0: number, arg1: number): void;
-        alignment(arg0: number): $FFIType;
         alignment(): number;
-        size(arg0: number): $FFIType;
+        alignment(arg0: number): $FFIType;
         size(): number;
-        type(): number;
+        size(arg0: number): $FFIType;
         type(arg0: number): $FFIType;
-        elements(arg0: number): $PointerBuffer;
+        type(): number;
         elements(arg0: $PointerBuffer | null): $FFIType;
+        elements(arg0: number): $PointerBuffer;
         set(arg0: number, arg1: number, arg2: number, arg3: $PointerBuffer | null): $FFIType;
         set(arg0: $FFIType): $FFIType;
         static create(arg0: number): $FFIType$Buffer;
+        static create(arg0: number): $FFIType;
         static create(arg0: number, arg1: number): $FFIType$Buffer;
         static create(): $FFIType;
-        static create(arg0: number): $FFIType;
         static nsize(arg0: number, arg1: number): void;
         static nsize(arg0: number): number;
+        static nelements(arg0: number, arg1: $PointerBuffer | null): void;
+        static nelements(arg0: number, arg1: number): $PointerBuffer;
+        static nalignment(arg0: number): number;
+        static nalignment(arg0: number, arg1: number): void;
+        static ntype(arg0: number): number;
+        static ntype(arg0: number, arg1: number): void;
         static malloc(arg0: number): $FFIType$Buffer;
         static malloc(arg0: $MemoryStack): $FFIType;
         static malloc(arg0: number, arg1: $MemoryStack): $FFIType$Buffer;
@@ -59,30 +59,30 @@ declare module "@package/org/lwjgl/system/libffi" {
         constructor(arg0: $ByteBuffer);
     }
     export class $FFICIF extends $Struct<$FFICIF> implements $NativeResource {
-        arg_types(arg0: number): $PointerBuffer;
-        static nabi(arg0: number): number;
-        static nnargs(arg0: number): number;
-        static narg_types(arg0: number, arg1: number): $PointerBuffer;
-        static nflags(arg0: number): number;
         flags(): number;
         bytes(): number;
-        static create(arg0: number): $FFICIF;
         static create(arg0: number): $FFICIF$Buffer;
         static create(arg0: number, arg1: number): $FFICIF$Buffer;
+        static create(arg0: number): $FFICIF;
         static create(): $FFICIF;
         rtype(): $FFIType;
         nargs(): number;
         static nrtype(arg0: number): $FFIType;
         abi(): number;
         static nbytes(arg0: number): number;
+        static nnargs(arg0: number): number;
+        static nflags(arg0: number): number;
+        static nabi(arg0: number): number;
+        static narg_types(arg0: number, arg1: number): $PointerBuffer;
+        arg_types(arg0: number): $PointerBuffer;
         static malloc(arg0: number): $FFICIF$Buffer;
-        static malloc(): $FFICIF;
         static malloc(arg0: number, arg1: $MemoryStack): $FFICIF$Buffer;
         static malloc(arg0: $MemoryStack): $FFICIF;
+        static malloc(): $FFICIF;
         static calloc(arg0: number): $FFICIF$Buffer;
-        static calloc(arg0: $MemoryStack): $FFICIF;
-        static calloc(arg0: number, arg1: $MemoryStack): $FFICIF$Buffer;
         static calloc(): $FFICIF;
+        static calloc(arg0: number, arg1: $MemoryStack): $FFICIF$Buffer;
+        static calloc(arg0: $MemoryStack): $FFICIF;
         static createSafe(arg0: number): $FFICIF;
         static createSafe(arg0: number, arg1: number): $FFICIF$Buffer;
         close(): void;
@@ -97,14 +97,14 @@ declare module "@package/org/lwjgl/system/libffi" {
         constructor(arg0: $ByteBuffer);
     }
     export class $FFICIF$Buffer extends $StructBuffer<$FFICIF, $FFICIF$Buffer> implements $NativeResource {
-        arg_types(arg0: number): $PointerBuffer;
         flags(): number;
         bytes(): number;
         rtype(): $FFIType;
         nargs(): number;
         abi(): number;
+        arg_types(arg0: number): $PointerBuffer;
         close(): void;
-        constructor(arg0: $ByteBuffer);
         constructor(arg0: number, arg1: number);
+        constructor(arg0: $ByteBuffer);
     }
 }

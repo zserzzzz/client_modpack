@@ -60,18 +60,18 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
          */
         getFlags(): $TooltipFlag;
         /**
-         * The `ItemStack` tooltip.
-         */
-        getToolTip(): $List<$Component>;
-        /**
          * The `ItemStack` with the tooltip.
          */
         getItemStack(): $ItemStack;
+        /**
+         * The `ItemStack` tooltip.
+         */
+        getToolTip(): $List<$Component>;
         constructor(arg0: $ItemStack_, arg1: $Player, arg2: $List_<$Component_>, arg3: $TooltipFlag, arg4: $Item$TooltipContext);
         get context(): $Item$TooltipContext;
         get flags(): $TooltipFlag;
-        get toolTip(): $List<$Component>;
         get itemStack(): $ItemStack;
+        get toolTip(): $List<$Component>;
     }
     /**
      * PlayerEvent is fired whenever an event involving a `Player` occurs.
@@ -96,6 +96,18 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
          * Returns the target of the attack, which is guaranteed to be a valid attack target.
          */
         getTarget(): $Entity;
+        /**
+         * Returns true if the attack would cause a sweep by utilizing the vanilla rules.
+         * 
+         * The vanilla rules are as follows. All of them must be true for a vanilla sweep to occur:
+         * 
+         * 1. The player's attack strength is greater than 90%.
+         * 2. The attack is not a critical hit, or is a critical hit which does not disable the sweep attack.
+         * 3. The player is on the ground.
+         * 4. The distance the player has traveled this tick is less than their speed.
+         * 5. The player's weapon supports sweep attacks via `ItemAbilities#SWORD_SWEEP`.
+         */
+        isVanillaSweep(): boolean;
         setCanceled(sweep: boolean): void;
         /**
          * Returns true if the attack would cause a sweep by utilizing the vanilla rules.
@@ -110,18 +122,6 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
          */
         isSweeping(): boolean;
         setSweeping(sweep: boolean): void;
-        /**
-         * Returns true if the attack would cause a sweep by utilizing the vanilla rules.
-         * 
-         * The vanilla rules are as follows. All of them must be true for a vanilla sweep to occur:
-         * 
-         * 1. The player's attack strength is greater than 90%.
-         * 2. The attack is not a critical hit, or is a critical hit which does not disable the sweep attack.
-         * 3. The player is on the ground.
-         * 4. The distance the player has traveled this tick is less than their speed.
-         * 5. The player's weapon supports sweep attacks via `ItemAbilities#SWORD_SWEEP`.
-         */
-        isVanillaSweep(): boolean;
         /**
          * Returns true if the attack would cause a sweep by utilizing the vanilla rules.
          * 
@@ -168,6 +168,10 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      */
     export class $ItemFishedEvent extends $PlayerEvent implements $ICancellableEvent {
         /**
+         * Use this to stuff related to the hook itself, like the position of the bobber.
+         */
+        getHookEntity(): $FishingHook;
+        /**
          * Get the damage the rod will take.
          */
         getRodDamage(): number;
@@ -177,20 +181,16 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
          */
         damageRodBy(rodDamage: number): void;
         /**
-         * Use this to stuff related to the hook itself, like the position of the bobber.
-         */
-        getHookEntity(): $FishingHook;
-        /**
          * Use this to get the items the player will receive.
          * You cannot use this to modify the drops the player will get.
          * If you want to affect the loot, you should use LootTables.
          */
         getDrops(): $NonNullList<$ItemStack>;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(stacks: $List_<$ItemStack_>, rodDamage: number, hook: $FishingHook);
-        get rodDamage(): number;
         get hookEntity(): $FishingHook;
+        get rodDamage(): number;
         get drops(): $NonNullList<$ItemStack>;
     }
     /**
@@ -211,8 +211,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      */
     export class $AttackEntityEvent extends $PlayerEvent implements $ICancellableEvent {
         getTarget(): $Entity;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(player: $Player, target: $Entity);
         get target(): $Entity;
     }
@@ -222,11 +222,11 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      * This event is only fired on the logical server.
      */
     export class $PlayerEnchantItemEvent extends $PlayerEvent {
-        getEnchantedItem(): $ItemStack;
         getEnchantments(): $List<$EnchantmentInstance>;
+        getEnchantedItem(): $ItemStack;
         constructor(player: $Player, enchantedItem: $ItemStack_, enchantments: $List_<$EnchantmentInstance>);
-        get enchantedItem(): $ItemStack;
         get enchantments(): $List<$EnchantmentInstance>;
+        get enchantedItem(): $ItemStack;
     }
     /**
      * This event is fired when the player is waking up.
@@ -260,14 +260,14 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      * This event is fired on the `NeoForge#EVENT_BUS`.
      */
     export class $ArrowNockEvent extends $PlayerEvent implements $ICancellableEvent {
-        getLevel(): $Level;
         getAction(): $InteractionResultHolder<$ItemStack>;
+        getLevel(): $Level;
         setAction(action: $InteractionResultHolder<$ItemStack_>): void;
         getHand(): $InteractionHand;
         getBow(): $ItemStack;
         hasAmmo(): boolean;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(player: $Player, item: $ItemStack_, hand: $InteractionHand_, level: $Level_, hasAmmo: boolean);
         get level(): $Level;
         get hand(): $InteractionHand;
@@ -281,14 +281,14 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      * If we are on the client and result is not `InteractionResult#SUCCESS`, the client will then continue to other hands.
      */
     export class $PlayerInteractEvent$RightClickItem extends $PlayerInteractEvent implements $ICancellableEvent {
+        getCancellationResult(): $InteractionResult;
         /**
          * Set the InteractionResult that will be returned to vanilla if the event is cancelled, instead of calling the relevant
          * method of the event.
          */
         setCancellationResult(result: $InteractionResult_): void;
-        getCancellationResult(): $InteractionResult;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(player: $Player, hand: $InteractionHand_);
     }
     /**
@@ -301,41 +301,9 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      */
     export class $CriticalHitEvent extends $PlayerEvent {
         /**
-         * @return if the attack will critically hit
-         */
-        isCriticalHit(): boolean;
-        /**
-         * @return if the attack will critically hit
-         */
-        disableSweep(): boolean;
-        /**
          * @return the entity that was attacked by the player
          */
         getTarget(): $Entity;
-        /**
-         * The damage multiplier is applied to the base attack's damage if the attack critically hits.
-         * 
-         * A damage multiplier of 1.0 will not change the damage, a value of 1.5 will increase the damage by 50%, and so on.
-         */
-        getDamageMultiplier(): number;
-        /**
-         * Changes the critical hit state.
-         */
-        setDisableSweep(isCriticalHit: boolean): void;
-        /**
-         * @return if the attack will critically hit
-         */
-        isVanillaCritical(): boolean;
-        /**
-         * Changes the critical hit state.
-         */
-        setCriticalHit(isCriticalHit: boolean): void;
-        /**
-         * The damage multiplier is applied to the base attack's damage if the attack critically hits.
-         * 
-         * A damage multiplier of 1.0 will not change the damage, a value of 1.5 will increase the damage by 50%, and so on.
-         */
-        getVanillaMultiplier(): number;
         /**
          * Sets the damage multiplier for the critical hit. Not used if `#isCriticalHit()` is false.
          * 
@@ -343,12 +311,44 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
          */
         setDamageMultiplier(dmgMultiplier: number): void;
         /**
+         * The damage multiplier is applied to the base attack's damage if the attack critically hits.
+         * 
+         * A damage multiplier of 1.0 will not change the damage, a value of 1.5 will increase the damage by 50%, and so on.
+         */
+        getVanillaMultiplier(): number;
+        /**
+         * @return if the attack will critically hit
+         */
+        disableSweep(): boolean;
+        /**
+         * @return if the attack will critically hit
+         */
+        isCriticalHit(): boolean;
+        /**
+         * The damage multiplier is applied to the base attack's damage if the attack critically hits.
+         * 
+         * A damage multiplier of 1.0 will not change the damage, a value of 1.5 will increase the damage by 50%, and so on.
+         */
+        getDamageMultiplier(): number;
+        /**
+         * @return if the attack will critically hit
+         */
+        isVanillaCritical(): boolean;
+        /**
+         * Changes the critical hit state.
+         */
+        setDisableSweep(isCriticalHit: boolean): void;
+        /**
+         * Changes the critical hit state.
+         */
+        setCriticalHit(isCriticalHit: boolean): void;
+        /**
          * Fire via `CommonHooks#fireCriticalHit(Player, Entity, boolean, float)`
          */
         constructor(player: $Player, target: $Entity, dmgMultiplier: number, isCriticalHit: boolean);
         get target(): $Entity;
-        get vanillaCritical(): boolean;
         get vanillaMultiplier(): number;
+        get vanillaCritical(): boolean;
     }
     export class $PlayerInteractEvent$LeftClickBlock$Action extends $Enum<$PlayerInteractEvent$LeftClickBlock$Action> {
         static values(): $PlayerInteractEvent$LeftClickBlock$Action[];
@@ -369,8 +369,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      */
     export class $PlayerXpEvent$PickupXp extends $PlayerXpEvent implements $ICancellableEvent {
         getOrb(): $ExperienceOrb;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(player: $Player, orb: $ExperienceOrb);
         get orb(): $ExperienceOrb;
     }
@@ -383,11 +383,11 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
     export class $PlayerSpawnPhantomsEvent extends $PlayerEvent {
         setResult(arg0: $PlayerSpawnPhantomsEvent$Result_): void;
         getResult(): $PlayerSpawnPhantomsEvent$Result;
-        getPhantomsToSpawn(): number;
         /**
          * Sets the number of phantoms to be spawned.
          */
         setPhantomsToSpawn(phantomsToSpawn: number): void;
+        getPhantomsToSpawn(): number;
         /**
          * Checks if a spawn attempt should be made by checking the current result and evaluating the vanilla conditions if necessary.
          * 
@@ -413,10 +413,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      * and the specified `InteractionResult` will be returned instead.
      */
     export class $UseItemOnBlockEvent extends $Event implements $ICancellableEvent {
-        getSide(): $LogicalSide;
         getLevel(): $Level;
         getUseOnContext(): $UseOnContext;
-        getItemStack(): $ItemStack;
         getUsePhase(): $UseItemOnBlockEvent$UsePhase;
         /**
          * Cancels the use interaction (preventing the block or item's use behavior from running) and provides the
@@ -425,6 +423,17 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
          * Invoke this if you intend to prevent the default interaction behavior and replace it with your own.
          */
         cancelWithResult(result: $ItemInteractionResult_): void;
+        getCancellationResult(): $ItemInteractionResult;
+        getSide(): $LogicalSide;
+        getItemStack(): $ItemStack;
+        getPlayer(): $Player;
+        /**
+         * Cancels the use interaction (preventing the block or item's use behavior from running) and provides the
+         * specified result to the interaction logic instead.
+         * 
+         * Invoke this if you intend to prevent the default interaction behavior and replace it with your own.
+         */
+        setCancellationResult(result: $ItemInteractionResult_): void;
         /**
          * If the interaction was on an entity, will be a BlockPos centered on the entity.
          * If the interaction was on a block, will be the position of that block.
@@ -434,27 +443,18 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
         getPos(): $BlockPos;
         getFace(): $Direction;
         getHand(): $InteractionHand;
-        /**
-         * Cancels the use interaction (preventing the block or item's use behavior from running) and provides the
-         * specified result to the interaction logic instead.
-         * 
-         * Invoke this if you intend to prevent the default interaction behavior and replace it with your own.
-         */
-        setCancellationResult(result: $ItemInteractionResult_): void;
-        getCancellationResult(): $ItemInteractionResult;
-        getPlayer(): $Player;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(arg0: $UseOnContext, arg1: $UseItemOnBlockEvent$UsePhase_);
-        get side(): $LogicalSide;
         get level(): $Level;
         get useOnContext(): $UseOnContext;
-        get itemStack(): $ItemStack;
         get usePhase(): $UseItemOnBlockEvent$UsePhase;
+        get side(): $LogicalSide;
+        get itemStack(): $ItemStack;
+        get player(): $Player;
         get pos(): $BlockPos;
         get face(): $Direction;
         get hand(): $InteractionHand;
-        get player(): $Player;
     }
     /**
      * Fired when a player trades with an `AbstractVillager`.
@@ -517,15 +517,15 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
          * Returns a copy of the original stack, before it was added to the player's inventory.
          * Changes to this item stack have no effect on any further processing.
          */
-        getCurrentStack(): $ItemStack;
+        getOriginalStack(): $ItemStack;
         /**
          * Returns a copy of the original stack, before it was added to the player's inventory.
          * Changes to this item stack have no effect on any further processing.
          */
-        getOriginalStack(): $ItemStack;
+        getCurrentStack(): $ItemStack;
         constructor(player: $Player, item: $ItemEntity, originalStack: $ItemStack_);
-        get currentStack(): $ItemStack;
         get originalStack(): $ItemStack;
+        get currentStack(): $ItemStack;
     }
     /**
      * This event is fired when a player collides with an `ItemEntity` on the ground.
@@ -554,17 +554,17 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      * The event can be canceled, which will prevent the spawn point from being changed.
      */
     export class $PlayerSetSpawnEvent extends $PlayerEvent implements $ICancellableEvent {
-        getSpawnLevel(): $ResourceKey<$Level>;
         /**
          * The new spawn position, or null if the spawn position is being reset.
          */
         getNewSpawn(): $BlockPos;
+        getSpawnLevel(): $ResourceKey<$Level>;
         isForced(): boolean;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(player: $Player, spawnLevel: $ResourceKey_<$Level>, newSpawn: $BlockPos_, forced: boolean);
-        get spawnLevel(): $ResourceKey<$Level>;
         get newSpawn(): $BlockPos;
+        get spawnLevel(): $ResourceKey<$Level>;
         get forced(): boolean;
     }
     /**
@@ -625,11 +625,11 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
     export class $PlayerEvent$BreakSpeed extends $PlayerEvent implements $ICancellableEvent {
         getPosition(): ($BlockPos) | undefined;
         getState(): $BlockState;
+        getOriginalSpeed(): number;
         getNewSpeed(): number;
         setNewSpeed(newSpeed: number): void;
-        getOriginalSpeed(): number;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(player: $Player, state: $BlockState_, original: number, pos: $BlockPos_);
         get position(): ($BlockPos) | undefined;
         get state(): $BlockState;
@@ -644,18 +644,6 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      */
     export class $PlayerRespawnPositionEvent extends $PlayerEvent {
         /**
-         * Changes if the original player's respawn position will be copied to the fresh player via `ServerPlayer#copyRespawnPosition(ServerPlayer)`.
-         * 
-         * If you wish to modify the set respawn position of the fresh player (for future respawns, not the current respawn), you can
-         * change the respawn position of the current player and set this value to true.
-         */
-        setCopyOriginalSpawnPosition(copyOriginalSpawnPosition: boolean): void;
-        getOriginalDimensionTransition(): $DimensionTransition;
-        /**
-         * Set the level the player will respawn into using a `ResourceKey`.
-         */
-        setRespawnLevel(respawnLevelResourceKey: $ResourceKey_<$Level>): void;
-        /**
          * If the respawn position of the original player will be copied to the fresh player via `ServerPlayer#copyRespawnPosition(ServerPlayer)`.
          * 
          * This defaults to true if the original dimension transition
@@ -665,10 +653,13 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
          */
         isFromEndFight(): boolean;
         /**
+         * Set the level the player will respawn into using a `ResourceKey`.
+         */
+        setRespawnLevel(respawnLevelResourceKey: $ResourceKey_<$Level>): void;
+        /**
          * Set the dimension transition for where the player will respawn
          */
         setDimensionTransition(dimensionTransition: $DimensionTransition_): void;
-        getDimensionTransition(): $DimensionTransition;
         /**
          * If the respawn position of the original player will be copied to the fresh player via `ServerPlayer#copyRespawnPosition(ServerPlayer)`.
          * 
@@ -678,10 +669,19 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
          * This has no impact on the selected position for the current respawn, but controls if the player will (for example) retain their bed as their set respawn position.
          */
         copyOriginalSpawnPosition(): boolean;
+        getDimensionTransition(): $DimensionTransition;
+        getOriginalDimensionTransition(): $DimensionTransition;
+        /**
+         * Changes if the original player's respawn position will be copied to the fresh player via `ServerPlayer#copyRespawnPosition(ServerPlayer)`.
+         * 
+         * If you wish to modify the set respawn position of the fresh player (for future respawns, not the current respawn), you can
+         * change the respawn position of the current player and set this value to true.
+         */
+        setCopyOriginalSpawnPosition(copyOriginalSpawnPosition: boolean): void;
         constructor(player: $ServerPlayer, dimensionTransition: $DimensionTransition_, fromEndFight: boolean);
-        get originalDimensionTransition(): $DimensionTransition;
-        set respawnLevel(value: $ResourceKey_<$Level>);
         get fromEndFight(): boolean;
+        set respawnLevel(value: $ResourceKey_<$Level>);
+        get originalDimensionTransition(): $DimensionTransition;
     }
     export class $PlayerContainerEvent$Close extends $PlayerContainerEvent {
         constructor(player: $Player, container: $AbstractContainerMenu);
@@ -714,11 +714,11 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      * This event is fired on the `NeoForge#EVENT_BUS`.
      */
     export class $PlayerDestroyItemEvent extends $PlayerEvent {
-        getOriginal(): $ItemStack;
         getHand(): $InteractionHand;
+        getOriginal(): $ItemStack;
         constructor(player: $Player, original: $ItemStack_, hand: $InteractionHand_);
-        get original(): $ItemStack;
         get hand(): $InteractionHand;
+        get original(): $ItemStack;
     }
     /**
      * ArrowLooseEvent is fired when a player stops using a bow.
@@ -743,11 +743,11 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
     export class $ArrowLooseEvent extends $PlayerEvent implements $ICancellableEvent {
         getLevel(): $Level;
         getCharge(): number;
+        setCharge(charge: number): void;
         getBow(): $ItemStack;
         hasAmmo(): boolean;
-        setCharge(charge: number): void;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(player: $Player, bow: $ItemStack_, level: $Level_, charge: number, hasAmmo: boolean);
         get level(): $Level;
         get bow(): $ItemStack;
@@ -782,17 +782,17 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      */
     export class $PlayerEvent$Clone extends $PlayerEvent {
         /**
+         * The old EntityPlayer that this new entity is a clone of.
+         */
+        getOriginal(): $Player;
+        /**
          * True if this event was fired because the player died.
          * False if it was fired because the entity switched dimensions.
          */
         isWasDeath(): boolean;
-        /**
-         * The old EntityPlayer that this new entity is a clone of.
-         */
-        getOriginal(): $Player;
         constructor(_new: $Player, oldPlayer: $Player, wasDeath: boolean);
-        get wasDeath(): boolean;
         get original(): $Player;
+        get wasDeath(): boolean;
     }
     /**
      * This event is fired when a player left clicks while targeting a block.
@@ -810,8 +810,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      * Therefore, in creative mode, `#setUseBlock` and `#setUseItem` have no effect.
      */
     export class $PlayerInteractEvent$LeftClickBlock extends $PlayerInteractEvent implements $ICancellableEvent {
-        setCanceled(canceled: boolean): void;
         getAction(): $PlayerInteractEvent$LeftClickBlock$Action;
+        setCanceled(canceled: boolean): void;
         getUseItem(): $TriState;
         getUseBlock(): $TriState;
         setUseBlock(triggerBlock: $TriState_): void;
@@ -851,14 +851,14 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      */
     export class $PlayerInteractEvent$EntityInteract extends $PlayerInteractEvent implements $ICancellableEvent {
         getTarget(): $Entity;
+        getCancellationResult(): $InteractionResult;
         /**
          * Set the InteractionResult that will be returned to vanilla if the event is cancelled, instead of calling the relevant
          * method of the event.
          */
         setCancellationResult(result: $InteractionResult_): void;
-        getCancellationResult(): $InteractionResult;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(player: $Player, hand: $InteractionHand_, target: $Entity);
         get target(): $Entity;
     }
@@ -881,13 +881,13 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      * Note that handling things differently on the client vs server may cause desynchronizations!
      */
     export class $PlayerInteractEvent$RightClickBlock extends $PlayerInteractEvent implements $ICancellableEvent {
+        getCancellationResult(): $InteractionResult;
         setCanceled(canceled: boolean): void;
         /**
          * Set the InteractionResult that will be returned to vanilla if the event is cancelled, instead of calling the relevant
          * method of the event.
          */
         setCancellationResult(result: $InteractionResult_): void;
-        getCancellationResult(): $InteractionResult;
         getUseItem(): $TriState;
         getUseBlock(): $TriState;
         /**
@@ -900,6 +900,7 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
          * TRUE: `Block#updateOrDestroy(BlockState, BlockState, LevelAccessor, BlockPos, int, int)` will always be called, unless `Item#onItemUseFirst` does not pass.
          */
         setUseBlock(triggerBlock: $TriState_): void;
+        getHitVec(): $BlockHitResult;
         /**
          * FALSE: `Block#use(BlockState, Level, BlockPos, Player, InteractionHand, BlockHitResult)` will never be called.
          * 
@@ -910,7 +911,6 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
          * TRUE: `Block#updateOrDestroy(BlockState, BlockState, LevelAccessor, BlockPos, int, int)` will always be called, unless `Item#onItemUseFirst` does not pass.
          */
         setUseItem(triggerBlock: $TriState_): void;
-        getHitVec(): $BlockHitResult;
         isCanceled(): boolean;
         constructor(player: $Player, hand: $InteractionHand_, pos: $BlockPos_, hitVec: $BlockHitResult);
         get hitVec(): $BlockHitResult;
@@ -923,19 +923,19 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      * This event is only fired on the logical server.
      */
     export class $CanContinueSleepingEvent extends $LivingEvent {
-        getProblem(): $Player$BedSleepingProblem;
-        /**
-         * @return if the sleeping entity may continue sleeping
-         */
-        mayContinueSleeping(): boolean;
         /**
          * Sets if the sleeping entity may continue sleeping.
          * By default, the entity may continue sleeping if there was not a problem detected.
          */
         setContinueSleeping(sleeping: boolean): void;
+        /**
+         * @return if the sleeping entity may continue sleeping
+         */
+        mayContinueSleeping(): boolean;
+        getProblem(): $Player$BedSleepingProblem;
         constructor(arg0: $LivingEntity, arg1: $Player$BedSleepingProblem_);
-        get problem(): $Player$BedSleepingProblem;
         set continueSleeping(value: boolean);
+        get problem(): $Player$BedSleepingProblem;
     }
     /**
      * Fired when an Entity is stopped to be "tracked" by this player (the player no longer receives updates about this entity, e.g. motion).
@@ -986,7 +986,7 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
         /**
          * Get the output result from the anvil
          */
-        getRight(): $ItemStack;
+        getOutput(): $ItemStack;
         /**
          * Get the output result from the anvil
          */
@@ -994,13 +994,13 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
         /**
          * Get the output result from the anvil
          */
-        getOutput(): $ItemStack;
-        setBreakChance(breakChance: number): void;
+        getRight(): $ItemStack;
         getBreakChance(): number;
+        setBreakChance(breakChance: number): void;
         constructor(player: $Player, left: $ItemStack_, right: $ItemStack_, output: $ItemStack_);
-        get right(): $ItemStack;
-        get left(): $ItemStack;
         get output(): $ItemStack;
+        get left(): $ItemStack;
+        get right(): $ItemStack;
     }
     /**
      * This event will fire when the player is opped or deopped.
@@ -1008,13 +1008,13 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      * This event is cancelable which will stop the op or deop from happening.
      */
     export class $PermissionsChangedEvent extends $PlayerEvent implements $ICancellableEvent {
-        getNewLevel(): number;
         getOldLevel(): number;
-        setCanceled(arg0: boolean): void;
+        getNewLevel(): number;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(player: $ServerPlayer, newLevel: number, oldLevel: number);
-        get newLevel(): number;
         get oldLevel(): number;
+        get newLevel(): number;
     }
     /**
      * This event is fired when the player's experience level changes through the `Player#giveExperienceLevels(int)` method.
@@ -1023,8 +1023,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
     export class $PlayerXpEvent$LevelChange extends $PlayerXpEvent implements $ICancellableEvent {
         getLevels(): number;
         setLevels(levels: number): void;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(player: $Player, levels: number);
     }
     /**
@@ -1032,14 +1032,14 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      * If the event is cancelled the game mode of the player is not changed and the value of `newGameMode` is ignored.
      */
     export class $PlayerEvent$PlayerChangeGameModeEvent extends $PlayerEvent implements $ICancellableEvent {
+        getNewGameMode(): $GameType;
+        getCurrentGameMode(): $GameType;
         /**
          * Sets the game mode the player will be changed to if this event is not cancelled.
          */
         setNewGameMode(newGameMode: $GameType_): void;
-        getCurrentGameMode(): $GameType;
-        getNewGameMode(): $GameType;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(player: $Player, currentGameMode: $GameType_, newGameMode: $GameType_);
         get currentGameMode(): $GameType;
     }
@@ -1063,24 +1063,28 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      * only on the logical server.
      */
     export class $AdvancementEvent$AdvancementProgressEvent extends $AdvancementEvent {
+        getProgressType(): $AdvancementEvent$AdvancementProgressEvent$ProgressType;
         /**
          * @return name of the criterion that was progressed
          */
         getCriterionName(): string;
-        getProgressType(): $AdvancementEvent$AdvancementProgressEvent$ProgressType;
         /**
          * @return the progress of the advancement
          */
         getAdvancementProgress(): $AdvancementProgress;
         constructor(player: $Player, progressed: $AdvancementHolder_, advancementProgress: $AdvancementProgress, criterionName: string, progressType: $AdvancementEvent$AdvancementProgressEvent$ProgressType_);
-        get criterionName(): string;
         get progressType(): $AdvancementEvent$AdvancementProgressEvent$ProgressType;
+        get criterionName(): string;
         get advancementProgress(): $AdvancementProgress;
     }
     /**
      * Parent class of the two events that fire when a `Player` collides with an `ItemEntity`.
      */
     export class $ItemEntityPickupEvent extends $Event {
+        /**
+         * @return the player who collided with the item
+         */
+        getPlayer(): $Player;
         /**
          * Returns the `ItemEntity` that was collided with.
          * 
@@ -1090,13 +1094,9 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
          * must not call `ItemEntity#setItem(ItemStack)`, as it will incur undefined behavior.
          */
         getItemEntity(): $ItemEntity;
-        /**
-         * @return the player who collided with the item
-         */
-        getPlayer(): $Player;
         constructor(player: $Player, item: $ItemEntity);
-        get itemEntity(): $ItemEntity;
         get player(): $Player;
+        get itemEntity(): $ItemEntity;
     }
     /**
      * This event is fired on the server when a connection has started the Forge handshake,
@@ -1108,15 +1108,15 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      */
     export class $PlayerNegotiationEvent extends $Event {
         getConnection(): $Connection;
-        getProfile(): $GameProfile;
-        /**
-         * Enqueue work to be completed asynchronously before the login proceeds.
-         */
-        enqueueWork(runnable: $Runnable_): void;
         /**
          * Enqueue work to be completed asynchronously before the login proceeds.
          */
         enqueueWork(future: $Future<void>): void;
+        /**
+         * Enqueue work to be completed asynchronously before the login proceeds.
+         */
+        enqueueWork(runnable: $Runnable_): void;
+        getProfile(): $GameProfile;
         constructor(connection: $Connection, profile: $GameProfile, futures: $List_<$Future<void>>);
         get connection(): $Connection;
         get profile(): $GameProfile;
@@ -1129,11 +1129,11 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      * This event is only fired on the logical server.
      */
     export class $CanPlayerSleepEvent extends $PlayerEvent {
-        getProblem(): $Player$BedSleepingProblem;
         getState(): $BlockState;
         getLevel(): $Level;
-        setProblem(arg0: $Player$BedSleepingProblem_): void;
         getPos(): $BlockPos;
+        setProblem(arg0: $Player$BedSleepingProblem_): void;
+        getProblem(): $Player$BedSleepingProblem;
         getVanillaProblem(): $Player$BedSleepingProblem;
         constructor(arg0: $ServerPlayer, arg1: $BlockPos_, arg2: $Player$BedSleepingProblem_);
         get state(): $BlockState;
@@ -1147,8 +1147,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      * See the individual documentation on each subevent for more details.
      */
     export class $PlayerInteractEvent extends $PlayerEvent {
-        getSide(): $LogicalSide;
         getLevel(): $Level;
+        getSide(): $LogicalSide;
         getItemStack(): $ItemStack;
         /**
          * If the interaction was on an entity, will be a BlockPos centered on the entity.
@@ -1159,8 +1159,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
         getPos(): $BlockPos;
         getFace(): $Direction;
         getHand(): $InteractionHand;
-        get side(): $LogicalSide;
         get level(): $Level;
+        get side(): $LogicalSide;
         get itemStack(): $ItemStack;
         get pos(): $BlockPos;
         get face(): $Direction;
@@ -1177,20 +1177,20 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
      */
     export class $PlayerInteractEvent$EntityInteractSpecific extends $PlayerInteractEvent implements $ICancellableEvent {
         getTarget(): $Entity;
+        getCancellationResult(): $InteractionResult;
         /**
          * Set the InteractionResult that will be returned to vanilla if the event is cancelled, instead of calling the relevant
          * method of the event.
          */
         setCancellationResult(result: $InteractionResult_): void;
-        getCancellationResult(): $InteractionResult;
         /**
          * Returns the local interaction position. This is a 3D vector, where (0, 0, 0) is centered exactly at the
          * center of the entity's bounding box at their feet. This means the X and Z values will be in the range
          * [-width / 2, width / 2] while Y values will be in the range [0, height]
          */
         getLocalPos(): $Vec3;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(player: $Player, hand: $InteractionHand_, target: $Entity, localPos: $Vec3_);
         get target(): $Entity;
         get localPos(): $Vec3;
@@ -1213,8 +1213,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
     export class $PlayerXpEvent$XpChange extends $PlayerXpEvent implements $ICancellableEvent {
         getAmount(): number;
         setAmount(amount: number): void;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(player: $Player, amount: number);
     }
     export class $AdvancementEvent$AdvancementProgressEvent$ProgressType extends $Enum<$AdvancementEvent$AdvancementProgressEvent$ProgressType> {
@@ -1259,6 +1259,22 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
          */
         setCanceled(success: boolean): void;
         /**
+         * @return the player who used the bone meal, if any
+         */
+        getPlayer(): $Player;
+        /**
+         * Returns true if the block is a valid bone meal target.
+         * 
+         * This is determined by `BonemealableBlock#isValidBonemealTarget`.
+         */
+        isValidBonemealTarget(): boolean;
+        /**
+         * Returns true if the block is a valid bone meal target.
+         * 
+         * This is determined by `BonemealableBlock#isValidBonemealTarget`.
+         */
+        isSuccessful(): boolean;
+        /**
          * @return the position of the bone mealed block
          */
         getPos(): $BlockPos;
@@ -1274,39 +1290,23 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
          * 
          * This is determined by `BonemealableBlock#isValidBonemealTarget`.
          */
-        isValidBonemealTarget(): boolean;
-        /**
-         * @return the player who used the bone meal, if any
-         */
-        getPlayer(): $Player;
-        /**
-         * Returns true if the block is a valid bone meal target.
-         * 
-         * This is determined by `BonemealableBlock#isValidBonemealTarget`.
-         */
-        isSuccessful(): boolean;
-        /**
-         * Returns true if the block is a valid bone meal target.
-         * 
-         * This is determined by `BonemealableBlock#isValidBonemealTarget`.
-         */
         isCanceled(): boolean;
         constructor(player: $Player, level: $Level_, pos: $BlockPos_, state: $BlockState_, stack: $ItemStack_);
         get state(): $BlockState;
         get stack(): $ItemStack;
         get level(): $Level;
-        get pos(): $BlockPos;
-        get validBonemealTarget(): boolean;
         get player(): $Player;
+        get validBonemealTarget(): boolean;
+        get pos(): $BlockPos;
     }
     /**
      * Occurs when a player falls, but is able to fly. Doesn't need to be cancelable, this is mainly for notification purposes.
      */
     export class $PlayerFlyableFallEvent extends $PlayerEvent {
-        getDistance(): number;
-        setDistance(distance: number): void;
         getMultiplier(): number;
         setMultiplier(distance: number): void;
+        setDistance(distance: number): void;
+        getDistance(): number;
         constructor(player: $Player, distance: number, multiplier: number);
     }
     /**
@@ -1331,8 +1331,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
         getLevel(): $BlockGetter;
         getPos(): $BlockPos;
         canHarvest(): boolean;
-        setCanHarvest(success: boolean): void;
         getTargetBlock(): $BlockState;
+        setCanHarvest(success: boolean): void;
         constructor(player: $Player, state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, success: boolean);
         get level(): $BlockGetter;
         get pos(): $BlockPos;
@@ -1350,16 +1350,16 @@ declare module "@package/net/neoforged/neoforge/event/entity/player" {
          * Sometimes the client resends unchanged options, so if that matters
          * for your use case, check equality with `#getOldInformation()`.
          */
-        getOldInformation(): $ClientInformation;
+        getUpdatedInformation(): $ClientInformation;
         /**
          * Returns the new client info to be applied to the player.
          * Sometimes the client resends unchanged options, so if that matters
          * for your use case, check equality with `#getOldInformation()`.
          */
-        getUpdatedInformation(): $ClientInformation;
+        getOldInformation(): $ClientInformation;
         constructor(player: $ServerPlayer, oldInfo: $ClientInformation_, newInfo: $ClientInformation_);
-        get oldInformation(): $ClientInformation;
         get updatedInformation(): $ClientInformation;
+        get oldInformation(): $ClientInformation;
     }
     /**
      * This event is fired on the client side when the player left clicks empty space with any ItemStack.

@@ -2,7 +2,7 @@ import { $Level_ } from "@package/net/minecraft/world/level";
 import { $DeferredRegister } from "@package/net/neoforged/neoforge/registries";
 import { $ItemStack_, $ItemStack } from "@package/net/minecraft/world/item";
 import { $IEventBus } from "@package/net/neoforged/bus/api";
-import { $RecipeSerializer, $CraftingBookCategory_, $RecipeType_, $Recipe, $RecipeHolder, $CraftingInput, $CustomRecipe, $RecipeType, $RecipeInput } from "@package/net/minecraft/world/item/crafting";
+import { $RecipeSerializer, $CraftingBookCategory_, $RecipeType_, $Recipe, $RecipeHolder, $CraftingInput, $CustomRecipe, $RecipeInput, $RecipeType } from "@package/net/minecraft/world/item/crafting";
 import { $IItemHandler } from "@package/net/neoforged/neoforge/items";
 import { $ResourceManagerReloadListener } from "@package/net/minecraft/server/packs/resources";
 import { $ItemEntity } from "@package/net/minecraft/world/entity/item";
@@ -31,9 +31,9 @@ declare module "@package/com/simibubi/create/foundation/recipe" {
     }
     export interface $ItemCopyingRecipe$SupportsItemCopying {
         getComponentType(): $DataComponentType<never>;
-        createCopy(arg0: $ItemStack_, arg1: number): $ItemStack;
         canCopyToItem(arg0: $ItemStack_): boolean;
         canCopyFromItem(arg0: $ItemStack_): boolean;
+        createCopy(arg0: $ItemStack_, arg1: number): $ItemStack;
         get componentType(): $DataComponentType<never>;
     }
     /**
@@ -56,9 +56,9 @@ declare module "@package/com/simibubi/create/foundation/recipe" {
         get serializer(): T;
     }
     export class $RecipeConditions {
-        static isOfType(...arg0: $RecipeType_<never>[]): $Predicate<$RecipeHolder<$Recipe<never>>>;
         static outputMatchesFilter(arg0: $FilteringBehaviour): $Predicate<$RecipeHolder<$Recipe<never>>>;
         static firstIngredientMatches(arg0: $ItemStack_): $Predicate<$RecipeHolder<$Recipe<never>>>;
+        static isOfType(...arg0: $RecipeType_<never>[]): $Predicate<$RecipeHolder<$Recipe<never>>>;
         constructor();
     }
     export class $AllIngredients {

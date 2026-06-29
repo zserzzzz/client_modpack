@@ -32,16 +32,16 @@ declare module "@package/net/neoforged/neoforge/client/model/renderable" {
         data(): $ModelData;
         state(): $BlockState;
         seed(): number;
+        faces(): $Direction[];
         randomSource(): $RandomSource;
         tint(): $Vector4f;
-        faces(): $Direction[];
         constructor(arg0: $ModelData);
         constructor(state: $BlockState_, faces: $Direction_[], randomSource: $RandomSource, seed: number, data: $ModelData, tint: $Vector4f);
     }
     /**
      * Values that may be interpreted as {@link $BakedModelRenderable$Context}.
      */
-    export type $BakedModelRenderable$Context_ = { data?: $ModelData, faces?: $Direction_[], randomSource?: $RandomSource, seed?: number, state?: $BlockState_, tint?: $Vector4f,  } | [data?: $ModelData, faces?: $Direction_[], randomSource?: $RandomSource, seed?: number, state?: $BlockState_, tint?: $Vector4f, ];
+    export type $BakedModelRenderable$Context_ = { state?: $BlockState_, tint?: $Vector4f, data?: $ModelData, faces?: $Direction_[], randomSource?: $RandomSource, seed?: number,  } | [state?: $BlockState_, tint?: $Vector4f, data?: $ModelData, faces?: $Direction_[], randomSource?: $RandomSource, seed?: number, ];
     export class $CompositeRenderable$Mesh {
     }
     /**
@@ -50,8 +50,8 @@ declare module "@package/net/neoforged/neoforge/client/model/renderable" {
     export class $IRenderable<T> {
     }
     export interface $IRenderable<T> {
-        render(arg0: $PoseStack, arg1: $MultiBufferSource_, arg2: $ITextureRenderTypeLookup_, arg3: number, arg4: number, arg5: number, arg6: T): void;
         withContext(arg0: T): $IRenderable<$Unit>;
+        render(arg0: $PoseStack, arg1: $MultiBufferSource_, arg2: $ITextureRenderTypeLookup_, arg3: number, arg4: number, arg5: number, arg6: T): void;
     }
     /**
      * Values that may be interpreted as {@link $IRenderable}.
@@ -65,8 +65,8 @@ declare module "@package/net/neoforged/neoforge/client/model/renderable" {
      * A context value that provides `Matrix4f` transforms for certain parts of the model.
      */
     export class $CompositeRenderable$Transforms {
-        getTransform(part: string): $Matrix4f;
         static of(arg0: $ImmutableMap<string, $Matrix4f>): $CompositeRenderable$Transforms;
+        getTransform(part: string): $Matrix4f;
         static EMPTY: $CompositeRenderable$Transforms;
     }
     /**
@@ -85,8 +85,8 @@ declare module "@package/net/neoforged/neoforge/client/model/renderable" {
          * Constructs a `BakedModelRenderable` from the given baked model.
          */
         static of(model: $BakedModel): $BakedModelRenderable;
-        render(arg0: $PoseStack, arg1: $MultiBufferSource_, arg2: $ITextureRenderTypeLookup_, arg3: number, arg4: number, arg5: number, arg6: $BakedModelRenderable$Context_): void;
         withContext(modelData: $ModelData): $IRenderable<$Unit>;
+        render(arg0: $PoseStack, arg1: $MultiBufferSource_, arg2: $ITextureRenderTypeLookup_, arg3: number, arg4: number, arg5: number, arg6: $BakedModelRenderable$Context_): void;
         withModelDataContext(): $IRenderable<$ModelData>;
         withContext(arg0: $BakedModelRenderable$Context_): $IRenderable<$Unit>;
     }

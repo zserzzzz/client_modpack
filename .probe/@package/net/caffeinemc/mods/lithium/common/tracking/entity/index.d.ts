@@ -6,12 +6,12 @@ import { $EntitySectionStorage, $EntityAccess } from "@package/net/minecraft/wor
 declare module "@package/net/caffeinemc/mods/lithium/common/tracking/entity" {
     export class $SectionedEntityMovementTracker<E extends $EntityAccess, S> {
         register(arg0: $ServerLevel): void;
-        listenToEntityMovementOnce(arg0: $SectionedEntityMovementListener_): void;
         unRegister(arg0: $ServerLevel): void;
         isUnchangedSince(arg0: number): boolean;
-        onSectionEnteredRange(arg0: $EntityMovementTrackerSection): void;
+        listenToEntityMovementOnce(arg0: $SectionedEntityMovementListener_): void;
         onSectionLeftRange(arg0: $EntityMovementTrackerSection): void;
         emitEntityMovement(arg0: number, arg1: $EntityMovementTrackerSection): void;
+        onSectionEnteredRange(arg0: $EntityMovementTrackerSection): void;
         constructor(arg0: $WorldSectionBox_, arg1: $Class<S>);
     }
     export class $ToggleableMovementTracker {
@@ -26,12 +26,12 @@ declare module "@package/net/caffeinemc/mods/lithium/common/tracking/entity" {
     export class $EntityMovementTrackerSection {
     }
     export interface $EntityMovementTrackerSection {
-        lithium$listenToMovementOnce<S, E extends $EntityAccess>(arg0: $SectionedEntityMovementTracker<E, S>, arg1: number): void;
-        lithium$trackEntityMovement(arg0: number, arg1: number): void;
-        lithium$removeListenToMovementOnce<S, E extends $EntityAccess>(arg0: $SectionedEntityMovementTracker<E, S>, arg1: number): void;
+        lithium$removeListener(arg0: $EntitySectionStorage<never>, arg1: $SectionedEntityMovementTracker<never, never>): void;
         lithium$addListener(arg0: $SectionedEntityMovementTracker<never, never>): void;
         lithium$getChangeTime(arg0: number): number;
-        lithium$removeListener(arg0: $EntitySectionStorage<never>, arg1: $SectionedEntityMovementTracker<never, never>): void;
+        lithium$trackEntityMovement(arg0: number, arg1: number): void;
+        lithium$removeListenToMovementOnce<S, E extends $EntityAccess>(arg0: $SectionedEntityMovementTracker<E, S>, arg1: number): void;
+        lithium$listenToMovementOnce<S, E extends $EntityAccess>(arg0: $SectionedEntityMovementTracker<E, S>, arg1: number): void;
     }
     export class $SectionedEntityMovementListener {
     }

@@ -2,6 +2,7 @@ import { $Level_ } from "@package/net/minecraft/world/level";
 import { $IntOpenHashSet } from "@package/it/unimi/dsi/fastutil/ints";
 import { $TagKey } from "@package/net/minecraft/tags";
 import { $ItemStack_, $ItemStack } from "@package/net/minecraft/world/item";
+import { $CompoundTag } from "@package/net/minecraft/nbt";
 import { $Fluid } from "@package/net/minecraft/world/level/material";
 import { $SerializableDataTicket } from "@package/software/bernie/geckolib/constant/dataticket";
 import { $EntityType_, $Entity$RemovalReason, $LivingEntity, $Pose, $PortalProcessor, $Entity } from "@package/net/minecraft/world/entity";
@@ -14,12 +15,12 @@ import { $AnimatableManager$ControllerRegistrar_ } from "@package/software/berni
 import { $RandomSource } from "@package/net/minecraft/util";
 import { $SynchedEntityData, $EntityDataAccessor } from "@package/net/minecraft/network/syncher";
 import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos } from "@package/net/minecraft/core";
+import { $HolderLookup$Provider, $BlockPos } from "@package/net/minecraft/core";
 import { $BaseNonAnimatableEntityBuilder, $BaseEntityBuilder } from "@package/net/liopyu/entityjs/builders/nonliving";
 import { $AtomicInteger } from "@package/java/util/concurrent/atomic";
 import { $AnimatableInstanceCache } from "@package/software/bernie/geckolib/animatable/instance";
 import { $Object } from "@package/java/lang";
-import { $Boat$Status, $Boat } from "@package/net/minecraft/world/entity/vehicle";
+import { $Boat$Status, $Boat, $Boat$Type } from "@package/net/minecraft/world/entity/vehicle";
 import { $Vec3 } from "@package/net/minecraft/world/phys";
 import { $EntityInLevelCallback } from "@package/net/minecraft/world/level/entity";
 
@@ -27,6 +28,7 @@ declare module "@package/net/liopyu/entityjs/entities/nonliving/vanilla" {
     export class $EyeOfEnderEntityJS extends $EyeOfEnder implements $IProjectileEntityJS {
         entityName(): string;
         getProjectileBuilder(): $BaseNonAnimatableEntityBuilder<never>;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         tx: number;
         ty: number;
@@ -107,18 +109,19 @@ declare module "@package/net/liopyu/entityjs/entities/nonliving/vanilla" {
     }
     export class $BoatEntityJS extends $Boat implements $IAnimatableJSNL {
         entityName(): string;
-        getBuilder(): $BaseEntityBuilder<never>;
         getAnimatableInstanceCache(): $AnimatableInstanceCache;
-        getTick(arg0: $Object): number;
-        getTypeId(): string;
+        getBuilder(): $BaseEntityBuilder<never>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): string;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $Boat$Type;
         firstTick: boolean;
         inputUp: boolean;
         wasEyeInWater: boolean;
@@ -204,26 +207,27 @@ declare module "@package/net/liopyu/entityjs/entities/nonliving/vanilla" {
         wasTouchingWater: boolean;
         horizontalCollision: boolean;
         constructor(arg0: $BoatJSBuilder, arg1: $EntityType_<$Boat>, arg2: $Level_);
-        get builder(): $BaseEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseEntityBuilder<never>;
         get typeId(): string;
         get boneResetTime(): number;
     }
     export class $TridentEntityJS extends $ThrownTrident implements $IAnimatableJSNL {
         entityName(): string;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
         getBuilder(): $BaseEntityBuilder<never>;
         isChanneling(): boolean;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
-        getTick(arg0: $Object): number;
-        getTypeId(): string;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): string;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -310,8 +314,8 @@ declare module "@package/net/liopyu/entityjs/entities/nonliving/vanilla" {
         horizontalCollision: boolean;
         constructor(arg0: $TridentJSBuilder, arg1: $EntityType_<$TridentEntityJS>, arg2: $Level_);
         constructor(arg0: $TridentJSBuilder, arg1: $EntityType_<$TridentEntityJS>, arg2: $LivingEntity, arg3: $Level_, arg4: $ItemStack_);
-        get channeling(): boolean;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get channeling(): boolean;
         get typeId(): string;
         get boneResetTime(): number;
     }

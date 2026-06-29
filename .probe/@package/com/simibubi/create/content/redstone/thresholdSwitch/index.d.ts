@@ -58,19 +58,19 @@ declare module "@package/com/simibubi/create/content/redstone/thresholdSwitch" {
         format(arg0: number, arg1: boolean): $MutableComponent;
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
         getState(): boolean;
+        clearContent(): void;
         getMaxLevel(): number;
         getMinLevel(): number;
+        isPowered(): boolean;
         shouldBePowered(): boolean;
         isInverted(): boolean;
-        isPowered(): boolean;
-        clearContent(): void;
-        updateCurrentLevel(): void;
         getTypeOfCurrentTarget(): $ThresholdSwitchBlockEntity$ThresholdType;
-        updatePowerAfterDelay(): void;
         getDisplayItemForScreen(): $ItemStack;
-        setInverted(arg0: boolean): void;
-        getLevelForDisplay(): number;
+        updatePowerAfterDelay(): void;
+        updateCurrentLevel(): void;
         getStockLevel(): number;
+        getLevelForDisplay(): number;
+        setInverted(arg0: boolean): void;
         currentLevel: number;
         worldPosition: $BlockPos;
         onWhenAbove: number;
@@ -88,19 +88,19 @@ declare module "@package/com/simibubi/create/content/redstone/thresholdSwitch" {
         get powered(): boolean;
         get typeOfCurrentTarget(): $ThresholdSwitchBlockEntity$ThresholdType;
         get displayItemForScreen(): $ItemStack;
-        get levelForDisplay(): number;
         get stockLevel(): number;
+        get levelForDisplay(): number;
     }
     export class $ThresholdSwitchBlock extends $DirectedDirectionalBlock implements $IBE<$ThresholdSwitchBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$ThresholdSwitchBlockEntity>;
         getBlockEntityClass(): $Class<$ThresholdSwitchBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ThresholdSwitchBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$ThresholdSwitchBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ThresholdSwitchBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ThresholdSwitchBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ThresholdSwitchBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $ThresholdSwitchBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ThresholdSwitchBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ThresholdSwitchBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ThresholdSwitchBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         static TARGET: $EnumProperty<$AttachFace>;
         explosionResistance: number;
@@ -133,8 +133,8 @@ declare module "@package/com/simibubi/create/content/redstone/thresholdSwitch" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$ThresholdSwitchBlockEntity>;
         get blockEntityClass(): $Class<$ThresholdSwitchBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$ThresholdSwitchBlockEntity>;
     }
     export class $ThresholdSwitchGenerator extends $SpecialBlockStateGen {
         constructor();
@@ -158,9 +158,9 @@ declare module "@package/com/simibubi/create/content/redstone/thresholdSwitch" {
     export class $ThresholdSwitchObservable {
     }
     export interface $ThresholdSwitchObservable {
+        format(arg0: number): $MutableComponent;
         getMinValue(): number;
         getMaxValue(): number;
-        format(arg0: number): $MutableComponent;
         getCurrentValue(): number;
         get minValue(): number;
         get maxValue(): number;

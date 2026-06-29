@@ -73,10 +73,10 @@ declare module "@package/com/simibubi/create/content/processing/burner" {
     }
     export class $LitBlazeBurnerBlock extends $Block implements $IWrenchable {
         static getLight(arg0: $BlockState_): number;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -143,11 +143,11 @@ declare module "@package/com/simibubi/create/content/processing/burner" {
         constructor(arg0: $VisualizationContext, arg1: $BlazeBurnerBlockEntity, arg2: number);
     }
     export class $BlazeBurnerBlock$HeatLevel extends $Enum<$BlazeBurnerBlock$HeatLevel> implements $StringRepresentable {
-        isAtLeast(arg0: $BlazeBurnerBlock$HeatLevel_): boolean;
         static values(): $BlazeBurnerBlock$HeatLevel[];
         static valueOf(arg0: string): $BlazeBurnerBlock$HeatLevel;
-        getSerializedName(): string;
+        isAtLeast(arg0: $BlazeBurnerBlock$HeatLevel_): boolean;
         static byIndex(arg0: number): $BlazeBurnerBlock$HeatLevel;
+        getSerializedName(): string;
         nextActiveLevel(): $BlazeBurnerBlock$HeatLevel;
         getRemappedEnumConstantName(): string;
         static CODEC: $Codec<$BlazeBurnerBlock$HeatLevel>;
@@ -181,24 +181,24 @@ declare module "@package/com/simibubi/create/content/processing/burner" {
         constructor(arg0: $BlockEntityRendererProvider$Context);
     }
     export class $BlazeBurnerBlock extends $HorizontalDirectionalBlock implements $IBE<$BlazeBurnerBlockEntity>, $IWrenchable, $SpecialBlockItemRequirement {
-        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
-        getBlockEntityType(): $BlockEntityType<$BlazeBurnerBlockEntity>;
-        getBlockEntityClass(): $Class<$BlazeBurnerBlockEntity>;
-        static getHeatLevelOf(arg0: $BlockState_): $BlazeBurnerBlock$HeatLevel;
         newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        static getLight(arg0: $BlockState_): number;
-        static buildLootTable(): $LootTable$Builder;
         static tryInsert(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $ItemStack_, arg4: boolean, arg5: boolean, arg6: boolean): $InteractionResultHolder<$ItemStack>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$BlazeBurnerBlockEntity>): void;
+        static getLight(arg0: $BlockState_): number;
+        static getHeatLevelOf(arg0: $BlockState_): $BlazeBurnerBlock$HeatLevel;
+        getBlockEntityClass(): $Class<$BlazeBurnerBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$BlazeBurnerBlockEntity>;
+        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
+        static buildLootTable(): $LootTable$Builder;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$BlazeBurnerBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($BlazeBurnerBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$BlazeBurnerBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $BlazeBurnerBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$BlazeBurnerBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($BlazeBurnerBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$BlazeBurnerBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -230,28 +230,28 @@ declare module "@package/com/simibubi/create/content/processing/burner" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$BlazeBurnerBlockEntity>;
         get blockEntityClass(): $Class<$BlazeBurnerBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$BlazeBurnerBlockEntity>;
     }
     export class $BlazeBurnerBlockEntity extends $SmartBlockEntity implements $BlazeBurnerAccessor, $IHasStomach {
-        getCapability(): $SmartFluidTank;
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
-        handler$fcb002$createliquidfuel$tick(arg0: $CallbackInfo): void;
-        handler$fcb001$createliquidfuel$write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean, arg3: $CallbackInfo): void;
-        handler$fcb001$createliquidfuel$read(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean, arg3: $CallbackInfo): void;
-        isCreativeFuel(arg0: $ItemStack_): boolean;
-        static getStockTicker(arg0: $LevelAccessor, arg1: $BlockPos_): $StockTickerBlockEntity;
-        isCreative(): boolean;
+        getCapability(): $SmartFluidTank;
         updateBlockState(): void;
-        getHeatLevelFromBlock(): $BlazeBurnerBlock$HeatLevel;
+        isCreative(): boolean;
+        static getStockTicker(arg0: $LevelAccessor, arg1: $BlockPos_): $StockTickerBlockEntity;
+        isCreativeFuel(arg0: $ItemStack_): boolean;
         getRemainingBurnTime(): number;
         getHeatLevelForRender(): $BlazeBurnerBlock$HeatLevel;
-        handler$fcb000$createliquidfuel$tryUpdateFuel(arg0: $ItemStack_, arg1: boolean, arg2: boolean, arg3: $CallbackInfoReturnable<any>): void;
-        getActiveFuel(): $BlazeBurnerBlockEntity$FuelType;
-        spawnParticleBurst(arg0: boolean): void;
+        getHeatLevelFromBlock(): $BlazeBurnerBlock$HeatLevel;
+        handler$fcb001$createliquidfuel$read(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean, arg3: $CallbackInfo): void;
+        handler$fcb001$createliquidfuel$write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean, arg3: $CallbackInfo): void;
+        handler$fcb002$createliquidfuel$tick(arg0: $CallbackInfo): void;
         isValidBlockAbove(): boolean;
-        createliquidfuel$setRemainingBurnTime(arg0: number): void;
+        spawnParticleBurst(arg0: boolean): void;
+        getActiveFuel(): $BlazeBurnerBlockEntity$FuelType;
+        handler$fcb000$createliquidfuel$tryUpdateFuel(arg0: $ItemStack_, arg1: boolean, arg2: boolean, arg3: $CallbackInfoReturnable<any>): void;
         createliquidfuel$invokeSetBlockHeat(arg0: $BlazeBurnerBlock$HeatLevel_): void;
+        createliquidfuel$setRemainingBurnTime(arg0: number): void;
         createliquidfuel$getRemainingBurnTime(): number;
         headAnimation: $LerpedFloat;
         level: $Level;
@@ -267,40 +267,40 @@ declare module "@package/com/simibubi/create/content/processing/burner" {
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
         get capability(): $SmartFluidTank;
         get creative(): boolean;
-        get heatLevelFromBlock(): $BlazeBurnerBlock$HeatLevel;
         get remainingBurnTime(): number;
         get heatLevelForRender(): $BlazeBurnerBlock$HeatLevel;
-        get activeFuel(): $BlazeBurnerBlockEntity$FuelType;
+        get heatLevelFromBlock(): $BlazeBurnerBlock$HeatLevel;
         get validBlockAbove(): boolean;
+        get activeFuel(): $BlazeBurnerBlockEntity$FuelType;
     }
     export class $BlazeBurnerHandler {
-        static thrownEggsGetEatenByBurner(arg0: $ProjectileImpactEvent): void;
-        static splashExtinguishesBurner(arg0: $ProjectileImpactEvent): void;
         static onThrowableImpact(arg0: $ProjectileImpactEvent): void;
+        static splashExtinguishesBurner(arg0: $ProjectileImpactEvent): void;
+        static thrownEggsGetEatenByBurner(arg0: $ProjectileImpactEvent): void;
         constructor();
     }
     export class $BlazeBurnerMovementBehaviour implements $MovementBehaviour {
-        invalidate(arg0: $MovementContext): void;
         tick(arg0: $MovementContext): void;
+        invalidate(arg0: $MovementContext): void;
         renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
-        canBeDisabledVia(arg0: $MovementContext): $ItemStack;
         disableBlockEntityRendering(): boolean;
+        canBeDisabledVia(arg0: $MovementContext): $ItemStack;
         isActive(arg0: $MovementContext): boolean;
-        stopMoving(arg0: $MovementContext): void;
         /**
          * @deprecated
          */
         dropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
+        onDisabledByControls(arg0: $MovementContext): void;
         getActiveAreaOffset(arg0: $MovementContext): $Vec3;
         mustTickWhileDisabled(): boolean;
-        onDisabledByControls(arg0: $MovementContext): void;
-        collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
-        onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
-        cancelStall(arg0: $MovementContext): void;
         startMoving(arg0: $MovementContext): void;
         visitNewPosition(arg0: $MovementContext, arg1: $BlockPos_): void;
-        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
+        collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
+        onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
         writeExtraData(arg0: $MovementContext): void;
+        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
+        cancelStall(arg0: $MovementContext): void;
+        stopMoving(arg0: $MovementContext): void;
         constructor();
     }
     export class $ScrollInstance extends $ColoredLitOverlayInstance {

@@ -5,11 +5,11 @@ declare module "@package/com/github/argon4w/acceleratedrendering/core/backends/b
     export class $IServerBuffer {
     }
     export interface $IServerBuffer {
-        bindBase(arg0: number, arg1: number): void;
-        bindRange(arg0: number, arg1: number, arg2: number, arg3: number): void;
         data(arg0: $ByteBuffer): void;
         "delete"(): void;
         bind(arg0: number): void;
+        bindRange(arg0: number, arg1: number, arg2: number, arg3: number): void;
+        bindBase(arg0: number, arg1: number): void;
         getBufferHandle(): number;
         get bufferHandle(): number;
     }
@@ -35,14 +35,14 @@ declare module "@package/com/github/argon4w/acceleratedrendering/core/backends/b
         get current(): number;
     }
     export class $MutableBuffer extends $MutableSize implements $IServerBuffer {
-        bindBase(arg0: number, arg1: number): void;
-        bindRange(arg0: number, arg1: number, arg2: number, arg3: number): void;
-        unmap(): void;
         map(arg0: number): number;
         data(arg0: $ByteBuffer): void;
         "delete"(): void;
         bind(arg0: number): void;
+        unmap(): void;
         copyTo(arg0: $IServerBuffer): void;
+        bindRange(arg0: number, arg1: number, arg2: number, arg3: number): void;
+        bindBase(arg0: number, arg1: number): void;
         getBufferHandle(): number;
         constructor(arg0: number, arg1: number);
         get bufferHandle(): number;

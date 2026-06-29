@@ -74,26 +74,26 @@ declare module "@package/net/minecraft/commands/arguments/item" {
     export interface $ComponentPredicateParser$Context<T, C, P> {
         anyOf(values: $List_<T>): T;
         negate(value: T): T;
-        forTagType(reader: $ImmutableStringReader, elementType: $ResourceLocation_): T;
-        createPredicateTest(reader: $ImmutableStringReader, context: P, value: $Tag_): T;
-        lookupPredicateType(reader: $ImmutableStringReader, elementType: $ResourceLocation_): P;
-        createComponentTest(reader: $ImmutableStringReader, context: C): T;
-        createComponentTest(reader: $ImmutableStringReader, context: C, value: $Tag_): T;
         lookupComponentType(reader: $ImmutableStringReader, elementType: $ResourceLocation_): C;
-        forElementType(reader: $ImmutableStringReader, elementType: $ResourceLocation_): T;
-        listElementTypes(): $Stream<$ResourceLocation>;
-        listTagTypes(): $Stream<$ResourceLocation>;
+        createComponentTest(reader: $ImmutableStringReader, context: C, value: $Tag_): T;
+        createComponentTest(reader: $ImmutableStringReader, context: C): T;
+        lookupPredicateType(reader: $ImmutableStringReader, elementType: $ResourceLocation_): P;
+        createPredicateTest(reader: $ImmutableStringReader, context: P, value: $Tag_): T;
+        forTagType(reader: $ImmutableStringReader, elementType: $ResourceLocation_): T;
         listPredicateTypes(): $Stream<$ResourceLocation>;
+        listTagTypes(): $Stream<$ResourceLocation>;
+        listElementTypes(): $Stream<$ResourceLocation>;
         listComponentTypes(): $Stream<$ResourceLocation>;
+        forElementType(reader: $ImmutableStringReader, elementType: $ResourceLocation_): T;
     }
     export class $ComponentPredicateParser$ElementLookupRule<T, C, P> extends $ResourceLookupRule<$ComponentPredicateParser$Context<T, C, P>, T> {
         context: $ComponentPredicateParser$Context<T, C, P>;
     }
     export class $ItemParser$SuggestionsVisitor implements $ItemParser$Visitor {
-        visitSuggestions(suggestions: $Function_<$SuggestionsBuilder, $CompletableFuture<$Suggestions>>): void;
         visitComponent<T>(componentType: $DataComponentType_<T>, value: T): void;
-        visitRemovedComponent<T>(componentType: $DataComponentType_<T>): void;
+        visitSuggestions(suggestions: $Function_<$SuggestionsBuilder, $CompletableFuture<$Suggestions>>): void;
         visitItem(item: $Holder_<$Item>): void;
+        visitRemovedComponent<T>(componentType: $DataComponentType_<T>): void;
     }
     export class $ItemParser$ItemResult extends $Record {
         item(): $Holder<$Item>;
@@ -135,10 +135,10 @@ declare module "@package/net/minecraft/commands/arguments/item" {
         context: $ComponentPredicateParser$Context<T, C, P>;
     }
     export class $FunctionArgument implements $ArgumentType<$FunctionArgument$Result> {
-        static getFunctions(context: $CommandContext<$CommandSourceStack>, name: string): $Collection<$CommandFunction<$CommandSourceStack>>;
         static getFunction(context: $CommandContext<$CommandSourceStack>, id: $ResourceLocation_): $CommandFunction<$CommandSourceStack>;
         static functions(): $FunctionArgument;
         getExamples(): $Collection<string>;
+        static getFunctions(context: $CommandContext<$CommandSourceStack>, name: string): $Collection<$CommandFunction<$CommandSourceStack>>;
         static getFunctionCollection(context: $CommandContext<$CommandSourceStack>, name: string): $Pair<$ResourceLocation, $Collection<$CommandFunction<$CommandSourceStack>>>;
         static getFunctionTag(context: $CommandContext<$CommandSourceStack>, id: $ResourceLocation_): $Collection<$CommandFunction<$CommandSourceStack>>;
         static getFunctionOrTag(context: $CommandContext<$CommandSourceStack>, name: string): $Pair<$ResourceLocation, $Either<$CommandFunction<$CommandSourceStack>, $Collection<$CommandFunction<$CommandSourceStack>>>>;
@@ -155,9 +155,9 @@ declare module "@package/net/minecraft/commands/arguments/item" {
      */
     export type $ItemPredicateArgument$PredicateWrapper_ = { id?: $ResourceLocation_, type?: $Decoder_<$Predicate<$ItemStack>>,  } | [id?: $ResourceLocation_, type?: $Decoder_<$Predicate<$ItemStack>>, ];
     export class $ItemInput {
-        createItemStack(count: number, allowOversizedStacks: boolean): $ItemStack;
-        serialize(levelRegistry: $HolderLookup$Provider): string;
         getItem(): $Item;
+        serialize(levelRegistry: $HolderLookup$Provider): string;
+        createItemStack(count: number, allowOversizedStacks: boolean): $ItemStack;
         constructor(item: $Holder_<$Item>, components: $DataComponentPatch_);
         get item(): $Item;
     }
@@ -166,13 +166,13 @@ declare module "@package/net/minecraft/commands/arguments/item" {
     /**
      * Values that may be interpreted as {@link $ItemPredicateArgument$ComponentWrapper}.
      */
-    export type $ItemPredicateArgument$ComponentWrapper_ = { valueChecker?: $Decoder_<$Predicate<$ItemStack>>, presenceChecker?: $Predicate_<$ItemStack>, id?: $ResourceLocation_,  } | [valueChecker?: $Decoder_<$Predicate<$ItemStack>>, presenceChecker?: $Predicate_<$ItemStack>, id?: $ResourceLocation_, ];
+    export type $ItemPredicateArgument$ComponentWrapper_ = { id?: $ResourceLocation_, valueChecker?: $Decoder_<$Predicate<$ItemStack>>, presenceChecker?: $Predicate_<$ItemStack>,  } | [id?: $ResourceLocation_, valueChecker?: $Decoder_<$Predicate<$ItemStack>>, presenceChecker?: $Predicate_<$ItemStack>, ];
     export class $ItemParser$Visitor {
     }
     export interface $ItemParser$Visitor {
-        visitSuggestions(suggestions: $Function_<$SuggestionsBuilder, $CompletableFuture<$Suggestions>>): void;
         visitComponent<T>(componentType: $DataComponentType_<T>, value: T): void;
-        visitRemovedComponent<T>(componentType: $DataComponentType_<T>): void;
+        visitSuggestions(suggestions: $Function_<$SuggestionsBuilder, $CompletableFuture<$Suggestions>>): void;
         visitItem(item: $Holder_<$Item>): void;
+        visitRemovedComponent<T>(componentType: $DataComponentType_<T>): void;
     }
 }

@@ -12,35 +12,35 @@ import { $ServerSubLevelContainer } from "@package/dev/ryanhcode/sable/api/suble
 
 declare module "@package/dev/ryanhcode/sable/sublevel/storage/holding" {
     export class $GlobalSavedSubLevelPointer extends $Record {
-        subLevelIndex(): number;
         local(): $SavedSubLevelPointer;
         chunkPos(): $ChunkPos;
         storageIndex(): number;
+        subLevelIndex(): number;
         static CODEC: $Codec<$GlobalSavedSubLevelPointer>;
         constructor(chunkPos: $ChunkPos, storageIndex: number, subLevelIndex: number);
     }
     /**
      * Values that may be interpreted as {@link $GlobalSavedSubLevelPointer}.
      */
-    export type $GlobalSavedSubLevelPointer_ = { storageIndex?: number, subLevelIndex?: number, chunkPos?: $ChunkPos,  } | [storageIndex?: number, subLevelIndex?: number, chunkPos?: $ChunkPos, ];
+    export type $GlobalSavedSubLevelPointer_ = { subLevelIndex?: number, chunkPos?: $ChunkPos, storageIndex?: number,  } | [subLevelIndex?: number, chunkPos?: $ChunkPos, storageIndex?: number, ];
     export class $SubLevelHoldingChunkMap implements $AutoCloseable {
-        processChanges(): void;
-        queueDeletion(arg0: $ServerSubLevel): void;
         close(): void;
+        getStorage(): $SubLevelStorage;
         updateChunkStatus(arg0: $ChunkPos, arg1: boolean): void;
         saveAll(): void;
-        getStorage(): $SubLevelStorage;
         moveToUnloaded(arg0: $ServerSubLevel, arg1: $ChunkPos): void;
+        processChanges(): void;
+        queueDeletion(arg0: $ServerSubLevel): void;
         getHoldingSubLevel(arg0: $UUID_): $HoldingSubLevel;
         static VERBOSE: boolean;
         constructor(arg0: $ServerLevel, arg1: $ServerSubLevelContainer);
         get storage(): $SubLevelStorage;
     }
     export class $SavedSubLevelPointer extends $Record {
-        subLevelIndex(): number;
         static unpack(arg0: number): $SavedSubLevelPointer;
         packed(): number;
         storageIndex(): number;
+        subLevelIndex(): number;
         constructor(storageIndex: number, subLevelIndex: number);
     }
     /**
@@ -48,16 +48,16 @@ declare module "@package/dev/ryanhcode/sable/sublevel/storage/holding" {
      */
     export type $SavedSubLevelPointer_ = { storageIndex?: number, subLevelIndex?: number,  } | [storageIndex?: number, subLevelIndex?: number, ];
     export class $SubLevelHoldingChunk {
-        getChunkPos(): $ChunkPos;
         static from(arg0: $ChunkPos, arg1: $CompoundTag_): $SubLevelHoldingChunk;
         writeTo(arg0: $CompoundTag_): void;
-        getSubLevelPointers(): $List<$SavedSubLevelPointer>;
-        acceptHoldingSubLevel(arg0: $HoldingSubLevel): void;
+        getChunkPos(): $ChunkPos;
         collectReadySubLevels(arg0: $ServerLevel, arg1: $Object2ObjectMap<$UUID_, $HoldingSubLevel>): void;
         getLoadedHoldingSubLevels(): $Iterable<$HoldingSubLevel>;
+        acceptHoldingSubLevel(arg0: $HoldingSubLevel): void;
+        getSubLevelPointers(): $List<$SavedSubLevelPointer>;
         constructor(arg0: $ChunkPos);
         get chunkPos(): $ChunkPos;
-        get subLevelPointers(): $List<$SavedSubLevelPointer>;
         get loadedHoldingSubLevels(): $Iterable<$HoldingSubLevel>;
+        get subLevelPointers(): $List<$SavedSubLevelPointer>;
     }
 }

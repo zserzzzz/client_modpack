@@ -31,29 +31,29 @@ declare module "@package/net/createmod/catnip/math" {
     export class $VoxelShaper {
         get(arg0: $Direction$Axis_): $VoxelShape;
         get(arg0: $Direction_): $VoxelShape;
-        static forDirectional(arg0: $VoxelShape, arg1: $Direction_): $VoxelShaper;
         static forAxis(arg0: $VoxelShape, arg1: $Direction$Axis_): $VoxelShaper;
-        withVerticalShapes(arg0: $VoxelShape): $VoxelShaper;
-        static forHorizontalAxis(arg0: $VoxelShape, arg1: $Direction$Axis_): $VoxelShaper;
-        static forHorizontal(arg0: $VoxelShape, arg1: $Direction_): $VoxelShaper;
         static axisAsFace(arg0: $Direction$Axis_): $Direction;
+        static forDirectional(arg0: $VoxelShape, arg1: $Direction_): $VoxelShaper;
+        withVerticalShapes(arg0: $VoxelShape): $VoxelShaper;
+        static forHorizontal(arg0: $VoxelShape, arg1: $Direction_): $VoxelShaper;
+        static forHorizontalAxis(arg0: $VoxelShape, arg1: $Direction$Axis_): $VoxelShaper;
         withShape(arg0: $VoxelShape, arg1: $Direction_): $VoxelShaper;
         constructor();
     }
     export class $BlockFace extends $Pair<$BlockPos, $Direction> {
+        static fromNBT(arg0: $CompoundTag_): $BlockFace;
         isEquivalent(arg0: $BlockFace): boolean;
         serializeNBT(): $CompoundTag;
-        getOpposite(): $BlockFace;
         getPos(): $BlockPos;
+        getOpposite(): $BlockFace;
         getFace(): $Direction;
-        static fromNBT(arg0: $CompoundTag_): $BlockFace;
         getConnectedPos(): $BlockPos;
         getOppositeFace(): $Direction;
         static CODEC: $Codec<$BlockFace>;
         static STREAM_CODEC: $StreamCodec<$ByteBuf, $BlockFace>;
         constructor(arg0: $BlockPos_, arg1: $Direction_);
-        get opposite(): $BlockFace;
         get pos(): $BlockPos;
+        get opposite(): $BlockFace;
         get face(): $Direction;
         get connectedPos(): $BlockPos;
         get oppositeFace(): $Direction;

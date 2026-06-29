@@ -193,14 +193,14 @@ declare module "@package/net/minecraft/data/tags" {
         add(arg0: $TagEntry): $TagsProvider$TagAppender<T>;
         add(key: $ResourceKey_<T>): $TagsProvider$TagAppender<T>;
         addAll(keys: $List_<$ResourceKey_<T>>): $TagsProvider$TagAppender<T>;
-        addOptional(location: $ResourceLocation_): $TagsProvider$TagAppender<T>;
-        getInternalBuilder(): $TagBuilder;
+        addTag(tag: $TagKey_<T>): $TagsProvider$TagAppender<T>;
         /**
          * @deprecated
          */
         getModID(): string;
-        addTag(tag: $TagKey_<T>): $TagsProvider$TagAppender<T>;
+        addOptional(location: $ResourceLocation_): $TagsProvider$TagAppender<T>;
         addOptionalTag(location: $ResourceLocation_): $TagsProvider$TagAppender<T>;
+        getInternalBuilder(): $TagBuilder;
         remove(arg0: $TagKey_<T>, ...arg1: $TagKey_<T>[]): $TagsProvider$TagAppender<T>;
         remove(arg0: $ResourceLocation_, ...arg1: $ResourceLocation_[]): $TagsProvider$TagAppender<T>;
         remove(key: $ResourceKey_<T>): $TagsProvider$TagAppender<T>;
@@ -209,17 +209,17 @@ declare module "@package/net/minecraft/data/tags" {
         remove(location: $ResourceLocation_): $TagsProvider$TagAppender<T>;
         replace(value: boolean): $TagsProvider$TagAppender<T>;
         replace(): $TagsProvider$TagAppender<T>;
-        addOptionalTags(...arg0: $TagKey_<T>[]): $TagsProvider$TagAppender<T>;
         addTags(...arg0: $TagKey_<T>[]): $TagsProvider$TagAppender<T>;
         addOptionalTag(tag: $TagKey_<T>): $TagsProvider$TagAppender<T>;
+        addOptionalTags(...arg0: $TagKey_<T>[]): $TagsProvider$TagAppender<T>;
         builder: $TagBuilder;
         constructor(builder: $TagBuilder);
         /**
          * @deprecated
          */
         constructor(arg0: $TagBuilder, arg1: string);
-        get internalBuilder(): $TagBuilder;
         get modID(): string;
+        get internalBuilder(): $TagBuilder;
     }
     export class $BannerPatternTagsProvider extends $TagsProvider<$BannerPattern> {
         registryKey: $ResourceKey<$Registry<$BannerPattern>>;
@@ -327,10 +327,10 @@ declare module "@package/net/minecraft/data/tags" {
         run(output: $CachedOutput_): $CompletableFuture<never>;
         getPath(arg0: $ResourceLocation_): $Path;
         tag(tag: $TagKey_<T>): $TagsProvider$TagAppender<T>;
+        addTags(provider: $HolderLookup$Provider): void;
         contentsGetter(): $CompletableFuture<$TagsProvider$TagLookup<T>>;
         createContentsProvider(): $CompletableFuture<$HolderLookup$Provider>;
         getOrCreateRawBuilder(tag: $TagKey_<T>): $TagBuilder;
-        addTags(provider: $HolderLookup$Provider): void;
         registryKey: $ResourceKey<$Registry<T>>;
         builders: $Map<$ResourceLocation, $TagBuilder>;
         pathProvider: $PackOutput$PathProvider;

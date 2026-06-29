@@ -3,30 +3,30 @@ import { $Enum, $Record } from "@package/java/lang";
 
 declare module "@package/software/bernie/geckolib/loading/json/raw" {
     export class $ModelProperties extends $Record {
+        visibleBoundsHeight(): number;
+        visibleBoundsOffset(): number[];
         static deserializer(): $JsonDeserializer<$ModelProperties>;
         identifier(): string;
-        textureHeight(): number;
         textureWidth(): number;
-        animationArmsDown(): boolean;
-        animationNoHeadBob(): boolean;
+        textureHeight(): number;
         visibleBoundsWidth(): number;
-        preserveModelPose(): boolean;
+        animationUpsideDown(): boolean;
+        animationArmsOutFront(): boolean;
+        animationDontShowArmor(): boolean;
+        animationInvertedCrouch(): boolean;
+        animationStationaryLegs(): boolean;
+        animationStatueOfLibertyArms(): boolean;
         animationSingleLegAnimation(): boolean;
         animationSingleArmAnimation(): boolean;
-        animationStatueOfLibertyArms(): boolean;
-        animationStationaryLegs(): boolean;
-        animationInvertedCrouch(): boolean;
-        animationDontShowArmor(): boolean;
-        animationArmsOutFront(): boolean;
-        visibleBoundsOffset(): number[];
-        visibleBoundsHeight(): number;
-        animationUpsideDown(): boolean;
+        preserveModelPose(): boolean;
+        animationArmsDown(): boolean;
+        animationNoHeadBob(): boolean;
         constructor(animationArmsDown: boolean, animationArmsOutFront: boolean, animationDontShowArmor: boolean, animationInvertedCrouch: boolean, animationNoHeadBob: boolean, animationSingleArmAnimation: boolean, animationSingleLegAnimation: boolean, animationStationaryLegs: boolean, animationStatueOfLibertyArms: boolean, animationUpsideDown: boolean, identifier: string, preserveModelPose: boolean, textureHeight: number, textureWidth: number, visibleBoundsHeight: number, visibleBoundsOffset: number[], visibleBoundsWidth: number);
     }
     /**
      * Values that may be interpreted as {@link $ModelProperties}.
      */
-    export type $ModelProperties_ = { animationSingleLegAnimation?: boolean, animationNoHeadBob?: boolean, animationArmsOutFront?: boolean, animationStationaryLegs?: boolean, preserveModelPose?: boolean, animationDontShowArmor?: boolean, visibleBoundsHeight?: number, animationArmsDown?: boolean, textureWidth?: number, identifier?: string, animationInvertedCrouch?: boolean, animationUpsideDown?: boolean, visibleBoundsOffset?: number[], animationStatueOfLibertyArms?: boolean, visibleBoundsWidth?: number, textureHeight?: number, animationSingleArmAnimation?: boolean,  } | [animationSingleLegAnimation?: boolean, animationNoHeadBob?: boolean, animationArmsOutFront?: boolean, animationStationaryLegs?: boolean, preserveModelPose?: boolean, animationDontShowArmor?: boolean, visibleBoundsHeight?: number, animationArmsDown?: boolean, textureWidth?: number, identifier?: string, animationInvertedCrouch?: boolean, animationUpsideDown?: boolean, visibleBoundsOffset?: number[], animationStatueOfLibertyArms?: boolean, visibleBoundsWidth?: number, textureHeight?: number, animationSingleArmAnimation?: boolean, ];
+    export type $ModelProperties_ = { animationInvertedCrouch?: boolean, animationUpsideDown?: boolean, visibleBoundsOffset?: number[], animationStatueOfLibertyArms?: boolean, visibleBoundsWidth?: number, textureHeight?: number, animationSingleArmAnimation?: boolean, animationSingleLegAnimation?: boolean, animationNoHeadBob?: boolean, animationArmsOutFront?: boolean, animationStationaryLegs?: boolean, preserveModelPose?: boolean, animationDontShowArmor?: boolean, visibleBoundsHeight?: number, animationArmsDown?: boolean, textureWidth?: number, identifier?: string,  } | [animationInvertedCrouch?: boolean, animationUpsideDown?: boolean, visibleBoundsOffset?: number[], animationStatueOfLibertyArms?: boolean, visibleBoundsWidth?: number, textureHeight?: number, animationSingleArmAnimation?: boolean, animationSingleLegAnimation?: boolean, animationNoHeadBob?: boolean, animationArmsOutFront?: boolean, animationStationaryLegs?: boolean, preserveModelPose?: boolean, animationDontShowArmor?: boolean, visibleBoundsHeight?: number, animationArmsDown?: boolean, textureWidth?: number, identifier?: string, ];
     export class $FaceUV$Rotation extends $Enum<$FaceUV$Rotation> {
         static fromValue(arg0: number): $FaceUV$Rotation;
         static values(): $FaceUV$Rotation[];

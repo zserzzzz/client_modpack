@@ -16,10 +16,10 @@ declare module "@package/com/simibubi/create/foundation/placement" {
         attachedPoles(arg0: $Level_, arg1: $BlockPos_, arg2: $Direction_): number;
         matchesAxis(arg0: $BlockState_, arg1: $Direction$Axis_): boolean;
         getOffset(arg0: $Player, arg1: $Level_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockHitResult, arg5: $ItemStack_): $PlacementOffset;
-        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
-        matchesState(arg0: $BlockState_): boolean;
-        displayGhost(arg0: $PlacementOffset): void;
         matchesItem(arg0: $ItemStack_): boolean;
+        matchesState(arg0: $BlockState_): boolean;
+        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
+        displayGhost(arg0: $PlacementOffset): void;
         constructor(arg0: $Predicate_<$BlockState>, arg1: $Function_<$BlockState, $Direction$Axis>, arg2: $Property<T>);
         get statePredicate(): $Predicate<$BlockState>;
     }

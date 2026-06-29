@@ -10,17 +10,17 @@ import { $PartialModel } from "@package/dev/engine_room/flywheel/lib/model/baked
 
 declare module "@package/com/simibubi/create/compat/jei/category/animations" {
     export class $AnimatedKinetics implements $IDrawable {
-        getHeight(): number;
         getWidth(): number;
-        static getCurrentAngle(): number;
-        static defaultBlockElement(arg0: $BlockState_): $GuiGameElement$GuiRenderBuilder;
+        getHeight(): number;
         static defaultBlockElement(arg0: $PartialModel): $GuiGameElement$GuiRenderBuilder;
+        static defaultBlockElement(arg0: $BlockState_): $GuiGameElement$GuiRenderBuilder;
+        static getCurrentAngle(): number;
         draw(arg0: $GuiGraphics): void;
         offset: number;
         static DEFAULT_LIGHTING: $ILightingSettings;
         constructor();
-        get height(): number;
         get width(): number;
+        get height(): number;
         static get currentAngle(): number;
     }
     export class $AnimatedDeployer extends $AnimatedKinetics {

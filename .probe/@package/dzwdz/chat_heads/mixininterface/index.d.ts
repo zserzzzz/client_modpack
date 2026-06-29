@@ -12,8 +12,8 @@ declare module "@package/dzwdz/chat_heads/mixininterface" {
     export class $Ownable {
     }
     export interface $Ownable {
-        chatheads$getOwner(): $PlayerInfo;
         chatheads$setOwner(arg0: $PlayerInfo): void;
+        chatheads$getOwner(): $PlayerInfo;
     }
     export class $TextureLocationSettable {
     }

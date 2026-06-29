@@ -10,12 +10,12 @@ declare module "@package/dev/eriksonn/aeronautics/api/levitite_blend_crystalliza
     export class $CrystalPropagationContext {
     }
     export interface $CrystalPropagationContext {
-        getNewAge(arg0: $Level_, arg1: number, arg2: boolean): number;
         canSpreadTo(arg0: $FluidState): boolean;
-        onCrystallize(arg0: $Level_, arg1: $BlockPos_): void;
+        getNewAge(arg0: $Level_, arg1: number, arg2: boolean): number;
+        onCrystallizationInitialize(arg0: $Level_, arg1: $BlockPos_, arg2: boolean): void;
         shouldCrystallize(arg0: $Level_, arg1: number, arg2: boolean): boolean;
         getCatalyzerTag(): $TagKey<$Block>;
-        onCrystallizationInitialize(arg0: $Level_, arg1: $BlockPos_, arg2: boolean): void;
+        onCrystallize(arg0: $Level_, arg1: $BlockPos_): void;
         onCrystallizationFail(arg0: $Level_, arg1: $BlockPos_, arg2: number, arg3: boolean): void;
         getCrystalBlockState(arg0: $Level_, arg1: $BlockPos_): $BlockState;
         onDefaultCrystallize(arg0: $Level_, arg1: $BlockPos_): void;

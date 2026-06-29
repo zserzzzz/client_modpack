@@ -44,19 +44,19 @@ declare module "@package/com/simibubi/create/foundation/gui/widget" {
         constructor(arg0: number, arg1: number, arg2: $Component_);
     }
     export class $ScrollInput extends $AbstractSimiWidget {
-        calling(arg0: $Consumer_<number>): $ScrollInput;
         format(arg0: $Function_<number, $Component>): $ScrollInput;
         getState(): number;
         setState(arg0: number): $ScrollInput;
+        inverted(): $ScrollInput;
+        titled(arg0: $MutableComponent_): $ScrollInput;
         withRange(arg0: number, arg1: number): $ScrollInput;
+        addHint(arg0: $MutableComponent_): $ScrollInput;
+        onChanged(): void;
+        calling(arg0: $Consumer_<number>): $ScrollInput;
         standardStep(): $Function<$ScrollValueBehaviour$StepContext, number>;
         withStepFunction(arg0: $Function_<$ScrollValueBehaviour$StepContext, number>): $ScrollInput;
-        inverted(): $ScrollInput;
-        addHint(arg0: $MutableComponent_): $ScrollInput;
-        writingTo(arg0: $Label): $ScrollInput;
         withShiftStep(arg0: number): $ScrollInput;
-        onChanged(): void;
-        titled(arg0: $MutableComponent_): $ScrollInput;
+        writingTo(arg0: $Label): $ScrollInput;
         removeCallback(): $ScrollInput;
         static COLOR_SUCCESS: $Couple<$Color>;
         visible: boolean;
@@ -86,9 +86,9 @@ declare module "@package/com/simibubi/create/foundation/gui/widget" {
         add<T extends $GuiEventListener>(arg0: T): T;
         tick(): void;
         render(arg0: $GuiGraphics, arg1: number, arg2: number, arg3: number): void;
-        addRenderableOnly<T extends $Renderable>(arg0: T): T;
         narrationPriority(): $NarratableEntry$NarrationPriority;
         updateNarration(arg0: $NarrationElementOutput): void;
+        addRenderableOnly<T extends $Renderable>(arg0: T): T;
         removeRenderableOnly<T extends $Renderable>(arg0: T): boolean;
         isActive(): boolean;
         constructor();

@@ -20,13 +20,13 @@ declare module "@package/net/minecraft/client/renderer/block/model/multipart" {
     export class $MultiPart implements $UnbakedModel {
         getDependencies(): $Collection<$ResourceLocation>;
         bake(baker: $ModelBaker, spriteGetter: $Function_<$Material, $TextureAtlasSprite>, state: $ModelState): $BakedModel;
-        resolveParents(resolver: $Function_<$ResourceLocation, $UnbakedModel>): void;
         getSelectors(): $List<$Selector>;
         getMultiVariants(): $Set<$MultiVariant>;
-        moreculling$getCullShapeElements(arg0: $ResourceLocation_): $List<$CullShapeElement>;
-        moreculling$setCullShapeElements(arg0: $List_<$CullShapeElement>): void;
-        moreculling$getUseModelShape(arg0: $ResourceLocation_): boolean;
+        resolveParents(resolver: $Function_<$ResourceLocation, $UnbakedModel>): void;
         moreculling$setUseModelShape(arg0: boolean): void;
+        moreculling$getCullShapeElements(arg0: $ResourceLocation_): $List<$CullShapeElement>;
+        moreculling$getUseModelShape(arg0: $ResourceLocation_): boolean;
+        moreculling$setCullShapeElements(arg0: $List_<$CullShapeElement>): void;
         definition: $StateDefinition<$Block, $BlockState>;
         constructor(definition: $StateDefinition<$Block_, $BlockState_>, selectors: $List_<$Selector>);
         get dependencies(): $Collection<$ResourceLocation>;

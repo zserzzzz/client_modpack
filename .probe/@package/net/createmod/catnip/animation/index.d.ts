@@ -21,24 +21,24 @@ declare module "@package/net/createmod/catnip/animation" {
         finished(): boolean;
     }
     export class $LerpedFloat {
+        getValue(): number;
+        getValue(arg0: number): number;
+        setValue(arg0: number): void;
+        static linear(): $LerpedFloat;
         getChaseTarget(): number;
         startWithValue(arg0: number): $LerpedFloat;
-        getValue(arg0: number): number;
-        getValue(): number;
-        setValue(arg0: number): void;
         readNBT(arg0: $CompoundTag_, arg1: boolean): void;
         writeNBT(): $CompoundTag;
-        chase(arg0: number, arg1: number, arg2: $LerpedFloat$Chaser_): $LerpedFloat;
-        settled(): boolean;
-        tickChaser(): void;
-        static linear(): $LerpedFloat;
-        setValueNoUpdate(arg0: number): void;
         static angular(): $LerpedFloat;
+        chase(arg0: number, arg1: number, arg2: $LerpedFloat$Chaser_): $LerpedFloat;
+        tickChaser(): void;
+        settled(): boolean;
+        disableSmartAngleChasing(): $LerpedFloat;
+        setValueNoUpdate(arg0: number): void;
         forceNextSync(): void;
         updateChaseSpeed(arg0: number): boolean;
-        disableSmartAngleChasing(): $LerpedFloat;
-        chaseTimed(arg0: number, arg1: number): $LerpedFloat;
         updateChaseTarget(arg0: number): void;
+        chaseTimed(arg0: number, arg1: number): $LerpedFloat;
         constructor(arg0: $LerpedFloat$Interpolator_);
         get chaseTarget(): number;
         set valueNoUpdate(value: number);
@@ -59,12 +59,12 @@ declare module "@package/net/createmod/catnip/animation" {
         static create(arg0: number): $PhysicalFloat;
         tick(): void;
         startAt(arg0: number): $PhysicalFloat;
-        withDrag(arg0: number): $PhysicalFloat;
-        bump(arg0: number, arg1: number): $PhysicalFloat;
-        bump(arg0: number): $PhysicalFloat;
-        addForce(arg0: $Force): $PhysicalFloat;
-        withLimit(arg0: number): $PhysicalFloat;
         zeroing(arg0: number): $PhysicalFloat;
+        withDrag(arg0: number): $PhysicalFloat;
+        bump(arg0: number): $PhysicalFloat;
+        bump(arg0: number, arg1: number): $PhysicalFloat;
+        withLimit(arg0: number): $PhysicalFloat;
+        addForce(arg0: $Force): $PhysicalFloat;
         constructor(arg0: number);
     }
 }

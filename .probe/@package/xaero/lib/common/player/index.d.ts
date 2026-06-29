@@ -6,19 +6,19 @@ export * as config from "@package/xaero/lib/common/player/config";
 
 declare module "@package/xaero/lib/common/player" {
     export class $ServerPlayerData {
-        static get(arg0: $ServerPlayer): $ServerPlayerData;
-        getConfigChannelData(arg0: $ConfigChannel): $ServerPlayerConfigChannelData;
-        getPlayer(): $ServerPlayer;
-        setPlayer(arg0: $ServerPlayer): void;
-        getConfigSynchronizer(): $ServerPlayerConfigSynchronizer;
-        setShouldUpdateConfigPermissions(arg0: boolean): void;
         shouldUpdateConfigPermissions(): boolean;
+        setShouldUpdateConfigPermissions(arg0: boolean): void;
+        static get(arg0: $ServerPlayer): $ServerPlayerData;
+        getPlayer(): $ServerPlayer;
+        getConfigSynchronizer(): $ServerPlayerConfigSynchronizer;
+        setPlayer(arg0: $ServerPlayer): void;
+        getConfigChannelData(arg0: $ConfigChannel): $ServerPlayerConfigChannelData;
         get configSynchronizer(): $ServerPlayerConfigSynchronizer;
     }
     export class $IServerPlayer {
     }
     export interface $IServerPlayer {
-        xaerolib_getData(): $ServerPlayerData;
         xaerolib_setData(arg0: $ServerPlayerData): void;
+        xaerolib_getData(): $ServerPlayerData;
     }
 }

@@ -65,9 +65,9 @@ declare module "@package/com/simibubi/create/content/trains/schedule" {
         createMenu(arg0: number, arg1: $Inventory, arg2: $Player): $AbstractContainerMenu;
         handScheduleTo(arg0: $ItemStack_, arg1: $Player, arg2: $LivingEntity, arg3: $InteractionHand_): $InteractionResult;
         shouldTriggerClientSideContainerClosingOnOpen(): boolean;
-        createCopy(arg0: $ItemStack_, arg1: number): $ItemStack;
         canCopyToItem(arg0: $ItemStack_): boolean;
         canCopyFromItem(arg0: $ItemStack_): boolean;
+        createCopy(arg0: $ItemStack_, arg1: number): $ItemStack;
         writeClientSideData(arg0: $AbstractContainerMenu, arg1: $RegistryFriendlyByteBuf): void;
         shouldCloseCurrentScreen(): boolean;
         static BASE_ATTACK_DAMAGE_ID: $ResourceLocation;
@@ -116,8 +116,8 @@ declare module "@package/com/simibubi/create/content/trains/schedule" {
         getTitleAs(arg0: string): $List<$Component>;
         getSecondLineTooltip(arg0: number): $List<$Component>;
         slotsTargeted(): number;
-        getSecondLineIcon(): $ItemStack;
         renderSpecialIcon(arg0: $GuiGraphics, arg1: number, arg2: number): boolean;
+        getSecondLineIcon(): $ItemStack;
         constructor();
         get secondLineIcon(): $ItemStack;
     }
@@ -192,8 +192,8 @@ declare module "@package/com/simibubi/create/content/trains/schedule" {
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $Schedule>;
         cyclic: boolean;
         savedProgress: number;
-        constructor();
         constructor(arg0: $List_<$ScheduleEntry>, arg1: boolean, arg2: number);
+        constructor();
     }
     export class $ScheduleMenu extends $HeldItemGhostItemMenu {
         quickcraftSlots: $Set<$Slot>;
@@ -241,17 +241,17 @@ declare module "@package/com/simibubi/create/content/trains/schedule" {
         read(arg0: $HolderLookup$Provider, arg1: $CompoundTag_): void;
         tick(arg0: $Level_): void;
         getSchedule(): $Schedule;
-        returnSchedule(arg0: $HolderLookup$Provider): $ItemStack;
-        startCooldown(): void;
         setSchedule(arg0: $Schedule, arg1: boolean): void;
         submitPredictions(): $Collection<$GlobalTrainDisplayData$TrainDeparturePrediction>;
+        startCooldown(): void;
+        returnSchedule(arg0: $HolderLookup$Provider): $ItemStack;
         getWaitingStatus(arg0: $Level_): $MutableComponent;
-        destinationReached(): void;
         startCurrentInstruction(arg0: $Level_): $DiscoveredPath;
-        discardSchedule(): void;
-        tickConditions(arg0: $Level_): void;
-        transitInterrupted(): void;
+        destinationReached(): void;
         setSchedulePresentClientside(arg0: boolean): void;
+        tickConditions(arg0: $Level_): void;
+        discardSchedule(): void;
+        transitInterrupted(): void;
         paused: boolean;
         predictionTicks: $List<number>;
         currentEntry: number;
@@ -278,14 +278,14 @@ declare module "@package/com/simibubi/create/content/trains/schedule" {
         getItem(arg0: number): $ItemStack;
         getData(): $CompoundTag;
         setData(arg0: $HolderLookup$Provider, arg1: $CompoundTag_): void;
+        getSummary(): $Pair<$ItemStack, $Component>;
         setItem(arg0: number, arg1: $ItemStack_): void;
         initConfigurationWidgets(arg0: $ModularGuiLineBuilder): void;
-        getSummary(): $Pair<$ItemStack, $Component>;
         getTitleAs(arg0: string): $List<$Component>;
         getSecondLineTooltip(arg0: number): $List<$Component>;
         slotsTargeted(): number;
-        getSecondLineIcon(): $ItemStack;
         renderSpecialIcon(arg0: $GuiGraphics, arg1: number, arg2: number): boolean;
+        getSecondLineIcon(): $ItemStack;
         get id(): $ResourceLocation;
         get summary(): $Pair<$ItemStack, $Component>;
         get secondLineIcon(): $ItemStack;

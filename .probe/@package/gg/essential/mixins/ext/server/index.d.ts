@@ -5,9 +5,9 @@ declare module "@package/gg/essential/mixins/ext/server" {
     export class $MinecraftServerExt {
     }
     export interface $MinecraftServerExt {
-        getEssential$coroutineScope(): $CoroutineScope;
         getEssential$dispatcher(): $CoroutineDispatcher;
-        get essential$coroutineScope(): $CoroutineScope;
+        getEssential$coroutineScope(): $CoroutineScope;
         get essential$dispatcher(): $CoroutineDispatcher;
+        get essential$coroutineScope(): $CoroutineScope;
     }
 }

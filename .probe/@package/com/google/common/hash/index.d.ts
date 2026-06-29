@@ -24,27 +24,27 @@ declare module "@package/com/google/common/hash" {
     export class $HashFunction {
     }
     export interface $HashFunction {
-        hashBytes(input: number[]): $HashCode;
-        hashBytes(input: $ByteBuffer): $HashCode;
-        hashBytes(input: number[], off: number, len: number): $HashCode;
+        hashLong(input: number): $HashCode;
         hashObject<T>(instance: T, funnel: $Funnel_<T>): $HashCode;
+        hashString(input: $CharSequence, charset: $Charset): $HashCode;
         newHasher(): $Hasher;
         newHasher(expectedInputSize: number): $Hasher;
-        hashInt(input: number): $HashCode;
-        hashLong(input: number): $HashCode;
-        hashString(input: $CharSequence, charset: $Charset): $HashCode;
+        hashBytes(input: $ByteBuffer): $HashCode;
+        hashBytes(input: number[]): $HashCode;
+        hashBytes(input: number[], off: number, len: number): $HashCode;
         bits(): number;
+        hashInt(input: number): $HashCode;
         hashUnencodedChars(input: $CharSequence): $HashCode;
     }
     export class $HashCode {
+        padToLong(): number;
+        static fromInt(hash: number): $HashCode;
+        asLong(): number;
+        static fromLong(hash: number): $HashCode;
         asBytes(): number[];
         asInt(): number;
-        static fromString(string: string): $HashCode;
-        static fromLong(hash: number): $HashCode;
-        asLong(): number;
-        static fromInt(hash: number): $HashCode;
-        padToLong(): number;
         bits(): number;
+        static fromString(string: string): $HashCode;
         static fromBytes(bytes: number[]): $HashCode;
         writeBytesTo(dest: number[], offset: number, maxLength: number): number;
     }

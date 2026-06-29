@@ -29,8 +29,6 @@ export * as data from "@package/dev/latvian/mods/kubejs/script/data";
 
 declare module "@package/dev/latvian/mods/kubejs/script" {
     export class $SourceLine extends $Record {
-        static fromJson(json: $JsonObject_): $SourceLine;
-        toJson(): $JsonObject;
         static of(): $SourceLine;
         static of(source: string, line: number): $SourceLine;
         line(): number;
@@ -38,6 +36,8 @@ declare module "@package/dev/latvian/mods/kubejs/script" {
         static write(buf: $FriendlyByteBuf, sourceLine: $SourceLine_): void;
         static read(buf: $FriendlyByteBuf): $SourceLine;
         isUnknown(): boolean;
+        toJson(): $JsonObject;
+        static fromJson(json: $JsonObject_): $SourceLine;
         static UNKNOWN: $SourceLine;
         constructor(source: string, line: number);
         get unknown(): boolean;
@@ -47,14 +47,14 @@ declare module "@package/dev/latvian/mods/kubejs/script" {
      */
     export type $SourceLine_ = { line?: number, source?: string,  } | [line?: number, source?: string, ];
     export class $ScriptManager {
+        isClassAllowed(name: string): boolean;
         unload(): void;
         reload(): void;
-        isClassAllowed(name: string): boolean;
+        loadPackFromDirectory(path: $Path_, name: string, exampleFile: boolean): void;
+        getRegistries(): $RegistryAccessContainer;
+        loadFromDirectory(): void;
         loadAdditional(): void;
         collectScripts(pack: $ScriptPack, dir: $Path_, path: string): void;
-        loadFromDirectory(): void;
-        getRegistries(): $RegistryAccessContainer;
-        loadPackFromDirectory(path: $Path_, name: string, exampleFile: boolean): void;
         scriptType: $ScriptType;
         canListenEvents: boolean;
         packs: $Map<string, $ScriptPack>;
@@ -80,13 +80,13 @@ declare module "@package/dev/latvian/mods/kubejs/script" {
         constructor(scriptType: $ScriptType_, files: $ScriptFile[], reload: $Runnable_);
     }
     export class $ConsoleLine implements $Supplier<$JsonElement> {
-        withExternalFile(path: $Path_): $ConsoleLine;
-        toJson(): $JsonObject;
         get(): $JsonElement;
         getText(): string;
-        customData(key: string, data: $JsonElement_, override: boolean): $ConsoleLine;
-        withSourceLine(source: string, line: number): $ConsoleLine;
+        toJson(): $JsonObject;
         withSourceLine(sourceLine: $SourceLine_): $ConsoleLine;
+        withSourceLine(source: string, line: number): $ConsoleLine;
+        customData(key: string, data: $JsonElement_, override: boolean): $ConsoleLine;
+        withExternalFile(path: $Path_): $ConsoleLine;
         console: $ConsoleJS;
         static EMPTY_ARRAY: $ConsoleLine[];
         sourceLines: $Collection<$SourceLine>;
@@ -101,40 +101,40 @@ declare module "@package/dev/latvian/mods/kubejs/script" {
         get text(): string;
     }
     export class $MapCodecTypeWrapper<T> extends $Record implements $TypeWrapperFactory<T> {
+        codec(): $MapCodec<T>;
         target(): $Class<T>;
         wrap(o: $Object, target: $TypeInfo_): T;
         defaultValue(): T;
-        codec(): $MapCodec<T>;
         constructor(target: $Class<T>, codec: $MapCodec_<T>, defaultValue: T);
     }
     /**
      * Values that may be interpreted as {@link $MapCodecTypeWrapper}.
      */
-    export type $MapCodecTypeWrapper_<T> = { codec?: $MapCodec_<any>, defaultValue?: any, target?: $Class<any>,  } | [codec?: $MapCodec_<any>, defaultValue?: any, target?: $Class<any>, ];
+    export type $MapCodecTypeWrapper_<T> = { target?: $Class<any>, codec?: $MapCodec_<any>, defaultValue?: any,  } | [target?: $Class<any>, codec?: $MapCodec_<any>, defaultValue?: any, ];
     export class $PlatformWrapper$ModInfo {
-        getCustomName(): string;
         getName(): string;
         setName(n: string): void;
         getId(): string;
         getVersion(): string;
+        getCustomName(): string;
         constructor(i: string);
-        get customName(): string;
         get id(): string;
         get version(): string;
+        get customName(): string;
     }
     export class $ScriptType extends $Enum<$ScriptType> implements $ScriptTypePredicate, $ScriptTypeHolder {
-        kjs$getScriptType(): $ScriptType;
-        getValidTypes(): $List<$ScriptType>;
         static values(): $ScriptType[];
         test(type: $ScriptType_): boolean;
         static valueOf(name: string): $ScriptType;
+        negate(): $ScriptTypePredicate;
+        kjs$getScriptType(): $ScriptType;
         isClient(): boolean;
-        getLogFile(): $Path;
-        isServer(): boolean;
         isStartup(): boolean;
+        isServer(): boolean;
+        getLogFile(): $Path;
+        getValidTypes(): $List<$ScriptType>;
         or(arg0: $Predicate_<$ScriptType>): $Predicate<$ScriptType>;
         and(arg0: $Predicate_<$ScriptType>): $Predicate<$ScriptType>;
-        negate(): $Predicate<$ScriptType>;
         console: $ConsoleJS;
         path: $Path;
         nativeEventListeners: $Map<$NativeEventWrapper$Listeners$Key, $NativeEventWrapper$Listeners>;
@@ -145,11 +145,11 @@ declare module "@package/dev/latvian/mods/kubejs/script" {
         classFilter: $Lazy<$ClassFilter>;
         static CLIENT: $ScriptType;
         nameStrip: string;
-        get validTypes(): $List<$ScriptType>;
         get client(): boolean;
-        get logFile(): $Path;
-        get server(): boolean;
         get startup(): boolean;
+        get server(): boolean;
+        get logFile(): $Path;
+        get validTypes(): $List<$ScriptType>;
     }
     /**
      * Values that may be interpreted as {@link $ScriptType}.
@@ -166,15 +166,6 @@ declare module "@package/dev/latvian/mods/kubejs/script" {
         constructor(manager: $ScriptManager);
     }
     export class $ConsoleJS {
-        stopCapturingErrors(): void;
-        errorsComponent(command: string): $Component;
-        getDebugEnabled(): boolean;
-        shouldPrintDebug(): boolean;
-        static methodPattern(c: $Class<never>, method: string): $Pattern;
-        getWriteToFile(): boolean;
-        setWriteToFile(m: boolean): void;
-        getScriptLine(): number;
-        getErrorsResponse(ctx: $KJSHTTPRequest): $HTTPResponse;
         group(): void;
         log(...message: $Object[]): void;
         flush(sync: boolean): void;
@@ -182,33 +173,42 @@ declare module "@package/dev/latvian/mods/kubejs/script" {
         getLogger(): $Logger;
         trace(): void;
         debug(message: $Object): $ConsoleLine;
-        error(message: $Object): $ConsoleLine;
-        error(message: string, error: $Throwable, exitPattern: $Pattern): $ConsoleLine;
         error(message: string, sourceLine: $SourceLine_, error: $Throwable, exitPattern: $Pattern): $ConsoleLine;
         error(message: string, throwable: $Throwable): $ConsoleLine;
-        warn(message: string, error: $Throwable, exitPattern: $Pattern): $ConsoleLine;
-        warn(message: string, sourceLine: $SourceLine_, error: $Throwable, exitPattern: $Pattern): $ConsoleLine;
-        warn(message: string, error: $Throwable): $ConsoleLine;
+        error(message: $Object): $ConsoleLine;
+        error(message: string, error: $Throwable, exitPattern: $Pattern): $ConsoleLine;
         warn(message: $Object): $ConsoleLine;
+        warn(message: string, error: $Throwable, exitPattern: $Pattern): $ConsoleLine;
+        warn(message: string, error: $Throwable): $ConsoleLine;
+        warn(message: string, sourceLine: $SourceLine_, error: $Throwable, exitPattern: $Pattern): $ConsoleLine;
         groupEnd(): void;
-        writeToFile(type: $LogType_, timestamp: number, line: string): void;
         writeToFile(type: $LogType_, line: string): void;
+        writeToFile(type: $LogType_, timestamp: number, line: string): void;
+        stopCapturingErrors(): void;
         printObject(o: $Object, tree: boolean): void;
         printObject(o: $Object): void;
         handleError(line: $ConsoleLine, error: $Throwable, exitPattern: $Pattern, print: boolean): void;
-        setDebugEnabled(m: boolean): void;
-        static getCurrent(): $ConsoleJS;
-        infof(message: string, ...args: $Object[]): $ConsoleLine;
-        resetFile(): void;
-        errorf(message: string, ...args: $Object[]): $ConsoleLine;
-        getMuted(): boolean;
-        debugf(message: string, ...args: $Object[]): $ConsoleLine;
-        warnf(message: string, ...args: $Object[]): $ConsoleLine;
-        printClass(className: string, tree: boolean): void;
-        printClass(className: string): void;
-        setMuted(m: boolean): void;
-        startCapturingErrors(): void;
         getWarningsResponse(ctx: $KJSHTTPRequest): $HTTPResponse;
+        startCapturingErrors(): void;
+        static getCurrent(): $ConsoleJS;
+        setDebugEnabled(m: boolean): void;
+        resetFile(): void;
+        setMuted(m: boolean): void;
+        errorf(message: string, ...args: $Object[]): $ConsoleLine;
+        debugf(message: string, ...args: $Object[]): $ConsoleLine;
+        getMuted(): boolean;
+        infof(message: string, ...args: $Object[]): $ConsoleLine;
+        printClass(className: string): void;
+        printClass(className: string, tree: boolean): void;
+        warnf(message: string, ...args: $Object[]): $ConsoleLine;
+        getDebugEnabled(): boolean;
+        getErrorsResponse(ctx: $KJSHTTPRequest): $HTTPResponse;
+        static methodPattern(c: $Class<never>, method: string): $Pattern;
+        errorsComponent(command: string): $Component;
+        shouldPrintDebug(): boolean;
+        getWriteToFile(): boolean;
+        getScriptLine(): number;
+        setWriteToFile(m: boolean): void;
         static SERVER: $ConsoleJS;
         scriptType: $ScriptType;
         static STARTUP: $ConsoleJS;
@@ -216,9 +216,9 @@ declare module "@package/dev/latvian/mods/kubejs/script" {
         static CLIENT: $ConsoleJS;
         contextFactory: $WeakReference<$ContextFactory>;
         constructor(m: $ScriptType_, log: $Logger);
-        get scriptLine(): number;
         get logger(): $Logger;
         static get current(): $ConsoleJS;
+        get scriptLine(): number;
     }
     export class $ScriptFileInfo {
         path: $Path;
@@ -270,10 +270,7 @@ declare module "@package/dev/latvian/mods/kubejs/script" {
         get priority(): number;
     }
     export class $PlatformWrapper {
-        /**
-         * @deprecated
-         */
-        static isForge(): boolean;
+        static getList(): $Set<string>;
         /**
          * @deprecated
          */
@@ -283,47 +280,50 @@ declare module "@package/dev/latvian/mods/kubejs/script" {
         /**
          * @deprecated
          */
-        static isFabric(): boolean;
+        static isForge(): boolean;
         static getMods(): $Map<string, $PlatformWrapper$ModInfo>;
-        static getList(): $Set<string>;
         static getModVersion(): string;
         static getMinecraftVersion(): number;
+        /**
+         * @deprecated
+         */
+        static isFabric(): boolean;
         static isDevelopmentEnvironment(): boolean;
-        static getPackMode(): string;
-        static isGeneratingData(): boolean;
         static getMcVersion(): string;
-        static breakpoint(...args: $Object[]): void;
+        static isGeneratingData(): boolean;
         static setModName(modId: string, name: string): void;
+        static breakpoint(...args: $Object[]): void;
         static isClientEnvironment(): boolean;
-        static getMinecraftVersionString(): string;
         static getCurrentThreadName(): string;
+        static getMinecraftVersionString(): string;
+        static getPackMode(): string;
         constructor();
-        static get forge(): boolean;
-        static get name(): string;
-        static get fabric(): boolean;
-        static get mods(): $Map<string, $PlatformWrapper$ModInfo>;
         static get list(): $Set<string>;
+        static get name(): string;
+        static get forge(): boolean;
+        static get mods(): $Map<string, $PlatformWrapper$ModInfo>;
         static get modVersion(): string;
         static get minecraftVersion(): number;
+        static get fabric(): boolean;
         static get developmentEnvironment(): boolean;
-        static get packMode(): string;
-        static get generatingData(): boolean;
         static get mcVersion(): string;
+        static get generatingData(): boolean;
         static get clientEnvironment(): boolean;
-        static get minecraftVersionString(): string;
         static get currentThreadName(): string;
+        static get minecraftVersionString(): string;
+        static get packMode(): string;
     }
     export class $CodecTypeWrapper<T> extends $Record implements $TypeWrapperFactory<T> {
+        codec(): $Codec<T>;
         target(): $Class<T>;
         wrap(o: $Object, target: $TypeInfo_): T;
         defaultValue(): T;
-        codec(): $Codec<T>;
         constructor(target: $Class<T>, codec: $Codec<T>, defaultValue: T);
     }
     /**
      * Values that may be interpreted as {@link $CodecTypeWrapper}.
      */
-    export type $CodecTypeWrapper_<T> = { codec?: $Codec<any>, defaultValue?: any, target?: $Class<any>,  } | [codec?: $Codec<any>, defaultValue?: any, target?: $Class<any>, ];
+    export type $CodecTypeWrapper_<T> = { target?: $Class<any>, codec?: $Codec<any>, defaultValue?: any,  } | [target?: $Class<any>, codec?: $Codec<any>, defaultValue?: any, ];
     export class $ScriptPack {
         manager: $ScriptManager;
         scripts: $List<$ScriptFile>;
@@ -332,12 +332,12 @@ declare module "@package/dev/latvian/mods/kubejs/script" {
     }
     export class $KubeJSContext extends $Context {
         getType(): $ScriptType;
-        loadJavaClass(name: string, error: boolean): $NativeJavaClass;
         getRegistries(): $RegistryAccessContainer;
         getConsole(): $ConsoleJS;
+        loadJavaClass(name: string, error: boolean): $NativeJavaClass;
         lookupRegistryType(type: $TypeInfo_, from: $Object): $RegistryType<never>;
-        lookupRegistry(type: $TypeInfo_, from: $Object): $Registry<never>;
         getJavaClassCache(): $Map<string, $Either<$NativeJavaClass, boolean>>;
+        lookupRegistry(type: $TypeInfo_, from: $Object): $Registry<never>;
         static JSTYPE_JAVA_CLASS: number;
         factory: $ContextFactory;
         static JSTYPE_JAVA_ARRAY: number;
@@ -399,8 +399,8 @@ declare module "@package/dev/latvian/mods/kubejs/script" {
         static STARTUP_OR_SERVER: $ScriptTypePredicate;
     }
     export interface $ScriptTypePredicate extends $Predicate<$ScriptType> {
-        getValidTypes(): $List<$ScriptType>;
         test(type: $ScriptType_): boolean;
+        getValidTypes(): $List<$ScriptType>;
         get validTypes(): $List<$ScriptType>;
     }
     /**
@@ -424,15 +424,15 @@ declare module "@package/dev/latvian/mods/kubejs/script" {
         register<T>(target: $Class<T>, validator: $TypeWrapperValidator_, factory: $TypeWrapperFactory_<T>): void;
         register<T>(target: $Class<T>, factory: $TypeWrapperFactory_<T>): void;
         scriptType(): $ScriptType;
+        registerCodec<T>(target: $Class<T>, codec: $Codec<T>): void;
+        registerCodec<T>(target: $Class<T>, codec: $Codec<T>, defaultValue: T): void;
+        registerAlias<F, T>(target: $Class<T>, from: $TypeInfo_, converter: $Function_<F, T>): void;
+        registerAlias<F, T>(target: $Class<T>, from: $Class<F>, converter: $Function_<F, T>): void;
         hasTypeWrapper<T>(target: $Class<T>): boolean;
         registerMapCodec<T>(target: $Class<T>, codec: $MapCodec_<T>, defaultValue: T): void;
         registerMapCodec<T>(target: $Class<T>, codec: $MapCodec_<T>): void;
-        registerCodec<T>(target: $Class<T>, codec: $Codec<T>): void;
-        registerCodec<T>(target: $Class<T>, codec: $Codec<T>, defaultValue: T): void;
-        registerAlias<F, T>(target: $Class<T>, from: $Class<F>, converter: $Function_<F, T>): void;
-        registerAlias<F, T>(target: $Class<T>, from: $TypeInfo_, converter: $Function_<F, T>): void;
-        registerEnumFromStringCodec<T extends $Enum<T>>(target: $Class<T>, codec: $Codec<T>, defaultValue: T, forceLowerCase: boolean): void;
         registerEnumFromStringCodec<T extends $Enum<T>>(target: $Class<T>, codec: $Codec<T>): void;
+        registerEnumFromStringCodec<T extends $Enum<T>>(target: $Class<T>, codec: $Codec<T>, defaultValue: T, forceLowerCase: boolean): void;
         constructor(type: $ScriptType_, typeWrappers: $TypeWrappers);
     }
     export class $TypeWrapperRegistry$RegistriesFromFunction<T> {

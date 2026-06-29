@@ -15,16 +15,16 @@ import { $Targets_, $Targets } from "@package/net/mehvahdjukaar/polytone/utils";
 
 declare module "@package/net/mehvahdjukaar/polytone/item" {
     export class $ItemModelOverride {
-        matchesPredicate(stack: $ItemStack_, level: $Level_, entityTagGetter: $Supplier_<$CompoundTag>, customName: $Component_): boolean;
-        namePattern(): $Pattern;
         model(): $ModelResourceLocation;
+        namePattern(): $Pattern;
+        matchesPredicate(stack: $ItemStack_, level: $Level_, entityTagGetter: $Supplier_<$CompoundTag>, customName: $Component_): boolean;
         components(): $DataComponentMap;
-        stackCount(): number;
         entityTag(): $CompoundTag;
+        stackCount(): number;
         static CODEC: $Codec<$ItemModelOverride>;
         static CODEC_MODEL_ONLY: $Codec<$ItemModelOverride$Partial>;
-        constructor(map: $DataComponentMap_, model: $ModelResourceLocation_);
         constructor(components: $DataComponentMap_, model: $ModelResourceLocation_, stackCount: (number) | undefined, pattern: ($Pattern) | undefined, entityTag: ($CompoundTag_) | undefined, expression: ($ColormapExpressionProvider) | undefined, nbtMatchers: $Map_<$DataComponentType_<never>, $CompoundTag_>);
+        constructor(map: $DataComponentMap_, model: $ModelResourceLocation_);
     }
     export class $ItemModifier$Partial extends $Record {
         customModels(): $List<$ItemModelOverride$Partial>;
@@ -35,24 +35,24 @@ declare module "@package/net/mehvahdjukaar/polytone/item" {
      */
     export type $ItemModifier$Partial_ = { customModels?: $List_<$ItemModelOverride$Partial_>,  } | [customModels?: $List_<$ItemModelOverride$Partial_>, ];
     export class $ItemModifier extends $Record {
-        tooltips(): $List<$TooltipAddition>;
-        customModels(): $List<$ItemModelOverride>;
-        static ofItemColor(colormap: $Colormap): $ItemModifier;
-        hasBarColor(): boolean;
-        shouldAttachToItem(): boolean;
         apply(item: $Item_): $ItemModifier;
         merge(newMod: $ItemModifier_): $ItemModifier;
         targets(): $Targets;
-        getBarColor(): $ItemColor;
-        getBarColor(itemStack: $ItemStack_): number;
+        hasBarColor(): boolean;
+        static ofItemColor(colormap: $Colormap): $ItemModifier;
+        customModels(): $List<$ItemModelOverride>;
+        shouldAttachToItem(): boolean;
         modifyTooltips(tooltips: $List_<$Component_>): void;
-        getTint(): $ItemColor;
-        static ofBarColor(colormap: $Colormap): $ItemModifier;
-        hasTint(): boolean;
+        getBarColor(itemStack: $ItemStack_): number;
+        getBarColor(): $ItemColor;
         rarity(): ($Rarity) | undefined;
+        hasTint(): boolean;
+        static ofBarColor(colormap: $Colormap): $ItemModifier;
+        getTint(): $ItemColor;
         barColor(): ($IColorGetter) | undefined;
-        tintGetter(): ($ItemColor) | undefined;
+        tooltips(): $List<$TooltipAddition>;
         removedTooltips(): $List<$Pattern>;
+        tintGetter(): ($ItemColor) | undefined;
         static CODEC: $Codec<$ItemModifier>;
         static CODEC_ONLY_MODELS: $Codec<$ItemModifier$Partial>;
         constructor(tintGetter: ($ItemColor_) | undefined, barColor: ($IColorGetter) | undefined, rarity: ($Rarity_) | undefined, tooltips: $List_<$TooltipAddition_>, removedTooltips: $List_<$Pattern>, customModels: $List_<$ItemModelOverride>, targets: $Targets_);
@@ -61,7 +61,7 @@ declare module "@package/net/mehvahdjukaar/polytone/item" {
     /**
      * Values that may be interpreted as {@link $ItemModifier}.
      */
-    export type $ItemModifier_ = { tintGetter?: ($ItemColor_) | undefined, targets?: $Targets_, tooltips?: $List_<$TooltipAddition_>, rarity?: ($Rarity_) | undefined, removedTooltips?: $List_<$Pattern>, customModels?: $List_<$ItemModelOverride>, barColor?: ($IColorGetter) | undefined,  } | [tintGetter?: ($ItemColor_) | undefined, targets?: $Targets_, tooltips?: $List_<$TooltipAddition_>, rarity?: ($Rarity_) | undefined, removedTooltips?: $List_<$Pattern>, customModels?: $List_<$ItemModelOverride>, barColor?: ($IColorGetter) | undefined, ];
+    export type $ItemModifier_ = { tooltips?: $List_<$TooltipAddition_>, rarity?: ($Rarity_) | undefined, removedTooltips?: $List_<$Pattern>, customModels?: $List_<$ItemModelOverride>, barColor?: ($IColorGetter) | undefined, tintGetter?: ($ItemColor_) | undefined, targets?: $Targets_,  } | [tooltips?: $List_<$TooltipAddition_>, rarity?: ($Rarity_) | undefined, removedTooltips?: $List_<$Pattern>, customModels?: $List_<$ItemModelOverride>, barColor?: ($IColorGetter) | undefined, tintGetter?: ($ItemColor_) | undefined, targets?: $Targets_, ];
     export class $IPolytoneItem {
     }
     export interface $IPolytoneItem {
@@ -85,5 +85,5 @@ declare module "@package/net/mehvahdjukaar/polytone/item" {
     /**
      * Values that may be interpreted as {@link $TooltipAddition}.
      */
-    export type $TooltipAddition_ = { position?: number, component?: $Component_,  } | [position?: number, component?: $Component_, ];
+    export type $TooltipAddition_ = { component?: $Component_, position?: number,  } | [component?: $Component_, position?: number, ];
 }

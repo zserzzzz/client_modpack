@@ -27,17 +27,17 @@ import { $BlockEntityTicker, $BlockEntityType, $BlockEntityType_, $BlockEntity }
 declare module "@package/com/simibubi/create/content/kinetics/chainDrive" {
     export class $ChainDriveBlock extends $RotatedPillarKineticBlock implements $IBE<$KineticBlockEntity>, $TransformableBlock {
         transform(arg0: $BlockState_, arg1: $StructureTransform): $BlockState;
-        getBlockEntityType(): $BlockEntityType<$KineticBlockEntity>;
-        getBlockEntityClass(): $Class<$KineticBlockEntity>;
         static getRotationSpeedModifier(arg0: $KineticBlockEntity, arg1: $KineticBlockEntity): number;
         static areBlocksConnected(arg0: $BlockState_, arg1: $BlockState_, arg2: $Direction_): boolean;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$KineticBlockEntity>): void;
+        getBlockEntityClass(): $Class<$KineticBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$KineticBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$KineticBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($KineticBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$KineticBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $KineticBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$KineticBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($KineticBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$KineticBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -70,8 +70,8 @@ declare module "@package/com/simibubi/create/content/kinetics/chainDrive" {
         hasCollision: boolean;
         static AXIS: $EnumProperty<$Direction$Axis>;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$KineticBlockEntity>;
         get blockEntityClass(): $Class<$KineticBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$KineticBlockEntity>;
     }
     export class $ChainDriveBlock$Part extends $Enum<$ChainDriveBlock$Part> implements $StringRepresentable {
         static values(): $ChainDriveBlock$Part[];

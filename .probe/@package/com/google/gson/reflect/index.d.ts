@@ -3,13 +3,8 @@ import { $Class } from "@package/java/lang";
 
 declare module "@package/com/google/gson/reflect" {
     export class $TypeToken<T> {
-        static getParameterized(arg0: $Type, ...arg1: $Type[]): $TypeToken<never>;
-        static get<T>(arg0: $Class<T>): $TypeToken<T>;
         static get(arg0: $Type): $TypeToken<never>;
-        /**
-         * @deprecated
-         */
-        isAssignableFrom(arg0: $Type): boolean;
+        static get<T>(arg0: $Class<T>): $TypeToken<T>;
         /**
          * @deprecated
          */
@@ -18,9 +13,14 @@ declare module "@package/com/google/gson/reflect" {
          * @deprecated
          */
         isAssignableFrom(arg0: $TypeToken<never>): boolean;
+        /**
+         * @deprecated
+         */
+        isAssignableFrom(arg0: $Type): boolean;
         getType(): $Type;
         getRawType(): $Class<T>;
         static getArray(arg0: $Type): $TypeToken<never>;
+        static getParameterized(arg0: $Type, ...arg1: $Type[]): $TypeToken<never>;
         get type(): $Type;
         get rawType(): $Class<T>;
     }

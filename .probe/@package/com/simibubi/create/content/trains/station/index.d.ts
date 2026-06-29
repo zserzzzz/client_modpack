@@ -81,25 +81,25 @@ declare module "@package/com/simibubi/create/content/trains/station" {
     }
     export class $StationBlockEntity extends $SmartBlockEntity implements $TransformableBlockEntity {
         transform(arg0: $BlockEntity, arg1: $StructureTransform): void;
-        getStation(): $GlobalStation;
         static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
         assemble(arg0: $UUID_): void;
+        getStation(): $GlobalStation;
         getAssemblyDirection(): $Direction;
-        resolveFlagAngle(): boolean;
-        getAutoSchedule(): $ItemStack;
-        dropSchedule(arg0: $ServerPlayer, arg1: $Train): void;
-        trackClicked(arg0: $Player, arg1: $InteractionHand_, arg2: $ITrackBlock, arg3: $BlockState_, arg4: $BlockPos_): boolean;
         updateName(arg0: string): boolean;
-        tryEnterAssemblyMode(): boolean;
-        refreshAssemblyInfo(): void;
         tryDisassembleTrain(arg0: $ServerPlayer): boolean;
+        refreshAssemblyInfo(): void;
+        tryEnterAssemblyMode(): boolean;
+        trackClicked(arg0: $Player, arg1: $InteractionHand_, arg2: $ITrackBlock, arg3: $BlockState_, arg4: $BlockPos_): boolean;
+        getAutoSchedule(): $ItemStack;
+        resolveFlagAngle(): boolean;
+        dropSchedule(arg0: $ServerPlayer, arg1: $Train): void;
         cancelAssembly(): void;
         isAssembling(): boolean;
         isValidBogeyOffset(arg0: number): boolean;
-        updateMapColor(arg0: number): void;
+        attachPackagePort(arg0: $PackagePortBlockEntity): void;
         enterAssemblyMode(arg0: $ServerPlayer): boolean;
         removePackagePort(arg0: $PackagePortBlockEntity): void;
-        attachPackagePort(arg0: $PackagePortBlockEntity): void;
+        updateMapColor(arg0: number): void;
         exitAssemblyMode(): boolean;
         worldPosition: $BlockPos;
         lastDisassembledTrainName: $Component;
@@ -128,26 +128,26 @@ declare module "@package/com/simibubi/create/content/trains/station" {
         constructor(arg0: $Font);
     }
     export class $StationBlock extends $Block implements $IBE<$StationBlockEntity>, $IWrenchable, $ProperWaterloggedBlock {
-        getBlockEntityType(): $BlockEntityType<$StationBlockEntity>;
         getBlockEntityClass(): $Class<$StationBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$StationBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$StationBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$StationBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($StationBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$StationBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $StationBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$StationBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($StationBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$StationBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
-        fluidState(arg0: $BlockState_): $FluidState;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         updateWater(arg0: $LevelAccessor, arg1: $BlockState_, arg2: $BlockPos_): void;
+        fluidState(arg0: $BlockState_): $FluidState;
+        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -179,18 +179,18 @@ declare module "@package/com/simibubi/create/content/trains/station" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$StationBlockEntity>;
         get blockEntityClass(): $Class<$StationBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$StationBlockEntity>;
     }
     export class $GlobalStation extends $SingleBlockEntityEdgePoint {
-        getPresentTrain(): $Train;
-        reserveFor(arg0: $Train): void;
-        cancelReservation(arg0: $Train): void;
+        getNearestTrain(): $Train;
         trainDeparted(arg0: $Train): void;
         getImminentTrain(): $Train;
-        runMailTransfer(): void;
-        getNearestTrain(): $Train;
+        cancelReservation(arg0: $Train): void;
         canApproachFrom(arg0: $TrackNode): boolean;
+        runMailTransfer(): void;
+        getPresentTrain(): $Train;
+        reserveFor(arg0: $Train): void;
         edgeLocation: $Couple<$TrackNodeLocation>;
         blockEntityPos: $BlockPos;
         connectedPorts: $Map<$BlockPos, $GlobalPackagePort>;
@@ -201,8 +201,8 @@ declare module "@package/com/simibubi/create/content/trains/station" {
         position: number;
         nearestTrain: $WeakReference<$Train>;
         constructor();
-        get presentTrain(): $Train;
         get imminentTrain(): $Train;
+        get presentTrain(): $Train;
     }
     export class $GlobalPackagePort {
         restoreOfflineBuffer(arg0: $IItemHandlerModifiable): void;
@@ -247,8 +247,8 @@ declare module "@package/com/simibubi/create/content/trains/station" {
         save(arg0: $HolderLookup$Provider): $CompoundTag;
         getTarget(): $BlockPos;
         getSource(): $BlockPos;
-        static createStationDecoration(arg0: number, arg1: number, arg2: ($Component_) | undefined): $MapDecoration;
         static fromWorld(arg0: $BlockGetter, arg1: $BlockPos_): $StationMarker;
+        static createStationDecoration(arg0: number, arg1: number, arg2: ($Component_) | undefined): $MapDecoration;
         constructor(arg0: $BlockPos_, arg1: $BlockPos_, arg2: $Component_);
         get name(): $Component;
         get id(): string;
@@ -280,9 +280,9 @@ declare module "@package/com/simibubi/create/content/trains/station" {
         constructor(arg0: number, arg1: number, arg2: $ScreenElement_);
     }
     export class $StationRenderer extends $SafeBlockEntityRenderer<$StationBlockEntity> {
+        static renderFlag(arg0: $PartialModel, arg1: $StationBlockEntity, arg2: number, arg3: $PoseStack, arg4: $MultiBufferSource_, arg5: number, arg6: number): void;
         shouldRenderOffScreen(arg0: $StationBlockEntity): boolean;
         static transformFlag(arg0: $Transform<never>, arg1: $StationBlockEntity, arg2: number, arg3: number, arg4: boolean): void;
-        static renderFlag(arg0: $PartialModel, arg1: $StationBlockEntity, arg2: number, arg3: $PoseStack, arg4: $MultiBufferSource_, arg5: number, arg6: number): void;
         constructor(arg0: $BlockEntityRendererProvider$Context);
     }
     export class $AbstractStationScreen extends $AbstractSimiScreen {

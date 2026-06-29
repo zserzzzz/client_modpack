@@ -6,20 +6,20 @@ import { $WorldSectionBox_, $WorldSectionBox } from "@package/net/caffeinemc/mod
 
 declare module "@package/net/caffeinemc/mods/lithium/common/tracking/block" {
     export class $ChunkSectionChangeCallback {
-        removeTracker(arg0: $SectionedBlockChangeTracker, arg1: $ListeningBlockStatePredicate): number;
         static init(): void;
         static create(arg0: number, arg1: $Level_): $ChunkSectionChangeCallback;
         onBlockChange(arg0: number, arg1: $BlockListeningSection): number;
         onChunkSectionInvalidated(arg0: $SectionPos): void;
+        removeTracker(arg0: $SectionedBlockChangeTracker, arg1: $ListeningBlockStatePredicate): number;
         addTracker(arg0: $SectionedBlockChangeTracker, arg1: $ListeningBlockStatePredicate): number;
         constructor();
     }
     export class $SectionedBlockChangeTracker {
         register(): void;
         unregister(): void;
-        setChanged(arg0: number): void;
-        setChanged(arg0: $BlockListeningSection): void;
         static registerAt(arg0: $Level_, arg1: $AABB_, arg2: $ListeningBlockStatePredicate): $SectionedBlockChangeTracker;
+        setChanged(arg0: $BlockListeningSection): void;
+        setChanged(arg0: number): void;
         isUnchangedSince(arg0: number): boolean;
         onChunkSectionInvalidated(arg0: $SectionPos): void;
         listenToAllSections(): void;

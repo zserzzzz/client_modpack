@@ -29,33 +29,29 @@ declare module "@package/net/neoforged/neoforge/network/handling" {
         handle(arg0: $CustomPacketPayload_): void;
         listener(): $ServerCommonPacketListener;
         flow(): $PacketFlow;
-        finishCurrentTask(arg0: $ConfigurationTask$Type_): void;
         enqueueWork<T>(arg0: $Supplier_<T>): $CompletableFuture<T>;
         enqueueWork(arg0: $Runnable_): $CompletableFuture<void>;
         payloadId(): $ResourceLocation;
-        disconnect(arg0: $Component_): void;
+        finishCurrentTask(arg0: $ConfigurationTask$Type_): void;
         handle(arg0: $Packet<never>): void;
         protocol(): $ConnectionProtocol;
         connection(): $Connection;
-        reply(arg0: $CustomPacketPayload_): void;
+        disconnect(arg0: $Component_): void;
         channelHandlerContext(): $ChannelHandlerContext;
+        reply(arg0: $CustomPacketPayload_): void;
         player(): $Player;
         constructor(listener: $ServerCommonPacketListener, payloadId: $ResourceLocation_);
     }
     /**
      * Values that may be interpreted as {@link $ServerPayloadContext}.
      */
-    export type $ServerPayloadContext_ = { listener?: $ServerCommonPacketListener, payloadId?: $ResourceLocation_,  } | [listener?: $ServerCommonPacketListener, payloadId?: $ResourceLocation_, ];
+    export type $ServerPayloadContext_ = { payloadId?: $ResourceLocation_, listener?: $ServerCommonPacketListener,  } | [payloadId?: $ResourceLocation_, listener?: $ServerCommonPacketListener, ];
     /**
      * Common context interface for payload handlers.
      */
     export class $IPayloadContext {
     }
     export interface $IPayloadContext {
-        /**
-         * Disconnects the player from the network.
-         */
-        disconnect(reason: $Component_): void;
         /**
          * Sends the given payload back to the sender.
          */
@@ -81,9 +77,13 @@ declare module "@package/net/neoforged/neoforge/network/handling" {
          */
         listener(): $ICommonPacketListener;
         /**
-         * @return the flow of the received payload
+         * Disconnects the player from the network.
          */
-        flow(): $PacketFlow;
+        disconnect(reason: $Component_): void;
+        /**
+         * @return the channel handler context
+         */
+        channelHandlerContext(): $ChannelHandlerContext;
         /**
          * Retrieves the player relevant to this payload. Players are only available in the `ConnectionProtocol#PLAY` phase.
          * 
@@ -93,13 +93,13 @@ declare module "@package/net/neoforged/neoforge/network/handling" {
          */
         player(): $Player;
         /**
+         * @return the flow of the received payload
+         */
+        flow(): $PacketFlow;
+        /**
          * Sends the given payload back to the sender.
          */
         reply(payload: $CustomPacketPayload_): void;
-        /**
-         * Marks a `ConfigurationTask` as completed.
-         */
-        finishCurrentTask(type: $ConfigurationTask$Type_): void;
         enqueueWork<T>(task: $Supplier_<T>): $CompletableFuture<T>;
         /**
          * For handlers running on the network thread, submits the given task to be run on the main thread of the game.
@@ -111,14 +111,14 @@ declare module "@package/net/neoforged/neoforge/network/handling" {
          */
         enqueueWork(task: $Runnable_): $CompletableFuture<void>;
         /**
-         * @return the channel handler context
+         * Marks a `ConfigurationTask` as completed.
          */
-        channelHandlerContext(): $ChannelHandlerContext;
+        finishCurrentTask(type: $ConfigurationTask$Type_): void;
     }
     export class $DirectionalPayloadHandler<T extends $CustomPacketPayload> extends $Record implements $IPayloadHandler<T> {
+        handle(arg0: T, arg1: $IPayloadContext): void;
         serverSide(): $IPayloadHandler<T>;
         clientSide(): $IPayloadHandler<T>;
-        handle(arg0: T, arg1: $IPayloadContext): void;
         constructor(clientSide: $IPayloadHandler_<T>, serverSide: $IPayloadHandler_<T>);
     }
     /**
@@ -127,25 +127,25 @@ declare module "@package/net/neoforged/neoforge/network/handling" {
     export type $DirectionalPayloadHandler_<T> = { clientSide?: $IPayloadHandler_<$CustomPacketPayload>, serverSide?: $IPayloadHandler_<$CustomPacketPayload>,  } | [clientSide?: $IPayloadHandler_<$CustomPacketPayload>, serverSide?: $IPayloadHandler_<$CustomPacketPayload>, ];
     export class $ClientPayloadContext extends $Record implements $IPayloadContext {
         handle(arg0: $CustomPacketPayload_): void;
-        flow(): $PacketFlow;
         player(): $Player;
-        finishCurrentTask(arg0: $ConfigurationTask$Type_): void;
+        flow(): $PacketFlow;
         enqueueWork(arg0: $Runnable_): $CompletableFuture<void>;
         enqueueWork<T>(arg0: $Supplier_<T>): $CompletableFuture<T>;
         payloadId(): $ResourceLocation;
-        disconnect(arg0: $Component_): void;
+        finishCurrentTask(arg0: $ConfigurationTask$Type_): void;
         handle(arg0: $Packet<never>): void;
         protocol(): $ConnectionProtocol;
         connection(): $Connection;
-        reply(arg0: $CustomPacketPayload_): void;
+        disconnect(arg0: $Component_): void;
         channelHandlerContext(): $ChannelHandlerContext;
+        reply(arg0: $CustomPacketPayload_): void;
         listener(): $ICommonPacketListener;
         constructor(listener: $ClientCommonPacketListener, payloadId: $ResourceLocation_);
     }
     /**
      * Values that may be interpreted as {@link $ClientPayloadContext}.
      */
-    export type $ClientPayloadContext_ = { listener?: $ClientCommonPacketListener, payloadId?: $ResourceLocation_,  } | [listener?: $ClientCommonPacketListener, payloadId?: $ResourceLocation_, ];
+    export type $ClientPayloadContext_ = { payloadId?: $ResourceLocation_, listener?: $ClientCommonPacketListener,  } | [payloadId?: $ResourceLocation_, listener?: $ClientCommonPacketListener, ];
     export class $MainThreadPayloadHandler<T extends $CustomPacketPayload> extends $Record implements $IPayloadHandler<T> {
         handler(): $IPayloadHandler<T>;
         handle(arg0: T, arg1: $IPayloadContext): void;

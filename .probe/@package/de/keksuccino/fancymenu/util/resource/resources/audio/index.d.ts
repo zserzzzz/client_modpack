@@ -14,9 +14,9 @@ declare module "@package/de/keksuccino/fancymenu/util/resource/resources/audio" 
         getDuration(): number;
         play(): void;
         setPlayTime(arg0: number): void;
-        getPlayTime(): number;
-        getSoundChannel(): $SoundSource;
         setSoundChannel(arg0: $SoundSource_): void;
+        getSoundChannel(): $SoundSource;
+        getPlayTime(): number;
         get duration(): number;
     }
 }

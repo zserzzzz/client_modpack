@@ -9,8 +9,8 @@ declare module "@package/net/minecraft/world/scores/criteria" {
         static byName(name: string): ($ObjectiveCriteria) | undefined;
         static getCustomCriteriaNames(): $Set<string>;
         getDefaultRenderType(): $ObjectiveCriteria$RenderType;
-        static registerCustom(name: string, readOnly: boolean, renderType: $ObjectiveCriteria$RenderType_): $ObjectiveCriteria;
         static registerCustom(name: string): $ObjectiveCriteria;
+        static registerCustom(name: string, readOnly: boolean, renderType: $ObjectiveCriteria$RenderType_): $ObjectiveCriteria;
         static DEATH_COUNT: $ObjectiveCriteria;
         static ARMOR: $ObjectiveCriteria;
         static TRIGGER: $ObjectiveCriteria;

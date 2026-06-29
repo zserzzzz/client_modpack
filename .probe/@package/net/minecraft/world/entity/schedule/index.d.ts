@@ -56,8 +56,8 @@ declare module "@package/net/minecraft/world/entity/schedule" {
     export interface $Schedule extends RegistryMarked<RegistryTypes.ScheduleTag, RegistryTypes.Schedule> {}
     export class $Timeline {
         getValueAt(dayTime: number): number;
-        getKeyframes(): $ImmutableList<$Keyframe>;
         addKeyframe(duration: number, active: number): $Timeline;
+        getKeyframes(): $ImmutableList<$Keyframe>;
         addKeyframes(frames: $Collection_<$Keyframe>): $Timeline;
         constructor();
         get keyframes(): $ImmutableList<$Keyframe>;

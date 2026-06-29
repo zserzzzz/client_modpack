@@ -10,45 +10,45 @@ declare module "@package/dev/ryanhcode/sable/sound" {
     export class $SoundInstanceDelegated {
     }
     export interface $SoundInstanceDelegated {
-        getDelegate(): $MovingSoundInstanceDelegate;
         setDelegate(arg0: $MovingSoundInstanceDelegate): void;
+        getDelegate(): $MovingSoundInstanceDelegate;
     }
     export class $MovingSoundInstanceDelegate implements $SoundInstance, $TickableSoundInstance {
-        getDelay(): number;
-        getZ(): number;
-        getX(): number;
         getLocation(): $ResourceLocation;
         resolve(arg0: $SoundManager): $WeighedSoundEvents;
         isRelative(): boolean;
         unload(arg0: $Channel): void;
         tick(): void;
         getSource(): $SoundSource;
-        getStream(arg0: $SoundBufferLibrary, arg1: $Sound, arg2: boolean): $CompletableFuture<any>;
-        isStopped(): boolean;
         getY(): number;
-        getPitch(): number;
-        getVolume(): number;
-        getSound(): $Sound;
-        isLooping(): boolean;
+        tickWithChannel(arg0: $Channel): void;
+        getDelay(): number;
+        getStream(arg0: $SoundBufferLibrary, arg1: $Sound, arg2: boolean): $CompletableFuture<any>;
+        canPlaySound(): boolean;
         canStartSilent(): boolean;
         getAttenuation(): $SoundInstance$Attenuation;
-        canPlaySound(): boolean;
-        tickWithChannel(arg0: $Channel): void;
+        isStopped(): boolean;
+        getZ(): number;
+        getX(): number;
+        getPitch(): number;
+        getVolume(): number;
+        isLooping(): boolean;
+        getSound(): $Sound;
         getAudioStream(arg0: $SoundBufferLibrary, arg1: $ResourceLocation_, arg2: boolean): $CompletableFuture<$AudioStream>;
         instance: $SoundInstance;
         constructor(arg0: $SoundInstance, arg1: $SubLevel);
-        get delay(): number;
-        get z(): number;
-        get x(): number;
         get location(): $ResourceLocation;
         get relative(): boolean;
         get source(): $SoundSource;
-        get stopped(): boolean;
         get y(): number;
+        get delay(): number;
+        get attenuation(): $SoundInstance$Attenuation;
+        get stopped(): boolean;
+        get z(): number;
+        get x(): number;
         get pitch(): number;
         get volume(): number;
-        get sound(): $Sound;
         get looping(): boolean;
-        get attenuation(): $SoundInstance$Attenuation;
+        get sound(): $Sound;
     }
 }

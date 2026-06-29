@@ -13,8 +13,8 @@ import { $StreamCodec } from "@package/net/minecraft/network/codec";
 
 declare module "@package/dev/latvian/mods/kubejs/client/icon" {
     export class $AtlasSpriteKubeIcon extends $Record implements $KubeIcon {
-        sprite(): $ResourceLocation;
         getType(): $KubeIconType<never>;
+        sprite(): $ResourceLocation;
         atlas(): ($ResourceLocation) | undefined;
         static TYPE: $KubeIconType<$AtlasSpriteKubeIcon>;
         constructor(atlas: ($ResourceLocation_) | undefined, sprite: $ResourceLocation_);
@@ -23,10 +23,10 @@ declare module "@package/dev/latvian/mods/kubejs/client/icon" {
     /**
      * Values that may be interpreted as {@link $AtlasSpriteKubeIcon}.
      */
-    export type $AtlasSpriteKubeIcon_ = { atlas?: ($ResourceLocation_) | undefined, sprite?: $ResourceLocation_,  } | [atlas?: ($ResourceLocation_) | undefined, sprite?: $ResourceLocation_, ];
+    export type $AtlasSpriteKubeIcon_ = { sprite?: $ResourceLocation_, atlas?: ($ResourceLocation_) | undefined,  } | [sprite?: $ResourceLocation_, atlas?: ($ResourceLocation_) | undefined, ];
     export class $KubeIconRenderer$FromAtlasSprite extends $Record implements $KubeIconRenderer {
-        draw(mc: $Minecraft, graphics: $GuiGraphics, x: number, y: number, size: number): void;
         icon(): $AtlasSpriteKubeIcon;
+        draw(mc: $Minecraft, graphics: $GuiGraphics, x: number, y: number, size: number): void;
         constructor(icon: $AtlasSpriteKubeIcon_);
     }
     /**
@@ -34,8 +34,8 @@ declare module "@package/dev/latvian/mods/kubejs/client/icon" {
      */
     export type $KubeIconRenderer$FromAtlasSprite_ = { icon?: $AtlasSpriteKubeIcon_,  } | [icon?: $AtlasSpriteKubeIcon_, ];
     export class $KubeIconRenderer$FromItem extends $Record implements $KubeIconRenderer {
-        draw(mc: $Minecraft, graphics: $GuiGraphics, x: number, y: number, size: number): void;
         icon(): $ItemKubeIcon;
+        draw(mc: $Minecraft, graphics: $GuiGraphics, x: number, y: number, size: number): void;
         constructor(icon: $ItemKubeIcon_);
     }
     /**
@@ -43,8 +43,8 @@ declare module "@package/dev/latvian/mods/kubejs/client/icon" {
      */
     export type $KubeIconRenderer$FromItem_ = { icon?: $ItemKubeIcon_,  } | [icon?: $ItemKubeIcon_, ];
     export class $TextureKubeIcon extends $Record implements $KubeIcon {
-        getType(): $KubeIconType<never>;
         texture(): $ResourceLocation;
+        getType(): $KubeIconType<never>;
         static TYPE: $KubeIconType<$TextureKubeIcon>;
         constructor(texture: $ResourceLocation_);
         get type(): $KubeIconType<never>;
@@ -54,8 +54,8 @@ declare module "@package/dev/latvian/mods/kubejs/client/icon" {
      */
     export type $TextureKubeIcon_ = { texture?: $ResourceLocation_,  } | [texture?: $ResourceLocation_, ];
     export class $KubeIconRenderer$FromTexture extends $Record implements $KubeIconRenderer {
-        draw(mc: $Minecraft, graphics: $GuiGraphics, x: number, y: number, size: number): void;
         icon(): $TextureKubeIcon;
+        draw(mc: $Minecraft, graphics: $GuiGraphics, x: number, y: number, size: number): void;
         constructor(icon: $TextureKubeIcon_);
     }
     /**
@@ -72,19 +72,19 @@ declare module "@package/dev/latvian/mods/kubejs/client/icon" {
      */
     export type $KubeIconTypeRegistry_ = ((type: $KubeIconType<never>) => void);
     export class $KubeIconType<T extends $KubeIcon> extends $Record {
-        id(): $ResourceLocation;
         codec(): $MapCodec<T>;
+        id(): $ResourceLocation;
         streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, T>;
         static TYPES: $Lazy<$Map<$ResourceLocation, $KubeIconType<never>>>;
         static CODEC: $Codec<$KubeIconType<never>>;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $KubeIconType<never>>;
-        constructor(id: $ResourceLocation_, codec: $MapCodec_<T>);
         constructor(id: $ResourceLocation_, codec: $MapCodec_<T>, streamCodec: $StreamCodec<$RegistryFriendlyByteBuf, T>);
+        constructor(id: $ResourceLocation_, codec: $MapCodec_<T>);
     }
     /**
      * Values that may be interpreted as {@link $KubeIconType}.
      */
-    export type $KubeIconType_<T> = { codec?: $MapCodec_<$KubeIcon_>, streamCodec?: $StreamCodec<$RegistryFriendlyByteBuf, $KubeIcon_>, id?: $ResourceLocation_,  } | [codec?: $MapCodec_<$KubeIcon_>, streamCodec?: $StreamCodec<$RegistryFriendlyByteBuf, $KubeIcon_>, id?: $ResourceLocation_, ];
+    export type $KubeIconType_<T> = { id?: $ResourceLocation_, codec?: $MapCodec_<$KubeIcon_>, streamCodec?: $StreamCodec<$RegistryFriendlyByteBuf, $KubeIcon_>,  } | [id?: $ResourceLocation_, codec?: $MapCodec_<$KubeIcon_>, streamCodec?: $StreamCodec<$RegistryFriendlyByteBuf, $KubeIcon_>, ];
     export class $KubeIconRenderer {
         static from(icon: $KubeIcon_): $KubeIconRenderer;
         static RENDERERS: $Lazy<$Map<$KubeIconType<never>, $Function<never, $KubeIconRenderer>>>;

@@ -48,9 +48,9 @@ import { $StreamCodec } from "@package/net/minecraft/network/codec";
 
 declare module "@package/com/simibubi/create/content/equipment/clipboard" {
     export class $ClipboardEntry {
-        static readAll(arg0: $ItemStack_): $List<$List<$ClipboardEntry>>;
         static readAll(arg0: $ClipboardContent_): $List<$List<$ClipboardEntry>>;
         static readAll(arg0: $DataComponentMap_): $List<$List<$ClipboardEntry>>;
+        static readAll(arg0: $ItemStack_): $List<$List<$ClipboardEntry>>;
         displayItem(arg0: $ItemStack_, arg1: number): $ClipboardEntry;
         static getLastViewedEntries(arg0: $ItemStack_): $List<$ClipboardEntry>;
         static CODEC: $Codec<$ClipboardEntry>;
@@ -69,9 +69,9 @@ declare module "@package/com/simibubi/create/content/equipment/clipboard" {
     export class $ClipboardBlockItem extends $BlockItem implements $ItemCopyingRecipe$SupportsItemCopying {
         getComponentType(): $DataComponentType<never>;
         registerModelOverrides(): void;
-        createCopy(arg0: $ItemStack_, arg1: number): $ItemStack;
         canCopyToItem(arg0: $ItemStack_): boolean;
         canCopyFromItem(arg0: $ItemStack_): boolean;
+        createCopy(arg0: $ItemStack_, arg1: number): $ItemStack;
         static BASE_ATTACK_DAMAGE_ID: $ResourceLocation;
         static DEFAULT_MAX_STACK_SIZE: number;
         static MAX_BAR_WIDTH: number;
@@ -117,8 +117,8 @@ declare module "@package/com/simibubi/create/content/equipment/clipboard" {
         get clipboardKey(): string;
     }
     export class $ClipboardBlockEntity extends $SmartBlockEntity {
-        onEditedBy(arg0: $Player): void;
         updateWrittenState(): void;
+        onEditedBy(arg0: $Player): void;
         worldPosition: $BlockPos;
         level: $Level;
         static ATTACHMENTS_NBT_KEY: string;
@@ -130,12 +130,12 @@ declare module "@package/com/simibubi/create/content/equipment/clipboard" {
         type(): $ClipboardOverrides$ClipboardType;
         setReadOnly(arg0: boolean): $ClipboardContent;
         readOnly(): boolean;
-        pages(): $List<$List<$ClipboardEntry>>;
-        setPreviouslyOpenedPage(arg0: number): $ClipboardContent;
         setPages(arg0: $List_<$List_<$ClipboardEntry>>): $ClipboardContent;
+        pages(): $List<$List<$ClipboardEntry>>;
         setCopiedValues(arg0: $CompoundTag_): $ClipboardContent;
-        copiedValues(): ($CompoundTag) | undefined;
+        setPreviouslyOpenedPage(arg0: number): $ClipboardContent;
         previouslyOpenedPage(): number;
+        copiedValues(): ($CompoundTag) | undefined;
         static PAGES_STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $List<$List<$ClipboardEntry>>>;
         static CODEC: $Codec<$ClipboardContent>;
         static PAGES_CODEC: $Codec<$List<$List<$ClipboardEntry>>>;
@@ -147,35 +147,35 @@ declare module "@package/com/simibubi/create/content/equipment/clipboard" {
     /**
      * Values that may be interpreted as {@link $ClipboardContent}.
      */
-    export type $ClipboardContent_ = { previouslyOpenedPage?: number, type?: $ClipboardOverrides$ClipboardType_, readOnly?: boolean, pages?: $List_<$List_<$ClipboardEntry>>, copiedValues?: ($CompoundTag_) | undefined,  } | [previouslyOpenedPage?: number, type?: $ClipboardOverrides$ClipboardType_, readOnly?: boolean, pages?: $List_<$List_<$ClipboardEntry>>, copiedValues?: ($CompoundTag_) | undefined, ];
+    export type $ClipboardContent_ = { copiedValues?: ($CompoundTag_) | undefined, previouslyOpenedPage?: number, type?: $ClipboardOverrides$ClipboardType_, readOnly?: boolean, pages?: $List_<$List_<$ClipboardEntry>>,  } | [copiedValues?: ($CompoundTag_) | undefined, previouslyOpenedPage?: number, type?: $ClipboardOverrides$ClipboardType_, readOnly?: boolean, pages?: $List_<$List_<$ClipboardEntry>>, ];
     export class $ClipboardValueSettingsHandler {
         static clientTick(): void;
-        static leftClickToPaste(arg0: $PlayerInteractEvent$LeftClickBlock): void;
-        static rightClickToCopy(arg0: $PlayerInteractEvent$RightClickBlock): void;
         static drawCustomBlockSelection(arg0: $RenderHighlightEvent$Block): void;
+        static rightClickToCopy(arg0: $PlayerInteractEvent$RightClickBlock): void;
+        static leftClickToPaste(arg0: $PlayerInteractEvent$LeftClickBlock): void;
         constructor();
     }
     export class $ClipboardBlock extends $FaceAttachedHorizontalDirectionalBlock implements $IBE<$ClipboardBlockEntity>, $IWrenchable, $ProperWaterloggedBlock {
-        getBlockEntityType(): $BlockEntityType<$ClipboardBlockEntity>;
         getBlockEntityClass(): $Class<$ClipboardBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ClipboardBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$ClipboardBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ClipboardBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ClipboardBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ClipboardBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $ClipboardBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ClipboardBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ClipboardBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ClipboardBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
-        fluidState(arg0: $BlockState_): $FluidState;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         updateWater(arg0: $LevelAccessor, arg1: $BlockState_, arg2: $BlockPos_): void;
+        fluidState(arg0: $BlockState_): $FluidState;
+        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -209,8 +209,8 @@ declare module "@package/com/simibubi/create/content/equipment/clipboard" {
         static FACE: $EnumProperty<$AttachFace>;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$ClipboardBlockEntity>;
         get blockEntityClass(): $Class<$ClipboardBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$ClipboardBlockEntity>;
     }
     export class $ClipboardScreen$DisplayCache {
     }
@@ -219,14 +219,14 @@ declare module "@package/com/simibubi/create/content/equipment/clipboard" {
     /**
      * Values that may be interpreted as {@link $ClipboardScreen$Pos2i}.
      */
-    export type $ClipboardScreen$Pos2i_ = { x?: number, y?: number,  } | [x?: number, y?: number, ];
+    export type $ClipboardScreen$Pos2i_ = { y?: number, x?: number,  } | [y?: number, x?: number, ];
     export class $ClipboardEditPacket extends $Record implements $ServerboundPacketPayload {
         handle(arg0: $ServerPlayer): void;
         getTypeProvider(): $BasePacketPayload$PacketTypeProvider;
-        clipboardContent(): $ClipboardContent;
-        static clipboardProcessor(arg0: $ClipboardContent_): $ClipboardContent;
         hotbarSlot(): number;
         targetedBlock(): $BlockPos;
+        static clipboardProcessor(arg0: $ClipboardContent_): $ClipboardContent;
+        clipboardContent(): $ClipboardContent;
         type(): $CustomPacketPayload$Type<$CustomPacketPayload>;
         toVanillaClientbound(): $ClientboundCustomPayloadPacket;
         toVanillaServerbound(): $ServerboundCustomPayloadPacket;
@@ -237,7 +237,7 @@ declare module "@package/com/simibubi/create/content/equipment/clipboard" {
     /**
      * Values that may be interpreted as {@link $ClipboardEditPacket}.
      */
-    export type $ClipboardEditPacket_ = { hotbarSlot?: number, clipboardContent?: $ClipboardContent_, targetedBlock?: $BlockPos_,  } | [hotbarSlot?: number, clipboardContent?: $ClipboardContent_, targetedBlock?: $BlockPos_, ];
+    export type $ClipboardEditPacket_ = { targetedBlock?: $BlockPos_, hotbarSlot?: number, clipboardContent?: $ClipboardContent_,  } | [targetedBlock?: $BlockPos_, hotbarSlot?: number, clipboardContent?: $ClipboardContent_, ];
     export class $ClipboardOverrides$ClipboardType extends $Enum<$ClipboardOverrides$ClipboardType> implements $StringRepresentable {
         static values(): $ClipboardOverrides$ClipboardType[];
         static valueOf(arg0: string): $ClipboardOverrides$ClipboardType;

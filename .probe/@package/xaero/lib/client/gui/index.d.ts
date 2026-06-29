@@ -51,20 +51,20 @@ declare module "@package/xaero/lib/client/gui" {
         get entriesCopy(): $ISettingEntry[];
     }
     export class $ScreenBase extends $Screen implements $IScreenBase {
-        refresh(): void;
         onExit(arg0: $Screen): void;
         getIndex(arg0: $GuiEventListener): number;
-        getEscape(): $Screen;
-        replaceRenderableWidget(arg0: $AbstractWidget, arg1: $AbstractWidget): void;
+        refresh(): void;
+        goBack(): void;
         static tryToGetEscape(arg0: $Screen): $Screen;
+        replaceRenderableWidget(arg0: $AbstractWidget, arg1: $AbstractWidget): void;
+        getEscape(): $Screen;
+        shouldSkipWorldRender(): boolean;
         canSkipWorldRender(): boolean;
         renderEscapeScreen(arg0: $GuiGraphics, arg1: number, arg2: number, arg3: number): void;
         replaceWidget(arg0: $AbstractWidget, arg1: $AbstractWidget): void;
         restoreFocus(arg0: number): void;
-        onDropdownClosed(arg0: $DropDownWidget): void;
         onDropdownOpen(arg0: $DropDownWidget): void;
-        shouldSkipWorldRender(): boolean;
-        goBack(): void;
+        onDropdownClosed(arg0: $DropDownWidget): void;
         static MENU_BACKGROUND: $ResourceLocation;
         minecraft: $Minecraft;
         parent: $Screen;

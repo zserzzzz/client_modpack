@@ -20,18 +20,18 @@ declare module "@package/net/neoforged/neoforge/network/filters" {
         isNecessary(manager: $Connection): boolean;
     }
     export class $NetworkFilters {
-        static cleanIfNecessary(manager: $Connection): void;
         static injectIfNecessary(manager: $Connection): void;
+        static cleanIfNecessary(manager: $Connection): void;
     }
     /**
      * A generic packet splitter that can be used to split packets that are too large to be sent in one go.
      */
     export class $GenericPacketSplitter extends $MessageToMessageEncoder<$Packet<never>> implements $DynamicChannelHandler {
         handler$fco000$fabric_networking_api_v1$encode(arg0: $ChannelHandlerContext, arg1: $Packet<any>, arg2: $List_<any>, arg3: $CallbackInfo): void;
-        isNecessary(manager: $Connection): boolean;
-        static isRemoteCompatible(manager: $Connection): boolean;
         static getRemoteCompatibility(arg0: $Connection): $GenericPacketSplitter$RemoteCompatibility;
         static determineMaxPayloadSize(maxPacketSize: number): number;
+        static isRemoteCompatible(manager: $Connection): boolean;
+        isNecessary(manager: $Connection): boolean;
         static CHANNEL_HANDLER_NAME: string;
         constructor();
     }

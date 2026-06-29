@@ -70,17 +70,17 @@ declare module "@package/com/simibubi/create/content/kinetics/chainConveyor" {
         constructor();
     }
     export class $ChainConveyorBlock extends $KineticBlock implements $IBE<$ChainConveyorBlockEntity>, $IHaveBigOutline, $BlockSubLevelAssemblyListener {
-        getBlockEntityType(): $BlockEntityType<$ChainConveyorBlockEntity>;
         getBlockEntityClass(): $Class<$ChainConveyorBlockEntity>;
-        afterMove(arg0: $ServerLevel, arg1: $ServerLevel, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockPos_): void;
+        getBlockEntityType(): $BlockEntityType<$ChainConveyorBlockEntity>;
         beforeMove(arg0: $ServerLevel, arg1: $ServerLevel, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockPos_): void;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ChainConveyorBlockEntity>): void;
+        afterMove(arg0: $ServerLevel, arg1: $ServerLevel, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockPos_): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ChainConveyorBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ChainConveyorBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ChainConveyorBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $ChainConveyorBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ChainConveyorBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ChainConveyorBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ChainConveyorBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -110,8 +110,8 @@ declare module "@package/com/simibubi/create/content/kinetics/chainConveyor" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$ChainConveyorBlockEntity>;
         get blockEntityClass(): $Class<$ChainConveyorBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$ChainConveyorBlockEntity>;
     }
     export class $ChainConveyorPackage {
         write(arg0: $HolderLookup$Provider): $CompoundTag;
@@ -142,16 +142,16 @@ declare module "@package/com/simibubi/create/content/kinetics/chainConveyor" {
     export class $ServerChainConveyorHandler {
         static sync(): void;
         static tick(): void;
-        static handleTTLPacket(arg0: $Player): void;
         static handleStopRidingPacket(arg0: $Player): void;
+        static handleTTLPacket(arg0: $Player): void;
         static ticks: number;
         static hangingPlayers: $Object2IntMap<$UUID>;
         constructor();
     }
     export class $ChainConveyorRenderer extends $KineticBlockEntityRenderer<$ChainConveyorBlockEntity> {
-        static renderChain(arg0: $PoseStack, arg1: $MultiBufferSource_, arg2: number, arg3: number, arg4: number, arg5: number, arg6: boolean): void;
         shouldRenderOffScreen(arg0: $ChainConveyorBlockEntity): boolean;
         redirect$gpj000$sable$fixMipDistance(arg0: $Vec3_, arg1: $Position, arg2: number): boolean;
+        static renderChain(arg0: $PoseStack, arg1: $MultiBufferSource_, arg2: number, arg3: number, arg4: number, arg5: number, arg6: boolean): void;
         static CHAIN_LOCATION: $ResourceLocation;
         static MIP_DISTANCE: number;
         static KINETIC_BLOCK: $SuperByteBufferCache$Compartment<$BlockState>;
@@ -173,8 +173,8 @@ declare module "@package/com/simibubi/create/content/kinetics/chainConveyor" {
         constructor();
     }
     export class $ChainConveyorPackage$ChainConveyorPackagePhysicsData {
-        setBE(arg0: $ChainConveyorBlockEntity): void;
         shouldTick(): boolean;
+        setBE(arg0: $ChainConveyorBlockEntity): void;
         targetPos: $Vec3;
         lastTick: number;
         flipped: boolean;
@@ -191,9 +191,9 @@ declare module "@package/com/simibubi/create/content/kinetics/chainConveyor" {
     }
     export class $ChainConveyorInteractionHandler {
         static clientTick(): void;
-        static hideVanillaBlockSelection(arg0: $RenderHighlightEvent$Block): void;
         static onUse(): boolean;
         static drawCustomBlockSelection(arg0: $PoseStack, arg1: $MultiBufferSource_, arg2: $Vec3_): void;
+        static hideVanillaBlockSelection(arg0: $RenderHighlightEvent$Block): void;
         static selectedChainPosition: number;
         static selectedShape: $ChainConveyorShape;
         static selectedBakedPosition: $Vec3;
@@ -211,13 +211,13 @@ declare module "@package/com/simibubi/create/content/kinetics/chainConveyor" {
     /**
      * Values that may be interpreted as {@link $ChainConveyorBlockEntity$ConnectedPort}.
      */
-    export type $ChainConveyorBlockEntity$ConnectedPort_ = { filter?: string, connection?: $BlockPos_, chainPosition?: number,  } | [filter?: string, connection?: $BlockPos_, chainPosition?: number, ];
+    export type $ChainConveyorBlockEntity$ConnectedPort_ = { connection?: $BlockPos_, chainPosition?: number, filter?: string,  } | [connection?: $BlockPos_, chainPosition?: number, filter?: string, ];
     export class $ChainConveyorRoutingTable {
         tick(): void;
         getExitFor(arg0: $ItemStack_): $BlockPos;
-        receivePortInfo(arg0: string, arg1: $BlockPos_): void;
-        advertiseTo(arg0: $BlockPos_, arg1: $ChainConveyorRoutingTable): void;
         shouldAdvertise(): boolean;
+        advertiseTo(arg0: $BlockPos_, arg1: $ChainConveyorRoutingTable): void;
+        receivePortInfo(arg0: string, arg1: $BlockPos_): void;
         createSummary(): $Collection<$Component>;
         static ENTRY_TIMEOUT: number;
         lastUpdate: number;
@@ -240,7 +240,7 @@ declare module "@package/com/simibubi/create/content/kinetics/chainConveyor" {
     /**
      * Values that may be interpreted as {@link $ChainConveyorRoutingTable$RoutingTableEntry}.
      */
-    export type $ChainConveyorRoutingTable$RoutingTableEntry_ = { endOfRoute?: boolean, nextConnection?: $BlockPos_, timeout?: $MutableInt, distance?: number, port?: string,  } | [endOfRoute?: boolean, nextConnection?: $BlockPos_, timeout?: $MutableInt, distance?: number, port?: string, ];
+    export type $ChainConveyorRoutingTable$RoutingTableEntry_ = { distance?: number, port?: string, endOfRoute?: boolean, nextConnection?: $BlockPos_, timeout?: $MutableInt,  } | [distance?: number, port?: string, endOfRoute?: boolean, nextConnection?: $BlockPos_, timeout?: $MutableInt, ];
     export class $ChainConveyorShape$ChainConveyorOBB extends $ChainConveyorShape {
         drawOutline(arg0: $BlockPos_, arg1: $PoseStack, arg2: $VertexConsumer): void;
         constructor(arg0: $BlockPos_, arg1: $Vec3_, arg2: $Vec3_);
@@ -255,36 +255,36 @@ declare module "@package/com/simibubi/create/content/kinetics/chainConveyor" {
     /**
      * Values that may be interpreted as {@link $ChainConveyorBlockEntity$ConnectionStats}.
      */
-    export type $ChainConveyorBlockEntity$ConnectionStats_ = { chainLength?: number, tangentAngle?: number, end?: $Vec3_, start?: $Vec3_,  } | [chainLength?: number, tangentAngle?: number, end?: $Vec3_, start?: $Vec3_, ];
+    export type $ChainConveyorBlockEntity$ConnectionStats_ = { end?: $Vec3_, start?: $Vec3_, chainLength?: number, tangentAngle?: number,  } | [end?: $Vec3_, start?: $Vec3_, chainLength?: number, tangentAngle?: number, ];
     export class $ChainConveyorBlockEntity extends $KineticBlockEntity implements $TransformableBlockEntity, $Clearable {
         transform(arg0: $BlockEntity, arg1: $StructureTransform): void;
-        wrapOperation$glh000$sable$testSublevelDistance1$mixinextras$bridge$60(arg0: $ChainConveyorBlockEntity, arg1: $BlockPos_, arg2: $Operation_<any>, arg3: $LocalRef<any>, arg4: $LocalRef<any>): void;
-        wrapOperation$glh000$sable$testSublevelDistance$mixinextras$bridge$59(arg0: $FrogportBlockEntity, arg1: $Operation_<any>, arg2: $LocalRef<any>): boolean;
-        handler$gkh000$sable$dropInvalidPackages(arg0: $CallbackInfo, arg1: $BlockPos_): void;
-        canAcceptMorePackagesFromOtherConveyor(): boolean;
         clearContent(): void;
-        getLoopingPackages(): $List<$ChainConveyorPackage>;
-        static getChainCost(arg0: $BlockPos_): number;
         notifyConnectedToValidate(): void;
-        wrapAngle(arg0: number): number;
-        forPointsAlongChains(arg0: $BlockPos_, arg1: number, arg2: $Consumer_<$Vec3>): boolean;
+        getTravellingPackages(): $Map<$BlockPos, $List<$ChainConveyorPackage>>;
         canAcceptMorePackages(): boolean;
+        forPointsAlongChains(arg0: $BlockPos_, arg1: number, arg2: $Consumer_<$Vec3>): boolean;
+        canAcceptPackagesFor(arg0: $BlockPos_): boolean;
         removeInvalidConnections(): void;
         updateBoxWorldPositions(): void;
+        loopThresholdCrossed(arg0: number, arg1: number, arg2: number): boolean;
         addTravellingPackage(arg0: $ChainConveyorPackage, arg1: $BlockPos_): boolean;
         static getChainsFromInventory(arg0: $Player, arg1: $ItemStack_, arg2: number, arg3: boolean): boolean;
-        loopThresholdCrossed(arg0: number, arg1: number, arg2: number): boolean;
-        canAcceptPackagesFor(arg0: $BlockPos_): boolean;
-        getTravellingPackages(): $Map<$BlockPos, $List<$ChainConveyorPackage>>;
-        wrapOperation$glh000$sable$testSublevelDistance(arg0: $FrogportBlockEntity, arg1: $Operation_<any>, arg2: $ChainConveyorPackage): boolean;
-        wrapOperation$glh000$sable$testSublevelDistance1(arg0: $ChainConveyorBlockEntity, arg1: $BlockPos_, arg2: $Operation_<any>, arg3: $Map$Entry<any, any>, arg4: $ChainConveyorPackage): void;
-        addLoopingPackage(arg0: $ChainConveyorPackage): boolean;
-        removeConnectionTo(arg0: $BlockPos_): boolean;
-        getPackagePosition(arg0: number, arg1: $BlockPos_): $Vec3;
+        wrapAngle(arg0: number): number;
+        getLoopingPackages(): $List<$ChainConveyorPackage>;
+        static getChainCost(arg0: $BlockPos_): number;
+        canAcceptMorePackagesFromOtherConveyor(): boolean;
+        handler$gkh000$sable$dropInvalidPackages(arg0: $CallbackInfo, arg1: $BlockPos_): void;
+        wrapOperation$glh000$sable$testSublevelDistance1$mixinextras$bridge$60(arg0: $ChainConveyorBlockEntity, arg1: $BlockPos_, arg2: $Operation_<any>, arg3: $LocalRef<any>, arg4: $LocalRef<any>): void;
+        wrapOperation$glh000$sable$testSublevelDistance$mixinextras$bridge$59(arg0: $FrogportBlockEntity, arg1: $Operation_<any>, arg2: $LocalRef<any>): boolean;
         tickBoxVisuals(): void;
         prepareStats(): void;
+        getPackagePosition(arg0: number, arg1: $BlockPos_): $Vec3;
+        addLoopingPackage(arg0: $ChainConveyorPackage): boolean;
         addConnectionTo(arg0: $BlockPos_): boolean;
         chainDestroyed(arg0: $BlockPos_, arg1: boolean, arg2: boolean): void;
+        removeConnectionTo(arg0: $BlockPos_): boolean;
+        wrapOperation$glh000$sable$testSublevelDistance1(arg0: $ChainConveyorBlockEntity, arg1: $BlockPos_, arg2: $Operation_<any>, arg3: $Map$Entry<any, any>, arg4: $ChainConveyorPackage): void;
+        wrapOperation$glh000$sable$testSublevelDistance(arg0: $FrogportBlockEntity, arg1: $Operation_<any>, arg2: $ChainConveyorPackage): boolean;
         loopPorts: $Map<$BlockPos, $ChainConveyorBlockEntity$ConnectedPort>;
         level: $Level;
         static ATTACHMENTS_NBT_KEY: string;
@@ -304,8 +304,8 @@ declare module "@package/com/simibubi/create/content/kinetics/chainConveyor" {
         reversed: boolean;
         cancelDrops: boolean;
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
-        get loopingPackages(): $List<$ChainConveyorPackage>;
         get travellingPackages(): $Map<$BlockPos, $List<$ChainConveyorPackage>>;
+        get loopingPackages(): $List<$ChainConveyorPackage>;
     }
     export class $ClientboundChainConveyorRidingPacket extends $Record implements $ClientboundPacketPayload {
         handle(arg0: $LocalPlayer): void;

@@ -8,48 +8,48 @@ declare module "@package/com/github/argon4w/acceleratedrendering/core/programs/o
     export class $IShaderProgramOverrides {
     }
     export interface $IShaderProgramOverrides {
-        getOverride(arg0: $RenderType): $ProgramOverride;
-        getOverride(arg0: number): $ProgramOverride;
         getCount(): number;
+        getOverride(arg0: number): $ProgramOverride;
+        getOverride(arg0: $RenderType): $ProgramOverride;
         get count(): number;
     }
     export class $ProgramOverride extends $Record {
         transform(): $ITransformOverride;
         uploading(): $IUploadingOverride;
-        uploadMeshInfo(arg0: number, arg1: number): void;
-        uploadVarying(arg0: number, arg1: number): void;
-        getVaryingSize(): number;
-        getMeshInfoSize(): number;
         overrideId(): number;
+        uploadVarying(arg0: number, arg1: number): void;
+        getMeshInfoSize(): number;
+        getVaryingSize(): number;
+        uploadMeshInfo(arg0: number, arg1: number): void;
         constructor(overrideId: number, transform: $ITransformOverride, uploading: $IUploadingOverride);
-        get varyingSize(): number;
         get meshInfoSize(): number;
+        get varyingSize(): number;
     }
     /**
      * Values that may be interpreted as {@link $ProgramOverride}.
      */
-    export type $ProgramOverride_ = { uploading?: $IUploadingOverride, overrideId?: number, transform?: $ITransformOverride,  } | [uploading?: $IUploadingOverride, overrideId?: number, transform?: $ITransformOverride, ];
+    export type $ProgramOverride_ = { transform?: $ITransformOverride, uploading?: $IUploadingOverride, overrideId?: number,  } | [transform?: $ITransformOverride, uploading?: $IUploadingOverride, overrideId?: number, ];
     export class $IUploadingOverride {
     }
     export interface $IUploadingOverride extends $IProgramOverride {
-        uploadMeshInfo(arg0: number, arg1: number): void;
         dispatchUploading(arg0: number, arg1: number, arg2: number): number;
         getMeshInfoSize(): number;
+        uploadMeshInfo(arg0: number, arg1: number): void;
         get meshInfoSize(): number;
     }
     export class $ITransformOverride {
     }
     export interface $ITransformOverride extends $IProgramOverride {
         uploadVarying(arg0: number, arg1: number): void;
-        getVaryingSize(): number;
         dispatchTransform(arg0: number, arg1: number, arg2: number): number;
+        getVaryingSize(): number;
         get varyingSize(): number;
     }
     export class $IProgramOverride {
     }
     export interface $IProgramOverride {
-        useProgram(): void;
         setupProgram(): void;
+        useProgram(): void;
     }
     export class $LoadShaderProgramOverridesEvent extends $Event implements $IModBusEvent {
         getOverrides(arg0: $ITransformOverride, arg1: $IUploadingOverride): $IShaderProgramOverrides;

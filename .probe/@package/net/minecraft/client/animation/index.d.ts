@@ -30,7 +30,7 @@ declare module "@package/net/minecraft/client/animation" {
     /**
      * Values that may be interpreted as {@link $AnimationDefinition}.
      */
-    export type $AnimationDefinition_ = { lengthInSeconds?: number, boneAnimations?: $Map_<string, $List_<$AnimationChannel_>>, looping?: boolean,  } | [lengthInSeconds?: number, boneAnimations?: $Map_<string, $List_<$AnimationChannel_>>, looping?: boolean, ];
+    export type $AnimationDefinition_ = { looping?: boolean, lengthInSeconds?: number, boneAnimations?: $Map_<string, $List_<$AnimationChannel_>>,  } | [looping?: boolean, lengthInSeconds?: number, boneAnimations?: $Map_<string, $List_<$AnimationChannel_>>, ];
     export class $AnimationChannel$Interpolation {
     }
     export interface $AnimationChannel$Interpolation {
@@ -62,7 +62,7 @@ declare module "@package/net/minecraft/client/animation" {
     /**
      * Values that may be interpreted as {@link $Keyframe}.
      */
-    export type $Keyframe_ = { interpolation?: $AnimationChannel$Interpolation_, timestamp?: number, target?: $Vector3f,  } | [interpolation?: $AnimationChannel$Interpolation_, timestamp?: number, target?: $Vector3f, ];
+    export type $Keyframe_ = { target?: $Vector3f, interpolation?: $AnimationChannel$Interpolation_, timestamp?: number,  } | [target?: $Vector3f, interpolation?: $AnimationChannel$Interpolation_, timestamp?: number, ];
     export class $AnimationChannel$Interpolations {
         static CATMULLROM: $AnimationChannel$Interpolation;
         static LINEAR: $AnimationChannel$Interpolation;
@@ -76,5 +76,5 @@ declare module "@package/net/minecraft/client/animation" {
     /**
      * Values that may be interpreted as {@link $AnimationChannel}.
      */
-    export type $AnimationChannel_ = { target?: $AnimationChannel$Target_, keyframes?: $Keyframe_[],  } | [target?: $AnimationChannel$Target_, keyframes?: $Keyframe_[], ];
+    export type $AnimationChannel_ = { keyframes?: $Keyframe_[], target?: $AnimationChannel$Target_,  } | [keyframes?: $Keyframe_[], target?: $AnimationChannel$Target_, ];
 }

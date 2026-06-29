@@ -19,11 +19,11 @@ declare module "@package/net/minecraft/world/level/levelgen/feature/foliageplace
          */
         shouldSkipLocation(random: $RandomSource, localX: number, localY: number, localZ: number, range: number, large: boolean): boolean;
         static foliagePlacerParts<P extends $FoliagePlacer>(instance: $RecordCodecBuilder$Instance<P>): $Products$P2<$RecordCodecBuilder$Mu<P>, $IntProvider, $IntProvider>;
-        createFoliage(level: $LevelSimulatedReader, blockSetter: $FoliagePlacer$FoliageSetter, random: $RandomSource, config: $TreeConfiguration, maxFreeTreeHeight: number, attachment: $FoliagePlacer$FoliageAttachment, foliageHeight: number, foliageRadius: number): void;
         createFoliage(level: $LevelSimulatedReader, blockSetter: $FoliagePlacer$FoliageSetter, random: $RandomSource, config: $TreeConfiguration, maxFreeTreeHeight: number, attachment: $FoliagePlacer$FoliageAttachment, foliageHeight: number, foliageRadius: number, offset: number): void;
+        createFoliage(level: $LevelSimulatedReader, blockSetter: $FoliagePlacer$FoliageSetter, random: $RandomSource, config: $TreeConfiguration, maxFreeTreeHeight: number, attachment: $FoliagePlacer$FoliageAttachment, foliageHeight: number, foliageRadius: number): void;
         placeLeavesRow(level: $LevelSimulatedReader, foliageSetter: $FoliagePlacer$FoliageSetter, random: $RandomSource, treeConfiguration: $TreeConfiguration, pos: $BlockPos_, range: number, localY: number, large: boolean): void;
-        foliageHeight(random: $RandomSource, height: number, config: $TreeConfiguration): number;
         static tryPlaceLeaf(level: $LevelSimulatedReader, foliageSetter: $FoliagePlacer$FoliageSetter, random: $RandomSource, treeConfiguration: $TreeConfiguration, pos: $BlockPos_): boolean;
+        foliageHeight(random: $RandomSource, height: number, config: $TreeConfiguration): number;
         foliageRadius(random: $RandomSource, radius: number): number;
         /**
          * Skips certain positions based on the provided shape, such as rounding corners randomly.

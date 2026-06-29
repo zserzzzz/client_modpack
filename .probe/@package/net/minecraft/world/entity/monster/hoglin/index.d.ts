@@ -1,6 +1,7 @@
 import { $GoalSelector } from "@package/net/minecraft/world/entity/ai/goal";
 import { $JumpControl, $MoveControl, $LookControl } from "@package/net/minecraft/world/entity/ai/control";
 import { $SensorType, $Sensor } from "@package/net/minecraft/world/entity/ai/sensing";
+import { $CompoundTag } from "@package/net/minecraft/nbt";
 import { $EntityDimensions, $EntityType_, $Entity$RemovalReason, $LivingEntity, $Pose, $PortalProcessor, $WalkAnimationState, $MobSpawnType_ } from "@package/net/minecraft/world/entity";
 import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
 import { $AttributeSupplier$Builder } from "@package/net/minecraft/world/entity/ai/attributes";
@@ -10,7 +11,7 @@ import { $RandomSource } from "@package/net/minecraft/util";
 import { $InteractionHand } from "@package/net/minecraft/world";
 import { $SoundEvent } from "@package/net/minecraft/sounds";
 import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos, $BlockPos_ } from "@package/net/minecraft/core";
+import { $HolderLookup$Provider, $BlockPos, $BlockPos_ } from "@package/net/minecraft/core";
 import { $Brain } from "@package/net/minecraft/world/entity/ai";
 import { $PathNavigation } from "@package/net/minecraft/world/entity/ai/navigation";
 import { $Object } from "@package/java/lang";
@@ -44,25 +45,26 @@ declare module "@package/net/minecraft/world/entity/monster/hoglin" {
      */
     export type $HoglinBase_ = (() => number);
     export class $Hoglin extends $Animal implements $Enemy, $HoglinBase {
-        static createAttributes(): $AttributeSupplier$Builder;
-        /**
-         * Entity won't drop items or experience points if this returns false
-         */
-        isConverting(): boolean;
-        /**
-         * Entity won't drop items or experience points if this returns false
-         */
-        canBeHunted(): boolean;
         /**
          * Entity won't drop items or experience points if this returns false
          */
         isAdult(): boolean;
         /**
+         * Entity won't drop items or experience points if this returns false
+         */
+        canBeHunted(): boolean;
+        /**
          * Returns the current armor value as determined by a call to InventoryPlayer.getTotalArmorValue
          */
         getAttackAnimationRemainingTicks(): number;
-        static checkHoglinSpawnRules(hoglin: $EntityType_<$Hoglin>, level: $LevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
+        static createAttributes(): $AttributeSupplier$Builder;
+        /**
+         * Entity won't drop items or experience points if this returns false
+         */
+        isConverting(): boolean;
         setImmuneToZombification(cannotBeHunted: boolean): void;
+        static checkHoglinSpawnRules(hoglin: $EntityType_<$Hoglin>, level: $LevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -234,17 +236,17 @@ declare module "@package/net/minecraft/world/entity/monster/hoglin" {
         static BASE_SAFE_FALL_DISTANCE: number;
         age: number;
         constructor(entityType: $EntityType_<$Hoglin>, level: $Level_);
-        get converting(): boolean;
         get adult(): boolean;
         get attackAnimationRemainingTicks(): number;
+        get converting(): boolean;
         set immuneToZombification(value: boolean);
     }
     export class $HoglinAi {
+        static wasHurtBy(hoglin: $Hoglin, target: $LivingEntity): void;
+        static isPacified(hoglin: $Hoglin): boolean;
         static onHitTarget(hoglin: $Hoglin, target: $LivingEntity): void;
         static updateActivity(hoglin: $Hoglin): void;
         static makeBrain(brain: $Brain<$Hoglin>): $Brain<never>;
-        static isPacified(hoglin: $Hoglin): boolean;
-        static wasHurtBy(hoglin: $Hoglin, target: $LivingEntity): void;
         static getSoundForCurrentActivity(hoglin: $Hoglin): ($SoundEvent) | undefined;
         static isPosNearNearestRepellent(hoglin: $Hoglin, pos: $BlockPos_): boolean;
         static REPELLENT_DETECTION_RANGE_VERTICAL: number;

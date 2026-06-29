@@ -4,7 +4,7 @@ import { $Item$Properties, $BlockItem, $Item, $ItemStack_ } from "@package/net/m
 import { $BlockPlaceContext } from "@package/net/minecraft/world/item/context";
 import { $ResourceLocation } from "@package/net/minecraft/resources";
 import { $Player } from "@package/net/minecraft/world/entity/player";
-import { $Block, $Block_ } from "@package/net/minecraft/world/level/block";
+import { $Block_, $Block } from "@package/net/minecraft/world/level/block";
 import { $Map } from "@package/java/util";
 import { $Object } from "@package/java/lang";
 import { $BlockHitResult } from "@package/net/minecraft/world/phys";

@@ -49,15 +49,15 @@ declare module "@package/net/minecraft/world/level/gameevent" {
          * Gets the position of the listener itself.
          */
         getListenerSource(): $PositionSource;
-        getDeliveryMode(): $GameEventListener$DeliveryMode;
-        handleGameEvent(level: $ServerLevel, gameEvent: $Holder_<$GameEvent>, context: $GameEvent$Context_, pos: $Vec3_): boolean;
         /**
          * Gets the listening radius of the listener. Events within this radius will notify the listener when broadcasted.
          */
         getListenerRadius(): number;
+        handleGameEvent(level: $ServerLevel, gameEvent: $Holder_<$GameEvent>, context: $GameEvent$Context_, pos: $Vec3_): boolean;
+        getDeliveryMode(): $GameEventListener$DeliveryMode;
         get listenerSource(): $PositionSource;
-        get deliveryMode(): $GameEventListener$DeliveryMode;
         get listenerRadius(): number;
+        get deliveryMode(): $GameEventListener$DeliveryMode;
     }
     export class $EntityPositionSource$Type implements $PositionSourceType<$EntityPositionSource> {
         codec(): $MapCodec<$EntityPositionSource>;
@@ -115,14 +115,14 @@ declare module "@package/net/minecraft/world/level/gameevent" {
         static of(sourceEntity: $Entity | null): $GameEvent$Context;
         static of(affectedState: $BlockState_ | null): $GameEvent$Context;
         static of(sourceEntity: $Entity | null, affectedState: $BlockState_ | null): $GameEvent$Context;
-        affectedState(): $BlockState;
         sourceEntity(): $Entity;
+        affectedState(): $BlockState;
         constructor(arg0: $Entity | null, arg1: $BlockState_ | null);
     }
     /**
      * Values that may be interpreted as {@link $GameEvent$Context}.
      */
-    export type $GameEvent$Context_ = { sourceEntity?: $Entity, affectedState?: $BlockState_,  } | [sourceEntity?: $Entity, affectedState?: $BlockState_, ];
+    export type $GameEvent$Context_ = { affectedState?: $BlockState_, sourceEntity?: $Entity,  } | [affectedState?: $BlockState_, sourceEntity?: $Entity, ];
     export class $EuclideanGameEventListenerRegistry$OnEmptyAction {
     }
     export interface $EuclideanGameEventListenerRegistry$OnEmptyAction {
@@ -156,8 +156,8 @@ declare module "@package/net/minecraft/world/level/gameevent" {
         context(): $GameEvent$Context;
         compareTo(other: $GameEvent$ListenerInfo): number;
         source(): $Vec3;
-        gameEvent(): $Holder<$GameEvent>;
         recipient(): $GameEventListener;
+        gameEvent(): $Holder<$GameEvent>;
         constructor(gameEvent: $Holder_<$GameEvent>, source: $Vec3_, context: $GameEvent$Context_, recipient: $GameEventListener, pos: $Vec3_);
     }
     export class $PositionSource {

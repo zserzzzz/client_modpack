@@ -45,9 +45,9 @@ declare module "@package/com/simibubi/create/content/logistics/crate" {
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
     }
     export class $CreativeCrateBlockEntity extends $CrateBlockEntity implements $Clearable {
+        clearContent(): void;
         createFilter(): $FilteringBehaviour;
         static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
-        clearContent(): void;
         worldPosition: $BlockPos;
         level: $Level;
         static ATTACHMENTS_NBT_KEY: string;
@@ -92,15 +92,15 @@ declare module "@package/com/simibubi/create/content/logistics/crate" {
         constructor(arg0: $ItemStack_);
     }
     export class $CreativeCrateBlock extends $CrateBlock implements $IBE<$CreativeCrateBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$CreativeCrateBlockEntity>;
         getBlockEntityClass(): $Class<$CreativeCrateBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$CreativeCrateBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$CreativeCrateBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$CreativeCrateBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($CreativeCrateBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$CreativeCrateBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $CreativeCrateBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$CreativeCrateBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($CreativeCrateBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$CreativeCrateBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -131,7 +131,7 @@ declare module "@package/com/simibubi/create/content/logistics/crate" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$CreativeCrateBlockEntity>;
         get blockEntityClass(): $Class<$CreativeCrateBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$CreativeCrateBlockEntity>;
     }
 }

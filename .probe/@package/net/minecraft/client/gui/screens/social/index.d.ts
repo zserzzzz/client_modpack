@@ -27,24 +27,24 @@ declare module "@package/net/minecraft/client/gui/screens/social" {
      */
     export type $SocialInteractionsScreen$Page_ = "all" | "hidden" | "blocked";
     export class $PlayerEntry extends $ContainerObjectSelectionList$Entry<$PlayerEntry> {
-        getPlayerName(): string;
-        getPlayerId(): $UUID;
         /**
          * @return `true` if the GUI element is dragging, `false` otherwise
          */
         isRemoved(): boolean;
+        getPlayerName(): string;
         setRemoved(hasRecentMessages: boolean): void;
+        getPlayerId(): $UUID;
         setHasRecentMessages(hasRecentMessages: boolean): void;
         getEntryNarationMessage(component: $MutableComponent_): $MutableComponent;
-        getSkinGetter(): $Supplier<$PlayerSkin>;
-        /**
-         * @return `true` if the GUI element is dragging, `false` otherwise
-         */
-        isChatReportable(): boolean;
         /**
          * @return `true` if the GUI element is dragging, `false` otherwise
          */
         hasRecentMessages(): boolean;
+        /**
+         * @return `true` if the GUI element is dragging, `false` otherwise
+         */
+        isChatReportable(): boolean;
+        getSkinGetter(): $Supplier<$PlayerSkin>;
         static BG_FILL: number;
         static PLAYERNAME_COLOR: number;
         static BG_FILL_REMOVED: number;
@@ -57,8 +57,8 @@ declare module "@package/net/minecraft/client/gui/screens/social" {
         constructor(minecraft: $Minecraft, socialInteractionsScreen: $SocialInteractionsScreen, id: $UUID_, playerName: string, skinGetter: $Supplier_<$PlayerSkin>, playerReportable: boolean);
         get playerName(): string;
         get playerId(): $UUID;
-        get skinGetter(): $Supplier<$PlayerSkin>;
         get chatReportable(): boolean;
+        get skinGetter(): $Supplier<$PlayerSkin>;
     }
     export class $SocialInteractionsScreen extends $Screen {
         onAddPlayer(playerInfo: $PlayerInfo): void;
@@ -85,8 +85,8 @@ declare module "@package/net/minecraft/client/gui/screens/social" {
         static HEADER_SEPARATOR: $ResourceLocation;
         height: number;
         font: $Font;
-        constructor(lastScreen: $Screen | null);
         constructor();
+        constructor(lastScreen: $Screen | null);
     }
     export class $SocialInteractionsPlayerList extends $ContainerObjectSelectionList<$PlayerEntry> {
         /**
@@ -94,9 +94,9 @@ declare module "@package/net/minecraft/client/gui/screens/social" {
          */
         isEmpty(): boolean;
         setFilter(filter: string): void;
-        addPlayer(playerInfo: $PlayerInfo, page: $SocialInteractionsScreen$Page_): void;
-        updatePlayerList(ids: $Collection_<$UUID_>, scrollAmount: number, arg2: boolean): void;
         removePlayer(id: $UUID_): void;
+        updatePlayerList(ids: $Collection_<$UUID_>, scrollAmount: number, arg2: boolean): void;
+        addPlayer(playerInfo: $PlayerInfo, page: $SocialInteractionsScreen$Page_): void;
         minecraft: $Minecraft;
         static SCROLLER_BACKGROUND_SPRITE: $ResourceLocation;
         visible: boolean;
@@ -121,17 +121,17 @@ declare module "@package/net/minecraft/client/gui/screens/social" {
         set filter(value: string);
     }
     export class $PlayerSocialManager {
-        shouldHideMessageFrom(id: $UUID_): boolean;
         isHidden(id: $UUID_): boolean;
-        startOnlineMode(): void;
+        shouldHideMessageFrom(id: $UUID_): boolean;
         stopOnlineMode(): void;
-        addPlayer(playerInfo: $PlayerInfo): void;
-        isBlocked(id: $UUID_): boolean;
-        getHiddenPlayers(): $Set<$UUID>;
-        removePlayer(id: $UUID_): void;
-        getDiscoveredUUID(uuid: string): $UUID;
-        showPlayer(id: $UUID_): void;
+        startOnlineMode(): void;
         hidePlayer(id: $UUID_): void;
+        showPlayer(id: $UUID_): void;
+        removePlayer(id: $UUID_): void;
+        getHiddenPlayers(): $Set<$UUID>;
+        isBlocked(id: $UUID_): boolean;
+        addPlayer(playerInfo: $PlayerInfo): void;
+        getDiscoveredUUID(uuid: string): $UUID;
         constructor(minecraft: $Minecraft, service: $UserApiService);
         get hiddenPlayers(): $Set<$UUID>;
     }

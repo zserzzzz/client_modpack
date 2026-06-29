@@ -10,11 +10,11 @@ import { $UUID_ } from "@package/java/util";
 
 declare module "@package/dev/ryanhcode/sable/network/udp" {
     export class $SableUDPServer {
-        sendUDPPacket(arg0: $ServerPlayer, arg1: $SableUDPPacket_, arg2: boolean): boolean;
-        sendPings(): void;
-        static getServer(arg0: $MinecraftServer): $SableUDPServer;
         isConnectedTo(arg0: $ServerPlayer): boolean;
+        static getServer(arg0: $MinecraftServer): $SableUDPServer;
+        sendPings(): void;
         receiveAuthenticationPacket(arg0: $UUID_, arg1: $InetSocketAddress): void;
+        sendUDPPacket(arg0: $ServerPlayer, arg1: $SableUDPPacket_, arg2: boolean): boolean;
         beginAuthentication(arg0: $ServerPlayer): void;
         receiveAlivePacket(arg0: $InetSocketAddress): void;
         static PING_INTERVAL: number;

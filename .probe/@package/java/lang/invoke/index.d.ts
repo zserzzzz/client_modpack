@@ -1,8 +1,8 @@
 import { $Serializable } from "@package/java/io";
 import { $DynamicConstantDesc, $MethodHandleDesc, $ClassDesc, $MethodTypeDesc, $Constable } from "@package/java/lang/constant";
 import { $Method, $Member, $Constructor, $Field } from "@package/java/lang/reflect";
-import { $List, $List_ } from "@package/java/util";
 import { $ClassLoader, $Enum, $Object, $Class } from "@package/java/lang";
+import { $List, $List_ } from "@package/java/util";
 
 declare module "@package/java/lang/invoke" {
     export class $MethodHandles$Lookup {
@@ -102,11 +102,10 @@ declare module "@package/java/lang/invoke" {
         get primitive(): boolean;
     }
     export class $VarHandle$VarHandleDesc extends $DynamicConstantDesc<$VarHandle> {
-        static ofStaticField(arg0: $ClassDesc, arg1: string, arg2: $ClassDesc): $VarHandle$VarHandleDesc;
-        resolveConstantDesc(arg0: $MethodHandles$Lookup): $VarHandle;
         static ofField(arg0: $ClassDesc, arg1: string, arg2: $ClassDesc): $VarHandle$VarHandleDesc;
         varType(): $ClassDesc;
         static ofArray(arg0: $ClassDesc): $VarHandle$VarHandleDesc;
+        static ofStaticField(arg0: $ClassDesc, arg1: string, arg2: $ClassDesc): $VarHandle$VarHandleDesc;
     }
     export class $VarHandle$AccessMode extends $Enum<$VarHandle$AccessMode> {
         static values(): $VarHandle$AccessMode[];

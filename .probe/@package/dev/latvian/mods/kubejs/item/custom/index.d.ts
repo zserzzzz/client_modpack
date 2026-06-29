@@ -1,7 +1,7 @@
 import { $Consumer_, $BiFunction, $BiFunction_ } from "@package/java/util/function";
 import { $Holder_, $Registry } from "@package/net/minecraft/core";
 import { $ArmorItem$Type, $ArmorMaterial, $Item$Properties, $Tier_, $Item, $ItemStack_, $Tier, $DiggerItem, $ShearsItem, $AnimalArmorItem$BodyType_ } from "@package/net/minecraft/world/item";
-import { $Component } from "@package/net/minecraft/network/chat";
+import { $Component_, $Component } from "@package/net/minecraft/network/chat";
 import { $ResourceLocation_, $ResourceKey, $ResourceLocation } from "@package/net/minecraft/resources";
 import { $Block } from "@package/net/minecraft/world/level/block";
 import { $Record, $Object } from "@package/java/lang";
@@ -20,23 +20,17 @@ declare module "@package/dev/latvian/mods/kubejs/item/custom" {
         addExisting(id: string, tier: $Tier_): void;
         addBasedOnExisting(id: string, existing: string, tier: $Consumer_<$MutableToolTier>): void;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -44,17 +38,23 @@ declare module "@package/dev/latvian/mods/kubejs/item/custom" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(tiers: $Map_<string, $Tier_>);
     }
     /**
@@ -74,8 +74,8 @@ declare module "@package/dev/latvian/mods/kubejs/item/custom" {
         constructor(builder: $ShearsItemBuilder);
     }
     export class $ShearsItemBuilder extends $ItemBuilder {
-        static isCustomShears(stack: $ItemStack_): boolean;
         speedBaseline(f: number): this;
+        static isCustomShears(stack: $ItemStack_): boolean;
         sourceLine: $SourceLine;
         static SHEAR_TAGS: $ResourceLocation[];
         id: $ResourceLocation;
@@ -108,6 +108,13 @@ declare module "@package/dev/latvian/mods/kubejs/item/custom" {
     }
     export class $SmithingTemplateItemBuilder extends $ItemBuilder {
         /**
+         * Sets the name for this smithing template.
+         * Note that the normal display name for all smithing templates is the same and cannot be changed, this instead sets the name in the tooltip (see vanilla smithing templates for what this looks like).
+         * 
+         * This will be overridden by a lang file if it exists.
+         */
+        displayName(name: $Component_): this;
+        /**
          * Sets the description text that shows in the item tooltip to describe what ingredients can be added.
          * Using 'Ingots & Crystals' or 'Netherite Ingot' will use the vanilla language keys so it is translated into other languages automatically.
          * THIS IS PURELY VISUAL
@@ -115,34 +122,6 @@ declare module "@package/dev/latvian/mods/kubejs/item/custom" {
          * If you wish to apply non standard formatting (like change the colour) set the `ingredientsText` field.
          */
         ingredients(text: string): this;
-        /**
-         * Adds leggings to the list of base item slot icons that the smithing table cycles through when this smithing template is put in
-         */
-        leggingsIcon(): this;
-        /**
-         * Adds a chestplate to the list of base item slot icons that the smithing table cycles through when this smithing template is put in
-         */
-        chestplateIcon(): this;
-        /**
-         * Adds a diamond to the list of ingredient slot icons that the smithing table cycles through when this smithing template is put in
-         */
-        diamondIcon(): this;
-        /**
-         * Adds all armor and basic tool icons to the list of base slot icons that the smithing table cycles through when this smithing template is put in
-         */
-        equipmentIcons(): this;
-        /**
-         * Adds an emerald to the list of ingredient slot icons that the smithing table cycles through when this smithing template is put in
-         */
-        emeraldIcon(): this;
-        /**
-         * Adds a dust, diamond, emerald, quartz, lapis lazuli and amethyst shard icons to the list of ingredient slot icons that the smithing table cycles through when this smithing template is put in
-         */
-        crystalIcons(): this;
-        /**
-         * Adds a pickaxe to the list of base item slot icons that the smithing table cycles through when this smithing template is put in
-         */
-        pickaxeIcon(): this;
         /**
          * Sets the description text that shows in the item tooltip to describe what it can be applied to.
          * Using 'Armor' or 'Diamond Equipment' will use the vanilla language keys so it is translated into other languages automatically.
@@ -152,61 +131,16 @@ declare module "@package/dev/latvian/mods/kubejs/item/custom" {
          */
         appliesTo(text: string): this;
         /**
-         * Adds all armor icons to the list of base slot icons that the smithing table cycles through when this smithing template is put in
-         */
-        armorIcons(): this;
-        /**
-         * Adds a dust to the list of ingredient slot icons that the smithing table cycles through when this smithing template is put in
-         */
-        dustIcon(): this;
-        /**
-         * Adds a hoe to the list of base item slot icons that the smithing table cycles through when this smithing template is put in
-         */
-        hoeIcon(): this;
-        /**
-         * Adds an ingot to the list of ingredient slot icons that the smithing table cycles through when this smithing template is put in
-         */
-        ingotIcon(): this;
-        /**
-         * Adds all basic tool icons to the list of base slot icons that the smithing table cycles through when this smithing template is put in
-         */
-        toolIcons(): this;
-        /**
-         * Adds an amethyst shard to the list of ingredient slot icons that the smithing table cycles through when this smithing template is put in
-         */
-        shardIcon(): this;
-        /**
-         * Adds a quartz to the list of ingredient slot icons that the smithing table cycles through when this smithing template is put in
-         */
-        quartzIcon(): this;
-        /**
-         * Adds a helmet to the list of base item slot icons that the smithing table cycles through when this smithing template is put in
-         */
-        helmetIcon(): this;
-        /**
-         * Adds a shovel to the list of base item slot icons that the smithing table cycles through when this smithing template is put in
-         */
-        shovelIcon(): this;
-        /**
-         * Adds a lapis lazuli to the list of ingredient slot icons that the smithing table cycles through when this smithing template is put in
-         */
-        lapisIcon(): this;
-        /**
-         * Adds a sword to the list of base item slot icons that the smithing table cycles through when this smithing template is put in
-         */
-        swordIcon(): this;
-        /**
-         * Adds a axe to the list of base item slot icons that the smithing table cycles through when this smithing template is put in
-         */
-        axeIcon(): this;
-        /**
-         * Adds boots to the list of base item slot icons that the smithing table cycles through when this smithing template is put in
-         */
-        bootsIcon(): this;
-        /**
          * Adds the specified texture location to the list of ingredient slot icons that the smithing table cycles through when this smithing template is put in
          */
         addIngredientsSlotIcon(location: $ResourceLocation_): this;
+        /**
+         * Sets the description text that shows when you hover over the ingredient slot when this item is put in smithing table as a template.
+         * Using 'Add ingot or crystal' or 'Add Netherite Ingot' will use the vanilla language keys so it is translated into other languages automatically.
+         * 
+         * If you wish to apply non standard formatting (like change the colour) set the `ingredientSlotDescriptionText` field.
+         */
+        ingredientsSlotDescription(text: string): this;
         /**
          * Adds the specified texture location to the list of base slot icons that the smithing table cycles through when this smithing template is put in.
          */
@@ -219,16 +153,89 @@ declare module "@package/dev/latvian/mods/kubejs/item/custom" {
          */
         appliesToSlotDescription(text: string): this;
         /**
-         * Sets the description text that shows when you hover over the ingredient slot when this item is put in smithing table as a template.
-         * Using 'Add ingot or crystal' or 'Add Netherite Ingot' will use the vanilla language keys so it is translated into other languages automatically.
-         * 
-         * If you wish to apply non standard formatting (like change the colour) set the `ingredientSlotDescriptionText` field.
-         */
-        ingredientsSlotDescription(text: string): this;
-        /**
          * Adds an ingot, dust, diamond, emerald, quartz, lapis lazuli and amethyst shard icons to the list of ingredient slot icons that the smithing table cycles through when this smithing template is put in
          */
         ingotAndCrystalIcons(): this;
+        /**
+         * Adds leggings to the list of base item slot icons that the smithing table cycles through when this smithing template is put in
+         */
+        leggingsIcon(): this;
+        /**
+         * Adds all armor and basic tool icons to the list of base slot icons that the smithing table cycles through when this smithing template is put in
+         */
+        equipmentIcons(): this;
+        /**
+         * Adds a dust, diamond, emerald, quartz, lapis lazuli and amethyst shard icons to the list of ingredient slot icons that the smithing table cycles through when this smithing template is put in
+         */
+        crystalIcons(): this;
+        /**
+         * Adds a diamond to the list of ingredient slot icons that the smithing table cycles through when this smithing template is put in
+         */
+        diamondIcon(): this;
+        /**
+         * Adds an emerald to the list of ingredient slot icons that the smithing table cycles through when this smithing template is put in
+         */
+        emeraldIcon(): this;
+        /**
+         * Adds a pickaxe to the list of base item slot icons that the smithing table cycles through when this smithing template is put in
+         */
+        pickaxeIcon(): this;
+        /**
+         * Adds a chestplate to the list of base item slot icons that the smithing table cycles through when this smithing template is put in
+         */
+        chestplateIcon(): this;
+        /**
+         * Adds all basic tool icons to the list of base slot icons that the smithing table cycles through when this smithing template is put in
+         */
+        toolIcons(): this;
+        /**
+         * Adds an ingot to the list of ingredient slot icons that the smithing table cycles through when this smithing template is put in
+         */
+        ingotIcon(): this;
+        /**
+         * Adds an amethyst shard to the list of ingredient slot icons that the smithing table cycles through when this smithing template is put in
+         */
+        shardIcon(): this;
+        /**
+         * Adds a quartz to the list of ingredient slot icons that the smithing table cycles through when this smithing template is put in
+         */
+        quartzIcon(): this;
+        /**
+         * Adds a lapis lazuli to the list of ingredient slot icons that the smithing table cycles through when this smithing template is put in
+         */
+        lapisIcon(): this;
+        /**
+         * Adds a dust to the list of ingredient slot icons that the smithing table cycles through when this smithing template is put in
+         */
+        dustIcon(): this;
+        /**
+         * Adds all armor icons to the list of base slot icons that the smithing table cycles through when this smithing template is put in
+         */
+        armorIcons(): this;
+        /**
+         * Adds boots to the list of base item slot icons that the smithing table cycles through when this smithing template is put in
+         */
+        bootsIcon(): this;
+        /**
+         * Adds a shovel to the list of base item slot icons that the smithing table cycles through when this smithing template is put in
+         */
+        shovelIcon(): this;
+        /**
+         * Adds a sword to the list of base item slot icons that the smithing table cycles through when this smithing template is put in
+         */
+        swordIcon(): this;
+        /**
+         * Adds a helmet to the list of base item slot icons that the smithing table cycles through when this smithing template is put in
+         */
+        helmetIcon(): this;
+        /**
+         * Adds a axe to the list of base item slot icons that the smithing table cycles through when this smithing template is put in
+         */
+        axeIcon(): this;
+        /**
+         * Adds a hoe to the list of base item slot icons that the smithing table cycles through when this smithing template is put in
+         */
+        hoeIcon(): this;
         ingredientsText: $Component;
         sourceLine: $SourceLine;
         id: $ResourceLocation;
@@ -313,6 +320,14 @@ declare module "@package/dev/latvian/mods/kubejs/item/custom" {
          */
         speed(f: number): this;
         /**
+         * Sets the base attack damage of the tool. Different tools have different baselines.
+         * 
+         * For example, a sword has a baseline of 3, while an axe has a baseline of 6.
+         * 
+         * The actual damage is the sum of the baseline and the attackDamageBonus from tier.
+         */
+        attackDamageBaseline(f: number): this;
+        /**
          * Sets the attack damage bonus of the tool.
          */
         attackDamageBonus(f: number): this;
@@ -328,22 +343,14 @@ declare module "@package/dev/latvian/mods/kubejs/item/custom" {
          * Modifies the tool tier.
          */
         modifyTier(callback: $Consumer_<$MutableToolTier>): this;
-        /**
-         * Sets the base attack damage of the tool. Different tools have different baselines.
-         * 
-         * For example, a sword has a baseline of 3, while an axe has a baseline of 6.
-         * 
-         * The actual damage is the sum of the baseline and the attackDamageBonus from tier.
-         */
-        attackDamageBaseline(f: number): this;
         sourceLine: $SourceLine;
         id: $ResourceLocation;
         registryKey: $ResourceKey<$Registry<$Item>>;
         constructor(i: $ResourceLocation_, d: number, s: number);
     }
     export class $ArmorItemBuilder$AnimalArmor extends $ArmorItemBuilder {
-        bodyType(type: $AnimalArmorItem$BodyType_): this;
         overlay(o: boolean): this;
+        bodyType(type: $AnimalArmorItem$BodyType_): this;
         armorType: $ArmorItem$Type;
         sourceLine: $SourceLine;
         id: $ResourceLocation;

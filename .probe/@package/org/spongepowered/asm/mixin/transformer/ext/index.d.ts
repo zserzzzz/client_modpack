@@ -6,12 +6,12 @@ declare module "@package/org/spongepowered/asm/mixin/transformer/ext" {
     export class $IExtensionRegistry {
     }
     export interface $IExtensionRegistry {
-        getActiveExtensions(): $List<$IExtension>;
         getExtensions(): $List<$IExtension>;
         getExtension<T extends $IExtension>(arg0: $Class<$IExtension>): T;
         getSyntheticClassRegistry(): $ISyntheticClassRegistry;
-        get activeExtensions(): $List<$IExtension>;
+        getActiveExtensions(): $List<$IExtension>;
         get extensions(): $List<$IExtension>;
         get syntheticClassRegistry(): $ISyntheticClassRegistry;
+        get activeExtensions(): $List<$IExtension>;
     }
 }

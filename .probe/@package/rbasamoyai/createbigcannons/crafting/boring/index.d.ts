@@ -11,14 +11,14 @@ declare module "@package/rbasamoyai/createbigcannons/crafting/boring" {
         matches(arg0: $Level_, arg1: $BlockPos_): boolean;
         matches(arg0: $BlockState_, arg1: $Direction_): boolean;
         getType(): $BlockRecipeType<never>;
+        getSerializer(): $BlockRecipeSerializer<never>;
+        ingredients(): $List<$ItemStack>;
+        assembleInWorld(arg0: $Level_, arg1: $BlockPos_): void;
         getResultBlock(): $Block;
         getResultState(arg0: $BlockState_): $BlockState;
-        ingredients(): $List<$ItemStack>;
-        getSerializer(): $BlockRecipeSerializer<never>;
-        assembleInWorld(arg0: $Level_, arg1: $BlockPos_): void;
         constructor(arg0: $BlockRecipeIngredient, arg1: $Block_, arg2: boolean);
         get type(): $BlockRecipeType<never>;
-        get resultBlock(): $Block;
         get serializer(): $BlockRecipeSerializer<never>;
+        get resultBlock(): $Block;
     }
 }

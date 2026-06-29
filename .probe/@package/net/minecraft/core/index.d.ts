@@ -62,27 +62,27 @@ declare module "@package/net/minecraft/core" {
         is(predicate: $Predicate_<$ResourceKey<T>>): boolean;
         tags(): $Stream<$TagKey<T>>;
         getData<A>(arg0: $DataMapType<T, A>): A;
-        canSerializeIn(owner: $HolderOwner<T>): boolean;
-        /**
-         * @deprecated
-         */
-        static createIntrusive<T>(owner: $HolderOwner<T>, value: T | null): $Holder$Reference<T>;
-        bindTags(tags: $Collection_<$TagKey_<T>>): void;
         unwrapKey(): ($ResourceKey<T>) | undefined;
-        bindValue(value: T): void;
-        bindKey(key: $ResourceKey_<T>): void;
         /**
          * Attempts to resolve the underlying `RegistryLookup` from a `Holder`.
          * 
          * This will only succeed if the underlying holder is a `Reference`.
          */
         unwrapLookup(): $HolderLookup$RegistryLookup<T>;
+        canSerializeIn(owner: $HolderOwner<T>): boolean;
         static createStandAlone<T>(owner: $HolderOwner<T>, key: $ResourceKey_<T>): $Holder$Reference<T>;
-        getRegisteredName(): string;
+        /**
+         * @deprecated
+         */
+        static createIntrusive<T>(owner: $HolderOwner<T>, value: T | null): $Holder$Reference<T>;
+        bindValue(value: T): void;
+        bindTags(tags: $Collection_<$TagKey_<T>>): void;
+        bindKey(key: $ResourceKey_<T>): void;
         /**
          * Test if a tag matches the object this holder holds.
          */
         isTag(location: $ResourceLocation_): boolean;
+        getRegisteredName(): string;
         /**
          * @return the holder that this holder wraps
          * 
@@ -96,13 +96,13 @@ declare module "@package/net/minecraft/core" {
         get delegate(): $Holder<T>;
     }
     export class $AxisCycle extends $Enum<$AxisCycle> {
-        inverse(): $AxisCycle;
-        cycle(x: number, arg1: number, y: number, arg3: $Direction$Axis_): number;
         cycle(x: number, y: number, z: number, axis: $Direction$Axis_): number;
+        cycle(x: number, arg1: number, y: number, arg3: $Direction$Axis_): number;
         cycle(axis: $Direction$Axis_): $Direction$Axis;
         static values(): $AxisCycle[];
         static valueOf(arg0: string): $AxisCycle;
         static between(to: $Direction$Axis_, axis2: $Direction$Axis_): $AxisCycle;
+        inverse(): $AxisCycle;
         static BACKWARD: $AxisCycle;
         static FORWARD: $AxisCycle;
         static VALUES: $AxisCycle[];
@@ -129,7 +129,7 @@ declare module "@package/net/minecraft/core" {
     /**
      * Values that may be interpreted as {@link $RegistrySetBuilder$RegisteredValue}.
      */
-    export type $RegistrySetBuilder$RegisteredValue_<T> = { lifecycle?: $Lifecycle, value?: any,  } | [lifecycle?: $Lifecycle, value?: any, ];
+    export type $RegistrySetBuilder$RegisteredValue_<T> = { value?: any, lifecycle?: $Lifecycle,  } | [value?: any, lifecycle?: $Lifecycle, ];
     export class $RegistrySetBuilder$UniversalLookup extends $RegistrySetBuilder$EmptyTagLookup<$Object> implements $HolderLookup<$Object> {
         listTagIds(): $Stream<$TagKey<$Object>>;
         listElementIds(): $Stream<$ResourceKey<$Object>>;
@@ -139,18 +139,18 @@ declare module "@package/net/minecraft/core" {
     }
     export interface $HolderLookup$Provider extends $IHolderLookupProviderExtension {
         lookup<T>(registryKey: $ResourceKey_<$Registry<T>>): ($HolderLookup$RegistryLookup<T>) | undefined;
+        lookupOrThrow<T>(registryKey: $ResourceKey_<$Registry<T>>): $HolderLookup$RegistryLookup<T>;
         createSerializationContext<V>(ops: $DynamicOps<V>): $RegistryOps<V>;
         asGetterLookup(): $HolderGetter$Provider;
         listRegistries(): $Stream<$ResourceKey<$Registry<never>>>;
-        lookupOrThrow<T>(registryKey: $ResourceKey_<$Registry<T>>): $HolderLookup$RegistryLookup<T>;
     }
     export class $RegistrySetBuilder {
         add<T>(key: $ResourceKey_<$Registry<T>>, bootstrap: $RegistrySetBuilder$RegistryBootstrap_<T>): $RegistrySetBuilder;
         add<T>(key: $ResourceKey_<$Registry<T>>, lifecycle: $Lifecycle, bootstrap: $RegistrySetBuilder$RegistryBootstrap_<T>): $RegistrySetBuilder;
         build(registryAccess: $RegistryAccess): $HolderLookup$Provider;
-        static lookupFromMap<T>(registryKey: $ResourceKey_<$Registry<T>>, registryLifecycle: $Lifecycle, owner: $HolderOwner<T>, elements: $Map_<$ResourceKey_<T>, $Holder$Reference<T>>): $HolderLookup$RegistryLookup<T>;
-        static wrapContextLookup<T>(owner: $HolderLookup$RegistryLookup<T>): $HolderGetter<T>;
         getEntryKeys(): $List<$ResourceKey<$Registry<never>>>;
+        static wrapContextLookup<T>(owner: $HolderLookup$RegistryLookup<T>): $HolderGetter<T>;
+        static lookupFromMap<T>(registryKey: $ResourceKey_<$Registry<T>>, registryLifecycle: $Lifecycle, owner: $HolderOwner<T>, elements: $Map_<$ResourceKey_<T>, $Holder$Reference<T>>): $HolderLookup$RegistryLookup<T>;
         buildPatch(registryAccess: $RegistryAccess, lookupProvider: $HolderLookup$Provider, clonerFactory: $Cloner$Factory): $RegistrySetBuilder$PatchedRegistries;
         entries: $List<$RegistrySetBuilder$RegistryStub<never>>;
         constructor();
@@ -163,12 +163,12 @@ declare module "@package/net/minecraft/core" {
      */
     export type $Holder$Reference$Type_ = "stand_alone" | "intrusive";
     export class $UUIDUtil {
-        static createOfflinePlayerUUID(username: string): $UUID;
-        static createOfflineProfile(username: string): $GameProfile;
-        static uuidToIntArray(uuid: $UUID_): number[];
-        static uuidFromIntArray(bits: number[]): $UUID;
-        static uuidToByteArray(uuid: $UUID_): number[];
         static readUUID(dynamic: $Dynamic<never>): $UUID;
+        static createOfflineProfile(username: string): $GameProfile;
+        static createOfflinePlayerUUID(username: string): $UUID;
+        static uuidToIntArray(uuid: $UUID_): number[];
+        static uuidToByteArray(uuid: $UUID_): number[];
+        static uuidFromIntArray(bits: number[]): $UUID;
         static CODEC_SET: $Codec<$Set<$UUID>>;
         static AUTHLIB_CODEC: $Codec<$UUID>;
         static CODEC: $Codec<$UUID>;
@@ -183,8 +183,8 @@ declare module "@package/net/minecraft/core" {
         static valueOf(arg0: string): $FrontAndTop;
         top(): $Direction;
         front(): $Direction;
-        getSerializedName(): string;
         static fromFrontAndTop(front: $Direction_, top: $Direction_): $FrontAndTop;
+        getSerializedName(): string;
         getRemappedEnumConstantName(): string;
         static UP_SOUTH: $FrontAndTop;
         static DOWN_NORTH: $FrontAndTop;
@@ -206,9 +206,9 @@ declare module "@package/net/minecraft/core" {
      */
     export type $FrontAndTop_ = "down_east" | "down_north" | "down_south" | "down_west" | "up_east" | "up_north" | "up_south" | "up_west" | "west_up" | "east_up" | "north_up" | "south_up";
     export class $BlockMath {
-        static blockCornerToCenter(transformation: $Transformation): $Transformation;
-        static blockCenterToCorner(transformation: $Transformation): $Transformation;
         static getUVLockTransform(transformation: $Transformation, direction: $Direction_): $Transformation;
+        static blockCenterToCorner(transformation: $Transformation): $Transformation;
+        static blockCornerToCenter(transformation: $Transformation): $Transformation;
         static VANILLA_UV_TRANSFORM_GLOBAL_TO_LOCAL: $Map<$Direction, $Transformation>;
         static VANILLA_UV_TRANSFORM_LOCAL_TO_GLOBAL: $Map<$Direction, $Transformation>;
         constructor();
@@ -218,7 +218,7 @@ declare module "@package/net/minecraft/core" {
     /**
      * Values that may be interpreted as {@link $RegistrySetBuilder$ValueAndHolder}.
      */
-    export type $RegistrySetBuilder$ValueAndHolder_<T> = { holder?: ($Holder$Reference<T>) | undefined, value?: $RegistrySetBuilder$RegisteredValue_<any>,  } | [holder?: ($Holder$Reference<T>) | undefined, value?: $RegistrySetBuilder$RegisteredValue_<any>, ];
+    export type $RegistrySetBuilder$ValueAndHolder_<T> = { value?: $RegistrySetBuilder$RegisteredValue_<any>, holder?: ($Holder$Reference<T>) | undefined,  } | [value?: $RegistrySetBuilder$RegisteredValue_<any>, holder?: ($Holder$Reference<T>) | undefined, ];
     export class $RegistryAccess$RegistryEntry<T> extends $Record {
         value(): $Registry<T>;
         key(): $ResourceKey<$Registry<T>>;
@@ -236,21 +236,76 @@ declare module "@package/net/minecraft/core" {
         lookup<T>(registryKey: $ResourceKey_<$Registry<T>>): ($HolderLookup$RegistryLookup<T>) | undefined;
         freeze(): $RegistryAccess$Frozen;
         registry<E>(registryKey: $ResourceKey_<$Registry<E>>): ($Registry<E>) | undefined;
-        registries(): $Stream<$RegistryAccess$RegistryEntry<never>>;
-        listRegistries(): $Stream<$ResourceKey<$Registry<never>>>;
-        allRegistriesLifecycle(): $Lifecycle;
         /**
          * A variant of `#registry(ResourceKey)` that throws if the registry does not exist.
          */
         registryOrThrow<E>(registryKey: $ResourceKey_<$Registry<E>>): $Registry<E>;
+        listRegistries(): $Stream<$ResourceKey<$Registry<never>>>;
+        allRegistriesLifecycle(): $Lifecycle;
+        registries(): $Stream<$RegistryAccess$RegistryEntry<never>>;
     }
     export class $BlockPos extends $Vec3i {
-        getBottomCenter(): $Vec3;
+        static asLong(x: number, y: number, z: number): number;
+        asLong(): number;
+        static min(pos1: $BlockPos_, pos2: $BlockPos_): $BlockPos;
+        static max(pos1: $BlockPos_, pos2: $BlockPos_): $BlockPos;
+        static of(packedPos: number): $BlockPos;
+        static offset(pos: number, arg1: $Direction_): number;
+        static offset(pos: number, arg1: number, dx: number, dy: number): number;
+        rotate(rotation: $Rotation_): $BlockPos;
+        /**
+         * Calculate the cross product of this and the given Vector
+         */
+        subtract(vector: $Vec3i): $BlockPos;
+        /**
+         * Calculate the cross product of this and the given Vector
+         */
+        cross(vector: $Vec3i): $BlockPos;
+        static getY(packedPos: number): number;
+        /**
+         * Offset this vector 1 unit up
+         */
+        immutable(): $BlockPos;
+        /**
+         * Offset this vector 1 unit up
+         */
+        above(): $BlockPos;
+        /**
+         * Offset this vector upwards by the given distance.
+         */
+        above(distance: number): $BlockPos;
+        static getZ(packedPos: number): number;
+        static getX(packedPos: number): number;
+        mutable(): $BlockPos$MutableBlockPos;
+        /**
+         * Offset this vector 1 unit up
+         */
+        north(): $BlockPos;
+        /**
+         * Offset this vector upwards by the given distance.
+         */
+        north(distance: number): $BlockPos;
+        /**
+         * Offset this vector upwards by the given distance.
+         */
+        south(distance: number): $BlockPos;
+        /**
+         * Offset this vector 1 unit up
+         */
+        west(): $BlockPos;
+        getCenter(): $Vec3;
+        static containing(position: $Position): $BlockPos;
+        static containing(x: number, arg1: number, y: number): $BlockPos;
+        /**
+         * Offset this vector upwards by the given distance.
+         */
+        atY(distance: number): $BlockPos;
+        static spiralAround(center: $BlockPos_, size: number, rotationDirection: $Direction_, expansionDirection: $Direction_): $Iterable<$BlockPos$MutableBlockPos>;
+        static findClosestMatch(pos: $BlockPos_, width: number, height: number, posFilter: $Predicate_<$BlockPos>): ($BlockPos) | undefined;
         /**
          * @deprecated
          */
         static squareOutSouthEast(pos: $BlockPos_): $Stream<$BlockPos>;
-        static findClosestMatch(pos: $BlockPos_, width: number, height: number, posFilter: $Predicate_<$BlockPos>): ($BlockPos) | undefined;
         /**
          * Creates an Iterable that returns all positions in the box specified by the given corners. **Coordinates must be in order**. e.g. x1 <= x2.
          * 
@@ -262,83 +317,19 @@ declare module "@package/net/minecraft/core" {
         static betweenClosed(x1: number, y1: number, z1: number, x2: number, y2: number, z2: number): $Iterable<$BlockPos>;
         static betweenClosed(firstPos: $BlockPos_, secondPos: $BlockPos_): $Iterable<$BlockPos>;
         static getFlatIndex(packedPos: number): number;
-        static spiralAround(center: $BlockPos_, size: number, rotationDirection: $Direction_, expansionDirection: $Direction_): $Iterable<$BlockPos$MutableBlockPos>;
         static withinManhattan(pos: $BlockPos_, xSize: number, ySize: number, zSize: number): $Iterable<$BlockPos>;
-        /**
-         * Offset this vector upwards by the given distance.
-         */
-        atY(distance: number): $BlockPos;
-        getCenter(): $Vec3;
-        static containing(x: number, arg1: number, y: number): $BlockPos;
-        static containing(position: $Position): $BlockPos;
-        mutable(): $BlockPos$MutableBlockPos;
-        static getZ(packedPos: number): number;
-        static getX(packedPos: number): number;
-        static asLong(x: number, y: number, z: number): number;
-        asLong(): number;
-        static min(pos1: $BlockPos_, pos2: $BlockPos_): $BlockPos;
-        static max(pos1: $BlockPos_, pos2: $BlockPos_): $BlockPos;
-        static of(packedPos: number): $BlockPos;
-        /**
-         * Calculate the cross product of this and the given Vector
-         */
-        offset(vector: $Vec3i): $BlockPos;
-        static offset(pos: number, arg1: number, dx: number, dy: number): number;
-        static offset(pos: number, arg1: $Direction_): number;
-        rotate(rotation: $Rotation_): $BlockPos;
-        /**
-         * Calculate the cross product of this and the given Vector
-         */
-        subtract(vector: $Vec3i): $BlockPos;
-        relative(axis: $Direction$Axis_, amount: number): $BlockPos;
-        static getY(packedPos: number): number;
-        /**
-         * Offset this vector 1 unit up
-         */
-        immutable(): $BlockPos;
-        /**
-         * Calculate the cross product of this and the given Vector
-         */
-        cross(vector: $Vec3i): $BlockPos;
-        /**
-         * Offset this vector 1 unit up
-         */
-        above(): $BlockPos;
-        static betweenClosedStream(firstPos: $BlockPos_, secondPos: $BlockPos_): $Stream<$BlockPos>;
-        static betweenClosedStream(minX: number, minY: number, minZ: number, maxX: number, maxY: number, maxZ: number): $Stream<$BlockPos>;
-        static betweenClosedStream(aabb: $AABB_): $Stream<$BlockPos>;
-        static betweenClosedStream(box: $BoundingBox): $Stream<$BlockPos>;
-        static randomBetweenClosed(random: $RandomSource, amount: number, minX: number, minY: number, minZ: number, maxX: number, maxY: number, maxZ: number): $Iterable<$BlockPos>;
-        static breadthFirstTraversal(startPos: $BlockPos_, depth: number, visitLimit: number, action: $BiConsumer_<$BlockPos, $Consumer<$BlockPos>>, predicate: $Predicate_<$BlockPos>): number;
+        getBottomCenter(): $Vec3;
         /**
          * Returns a stream of positions in a box shape, ordered by closest to furthest. Returns by definition the given position as first element in the stream.
          */
         static withinManhattanStream(pos: $BlockPos_, xSize: number, ySize: number, zSize: number): $Stream<$BlockPos>;
+        static betweenClosedStream(minX: number, minY: number, minZ: number, maxX: number, maxY: number, maxZ: number): $Stream<$BlockPos>;
+        static betweenClosedStream(aabb: $AABB_): $Stream<$BlockPos>;
+        static betweenClosedStream(box: $BoundingBox): $Stream<$BlockPos>;
+        static betweenClosedStream(firstPos: $BlockPos_, secondPos: $BlockPos_): $Stream<$BlockPos>;
         clampLocationWithin(pos: $Vec3_): $Vec3;
-        /**
-         * Offset this vector upwards by the given distance.
-         */
-        north(distance: number): $BlockPos;
-        /**
-         * Offset this vector 1 unit up
-         */
-        north(): $BlockPos;
-        /**
-         * Offset this vector upwards by the given distance.
-         */
-        east(distance: number): $BlockPos;
-        /**
-         * Offset this vector 1 unit up
-         */
-        south(): $BlockPos;
-        /**
-         * Offset this vector upwards by the given distance.
-         */
-        south(distance: number): $BlockPos;
-        /**
-         * Offset this vector 1 unit up
-         */
-        west(): $BlockPos;
+        static breadthFirstTraversal(startPos: $BlockPos_, depth: number, visitLimit: number, action: $BiConsumer_<$BlockPos, $Consumer<$BlockPos>>, predicate: $Predicate_<$BlockPos>): number;
+        static randomBetweenClosed(random: $RandomSource, amount: number, minX: number, minY: number, minZ: number, maxX: number, maxY: number, maxZ: number): $Iterable<$BlockPos>;
         static randomInCube(random: $RandomSource, amount: number, center: $BlockPos_, radius: number): $Iterable<$BlockPos>;
         static ZERO: $BlockPos;
         static PACKED_Y_MASK: number;
@@ -353,8 +344,8 @@ declare module "@package/net/minecraft/core" {
         static PACKED_Y_LENGTH: number;
         constructor(x: number, y: number, z: number);
         constructor(vector: $Vec3i);
-        get bottomCenter(): $Vec3;
         get center(): $Vec3;
+        get bottomCenter(): $Vec3;
     }
     /**
      * Values that may be interpreted as {@link $BlockPos}.
@@ -382,26 +373,26 @@ declare module "@package/net/minecraft/core" {
          * @return the Axis specified by the given name or `null` if no such Axis exists
          */
         static valueOf(name: string): $Direction$Axis;
-        static getRandom(random: $RandomSource): $Direction$Axis;
-        getSerializedName(): string;
-        /**
-         * @return the Axis specified by the given name or `null` if no such Axis exists
-         */
-        static byName(name: string): $Direction$Axis;
-        /**
-         * @return this Axis' Plane (VERTICAL for Y, HORIZONTAL for X and Z)
-         */
-        getPlane(): $Direction$Plane;
         /**
          * @return whether this Axis is on the horizontal plane (true for X and Z)
          */
         isVertical(): boolean;
-        choose(x: number, arg1: number, y: number): number;
-        choose(x: number, y: number, z: number): number;
         /**
          * @return whether this Axis is on the horizontal plane (true for X and Z)
          */
         isHorizontal(): boolean;
+        static getRandom(random: $RandomSource): $Direction$Axis;
+        /**
+         * @return the Axis specified by the given name or `null` if no such Axis exists
+         */
+        static byName(name: string): $Direction$Axis;
+        getSerializedName(): string;
+        choose(x: number, y: number, z: number): number;
+        choose(x: number, arg1: number, y: number): number;
+        /**
+         * @return this Axis' Plane (VERTICAL for Y, HORIZONTAL for X and Z)
+         */
+        getPlane(): $Direction$Plane;
         getRemappedEnumConstantName(): string;
         or(arg0: $Predicate_<$Direction>): $Predicate<$Direction>;
         negate(): $Predicate<$Direction>;
@@ -411,10 +402,10 @@ declare module "@package/net/minecraft/core" {
         static Y: $Direction$Axis;
         static Z: $Direction$Axis;
         static VALUES: $Direction$Axis[];
-        get serializedName(): string;
-        get plane(): $Direction$Plane;
         get vertical(): boolean;
         get horizontal(): boolean;
+        get serializedName(): string;
+        get plane(): $Direction$Plane;
         get remappedEnumConstantName(): string;
     }
     /**
@@ -426,7 +417,7 @@ declare module "@package/net/minecraft/core" {
     /**
      * Values that may be interpreted as {@link $RegistrySetBuilder$BuildState}.
      */
-    export type $RegistrySetBuilder$BuildState_ = { registries?: $Map_<$ResourceLocation_, $HolderGetter<never>>, lookup?: $RegistrySetBuilder$UniversalLookup, owner?: $RegistrySetBuilder$UniversalOwner, errors?: $List_<$RuntimeException>, registeredValues?: $Map_<$ResourceKey_<never>, $RegistrySetBuilder$RegisteredValue_<never>>,  } | [registries?: $Map_<$ResourceLocation_, $HolderGetter<never>>, lookup?: $RegistrySetBuilder$UniversalLookup, owner?: $RegistrySetBuilder$UniversalOwner, errors?: $List_<$RuntimeException>, registeredValues?: $Map_<$ResourceKey_<never>, $RegistrySetBuilder$RegisteredValue_<never>>, ];
+    export type $RegistrySetBuilder$BuildState_ = { owner?: $RegistrySetBuilder$UniversalOwner, errors?: $List_<$RuntimeException>, registeredValues?: $Map_<$ResourceKey_<never>, $RegistrySetBuilder$RegisteredValue_<never>>, registries?: $Map_<$ResourceLocation_, $HolderGetter<never>>, lookup?: $RegistrySetBuilder$UniversalLookup,  } | [owner?: $RegistrySetBuilder$UniversalOwner, errors?: $List_<$RuntimeException>, registeredValues?: $Map_<$ResourceKey_<never>, $RegistrySetBuilder$RegisteredValue_<never>>, registries?: $Map_<$ResourceLocation_, $HolderGetter<never>>, lookup?: $RegistrySetBuilder$UniversalLookup, ];
     export class $DefaultedMappedRegistry<T> extends $MappedRegistry<T> implements $DefaultedRegistry<T> {
         getDefaultKey(): $ResourceLocation;
         toId: $Reference2IntMap<T>;
@@ -475,13 +466,13 @@ declare module "@package/net/minecraft/core" {
          */
         test(predicate: $Predicate_<$ResourceKey<T>>): boolean;
         tags(): $Stream<$TagKey<T>>;
-        canSerializeIn(owner: $HolderOwner<T>): boolean;
-        getRegisteredName(): string;
         unwrapKey(): ($ResourceKey<T>) | undefined;
         /**
          * Test if a tag matches the object this holder holds.
          */
         isTag(location: $ResourceLocation_): boolean;
+        canSerializeIn(owner: $HolderOwner<T>): boolean;
+        getRegisteredName(): string;
         get bound(): boolean;
         get registeredName(): string;
     }
@@ -490,14 +481,6 @@ declare module "@package/net/minecraft/core" {
      */
     export type $Holder_<T> = RegistryTypes.ResolveObject<T>;
     export class $Rotations {
-        /**
-         * @return the X axis rotation
-         */
-        getZ(): number;
-        /**
-         * @return the X axis rotation
-         */
-        getX(): number;
         save(): $ListTag;
         /**
          * @return the X axis rotation
@@ -506,30 +489,38 @@ declare module "@package/net/minecraft/core" {
         /**
          * @return the X axis rotation
          */
-        getWrappedY(): number;
-        /**
-         * @return the X axis rotation
-         */
         getWrappedZ(): number;
         /**
          * @return the X axis rotation
          */
+        getWrappedY(): number;
+        /**
+         * @return the X axis rotation
+         */
         getWrappedX(): number;
+        /**
+         * @return the X axis rotation
+         */
+        getZ(): number;
+        /**
+         * @return the X axis rotation
+         */
+        getX(): number;
         x: number;
         y: number;
         z: number;
         static STREAM_CODEC: $StreamCodec<$ByteBuf, $Rotations>;
-        constructor(tag: $ListTag_);
         constructor(x: number, y: number, z: number);
-        get wrappedY(): number;
+        constructor(tag: $ListTag_);
         get wrappedZ(): number;
+        get wrappedY(): number;
         get wrappedX(): number;
     }
     export class $HolderLookup<T> {
     }
     export interface $HolderLookup<T> extends $HolderGetter<T> {
-        listTags(): $Stream<$HolderSet$Named<T>>;
         listTagIds(): $Stream<$TagKey<T>>;
+        listTags(): $Stream<$HolderSet$Named<T>>;
         listElements(): $Stream<$Holder$Reference<T>>;
         listElementIds(): $Stream<$ResourceKey<T>>;
     }
@@ -547,8 +538,8 @@ declare module "@package/net/minecraft/core" {
      * The latter is used to query biomes from a noise biome source.
      */
     export class $QuartPos {
-        static toSection(value: number): number;
         static fromSection(value: number): number;
+        static toSection(value: number): number;
         static fromBlock(value: number): number;
         static toBlock(value: number): number;
         static quartLocal(value: number): number;
@@ -560,9 +551,9 @@ declare module "@package/net/minecraft/core" {
         canSerializeIn(arg0: $HolderOwner<$Object>): boolean;
     }
     export class $GlobalPos extends $Record {
-        dimension(): $ResourceKey<$Level>;
         static of(dimension: $ResourceKey_<$Level>, pos: $BlockPos_): $GlobalPos;
         pos(): $BlockPos;
+        dimension(): $ResourceKey<$Level>;
         static CODEC: $Codec<$GlobalPos>;
         static MAP_CODEC: $MapCodec<$GlobalPos>;
         static STREAM_CODEC: $StreamCodec<$ByteBuf, $GlobalPos>;
@@ -584,8 +575,8 @@ declare module "@package/net/minecraft/core" {
         canSerializeIn(arg0: $HolderOwner<T>): boolean;
         getRandomElement(arg0: $RandomSource): ($Holder<T>) | undefined;
         forEach(arg0: $Consumer_<T>): void;
-        serializationType(): $IHolderSetExtension$SerializationType;
         addInvalidationListener(arg0: $Runnable_): void;
+        serializationType(): $IHolderSetExtension$SerializationType;
         constructor();
         [Symbol.iterator](): Iterator<$Holder<T>>
     }
@@ -615,11 +606,11 @@ declare module "@package/net/minecraft/core" {
         getId(value: T): number;
         addMapping(key: T, value: number): void;
         byId(id: number): T;
-        byIdOrThrow(id: number): T;
         /**
          * @return the integer ID used to identify the given object
          */
         getIdOrThrow(value: T): number;
+        byIdOrThrow(id: number): T;
         spliterator(): $Spliterator<T>;
         forEach(arg0: $Consumer_<T>): void;
         tToId: $Reference2IntMap<T>;
@@ -631,21 +622,19 @@ declare module "@package/net/minecraft/core" {
     }
     export class $BlockPos$MutableBlockPos extends $BlockPos {
         clamp(axis: $Direction$Axis_, min: number, max: number): $BlockPos$MutableBlockPos;
+        set(x: number, arg1: number, y: number): $BlockPos$MutableBlockPos;
         set(offset: $Vec3i): $BlockPos$MutableBlockPos;
         set(packedPos: number): $BlockPos$MutableBlockPos;
-        set(cycle: $AxisCycle_, x: number, y: number, z: number): $BlockPos$MutableBlockPos;
-        set(x: number, arg1: number, y: number): $BlockPos$MutableBlockPos;
         set(x: number, y: number, z: number): $BlockPos$MutableBlockPos;
-        move(x: number, y: number, z: number): $BlockPos$MutableBlockPos;
+        set(cycle: $AxisCycle_, x: number, y: number, z: number): $BlockPos$MutableBlockPos;
         move(offset: $Vec3i): $BlockPos$MutableBlockPos;
-        move(direction: $Direction_, n: number): $BlockPos$MutableBlockPos;
+        move(x: number, y: number, z: number): $BlockPos$MutableBlockPos;
         move(direction: $Direction_): $BlockPos$MutableBlockPos;
-        setX(x: number): $BlockPos$MutableBlockPos;
-        setY(x: number): $BlockPos$MutableBlockPos;
-        setZ(x: number): $BlockPos$MutableBlockPos;
+        move(direction: $Direction_, n: number): $BlockPos$MutableBlockPos;
+        setWithOffset(pos: $Vec3i, direction: $Direction_): $BlockPos$MutableBlockPos;
         setWithOffset(vector: $Vec3i, offsetX: number, offsetY: number, offsetZ: number): $BlockPos$MutableBlockPos;
         setWithOffset(pos: $Vec3i, offset: $Vec3i): $BlockPos$MutableBlockPos;
-        setWithOffset(pos: $Vec3i, direction: $Direction_): $BlockPos$MutableBlockPos;
+        setX(x: number): $BlockPos$MutableBlockPos;
         static ZERO: $BlockPos;
         static PACKED_Y_MASK: number;
         static CODEC: $Codec<$BlockPos>;
@@ -661,8 +650,6 @@ declare module "@package/net/minecraft/core" {
         constructor(x: number, y: number, z: number);
         constructor();
         set x(value: number);
-        set y(value: number);
-        set z(value: number);
     }
     export class $RegistryAccess$Frozen {
     }
@@ -676,22 +663,24 @@ declare module "@package/net/minecraft/core" {
         get(arg0: $TagKey_<T>): ($HolderSet$Named<T>) | undefined;
         key(): $ResourceKey<$Registry<T>>;
         getData<A>(arg0: $DataMapType<T, A>, arg1: $ResourceKey_<T>): A;
-        registryLifecycle(): $Lifecycle;
         listTags(): $Stream<$HolderSet$Named<T>>;
         listElements(): $Stream<$Holder$Reference<T>>;
+        registryLifecycle(): $Lifecycle;
     }
     /**
      * Values that may be interpreted as {@link $HolderLookup$RegistryLookup$Delegate}.
      */
     export type $HolderLookup$RegistryLookup$Delegate_<T> = (() => $HolderLookup$RegistryLookup<T>);
     export class $Registry<T> {
-        static register<T>(registry: $Registry<T>, name: string, value: T): T;
-        static register<V, T extends V>(registry: $Registry<V>, name: $ResourceLocation_, value: T): T;
         static register<V, T extends V>(registry: $Registry<V>, key: $ResourceKey_<V>, value: T): T;
-        static registerForHolder<T>(registry: $Registry<T>, name: $ResourceLocation_, value: T): $Holder$Reference<T>;
+        static register<V, T extends V>(registry: $Registry<V>, name: $ResourceLocation_, value: T): T;
+        static register<T>(registry: $Registry<T>, name: string, value: T): T;
         static registerForHolder<T>(registry: $Registry<T>, key: $ResourceKey_<T>, value: T): $Holder$Reference<T>;
+        static registerForHolder<T>(registry: $Registry<T>, name: $ResourceLocation_, value: T): $Holder$Reference<T>;
     }
     export interface $Registry<T> extends $Keyable, $IdMap<T>, $IRegistryExtension<T> {
+        getOrThrow(key: $ResourceKey_<T>): T;
+        getAny(): ($Holder$Reference<T>) | undefined;
         get(key: $ResourceKey_<T> | null): T;
         get(name: $ResourceLocation_ | null): T;
         stream(): $Stream<T>;
@@ -704,8 +693,8 @@ declare module "@package/net/minecraft/core" {
          */
         getKey(value: T): $ResourceLocation;
         key(): $ResourceKey<$Registry<T>>;
-        containsKey(key: $ResourceKey_<T>): boolean;
         containsKey(name: $ResourceLocation_): boolean;
+        containsKey(key: $ResourceKey_<T>): boolean;
         /**
          * @return the integer ID used to identify the given object
          */
@@ -717,38 +706,36 @@ declare module "@package/net/minecraft/core" {
         keySet(): $Set<$ResourceLocation>;
         freeze(): $Registry<T>;
         getTag(key: $TagKey_<T>): ($HolderSet$Named<T>) | undefined;
-        getRandom(random: $RandomSource): ($Holder$Reference<T>) | undefined;
-        getOptional(location: $ResourceLocation_ | null): (T) | undefined;
         getOptional(key: $ResourceKey_<T> | null): (T) | undefined;
-        getAny(): ($Holder$Reference<T>) | undefined;
-        getOrThrow(key: $ResourceKey_<T>): T;
-        byNameCodec(): $Codec<T>;
-        getResourceKey(value: T): ($ResourceKey<T>) | undefined;
-        registryLifecycle(): $Lifecycle;
+        getOptional(location: $ResourceLocation_ | null): (T) | undefined;
+        getRandom(random: $RandomSource): ($Holder$Reference<T>) | undefined;
+        registrationInfo(key: $ResourceKey_<T>): ($RegistrationInfo) | undefined;
+        getOrCreateTag(key: $TagKey_<T>): $HolderSet$Named<T>;
+        getTagOrEmpty(key: $TagKey_<T>): $Iterable<$Holder<T>>;
         /**
          * @return all keys in this registry
          */
         registryKeySet(): $Set<$ResourceKey<T>>;
-        getOrCreateTag(key: $TagKey_<T>): $HolderSet$Named<T>;
-        getTagNames(): $Stream<$TagKey<T>>;
-        holderOwner(): $HolderOwner<T>;
-        getTagOrEmpty(key: $TagKey_<T>): $Iterable<$Holder<T>>;
-        asTagAddingLookup(): $HolderLookup$RegistryLookup<T>;
-        getHolderOrThrow(key: $ResourceKey_<T>): $Holder$Reference<T>;
-        holderByNameCodec(): $Codec<$Holder<T>>;
         wrapAsHolder(value: T): $Holder<T>;
+        holderOwner(): $HolderOwner<T>;
+        getResourceKey(value: T): ($ResourceKey<T>) | undefined;
+        registryLifecycle(): $Lifecycle;
         getRandomElementOf(key: $TagKey_<T>, random: $RandomSource): ($Holder<T>) | undefined;
-        registrationInfo(key: $ResourceKey_<T>): ($RegistrationInfo) | undefined;
-        asHolderIdMap(): $IdMap<$Holder<T>>;
-        createIntrusiveHolder(value: T): $Holder$Reference<T>;
+        holderByNameCodec(): $Codec<$Holder<T>>;
+        getHolderOrThrow(key: $ResourceKey_<T>): $Holder$Reference<T>;
+        getTagNames(): $Stream<$TagKey<T>>;
+        asTagAddingLookup(): $HolderLookup$RegistryLookup<T>;
+        byNameCodec(): $Codec<T>;
+        holders(): $Stream<$Holder$Reference<T>>;
         getTags(): $Stream<$Pair<$TagKey<T>, $HolderSet$Named<T>>>;
         resetTags(): void;
         asLookup(): $HolderLookup$RegistryLookup<T>;
         bindTags(tagMap: $Map_<$TagKey_<T>, $List_<$Holder_<T>>>): void;
-        holders(): $Stream<$Holder$Reference<T>>;
-        getHolder(key: $ResourceKey_<T>): ($Holder$Reference<T>) | undefined;
-        getHolder(location: $ResourceLocation_): ($Holder$Reference<T>) | undefined;
+        createIntrusiveHolder(value: T): $Holder$Reference<T>;
+        asHolderIdMap(): $IdMap<$Holder<T>>;
         getHolder(id: number): ($Holder$Reference<T>) | undefined;
+        getHolder(location: $ResourceLocation_): ($Holder$Reference<T>) | undefined;
+        getHolder(key: $ResourceKey_<T>): ($Holder$Reference<T>) | undefined;
         get any(): ($Holder$Reference<T>) | undefined;
         get tagNames(): $Stream<$TagKey<T>>;
         get tags(): $Stream<$Pair<$TagKey<T>, $HolderSet$Named<T>>>;
@@ -764,12 +751,12 @@ declare module "@package/net/minecraft/core" {
         static copyOf<E>(arg0: $Collection_<E>): $NonNullList<E>;
         static of<E>(defaultValue: E, ...elements: E[]): $NonNullList<E>;
         static create<E>(): $NonNullList<E>;
-        static codecOf<E>(arg0: $Codec<E>): $Codec<$NonNullList<E>>;
         /**
          * Creates a new NonNullList with *fixed* size and default value. The list will be filled with the default value.
          */
         static withSize<E>(size: number, defaultValue: E): $NonNullList<E>;
         static createWithCapacity<E>(initialCapacity: number): $NonNullList<E>;
+        static codecOf<E>(arg0: $Codec<E>): $Codec<$NonNullList<E>>;
         getDelegate(): $List<$Object>;
         reversed(): $SequencedCollection<E>;
         constructor(list: $List_<E>, defaultValue: E | null);
@@ -777,22 +764,20 @@ declare module "@package/net/minecraft/core" {
     }
     export class $RegistrySetBuilder$EmptyTagRegistryLookup<T> extends $RegistrySetBuilder$EmptyTagLookup<T> implements $HolderLookup$RegistryLookup<T> {
         getData<A>(arg0: $DataMapType<T, A>, arg1: $ResourceKey_<T>): A;
-        filterElements(arg0: $Predicate_<T>): $HolderLookup$RegistryLookup<T>;
         filterFeatures(arg0: $FeatureFlagSet): $HolderLookup$RegistryLookup<T>;
+        filterElements(arg0: $Predicate_<T>): $HolderLookup$RegistryLookup<T>;
         listTagIds(): $Stream<$TagKey<T>>;
         listElementIds(): $Stream<$ResourceKey<T>>;
         canSerializeIn(arg0: $HolderOwner<T>): boolean;
     }
     export class $Vec3i implements $Comparable<$Vec3i> {
-        getZ(): number;
-        getX(): number;
         get(axis: $Direction$Axis_): number;
         compareTo(other: $Vec3i): number;
+        offset(dx: number, dy: number, dz: number): $Vec3i;
         /**
          * Calculate the cross product of this and the given Vector
          */
         offset(vector: $Vec3i): $Vec3i;
-        offset(dx: number, dy: number, dz: number): $Vec3i;
         toShortString(): string;
         /**
          * Offset this vector upwards by the given distance.
@@ -806,21 +791,13 @@ declare module "@package/net/minecraft/core" {
          * Offsets this Vector by the given distance in the specified direction.
          */
         relative(direction: $Direction_, distance: number): $Vec3i;
-        relative(axis: $Direction$Axis_, amount: number): $Vec3i;
         relative(direction: $Direction_): $Vec3i;
-        getY(): number;
+        relative(axis: $Direction$Axis_, amount: number): $Vec3i;
         /**
          * Calculate the cross product of this and the given Vector
          */
         cross(vector: $Vec3i): $Vec3i;
-        /**
-         * Offset this vector 1 unit up
-         */
-        below(): $Vec3i;
-        /**
-         * Offset this vector upwards by the given distance.
-         */
-        below(distance: number): $Vec3i;
+        getY(): number;
         /**
          * Offset this vector upwards by the given distance.
          */
@@ -830,9 +807,15 @@ declare module "@package/net/minecraft/core" {
          */
         above(): $Vec3i;
         /**
+         * Offset this vector upwards by the given distance.
+         */
+        below(distance: number): $Vec3i;
+        /**
          * Offset this vector 1 unit up
          */
-        north(): $Vec3i;
+        below(): $Vec3i;
+        getZ(): number;
+        getX(): number;
         /**
          * Offset this vector upwards by the given distance.
          */
@@ -840,19 +823,23 @@ declare module "@package/net/minecraft/core" {
         /**
          * Offset this vector 1 unit up
          */
-        east(): $Vec3i;
+        north(): $Vec3i;
         /**
-         * Offset this vector upwards by the given distance.
+         * Offset this vector 1 unit up
          */
-        east(distance: number): $Vec3i;
+        south(): $Vec3i;
         /**
          * Offset this vector upwards by the given distance.
          */
         south(distance: number): $Vec3i;
         /**
+         * Offset this vector upwards by the given distance.
+         */
+        east(distance: number): $Vec3i;
+        /**
          * Offset this vector 1 unit up
          */
-        south(): $Vec3i;
+        east(): $Vec3i;
         /**
          * Offset this vector 1 unit up
          */
@@ -861,6 +848,10 @@ declare module "@package/net/minecraft/core" {
          * Offset this vector upwards by the given distance.
          */
         west(distance: number): $Vec3i;
+        /**
+         * Offset this vector upwards by the given distance.
+         */
+        setX(distance: number): $Vec3i;
         closerThan(vector: $Vec3i, distance: number): boolean;
         /**
          * Calculate squared distance to the given Vector
@@ -869,21 +860,17 @@ declare module "@package/net/minecraft/core" {
         /**
          * Offset this vector upwards by the given distance.
          */
-        setX(distance: number): $Vec3i;
+        setZ(distance: number): $Vec3i;
         /**
          * Offset this vector upwards by the given distance.
          */
         setY(distance: number): $Vec3i;
-        /**
-         * Offset this vector upwards by the given distance.
-         */
-        setZ(distance: number): $Vec3i;
+        static offsetCodec(maxOffset: number): $Codec<$Vec3i>;
         distToLowCornerSqr(x: number, arg1: number, y: number): number;
         distManhattan(other: $Vec3i): number;
         distToCenterSqr(position: $Position): number;
         distToCenterSqr(x: number, arg1: number, y: number): number;
         closerToCenterThan(position: $Position, distance: number): boolean;
-        static offsetCodec(maxOffset: number): $Codec<$Vec3i>;
         static ZERO: $Vec3i;
         static CODEC: $Codec<$Vec3i>;
         constructor(x: number, y: number, z: number);
@@ -898,11 +885,11 @@ declare module "@package/net/minecraft/core" {
         constructor(keys: $List_<T>);
     }
     export class $Direction8 extends $Enum<$Direction8> {
-        getDirections(): $Set<$Direction>;
         static values(): $Direction8[];
         static valueOf(arg0: string): $Direction8;
         getStepX(): number;
         getStepZ(): number;
+        getDirections(): $Set<$Direction>;
         static NORTH_WEST: $Direction8;
         static NORTH: $Direction8;
         static NORTH_EAST: $Direction8;
@@ -911,9 +898,9 @@ declare module "@package/net/minecraft/core" {
         static SOUTH: $Direction8;
         static SOUTH_WEST: $Direction8;
         static EAST: $Direction8;
-        get directions(): $Set<$Direction>;
         get stepX(): number;
         get stepZ(): number;
+        get directions(): $Set<$Direction>;
     }
     /**
      * Values that may be interpreted as {@link $Direction8}.
@@ -927,22 +914,22 @@ declare module "@package/net/minecraft/core" {
         is(arg0: $Predicate_<$ResourceKey<T>>): boolean;
         is(arg0: $ResourceLocation_): boolean;
         tags(): $Stream<$TagKey<T>>;
-        canSerializeIn(arg0: $HolderOwner<T>): boolean;
         unwrapKey(): ($ResourceKey<T>) | undefined;
-        getRegisteredName(): string;
+        canSerializeIn(arg0: $HolderOwner<T>): boolean;
         /**
          * Test if a tag matches the object this holder holds.
          */
         isTag(tagKey: $ResourceLocation_): boolean;
-        getDelegate(): $Holder<T>;
+        getRegisteredName(): string;
         getKey(): $ResourceKey<T>;
+        getDelegate(): $Holder<T>;
         unwrapLookup(): $HolderLookup$RegistryLookup<T>;
         getData<T>(arg0: $DataMapType<T, T>): T;
         constructor(value: T);
         get bound(): boolean;
         get registeredName(): string;
-        get delegate(): $Holder<T>;
         get key(): $ResourceKey<T>;
+        get delegate(): $Holder<T>;
     }
     /**
      * Values that may be interpreted as {@link $Holder$Direct}.
@@ -974,18 +961,18 @@ declare module "@package/net/minecraft/core" {
          * @return the integer ID used to identify the given object
          */
         getId(value: T): number;
-        byId(id: number): T;
-        byIdOrThrow(id: number): T;
         /**
          * @return the integer ID used to identify the given object
          */
         getIdOrThrow(value: T): number;
+        byIdOrThrow(id: number): T;
+        byId(id: number): T;
     }
     export class $RegistrySetBuilder$RegistryStub<T> extends $Record {
+        lifecycle(): $Lifecycle;
         apply(state: $RegistrySetBuilder$BuildState_): void;
         key(): $ResourceKey<$Registry<T>>;
         bootstrap(): $RegistrySetBuilder$RegistryBootstrap<T>;
-        lifecycle(): $Lifecycle;
         collectRegisteredValues(buildState: $RegistrySetBuilder$BuildState_): $RegistrySetBuilder$RegistryContents<T>;
         constructor(key: $ResourceKey_<$Registry<T>>, lifecycle: $Lifecycle, bootstrap: $RegistrySetBuilder$RegistryBootstrap_<T>);
     }
@@ -1003,20 +990,20 @@ declare module "@package/net/minecraft/core" {
          * @return whether this registry should be synced to clients
          */
         isEmpty(): boolean;
-        register(key: $ResourceKey_<T>, value: T, registrationInfo: $RegistrationInfo_): $Holder$Reference<T>;
         register(arg0: number, arg1: $ResourceKey_<T>, arg2: T, arg3: $RegistrationInfo_): $Holder$Reference<T>;
+        register(key: $ResourceKey_<T>, value: T, registrationInfo: $RegistrationInfo_): $Holder$Reference<T>;
         registerIdMapping(arg0: $ResourceKey_<T>, arg1: number): void;
-        createRegistrationLookup(): $HolderGetter<T>;
-        getOrCreateHolderOrThrow(key: $ResourceKey_<T>): $Holder$Reference<T>;
         /**
          * @deprecated
          */
         unfreeze(): void;
-        getToId(): $Reference2IntMap<T>;
+        createRegistrationLookup(): $HolderGetter<T>;
+        getOrCreateHolderOrThrow(key: $ResourceKey_<T>): $Holder$Reference<T>;
         /**
          * @return whether this registry should be synced to clients
          */
         getFrozen(): boolean;
+        getToId(): $Reference2IntMap<T>;
         getByValue(): $Map<T, $Holder$Reference<T>>;
         neoforge$getRegistrationInfos(): $Map<$ResourceKey<T>, $RegistrationInfo>;
         toId: $Reference2IntMap<T>;
@@ -1042,15 +1029,15 @@ declare module "@package/net/minecraft/core" {
          */
         lookup<T>(registryKey: $ResourceKey_<$Registry<T>>): ($HolderLookup$RegistryLookup<T>) | undefined;
         freeze(): $RegistryAccess$Frozen;
-        listRegistries(): $Stream<$ResourceKey<$Registry<never>>>;
-        allRegistriesLifecycle(): $Lifecycle;
         /**
          * A variant of `#registry(ResourceKey)` that throws if the registry does not exist.
          */
         registryOrThrow<E>(registryKey: $ResourceKey_<$Registry<E>>): $Registry<E>;
+        listRegistries(): $Stream<$ResourceKey<$Registry<never>>>;
+        allRegistriesLifecycle(): $Lifecycle;
+        lookupOrThrow<T>(registryKey: $ResourceKey_<$Registry<T>>): $HolderLookup$RegistryLookup<T>;
         createSerializationContext<V>(ops: $DynamicOps<V>): $RegistryOps<V>;
         asGetterLookup(): $HolderGetter$Provider;
-        lookupOrThrow<T>(registryKey: $ResourceKey_<$Registry<T>>): $HolderLookup$RegistryLookup<T>;
         /**
          * Get the registry owned by this registry access by the given key. If it doesn't exist, the default registry of registries is queried instead, which contains static registries such as blocks.
          * The returned registry can not guarantee that it is writable here, so the return type is widened to `Registry` instead.
@@ -1066,9 +1053,9 @@ declare module "@package/net/minecraft/core" {
     }
     export class $Cursor3D {
         advance(): boolean;
-        nextX(): number;
-        nextZ(): number;
         nextY(): number;
+        nextZ(): number;
+        nextX(): number;
         getNextType(): number;
         static TYPE_CORNER: number;
         static TYPE_INSIDE: number;
@@ -1084,9 +1071,9 @@ declare module "@package/net/minecraft/core" {
         static valueOf(arg0: string): $Direction$Plane;
         iterator(): $Iterator<$Direction>;
         stream(): $Stream<$Direction>;
-        getRandomAxis(random: $RandomSource): $Direction$Axis;
-        shuffledCopy(random: $RandomSource): $List<$Direction>;
         getRandomDirection(random: $RandomSource): $Direction;
+        shuffledCopy(random: $RandomSource): $List<$Direction>;
+        getRandomAxis(random: $RandomSource): $Direction$Axis;
         spliterator(): $Spliterator<$Direction>;
         forEach(arg0: $Consumer_<$Direction>): void;
         or(arg0: $Predicate_<$Direction>): $Predicate<$Direction>;
@@ -1101,6 +1088,7 @@ declare module "@package/net/minecraft/core" {
      */
     export type $Direction$Plane_ = "horizontal" | "vertical";
     export class $BlockBox extends $Record implements $Iterable<$BlockPos> {
+        extend(direction: $Direction_, amount: number): $BlockBox;
         include(pos: $BlockPos_): $BlockBox;
         min(): $BlockPos;
         max(): $BlockPos;
@@ -1110,11 +1098,10 @@ declare module "@package/net/minecraft/core" {
         offset(vector: $Vec3i): $BlockBox;
         contains(pos: $BlockPos_): boolean;
         move(direction: $Direction_, amount: number): $BlockBox;
-        extend(direction: $Direction_, amount: number): $BlockBox;
-        sizeX(): number;
-        sizeY(): number;
-        sizeZ(): number;
         aabb(): $AABB;
+        sizeZ(): number;
+        sizeY(): number;
+        sizeX(): number;
         isBlock(): boolean;
         spliterator(): $Spliterator<$BlockPos>;
         forEach(arg0: $Consumer_<$BlockPos>): void;
@@ -1132,9 +1119,9 @@ declare module "@package/net/minecraft/core" {
     export interface $HolderLookup$RegistryLookup<T> extends $HolderLookup<T>, $HolderOwner<T> {
         key(): $ResourceKey<$Registry<T>>;
         getData<A>(arg0: $DataMapType<T, A>, arg1: $ResourceKey_<T>): A;
-        registryLifecycle(): $Lifecycle;
-        filterElements(predicate: $Predicate_<T>): $HolderLookup$RegistryLookup<T>;
         filterFeatures(enabledFeatures: $FeatureFlagSet): $HolderLookup$RegistryLookup<T>;
+        filterElements(predicate: $Predicate_<T>): $HolderLookup$RegistryLookup<T>;
+        registryLifecycle(): $Lifecycle;
     }
     export class $RegistrySynchronization {
         static networkedRegistries(registryAccess: $LayeredRegistryAccess<$RegistryLayer_>): $Stream<$RegistryAccess$RegistryEntry<never>>;
@@ -1144,57 +1131,58 @@ declare module "@package/net/minecraft/core" {
         constructor();
     }
     export class $SectionPos extends $Vec3i {
-        static aroundAndAtBlockPos(pos: $BlockPos_, consumer: $LongConsumer_): void;
-        static aroundAndAtBlockPos(pos: number, arg1: $LongConsumer_): void;
-        static aroundAndAtBlockPos(x: number, y: number, z: number, consumer: $LongConsumer_): void;
         asLong(): number;
-        static asLong(x: number, y: number, z: number): number;
         static asLong(blockPos: $BlockPos_): number;
+        static asLong(x: number, y: number, z: number): number;
+        center(): $BlockPos;
+        static of(packed: number): $SectionPos;
         static of(chunkX: number, chunkY: number, chunkZ: number): $SectionPos;
         static of(pos: $BlockPos_): $SectionPos;
         static of(chunkPos: $ChunkPos, y: number): $SectionPos;
-        static of(packed: number): $SectionPos;
-        static of(entity: $EntityAccess): $SectionPos;
         static of(position: $Position): $SectionPos;
+        static of(entity: $EntityAccess): $SectionPos;
+        offset(chunkX: number, chunkY: number, chunkZ: number): $SectionPos;
         static offset(packed: number, arg1: $Direction_): number;
         static offset(packed: number, arg1: number, dx: number, dy: number): number;
         static x(packed: number): number;
         x(): number;
-        static z(packed: number): number;
         z(): number;
+        static z(packed: number): number;
         static y(packed: number): number;
         y(): number;
         origin(): $BlockPos;
-        chunk(): $ChunkPos;
-        static sectionToBlockCoord(blockCoord: number): number;
         static sectionToBlockCoord(pos: number, offset: number): number;
-        center(): $BlockPos;
-        static betweenClosedStream(x1: number, y1: number, z1: number, x2: number, y2: number, z2: number): $Stream<$SectionPos>;
-        static blockToSectionCoord(blockCoord: number): number;
-        static blockToSectionCoord(coord: number): number;
-        static cube(center: $SectionPos, radius: number): $Stream<$SectionPos>;
+        static sectionToBlockCoord(blockCoord: number): number;
         static sectionRelative(blockCoord: number): number;
-        static posToSectionCoord(coord: number): number;
-        static sectionRelativeX(x: number): number;
-        static sectionRelativePos(pos: $BlockPos_): number;
-        static getZeroNode(levelPos: number): number;
         static getZeroNode(x: number, z: number): number;
-        blocksInside(): $Stream<$BlockPos>;
-        static blockToSection(levelPos: number): number;
-        relativeToBlockZ(x: number): number;
+        static getZeroNode(levelPos: number): number;
+        static sectionRelativePos(pos: $BlockPos_): number;
+        static sectionRelativeX(x: number): number;
         relativeToBlockX(x: number): number;
-        relativeToBlockY(x: number): number;
-        static aroundChunk(chunkPos: $ChunkPos, x: number, y: number, z: number): $Stream<$SectionPos>;
-        static sectionRelativeY(x: number): number;
-        static sectionRelativeZ(x: number): number;
         relativeToBlockPos(pos: number): $BlockPos;
-        maxBlockX(): number;
+        static sectionRelativeY(x: number): number;
+        static posToSectionCoord(coord: number): number;
+        static blockToSection(levelPos: number): number;
+        static aroundChunk(chunkPos: $ChunkPos, x: number, y: number, z: number): $Stream<$SectionPos>;
+        relativeToBlockZ(x: number): number;
+        blocksInside(): $Stream<$BlockPos>;
+        static sectionRelativeZ(x: number): number;
+        relativeToBlockY(x: number): number;
+        chunk(): $ChunkPos;
+        static cube(center: $SectionPos, radius: number): $Stream<$SectionPos>;
+        static betweenClosedStream(x1: number, y1: number, z1: number, x2: number, y2: number, z2: number): $Stream<$SectionPos>;
+        static aroundAndAtBlockPos(pos: number, arg1: $LongConsumer_): void;
+        static aroundAndAtBlockPos(pos: $BlockPos_, consumer: $LongConsumer_): void;
+        static aroundAndAtBlockPos(x: number, y: number, z: number, consumer: $LongConsumer_): void;
+        static blockToSectionCoord(coord: number): number;
+        static blockToSectionCoord(blockCoord: number): number;
         static bottomOf(chunk: $ChunkAccess): $SectionPos;
-        minBlockX(): number;
-        minBlockY(): number;
-        minBlockZ(): number;
-        maxBlockY(): number;
         maxBlockZ(): number;
+        minBlockY(): number;
+        minBlockX(): number;
+        minBlockZ(): number;
+        maxBlockX(): number;
+        maxBlockY(): number;
         static ZERO: $Vec3i;
         static SECTION_MASK: number;
         static CODEC: $Codec<$Vec3i>;
@@ -1209,10 +1197,10 @@ declare module "@package/net/minecraft/core" {
     export class $HolderGetter<T> {
     }
     export interface $HolderGetter<T> {
-        get(resourceKey: $ResourceKey_<T>): ($Holder$Reference<T>) | undefined;
-        get(tagKey: $TagKey_<T>): ($HolderSet$Named<T>) | undefined;
         getOrThrow(tagKey: $TagKey_<T>): $HolderSet$Named<T>;
         getOrThrow(resourceKey: $ResourceKey_<T>): $Holder$Reference<T>;
+        get(resourceKey: $ResourceKey_<T>): ($Holder$Reference<T>) | undefined;
+        get(tagKey: $TagKey_<T>): ($HolderSet$Named<T>) | undefined;
     }
     export class $Position {
     }
@@ -1225,11 +1213,11 @@ declare module "@package/net/minecraft/core" {
         getName(): string;
         static values(): $Direction$AxisDirection[];
         static valueOf(arg0: string): $Direction$AxisDirection;
-        opposite(): $Direction$AxisDirection;
         /**
          * @return the offset for this AxisDirection. 1 for POSITIVE, -1 for NEGATIVE
          */
         getStep(): number;
+        opposite(): $Direction$AxisDirection;
         static POSITIVE: $Direction$AxisDirection;
         static NEGATIVE: $Direction$AxisDirection;
         get step(): number;
@@ -1248,10 +1236,6 @@ declare module "@package/net/minecraft/core" {
      */
     export type $RegistrySetBuilder$PatchedRegistries_ = { full?: $HolderLookup$Provider, patches?: $HolderLookup$Provider,  } | [full?: $HolderLookup$Provider, patches?: $HolderLookup$Provider, ];
     export class $Direction extends $Enum<$Direction> implements $StringRepresentable {
-        /**
-         * @return the normalized Vector that points in the direction of this Direction.
-         */
-        getNormal(): $Vec3i;
         getName(): string;
         static get(axisDirection: $Direction$AxisDirection_, axis: $Direction$Axis_): $Direction;
         static values(): $Direction[];
@@ -1262,21 +1246,39 @@ declare module "@package/net/minecraft/core" {
         static stream(): $Stream<$Direction>;
         step(): $Vector3f;
         static rotate(matrix: $Matrix4f, direction: $Direction_): $Direction;
+        /**
+         * @return the angle in degrees corresponding to this Direction.
+         * @see #fromYRot
+         */
+        getYaw(): number;
+        static fromAxisAndDirection(axis: $Direction$Axis_, axisDirection: $Direction$AxisDirection_): $Direction;
+        /**
+         * Rotate this Direction around the Y axis clockwise (NORTH => EAST => SOUTH => WEST => NORTH)
+         */
+        getClockWise(): $Direction;
+        getClockWise(axis: $Direction$Axis_): $Direction;
         static getRandom(random: $RandomSource): $Direction;
-        getSerializedName(): string;
         /**
          * @return the Direction specified by the given name or null if no such Direction exists
          */
         static byName(name: string | null): $Direction;
-        getRotation(): $Quaternionf;
-        static fromAxisAndDirection(axis: $Direction$Axis_, axisDirection: $Direction$AxisDirection_): $Direction;
-        getAxisDirection(): $Direction$AxisDirection;
-        static allShuffled(random: $RandomSource): $Collection<$Direction>;
+        getCounterClockWise(axis: $Direction$Axis_): $Direction;
         /**
-         * @return the Direction corresponding to the given horizontal index (0-3). Out of bounds values are wrapped around. The order is S-W-N-E.
-         * @see #get2DDataValue
+         * Rotate this Direction around the Y axis clockwise (NORTH => EAST => SOUTH => WEST => NORTH)
          */
-        static from3DDataValue(horizontalIndex: number): $Direction;
+        getCounterClockWise(): $Direction;
+        getAxisDirection(): $Direction$AxisDirection;
+        isFacingAngle(degrees: number): boolean;
+        /**
+         * Gets the `Direction` values for the provided entity's
+         * looking direction. Dependent on yaw and pitch of entity looking.
+         */
+        static orderedByNearest(entity: $Entity): $Direction[];
+        /**
+         * @return the angle in degrees corresponding to this Direction.
+         * @see #fromYRot
+         */
+        getPitch(): number;
         /**
          * @return the Direction corresponding to the given horizontal index (0-3). Out of bounds values are wrapped around. The order is S-W-N-E.
          * @see #get2DDataValue
@@ -1285,41 +1287,22 @@ declare module "@package/net/minecraft/core" {
         /**
          * @return the index of this horizontal facing (0-3). The order is S-W-N-E
          */
-        getIndex(): number;
+        getHorizontalIndex(): number;
         /**
-         * @return the angle in degrees corresponding to this Direction.
-         * @see #fromYRot
+         * @return the Direction corresponding to the given horizontal index (0-3). Out of bounds values are wrapped around. The order is S-W-N-E.
+         * @see #get2DDataValue
          */
-        getPitch(): number;
-        static getFacingAxis(entity: $Entity, axis: $Direction$Axis_): $Direction;
+        static from3DDataValue(horizontalIndex: number): $Direction;
+        static allShuffled(random: $RandomSource): $Collection<$Direction>;
         /**
          * @return the index of this horizontal facing (0-3). The order is S-W-N-E
          */
-        getHorizontalIndex(): number;
-        isFacingAngle(degrees: number): boolean;
+        getIndex(): number;
+        static getFacingAxis(entity: $Entity, axis: $Direction$Axis_): $Direction;
         /**
-         * Gets the `Direction` values for the provided entity's
-         * looking direction. Dependent on yaw and pitch of entity looking.
+         * @return the normalized Vector that points in the direction of this Direction.
          */
-        static orderedByNearest(entity: $Entity): $Direction[];
-        /**
-         * Rotate this Direction around the Y axis clockwise (NORTH => EAST => SOUTH => WEST => NORTH)
-         */
-        getOpposite(): $Direction;
-        static fromDelta(x: number, y: number, z: number): $Direction;
-        getCounterClockWise(axis: $Direction$Axis_): $Direction;
-        /**
-         * Rotate this Direction around the Y axis clockwise (NORTH => EAST => SOUTH => WEST => NORTH)
-         */
-        getCounterClockWise(): $Direction;
-        getAxis(): $Direction$Axis;
-        static getNearest(x: number, y: number, z: number): $Direction;
-        static getNearest(x: number, arg1: number, y: number): $Direction;
-        static getNearest(ois: $Vec3_): $Direction;
-        /**
-         * @return the Direction corresponding to the given angle in degrees (0-360). Out of bounds values are wrapped around. An angle of 0 is SOUTH, an angle of 90 would be WEST.
-         */
-        static fromYRot(angle: number): $Direction;
+        getNormal(): $Vec3i;
         /**
          * @return the index of this horizontal facing (0-3). The order is S-W-N-E
          */
@@ -1332,16 +1315,21 @@ declare module "@package/net/minecraft/core" {
          * @return the index of this horizontal facing (0-3). The order is S-W-N-E
          */
         getY(): number;
+        getAxis(): $Direction$Axis;
+        getSerializedName(): string;
+        static getNearest(x: number, y: number, z: number): $Direction;
+        static getNearest(x: number, arg1: number, y: number): $Direction;
+        static getNearest(ois: $Vec3_): $Direction;
+        getRotation(): $Quaternionf;
         /**
-         * @return the angle in degrees corresponding to this Direction.
-         * @see #fromYRot
+         * @return the Direction corresponding to the given angle in degrees (0-360). Out of bounds values are wrapped around. An angle of 0 is SOUTH, an angle of 90 would be WEST.
          */
-        getYaw(): number;
-        getClockWise(axis: $Direction$Axis_): $Direction;
+        static fromYRot(angle: number): $Direction;
         /**
          * Rotate this Direction around the Y axis clockwise (NORTH => EAST => SOUTH => WEST => NORTH)
          */
-        getClockWise(): $Direction;
+        getOpposite(): $Direction;
+        static fromDelta(x: number, y: number, z: number): $Direction;
         getRemappedEnumConstantName(): string;
         static DOWN: $Direction;
         static CODEC: $StringRepresentable$EnumCodec<$Direction>;
@@ -1353,19 +1341,19 @@ declare module "@package/net/minecraft/core" {
         static SOUTH: $Direction;
         static EAST: $Direction;
         static STREAM_CODEC: $StreamCodec<$ByteBuf, $Direction>;
-        get normal(): $Vec3i;
-        get serializedName(): string;
-        get rotation(): $Quaternionf;
+        get yaw(): number;
         get axisDirection(): $Direction$AxisDirection;
-        get index(): number;
         get pitch(): number;
         get horizontalIndex(): number;
-        get opposite(): $Direction;
-        get axis(): $Direction$Axis;
+        get index(): number;
+        get normal(): $Vec3i;
         get x(): number;
         get z(): number;
         get y(): number;
-        get yaw(): number;
+        get axis(): $Direction$Axis;
+        get serializedName(): string;
+        get rotation(): $Quaternionf;
+        get opposite(): $Direction;
         get remappedEnumConstantName(): string;
     }
     /**
@@ -1381,8 +1369,8 @@ declare module "@package/net/minecraft/core" {
     export interface $DefaultedRegistry<T> extends $Registry<T> {
         get(arg0: $ResourceLocation_ | null): T;
         getKey(arg0: T): $ResourceLocation;
-        byId(arg0: number): T;
         getDefaultKey(): $ResourceLocation;
+        byId(arg0: number): T;
         get defaultKey(): $ResourceLocation;
     }
     export class $RegistrySetBuilder$LazyHolder<T> extends $Holder$Reference<T> {
@@ -1405,9 +1393,9 @@ declare module "@package/net/minecraft/core" {
         stream(): $Stream<$Holder<$Holder<T>>>;
         contains(holder: $Holder_<$Holder<T>>): boolean;
         unwrap(): $Either<$TagKey<$Holder<T>>, $List<$Holder<$Holder<T>>>>;
+        unwrapKey(): ($TagKey<$Holder<T>>) | undefined;
         canSerializeIn(owner: $HolderOwner<$Holder_<T>>): boolean;
         getRandomElement(random: $RandomSource): ($Holder<$Holder<T>>) | undefined;
-        unwrapKey(): ($TagKey<$Holder<T>>) | undefined;
     }
     /**
      * Values that may be interpreted as {@link $HolderSet}.

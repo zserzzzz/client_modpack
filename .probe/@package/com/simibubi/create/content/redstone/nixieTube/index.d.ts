@@ -31,7 +31,7 @@ import { $UseOnContext } from "@package/net/minecraft/world/item/context";
 import { $IWrenchable } from "@package/com/simibubi/create/content/equipment/wrench";
 import { $ResourceKey } from "@package/net/minecraft/resources";
 import { $PoseStack } from "@package/com/mojang/blaze3d/vertex";
-import { $HorizontalDirectionalBlock, $Block$BlockStatePairKey, $SoundType, $SimpleWaterloggedBlock, $Block } from "@package/net/minecraft/world/level/block";
+import { $HorizontalDirectionalBlock, $Block$BlockStatePairKey, $SimpleWaterloggedBlock, $SoundType, $Block } from "@package/net/minecraft/world/level/block";
 import { $BlockEntityTicker, $BlockEntityType, $BlockEntityType_, $BlockEntity } from "@package/net/minecraft/world/level/block/entity";
 import { $RegisterCapabilitiesEvent } from "@package/net/neoforged/neoforge/capabilities";
 
@@ -42,12 +42,12 @@ declare module "@package/com/simibubi/create/content/redstone/nixieTube" {
     export class $NixieTubeBlockEntity extends $SmartBlockEntity {
         static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
         getRedstoneStrength(): number;
+        updateRedstoneStrength(arg0: number): void;
+        getFullText(): $MutableComponent;
         displayEmptyText(arg0: number): void;
+        displayCustomText(arg0: string, arg1: number): void;
         clearCustomText(): void;
         reactsToRedstone(): boolean;
-        displayCustomText(arg0: string, arg1: number): void;
-        getFullText(): $MutableComponent;
-        updateRedstoneStrength(arg0: number): void;
         getDisplayedStrings(): $Couple<string>;
         updateDisplayedStrings(): void;
         worldPosition: $BlockPos;
@@ -76,33 +76,33 @@ declare module "@package/com/simibubi/create/content/redstone/nixieTube" {
         constructor();
     }
     export class $NixieTubeBlock extends $DoubleFaceAttachedBlock implements $IBE<$NixieTubeBlockEntity>, $IWrenchable, $SimpleWaterloggedBlock, $SpecialBlockItemRequirement {
-        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
         static colorOf(arg0: $BlockState_): $DyeColor;
-        static walkNixies(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: boolean, arg3: $BiConsumer_<$BlockPos, number>): boolean;
-        getBlockEntityType(): $BlockEntityType<$NixieTubeBlockEntity>;
-        getColor(): $DyeColor;
-        getBlockEntityClass(): $Class<$NixieTubeBlockEntity>;
-        static withColor(arg0: $BlockState_, arg1: $DyeColor_): $BlockState;
         static updateDisplayedRedstoneValue(arg0: $NixieTubeBlockEntity, arg1: $BlockState_, arg2: boolean): void;
+        static getFacing(arg0: $BlockState_): $Direction;
+        getColor(): $DyeColor;
+        static withColor(arg0: $BlockState_, arg1: $DyeColor_): $BlockState;
         static areNixieBlocksEqual(arg0: $BlockState_, arg1: $BlockState_): boolean;
         static isInComputerControlledRow(arg0: $LevelAccessor, arg1: $BlockPos_): boolean;
         static getLeftNixieDirection(arg0: $BlockState_): $Direction;
         static getRightNixieDirection(arg0: $BlockState_): $Direction;
-        static getFacing(arg0: $BlockState_): $Direction;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$NixieTubeBlockEntity>): void;
+        static walkNixies(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: boolean, arg3: $BiConsumer_<$BlockPos, number>): boolean;
+        getBlockEntityClass(): $Class<$NixieTubeBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$NixieTubeBlockEntity>;
+        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$NixieTubeBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($NixieTubeBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$NixieTubeBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $NixieTubeBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$NixieTubeBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($NixieTubeBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$NixieTubeBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
@@ -136,20 +136,20 @@ declare module "@package/com/simibubi/create/content/redstone/nixieTube" {
         static FACE: $EnumProperty<$DoubleFaceAttachedBlock$DoubleAttachFace>;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties, arg1: $DyeColor_);
-        get blockEntityType(): $BlockEntityType<$NixieTubeBlockEntity>;
         get color(): $DyeColor;
         get blockEntityClass(): $Class<$NixieTubeBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$NixieTubeBlockEntity>;
     }
     export class $NixieTubeRenderer extends $SafeBlockEntityRenderer<$NixieTubeBlockEntity> {
-        static drawInWorldString(arg0: $PoseStack, arg1: $MultiBufferSource_, arg2: string, arg3: number): void;
         static drawTube(arg0: $PoseStack, arg1: $MultiBufferSource_, arg2: string, arg3: number, arg4: $DyeColor_, arg5: $RandomSource): void;
+        static drawInWorldString(arg0: $PoseStack, arg1: $MultiBufferSource_, arg2: string, arg3: number): void;
         constructor(arg0: $BlockEntityRendererProvider$Context);
     }
     export class $DoubleFaceAttachedBlock$DoubleAttachFace extends $Enum<$DoubleFaceAttachedBlock$DoubleAttachFace> implements $StringRepresentable {
         static values(): $DoubleFaceAttachedBlock$DoubleAttachFace[];
         static valueOf(arg0: string): $DoubleFaceAttachedBlock$DoubleAttachFace;
-        getSerializedName(): string;
         xRot(): number;
+        getSerializedName(): string;
         getRemappedEnumConstantName(): string;
         static FLOOR: $DoubleFaceAttachedBlock$DoubleAttachFace;
         static WALL: $DoubleFaceAttachedBlock$DoubleAttachFace;

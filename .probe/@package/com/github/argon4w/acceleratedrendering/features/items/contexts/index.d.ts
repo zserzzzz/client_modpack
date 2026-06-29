@@ -11,5 +11,5 @@ declare module "@package/com/github/argon4w/acceleratedrendering/features/items/
     /**
      * Values that may be interpreted as {@link $AcceleratedModelRenderContext}.
      */
-    export type $AcceleratedModelRenderContext_ = { randomSource?: $RandomSource, layerColors?: $ILayerColors_,  } | [randomSource?: $RandomSource, layerColors?: $ILayerColors_, ];
+    export type $AcceleratedModelRenderContext_ = { layerColors?: $ILayerColors_, randomSource?: $RandomSource,  } | [layerColors?: $ILayerColors_, randomSource?: $RandomSource, ];
 }

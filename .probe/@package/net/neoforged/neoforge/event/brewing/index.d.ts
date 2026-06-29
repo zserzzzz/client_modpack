@@ -29,11 +29,11 @@ declare module "@package/net/neoforged/neoforge/event/brewing" {
      * Fired on both client and server side, on the main event bus.
      */
     export class $RegisterBrewingRecipesEvent extends $Event {
-        getBuilder(): $PotionBrewing$Builder;
         getRegistryAccess(): $RegistryAccess;
+        getBuilder(): $PotionBrewing$Builder;
         constructor(builder: $PotionBrewing$Builder, registryAccess: $RegistryAccess);
-        get builder(): $PotionBrewing$Builder;
         get registryAccess(): $RegistryAccess;
+        get builder(): $PotionBrewing$Builder;
     }
     /**
      * PotionBrewEvent.Post is fired when a potion is brewed in the brewing stand.
@@ -70,8 +70,8 @@ declare module "@package/net/neoforged/neoforge/event/brewing" {
      * If this event is canceled, and items have been modified, PotionBrewEvent.Post will automatically be fired.
      */
     export class $PotionBrewEvent$Pre extends $PotionBrewEvent implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(stacks: $NonNullList<$ItemStack_>);
     }
 }

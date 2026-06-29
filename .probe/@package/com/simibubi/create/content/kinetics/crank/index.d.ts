@@ -62,10 +62,10 @@ declare module "@package/com/simibubi/create/content/kinetics/crank" {
         constructor(arg0: $SmartBlockEntity);
     }
     export class $ValveHandleBlock extends $HandCrankBlock {
-        static onBlockActivated(arg0: $PlayerInteractEvent$RightClickBlock): void;
-        static dyed(arg0: $BlockBehaviour$Properties, arg1: $DyeColor_): $ValveHandleBlock;
         clicked(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_, arg3: $Player, arg4: $InteractionHand_): boolean;
         static copper(arg0: $BlockBehaviour$Properties): $ValveHandleBlock;
+        static dyed(arg0: $BlockBehaviour$Properties, arg1: $DyeColor_): $ValveHandleBlock;
+        static onBlockActivated(arg0: $PlayerInteractEvent$RightClickBlock): void;
         explosionResistance: number;
         color: $DyeColor;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -97,23 +97,23 @@ declare module "@package/com/simibubi/create/content/kinetics/crank" {
         hasCollision: boolean;
     }
     export class $HandCrankBlock extends $DirectionalKineticBlock implements $IBE<$HandCrankBlockEntity>, $ProperWaterloggedBlock {
-        getBlockEntityType(): $BlockEntityType<$HandCrankBlockEntity>;
         getBlockEntityClass(): $Class<$HandCrankBlockEntity>;
         getRotationSpeed(): number;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$HandCrankBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$HandCrankBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$HandCrankBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($HandCrankBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$HandCrankBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $HandCrankBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
-        fluidState(arg0: $BlockState_): $FluidState;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$HandCrankBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($HandCrankBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$HandCrankBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         updateWater(arg0: $LevelAccessor, arg1: $BlockState_, arg2: $BlockPos_): void;
+        fluidState(arg0: $BlockState_): $FluidState;
+        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -145,14 +145,14 @@ declare module "@package/com/simibubi/create/content/kinetics/crank" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$HandCrankBlockEntity>;
         get blockEntityClass(): $Class<$HandCrankBlockEntity>;
         get rotationSpeed(): number;
+        get blockEntityType(): $BlockEntityType<$HandCrankBlockEntity>;
     }
     export class $HandCrankBlockEntity extends $GeneratingKineticBlockEntity {
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
-        getRenderedHandle(): $SuperByteBuffer;
         turn(arg0: boolean): void;
+        getRenderedHandle(): $SuperByteBuffer;
         getIndependentAngle(arg0: number): number;
         shouldRenderShaft(): boolean;
         level: $Level;

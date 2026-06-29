@@ -22,5 +22,5 @@ declare module "@package/com/simibubi/create/api/stress" {
     /**
      * Values that may be interpreted as {@link $BlockStressValues$GeneratedRpm}.
      */
-    export type $BlockStressValues$GeneratedRpm_ = { mayGenerateLess?: boolean, value?: number,  } | [mayGenerateLess?: boolean, value?: number, ];
+    export type $BlockStressValues$GeneratedRpm_ = { value?: number, mayGenerateLess?: boolean,  } | [value?: number, mayGenerateLess?: boolean, ];
 }

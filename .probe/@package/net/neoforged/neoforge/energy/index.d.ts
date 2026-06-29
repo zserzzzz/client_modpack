@@ -30,6 +30,11 @@ declare module "@package/net/neoforged/neoforge/energy" {
          */
         getMaxEnergyStored(): number;
         /**
+         * Returns if this storage can have energy extracted.
+         * If this is false, then any calls to extractEnergy will return 0.
+         */
+        canExtract(): boolean;
+        /**
          * Adds energy to the storage. Returns the amount of energy that was accepted.
          */
         receiveEnergy(toReceive: number, simulate: boolean): number;
@@ -37,11 +42,6 @@ declare module "@package/net/neoforged/neoforge/energy" {
          * Adds energy to the storage. Returns the amount of energy that was accepted.
          */
         extractEnergy(toReceive: number, simulate: boolean): number;
-        /**
-         * Returns if this storage can have energy extracted.
-         * If this is false, then any calls to extractEnergy will return 0.
-         */
-        canExtract(): boolean;
         get energyStored(): number;
         get maxEnergyStored(): number;
     }
@@ -59,9 +59,9 @@ declare module "@package/net/neoforged/neoforge/energy" {
         canReceive(): boolean;
         getEnergyStored(): number;
         getMaxEnergyStored(): number;
+        canExtract(): boolean;
         receiveEnergy(maxReceive: number, simulate: boolean): number;
         extractEnergy(maxReceive: number, simulate: boolean): number;
-        canExtract(): boolean;
         static INSTANCE: $EmptyEnergyStorage;
         get energyStored(): number;
         get maxEnergyStored(): number;
@@ -73,14 +73,14 @@ declare module "@package/net/neoforged/neoforge/energy" {
      * Created with consent and permission of King Lemming and Team CoFH. Released with permission under LGPL 2.1 when bundled with Forge.
      */
     export class $EnergyStorage implements $IEnergyStorage, $INBTSerializable<$Tag> {
-        canReceive(): boolean;
         deserializeNBT(provider: $HolderLookup$Provider, nbt: $Tag_): void;
         serializeNBT(provider: $HolderLookup$Provider): $Tag;
+        canReceive(): boolean;
         getEnergyStored(): number;
         getMaxEnergyStored(): number;
+        canExtract(): boolean;
         receiveEnergy(toReceive: number, simulate: boolean): number;
         extractEnergy(toReceive: number, simulate: boolean): number;
-        canExtract(): boolean;
         constructor(capacity: number, maxReceive: number, maxExtract: number, energy: number);
         constructor(capacity: number, maxReceive: number, maxExtract: number);
         constructor(capacity: number, maxTransfer: number);
@@ -100,9 +100,9 @@ declare module "@package/net/neoforged/neoforge/energy" {
         canReceive(): boolean;
         getEnergyStored(): number;
         getMaxEnergyStored(): number;
+        canExtract(): boolean;
         receiveEnergy(toReceive: number, simulate: boolean): number;
         extractEnergy(toReceive: number, simulate: boolean): number;
-        canExtract(): boolean;
         /**
          * Creates a new ItemEnergyStorage with a transfer rate equivalent to the capacity.
          */

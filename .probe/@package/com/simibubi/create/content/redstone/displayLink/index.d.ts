@@ -50,18 +50,18 @@ export * as target from "@package/com/simibubi/create/content/redstone/displayLi
 declare module "@package/com/simibubi/create/content/redstone/displayLink" {
     export class $DisplayLinkContext {
         level(): $Level;
+        sourceConfig(): $CompoundTag;
+        blockEntity(): $DisplayLinkBlockEntity;
         getTargetPos(): $BlockPos;
         getSourceBlockEntity(): $BlockEntity;
-        getTargetBlockEntity(): $BlockEntity;
         getSourcePos(): $BlockPos;
-        blockEntity(): $DisplayLinkBlockEntity;
-        sourceConfig(): $CompoundTag;
+        getTargetBlockEntity(): $BlockEntity;
         flapDisplayContext: $Object;
         constructor(arg0: $Level_, arg1: $DisplayLinkBlockEntity);
         get targetPos(): $BlockPos;
         get sourceBlockEntity(): $BlockEntity;
-        get targetBlockEntity(): $BlockEntity;
         get sourcePos(): $BlockPos;
+        get targetBlockEntity(): $BlockEntity;
     }
     export class $DisplayLinkConfigurationPacket extends $BlockEntityConfigurationPacket<$DisplayLinkBlockEntity> {
         static STREAM_CODEC: $StreamCodec<$ByteBuf, $DisplayLinkConfigurationPacket>;
@@ -71,15 +71,15 @@ declare module "@package/com/simibubi/create/content/redstone/displayLink" {
         target(arg0: $BlockPos_): void;
         transform(arg0: $BlockEntity, arg1: $StructureTransform): void;
         getSourcePosition(): $BlockPos;
-        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
         getDirection(): $Direction;
-        handler$gkn001$sable$accountForSubLevels(arg0: $CallbackInfoReturnable<any>): void;
+        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
+        setSourceConfig(arg0: $CompoundTag_): void;
         getSourceConfig(): $CompoundTag;
         updateGatheredData(): void;
-        setSourceConfig(arg0: $CompoundTag_): void;
         getTargetPosition(): $BlockPos;
-        onNoLongerPowered(): void;
         tickSource(): void;
+        handler$gkn001$sable$accountForSubLevels(arg0: $CallbackInfoReturnable<any>): void;
+        onNoLongerPowered(): void;
         worldPosition: $BlockPos;
         refreshTicks: number;
         level: $Level;
@@ -96,15 +96,15 @@ declare module "@package/com/simibubi/create/content/redstone/displayLink" {
         get targetPosition(): $BlockPos;
     }
     export class $ClickToLinkBlockItem extends $BlockItem {
-        isValidTarget(arg0: $LevelAccessor, arg1: $BlockPos_): boolean;
-        wrapOperation$gkm000$sable$accountForSubLevels$mixinextras$bridge$11(arg0: $BlockPos_, arg1: $Vec3i, arg2: number, arg3: $Operation_<any>, arg4: $LocalRef<any>): boolean;
         static clientTick(): void;
+        isValidTarget(arg0: $LevelAccessor, arg1: $BlockPos_): boolean;
+        getMessageTranslationKey(): string;
+        wrapOperation$gkm000$sable$accountForSubLevels(arg0: $BlockPos_, arg1: $Vec3i, arg2: number, arg3: $Operation_<any>, arg4: $Level_): boolean;
         getSelectionBounds(arg0: $BlockPos_): $AABB;
         placeWhenInvalid(): boolean;
-        getMessageTranslationKey(): string;
-        getMaxDistanceFromSelection(): number;
         static linkableItemAlwaysPlacesWhenUsed(arg0: $PlayerInteractEvent$RightClickBlock): void;
-        wrapOperation$gkm000$sable$accountForSubLevels(arg0: $BlockPos_, arg1: $Vec3i, arg2: number, arg3: $Operation_<any>, arg4: $Level_): boolean;
+        getMaxDistanceFromSelection(): number;
+        wrapOperation$gkm000$sable$accountForSubLevels$mixinextras$bridge$11(arg0: $BlockPos_, arg1: $Vec3i, arg2: number, arg3: $Operation_<any>, arg4: $LocalRef<any>): boolean;
         static BASE_ATTACK_DAMAGE_ID: $ResourceLocation;
         static DEFAULT_MAX_STACK_SIZE: number;
         static MAX_BAR_WIDTH: number;
@@ -138,8 +138,8 @@ declare module "@package/com/simibubi/create/content/redstone/displayLink" {
         constructor(arg0: $DisplayLinkBlockEntity);
     }
     export class $ClickToLinkBlockItem$ClickToLinkData extends $Record {
-        selectedDim(): $ResourceLocation;
         selectedPos(): $BlockPos;
+        selectedDim(): $ResourceLocation;
         static CODEC: $Codec<$ClickToLinkBlockItem$ClickToLinkData>;
         static STREAM_CODEC: $StreamCodec<$ByteBuf, $ClickToLinkBlockItem$ClickToLinkData>;
         constructor(selectedPos: $BlockPos_, selectedDim: $ResourceLocation_);
@@ -147,7 +147,7 @@ declare module "@package/com/simibubi/create/content/redstone/displayLink" {
     /**
      * Values that may be interpreted as {@link $ClickToLinkBlockItem$ClickToLinkData}.
      */
-    export type $ClickToLinkBlockItem$ClickToLinkData_ = { selectedPos?: $BlockPos_, selectedDim?: $ResourceLocation_,  } | [selectedPos?: $BlockPos_, selectedDim?: $ResourceLocation_, ];
+    export type $ClickToLinkBlockItem$ClickToLinkData_ = { selectedDim?: $ResourceLocation_, selectedPos?: $BlockPos_,  } | [selectedDim?: $ResourceLocation_, selectedPos?: $BlockPos_, ];
     export class $DisplayLinkBlockItem extends $ClickToLinkBlockItem {
         static BASE_ATTACK_DAMAGE_ID: $ResourceLocation;
         static DEFAULT_MAX_STACK_SIZE: number;
@@ -160,11 +160,11 @@ declare module "@package/com/simibubi/create/content/redstone/displayLink" {
         constructor(arg0: $Block_, arg1: $Item$Properties);
     }
     export class $LinkWithBulbBlockEntity extends $SmartBlockEntity {
-        getGlow(arg0: number): number;
         pulse(): void;
+        getGlow(arg0: number): number;
         sendPulseNextSync(): void;
-        getBulbFacing(arg0: $BlockState_): $Direction;
         getBulbOffset(arg0: $BlockState_): $Vec3;
+        getBulbFacing(arg0: $BlockState_): $Direction;
         worldPosition: $BlockPos;
         level: $Level;
         static ATTACHMENTS_NBT_KEY: string;
@@ -172,18 +172,18 @@ declare module "@package/com/simibubi/create/content/redstone/displayLink" {
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
     }
     export class $DisplayLinkBlock extends $WrenchableDirectionalBlock implements $IBE<$DisplayLinkBlockEntity>, $BlockSubLevelAssemblyListener {
-        getBlockEntityType(): $BlockEntityType<$DisplayLinkBlockEntity>;
         getBlockEntityClass(): $Class<$DisplayLinkBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$DisplayLinkBlockEntity>;
         afterMove(arg0: $ServerLevel, arg1: $ServerLevel, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockPos_): void;
         static sendToGatherers<T extends $DisplaySource>(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BiConsumer_<$DisplayLinkBlockEntity, T>, arg3: $Class<T>): void;
         static notifyGatherers(arg0: $LevelAccessor, arg1: $BlockPos_): void;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$DisplayLinkBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$DisplayLinkBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($DisplayLinkBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$DisplayLinkBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $DisplayLinkBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$DisplayLinkBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($DisplayLinkBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$DisplayLinkBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         beforeMove(arg0: $ServerLevel, arg1: $ServerLevel, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockPos_): void;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
@@ -216,8 +216,8 @@ declare module "@package/com/simibubi/create/content/redstone/displayLink" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$DisplayLinkBlockEntity>;
         get blockEntityClass(): $Class<$DisplayLinkBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$DisplayLinkBlockEntity>;
     }
     export class $LinkBulbRenderer extends $SafeBlockEntityRenderer<$LinkWithBulbBlockEntity> {
         constructor(arg0: $BlockEntityRendererProvider$Context);

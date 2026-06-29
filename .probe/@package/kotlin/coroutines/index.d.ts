@@ -6,8 +6,8 @@ declare module "@package/kotlin/coroutines" {
         get<E extends $CoroutineContext$Element>(arg0: $CoroutineContext$Key<E>): E;
         getKey(): $CoroutineContext$Key<never>;
         plus(arg0: $CoroutineContext): $CoroutineContext;
-        fold<R>(arg0: R, arg1: $Function2_<R, $CoroutineContext$Element, R>): R;
         minusKey(arg0: $CoroutineContext$Key<never>): $CoroutineContext;
+        fold<R>(arg0: R, arg1: $Function2_<R, $CoroutineContext$Element, R>): R;
         constructor(arg0: $CoroutineContext$Key<never>);
         get key(): $CoroutineContext$Key<never>;
     }
@@ -16,8 +16,8 @@ declare module "@package/kotlin/coroutines" {
     export interface $CoroutineContext$Element extends $CoroutineContext {
         get<E extends $CoroutineContext$Element>(arg0: $CoroutineContext$Key<E>): E;
         getKey(): $CoroutineContext$Key<never>;
-        fold<R>(arg0: R, arg1: $Function2_<R, $CoroutineContext$Element, R>): R;
         minusKey(arg0: $CoroutineContext$Key<never>): $CoroutineContext;
+        fold<R>(arg0: R, arg1: $Function2_<R, $CoroutineContext$Element, R>): R;
         get key(): $CoroutineContext$Key<never>;
     }
     export class $ContinuationInterceptor$Key implements $CoroutineContext$Key<$ContinuationInterceptor> {
@@ -27,8 +27,8 @@ declare module "@package/kotlin/coroutines" {
     export interface $CoroutineContext {
         get<E extends $CoroutineContext$Element>(arg0: $CoroutineContext$Key<E>): E;
         plus(arg0: $CoroutineContext): $CoroutineContext;
-        fold<R>(arg0: R, arg1: $Function2_<R, $CoroutineContext$Element, R>): R;
         minusKey(arg0: $CoroutineContext$Key<never>): $CoroutineContext;
+        fold<R>(arg0: R, arg1: $Function2_<R, $CoroutineContext$Element, R>): R;
     }
     export class $Continuation<T> {
     }
@@ -46,8 +46,8 @@ declare module "@package/kotlin/coroutines" {
     }
     export interface $ContinuationInterceptor extends $CoroutineContext$Element {
         get<E extends $CoroutineContext$Element>(arg0: $CoroutineContext$Key<E>): E;
-        interceptContinuation<T>(arg0: $Continuation<T>): $Continuation<T>;
         minusKey(arg0: $CoroutineContext$Key<never>): $CoroutineContext;
+        interceptContinuation<T>(arg0: $Continuation<T>): $Continuation<T>;
         releaseInterceptedContinuation(arg0: $Continuation<never>): void;
     }
     export class $AbstractCoroutineContextKey<B extends $CoroutineContext$Element, E extends B> implements $CoroutineContext$Key<E> {

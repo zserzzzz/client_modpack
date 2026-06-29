@@ -37,9 +37,9 @@ declare module "@package/com/simibubi/create/content/fluids/drain" {
     export class $ItemDrainBlockEntity extends $SmartBlockEntity implements $IHaveGoggleInformation {
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
         static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
-        setHeldItem(arg0: $TransportedItemStack, arg1: $Direction_): void;
         addToGoggleTooltip(arg0: $List_<$Component_>, arg1: boolean): boolean;
         getHeldItemStack(): $ItemStack;
+        setHeldItem(arg0: $TransportedItemStack, arg1: $Direction_): void;
         containedFluidTooltip(arg0: $List_<$Component_>, arg1: boolean, arg2: $IFluidHandler): boolean;
         getIcon(arg0: boolean): $ItemStack;
         worldPosition: $BlockPos;
@@ -51,19 +51,19 @@ declare module "@package/com/simibubi/create/content/fluids/drain" {
         get heldItemStack(): $ItemStack;
     }
     export class $ItemDrainBlock extends $Block implements $IWrenchable, $IBE<$ItemDrainBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$ItemDrainBlockEntity>;
         getBlockEntityClass(): $Class<$ItemDrainBlockEntity>;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        getBlockEntityType(): $BlockEntityType<$ItemDrainBlockEntity>;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ItemDrainBlockEntity>): void;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ItemDrainBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ItemDrainBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ItemDrainBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $ItemDrainBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ItemDrainBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ItemDrainBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ItemDrainBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -93,45 +93,45 @@ declare module "@package/com/simibubi/create/content/fluids/drain" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$ItemDrainBlockEntity>;
         get blockEntityClass(): $Class<$ItemDrainBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$ItemDrainBlockEntity>;
     }
     export class $ItemDrainItemHandler implements $IItemHandler {
+        getStackInSlot(arg0: number): $ItemStack;
+        getSlots(): number;
+        insertItem(arg0: number, arg1: $ItemStack_, arg2: boolean): $ItemStack;
+        extractItem(arg0: number, arg1: number, arg2: boolean): $ItemStack;
         getSlotLimit(arg0: number): number;
         isItemValid(arg0: number, arg1: $ItemStack_): boolean;
-        extractItem(arg0: number, arg1: number, arg2: boolean): $ItemStack;
-        getSlots(): number;
-        getStackInSlot(arg0: number): $ItemStack;
-        insertItem(arg0: number, arg1: $ItemStack_, arg2: boolean): $ItemStack;
-        kjs$isMutable(): boolean;
         kjs$setStackInSlot(slot: number, stack: $ItemStack_): void;
-        kjs$self(): $IItemHandler;
+        kjs$isMutable(): boolean;
         kjs$getBlock(level: $Level_): $LevelBlock;
-        getHeight(): number;
-        insertItem(stack: $ItemStack_, simulate: boolean): $ItemStack;
+        kjs$self(): $IItemHandler;
         setChanged(): void;
+        insertItem(stack: $ItemStack_, simulate: boolean): $ItemStack;
         asContainer(): $Container;
-        countNonEmpty(): number;
         countNonEmpty(match: $ItemPredicate_): number;
-        getWidth(): number;
-        isEmpty(): boolean;
-        count(): number;
-        count(match: $ItemPredicate_): number;
-        find(match: $ItemPredicate_): number;
-        find(): number;
+        countNonEmpty(): number;
+        getHeight(): number;
+        getAllItems(): $List<$ItemStack>;
         clear(match: $ItemPredicate_): void;
         clear(): void;
-        getAllItems(): $List<$ItemStack>;
+        find(match: $ItemPredicate_): number;
+        find(): number;
+        count(): number;
+        count(match: $ItemPredicate_): number;
+        isEmpty(): boolean;
+        getWidth(): number;
         insertItem(slot: number, stack: $ItemStack_, simulate: boolean): $ItemStack;
-        extractItem(slot: number, amount: number, simulate: boolean): $ItemStack;
-        isItemValid(slot: number, stack: $ItemStack_): boolean;
         getStackInSlot(slot: number): $ItemStack;
+        isItemValid(slot: number, stack: $ItemStack_): boolean;
+        extractItem(slot: number, amount: number, simulate: boolean): $ItemStack;
         getSlotLimit(slot: number): number;
         getSlots(): number;
         constructor(arg0: $ItemDrainBlockEntity, arg1: $Direction_);
         get height(): number;
-        get width(): number;
-        get empty(): boolean;
         get allItems(): $List<$ItemStack>;
+        get empty(): boolean;
+        get width(): number;
     }
 }

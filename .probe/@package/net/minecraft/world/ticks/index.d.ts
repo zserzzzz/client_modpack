@@ -19,6 +19,24 @@ declare module "@package/net/minecraft/world/ticks" {
     export class $ContainerSingleItem {
     }
     export interface $ContainerSingleItem extends $Container {
+        isEmpty(): boolean;
+        /**
+         * Returns the stack in the given slot.
+         */
+        getItem(slot: number): $ItemStack;
+        /**
+         * Returns the stack in the given slot.
+         */
+        splitTheItem(slot: number): $ItemStack;
+        removeTheItem(): $ItemStack;
+        /**
+         * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
+         */
+        removeItem(slot: number, amount: number): $ItemStack;
+        /**
+         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
+         */
+        clearContent(): void;
         /**
          * Returns the stack in the given slot.
          */
@@ -27,40 +45,22 @@ declare module "@package/net/minecraft/world/ticks" {
          * Returns the number of slots in the inventory.
          */
         getContainerSize(): number;
-        isEmpty(): boolean;
-        /**
-         * Returns the stack in the given slot.
-         */
-        getItem(slot: number): $ItemStack;
-        /**
-         * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
-         */
-        removeItem(slot: number, amount: number): $ItemStack;
         /**
          * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
          */
         setItem(slot: number, stack: $ItemStack_): void;
-        /**
-         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
-         */
-        clearContent(): void;
         setTheItem(item: $ItemStack_): void;
         getTheItem(): $ItemStack;
-        /**
-         * Returns the stack in the given slot.
-         */
-        splitTheItem(slot: number): $ItemStack;
-        removeTheItem(): $ItemStack;
-        get containerSize(): number;
         get empty(): boolean;
+        get containerSize(): number;
     }
     export class $ScheduledTick<T> extends $Record {
         priority(): $TickPriority;
         type(): T;
         pos(): $BlockPos;
         static probe<T>(type: T, pos: $BlockPos_): $ScheduledTick<T>;
-        subTickOrder(): number;
         triggerTick(): number;
+        subTickOrder(): number;
         static INTRA_TICK_DRAIN_ORDER: $Comparator<$ScheduledTick<never>>;
         static UNIQUE_TICK_HASH: $Hash$Strategy<$ScheduledTick<never>>;
         static DRAIN_ORDER: $Comparator<$ScheduledTick<never>>;
@@ -70,18 +70,18 @@ declare module "@package/net/minecraft/world/ticks" {
     /**
      * Values that may be interpreted as {@link $ScheduledTick}.
      */
-    export type $ScheduledTick_<T> = { subTickOrder?: number, type?: any, pos?: $BlockPos_, priority?: $TickPriority_, triggerTick?: number,  } | [subTickOrder?: number, type?: any, pos?: $BlockPos_, priority?: $TickPriority_, triggerTick?: number, ];
+    export type $ScheduledTick_<T> = { triggerTick?: number, subTickOrder?: number, type?: any, pos?: $BlockPos_, priority?: $TickPriority_,  } | [triggerTick?: number, subTickOrder?: number, type?: any, pos?: $BlockPos_, priority?: $TickPriority_, ];
     export class $LevelTicks<T> implements $LevelTickAccess<T> {
+        addContainer(chunkPos: $ChunkPos, chunkTicks: $LevelChunkTicks<T>): void;
         count(): number;
         schedule(tick: $ScheduledTick_<T>): void;
         tick(gameTime: number, arg1: number, maxAllowedTicks: $BiConsumer_<$BlockPos, T>): void;
-        hasScheduledTick(pos: $BlockPos_, type: T): boolean;
-        addContainer(chunkPos: $ChunkPos, chunkTicks: $LevelChunkTicks<T>): void;
-        clearArea(area: $BoundingBox): void;
         willTickThisTick(pos: $BlockPos_, type: T): boolean;
+        hasScheduledTick(pos: $BlockPos_, type: T): boolean;
+        copyArea(area: $BoundingBox, offset: $Vec3i): void;
         removeContainer(chunkPos: $ChunkPos): void;
         copyAreaFrom(levelTicks: $LevelTicks<T>, area: $BoundingBox, offset: $Vec3i): void;
-        copyArea(area: $BoundingBox, offset: $Vec3i): void;
+        clearArea(area: $BoundingBox): void;
         constructor(tickCheck: $LongPredicate_, profiler: $Supplier_<$ProfilerFiller>);
     }
     export class $TickPriority extends $Enum<$TickPriority> {
@@ -125,8 +125,8 @@ declare module "@package/net/minecraft/world/ticks" {
     export class $WorldGenTickAccess<T> implements $LevelTickAccess<T> {
         count(): number;
         schedule(tick: $ScheduledTick_<T>): void;
-        hasScheduledTick(pos: $BlockPos_, type: T): boolean;
         willTickThisTick(pos: $BlockPos_, type: T): boolean;
+        hasScheduledTick(pos: $BlockPos_, type: T): boolean;
         constructor(containerGetter: $Function_<$BlockPos, $TickContainerAccess<T>>);
     }
     export class $LevelTickAccess<T> {
@@ -143,8 +143,8 @@ declare module "@package/net/minecraft/world/ticks" {
         removeIf(predicate: $Predicate_<$ScheduledTick<T>>): void;
         poll(): $ScheduledTick<T>;
         getAll(): $Stream<$ScheduledTick<T>>;
-        unpack(gameTime: number): void;
         hasScheduledTick(pos: $BlockPos_, type: T): boolean;
+        unpack(gameTime: number): void;
         sable$copy(arg0: $LevelChunkTicks<any>): void;
         setOnTickAdded(onTickAdded: $BiConsumer_<$LevelChunkTicks<T>, $ScheduledTick<T>> | null): void;
         getTicks(): $List<$SavedTick<T>>;
@@ -204,5 +204,5 @@ declare module "@package/net/minecraft/world/ticks" {
     /**
      * Values that may be interpreted as {@link $SavedTick}.
      */
-    export type $SavedTick_<T> = { priority?: $TickPriority_, pos?: $BlockPos_, delay?: number, type?: any,  } | [priority?: $TickPriority_, pos?: $BlockPos_, delay?: number, type?: any, ];
+    export type $SavedTick_<T> = { pos?: $BlockPos_, delay?: number, type?: any, priority?: $TickPriority_,  } | [pos?: $BlockPos_, delay?: number, type?: any, priority?: $TickPriority_, ];
 }

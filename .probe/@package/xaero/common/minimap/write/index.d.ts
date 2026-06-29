@@ -1,15 +1,15 @@
-import { $BlockStateShortShapeCache } from "@package/xaero/common/cache";
 import { $Level_, $Level } from "@package/net/minecraft/world/level";
 import { $MinimapSession } from "@package/xaero/hud/minimap/module";
+import { $IXaeroMinimap } from "@package/xaero/common";
+import { $LevelChunk } from "@package/net/minecraft/world/level/chunk";
+import { $List_ } from "@package/java/util";
+import { $BlockStateShortShapeCache } from "@package/xaero/common/cache";
 import { $BlockPos$MutableBlockPos } from "@package/net/minecraft/core";
 import { $MinimapTile, $MinimapChunk } from "@package/xaero/common/minimap/region";
 import { $BlockState_ } from "@package/net/minecraft/world/level/block/state";
-import { $IXaeroMinimap } from "@package/xaero/common";
 import { $ResourceKey_ } from "@package/net/minecraft/resources";
-import { $LevelChunk } from "@package/net/minecraft/world/level/chunk";
 import { $Block } from "@package/net/minecraft/world/level/block";
 import { $HighlighterRegistry, $DimensionHighlighterHandler } from "@package/xaero/common/minimap/highlight";
-import { $List_ } from "@package/java/util";
 import { $Heightmap$Types_ } from "@package/net/minecraft/world/level/levelgen";
 
 declare module "@package/xaero/common/minimap/write" {
@@ -17,30 +17,30 @@ declare module "@package/xaero/common/minimap/write" {
         constructor();
     }
     export class $MinimapWriter {
-        cleanup(): void;
         onRender(): void;
-        setupDimensionHighlightHandler(arg0: $ResourceKey_<$Level>): void;
-        getFixedSkyLightBlockBrightness(arg0: number, arg1: number, arg2: number): number;
-        getDimensionHighlightHandler(): $DimensionHighlighterHandler;
-        getUpdateRadiusInChunks(): number;
+        cleanup(): void;
         getSectionBasedHeight(arg0: $LevelChunk, arg1: number): number;
-        getLoadingMapChunkX(): number;
-        getLoadingSideInChunks(): number;
         setClearBlockColours(arg0: boolean): void;
+        getUpdateRadiusInChunks(): number;
+        getLoadedLevels(): number;
+        getLoadedMapChunkZ(): number;
+        getLoadedMapChunkX(): number;
+        getLoadedBlocks(): $MinimapChunk[][];
+        getLoadedCaving(): number;
+        getLoadingSideInChunks(): number;
+        getLoadedSideInChunks(): number;
+        getLoadingMapChunkX(): number;
         isLoadedNonWorldMap(): boolean;
         getLoadingMapChunkZ(): number;
-        getLoadedSideInChunks(): number;
         findBlock(arg0: $Level_, arg1: $LevelChunk, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: boolean, arg8: $BlockPos$MutableBlockPos, arg9: $BlockPos$MutableBlockPos, arg10: number, arg11: boolean, arg12: $List_<number>, arg13: $List_<$BlockState_>, arg14: number, arg15: boolean, arg16: $List_<number>, arg17: boolean, arg18: boolean, arg19: $BlockPos$MutableBlockPos, arg20: boolean): $Block;
-        getLoadSide(): number;
-        getMapCoord(arg0: number, arg1: number): number;
+        getDimensionHighlightHandler(): $DimensionHighlighterHandler;
         getBlockBrightness(arg0: number, arg1: number, arg2: number, arg3: number): number;
         loadBlockColor(arg0: number, arg1: $Level_, arg2: number, arg3: number, arg4: $LevelChunk, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number, arg10: $Heightmap$Types_, arg11: $MinimapTile, arg12: $MinimapChunk, arg13: $MinimapChunk, arg14: $MinimapChunk, arg15: $MinimapChunk, arg16: number, arg17: number, arg18: number, arg19: boolean, arg20: boolean, arg21: number, arg22: number, arg23: number, arg24: boolean, arg25: number, arg26: number, arg27: boolean, arg28: number, arg29: number, arg30: boolean, arg31: $List_<number>, arg32: $List_<$BlockState_>, arg33: $List_<number>, arg34: number[], arg35: number[], arg36: number[], arg37: number[], arg38: number[], arg39: number[], arg40: number[], arg41: number[], arg42: number[], arg43: boolean, arg44: number, arg45: $BlockPos$MutableBlockPos, arg46: $BlockPos$MutableBlockPos, arg47: number, arg48: number, arg49: $IXaeroMinimap, arg50: $MinimapWriterHelper, arg51: number, arg52: boolean, arg53: boolean, arg54: number, arg55: number, arg56: number, arg57: number, arg58: boolean, arg59: boolean, arg60: boolean, arg61: boolean, arg62: $BlockPos$MutableBlockPos, arg63: boolean): $MinimapTile;
-        getLoadedMapChunkZ(): number;
-        getLoadedCaving(): number;
-        getLoadedMapChunkX(): number;
+        getLoadSide(): number;
+        getMapCoord(arg0: number, arg1: number): number;
         resetShortBlocks(): void;
-        getLoadedBlocks(): $MinimapChunk[][];
-        getLoadedLevels(): number;
+        getFixedSkyLightBlockBrightness(arg0: number, arg1: number, arg2: number): number;
+        setupDimensionHighlightHandler(arg0: $ResourceKey_<$Level>): void;
         maxTime: number;
         static NO_Y_VALUE: number;
         loadingLightOverlayMaxLight: number;
@@ -62,20 +62,20 @@ declare module "@package/xaero/common/minimap/write" {
         loadedLightOverlayMinLight: number;
         loadingLightOverlayType: number;
         constructor(arg0: $IXaeroMinimap, arg1: $MinimapSession, arg2: $BlockStateShortShapeCache, arg3: $HighlighterRegistry);
-        set upDimensionHighlightHandler(value: $ResourceKey_<$Level>);
-        get dimensionHighlightHandler(): $DimensionHighlighterHandler;
-        get updateRadiusInChunks(): number;
-        get loadingMapChunkX(): number;
-        get loadingSideInChunks(): number;
         set clearBlockColours(value: boolean);
-        get loadedNonWorldMap(): boolean;
-        get loadingMapChunkZ(): number;
-        get loadedSideInChunks(): number;
-        get loadSide(): number;
+        get updateRadiusInChunks(): number;
+        get loadedLevels(): number;
         get loadedMapChunkZ(): number;
-        get loadedCaving(): number;
         get loadedMapChunkX(): number;
         get loadedBlocks(): $MinimapChunk[][];
-        get loadedLevels(): number;
+        get loadedCaving(): number;
+        get loadingSideInChunks(): number;
+        get loadedSideInChunks(): number;
+        get loadingMapChunkX(): number;
+        get loadedNonWorldMap(): boolean;
+        get loadingMapChunkZ(): number;
+        get dimensionHighlightHandler(): $DimensionHighlighterHandler;
+        get loadSide(): number;
+        set upDimensionHighlightHandler(value: $ResourceKey_<$Level>);
     }
 }

@@ -8,19 +8,19 @@ import { $Vec3_, $Vec3 } from "@package/net/minecraft/world/phys";
 
 declare module "@package/net/minecraft/world/entity/ai/navigation" {
     export class $GroundPathNavigation extends $PathNavigation {
+        setCanWalkOverFences(avoidSun: boolean): void;
+        setCanPassDoors(avoidSun: boolean): void;
+        setCanOpenDoors(avoidSun: boolean): void;
         /**
          * If on ground or swimming and can swim
          */
-        canOpenDoors(): boolean;
+        canPassDoors(): boolean;
         setAvoidSun(avoidSun: boolean): void;
         hasValidPathType(pathType: $PathType_): boolean;
         /**
          * If on ground or swimming and can swim
          */
-        canPassDoors(): boolean;
-        setCanWalkOverFences(avoidSun: boolean): void;
-        setCanOpenDoors(avoidSun: boolean): void;
-        setCanPassDoors(avoidSun: boolean): void;
+        canOpenDoors(): boolean;
         mob: $Mob;
         lastStuckCheck: number;
         level: $Level;
@@ -36,8 +36,8 @@ declare module "@package/net/minecraft/world/entity/ai/navigation" {
         timeoutCachedNode: $Vec3i;
         timeLastRecompute: number;
         constructor(mob: $Mob, level: $Level_);
-        set avoidSun(value: boolean);
         set canWalkOverFences(value: boolean);
+        set avoidSun(value: boolean);
     }
     export class $AmphibiousPathNavigation extends $PathNavigation {
         mob: $Mob;
@@ -73,57 +73,27 @@ declare module "@package/net/minecraft/world/entity/ai/navigation" {
          * Sets the active `Path` to `null`.
          */
         tick(): void;
+        shouldRecomputePath(pos: $BlockPos_): boolean;
+        isStableDestination(pos: $BlockPos_): boolean;
+        getMaxDistanceToWaypoint(): number;
+        static isClearForMovementBetween(mob: $Mob, pos1: $Vec3_, pos2: $Vec3_, allowSwimming: boolean): boolean;
         /**
          * If on ground or swimming and can swim
          */
-        isInProgress(): boolean;
-        getTargetPos(): $BlockPos;
-        canCutCorner(pathType: $PathType_): boolean;
-        getNodeEvaluator(): $NodeEvaluator;
+        isStuck(): boolean;
         /**
          * Sets the active `Path` to `null`.
          */
-        followThePath(): void;
-        getTempMobPos(): $Vec3;
-        /**
-         * If on ground or swimming and can swim
-         */
-        canUpdatePath(): boolean;
-        /**
-         * Checks if entity haven't been moved when last checked and if so, stops the current navigation.
-         */
-        doStuckDetection(positionVec3: $Vec3_): void;
-        /**
-         * Sets the speed
-         */
-        setSpeedModifier(speed: number): void;
-        /**
-         * Checks if the specified entity can safely walk to the specified location.
-         */
-        canMoveDirectly(posVec31: $Vec3_, posVec32: $Vec3_): boolean;
-        createPathFinder(maxVisitedNodes: number): $PathFinder;
-        shouldRecomputePath(pos: $BlockPos_): boolean;
-        moveTo(x: number, arg1: number, y: number, arg3: number, z: number): boolean;
-        /**
-         * Try to find and set a path to XYZ. Returns `true` if successful.
-         */
-        moveTo(x: number, arg1: number, y: number, arg3: number): boolean;
-        /**
-         * Try to find and set a path to EntityLiving. Returns `true` if successful.
-         */
-        moveTo(entity: $Entity, speed: number): boolean;
-        /**
-         * Sets a new path. If it's different from the old path. Checks to adjust path for sun avoiding, and stores start coords.
-         */
-        moveTo(pathentity: $Path | null, speed: number): boolean;
+        trimPath(): void;
+        getGroundY(vec: $Vec3_): number;
         /**
          * Sets the active `Path` to `null`.
          */
         recomputePath(): void;
-        static isClearForMovementBetween(mob: $Mob, pos1: $Vec3_, pos2: $Vec3_, allowSwimming: boolean): boolean;
-        isStableDestination(pos: $BlockPos_): boolean;
-        getMaxDistanceToWaypoint(): number;
-        createPath(positions: $Set_<$BlockPos_>, distance: number): $Path;
+        /**
+         * If on ground or swimming and can swim
+         */
+        canFloat(): boolean;
         createPath(targets: $Set_<$BlockPos_>, regionOffset: number, offsetUpward: boolean, accuracy: number, followRange: number): $Path;
         /**
          * Returns a path to one of the given targets or null
@@ -135,6 +105,11 @@ declare module "@package/net/minecraft/world/entity/ai/navigation" {
         createPath(entity: $Entity, accuracy: number): $Path;
         createPath(pos: $BlockPos_, regionOffset: number, accuracy: number): $Path;
         /**
+         * Returns path to given BlockPos
+         */
+        createPath(pos: $BlockPos_, accuracy: number): $Path;
+        createPath(positions: $Set_<$BlockPos_>, distance: number): $Path;
+        /**
          * Returns a path to one of the elements of the stream or null
          */
         createPath(targets: $Stream<$BlockPos_>, accuracy: number): $Path;
@@ -142,29 +117,54 @@ declare module "@package/net/minecraft/world/entity/ai/navigation" {
          * Returns path to given BlockPos
          */
         createPath(x: number, arg1: number, y: number, arg3: number): $Path;
+        moveTo(x: number, arg1: number, y: number, arg3: number, z: number): boolean;
         /**
-         * Returns path to given BlockPos
+         * Sets a new path. If it's different from the old path. Checks to adjust path for sun avoiding, and stores start coords.
          */
-        createPath(pos: $BlockPos_, accuracy: number): $Path;
+        moveTo(pathentity: $Path | null, speed: number): boolean;
+        /**
+         * Try to find and set a path to XYZ. Returns `true` if successful.
+         */
+        moveTo(x: number, arg1: number, y: number, arg3: number): boolean;
+        /**
+         * Try to find and set a path to EntityLiving. Returns `true` if successful.
+         */
+        moveTo(entity: $Entity, speed: number): boolean;
+        setCanFloat(canSwim: boolean): void;
+        canCutCorner(pathType: $PathType_): boolean;
+        /**
+         * Checks if the specified entity can safely walk to the specified location.
+         */
+        canMoveDirectly(posVec31: $Vec3_, posVec32: $Vec3_): boolean;
+        createPathFinder(maxVisitedNodes: number): $PathFinder;
         /**
          * If on ground or swimming and can swim
          */
-        canFloat(): boolean;
-        /**
-         * If on ground or swimming and can swim
-         */
-        isStuck(): boolean;
+        canUpdatePath(): boolean;
         /**
          * Sets the active `Path` to `null`.
          */
-        trimPath(): void;
-        getGroundY(vec: $Vec3_): number;
-        setCanFloat(canSwim: boolean): void;
+        followThePath(): void;
+        /**
+         * Checks if entity haven't been moved when last checked and if so, stops the current navigation.
+         */
+        doStuckDetection(positionVec3: $Vec3_): void;
+        getTargetPos(): $BlockPos;
+        /**
+         * Sets the speed
+         */
+        setSpeedModifier(speed: number): void;
+        /**
+         * If on ground or swimming and can swim
+         */
+        isInProgress(): boolean;
+        getNodeEvaluator(): $NodeEvaluator;
+        getTempMobPos(): $Vec3;
+        setMaxVisitedNodesMultiplier(multiplier: number): void;
         /**
          * Sets the active `Path` to `null`.
          */
         resetMaxVisitedNodesMultiplier(): void;
-        setMaxVisitedNodesMultiplier(multiplier: number): void;
         mob: $Mob;
         lastStuckCheck: number;
         level: $Level;
@@ -181,10 +181,10 @@ declare module "@package/net/minecraft/world/entity/ai/navigation" {
         timeLastRecompute: number;
         constructor(mob: $Mob, level: $Level_);
         get done(): boolean;
-        get inProgress(): boolean;
-        get targetPos(): $BlockPos;
-        get tempMobPos(): $Vec3;
         get stuck(): boolean;
+        get targetPos(): $BlockPos;
+        get inProgress(): boolean;
+        get tempMobPos(): $Vec3;
         set maxVisitedNodesMultiplier(value: number);
     }
     export class $WaterBoundPathNavigation extends $PathNavigation {
@@ -222,16 +222,16 @@ declare module "@package/net/minecraft/world/entity/ai/navigation" {
         constructor(mob: $Mob, level: $Level_);
     }
     export class $FlyingPathNavigation extends $PathNavigation {
-        /**
-         * If on ground or swimming and can swim
-         */
-        canOpenDoors(): boolean;
+        setCanPassDoors(canOpenDoors: boolean): void;
+        setCanOpenDoors(canOpenDoors: boolean): void;
         /**
          * If on ground or swimming and can swim
          */
         canPassDoors(): boolean;
-        setCanOpenDoors(canOpenDoors: boolean): void;
-        setCanPassDoors(canOpenDoors: boolean): void;
+        /**
+         * If on ground or swimming and can swim
+         */
+        canOpenDoors(): boolean;
         mob: $Mob;
         lastStuckCheck: number;
         level: $Level;

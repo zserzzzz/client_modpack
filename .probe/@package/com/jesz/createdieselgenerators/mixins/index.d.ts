@@ -30,14 +30,14 @@ declare module "@package/com/jesz/createdieselgenerators/mixins" {
     export class $AgeableListModelAccessor {
     }
     export interface $AgeableListModelAccessor {
-        getBabyHeadScale(): number;
         getBabyZHeadOffset(): number;
         getScaleHead(): boolean;
         getBabyYHeadOffset(): number;
-        get babyHeadScale(): number;
+        getBabyHeadScale(): number;
         get babyZHeadOffset(): number;
         get scaleHead(): boolean;
         get babyYHeadOffset(): number;
+        get babyHeadScale(): number;
     }
     export class $UseOnContextInvoker {
     }

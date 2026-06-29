@@ -18,10 +18,10 @@ declare module "@package/com/ishland/c2me/rewrites/chunksystem/common/async_chun
     export interface $ProtoChunkExtension {
         getInitialMainThreadComputeFuture(): $CompletableFuture<void>;
         setInitialMainThreadComputeFuture(arg0: $CompletableFuture<void>): void;
-        getNeedBlending(): boolean;
-        setBlendingInfo(arg0: $ChunkPos, arg1: $List_<$BitSet>): void;
         setBlendingComputeFuture(arg0: $CompletableFuture<void>): void;
-        get needBlending(): boolean;
+        setBlendingInfo(arg0: $ChunkPos, arg1: $List_<$BitSet>): void;
+        getNeedBlending(): boolean;
         set blendingComputeFuture(value: $CompletableFuture<void>);
+        get needBlending(): boolean;
     }
 }

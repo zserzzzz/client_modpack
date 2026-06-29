@@ -53,23 +53,23 @@ declare module "@package/com/simibubi/create/content/decoration/copycat" {
         constructor(arg0: $BakedModel);
     }
     export class $CopycatSpecialCases {
-        static isBarsMaterial(arg0: $BlockState_): boolean;
         static isTrapdoorMaterial(arg0: $BlockState_): boolean;
+        static isBarsMaterial(arg0: $BlockState_): boolean;
         constructor();
     }
     export class $CopycatBlockEntity extends $SmartBlockEntity implements $SpecialBlockEntityItemRequirement, $TransformableBlockEntity, $PartialSafeNBT, $Clearable, $ICopycatBlockEntity {
         transform(arg0: $BlockEntity, arg1: $StructureTransform): void;
         clearContent(): void;
         getMaterial(): $BlockState;
-        setCTEnabledInternal(value: boolean): void;
-        setConsumedItemInternal(consumedItem: $ItemStack_): void;
-        setMaterialInternal(material: $BlockState_): void;
-        isCTEnabled(): boolean;
         getConsumedItem(): $ItemStack;
         setMaterial(arg0: $BlockState_): void;
         cycleMaterial(): boolean;
         hasCustomMaterial(): boolean;
         setConsumedItem(arg0: $ItemStack_): void;
+        isCTEnabled(): boolean;
+        setMaterialInternal(material: $BlockState_): void;
+        setCTEnabledInternal(value: boolean): void;
+        setConsumedItemInternal(consumedItem: $ItemStack_): void;
         init(): void;
         accept(other: $BlockEntity): void;
         getBlock(): $ICopycatBlock;
@@ -79,18 +79,18 @@ declare module "@package/com/simibubi/create/content/decoration/copycat" {
         static ATTACHMENTS_NBT_KEY: string;
         hasComparators: number;
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
+        set materialInternal(value: $BlockState_);
         set CTEnabledInternal(value: boolean);
         set consumedItemInternal(value: $ItemStack_);
-        set materialInternal(value: $BlockState_);
         get block(): $ICopycatBlock;
     }
     export class $WaterloggedCopycatBlock extends $CopycatBlock implements $ProperWaterloggedBlock {
-        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
-        fluidState(arg0: $BlockState_): $FluidState;
         updateWater(arg0: $LevelAccessor, arg1: $BlockState_, arg2: $BlockPos_): void;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
+        fluidState(arg0: $BlockState_): $FluidState;
+        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -124,10 +124,10 @@ declare module "@package/com/simibubi/create/content/decoration/copycat" {
     }
     export class $CopycatPanelBlock$PlacementHelper implements $IPlacementHelper {
         getOffset(arg0: $Player, arg1: $Level_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockHitResult, arg5: $ItemStack_): $PlacementOffset;
-        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
-        matchesState(arg0: $BlockState_): boolean;
-        displayGhost(arg0: $PlacementOffset): void;
         matchesItem(arg0: $ItemStack_): boolean;
+        matchesState(arg0: $BlockState_): boolean;
+        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
+        displayGhost(arg0: $PlacementOffset): void;
     }
     export class $CopycatStepModel extends $CopycatModel {
         static MATERIAL_PROPERTY: $ModelProperty<$BlockState>;
@@ -175,57 +175,58 @@ declare module "@package/com/simibubi/create/content/decoration/copycat" {
         constructor();
     }
     export class $FilteredBlockAndTintGetter implements $BlockAndTintGetter {
+        getMinBuildHeight(): number;
         getHeight(): number;
         getFluidState(arg0: $BlockPos_): $FluidState;
-        getMinBuildHeight(): number;
-        getLightEngine(): $LevelLightEngine;
-        getBlockTint(arg0: $BlockPos_, arg1: $ColorResolver_): number;
         getBlockState(arg0: $BlockPos_): $BlockState;
         getBlockEntity(arg0: $BlockPos_): $BlockEntity;
         getShade(arg0: $Direction_, arg1: boolean): number;
+        getBlockTint(arg0: $BlockPos_, arg1: $ColorResolver_): number;
+        getLightEngine(): $LevelLightEngine;
         getModelData(arg0: $BlockPos_): $ModelData;
-        getBrightness(arg0: $LightLayer_, arg1: $BlockPos_): number;
-        getRawBrightness(arg0: $BlockPos_, arg1: number): number;
         canSeeSky(arg0: $BlockPos_): boolean;
-        clipWithInteractionOverride(arg0: $Vec3_, arg1: $Vec3_, arg2: $BlockPos_, arg3: $VoxelShape, arg4: $BlockState_): $BlockHitResult;
-        getBlockFloorHeight(arg0: $VoxelShape, arg1: $Supplier_<$VoxelShape>): number;
-        getBlockFloorHeight(arg0: $BlockPos_): number;
-        handler$hbg000$aero_cam_sync$shiftClipForCameraTilt(arg0: $ClipContext, arg1: $CallbackInfoReturnable<any>): void;
-        isBlockInLine(arg0: $ClipBlockStateContext): $BlockHitResult;
-        getBlockEntity<T extends $BlockEntity>(arg0: $BlockPos_, arg1: $BlockEntityType_<T>): (T) | undefined;
-        getBlockStates(arg0: $AABB_): $Stream<$BlockState>;
-        clip(arg0: $ClipContext): $BlockHitResult;
-        getLightEmission(arg0: $BlockPos_): number;
+        getRawBrightness(arg0: $BlockPos_, arg1: number): number;
+        getBrightness(arg0: $LightLayer_, arg1: $BlockPos_): number;
         getMaxLightLevel(): number;
+        getBlockFloorHeight(arg0: $BlockPos_): number;
+        getBlockFloorHeight(arg0: $VoxelShape, arg1: $Supplier_<$VoxelShape>): number;
+        getLightEmission(arg0: $BlockPos_): number;
+        getBlockEntity<T extends $BlockEntity>(arg0: $BlockPos_, arg1: $BlockEntityType_<T>): (T) | undefined;
+        clip(arg0: $ClipContext): $BlockHitResult;
+        handler$hbg000$aero_cam_sync$shiftClipForCameraTilt(arg0: $ClipContext, arg1: $CallbackInfoReturnable<any>): void;
+        getBlockStates(arg0: $AABB_): $Stream<$BlockState>;
+        clipWithInteractionOverride(arg0: $Vec3_, arg1: $Vec3_, arg2: $BlockPos_, arg3: $VoxelShape, arg4: $BlockState_): $BlockHitResult;
+        isBlockInLine(arg0: $ClipBlockStateContext): $BlockHitResult;
         getShade(arg0: number, arg1: number, arg2: number, arg3: boolean): number;
-        getSectionIndexFromSectionY(arg0: number): number;
-        getSectionYFromSectionIndex(arg0: number): number;
         isOutsideBuildHeight(arg0: number): boolean;
         isOutsideBuildHeight(arg0: $BlockPos_): boolean;
-        getMaxBuildHeight(): number;
+        getSectionIndexFromSectionY(arg0: number): number;
+        getSectionYFromSectionIndex(arg0: number): number;
         getSectionsCount(): number;
+        getMaxSection(): number;
         getSectionIndex(arg0: number): number;
         getMinSection(): number;
-        getMaxSection(): number;
+        getMaxBuildHeight(): number;
         getAuxLightManager(arg0: $BlockPos_): $AuxiliaryLightManager;
         getAuxLightManager(arg0: $ChunkPos): $AuxiliaryLightManager;
         getBlockEntityRenderData(arg0: $BlockPos_): $Object;
-        getBiomeFabric(arg0: $BlockPos_): $Holder<$Biome>;
         hasBiomes(): boolean;
+        getBiomeFabric(arg0: $BlockPos_): $Holder<$Biome>;
         constructor(arg0: $BlockAndTintGetter, arg1: $Predicate_<$BlockPos>);
-        get height(): number;
         get minBuildHeight(): number;
+        get height(): number;
         get lightEngine(): $LevelLightEngine;
         get maxLightLevel(): number;
-        get maxBuildHeight(): number;
         get sectionsCount(): number;
-        get minSection(): number;
         get maxSection(): number;
+        get minSection(): number;
+        get maxBuildHeight(): number;
     }
     export class $SpecialCopycatPanelBlockState extends $SpecialBlockStateGen {
         constructor(arg0: string);
     }
     export class $CopycatStepBlock extends $WaterloggedCopycatBlock implements $ICopycatBlock {
+        getBlockEntity(worldIn: $BlockGetter, pos: $BlockPos_): $CopycatBlockEntity;
         static isOccluded(arg0: $BlockState_, arg1: $BlockState_, arg2: $Direction_): boolean;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -259,38 +260,38 @@ declare module "@package/com/simibubi/create/content/decoration/copycat" {
         constructor(arg0: $BlockBehaviour$Properties);
     }
     export class $CopycatBlock extends $Block implements $IBE<$CopycatBlockEntity>, $IWrenchable, $ICopycatBlock {
-        getBlockEntityType(): $BlockEntityType<$CopycatBlockEntity>;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        getBlockEntityClass(): $Class<$CopycatBlockEntity>;
-        static wrappedColor(): $BlockColor;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
         static getMaterial(arg0: $BlockGetter, arg1: $BlockPos_): $BlockState;
-        canConnectTexturesToward(arg0: $BlockAndTintGetter, arg1: $BlockPos_, arg2: $BlockPos_, arg3: $BlockState_): boolean;
-        shouldFaceAlwaysRender(arg0: $BlockState_, arg1: $Direction_): boolean;
-        isIgnoredConnectivitySide(arg0: $BlockAndTintGetter, arg1: $BlockState_, arg2: $Direction_, arg3: $BlockPos_, arg4: $BlockPos_): boolean;
-        handler$ijd000$createdieselgenerators$use(arg0: $ItemStack_, arg1: $BlockState_, arg2: $Level_, arg3: $BlockPos_, arg4: $Player, arg5: $InteractionHand_, arg6: $BlockHitResult, arg7: $CallbackInfoReturnable<any>): void;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
+        getBlockEntityClass(): $Class<$CopycatBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$CopycatBlockEntity>;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         prepareMaterial(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_, arg3: $Player, arg4: $InteractionHand_, arg5: $BlockHitResult, arg6: $BlockState_): $BlockState;
         canFaceBeOccluded(arg0: $BlockState_, arg1: $Direction_): boolean;
-        getAcceptedBlockState(arg0: $Level_, arg1: $BlockPos_, arg2: $ItemStack_, arg3: $Direction_): $BlockState;
+        static wrappedColor(): $BlockColor;
+        canConnectTexturesToward(arg0: $BlockAndTintGetter, arg1: $BlockPos_, arg2: $BlockPos_, arg3: $BlockState_): boolean;
+        isIgnoredConnectivitySide(arg0: $BlockAndTintGetter, arg1: $BlockState_, arg2: $Direction_, arg3: $BlockPos_, arg4: $BlockPos_): boolean;
+        shouldFaceAlwaysRender(arg0: $BlockState_, arg1: $Direction_): boolean;
         isAcceptedRegardless(arg0: $BlockState_): boolean;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$CopycatBlockEntity>): void;
+        getAcceptedBlockState(arg0: $Level_, arg1: $BlockPos_, arg2: $ItemStack_, arg3: $Direction_): $BlockState;
+        handler$ijd000$createdieselgenerators$use(arg0: $ItemStack_, arg1: $BlockState_, arg2: $Level_, arg3: $BlockPos_, arg4: $Player, arg5: $InteractionHand_, arg6: $BlockHitResult, arg7: $CallbackInfoReturnable<any>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$CopycatBlockEntity, $InteractionResult>): $InteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $CopycatBlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$CopycatBlockEntity>): void;
         getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($CopycatBlockEntity) | undefined;
         onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$CopycatBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
-        getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $CopycatBlockEntity;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onRemove(state: $BlockState_, world: $Level_, pos: $BlockPos_, newState: $BlockState_, isMoving: boolean, handler: $ICopycatBlock$OnRemoveHandler_): void;
-        transform(state: $BlockState_, transform: $StructureTransform): $BlockState;
-        canOcclude(level: $BlockGetter, state: $BlockState_, pos: $BlockPos_): boolean;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         shapeCanOccludeNeighbor(level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, neighborPos: $BlockPos_, dir: $Direction_): (boolean) | undefined;
-        isIgnoredConnectivitySide(reader: $BlockAndTintGetter, fromState: $BlockState_, face: $Direction_, fromPos: $BlockPos_, toPos: $BlockPos_ | null, toState: $BlockState_ | null): boolean;
+        transform(state: $BlockState_, transform: $StructureTransform): $BlockState;
+        onRemove(state: $BlockState_, world: $Level_, pos: $BlockPos_, newState: $BlockState_, isMoving: boolean, handler: $ICopycatBlock$OnRemoveHandler_): void;
+        canOcclude(level: $BlockGetter, state: $BlockState_, pos: $BlockPos_): boolean;
         toggleCT(state: $BlockState_, level: $Level_, pos: $BlockPos_, player: $Player, hitResult: $BlockHitResult): $InteractionResult;
-        isCTEnabled(state: $BlockState_, level: $BlockAndTintGetter, pos: $BlockPos_ | null): boolean;
         canToggleCT(state: $BlockState_, level: $BlockAndTintGetter, pos: $BlockPos_): boolean;
         checkConnection(reader: $BlockAndTintGetter, fromPos: $BlockPos_, toPos: $BlockPos_, fromState: $BlockState_): boolean;
+        isCTEnabled(state: $BlockState_, level: $BlockAndTintGetter, pos: $BlockPos_ | null): boolean;
+        isIgnoredConnectivitySide(reader: $BlockAndTintGetter, fromState: $BlockState_, face: $Direction_, fromPos: $BlockPos_, toPos: $BlockPos_ | null, toState: $BlockState_ | null): boolean;
         getCopycatBlockEntity(worldIn: $BlockGetter, pos: $BlockPos_): $ICopycatBlockEntity;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         stateType(): $StateType;
@@ -322,8 +323,8 @@ declare module "@package/com/simibubi/create/content/decoration/copycat" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$CopycatBlockEntity>;
         get blockEntityClass(): $Class<$CopycatBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$CopycatBlockEntity>;
     }
     export class $CopycatPanelModel extends $CopycatModel {
         static MATERIAL_PROPERTY: $ModelProperty<$BlockState>;

@@ -7,11 +7,11 @@ import { $Event } from "@package/net/fabricmc/fabric/api/event";
 
 declare module "@package/net/fabricmc/fabric/api/registry" {
     export class $FlammableBlockRegistry$Entry {
-        getSpreadChance(): number;
         getBurnChance(): number;
+        getSpreadChance(): number;
         constructor(arg0: number, arg1: number);
-        get spreadChance(): number;
         get burnChance(): number;
+        get spreadChance(): number;
     }
     export class $FabricBrewingRecipeRegistryBuilder$BuildCallback {
     }
@@ -28,8 +28,8 @@ declare module "@package/net/fabricmc/fabric/api/registry" {
     export interface $FabricBrewingRecipeRegistryBuilder {
         registerRecipes(arg0: $Ingredient_, arg1: $Holder_<$Potion>): void;
         registerPotionRecipe(arg0: $Holder_<$Potion>, arg1: $Ingredient_, arg2: $Holder_<$Potion>): void;
-        getEnabledFeatures(): $FeatureFlagSet;
         registerItemRecipe(arg0: $Item_, arg1: $Ingredient_, arg2: $Item_): void;
+        getEnabledFeatures(): $FeatureFlagSet;
         get enabledFeatures(): $FeatureFlagSet;
     }
 }

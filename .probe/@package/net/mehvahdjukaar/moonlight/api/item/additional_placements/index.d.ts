@@ -4,27 +4,27 @@ import { $BlockPlaceContext, $UseOnContext } from "@package/net/minecraft/world/
 import { $FoodProperties_ } from "@package/net/minecraft/world/food";
 import { $BlockState } from "@package/net/minecraft/world/level/block/state";
 import { $ResourceLocation } from "@package/net/minecraft/resources";
-import { $SoundType_, $Block, $Block_ } from "@package/net/minecraft/world/level/block";
+import { $SoundType_, $Block_, $Block } from "@package/net/minecraft/world/level/block";
 import { $Map } from "@package/java/util";
 import { $Object } from "@package/java/lang";
 
 declare module "@package/net/mehvahdjukaar/moonlight/api/item/additional_placements" {
     export class $AdditionalItemPlacement {
-        overrideGetPlacementState(arg0: $BlockPlaceContext): $BlockState;
-        getPlacedBlock(): $Block;
-        overrideUseOn(arg0: $UseOnContext, arg1: $FoodProperties_): $InteractionResult;
         overridePlace(arg0: $BlockPlaceContext): $InteractionResult;
+        overrideGetPlacementState(arg0: $BlockPlaceContext): $BlockState;
+        overrideUseOn(arg0: $UseOnContext, arg1: $FoodProperties_): $InteractionResult;
         overrideUpdatePlacementContext(arg0: $BlockPlaceContext): $BlockPlaceContext;
+        getPlacedBlock(): $Block;
         static getBlockPlacer(): $BlockPlacerItem;
         constructor(arg0: $Block_);
         get placedBlock(): $Block;
         static get blockPlacer(): $BlockPlacerItem;
     }
     export class $BlockPlacerItem extends $BlockItem {
-        mimicGetPlacementState(arg0: $BlockPlaceContext, arg1: $Block_): $BlockState;
         static get(): $BlockPlacerItem;
-        mimicUseOn(arg0: $UseOnContext, arg1: $Block_, arg2: $FoodProperties_): $InteractionResult;
         mimicPlace(arg0: $BlockPlaceContext, arg1: $Block_, arg2: $SoundType_): $InteractionResult;
+        mimicUseOn(arg0: $UseOnContext, arg1: $Block_, arg2: $FoodProperties_): $InteractionResult;
+        mimicGetPlacementState(arg0: $BlockPlaceContext, arg1: $Block_): $BlockState;
         static BASE_ATTACK_DAMAGE_ID: $ResourceLocation;
         static DEFAULT_MAX_STACK_SIZE: number;
         static MAX_BAR_WIDTH: number;

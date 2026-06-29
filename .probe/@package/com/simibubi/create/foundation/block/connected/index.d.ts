@@ -20,20 +20,20 @@ declare module "@package/com/simibubi/create/foundation/block/connected" {
         constructor();
     }
     export class $ConnectedTextureBehaviour {
-        getCTBlockState(arg0: $BlockAndTintGetter, arg1: $BlockState_, arg2: $Direction_, arg3: $BlockPos_, arg4: $BlockPos_): $BlockState;
-        buildContext(arg0: $BlockAndTintGetter, arg1: $BlockPos_, arg2: $BlockState_, arg3: $Direction_, arg4: $ConnectedTextureBehaviour$ContextRequirement): $ConnectedTextureBehaviour$CTContext;
-        getShift(arg0: $BlockState_, arg1: $RandomSource, arg2: $Direction_, arg3: $TextureAtlasSprite): $CTSpriteShiftEntry;
         getShift(arg0: $BlockState_, arg1: $Direction_, arg2: $TextureAtlasSprite): $CTSpriteShiftEntry;
-        getDataType(arg0: $BlockAndTintGetter, arg1: $BlockPos_, arg2: $BlockState_, arg3: $Direction_): $CTType;
-        buildContextForOccludedDirections(): boolean;
-        connectsTo(arg0: $BlockState_, arg1: $BlockState_, arg2: $BlockAndTintGetter, arg3: $BlockPos_, arg4: $BlockPos_, arg5: $Direction_, arg6: $Direction_, arg7: $Direction_): boolean;
+        getShift(arg0: $BlockState_, arg1: $RandomSource, arg2: $Direction_, arg3: $TextureAtlasSprite): $CTSpriteShiftEntry;
         connectsTo(arg0: $BlockState_, arg1: $BlockState_, arg2: $BlockAndTintGetter, arg3: $BlockPos_, arg4: $BlockPos_, arg5: $Direction_): boolean;
+        connectsTo(arg0: $BlockState_, arg1: $BlockState_, arg2: $BlockAndTintGetter, arg3: $BlockPos_, arg4: $BlockPos_, arg5: $Direction_, arg6: $Direction_, arg7: $Direction_): boolean;
+        getDataType(arg0: $BlockAndTintGetter, arg1: $BlockPos_, arg2: $BlockState_, arg3: $Direction_): $CTType;
+        buildContext(arg0: $BlockAndTintGetter, arg1: $BlockPos_, arg2: $BlockState_, arg3: $Direction_, arg4: $ConnectedTextureBehaviour$ContextRequirement): $ConnectedTextureBehaviour$CTContext;
+        getCTBlockState(arg0: $BlockAndTintGetter, arg1: $BlockState_, arg2: $Direction_, arg3: $BlockPos_, arg4: $BlockPos_): $BlockState;
+        buildContextForOccludedDirections(): boolean;
         constructor();
     }
     export class $CTSpriteShiftEntry extends $SpriteShiftEntry {
         getType(): $CTType;
-        getTargetU(arg0: number, arg1: number): number;
         getTargetV(arg0: number, arg1: number): number;
+        getTargetU(arg0: number, arg1: number): number;
         constructor(arg0: $CTType);
         get type(): $CTType;
     }
@@ -88,11 +88,11 @@ declare module "@package/com/simibubi/create/foundation/block/connected" {
         up(): $ConnectedTextureBehaviour$ContextRequirement$Builder;
         all(): $ConnectedTextureBehaviour$ContextRequirement$Builder;
         down(): $ConnectedTextureBehaviour$ContextRequirement$Builder;
-        bottomLeft(): $ConnectedTextureBehaviour$ContextRequirement$Builder;
-        topLeft(): $ConnectedTextureBehaviour$ContextRequirement$Builder;
-        topRight(): $ConnectedTextureBehaviour$ContextRequirement$Builder;
-        vertical(): $ConnectedTextureBehaviour$ContextRequirement$Builder;
         horizontal(): $ConnectedTextureBehaviour$ContextRequirement$Builder;
+        vertical(): $ConnectedTextureBehaviour$ContextRequirement$Builder;
+        topLeft(): $ConnectedTextureBehaviour$ContextRequirement$Builder;
+        bottomLeft(): $ConnectedTextureBehaviour$ContextRequirement$Builder;
+        topRight(): $ConnectedTextureBehaviour$ContextRequirement$Builder;
         bottomRight(): $ConnectedTextureBehaviour$ContextRequirement$Builder;
         corners(): $ConnectedTextureBehaviour$ContextRequirement$Builder;
         axisAligned(): $ConnectedTextureBehaviour$ContextRequirement$Builder;

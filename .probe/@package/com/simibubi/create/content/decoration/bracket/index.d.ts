@@ -51,19 +51,19 @@ declare module "@package/com/simibubi/create/content/decoration/bracket" {
      */
     export type $BracketBlock$BracketType_ = "pipe" | "cog" | "shaft";
     export class $BracketedBlockEntityBehaviour extends $BlockEntityBehaviour {
+        getBracket(): $BlockState;
         removeBracket(arg0: boolean): $BlockState;
         transformBracket(arg0: $StructureTransform): void;
         canHaveBracket(): boolean;
-        isBracketPresent(): boolean;
-        getBracket(): $BlockState;
         applyBracket(arg0: $BlockState_): void;
+        isBracketPresent(): boolean;
         isBracketValid(arg0: $BlockState_): boolean;
         blockEntity: $SmartBlockEntity;
         static TYPE: $BehaviourType<$BracketedBlockEntityBehaviour>;
         constructor(arg0: $SmartBlockEntity);
         constructor(arg0: $SmartBlockEntity, arg1: $Predicate_<$BlockState>);
-        get bracketPresent(): boolean;
         get bracket(): $BlockState;
+        get bracketPresent(): boolean;
     }
     export class $BracketBlock extends $WrenchableDirectionalBlock {
         getSuitableBracket(arg0: $BlockState_, arg1: $Direction_): ($BlockState) | undefined;

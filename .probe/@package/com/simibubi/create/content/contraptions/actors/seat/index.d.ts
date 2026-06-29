@@ -1,5 +1,6 @@
 import { $MapCodec } from "@package/com/mojang/serialization";
 import { $MultiBufferSource_ } from "@package/net/minecraft/client/renderer";
+import { $CompoundTag } from "@package/net/minecraft/nbt";
 import { $EntityType_, $Pose, $PortalProcessor, $Entity, $Entity$RemovalReason, $EntityType$Builder } from "@package/net/minecraft/world/entity";
 import { $ActorVisual, $ContraptionMatrices } from "@package/com/simibubi/create/content/contraptions/render";
 import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
@@ -8,7 +9,7 @@ import { $Frustum } from "@package/net/minecraft/client/renderer/culling";
 import { $RandomSource } from "@package/net/minecraft/util";
 import { $SoundEvent } from "@package/net/minecraft/sounds";
 import { $Object2DoubleMap, $Object2ByteLinkedOpenHashMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos, $BlockPos_, $Direction, $IdMapper } from "@package/net/minecraft/core";
+import { $HolderLookup$Provider, $BlockPos, $BlockPos_, $Direction, $IdMapper } from "@package/net/minecraft/core";
 import { $RegistryFriendlyByteBuf } from "@package/net/minecraft/network";
 import { $StateDefinition, $BlockBehaviour$Properties, $BlockState_, $BlockState } from "@package/net/minecraft/world/level/block/state";
 import { $ProperWaterloggedBlock } from "@package/com/simibubi/create/foundation/block";
@@ -38,17 +39,17 @@ import { $Vec3, $Vec3_ } from "@package/net/minecraft/world/phys";
 
 declare module "@package/com/simibubi/create/content/contraptions/actors/seat" {
     export class $SeatBlock extends $Block implements $ProperWaterloggedBlock {
-        static canBePickedUp(arg0: $Entity): boolean;
         getColor(): $DyeColor;
-        static isSeatOccupied(arg0: $Level_, arg1: $BlockPos_): boolean;
         static sitDown(arg0: $Level_, arg1: $BlockPos_, arg2: $Entity): void;
+        static canBePickedUp(arg0: $Entity): boolean;
+        static isSeatOccupied(arg0: $Level_, arg1: $BlockPos_): boolean;
         static getLeashed(arg0: $Level_, arg1: $Player): $Optional<$Entity>;
-        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
-        fluidState(arg0: $BlockState_): $FluidState;
         updateWater(arg0: $LevelAccessor, arg1: $BlockState_, arg2: $BlockPos_): void;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
+        fluidState(arg0: $BlockState_): $FluidState;
+        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -86,22 +87,22 @@ declare module "@package/com/simibubi/create/content/contraptions/actors/seat" {
         visitNewPosition(arg0: $MovementContext, arg1: $BlockPos_): void;
         isActive(arg0: $MovementContext): boolean;
         tick(arg0: $MovementContext): void;
-        stopMoving(arg0: $MovementContext): void;
         /**
          * @deprecated
          */
         dropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
+        onDisabledByControls(arg0: $MovementContext): void;
+        renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
         getActiveAreaOffset(arg0: $MovementContext): $Vec3;
         mustTickWhileDisabled(): boolean;
-        renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
-        onDisabledByControls(arg0: $MovementContext): void;
+        disableBlockEntityRendering(): boolean;
+        canBeDisabledVia(arg0: $MovementContext): $ItemStack;
         collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
         onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
-        cancelStall(arg0: $MovementContext): void;
-        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
-        canBeDisabledVia(arg0: $MovementContext): $ItemStack;
         writeExtraData(arg0: $MovementContext): void;
-        disableBlockEntityRendering(): boolean;
+        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
+        cancelStall(arg0: $MovementContext): void;
+        stopMoving(arg0: $MovementContext): void;
         constructor();
     }
     export class $SeatInteractionBehaviour extends $MovingInteractionBehaviour {
@@ -109,8 +110,8 @@ declare module "@package/com/simibubi/create/content/contraptions/actors/seat" {
         constructor();
     }
     export class $SeatEntity$Render extends $EntityRenderer<$SeatEntity> {
-        getTextureLocation(arg0: $SeatEntity): $ResourceLocation;
         shouldRender(arg0: $SeatEntity, arg1: $Frustum, arg2: number, arg3: number, arg4: number): boolean;
+        getTextureLocation(arg0: $SeatEntity): $ResourceLocation;
         shadowRadius: number;
         static LEASH_RENDER_STEPS: number;
         entityRenderDispatcher: $EntityRenderDispatcher;
@@ -128,6 +129,7 @@ declare module "@package/com/simibubi/create/content/contraptions/actors/seat" {
         static getCustomEntitySeatOffset(arg0: $Entity): number;
         readSpawnData(arg0: $RegistryFriendlyByteBuf): void;
         writeSpawnData(arg0: $RegistryFriendlyByteBuf): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;

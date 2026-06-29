@@ -11,13 +11,13 @@ declare module "@package/rbasamoyai/createbigcannons/remix" {
         static defaultShouldCheck(): boolean;
     }
     export interface $HasFragileContraption {
-        createbigcannons$setBrokenDisassembly(arg0: boolean): void;
+        createbigcannons$blockBreaksDisassembly(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_): boolean;
+        createbigcannons$getFragileBlockPositions(): $Set<$BlockPos>;
         createbigcannons$isBrokenDisassembly(): boolean;
+        createbigcannons$setBrokenDisassembly(arg0: boolean): void;
         createbigcannons$getEncounteredBlocks(): $Map<$BlockPos, $BlockState>;
         createbigcannons$fragileDisassemble(): void;
         createbigcannons$shouldCheckFragility(): boolean;
-        createbigcannons$blockBreaksDisassembly(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_): boolean;
-        createbigcannons$getFragileBlockPositions(): $Set<$BlockPos>;
     }
     export class $CustomBlockDamageDisplay {
     }

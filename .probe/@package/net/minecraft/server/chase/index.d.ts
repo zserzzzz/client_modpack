@@ -22,11 +22,11 @@ declare module "@package/net/minecraft/server/chase" {
     /**
      * Values that may be interpreted as {@link $ChaseClient$TeleportTarget}.
      */
-    export type $ChaseClient$TeleportTarget_ = { rot?: $Vec2, pos?: $Vec3_, level?: $ResourceKey_<$Level>,  } | [rot?: $Vec2, pos?: $Vec3_, level?: $ResourceKey_<$Level>, ];
+    export type $ChaseClient$TeleportTarget_ = { level?: $ResourceKey_<$Level>, rot?: $Vec2, pos?: $Vec3_,  } | [level?: $ResourceKey_<$Level>, rot?: $Vec2, pos?: $Vec3_, ];
     export class $ChaseServer$PlayerPosition extends $Record {
     }
     /**
      * Values that may be interpreted as {@link $ChaseServer$PlayerPosition}.
      */
-    export type $ChaseServer$PlayerPosition_ = { z?: number, y?: number, x?: number, yRot?: number, dimensionName?: string, xRot?: number,  } | [z?: number, y?: number, x?: number, yRot?: number, dimensionName?: string, xRot?: number, ];
+    export type $ChaseServer$PlayerPosition_ = { dimensionName?: string, xRot?: number, z?: number, y?: number, x?: number, yRot?: number,  } | [dimensionName?: string, xRot?: number, z?: number, y?: number, x?: number, yRot?: number, ];
 }

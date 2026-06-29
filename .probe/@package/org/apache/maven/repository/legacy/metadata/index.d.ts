@@ -5,19 +5,19 @@ declare module "@package/org/apache/maven/repository/legacy/metadata" {
     export class $ArtifactMetadata {
     }
     export interface $ArtifactMetadata {
-        getGroupId(): string;
         merge(arg0: $ArtifactMetadata): void;
         getKey(): $Object;
+        getGroupId(): string;
         getArtifactId(): string;
-        storedInArtifactVersionDirectory(): boolean;
         getBaseVersion(): string;
+        storedInArtifactVersionDirectory(): boolean;
         getLocalFilename(arg0: $ArtifactRepository): string;
         getRemoteFilename(): string;
         extendedToString(): string;
         storeInLocalRepository(arg0: $ArtifactRepository, arg1: $ArtifactRepository): void;
         storedInGroupDirectory(): boolean;
-        get groupId(): string;
         get key(): $Object;
+        get groupId(): string;
         get artifactId(): string;
         get baseVersion(): string;
         get remoteFilename(): string;

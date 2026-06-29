@@ -11,10 +11,10 @@ declare module "@package/gg/essential/mixins/transformers/client" {
     export class $MouseHelperAccessor {
     }
     export interface $MouseHelperAccessor {
-        setMouseX(arg0: number): void;
         setMouseY(arg0: number): void;
-        set mouseX(value: number);
+        setMouseX(arg0: number): void;
         set mouseY(value: number);
+        set mouseX(value: number);
     }
     export class $ClientWorldAccessor {
     }

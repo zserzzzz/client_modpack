@@ -4,7 +4,7 @@ declare module "@package/org/embeddedt/modernfix/common/mixin/perf/optimize_surf
     export class $BiomeManagerAccessor {
     }
     export interface $BiomeManagerAccessor {
-        mfix$getZoomSeed(): number;
         mfix$getBiomeSource(): $BiomeManager$NoiseBiomeSource;
+        mfix$getZoomSeed(): number;
     }
 }

@@ -15,10 +15,10 @@ import { $StreamCodec } from "@package/net/minecraft/network/codec";
 
 declare module "@package/com/simibubi/create/foundation/particle" {
     export class $AirParticle extends $SimpleAnimatedParticle implements $ParticleSubLevelKickable {
-        sable$shouldKickFromTracking(): boolean;
         sable$shouldCollideWithTrackingSubLevel(): boolean;
-        sable$getUpDirection(): $Vector3dc;
+        sable$shouldKickFromTracking(): boolean;
         sable$shouldCareAboutIntersectingSubLevels(): boolean;
+        sable$getUpDirection(): $Vector3dc;
         speedUpWhenYMotionIsBlocked: boolean;
         lifetime: number;
         roll: number;
@@ -58,8 +58,8 @@ declare module "@package/com/simibubi/create/foundation/particle" {
     export class $AirParticleData implements $ParticleOptions, $ICustomParticleDataWithSprite<$AirParticleData> {
         getCodec(arg0: $ParticleType_<$AirParticleData>): $MapCodec<$AirParticleData>;
         getType(): $ParticleType<never>;
-        getStreamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $AirParticleData>;
         getMetaFactory(): $ParticleEngine$SpriteParticleRegistration<$AirParticleData>;
+        getStreamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $AirParticleData>;
         getFactory(): $ParticleProvider<$AirParticleData>;
         register(arg0: $ParticleType_<$AirParticleData>, arg1: $RegisterParticleProvidersEvent): void;
         createType(): $ParticleType<$AirParticleData>;
@@ -68,8 +68,8 @@ declare module "@package/com/simibubi/create/foundation/particle" {
         constructor(arg0: number, arg1: number);
         constructor();
         get type(): $ParticleType<never>;
-        get streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $AirParticleData>;
         get metaFactory(): $ParticleEngine$SpriteParticleRegistration<$AirParticleData>;
+        get streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $AirParticleData>;
         get factory(): $ParticleProvider<$AirParticleData>;
     }
     export class $ICustomParticleData<T extends $ParticleOptions> {
@@ -78,8 +78,8 @@ declare module "@package/com/simibubi/create/foundation/particle" {
         getCodec(arg0: $ParticleType_<T>): $MapCodec<T>;
         getFactory(): $ParticleProvider<T>;
         register(arg0: $ParticleType_<T>, arg1: $RegisterParticleProvidersEvent): void;
-        getStreamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, T>;
         createType(): $ParticleType<T>;
+        getStreamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, T>;
         get factory(): $ParticleProvider<T>;
         get streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, T>;
     }

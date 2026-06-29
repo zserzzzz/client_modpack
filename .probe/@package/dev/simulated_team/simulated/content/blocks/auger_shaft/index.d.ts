@@ -15,8 +15,8 @@ declare module "@package/dev/simulated_team/simulated/content/blocks/auger_shaft
     export class $BlockHarvester {
     }
     export interface $BlockHarvester {
-        simulated$getAssociatedDistributor(): $AugerDistributor;
         simulated$setDistributor(arg0: $AugerDistributor_): void;
+        simulated$getAssociatedDistributor(): $AugerDistributor;
         depositItemStack(arg0: $BlockPos_, arg1: $ItemStack_): $ItemStack;
     }
 }

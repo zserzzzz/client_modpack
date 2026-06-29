@@ -9,10 +9,10 @@ import { $Couple } from "@package/net/createmod/catnip/data";
 
 declare module "@package/net/createmod/catnip/gui/widget" {
     export class $AbstractSimiWidget extends $AbstractWidget implements $TickableGuiEventListener {
-        setActive<T extends $AbstractSimiWidget>(arg0: boolean): T;
         tick(): void;
-        withCallback<T extends $AbstractSimiWidget>(arg0: $BiConsumer_<number, number>): T;
+        setActive<T extends $AbstractSimiWidget>(arg0: boolean): T;
         withCallback<T extends $AbstractSimiWidget>(arg0: $Runnable_): T;
+        withCallback<T extends $AbstractSimiWidget>(arg0: $BiConsumer_<number, number>): T;
         getToolTip(): $List<$Component>;
         atZLevel<T extends $AbstractSimiWidget>(arg0: number): T;
         runCallback(arg0: number, arg1: number): void;

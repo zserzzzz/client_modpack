@@ -19,7 +19,7 @@ declare module "@package/com/simibubi/create/api/packager" {
     /**
      * Values that may be interpreted as {@link $InventoryIdentifier$Pair}.
      */
-    export type $InventoryIdentifier$Pair_ = { first?: $BlockPos_, second?: $BlockPos_,  } | [first?: $BlockPos_, second?: $BlockPos_, ];
+    export type $InventoryIdentifier$Pair_ = { second?: $BlockPos_, first?: $BlockPos_,  } | [second?: $BlockPos_, first?: $BlockPos_, ];
     export class $InventoryIdentifier {
         static get(arg0: $Level_, arg1: $BlockFace): $InventoryIdentifier;
         static REGISTRY: $SimpleRegistry<$Block, $InventoryIdentifier$Finder>;
@@ -49,7 +49,7 @@ declare module "@package/com/simibubi/create/api/packager" {
     /**
      * Values that may be interpreted as {@link $InventoryIdentifier$MultiFace}.
      */
-    export type $InventoryIdentifier$MultiFace_ = { pos?: $BlockPos_, sides?: $Set_<$Direction_>,  } | [pos?: $BlockPos_, sides?: $Set_<$Direction_>, ];
+    export type $InventoryIdentifier$MultiFace_ = { sides?: $Set_<$Direction_>, pos?: $BlockPos_,  } | [sides?: $Set_<$Direction_>, pos?: $BlockPos_, ];
     export class $InventoryIdentifier$Finder {
     }
     export interface $InventoryIdentifier$Finder {

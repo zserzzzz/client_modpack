@@ -15,31 +15,31 @@ declare module "@package/net/caffeinemc/mods/sodium/client/world/cloned" {
     export class $ClonedChunkSection {
         getPosition(): $SectionPos;
         getAuxLightManager(): $SodiumAuxiliaryLightManager;
-        getBlockData(): $PalettedContainerRO<$BlockState>;
-        getBlockEntityRenderDataMap(): $Int2ReferenceMap<$Object>;
-        getBlockEntityMap(): $Int2ReferenceMap<$BlockEntity>;
-        getBiomeData(): $PalettedContainerRO<$Holder<$Biome>>;
-        getLightArray(arg0: $LightLayer_): $DataLayer;
-        getModelMap(): $SodiumModelDataContainer;
         setLastUsedTimestamp(arg0: number): void;
         getLastUsedTimestamp(): number;
+        getBlockData(): $PalettedContainerRO<$BlockState>;
+        getBlockEntityRenderDataMap(): $Int2ReferenceMap<$Object>;
+        getBiomeData(): $PalettedContainerRO<$Holder<$Biome>>;
+        getLightArray(arg0: $LightLayer_): $DataLayer;
+        getBlockEntityMap(): $Int2ReferenceMap<$BlockEntity>;
+        getModelMap(): $SodiumModelDataContainer;
         constructor(arg0: $Level_, arg1: $LevelChunk, arg2: $LevelChunkSection, arg3: $SectionPos);
         get position(): $SectionPos;
         get auxLightManager(): $SodiumAuxiliaryLightManager;
         get blockData(): $PalettedContainerRO<$BlockState>;
         get blockEntityRenderDataMap(): $Int2ReferenceMap<$Object>;
-        get blockEntityMap(): $Int2ReferenceMap<$BlockEntity>;
         get biomeData(): $PalettedContainerRO<$Holder<$Biome>>;
+        get blockEntityMap(): $Int2ReferenceMap<$BlockEntity>;
         get modelMap(): $SodiumModelDataContainer;
     }
     export class $ChunkRenderContext {
-        getOrigin(): $SectionPos;
         getSections(): $ClonedChunkSection[];
+        getOrigin(): $SectionPos;
         getVolume(): $BoundingBox;
         getRenderers(): $List<never>;
         constructor(arg0: $SectionPos, arg1: $ClonedChunkSection[], arg2: $BoundingBox, arg3: $List_<never>);
-        get origin(): $SectionPos;
         get sections(): $ClonedChunkSection[];
+        get origin(): $SectionPos;
         get volume(): $BoundingBox;
         get renderers(): $List<never>;
     }

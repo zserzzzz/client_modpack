@@ -31,16 +31,16 @@ declare module "@package/com/simibubi/create/content/fluids/potion" {
         constructor();
     }
     export class $PotionFluidHandler {
-        static bottleTypeFromItem(arg0: $Item_): $PotionFluid$BottleType;
-        static getFluidFromPotion(arg0: $PotionContents_, arg1: $PotionFluid$BottleType_, arg2: number): $FluidStack;
-        static isPotionItem(arg0: $ItemStack_): boolean;
-        static potionIngredient(arg0: $Holder_<$Potion>, arg1: number): $SizedFluidIngredient;
-        static emptyPotion(arg0: $ItemStack_, arg1: boolean): $Pair<$FluidStack, $ItemStack>;
         static addPotionTooltip(arg0: $FluidStack_, arg1: $Consumer_<$Component>, arg2: number): void;
-        static fillBottle(arg0: $ItemStack_, arg1: $FluidStack_): $ItemStack;
         static itemFromBottleType(arg0: $PotionFluid$BottleType_): $ItemLike;
+        static fillBottle(arg0: $ItemStack_, arg1: $FluidStack_): $ItemStack;
         static getRequiredAmountForFilledBottle(arg0: $ItemStack_, arg1: $FluidStack_): number;
         static getFluidFromPotionItem(arg0: $ItemStack_): $FluidStack;
+        static getFluidFromPotion(arg0: $PotionContents_, arg1: $PotionFluid$BottleType_, arg2: number): $FluidStack;
+        static isPotionItem(arg0: $ItemStack_): boolean;
+        static bottleTypeFromItem(arg0: $Item_): $PotionFluid$BottleType;
+        static emptyPotion(arg0: $ItemStack_, arg1: boolean): $Pair<$FluidStack, $ItemStack>;
+        static potionIngredient(arg0: $Holder_<$Potion>, arg1: number): $SizedFluidIngredient;
         constructor();
     }
     export class $PotionFluid$BottleType extends $Enum<$PotionFluid$BottleType> implements $StringRepresentable {

@@ -39,23 +39,23 @@ declare module "@package/com/simibubi/create/infrastructure/debugInfo" {
      */
     export type $InfoProvider_ = ((arg0: $Player) => string);
     export class $DebugInformation {
-        static getIndent(arg0: number): string;
         static tryTrim(arg0: string): string;
+        static getIndent(arg0: number): string;
         static getCpuInfo(): string;
-        static getServerInfo(): $List<$DebugInfoSection>;
         static getClientInfo(): $List<$DebugInfoSection>;
+        static getServerInfo(): $List<$DebugInfoSection>;
+        static listAllGraphicsCards(): $Collection<$InfoElement>;
+        static getVersionOfMod(arg0: string): string;
         static getMcSystemInfo(arg0: string): string;
+        static registerBothInfo(arg0: $DebugInfoSection_): void;
         static registerClientInfo(arg0: $DebugInfoSection_): void;
         static registerServerInfo(arg0: $DebugInfoSection_): void;
-        static getVersionOfMod(arg0: string): string;
-        static getTotalRam(): string;
-        static registerBothInfo(arg0: $DebugInfoSection_): void;
         static listAllOtherMods(): $Collection<$InfoElement>;
-        static listAllGraphicsCards(): $Collection<$InfoElement>;
+        static getTotalRam(): string;
         constructor();
         static get cpuInfo(): string;
-        static get serverInfo(): $List<$DebugInfoSection>;
         static get clientInfo(): $List<$DebugInfoSection>;
+        static get serverInfo(): $List<$DebugInfoSection>;
         static get totalRam(): string;
     }
 }

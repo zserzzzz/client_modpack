@@ -42,8 +42,8 @@ declare module "@package/com/mojang/authlib/minecraft" {
         static DISABLED: $TelemetrySession;
     }
     export interface $TelemetrySession {
-        createNewEvent(arg0: string): $TelemetryEvent;
         isEnabled(): boolean;
+        createNewEvent(arg0: string): $TelemetryEvent;
         get enabled(): boolean;
     }
     export class $UserApiService$UserProperties extends $Record {
@@ -55,17 +55,17 @@ declare module "@package/com/mojang/authlib/minecraft" {
     /**
      * Values that may be interpreted as {@link $UserApiService$UserProperties}.
      */
-    export type $UserApiService$UserProperties_ = { flags?: $Set_<$UserApiService$UserFlag_>, bannedScopes?: $Map_<string, $BanDetails_>,  } | [flags?: $Set_<$UserApiService$UserFlag_>, bannedScopes?: $Map_<string, $BanDetails_>, ];
+    export type $UserApiService$UserProperties_ = { bannedScopes?: $Map_<string, $BanDetails_>, flags?: $Set_<$UserApiService$UserFlag_>,  } | [bannedScopes?: $Map_<string, $BanDetails_>, flags?: $Set_<$UserApiService$UserFlag_>, ];
     export class $MinecraftSessionService {
     }
     export interface $MinecraftSessionService {
-        getSecurePropertyValue(arg0: $Property_): string;
         fetchProfile(arg0: $UUID_, arg1: boolean): $ProfileResult;
-        joinServer(arg0: $UUID_, arg1: string, arg2: string): void;
         getTextures(arg0: $GameProfile): $MinecraftProfileTextures;
+        getSecurePropertyValue(arg0: $Property_): string;
+        getPackedTextures(arg0: $GameProfile): $Property;
         unpackTextures(arg0: $Property_): $MinecraftProfileTextures;
         hasJoinedServer(arg0: string, arg1: string, arg2: $InetAddress | null): $ProfileResult;
-        getPackedTextures(arg0: $GameProfile): $Property;
+        joinServer(arg0: $UUID_, arg1: string, arg2: string): void;
     }
     export class $MinecraftProfileTexture$Type extends $Enum<$MinecraftProfileTexture$Type> {
         static values(): $MinecraftProfileTexture$Type[];
@@ -79,17 +79,17 @@ declare module "@package/com/mojang/authlib/minecraft" {
      */
     export type $MinecraftProfileTexture$Type_ = "skin" | "cape" | "elytra";
     export class $MinecraftProfileTextures extends $Record {
-        signatureState(): $SignatureState;
+        elytra(): $MinecraftProfileTexture;
         cape(): $MinecraftProfileTexture;
         skin(): $MinecraftProfileTexture;
-        elytra(): $MinecraftProfileTexture;
+        signatureState(): $SignatureState;
         static EMPTY: $MinecraftProfileTextures;
         constructor(skin: $MinecraftProfileTexture | null, cape: $MinecraftProfileTexture | null, elytra: $MinecraftProfileTexture | null, signatureState: $SignatureState_);
     }
     /**
      * Values that may be interpreted as {@link $MinecraftProfileTextures}.
      */
-    export type $MinecraftProfileTextures_ = { elytra?: $MinecraftProfileTexture, skin?: $MinecraftProfileTexture, cape?: $MinecraftProfileTexture, signatureState?: $SignatureState_,  } | [elytra?: $MinecraftProfileTexture, skin?: $MinecraftProfileTexture, cape?: $MinecraftProfileTexture, signatureState?: $SignatureState_, ];
+    export type $MinecraftProfileTextures_ = { cape?: $MinecraftProfileTexture, signatureState?: $SignatureState_, elytra?: $MinecraftProfileTexture, skin?: $MinecraftProfileTexture,  } | [cape?: $MinecraftProfileTexture, signatureState?: $SignatureState_, elytra?: $MinecraftProfileTexture, skin?: $MinecraftProfileTexture, ];
     export class $UserApiService$UserFlag extends $Enum<$UserApiService$UserFlag> {
         static values(): $UserApiService$UserFlag[];
         static valueOf(arg0: string): $UserApiService$UserFlag;
@@ -110,26 +110,26 @@ declare module "@package/com/mojang/authlib/minecraft" {
     }
     export interface $UserApiService {
         getKeyPair(): $KeyPairResponse;
+        fetchProperties(): $UserApiService$UserProperties;
         getAbuseReportLimits(): $AbuseReportLimits;
         newTelemetrySession(arg0: $Executor_): $TelemetrySession;
-        fetchProperties(): $UserApiService$UserProperties;
         refreshBlockList(): void;
-        canSendReports(): boolean;
-        isBlockedPlayer(arg0: $UUID_): boolean;
         reportAbuse(arg0: $AbuseReportRequest_): void;
+        isBlockedPlayer(arg0: $UUID_): boolean;
+        canSendReports(): boolean;
         get keyPair(): $KeyPairResponse;
         get abuseReportLimits(): $AbuseReportLimits;
     }
     export class $BanDetails extends $Record {
-        reasonMessage(): string;
         expires(): $Instant;
         id(): $UUID;
         reason(): string;
+        reasonMessage(): string;
         static MULTIPLAYER_SCOPE: string;
         constructor(id: $UUID_, expires: $Instant | null, reason: string | null, reasonMessage: string | null);
     }
     /**
      * Values that may be interpreted as {@link $BanDetails}.
      */
-    export type $BanDetails_ = { id?: $UUID_, expires?: $Instant, reason?: string, reasonMessage?: string,  } | [id?: $UUID_, expires?: $Instant, reason?: string, reasonMessage?: string, ];
+    export type $BanDetails_ = { reason?: string, reasonMessage?: string, id?: $UUID_, expires?: $Instant,  } | [reason?: string, reasonMessage?: string, id?: $UUID_, expires?: $Instant, ];
 }

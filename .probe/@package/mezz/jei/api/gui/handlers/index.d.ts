@@ -15,12 +15,12 @@ declare module "@package/mezz/jei/api/gui/handlers" {
         static createBasic(arg0: number, arg1: number, arg2: number, arg3: number, ...arg4: $RecipeType<never>[]): $IGuiClickableArea;
     }
     export interface $IGuiClickableArea {
-        onClick(arg0: $IFocusFactory, arg1: $IRecipesGui): void;
+        getTooltip(arg0: $ITooltipBuilder): void;
         /**
          * @deprecated
          */
         getTooltipStrings(): $List<$Component>;
-        getTooltip(arg0: $ITooltipBuilder): void;
+        onClick(arg0: $IFocusFactory, arg1: $IRecipesGui): void;
         getArea(): $Rect2i;
         isTooltipEnabled(): boolean;
         get tooltipStrings(): $List<$Component>;
@@ -30,31 +30,31 @@ declare module "@package/mezz/jei/api/gui/handlers" {
     export class $IGuiContainerHandler<T extends $AbstractContainerScreen<never>> {
     }
     export interface $IGuiContainerHandler<T extends $AbstractContainerScreen<never>> {
-        getGuiClickableAreas(arg0: T, arg1: number, arg2: number): $Collection<$IGuiClickableArea>;
         /**
          * @deprecated
          */
         getClickableIngredientUnderMouse(arg0: T, arg1: number, arg2: number): ($IClickableIngredient<never>) | undefined;
         getClickableIngredientUnderMouse(arg0: $IClickableIngredientFactory, arg1: T, arg2: number, arg3: number): ($IClickableIngredient<never>) | undefined;
+        getGuiClickableAreas(arg0: T, arg1: number, arg2: number): $Collection<$IGuiClickableArea>;
         getGuiExtraAreas(arg0: T): $List<$Rect2i>;
     }
     export class $IGhostIngredientHandler<T extends $Screen> {
     }
     export interface $IGhostIngredientHandler<T extends $Screen> {
-        getTargetsTyped<I>(arg0: T, arg1: $ITypedIngredient<I>, arg2: boolean): $List<$IGhostIngredientHandler$Target<I>>;
         onComplete(): void;
+        getTargetsTyped<I>(arg0: T, arg1: $ITypedIngredient<I>, arg2: boolean): $List<$IGhostIngredientHandler$Target<I>>;
         shouldHighlightTargets(): boolean;
     }
     export class $IGuiProperties {
     }
     export interface $IGuiProperties {
-        screenHeight(): number;
         screenWidth(): number;
+        screenHeight(): number;
         guiLeft(): number;
         guiTop(): number;
         screenClass(): $Class<$Screen>;
-        guiYSize(): number;
         guiXSize(): number;
+        guiYSize(): number;
     }
     export class $IScreenHandler<T extends $Screen> {
     }

@@ -53,23 +53,23 @@ declare module "@package/dev/engine_room/flywheel/api/material" {
     export class $Material {
     }
     export interface $Material {
-        light(): $LightShader;
-        equals(other: $Material): boolean;
-        fog(): $FogShader;
-        blur(): boolean;
-        mipmap(): boolean;
-        texture(): $ResourceLocation;
         shaders(): $MaterialShaders;
+        texture(): $ResourceLocation;
+        equals(other: $Material): boolean;
+        mipmap(): boolean;
+        blur(): boolean;
+        light(): $LightShader;
         ambientOcclusion(): boolean;
-        cutout(): $CutoutShader;
-        polygonOffset(): boolean;
-        transparency(): $Transparency;
-        backfaceCulling(): boolean;
-        depthTest(): $DepthTest;
-        cardinalLightingMode(): $CardinalLightingMode;
-        useOverlay(): boolean;
-        useLight(): boolean;
+        fog(): $FogShader;
         writeMask(): $WriteMask;
+        useLight(): boolean;
+        useOverlay(): boolean;
+        transparency(): $Transparency;
+        polygonOffset(): boolean;
+        cutout(): $CutoutShader;
+        depthTest(): $DepthTest;
+        backfaceCulling(): boolean;
+        cardinalLightingMode(): $CardinalLightingMode;
     }
     export class $LightShader {
     }
@@ -100,8 +100,8 @@ declare module "@package/dev/engine_room/flywheel/api/material" {
     export class $MaterialShaders {
     }
     export interface $MaterialShaders {
-        vertexSource(): $ResourceLocation;
         fragmentSource(): $ResourceLocation;
+        vertexSource(): $ResourceLocation;
     }
     export class $CutoutShader {
     }

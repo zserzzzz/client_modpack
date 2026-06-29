@@ -37,8 +37,8 @@ import { $Vector3d } from "@package/org/joml";
 declare module "@package/com/simibubi/create/content/kinetics/waterwheel" {
     export class $WaterWheelBlockEntity extends $GeneratingKineticBlockEntity {
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
-        applyMaterialIfValid(arg0: $ItemStack_): $ItemInteractionResult;
         determineAndApplyFlowScore(): void;
+        applyMaterialIfValid(arg0: $ItemStack_): $ItemInteractionResult;
         setFlowScoreAndUpdate(arg0: number): void;
         getFlowVectorAtPosition(arg0: $BlockPos_): $Vec3;
         static SMALL_OFFSETS: $Map<$Direction$Axis, $Set<$BlockPos>>;
@@ -61,14 +61,14 @@ declare module "@package/com/simibubi/create/content/kinetics/waterwheel" {
     }
     export class $WaterWheelRenderer$ModelKey extends $Record {
         state(): $BlockState;
-        material(): $BlockState;
         large(): boolean;
+        material(): $BlockState;
         constructor(large: boolean, state: $BlockState_, material: $BlockState_);
     }
     /**
      * Values that may be interpreted as {@link $WaterWheelRenderer$ModelKey}.
      */
-    export type $WaterWheelRenderer$ModelKey_ = { state?: $BlockState_, material?: $BlockState_, large?: boolean,  } | [state?: $BlockState_, material?: $BlockState_, large?: boolean, ];
+    export type $WaterWheelRenderer$ModelKey_ = { large?: boolean, state?: $BlockState_, material?: $BlockState_,  } | [large?: boolean, state?: $BlockState_, material?: $BlockState_, ];
     export class $LargeWaterWheelBlockEntity extends $WaterWheelBlockEntity {
         static SMALL_OFFSETS: $Map<$Direction$Axis, $Set<$BlockPos>>;
         flowScore: number;
@@ -88,15 +88,15 @@ declare module "@package/com/simibubi/create/content/kinetics/waterwheel" {
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
     }
     export class $WaterWheelBlock extends $DirectionalKineticBlock implements $IBE<$WaterWheelBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$WaterWheelBlockEntity>;
         getBlockEntityClass(): $Class<$WaterWheelBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$WaterWheelBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$WaterWheelBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$WaterWheelBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($WaterWheelBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$WaterWheelBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $WaterWheelBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$WaterWheelBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($WaterWheelBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$WaterWheelBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -127,17 +127,17 @@ declare module "@package/com/simibubi/create/content/kinetics/waterwheel" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$WaterWheelBlockEntity>;
         get blockEntityClass(): $Class<$WaterWheelBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$WaterWheelBlockEntity>;
     }
     export class $WaterWheelStructuralBlock extends $DirectionalBlock implements $IWrenchable, $IProxyHoveringInformation {
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         static getMaster(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $BlockState_): $BlockPos;
-        getInformationSource(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_): $BlockPos;
         stillValid(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $BlockState_, arg3: boolean): boolean;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        getInformationSource(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_): $BlockPos;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -181,16 +181,16 @@ declare module "@package/com/simibubi/create/content/kinetics/waterwheel" {
         constructor(arg0: $Block_, arg1: $Item$Properties);
     }
     export class $LargeWaterWheelBlock extends $RotatedPillarKineticBlock implements $IBE<$LargeWaterWheelBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$LargeWaterWheelBlockEntity>;
         getBlockEntityClass(): $Class<$LargeWaterWheelBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$LargeWaterWheelBlockEntity>;
         getAxisForPlacement(arg0: $BlockPlaceContext): $Direction$Axis;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$LargeWaterWheelBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$LargeWaterWheelBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($LargeWaterWheelBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$LargeWaterWheelBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $LargeWaterWheelBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$LargeWaterWheelBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($LargeWaterWheelBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$LargeWaterWheelBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -222,8 +222,8 @@ declare module "@package/com/simibubi/create/content/kinetics/waterwheel" {
         hasCollision: boolean;
         static AXIS: $EnumProperty<$Direction$Axis>;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$LargeWaterWheelBlockEntity>;
         get blockEntityClass(): $Class<$LargeWaterWheelBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$LargeWaterWheelBlockEntity>;
     }
     export class $WaterWheelRenderer$Variant extends $Enum<$WaterWheelRenderer$Variant> {
         model(): $BakedModel;
@@ -239,11 +239,11 @@ declare module "@package/com/simibubi/create/content/kinetics/waterwheel" {
      */
     export type $WaterWheelRenderer$Variant_ = "small" | "large" | "large_extension";
     export class $WaterWheelStructuralBlock$RenderProperties implements $IClientBlockExtensions, $MultiPosDestructionHandler {
+        getExtraPositions(arg0: $ClientLevel, arg1: $BlockPos_, arg2: $BlockState_, arg3: number): $Set<$BlockPos>;
         addHitEffects(arg0: $BlockState_, arg1: $Level_, arg2: $HitResult, arg3: $ParticleEngine): boolean;
         addDestroyEffects(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $ParticleEngine): boolean;
-        getExtraPositions(arg0: $ClientLevel, arg1: $BlockPos_, arg2: $BlockState_, arg3: number): $Set<$BlockPos>;
-        playBreakSound(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): boolean;
         getFogColor(arg0: $BlockState_, arg1: $LevelReader, arg2: $BlockPos_, arg3: $Entity, arg4: $Vector3d, arg5: number): $Vector3d;
+        playBreakSound(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): boolean;
         areBreakingParticlesTinted(arg0: $BlockState_, arg1: $ClientLevel, arg2: $BlockPos_): boolean;
         constructor();
     }
@@ -255,13 +255,13 @@ declare module "@package/com/simibubi/create/content/kinetics/waterwheel" {
     /**
      * Values that may be interpreted as {@link $WaterWheelVisual$ModelKey}.
      */
-    export type $WaterWheelVisual$ModelKey_ = { material?: $BlockState_, variant?: $WaterWheelRenderer$Variant_,  } | [material?: $BlockState_, variant?: $WaterWheelRenderer$Variant_, ];
+    export type $WaterWheelVisual$ModelKey_ = { variant?: $WaterWheelRenderer$Variant_, material?: $BlockState_,  } | [variant?: $WaterWheelRenderer$Variant_, material?: $BlockState_, ];
     export class $WaterWheelRenderer<T extends $WaterWheelBlockEntity> extends $KineticBlockEntityRenderer<T> {
         static standard<T extends $WaterWheelBlockEntity>(arg0: $BlockEntityRendererProvider$Context): $WaterWheelRenderer<T>;
-        static generateModel(arg0: $WaterWheelRenderer$Variant_, arg1: $BlockState_): $BakedModel;
-        static generateModel(arg0: $BakedModel, arg1: $BlockState_): $BakedModel;
-        static generateModel(arg0: $WaterWheelRenderer$ModelKey_): $BakedModel;
         static large<T extends $WaterWheelBlockEntity>(arg0: $BlockEntityRendererProvider$Context): $WaterWheelRenderer<T>;
+        static generateModel(arg0: $BakedModel, arg1: $BlockState_): $BakedModel;
+        static generateModel(arg0: $WaterWheelRenderer$Variant_, arg1: $BlockState_): $BakedModel;
+        static generateModel(arg0: $WaterWheelRenderer$ModelKey_): $BakedModel;
         static OAK_LOG_TOP_TEMPLATE: $StitchedSprite;
         static KINETIC_BLOCK: $SuperByteBufferCache$Compartment<$BlockState>;
         static rainbowMode: boolean;

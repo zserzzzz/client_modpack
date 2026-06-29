@@ -25,14 +25,14 @@ declare module "@package/gg/essential/universal" {
         fork(): $UMatrixStack;
         translate(x: number, y: number, z: number): void;
         translate(x: number, y: number, z: number): void;
-        runReplacingGlobalState(block: $Runnable_): void;
         runReplacingGlobalState<R>(block: $Function0_<R>): R;
-        toMC(): $PoseStack;
+        runReplacingGlobalState(block: $Runnable_): void;
+        replaceGlobalState(): void;
         applyToGlobalState(): void;
         static rotate$default(arg0: $UMatrixStack, arg1: number, arg2: number, arg3: number, arg4: number, arg5: boolean, arg6: number, arg7: $Object): void;
-        replaceGlobalState(): void;
-        runWithGlobalState(block: $Runnable_): void;
         runWithGlobalState<R>(block: $Function0_<R>): R;
+        runWithGlobalState(block: $Runnable_): void;
+        toMC(): $PoseStack;
         static Companion: $UMatrixStack$Companion;
         static UNIT: $UMatrixStack;
         constructor(mc: $PoseStack$Pose);
@@ -44,34 +44,34 @@ declare module "@package/gg/essential/universal" {
         constructor($constructor_marker: $DefaultConstructorMarker);
     }
     export class $UMatrixStack$Entry {
-        getNormal(): $Matrix3f;
-        static copy$default(arg0: $UMatrixStack$Entry, arg1: $Matrix4f, arg2: $Matrix3f, arg3: number, arg4: $Object): $UMatrixStack$Entry;
-        deepCopy(): $UMatrixStack$Entry;
-        copy(model: $Matrix4f, normal: $Matrix3f): $UMatrixStack$Entry;
         getModel(): $Matrix4f;
+        copy(model: $Matrix4f, normal: $Matrix3f): $UMatrixStack$Entry;
+        deepCopy(): $UMatrixStack$Entry;
+        static copy$default(arg0: $UMatrixStack$Entry, arg1: $Matrix4f, arg2: $Matrix3f, arg3: number, arg4: $Object): $UMatrixStack$Entry;
+        getModelAsArray(): number[];
+        getNormal(): $Matrix3f;
         component2(): $Matrix3f;
         component1(): $Matrix4f;
         toMCStack(): $PoseStack;
-        getModelAsArray(): number[];
         constructor(model: $Matrix4f, normal: $Matrix3f);
-        get normal(): $Matrix3f;
         get model(): $Matrix4f;
         get modelAsArray(): number[];
+        get normal(): $Matrix3f;
     }
     export class $UImage {
-        getHeight(): number;
-        setPixelRGBA(x: number, y: number, color: number): void;
         copy(): $UImage;
         copyFrom(other: $UImage): void;
         getWidth(): number;
+        getHeight(): number;
         static ofSize(width: number, height: number, clear: boolean): $UImage;
         static ofSize(width: number, height: number): $UImage;
-        getPixelRGBA(x: number, y: number): number;
+        setPixelRGBA(x: number, y: number, color: number): void;
         getNativeImage(): $NativeImage;
+        getPixelRGBA(x: number, y: number): number;
         static Companion: $UImage$Companion;
         constructor(nativeImage: $NativeImage);
-        get height(): number;
         get width(): number;
+        get height(): number;
         get nativeImage(): $NativeImage;
     }
 }

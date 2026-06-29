@@ -29,17 +29,13 @@ declare module "@package/java/security" {
         get name(): string;
     }
     export class $Signature extends $SignatureSpi {
-        initVerify(arg0: $Certificate): void;
-        initVerify(arg0: $PublicKey): void;
-        initSign(arg0: $PrivateKey, arg1: $SecureRandom): void;
-        initSign(arg0: $PrivateKey): void;
-        update(arg0: $ByteBuffer): void;
-        update(arg0: number): void;
-        update(arg0: number[], arg1: number, arg2: number): void;
         update(arg0: number[]): void;
-        static getInstance(arg0: string, arg1: $Provider): $Signature;
-        static getInstance(arg0: string, arg1: string): $Signature;
+        update(arg0: number[], arg1: number, arg2: number): void;
+        update(arg0: number): void;
+        update(arg0: $ByteBuffer): void;
         static getInstance(arg0: string): $Signature;
+        static getInstance(arg0: string, arg1: string): $Signature;
+        static getInstance(arg0: string, arg1: $Provider): $Signature;
         getParameters(): $AlgorithmParameters;
         sign(arg0: number[], arg1: number, arg2: number): number;
         sign(): number[];
@@ -51,6 +47,10 @@ declare module "@package/java/security" {
          * @deprecated
          */
         getParameter(arg0: string): $Object;
+        initVerify(arg0: $Certificate): void;
+        initVerify(arg0: $PublicKey): void;
+        initSign(arg0: $PrivateKey): void;
+        initSign(arg0: $PrivateKey, arg1: $SecureRandom): void;
         /**
          * @deprecated
          */
@@ -138,28 +138,28 @@ declare module "@package/java/security" {
         get services(): $Set<$Provider$Service>;
     }
     export class $SecureRandom extends $Random {
-        generateSeed(arg0: number): number[];
-        static getInstanceStrong(): $SecureRandom;
-        reseed(): void;
-        reseed(arg0: $SecureRandomParameters): void;
-        static getInstance(arg0: string, arg1: string): $SecureRandom;
-        static getInstance(arg0: string, arg1: $SecureRandomParameters, arg2: $Provider): $SecureRandom;
         static getInstance(arg0: string, arg1: $SecureRandomParameters, arg2: string): $SecureRandom;
         static getInstance(arg0: string, arg1: $SecureRandomParameters): $SecureRandom;
-        static getInstance(arg0: string, arg1: $Provider): $SecureRandom;
+        static getInstance(arg0: string, arg1: $SecureRandomParameters, arg2: $Provider): $SecureRandom;
         static getInstance(arg0: string): $SecureRandom;
+        static getInstance(arg0: string, arg1: string): $SecureRandom;
+        static getInstance(arg0: string, arg1: $Provider): $SecureRandom;
         getParameters(): $SecureRandomParameters;
         nextBytes(arg0: number[], arg1: $SecureRandomParameters): void;
         getProvider(): $Provider;
         setSeed(arg0: number[]): void;
         static getSeed(arg0: number): number[];
         getAlgorithm(): string;
+        generateSeed(arg0: number): number[];
+        static getInstanceStrong(): $SecureRandom;
+        reseed(): void;
+        reseed(arg0: $SecureRandomParameters): void;
         constructor(arg0: number[]);
         constructor();
-        static get instanceStrong(): $SecureRandom;
         get parameters(): $SecureRandomParameters;
         get provider(): $Provider;
         get algorithm(): string;
+        static get instanceStrong(): $SecureRandom;
     }
     export class $PrivateKey {
         /**
@@ -230,17 +230,17 @@ declare module "@package/java/security" {
         get actions(): string;
     }
     export class $AlgorithmParameters {
-        getParameterSpec<T extends $AlgorithmParameterSpec>(arg0: $Class<T>): T;
-        static getInstance(arg0: string): $AlgorithmParameters;
         static getInstance(arg0: string, arg1: $Provider): $AlgorithmParameters;
         static getInstance(arg0: string, arg1: string): $AlgorithmParameters;
+        static getInstance(arg0: string): $AlgorithmParameters;
+        init(arg0: number[]): void;
         init(arg0: number[], arg1: string): void;
         init(arg0: $AlgorithmParameterSpec): void;
-        init(arg0: number[]): void;
-        getEncoded(arg0: string): number[];
         getEncoded(): number[];
+        getEncoded(arg0: string): number[];
         getProvider(): $Provider;
         getAlgorithm(): string;
+        getParameterSpec<T extends $AlgorithmParameterSpec>(arg0: $Class<T>): T;
         get provider(): $Provider;
         get algorithm(): string;
     }

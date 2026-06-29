@@ -88,9 +88,9 @@ declare module "@package/net/minecraft/world/level/levelgen/feature/configuratio
         get features(): $Stream<$ConfiguredFeature<never, never>>;
     }
     export class $TwistingVinesConfig extends $Record implements $FeatureConfiguration {
-        maxHeight(): number;
         spreadHeight(): number;
         spreadWidth(): number;
+        maxHeight(): number;
         getFeatures(): $Stream<$ConfiguredFeature<never, never>>;
         static CODEC: $Codec<$TwistingVinesConfig>;
         constructor(arg0: number, arg1: number, arg2: number);
@@ -99,7 +99,7 @@ declare module "@package/net/minecraft/world/level/levelgen/feature/configuratio
     /**
      * Values that may be interpreted as {@link $TwistingVinesConfig}.
      */
-    export type $TwistingVinesConfig_ = { spreadHeight?: number, spreadWidth?: number, maxHeight?: number,  } | [spreadHeight?: number, spreadWidth?: number, maxHeight?: number, ];
+    export type $TwistingVinesConfig_ = { maxHeight?: number, spreadHeight?: number, spreadWidth?: number,  } | [maxHeight?: number, spreadHeight?: number, spreadWidth?: number, ];
     export class $LargeDripstoneConfiguration implements $FeatureConfiguration {
         getFeatures(): $Stream<$ConfiguredFeature<never, never>>;
         minRadiusForWind: number;
@@ -131,12 +131,12 @@ declare module "@package/net/minecraft/world/level/levelgen/feature/configuratio
     }
     export class $SculkPatchConfiguration extends $Record implements $FeatureConfiguration {
         chargeCount(): number;
-        amountPerCharge(): number;
-        spreadAttempts(): number;
-        catalystChance(): number;
         growthRounds(): number;
-        spreadRounds(): number;
+        amountPerCharge(): number;
+        catalystChance(): number;
+        spreadAttempts(): number;
         extraRareGrowths(): $IntProvider;
+        spreadRounds(): number;
         getFeatures(): $Stream<$ConfiguredFeature<never, never>>;
         static CODEC: $Codec<$SculkPatchConfiguration>;
         constructor(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: $IntProvider_, arg6: number);
@@ -145,7 +145,7 @@ declare module "@package/net/minecraft/world/level/levelgen/feature/configuratio
     /**
      * Values that may be interpreted as {@link $SculkPatchConfiguration}.
      */
-    export type $SculkPatchConfiguration_ = { spreadRounds?: number, spreadAttempts?: number, extraRareGrowths?: $IntProvider_, chargeCount?: number, amountPerCharge?: number, catalystChance?: number, growthRounds?: number,  } | [spreadRounds?: number, spreadAttempts?: number, extraRareGrowths?: $IntProvider_, chargeCount?: number, amountPerCharge?: number, catalystChance?: number, growthRounds?: number, ];
+    export type $SculkPatchConfiguration_ = { catalystChance?: number, growthRounds?: number, spreadRounds?: number, spreadAttempts?: number, extraRareGrowths?: $IntProvider_, chargeCount?: number, amountPerCharge?: number,  } | [catalystChance?: number, growthRounds?: number, spreadRounds?: number, spreadAttempts?: number, extraRareGrowths?: $IntProvider_, chargeCount?: number, amountPerCharge?: number, ];
     export class $CountConfiguration implements $FeatureConfiguration {
         count(): $IntProvider;
         getFeatures(): $Stream<$ConfiguredFeature<never, never>>;
@@ -192,7 +192,7 @@ declare module "@package/net/minecraft/world/level/levelgen/feature/configuratio
     /**
      * Values that may be interpreted as {@link $RandomPatchConfiguration}.
      */
-    export type $RandomPatchConfiguration_ = { tries?: number, feature?: $Holder_<$PlacedFeature>, xzSpread?: number, ySpread?: number,  } | [tries?: number, feature?: $Holder_<$PlacedFeature>, xzSpread?: number, ySpread?: number, ];
+    export type $RandomPatchConfiguration_ = { ySpread?: number, tries?: number, feature?: $Holder_<$PlacedFeature>, xzSpread?: number,  } | [ySpread?: number, tries?: number, feature?: $Holder_<$PlacedFeature>, xzSpread?: number, ];
     export class $BlockStateConfiguration implements $FeatureConfiguration {
         getFeatures(): $Stream<$ConfiguredFeature<never, never>>;
         static CODEC: $Codec<$BlockStateConfiguration>;
@@ -203,9 +203,9 @@ declare module "@package/net/minecraft/world/level/levelgen/feature/configuratio
     export class $TreeConfiguration$TreeConfigurationBuilder {
         build(): $TreeConfiguration;
         ignoreVines(): $TreeConfiguration$TreeConfigurationBuilder;
-        decorators(decorators: $List_<$TreeDecorator>): $TreeConfiguration$TreeConfigurationBuilder;
-        forceDirt(): $TreeConfiguration$TreeConfigurationBuilder;
         dirt(dirtProvider: $BlockStateProvider): $TreeConfiguration$TreeConfigurationBuilder;
+        forceDirt(): $TreeConfiguration$TreeConfigurationBuilder;
+        decorators(decorators: $List_<$TreeDecorator>): $TreeConfiguration$TreeConfigurationBuilder;
         trunkProvider: $BlockStateProvider;
         foliageProvider: $BlockStateProvider;
         constructor(trunkProvider: $BlockStateProvider, trunkPlacer: $TrunkPlacer, foliageProvider: $BlockStateProvider, foliagePlacer: $FoliagePlacer, rootPlacer: ($RootPlacer) | undefined, minimumSize: $FeatureSize);
@@ -239,9 +239,9 @@ declare module "@package/net/minecraft/world/level/levelgen/feature/configuratio
         get features(): $Stream<$ConfiguredFeature<never, never>>;
     }
     export class $EndGatewayConfiguration implements $FeatureConfiguration {
-        static knownExit(exit: $BlockPos_, exact: boolean): $EndGatewayConfiguration;
         isExitExact(): boolean;
         static delayedExitSearch(): $EndGatewayConfiguration;
+        static knownExit(exit: $BlockPos_, exact: boolean): $EndGatewayConfiguration;
         getExit(): ($BlockPos) | undefined;
         getFeatures(): $Stream<$ConfiguredFeature<never, never>>;
         static CODEC: $Codec<$EndGatewayConfiguration>;
@@ -313,7 +313,7 @@ declare module "@package/net/minecraft/world/level/levelgen/feature/configuratio
     /**
      * Values that may be interpreted as {@link $DiskConfiguration}.
      */
-    export type $DiskConfiguration_ = { target?: $BlockPredicate, radius?: $IntProvider_, stateProvider?: $RuleBasedBlockStateProvider_, halfHeight?: number,  } | [target?: $BlockPredicate, radius?: $IntProvider_, stateProvider?: $RuleBasedBlockStateProvider_, halfHeight?: number, ];
+    export type $DiskConfiguration_ = { radius?: $IntProvider_, stateProvider?: $RuleBasedBlockStateProvider_, halfHeight?: number, target?: $BlockPredicate,  } | [radius?: $IntProvider_, stateProvider?: $RuleBasedBlockStateProvider_, halfHeight?: number, target?: $BlockPredicate, ];
     export class $RandomBooleanFeatureConfiguration implements $FeatureConfiguration {
         getFeatures(): $Stream<$ConfiguredFeature<never, never>>;
         static CODEC: $Codec<$RandomBooleanFeatureConfiguration>;
@@ -377,12 +377,12 @@ declare module "@package/net/minecraft/world/level/levelgen/feature/configuratio
         get features(): $Stream<$ConfiguredFeature<never, never>>;
     }
     export class $BlockColumnConfiguration extends $Record implements $FeatureConfiguration {
+        static simple(height: $IntProvider_, state: $BlockStateProvider): $BlockColumnConfiguration;
         static layer(height: $IntProvider_, state: $BlockStateProvider): $BlockColumnConfiguration$Layer;
         layers(): $List<$BlockColumnConfiguration$Layer>;
         direction(): $Direction;
-        static simple(height: $IntProvider_, state: $BlockStateProvider): $BlockColumnConfiguration;
-        prioritizeTip(): boolean;
         allowedPlacement(): $BlockPredicate;
+        prioritizeTip(): boolean;
         getFeatures(): $Stream<$ConfiguredFeature<never, never>>;
         static CODEC: $Codec<$BlockColumnConfiguration>;
         constructor(arg0: $List_<$BlockColumnConfiguration$Layer_>, arg1: $Direction_, arg2: $BlockPredicate, arg3: boolean);
@@ -391,7 +391,7 @@ declare module "@package/net/minecraft/world/level/levelgen/feature/configuratio
     /**
      * Values that may be interpreted as {@link $BlockColumnConfiguration}.
      */
-    export type $BlockColumnConfiguration_ = { direction?: $Direction_, allowedPlacement?: $BlockPredicate, prioritizeTip?: boolean, layers?: $List_<$BlockColumnConfiguration$Layer_>,  } | [direction?: $Direction_, allowedPlacement?: $BlockPredicate, prioritizeTip?: boolean, layers?: $List_<$BlockColumnConfiguration$Layer_>, ];
+    export type $BlockColumnConfiguration_ = { prioritizeTip?: boolean, layers?: $List_<$BlockColumnConfiguration$Layer_>, direction?: $Direction_, allowedPlacement?: $BlockPredicate,  } | [prioritizeTip?: boolean, layers?: $List_<$BlockColumnConfiguration$Layer_>, direction?: $Direction_, allowedPlacement?: $BlockPredicate, ];
     export class $DripstoneClusterConfiguration implements $FeatureConfiguration {
         getFeatures(): $Stream<$ConfiguredFeature<never, never>>;
         chanceOfDripstoneColumnAtMaxDistanceFromCenter: number;
@@ -418,17 +418,17 @@ declare module "@package/net/minecraft/world/level/levelgen/feature/configuratio
     /**
      * Values that may be interpreted as {@link $BlockColumnConfiguration$Layer}.
      */
-    export type $BlockColumnConfiguration$Layer_ = { height?: $IntProvider_, state?: $BlockStateProvider,  } | [height?: $IntProvider_, state?: $BlockStateProvider, ];
+    export type $BlockColumnConfiguration$Layer_ = { state?: $BlockStateProvider, height?: $IntProvider_,  } | [state?: $BlockStateProvider, height?: $IntProvider_, ];
     export class $SpikeConfiguration implements $FeatureConfiguration {
+        getSpikes(): $List<$SpikeFeature$EndSpike>;
         getCrystalBeamTarget(): $BlockPos;
         isCrystalInvulnerable(): boolean;
-        getSpikes(): $List<$SpikeFeature$EndSpike>;
         getFeatures(): $Stream<$ConfiguredFeature<never, never>>;
         static CODEC: $Codec<$SpikeConfiguration>;
         constructor(crystalInvulnerable: boolean, spikes: $List_<$SpikeFeature$EndSpike>, crystalBeamTarget: $BlockPos_ | null);
+        get spikes(): $List<$SpikeFeature$EndSpike>;
         get crystalBeamTarget(): $BlockPos;
         get crystalInvulnerable(): boolean;
-        get spikes(): $List<$SpikeFeature$EndSpike>;
         get features(): $Stream<$ConfiguredFeature<never, never>>;
     }
     export class $PointedDripstoneConfiguration implements $FeatureConfiguration {

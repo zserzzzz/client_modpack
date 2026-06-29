@@ -6,9 +6,9 @@ import { $ResourceKey_ } from "@package/net/minecraft/resources";
 
 declare module "@package/net/minecraft/util/profiling/jfr/event" {
     export class $NetworkSummaryEvent$SumAggregation {
+        trackReceivedPacket(delta: number): void;
         trackSentPacket(delta: number): void;
         commitEvent(): void;
-        trackReceivedPacket(delta: number): void;
         constructor(remoteAddress: string);
     }
     export class $ChunkGenerationEvent$Fields {

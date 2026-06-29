@@ -42,12 +42,12 @@ declare module "@package/net/minecraft/world/level/storage/loot" {
     export class $LootParams$Builder {
         create(params: $LootContextParamSet): $LootParams;
         getLevel(): $ServerLevel;
-        getParameter<T>(parameter: $LootContextParam<T>): T;
         withDynamicDrop(name: $ResourceLocation_, dynamicDrop: $LootParams$DynamicDrop_): $LootParams$Builder;
+        getParameter<T>(parameter: $LootContextParam<T>): T;
+        withParameter<T>(parameter: $LootContextParam<T>, value: T): $LootParams$Builder;
+        withOptionalParameter<T>(parameter: $LootContextParam<T>, value: T | null): $LootParams$Builder;
         getOptionalParameter<T>(parameter: $LootContextParam<T>): T;
         withLuck(luck: number): $LootParams$Builder;
-        withOptionalParameter<T>(parameter: $LootContextParam<T>, value: T | null): $LootParams$Builder;
-        withParameter<T>(parameter: $LootContextParam<T>, value: T): $LootParams$Builder;
         constructor(level: $ServerLevel);
         get level(): $ServerLevel;
     }
@@ -58,10 +58,10 @@ declare module "@package/net/minecraft/world/level/storage/loot" {
         pool(arg0: $LootPool): $LootTable$Builder;
         build(): $LootTable;
         pools(arg0: $Collection_<any>): $LootTable$Builder;
-        withPool(lootPool: $LootPool$Builder): $LootTable$Builder;
-        modifyPools(arg0: $Consumer_<any>): $LootTable$Builder;
         setRandomSequence(randomSequence: $ResourceLocation_): $LootTable$Builder;
         setParamSet(parameterSet: $LootContextParamSet): $LootTable$Builder;
+        modifyPools(arg0: $Consumer_<any>): $LootTable$Builder;
+        withPool(lootPool: $LootPool$Builder): $LootTable$Builder;
         apply<E>(builderSources: E[], toBuilderFunction: $Function_<E, $LootItemFunction$Builder>): $LootTable$Builder;
         apply<E>(builderSources: $Iterable_<E>, toBuilderFunction: $Function_<E, $LootItemFunction$Builder>): $LootTable$Builder;
         unwrap(): $LootTable$Builder;
@@ -116,15 +116,15 @@ declare module "@package/net/minecraft/world/level/storage/loot" {
      */
     export type $LootContext$EntityTarget_ = "this" | "attacker" | "direct_attacker" | "attacking_player" | string;
     export class $LootDataType<T> extends $Record {
-        idSetter(): $BiConsumer<T, $ResourceLocation>;
-        deserialize<V>(resourceLocation: $ResourceLocation_, ops: $DynamicOps<V>, value: V): (T) | undefined;
+        codec(): $Codec<T>;
         static values(): $Stream<$LootDataType<never>>;
         defaultValue(): T;
+        deserialize<V>(resourceLocation: $ResourceLocation_, ops: $DynamicOps<V>, value: V): (T) | undefined;
         validator(): $LootDataType$Validator<T>;
-        codec(): $Codec<T>;
-        handler$fec000$probejs$apply(resourceLocation: $ResourceLocation_, ops: $DynamicOps<any>, value: $Object, cir: $CallbackInfoReturnable<any>): void;
-        conditionalCodec(): $Codec<(T) | undefined>;
         registryKey(): $ResourceKey<$Registry<T>>;
+        conditionalCodec(): $Codec<(T) | undefined>;
+        handler$fec000$probejs$apply(resourceLocation: $ResourceLocation_, ops: $DynamicOps<any>, value: $Object, cir: $CallbackInfoReturnable<any>): void;
+        idSetter(): $BiConsumer<T, $ResourceLocation>;
         runValidation(context: $ValidationContext, key: $ResourceKey_<T>, value: T): void;
         static TABLE: $LootDataType<$LootTable>;
         static MODIFIER: $LootDataType<$LootItemFunction>;
@@ -134,26 +134,36 @@ declare module "@package/net/minecraft/world/level/storage/loot" {
     /**
      * Values that may be interpreted as {@link $LootDataType}.
      */
-    export type $LootDataType_<T> = { conditionalCodec?: $Codec<(T) | undefined>, idSetter?: $BiConsumer_<any, $ResourceLocation>, validator?: $LootDataType$Validator_<any>, registryKey?: $ResourceKey_<$Registry<any>>, codec?: $Codec<any>, defaultValue?: any,  } | [conditionalCodec?: $Codec<(T) | undefined>, idSetter?: $BiConsumer_<any, $ResourceLocation>, validator?: $LootDataType$Validator_<any>, registryKey?: $ResourceKey_<$Registry<any>>, codec?: $Codec<any>, defaultValue?: any, ];
+    export type $LootDataType_<T> = { codec?: $Codec<any>, defaultValue?: any, conditionalCodec?: $Codec<(T) | undefined>, idSetter?: $BiConsumer_<any, $ResourceLocation>, validator?: $LootDataType$Validator_<any>, registryKey?: $ResourceKey_<$Registry<any>>,  } | [codec?: $Codec<any>, defaultValue?: any, conditionalCodec?: $Codec<(T) | undefined>, idSetter?: $BiConsumer_<any, $ResourceLocation>, validator?: $LootDataType$Validator_<any>, registryKey?: $ResourceKey_<$Registry<any>>, ];
     /**
      * LootContext stores various context information for loot generation.
      * This includes the Level as well as any known `LootContextParam`s.
      */
     export class $LootContext {
         getLevel(): $ServerLevel;
+        getQueriedLootTableId(): $ResourceLocation;
         getRandom(): $RandomSource;
-        static createVisitedEntry(modifier: $LootItemFunction): $LootContext$VisitedEntry<$LootItemFunction>;
-        static createVisitedEntry(predicate: $LootItemCondition): $LootContext$VisitedEntry<$LootItemCondition>;
-        static createVisitedEntry(lootTable: $LootTable): $LootContext$VisitedEntry<$LootTable>;
-        pushVisitedElement(element: $LootContext$VisitedEntry_<never>): boolean;
+        popVisitedElement(element: $LootContext$VisitedEntry_<never>): void;
+        /**
+         * Get the value of the given parameter.
+         * 
+         * @throws NoSuchElementException if the parameter is not present in this context
+         */
+        getParamOrNull<T>(param: $LootContextParam<T>): T;
+        hasVisitedElement(element: $LootContext$VisitedEntry_<never>): boolean;
+        /**
+         * Add the dynamic drops for the given dynamic drops name to the given consumer.
+         * If no dynamic drops provider for the given name has been registered to this LootContext, nothing is generated.
+         * 
+         * @see DynamicDrops
+         */
+        addDynamicDrops(name: $ResourceLocation_, consumer: $Consumer_<$ItemStack>): void;
         /**
          * The luck value for this loot context. This is usually just the player's luck value, however it may be modified depending on the context of the looting.
          * When fishing for example it is increased based on the Luck of the Sea enchantment.
          */
         getLuck(): number;
         getResolver(): $HolderGetter$Provider;
-        setQueriedLootTableId(arg0: $ResourceLocation_): void;
-        getQueriedLootTableId(): $ResourceLocation;
         /**
          * Check whether the given parameter is present in this context.
          */
@@ -164,21 +174,11 @@ declare module "@package/net/minecraft/world/level/storage/loot" {
          * @throws NoSuchElementException if the parameter is not present in this context
          */
         getParam<T>(param: $LootContextParam<T>): T;
-        hasVisitedElement(element: $LootContext$VisitedEntry_<never>): boolean;
-        /**
-         * Get the value of the given parameter.
-         * 
-         * @throws NoSuchElementException if the parameter is not present in this context
-         */
-        getParamOrNull<T>(param: $LootContextParam<T>): T;
-        /**
-         * Add the dynamic drops for the given dynamic drops name to the given consumer.
-         * If no dynamic drops provider for the given name has been registered to this LootContext, nothing is generated.
-         * 
-         * @see DynamicDrops
-         */
-        addDynamicDrops(name: $ResourceLocation_, consumer: $Consumer_<$ItemStack>): void;
-        popVisitedElement(element: $LootContext$VisitedEntry_<never>): void;
+        static createVisitedEntry(modifier: $LootItemFunction): $LootContext$VisitedEntry<$LootItemFunction>;
+        static createVisitedEntry(predicate: $LootItemCondition): $LootContext$VisitedEntry<$LootItemCondition>;
+        static createVisitedEntry(lootTable: $LootTable): $LootContext$VisitedEntry<$LootTable>;
+        pushVisitedElement(element: $LootContext$VisitedEntry_<never>): boolean;
+        setQueriedLootTableId(arg0: $ResourceLocation_): void;
         constructor(params: $LootParams, random: $RandomSource, lootDataResolver: $HolderGetter$Provider_);
         get level(): $ServerLevel;
         get random(): $RandomSource;
@@ -190,26 +190,26 @@ declare module "@package/net/minecraft/world/level/storage/loot" {
      */
     export class $ValidationContext {
         resolver(): $HolderGetter$Provider;
+        reporter(): $ProblemReporter;
         /**
          * Create a new ValidationContext with the given LootContextParamSet.
          */
         setParams(params: $LootContextParamSet): $ValidationContext;
-        reporter(): $ProblemReporter;
         /**
          * Validate the given LootContextUser.
          */
         validateUser(lootContextUser: $LootContextUser): void;
+        hasVisitedElement(key: $ResourceKey_<never>): boolean;
         allowsReferences(): boolean;
         /**
          * Report a problem to this ValidationContext.
          */
         reportProblem(problem: string): void;
+        enterElement(name: string, key: $ResourceKey_<never>): $ValidationContext;
         /**
          * Create a new ValidationContext with `childName` being added to the context.
          */
         forChild(childName: string): $ValidationContext;
-        enterElement(name: string, key: $ResourceKey_<never>): $ValidationContext;
-        hasVisitedElement(key: $ResourceKey_<never>): boolean;
         constructor(reporter: $ProblemReporter, params: $LootContextParamSet);
         constructor(reporter: $ProblemReporter, params: $LootContextParamSet, resolver: $HolderGetter$Provider_);
         set params(value: $LootContextParamSet);
@@ -236,10 +236,6 @@ declare module "@package/net/minecraft/world/level/storage/loot" {
      */
     export class $IntRange implements $BoundedIntUnaryOperatorAccessor {
         /**
-         * Create an IntRange that contains only exactly the given value.
-         */
-        static upperBound(exactValue: number): $IntRange;
-        /**
          * Check whether the given value falls within this IntRange.
          */
         test(lootContext: $LootContext, value: number): boolean;
@@ -259,6 +255,10 @@ declare module "@package/net/minecraft/world/level/storage/loot" {
          * Create an IntRange that contains only exactly the given value.
          */
         static lowerBound(exactValue: number): $IntRange;
+        /**
+         * Create an IntRange that contains only exactly the given value.
+         */
+        static upperBound(exactValue: number): $IntRange;
         /**
          * The LootContextParams required for this IntRange.
          */
@@ -300,11 +300,11 @@ declare module "@package/net/minecraft/world/level/storage/loot" {
     export class $LootParams {
         getLevel(): $ServerLevel;
         getParameter<T>(param: $LootContextParam<T>): T;
+        getParamOrNull<T>(param: $LootContextParam<T>): T;
+        addDynamicDrops(location: $ResourceLocation_, consumer: $Consumer_<$ItemStack>): void;
         getOptionalParameter<T>(param: $LootContextParam<T>): T;
         getLuck(): number;
         hasParam(param: $LootContextParam<never>): boolean;
-        getParamOrNull<T>(param: $LootContextParam<T>): T;
-        addDynamicDrops(location: $ResourceLocation_, consumer: $Consumer_<$ItemStack>): void;
         constructor(level: $ServerLevel, params: $Map_<$LootContextParam<never>, $Object>, dynamicDrops: $Map_<$ResourceLocation_, $LootParams$DynamicDrop_>, luck: number);
         get level(): $ServerLevel;
         get luck(): number;
@@ -315,10 +315,10 @@ declare module "@package/net/minecraft/world/level/storage/loot" {
         type(): $DataComponentType<T>;
         empty(): T;
         getContents(contents: T): $Stream<$ItemStack>;
-        setContents(stack: $ItemStack_, contents: T, items: $Stream<$ItemStack_>): void;
-        setContents(stack: $ItemStack_, items: $Stream<$ItemStack_>): void;
-        setContents(contents: T, items: $Stream<$ItemStack_>): T;
         modifyItems(stack: $ItemStack_, modifier: $UnaryOperator_<$ItemStack>): void;
+        setContents(stack: $ItemStack_, contents: T, items: $Stream<$ItemStack_>): void;
+        setContents(contents: T, items: $Stream<$ItemStack_>): T;
+        setContents(stack: $ItemStack_, items: $Stream<$ItemStack_>): void;
     }
     export class $LootTable implements $LootTableAccessor, $LootTableAccessor$2, $LootTableAccessor$1 {
         fill(container: $Container, params: $LootParams, seed: number): void;
@@ -329,38 +329,38 @@ declare module "@package/net/minecraft/world/level/storage/loot" {
         getPool(arg0: string): $LootPool;
         isFrozen(): boolean;
         freeze(): void;
-        static lootTable(): $LootTable$Builder;
-        getLootTableId(): $ResourceLocation;
-        setLootTableId(arg0: $ResourceLocation_): void;
+        static createStackSplitter(level: $ServerLevel, output: $Consumer_<$ItemStack>): $Consumer<$ItemStack>;
         /**
-         * @deprecated
+         * Generate random items to the given Consumer, ensuring they do not exceed their maximum stack size.
          */
-        getRandomItemsRaw(params: $LootParams, output: $Consumer_<$ItemStack>): void;
+        getRandomItems(contextData: $LootContext, output: $Consumer_<$ItemStack>): void;
+        getRandomItems(params: $LootParams, random: $RandomSource): $ObjectArrayList<$ItemStack>;
+        getRandomItems(params: $LootParams, output: $Consumer_<$ItemStack>): void;
+        getRandomItems(params: $LootParams, seed: number): $ObjectArrayList<$ItemStack>;
+        getRandomItems(params: $LootParams): $ObjectArrayList<$ItemStack>;
+        getRandomItems(params: $LootParams, seed: number, arg2: $Consumer_<$ItemStack>): void;
+        setLootTableId(arg0: $ResourceLocation_): void;
         /**
          * @deprecated
          * Generate random items to the given Consumer, ensuring they do not exceed their maximum stack size.
          */
         getRandomItemsRaw(contextData: $LootContext, output: $Consumer_<$ItemStack>): void;
         /**
+         * @deprecated
+         */
+        getRandomItemsRaw(params: $LootParams, output: $Consumer_<$ItemStack>): void;
+        getLootTableId(): $ResourceLocation;
+        /**
          * Get the parameter set for this LootTable.
          */
         getParamSet(): $LootContextParamSet;
-        getRandomItems(params: $LootParams, output: $Consumer_<$ItemStack>): void;
-        /**
-         * Generate random items to the given Consumer, ensuring they do not exceed their maximum stack size.
-         */
-        getRandomItems(contextData: $LootContext, output: $Consumer_<$ItemStack>): void;
-        getRandomItems(params: $LootParams, seed: number, arg2: $Consumer_<$ItemStack>): void;
-        getRandomItems(params: $LootParams, seed: number): $ObjectArrayList<$ItemStack>;
-        getRandomItems(params: $LootParams, random: $RandomSource): $ObjectArrayList<$ItemStack>;
-        getRandomItems(params: $LootParams): $ObjectArrayList<$ItemStack>;
+        static lootTable(): $LootTable$Builder;
         addPool(arg0: $LootPool): void;
         removePool(arg0: string): $LootPool;
-        static createStackSplitter(level: $ServerLevel, output: $Consumer_<$ItemStack>): $Consumer<$ItemStack>;
-        fabric_getPools(): $List<$LootPool>;
-        getPools(): $List<$LootPool>;
         fabric_getFunctions(): $List<$LootItemFunction>;
         fabric_getRandomSequenceId(): ($ResourceLocation) | undefined;
+        fabric_getPools(): $List<$LootPool>;
+        getPools(): $List<$LootPool>;
         static CODEC: $Codec<$Holder<$LootTable>>;
         static DEFAULT_PARAM_SET: $LootContextParamSet;
         pools: $List<$LootPool>;
@@ -380,20 +380,20 @@ declare module "@package/net/minecraft/world/level/storage/loot" {
         setName(arg0: string): void;
         isFrozen(): boolean;
         freeze(): void;
+        getBonusRolls(): $NumberProvider;
         addRandomItems(stackConsumer: $Consumer_<$ItemStack>, context: $LootContext): void;
         setBonusRolls(arg0: $NumberProvider_): void;
-        getBonusRolls(): $NumberProvider;
-        setRolls(arg0: $NumberProvider_): void;
         static lootPool(): $LootPool$Builder;
-        getFunctions(): $List<$LootItemFunction>;
+        setRolls(arg0: $NumberProvider_): void;
         getEntries(): $List<$LootPoolEntryContainer>;
         getConditions(): $List<$LootItemCondition>;
-        fabric_getEntries(): $List<$LootPoolEntryContainer>;
-        fabric_getRolls(): $NumberProvider;
-        getRolls(): $NumberProvider;
         fabric_getFunctions(): $List<$LootItemFunction>;
-        fabric_getConditions(): $List<$LootItemCondition>;
         fabric_getBonusRolls(): $NumberProvider;
+        fabric_getConditions(): $List<$LootItemCondition>;
+        fabric_getRolls(): $NumberProvider;
+        fabric_getEntries(): $List<$LootPoolEntryContainer>;
+        getFunctions(): $List<$LootItemFunction>;
+        getRolls(): $NumberProvider;
         entries: $List<$LootPoolEntryContainer>;
         static CODEC: $Codec<$LootPool>;
         functions: $List<$LootItemFunction>;
@@ -429,7 +429,7 @@ declare module "@package/net/minecraft/world/level/storage/loot" {
     /**
      * Values that may be interpreted as {@link $LootContext$VisitedEntry}.
      */
-    export type $LootContext$VisitedEntry_<T> = { type?: $LootDataType_<any>, value?: any,  } | [type?: $LootDataType_<any>, value?: any, ];
+    export type $LootContext$VisitedEntry_<T> = { value?: any, type?: $LootDataType_<any>,  } | [value?: any, type?: $LootDataType_<any>, ];
     /**
      * Stores IDs for built in loot tables, i.e. loot tables which are not based directly on a block or entity ID.
      */

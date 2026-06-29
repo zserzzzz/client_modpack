@@ -19,21 +19,21 @@ declare module "@package/com/simibubi/create/content/schematics/client/tools" {
         constructor();
     }
     export class $ToolType extends $Enum<$ToolType> {
-        getDescription(): $List<$Component>;
         static values(): $ToolType[];
         static valueOf(arg0: string): $ToolType;
         getDisplayName(): $MutableComponent;
+        getDescription(): $List<$Component>;
         getIcon(): $AllIcons;
-        static getTools(arg0: boolean): $List<$ToolType>;
         getTool(): $ISchematicTool;
+        static getTools(arg0: boolean): $List<$ToolType>;
         static PRINT: $ToolType;
         static MOVE: $ToolType;
         static ROTATE: $ToolType;
         static DEPLOY: $ToolType;
         static MOVE_Y: $ToolType;
         static FLIP: $ToolType;
-        get description(): $List<$Component>;
         get displayName(): $MutableComponent;
+        get description(): $List<$Component>;
         get icon(): $AllIcons;
         get tool(): $ISchematicTool;
     }
@@ -47,10 +47,10 @@ declare module "@package/com/simibubi/create/content/schematics/client/tools" {
         init(): void;
         renderOverlay(arg0: $Gui, arg1: $GuiGraphics, arg2: number, arg3: number, arg4: number): void;
         renderTool(arg0: $PoseStack, arg1: $SuperRenderTypeBuffer, arg2: $Vec3_): void;
-        renderOnSchematic(arg0: $PoseStack, arg1: $SuperRenderTypeBuffer): void;
-        handleRightClick(): boolean;
-        updateSelection(): void;
         handleMouseWheel(arg0: number): boolean;
+        updateSelection(): void;
+        handleRightClick(): boolean;
+        renderOnSchematic(arg0: $PoseStack, arg1: $SuperRenderTypeBuffer): void;
     }
     export class $FlipTool extends $PlacementToolBase {
         constructor();
@@ -68,20 +68,20 @@ declare module "@package/com/simibubi/create/content/schematics/client/tools" {
         init(): void;
         renderOverlay(arg0: $Gui, arg1: $GuiGraphics, arg2: number, arg3: number, arg4: number): void;
         renderTool(arg0: $PoseStack, arg1: $SuperRenderTypeBuffer, arg2: $Vec3_): void;
-        handler$gna000$sable$forceUpdateSelection(arg0: $CallbackInfo, arg1: $Vec3_): void;
-        wrapOperation$gna000$sable$rayTraceSublevels(arg0: $Vec3_, arg1: $Vec3_, arg2: $Predicate_<any>, arg3: $Operation_<any>, arg4: $LocalPlayer, arg5: $SchematicTransformation): $RaycastHelper$PredicateTraceResult;
         wrapOperation$gna000$sable$rayTraceSublevels$mixinextras$bridge$10(arg0: $Vec3_, arg1: $Vec3_, arg2: $Predicate_<any>, arg3: $Operation_<any>, arg4: $LocalRef<any>, arg5: $LocalRef<any>): $RaycastHelper$PredicateTraceResult;
-        renderOnSchematic(arg0: $PoseStack, arg1: $SuperRenderTypeBuffer): void;
+        wrapOperation$gna000$sable$rayTraceSublevels(arg0: $Vec3_, arg1: $Vec3_, arg2: $Predicate_<any>, arg3: $Operation_<any>, arg4: $LocalPlayer, arg5: $SchematicTransformation): $RaycastHelper$PredicateTraceResult;
         updateSelection(): void;
         updateTargetPos(): void;
+        renderOnSchematic(arg0: $PoseStack, arg1: $SuperRenderTypeBuffer): void;
+        handler$gna000$sable$forceUpdateSelection(arg0: $CallbackInfo, arg1: $Vec3_): void;
         constructor();
     }
     export class $MoveVerticalTool extends $PlacementToolBase {
         constructor();
     }
     export class $DeployTool extends $PlacementToolBase {
-        wrapOperation$gml000$sable$manualTransformBB(arg0: $PoseStack, arg1: number, arg2: number, arg3: number, arg4: $Operation_<any>, arg5: number, arg6: number, arg7: $Vec3_): void;
         wrapOperation$gml000$sable$manualTransformBB$mixinextras$bridge$7(arg0: $PoseStack, arg1: number, arg2: number, arg3: number, arg4: $Operation_<any>, arg5: $LocalIntRef, arg6: $LocalIntRef, arg7: $LocalRef<any>): void;
+        wrapOperation$gml000$sable$manualTransformBB(arg0: $PoseStack, arg1: number, arg2: number, arg3: number, arg4: $Operation_<any>, arg5: number, arg6: number, arg7: $Vec3_): void;
         constructor();
     }
 }

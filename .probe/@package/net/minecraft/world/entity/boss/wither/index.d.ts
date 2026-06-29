@@ -1,5 +1,6 @@
 import { $GoalSelector, $Goal } from "@package/net/minecraft/world/entity/ai/goal";
 import { $JumpControl, $MoveControl, $LookControl } from "@package/net/minecraft/world/entity/ai/control";
+import { $CompoundTag } from "@package/net/minecraft/nbt";
 import { $EntityDimensions, $PowerableMob, $EntityType_, $Entity$RemovalReason, $LivingEntity, $Pose, $PortalProcessor, $WalkAnimationState } from "@package/net/minecraft/world/entity";
 import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
 import { $AttributeSupplier$Builder } from "@package/net/minecraft/world/entity/ai/attributes";
@@ -7,7 +8,7 @@ import { $UUID, $Stack } from "@package/java/util";
 import { $RandomSource } from "@package/net/minecraft/util";
 import { $InteractionHand } from "@package/net/minecraft/world";
 import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos } from "@package/net/minecraft/core";
+import { $HolderLookup$Provider, $BlockPos } from "@package/net/minecraft/core";
 import { $Brain } from "@package/net/minecraft/world/entity/ai";
 import { $BlockState_ } from "@package/net/minecraft/world/level/block/state";
 import { $PathNavigation } from "@package/net/minecraft/world/entity/ai/navigation";
@@ -29,39 +30,40 @@ declare module "@package/net/minecraft/world/entity/boss/wither" {
     export class $WitherBoss$WitherDoNothingGoal extends $Goal {
     }
     export class $WitherBoss extends $Monster implements $PowerableMob, $RangedAttackMob {
-        static createAttributes(): $AttributeSupplier$Builder;
         /**
          * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
          */
         makeInvulnerable(): void;
         /**
-         * If a rider of this entity can interact with this entity. Should return true on the
-         * ridden entity if so.
-         */
-        isPowered(): boolean;
-        /**
          * @deprecated
          */
         static canDestroy(state: $BlockState_): boolean;
-        /**
-         * Attack the specified entity using a ranged attack.
-         */
-        performRangedAttack(target: $LivingEntity, distanceFactor: number): void;
-        /**
-         * Returns the current armor value as determined by a call to InventoryPlayer.getTotalArmorValue
-         */
-        getInvulnerableTicks(): number;
-        setInvulnerableTicks(invulnerableTicks: number): void;
-        /**
-         * Returns the target entity ID if present, or -1 if not
-         */
-        getAlternativeTarget(head: number): number;
+        getHeadYRot(head: number): number;
+        getHeadXRot(head: number): number;
         /**
          * Updates the target entity ID
          */
         setAlternativeTarget(targetOffset: number, newId: number): void;
-        getHeadYRot(head: number): number;
-        getHeadXRot(head: number): number;
+        /**
+         * Returns the current armor value as determined by a call to InventoryPlayer.getTotalArmorValue
+         */
+        getInvulnerableTicks(): number;
+        /**
+         * Returns the target entity ID if present, or -1 if not
+         */
+        getAlternativeTarget(head: number): number;
+        setInvulnerableTicks(invulnerableTicks: number): void;
+        /**
+         * Attack the specified entity using a ranged attack.
+         */
+        performRangedAttack(target: $LivingEntity, distanceFactor: number): void;
+        static createAttributes(): $AttributeSupplier$Builder;
+        /**
+         * If a rider of this entity can interact with this entity. Should return true on the
+         * ridden entity if so.
+         */
+        isPowered(): boolean;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;

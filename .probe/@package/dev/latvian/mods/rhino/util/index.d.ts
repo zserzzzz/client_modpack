@@ -9,8 +9,8 @@ declare module "@package/dev/latvian/mods/rhino/util" {
     export class $DataObject {
     }
     export interface $DataObject {
-        createDataObject<T>(arg0: $Supplier_<T>, arg1: $Context): T;
         isDataObjectList(): boolean;
+        createDataObject<T>(arg0: $Supplier_<T>, arg1: $Context): T;
         createDataObjectList<T>(arg0: $Supplier_<T>, arg1: $Context): $List<T>;
         get dataObjectList(): boolean;
     }
@@ -56,16 +56,16 @@ declare module "@package/dev/latvian/mods/rhino/util" {
      */
     export type $DefaultValueTypeHint_ = "string" | "number" | "boolean" | "function" | "class";
     export class $ArrayValueProvider {
-        static fromIterable(arg0: $Iterable_<never>): $ArrayValueProvider;
-        static fromJavaList(arg0: $List_<never>, arg1: $Object): $ArrayValueProvider;
         static fromNativeArray(arg0: $NativeArray): $ArrayValueProvider;
+        static fromJavaList(arg0: $List_<never>, arg1: $Object): $ArrayValueProvider;
+        static fromIterable(arg0: $Iterable_<never>): $ArrayValueProvider;
         static EMPTY: $ArrayValueProvider;
     }
     export interface $ArrayValueProvider {
-        createSet(arg1: $TypeInfo_): $Object;
         getLength(): number;
         createList(arg1: $TypeInfo_): $Object;
         createArray(arg1: $TypeInfo_): $Object;
+        createSet(arg1: $TypeInfo_): $Object;
         getArrayValue(arg1: number): $Object;
         getErrorSource(): $Object;
         get length(): number;

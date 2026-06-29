@@ -22,26 +22,26 @@ import { $WorldDimensions, $WorldOptions } from "@package/net/minecraft/world/le
 
 declare module "@package/net/minecraft/server/dedicated" {
     export class $Settings<T extends $Settings<T>> {
-        get<V>(key: string, serializer: $Function_<string, V>, deserializer: $Function_<V, string>, defaultValue: V): V;
-        get(key: string, defaultValue: number): number;
-        get<V>(key: string, serializer: $Function_<string, V>, modifier: $UnaryOperator_<V>, deserializer: $Function_<V, string>, defaultValue: V): V;
         get<V>(key: string, mapper: $Function_<string, V>, value: V): V;
+        get<V>(key: string, serializer: $Function_<string, V>, deserializer: $Function_<V, string>, defaultValue: V): V;
         get(key: string, defaultValue: string): string;
+        get<V>(key: string, serializer: $Function_<string, V>, modifier: $UnaryOperator_<V>, deserializer: $Function_<V, string>, defaultValue: V): V;
+        get(key: string, defaultValue: number): number;
         get(key: string, defaultValue: boolean): boolean;
         get(key: string, defaultValue: number): number;
         get(key: string, modifier: $UnaryOperator_<number>, defaultValue: number): number;
         store(path: $Path_): void;
         reload(registryAccess: $RegistryAccess, properties: $Properties): T;
         static loadFromFile(path: $Path_): $Properties;
-        getMutable(key: string, defaultValue: number): $Settings$MutableValue<number>;
-        getMutable(key: string, defaultValue: boolean): $Settings$MutableValue<boolean>;
-        getMutable<V>(key: string, serializer: $Function_<string, V>, deserializer: $Function_<V, string>, defaultValue: V): $Settings$MutableValue<V>;
-        getMutable<V>(key: string, serializer: $Function_<string, V>, defaultValue: V): $Settings$MutableValue<V>;
-        getLegacy<V>(key: string, serializer: $Function_<string, V>): V;
+        cloneProperties(): $Properties;
         static dispatchNumberOrString<V>(byId: $IntFunction_<V>, byName: $Function_<string, V>): $Function<string, V>;
         getLegacyBoolean(key: string): boolean;
         getLegacyString(key: string): string;
-        cloneProperties(): $Properties;
+        getMutable<V>(key: string, serializer: $Function_<string, V>, defaultValue: V): $Settings$MutableValue<V>;
+        getMutable<V>(key: string, serializer: $Function_<string, V>, deserializer: $Function_<V, string>, defaultValue: V): $Settings$MutableValue<V>;
+        getMutable(key: string, defaultValue: number): $Settings$MutableValue<number>;
+        getMutable(key: string, defaultValue: boolean): $Settings$MutableValue<boolean>;
+        getLegacy<V>(key: string, serializer: $Function_<string, V>): V;
         properties: $Properties;
         constructor(properties: $Properties);
     }
@@ -63,6 +63,7 @@ declare module "@package/net/minecraft/server/dedicated" {
         constructor(server: $DedicatedServer);
     }
     export class $DedicatedPlayerList extends $PlayerList {
+        getServer(): $DedicatedServer;
         static WHITELIST_FILE: $File;
         maxPlayers: number;
         static USERBANLIST_FILE: $File;
@@ -71,6 +72,7 @@ declare module "@package/net/minecraft/server/dedicated" {
         static CHAT_FILTERED_FULL: $Component;
         static DUPLICATE_LOGIN_DISCONNECT_MESSAGE: $Component;
         constructor(server: $DedicatedServer, registries: $LayeredRegistryAccess<$RegistryLayer_>, playerIo: $PlayerDataStorage);
+        get server(): $DedicatedServer;
     }
     export class $Settings$MutableValue<V> implements $Supplier<V> {
         get(): V;
@@ -79,46 +81,46 @@ declare module "@package/net/minecraft/server/dedicated" {
     }
     export class $DedicatedServer extends $MinecraftServer implements $ServerInterface {
         getProperties(): $DedicatedServerProperties;
-        /**
-         * Handle a command received by an RCon instance
-         */
-        runCommand(command: string): string;
         getPlayerList(): $DedicatedPlayerList;
-        /**
-         * Used by RCon's Query in the form of "MajorServerMod 1.2.3: MyPlugin 1.3" AnotherPlugin 2.1" AndSoForth 1.0".
-         */
-        getServerName(): string;
         /**
          * The compression threshold. If the packet is larger than the specified amount of bytes, it will be compressed
          */
         getServerPort(): number;
         /**
-         * Directly calls System.exit(0), instantly killing the program.
+         * Handle a command received by an RCon instance
          */
-        showGui(): void;
-        getMaxTickLength(): number;
+        runCommand(command: string): string;
         /**
          * Used by RCon's Query in the form of "MajorServerMod 1.2.3: MyPlugin 1.3" AnotherPlugin 2.1" AndSoForth 1.0".
          */
-        getLevelIdName(): string;
+        getServerName(): string;
         /**
-         * Initialises the server and starts it.
+         * Directly calls System.exit(0), instantly killing the program.
          */
-        convertOldUsers(): boolean;
+        handleConsoleInputs(): void;
+        storeUsingWhiteList(isStoreUsingWhiteList: boolean): void;
+        /**
+         * Used by RCon's Query in the form of "MajorServerMod 1.2.3: MyPlugin 1.3" AnotherPlugin 2.1" AndSoForth 1.0".
+         */
+        getServerIp(): string;
         /**
          * Used by RCon's Query in the form of "MajorServerMod 1.2.3: MyPlugin 1.3" AnotherPlugin 2.1" AndSoForth 1.0".
          */
         getPluginNames(): string;
         handleConsoleInput(msg: string, source: $CommandSourceStack): void;
         /**
+         * Initialises the server and starts it.
+         */
+        convertOldUsers(): boolean;
+        getMaxTickLength(): number;
+        /**
          * Used by RCon's Query in the form of "MajorServerMod 1.2.3: MyPlugin 1.3" AnotherPlugin 2.1" AndSoForth 1.0".
          */
-        getServerIp(): string;
-        storeUsingWhiteList(isStoreUsingWhiteList: boolean): void;
+        getLevelIdName(): string;
         /**
          * Directly calls System.exit(0), instantly killing the program.
          */
-        handleConsoleInputs(): void;
+        showGui(): void;
         static VANILLA_BRAND: string;
         static ANONYMOUS_PLAYER_PROFILE: $GameProfile;
         nextTickTimeNanos: number;
@@ -135,12 +137,12 @@ declare module "@package/net/minecraft/server/dedicated" {
         constructor(serverThread: $Thread, storageSource: $LevelStorageSource$LevelStorageAccess, packRepository: $PackRepository, worldStem: $WorldStem_, settings: $DedicatedServerSettings, fixerUpper: $DataFixer, services: $Services_, progressListenerFactory: $ChunkProgressListenerFactory_);
         get properties(): $DedicatedServerProperties;
         get playerList(): $DedicatedPlayerList;
-        get serverName(): string;
         get serverPort(): number;
+        get serverName(): string;
+        get serverIp(): string;
+        get pluginNames(): string;
         get maxTickLength(): number;
         get levelIdName(): string;
-        get pluginNames(): string;
-        get serverIp(): string;
     }
     export class $DedicatedServerProperties extends $Settings<$DedicatedServerProperties> {
         static fromFile(path: $Path_): $DedicatedServerProperties;

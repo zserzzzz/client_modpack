@@ -6,12 +6,12 @@ import { $DamageScaling_, $DeathMessageType_, $DamageType, $DamageEffects_, $Dam
 
 declare module "@package/com/simibubi/create/foundation/damageTypes" {
     export class $DamageTypeBuilder {
-        deathMessageType(arg0: $DeathMessageType_): $DamageTypeBuilder;
         register(arg0: $BootstrapContext<$DamageType_>): $DamageType;
         build(): $DamageType;
-        msgId(arg0: string): $DamageTypeBuilder;
-        effects(arg0: $DamageEffects_): $DamageTypeBuilder;
         scaling(arg0: $DamageScaling_): $DamageTypeBuilder;
+        effects(arg0: $DamageEffects_): $DamageTypeBuilder;
+        deathMessageType(arg0: $DeathMessageType_): $DamageTypeBuilder;
+        msgId(arg0: string): $DamageTypeBuilder;
         exhaustion(arg0: number): $DamageTypeBuilder;
         simpleMsgId(): $DamageTypeBuilder;
         constructor(arg0: $ResourceKey_<$DamageType>);
@@ -19,13 +19,13 @@ declare module "@package/com/simibubi/create/foundation/damageTypes" {
     export class $CreateDamageSources {
         static drill(arg0: $Level_): $DamageSource;
         static saw(arg0: $Level_): $DamageSource;
-        static roller(arg0: $Level_): $DamageSource;
-        static cuckooSurprise(arg0: $Level_): $DamageSource;
         static runOver(arg0: $Level_, arg1: $Entity): $DamageSource;
+        static roller(arg0: $Level_): $DamageSource;
         static crush(arg0: $Level_): $DamageSource;
-        static fanFire(arg0: $Level_): $DamageSource;
-        static fanLava(arg0: $Level_): $DamageSource;
         static potatoCannon(arg0: $Level_, arg1: $Entity, arg2: $Entity): $DamageSource;
+        static cuckooSurprise(arg0: $Level_): $DamageSource;
+        static fanLava(arg0: $Level_): $DamageSource;
+        static fanFire(arg0: $Level_): $DamageSource;
         constructor();
     }
 }

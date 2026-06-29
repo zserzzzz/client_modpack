@@ -29,11 +29,11 @@ declare module "@package/net/minecraft/world/level/portal" {
     export type $DimensionTransition$PostDimensionTransition_ = ((arg0: $Entity) => void);
     export class $PortalShape {
         isValid(): boolean;
-        isComplete(): boolean;
-        createPortalBlocks(): void;
         static findEmptyPortalShape(level: $LevelAccessor, bottomLeft: $BlockPos_, axis: $Direction$Axis_): ($PortalShape) | undefined;
         static getRelativePosition(foundRectangle: $BlockUtil$FoundRectangle, axis: $Direction$Axis_, pos: $Vec3_, entityDimensions: $EntityDimensions_): $Vec3;
+        isComplete(): boolean;
         static findCollisionFreePosition(pos: $Vec3_, level: $ServerLevel, entity: $Entity, dimensions: $EntityDimensions_): $Vec3;
+        createPortalBlocks(): void;
         static findPortalShape(level: $LevelAccessor, bottomLeft: $BlockPos_, predicate: $Predicate_<$PortalShape>, axis: $Direction$Axis_): ($PortalShape) | undefined;
         static MAX_WIDTH: number;
         static MAX_HEIGHT: number;
@@ -44,12 +44,12 @@ declare module "@package/net/minecraft/world/level/portal" {
     export class $DimensionTransition extends $Record {
         pos(): $Vec3;
         newLevel(): $ServerLevel;
+        xRot(): number;
+        yRot(): number;
+        postDimensionTransition(): $DimensionTransition$PostDimensionTransition;
         missingRespawnBlock(): boolean;
         static missingRespawnBlock(level: $ServerLevel, entity: $Entity, postDimensionTransition: $DimensionTransition$PostDimensionTransition_): $DimensionTransition;
         speed(): $Vec3;
-        postDimensionTransition(): $DimensionTransition$PostDimensionTransition;
-        xRot(): number;
-        yRot(): number;
         static PLACE_PORTAL_TICKET: $DimensionTransition$PostDimensionTransition;
         static PLAY_PORTAL_SOUND: $DimensionTransition$PostDimensionTransition;
         static DO_NOTHING: $DimensionTransition$PostDimensionTransition;
@@ -60,5 +60,5 @@ declare module "@package/net/minecraft/world/level/portal" {
     /**
      * Values that may be interpreted as {@link $DimensionTransition}.
      */
-    export type $DimensionTransition_ = { yRot?: number, speed?: $Vec3_, pos?: $Vec3_, postDimensionTransition?: $DimensionTransition$PostDimensionTransition_, newLevel?: $ServerLevel, missingRespawnBlock?: boolean, xRot?: number,  } | [yRot?: number, speed?: $Vec3_, pos?: $Vec3_, postDimensionTransition?: $DimensionTransition$PostDimensionTransition_, newLevel?: $ServerLevel, missingRespawnBlock?: boolean, xRot?: number, ];
+    export type $DimensionTransition_ = { newLevel?: $ServerLevel, missingRespawnBlock?: boolean, xRot?: number, yRot?: number, speed?: $Vec3_, pos?: $Vec3_, postDimensionTransition?: $DimensionTransition$PostDimensionTransition_,  } | [newLevel?: $ServerLevel, missingRespawnBlock?: boolean, xRot?: number, yRot?: number, speed?: $Vec3_, pos?: $Vec3_, postDimensionTransition?: $DimensionTransition$PostDimensionTransition_, ];
 }

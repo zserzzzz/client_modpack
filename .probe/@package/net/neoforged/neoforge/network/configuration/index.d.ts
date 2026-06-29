@@ -50,9 +50,9 @@ declare module "@package/net/neoforged/neoforge/network/configuration" {
         type(): $ConfigurationTask$Type;
         start(arg0: $Consumer_<$Packet<never>>): void;
         listener(): $ServerConfigurationPacketListener;
-        static handleVanillaServerConnection(arg0: $ClientConfigurationPacketListener): boolean;
-        static handleClientboundPayload(arg0: $ExtensibleEnumDataPayload_, arg1: $IPayloadContext): void;
         static handleServerboundPayload(arg0: $ExtensibleEnumAcknowledgePayload, arg1: $IPayloadContext): void;
+        static handleClientboundPayload(arg0: $ExtensibleEnumDataPayload_, arg1: $IPayloadContext): void;
+        static handleVanillaServerConnection(arg0: $ClientConfigurationPacketListener): boolean;
         static TYPE: $ConfigurationTask$Type;
         constructor(listener: $ServerConfigurationPacketListener);
     }
@@ -110,7 +110,7 @@ declare module "@package/net/neoforged/neoforge/network/configuration" {
     /**
      * Values that may be interpreted as {@link $CheckExtensibleEnums$ExtensionData}.
      */
-    export type $CheckExtensibleEnums$ExtensionData_ = { totalCount?: number, entries?: $List_<string>, vanillaCount?: number,  } | [totalCount?: number, entries?: $List_<string>, vanillaCount?: number, ];
+    export type $CheckExtensibleEnums$ExtensionData_ = { vanillaCount?: number, totalCount?: number, entries?: $List_<string>,  } | [vanillaCount?: number, totalCount?: number, entries?: $List_<string>, ];
     export class $RegistryDataMapNegotiation extends $Record implements $ICustomConfigurationTask {
         run(arg0: $Consumer_<$CustomPacketPayload>): void;
         type(): $ConfigurationTask$Type;
@@ -128,9 +128,9 @@ declare module "@package/net/neoforged/neoforge/network/configuration" {
         type(): $ConfigurationTask$Type;
         start(arg0: $Consumer_<$Packet<never>>): void;
         listener(): $ServerConfigurationPacketListener;
-        static handleVanillaServerConnection(arg0: $ClientConfigurationPacketListener): boolean;
-        static handleClientboundPayload(arg0: $FeatureFlagDataPayload_, arg1: $IPayloadContext): void;
         static handleServerboundPayload(arg0: $FeatureFlagAcknowledgePayload, arg1: $IPayloadContext): void;
+        static handleClientboundPayload(arg0: $FeatureFlagDataPayload_, arg1: $IPayloadContext): void;
+        static handleVanillaServerConnection(arg0: $ClientConfigurationPacketListener): boolean;
         static TYPE: $ConfigurationTask$Type;
         constructor(listener: $ServerConfigurationPacketListener);
     }
@@ -142,17 +142,17 @@ declare module "@package/net/neoforged/neoforge/network/configuration" {
         isExtended(): boolean;
         className(): string;
         data(): ($CheckExtensibleEnums$ExtensionData) | undefined;
-        isServerbound(): boolean;
         isClientbound(): boolean;
+        isServerbound(): boolean;
         networkCheck(): $NetworkedEnum$NetworkCheck;
         static STREAM_CODEC: $StreamCodec<$ByteBuf, $CheckExtensibleEnums$EnumEntry>;
         constructor(className: string, networkCheck: $NetworkedEnum$NetworkCheck_, data: ($CheckExtensibleEnums$ExtensionData_) | undefined);
         get extended(): boolean;
-        get serverbound(): boolean;
         get clientbound(): boolean;
+        get serverbound(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $CheckExtensibleEnums$EnumEntry}.
      */
-    export type $CheckExtensibleEnums$EnumEntry_ = { className?: string, networkCheck?: $NetworkedEnum$NetworkCheck_, data?: ($CheckExtensibleEnums$ExtensionData_) | undefined,  } | [className?: string, networkCheck?: $NetworkedEnum$NetworkCheck_, data?: ($CheckExtensibleEnums$ExtensionData_) | undefined, ];
+    export type $CheckExtensibleEnums$EnumEntry_ = { data?: ($CheckExtensibleEnums$ExtensionData_) | undefined, className?: string, networkCheck?: $NetworkedEnum$NetworkCheck_,  } | [data?: ($CheckExtensibleEnums$ExtensionData_) | undefined, className?: string, networkCheck?: $NetworkedEnum$NetworkCheck_, ];
 }

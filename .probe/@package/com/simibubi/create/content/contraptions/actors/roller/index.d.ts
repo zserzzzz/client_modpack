@@ -41,8 +41,8 @@ declare module "@package/com/simibubi/create/content/contraptions/actors/roller"
     export class $RollerBlockEntity extends $SmartBlockEntity {
         getAnimatedSpeed(): number;
         setAnimatedSpeed(arg0: number): void;
-        shareValuesToAdjacent(): void;
         searchForSharedValues(): void;
+        shareValuesToAdjacent(): void;
         mode: $ScrollOptionBehaviour<$RollerBlockEntity$RollingMode>;
         worldPosition: $BlockPos;
         level: $Level;
@@ -58,8 +58,8 @@ declare module "@package/com/simibubi/create/content/contraptions/actors/roller"
      */
     export type $RollerBlockEntity$RollingMode_ = "tunnel_pave" | "straight_fill" | "wide_fill";
     export class $TrackPaverV2 {
-        static pave(arg0: $PaveTask, arg1: $TrackGraph, arg2: $TrackEdge, arg3: number, arg4: number): void;
         static paveCurve(arg0: $PaveTask, arg1: $BezierConnection, arg2: number, arg3: number): void;
+        static pave(arg0: $PaveTask, arg1: $TrackGraph, arg2: $TrackEdge, arg3: number, arg4: number): void;
         static paveStraight(arg0: $PaveTask, arg1: $BlockPos_, arg2: $Vec3_, arg3: number): void;
         static lineToPointDiff2d(arg0: $Vec3_, arg1: $Vec3_, arg2: $Vec3_): number;
         constructor();
@@ -77,15 +77,15 @@ declare module "@package/com/simibubi/create/content/contraptions/actors/roller"
         constructor();
     }
     export class $RollerBlock extends $AttachedActorBlock implements $IBE<$RollerBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$RollerBlockEntity>;
         getBlockEntityClass(): $Class<$RollerBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$RollerBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$RollerBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$RollerBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($RollerBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$RollerBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $RollerBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$RollerBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($RollerBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$RollerBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -116,8 +116,8 @@ declare module "@package/com/simibubi/create/content/contraptions/actors/roller"
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$RollerBlockEntity>;
         get blockEntityClass(): $Class<$RollerBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$RollerBlockEntity>;
     }
     export class $RollerBlockItem extends $BlockItem {
         static BASE_ATTACK_DAMAGE_ID: $ResourceLocation;

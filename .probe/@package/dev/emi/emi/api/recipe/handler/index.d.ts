@@ -22,17 +22,17 @@ declare module "@package/dev/emi/emi/api/recipe/handler" {
      */
     export type $EmiCraftContext$Destination_ = "none" | "cursor" | "inventory";
     export class $EmiCraftContext<T extends $AbstractContainerMenu> implements $GlobalMixin {
-        getScreen(): $AbstractContainerScreen<T>;
         getType(): $EmiCraftContext$Type;
         getDestination(): $EmiCraftContext$Destination;
+        getScreen(): $AbstractContainerScreen<T>;
         getInventory(): $EmiPlayerInventory;
         getAmount(): number;
         getScreenHandler(): T;
         constructor(screen: $AbstractContainerScreen<T>, inventory: $EmiPlayerInventory, type: $EmiCraftContext$Type_, destination: $EmiCraftContext$Destination_, amount: number);
         constructor(screen: $AbstractContainerScreen<T>, inventory: $EmiPlayerInventory, type: $EmiCraftContext$Type_);
-        get screen(): $AbstractContainerScreen<T>;
         get type(): $EmiCraftContext$Type;
         get destination(): $EmiCraftContext$Destination;
+        get screen(): $AbstractContainerScreen<T>;
         get inventory(): $EmiPlayerInventory;
         get amount(): number;
         get screenHandler(): T;
@@ -53,10 +53,10 @@ declare module "@package/dev/emi/emi/api/recipe/handler" {
     export interface $EmiRecipeHandler<T extends $AbstractContainerMenu> extends $GlobalMixin {
         render(recipe: $EmiRecipe, context: $EmiCraftContext<T>, widgets: $List_<$Widget>, draw: $GuiGraphics): void;
         getInventory(arg0: $AbstractContainerScreen<T>): $EmiPlayerInventory;
+        getTooltip(recipe: $EmiRecipe, context: $EmiCraftContext<T>): $List<$ClientTooltipComponent>;
         craft(arg0: $EmiRecipe, arg1: $EmiCraftContext<T>): boolean;
         canCraft(arg0: $EmiRecipe, arg1: $EmiCraftContext<T>): boolean;
-        getTooltip(recipe: $EmiRecipe, context: $EmiCraftContext<T>): $List<$ClientTooltipComponent>;
-        supportsRecipe(arg0: $EmiRecipe): boolean;
         alwaysDisplaySupport(recipe: $EmiRecipe): boolean;
+        supportsRecipe(arg0: $EmiRecipe): boolean;
     }
 }

@@ -13,8 +13,8 @@ import { $ArgumentType } from "@package/com/mojang/brigadier/arguments";
 declare module "@package/net/minecraft/commands/arguments/coordinates" {
     export class $RotationArgument implements $ArgumentType<$Coordinates> {
         parse(reader: $StringReader): $Coordinates;
-        getExamples(): $Collection<string>;
         static rotation(): $RotationArgument;
+        getExamples(): $Collection<string>;
         static getRotation(context: $CommandContext<$CommandSourceStack>, name: string): $Coordinates;
         parse<S>(arg0: $StringReader, arg1: S): $Coordinates;
         listSuggestions<S>(arg0: $CommandContext<S>, arg1: $SuggestionsBuilder): $CompletableFuture<$Suggestions>;
@@ -27,9 +27,9 @@ declare module "@package/net/minecraft/commands/arguments/coordinates" {
         getExamples(): $Collection<string>;
         static getBlockPos(context: $CommandContext<$CommandSourceStack>, name: string): $BlockPos;
         static blockPos(): $BlockPosArgument;
-        static getLoadedBlockPos(context: $CommandContext<$CommandSourceStack>, level: $ServerLevel, name: string): $BlockPos;
-        static getLoadedBlockPos(context: $CommandContext<$CommandSourceStack>, name: string): $BlockPos;
         listSuggestions<S>(context: $CommandContext<S>, builder: $SuggestionsBuilder): $CompletableFuture<$Suggestions>;
+        static getLoadedBlockPos(context: $CommandContext<$CommandSourceStack>, name: string): $BlockPos;
+        static getLoadedBlockPos(context: $CommandContext<$CommandSourceStack>, level: $ServerLevel, name: string): $BlockPos;
         static getSpawnablePos(context: $CommandContext<$CommandSourceStack>, name: string): $BlockPos;
         parse<S>(arg0: $StringReader, arg1: S): $Coordinates;
         static ERROR_OUT_OF_WORLD: $SimpleCommandExceptionType;
@@ -52,15 +52,15 @@ declare module "@package/net/minecraft/commands/arguments/coordinates" {
         getPosition(source: $CommandSourceStack): $Vec3;
         static parse(reader: $StringReader): $LocalCoordinates;
         getRotation(source: $CommandSourceStack): $Vec2;
-        isZRelative(): boolean;
-        isXRelative(): boolean;
         isYRelative(): boolean;
+        isXRelative(): boolean;
+        isZRelative(): boolean;
         getBlockPos(source: $CommandSourceStack): $BlockPos;
         static PREFIX_LOCAL_COORDINATE: string;
         constructor(left: number, arg1: number, up: number);
-        get ZRelative(): boolean;
-        get XRelative(): boolean;
         get YRelative(): boolean;
+        get XRelative(): boolean;
+        get ZRelative(): boolean;
     }
     export class $WorldCoordinate {
         get(coord: number): number;
@@ -89,8 +89,8 @@ declare module "@package/net/minecraft/commands/arguments/coordinates" {
     export class $ColumnPosArgument implements $ArgumentType<$Coordinates> {
         getExamples(): $Collection<string>;
         static columnPos(): $ColumnPosArgument;
-        static getColumnPos(context: $CommandContext<$CommandSourceStack>, name: string): $ColumnPos;
         listSuggestions<S>(context: $CommandContext<S>, builder: $SuggestionsBuilder): $CompletableFuture<$Suggestions>;
+        static getColumnPos(context: $CommandContext<$CommandSourceStack>, name: string): $ColumnPos;
         parse<S>(arg0: $StringReader, arg1: S): $Coordinates;
         parse(arg0: $StringReader): $Coordinates;
         static ERROR_NOT_COMPLETE: $SimpleCommandExceptionType;
@@ -108,27 +108,27 @@ declare module "@package/net/minecraft/commands/arguments/coordinates" {
         static absolute(vector: $Vec2): $WorldCoordinates;
         static absolute(x: number, arg1: number, y: number): $WorldCoordinates;
         getRotation(source: $CommandSourceStack): $Vec2;
-        isZRelative(): boolean;
-        isXRelative(): boolean;
         isYRelative(): boolean;
+        isXRelative(): boolean;
+        isZRelative(): boolean;
         getBlockPos(source: $CommandSourceStack): $BlockPos;
         constructor(x: $WorldCoordinate, y: $WorldCoordinate, z: $WorldCoordinate);
-        get ZRelative(): boolean;
-        get XRelative(): boolean;
         get YRelative(): boolean;
+        get XRelative(): boolean;
+        get ZRelative(): boolean;
     }
     export class $Coordinates {
     }
     export interface $Coordinates {
         getPosition(source: $CommandSourceStack): $Vec3;
-        getRotation(source: $CommandSourceStack): $Vec2;
         getBlockPos(source: $CommandSourceStack): $BlockPos;
-        isZRelative(): boolean;
-        isXRelative(): boolean;
+        getRotation(source: $CommandSourceStack): $Vec2;
         isYRelative(): boolean;
-        get ZRelative(): boolean;
-        get XRelative(): boolean;
+        isXRelative(): boolean;
+        isZRelative(): boolean;
         get YRelative(): boolean;
+        get XRelative(): boolean;
+        get ZRelative(): boolean;
     }
     export class $Vec2Argument implements $ArgumentType<$Coordinates> {
         parse(reader: $StringReader): $Coordinates;

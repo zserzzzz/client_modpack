@@ -12,9 +12,9 @@ import { $BlockApiLookup$BlockApiProvider_, $BlockApiLookup$BlockEntityApiProvid
 
 declare module "@package/net/fabricmc/fabric/impl/lookup/block" {
     export class $BlockApiCacheImpl<A, C> implements $BlockApiCache<A, C> {
-        getLookup(): $BlockApiLookupImpl<A, C>;
-        invalidate(): void;
         find(arg0: $BlockState_, arg1: C): A;
+        invalidate(): void;
+        getLookup(): $BlockApiLookupImpl<A, C>;
         getBlockEntity(): $BlockEntity;
         getPos(): $BlockPos;
         getWorld(): $ServerLevel;
@@ -30,11 +30,11 @@ declare module "@package/net/fabricmc/fabric/impl/lookup/block" {
         find(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_, arg3: $BlockEntity, arg4: C): A;
         getId(): $ResourceLocation;
         getProvider(arg0: $Block_): $BlockApiLookup$BlockApiProvider<A, C>;
+        apiClass(): $Class<A>;
+        registerForBlockEntities(arg0: $BlockApiLookup$BlockEntityApiProvider_<A, C>, ...arg1: $BlockEntityType_<never>[]): void;
         contextClass(): $Class<C>;
         registerFallback(arg0: $BlockApiLookup$BlockApiProvider_<A, C>): void;
         registerSelf(...arg0: $BlockEntityType_<never>[]): void;
-        apiClass(): $Class<A>;
-        registerForBlockEntities(arg0: $BlockApiLookup$BlockEntityApiProvider_<A, C>, ...arg1: $BlockEntityType_<never>[]): void;
         getFallbackProviders(): $List<$BlockApiLookup$BlockApiProvider<A, C>>;
         registerForBlocks(arg0: $BlockApiLookup$BlockApiProvider_<A, C>, ...arg1: $Block_[]): void;
         find(arg0: $Level_, arg1: $BlockPos_, arg2: C): A;
@@ -45,7 +45,7 @@ declare module "@package/net/fabricmc/fabric/impl/lookup/block" {
     export class $ServerWorldCache {
     }
     export interface $ServerWorldCache {
-        fabric_registerCache(arg0: $BlockPos_, arg1: $BlockApiCacheImpl<never, never>): void;
         fabric_invalidateCache(arg0: $BlockPos_): void;
+        fabric_registerCache(arg0: $BlockPos_, arg1: $BlockApiCacheImpl<never, never>): void;
     }
 }

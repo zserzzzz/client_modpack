@@ -427,9 +427,9 @@ declare module "@package/java/util/concurrent" {
     }
     export interface $Flow$Subscriber<T> {
         onError(arg0: $Throwable): void;
+        onNext(arg0: T): void;
         onComplete(): void;
         onSubscribe(arg0: $Flow$Subscription): void;
-        onNext(arg0: T): void;
     }
     export class $ThreadFactory {
     }

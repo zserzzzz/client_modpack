@@ -68,17 +68,17 @@ declare module "@package/com/simibubi/create/content/redstone/link/controller" {
      */
     export type $LinkedControllerItemRenderer$RenderType_ = "normal" | "lectern";
     export class $LecternControllerBlockEntity extends $SmartBlockEntity implements $LecternControllerBlockEntityExtension {
-        dropController(arg0: $BlockState_): void;
-        static playerInRange(arg0: $Player, arg1: $Level_, arg2: $BlockPos_): boolean;
-        tryStartUsing(arg0: $Player): void;
-        sable$setNoDrop(): void;
-        getController(): $ItemStack;
-        handler$gmd000$sable$dropController(arg0: $BlockState_, arg1: $CallbackInfo): void;
         setController(arg0: $ItemStack_): void;
+        getController(): $ItemStack;
+        static playerInRange(arg0: $Player, arg1: $Level_, arg2: $BlockPos_): boolean;
+        dropController(arg0: $BlockState_): void;
+        sable$setNoDrop(): void;
+        tryStartUsing(arg0: $Player): void;
         hasUser(): boolean;
         isUsedBy(arg0: $Player): boolean;
-        static playerIsUsingLectern(arg0: $Player): boolean;
         swapControllers(arg0: $ItemStack_, arg1: $Player, arg2: $InteractionHand_, arg3: $BlockState_): void;
+        static playerIsUsingLectern(arg0: $Player): boolean;
+        handler$gmd000$sable$dropController(arg0: $BlockState_, arg1: $CallbackInfo): void;
         tryStopUsing(arg0: $Player): void;
         worldPosition: $BlockPos;
         level: $Level;
@@ -136,9 +136,9 @@ declare module "@package/com/simibubi/create/content/redstone/link/controller" {
         static tick(): void;
         static renderOverlay(arg0: $GuiGraphics, arg1: $DeltaTracker): void;
         static toggle(): void;
-        static inLectern(): boolean;
-        static deactivateInLectern(): void;
         static toggleBindMode(arg0: $BlockPos_): void;
+        static deactivateInLectern(): void;
+        static inLectern(): boolean;
         static activateInLectern(arg0: $BlockPos_): void;
         static currentlyPressed: $Collection<number>;
         static PACKET_RATE: number;
@@ -196,8 +196,8 @@ declare module "@package/com/simibubi/create/content/redstone/link/controller" {
     export class $LinkedControllerItem extends $Item implements $MenuProvider {
         getDisplayName(): $Component;
         createMenu(arg0: number, arg1: $Inventory, arg2: $Player): $AbstractContainerMenu;
-        static toFrequency(arg0: $ItemStack_, arg1: number): $Couple<$RedstoneLinkNetworkHandler$Frequency>;
         static getFrequencyItems(arg0: $ItemStack_): $ItemStackHandler;
+        static toFrequency(arg0: $ItemStack_, arg1: number): $Couple<$RedstoneLinkNetworkHandler$Frequency>;
         shouldTriggerClientSideContainerClosingOnOpen(): boolean;
         writeClientSideData(arg0: $AbstractContainerMenu, arg1: $RegistryFriendlyByteBuf): void;
         shouldCloseCurrentScreen(): boolean;
@@ -213,17 +213,17 @@ declare module "@package/com/simibubi/create/content/redstone/link/controller" {
         get displayName(): $Component;
     }
     export class $LecternControllerBlock extends $LecternBlock implements $IBE<$LecternControllerBlockEntity>, $SpecialBlockItemRequirement, $BlockSubLevelAssemblyListener {
-        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
-        getBlockEntityType(): $BlockEntityType<$LecternControllerBlockEntity>;
-        replaceLectern(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $ItemStack_): void;
-        replaceWithLectern(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): void;
         getBlockEntityClass(): $Class<$LecternControllerBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$LecternControllerBlockEntity>;
+        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
+        replaceWithLectern(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): void;
+        replaceLectern(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $ItemStack_): void;
         afterMove(arg0: $ServerLevel, arg1: $ServerLevel, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockPos_): void;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$LecternControllerBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$LecternControllerBlockEntity, $InteractionResult>): $InteractionResult;
+        getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $LecternControllerBlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$LecternControllerBlockEntity>): void;
         getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($LecternControllerBlockEntity) | undefined;
         onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$LecternControllerBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
-        getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $LecternControllerBlockEntity;
         beforeMove(arg0: $ServerLevel, arg1: $ServerLevel, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockPos_): void;
         static SHAPE_NORTH: $VoxelShape;
         static SHAPE_SOUTH: $VoxelShape;
@@ -265,8 +265,8 @@ declare module "@package/com/simibubi/create/content/redstone/link/controller" {
         static SHAPE_EAST: $VoxelShape;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$LecternControllerBlockEntity>;
         get blockEntityClass(): $Class<$LecternControllerBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$LecternControllerBlockEntity>;
     }
     export class $LinkedControllerStopLecternPacket extends $LinkedControllerPacketBase {
         static STREAM_CODEC: $StreamCodec<$ByteBuf, $LinkedControllerStopLecternPacket>;

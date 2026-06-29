@@ -8,7 +8,7 @@ declare module "@package/gg/essential/mixins/impl/client/renderer/entity" {
     }
     export interface $PlayerEntityRendererExt {
         essential$getEssentialModelRenderer(): $EssentialModelRenderer;
-        essential$getFeatures(): $Iterable<never>;
         essential$getTransform(arg0: $AbstractClientPlayer, arg1: number, arg2: number): $Mat4;
+        essential$getFeatures(): $Iterable<never>;
     }
 }

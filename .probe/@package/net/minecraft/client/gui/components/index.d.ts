@@ -55,9 +55,9 @@ export * as events from "@package/net/minecraft/client/gui/components/events";
 
 declare module "@package/net/minecraft/client/gui/components" {
     export class $Tooltip implements $NarrationSupplier {
-        toCharSequence(minecraft: $Minecraft): $List<$FormattedCharSequence>;
-        static create(message: $Component_, narration: $Component_ | null): $Tooltip;
         static create(message: $Component_): $Tooltip;
+        static create(message: $Component_, narration: $Component_ | null): $Tooltip;
+        toCharSequence(minecraft: $Minecraft): $List<$FormattedCharSequence>;
         static splitTooltip(minecraft: $Minecraft, message: $Component_): $List<$FormattedCharSequence>;
         /**
          * Updates the narration output with the current narration information.
@@ -95,14 +95,14 @@ declare module "@package/net/minecraft/client/gui/components" {
     /**
      * Values that may be interpreted as {@link $MultilineTextField$StringView}.
      */
-    export type $MultilineTextField$StringView_ = { endIndex?: number, beginIndex?: number,  } | [endIndex?: number, beginIndex?: number, ];
+    export type $MultilineTextField$StringView_ = { beginIndex?: number, endIndex?: number,  } | [beginIndex?: number, endIndex?: number, ];
     export class $TabButton extends $AbstractWidget {
-        renderMenuBackground(guiGraphics: $GuiGraphics, minX: number, minY: number, maxX: number, maxY: number): void;
         tab(): $Tab;
         /**
          * @return `true` if the GUI element is focused, `false` otherwise
          */
         isSelected(): boolean;
+        renderMenuBackground(guiGraphics: $GuiGraphics, minX: number, minY: number, maxX: number, maxY: number): void;
         renderString(guiGraphics: $GuiGraphics, font: $Font, color: number): void;
         packedFGColor: number;
         static UNSET_FG_COLOR: number;
@@ -130,16 +130,17 @@ declare module "@package/net/minecraft/client/gui/components" {
         get splashFancyMenu(): string;
     }
     export class $AbstractScrollWidget extends $AbstractWidget implements $Renderable, $GuiEventListener {
-        renderBackground(guiGraphics: $GuiGraphics): void;
-        renderBorder(guiGraphics: $GuiGraphics, x: number, y: number, width: number, height: number): void;
-        scrollAmount(): number;
-        setScrollAmount(scrollAmount: number): void;
-        renderContents(guiGraphics: $GuiGraphics, mouseX: number, mouseY: number, partialTick: number): void;
         renderDecorations(guiGraphics: $GuiGraphics): void;
         /**
          * @return `true` if the GUI element is focused, `false` otherwise
          */
         scrollbarVisible(): boolean;
+        scrollRate(): number;
+        scrollAmount(): number;
+        renderBackground(guiGraphics: $GuiGraphics): void;
+        renderBorder(guiGraphics: $GuiGraphics, x: number, y: number, width: number, height: number): void;
+        setScrollAmount(scrollAmount: number): void;
+        renderContents(guiGraphics: $GuiGraphics, mouseX: number, mouseY: number, partialTick: number): void;
         /**
          * Returns the tab order group of the GUI component.
          * Tab order group determines the order in which the components are traversed when using keyboard navigation.
@@ -154,14 +155,15 @@ declare module "@package/net/minecraft/client/gui/components" {
          * @return The tab order group of the GUI component.
          */
         scrollbarWidth(): number;
+        withinContentAreaPoint(x: number, arg1: number): boolean;
+        withinContentAreaTopBottom(top: number, bottom: number): boolean;
         /**
          * Returns the tab order group of the GUI component.
          * Tab order group determines the order in which the components are traversed when using keyboard navigation.
          * 
          * @return The tab order group of the GUI component.
          */
-        innerPadding(): number;
-        scrollRate(): number;
+        totalInnerPadding(): number;
         /**
          * Returns the tab order group of the GUI component.
          * Tab order group determines the order in which the components are traversed when using keyboard navigation.
@@ -175,9 +177,7 @@ declare module "@package/net/minecraft/client/gui/components" {
          * 
          * @return The tab order group of the GUI component.
          */
-        totalInnerPadding(): number;
-        withinContentAreaPoint(x: number, arg1: number): boolean;
-        withinContentAreaTopBottom(top: number, bottom: number): boolean;
+        innerPadding(): number;
         packedFGColor: number;
         static UNSET_FG_COLOR: number;
         visible: boolean;
@@ -219,16 +219,16 @@ declare module "@package/net/minecraft/client/gui/components" {
         set pressActionFancyMenu(value: $Button$OnPress_);
     }
     export class $CycleButton$Builder<T> {
-        withTooltip(tooltipSupplier: $OptionInstance$TooltipSupplier_<T>): $CycleButton$Builder<T>;
-        create(message: $Component_, onValueChange: $CycleButton$OnValueChange_<T>): $CycleButton<T>;
+        withInitialValue(initialValue: T): $CycleButton$Builder<T>;
         create(x: number, y: number, width: number, height: number, name: $Component_, onValueChange: $CycleButton$OnValueChange_<T>): $CycleButton<T>;
+        create(message: $Component_, onValueChange: $CycleButton$OnValueChange_<T>): $CycleButton<T>;
         create(x: number, y: number, width: number, height: number, name: $Component_): $CycleButton<T>;
-        withValues(values: $Collection_<T>): $CycleButton$Builder<T>;
+        withTooltip(tooltipSupplier: $OptionInstance$TooltipSupplier_<T>): $CycleButton$Builder<T>;
         withValues(...values: T[]): $CycleButton$Builder<T>;
         withValues(defaultList: $List_<T>, selectedList: $List_<T>): $CycleButton$Builder<T>;
-        withValues(altListSelector: $BooleanSupplier_, defaultList: $List_<T>, selectedList: $List_<T>): $CycleButton$Builder<T>;
         withValues(values: $CycleButton$ValueListSupplier<T>): $CycleButton$Builder<T>;
-        withInitialValue(initialValue: T): $CycleButton$Builder<T>;
+        withValues(values: $Collection_<T>): $CycleButton$Builder<T>;
+        withValues(altListSelector: $BooleanSupplier_, defaultList: $List_<T>, selectedList: $List_<T>): $CycleButton$Builder<T>;
         displayOnlyValue(): $CycleButton$Builder<T>;
         withCustomNarration(narrationProvider: $Function_<$CycleButton<T>, $MutableComponent>): $CycleButton$Builder<T>;
         constructor(valueStringifier: $Function_<T, $Component>);
@@ -263,40 +263,40 @@ declare module "@package/net/minecraft/client/gui/components" {
         static EMPTY: $MultiLineLabel;
     }
     export interface $MultiLineLabel {
+        renderLeftAligned(guiGraphics: $GuiGraphics, x: number, y: number, lineHeight: number, color: number): void;
         getWidth(): number;
-        renderLeftAlignedNoShadow(guiGraphics: $GuiGraphics, x: number, y: number, lineHeight: number, color: number): number;
         getLineCount(): number;
         renderCentered(guiGraphics: $GuiGraphics, x: number, y: number, lineHeight: number, color: number): void;
         renderCentered(guiGraphics: $GuiGraphics, x: number, y: number): void;
-        renderLeftAligned(guiGraphics: $GuiGraphics, x: number, y: number, lineHeight: number, color: number): void;
+        renderLeftAlignedNoShadow(guiGraphics: $GuiGraphics, x: number, y: number, lineHeight: number, color: number): number;
         get width(): number;
         get lineCount(): number;
     }
     export class $CommandSuggestions$SuggestionsList implements $IMixinSuggestionsList {
-        getNarrationMessage(): $Component;
-        select(change: number): void;
         cycle(change: number): void;
-        keyPressed(keyCode: number, scanCode: number, modifiers: number): boolean;
+        select(change: number): void;
         render(guiGraphics: $GuiGraphics, mouseX: number, mouseY: number): void;
+        keyPressed(keyCode: number, scanCode: number, modifiers: number): boolean;
         mouseClicked(keyCode: number, scanCode: number, modifiers: number): boolean;
+        getNarrationMessage(): $Component;
         mouseScrolled(delta: number): boolean;
-        localvar$bfn000$chat_heads$chatheads$captureSuggestion(suggestion: $Suggestion, playerRef: $LocalRef<any>): $Suggestion;
-        modify$bfn000$chat_heads$chatheads$enlargeBackground(x: number, playerRef: $LocalRef<any>): number;
         localvar$bfn000$chat_heads$chatheads$captureGuiGraphics(guiGraphics: $GuiGraphics, graphicsRef: $LocalRef<any>): $GuiGraphics;
+        modify$bfn000$chat_heads$chatheads$enlargeBackground(x: number, playerRef: $LocalRef<any>): number;
         handler$bfn000$chat_heads$chatheads$fixOutOfBoundChatHeads(commandSuggestions: $CommandSuggestions, x: number, y: number, width: number, suggestions: $List_<any>, narrateFirstSuggestion: boolean, ci: $CallbackInfo): void;
-        modify$bfn000$chat_heads$chatheads$renderChatHead(y: number, playerRef: $LocalRef<any>, graphicsRef: $LocalRef<any>): number;
+        localvar$bfn000$chat_heads$chatheads$captureSuggestion(suggestion: $Suggestion, playerRef: $LocalRef<any>): $Suggestion;
         useSuggestion(): void;
-        setLastMouseFancyMenu(arg0: $Vec2): void;
-        getLastMouseFancyMenu(): $Vec2;
-        getCurrentFancyMenu(): number;
+        modify$bfn000$chat_heads$chatheads$renderChatHead(y: number, playerRef: $LocalRef<any>, graphicsRef: $LocalRef<any>): number;
         getOffsetFancyMenu(): number;
         getRectFancyMenu(): $Rect2i;
+        getCurrentFancyMenu(): number;
+        getLastMouseFancyMenu(): $Vec2;
+        setLastMouseFancyMenu(arg0: $Vec2): void;
         tabCycles: boolean;
         this$0: $CommandSuggestions;
         get narrationMessage(): $Component;
-        get currentFancyMenu(): number;
         get offsetFancyMenu(): number;
         get rectFancyMenu(): $Rect2i;
+        get currentFancyMenu(): number;
     }
     export class $LogoRenderer {
         renderLogo(guiGraphics: $GuiGraphics, screenWidth: number, transparency: number): void;
@@ -312,13 +312,13 @@ declare module "@package/net/minecraft/client/gui/components" {
         constructor(keepLogoThroughFade: boolean);
     }
     export class $Checkbox$Builder {
+        onValueChange(onValueChange: $Checkbox$OnValueChange_): $Checkbox$Builder;
         pos(x: number, y: number): $Checkbox$Builder;
         build(): $Checkbox;
         maxWidth(maxWidth: number): $Checkbox$Builder;
         selected(option: $OptionInstance<boolean>): $Checkbox$Builder;
         selected(selected: boolean): $Checkbox$Builder;
         tooltip(tooltip: $Tooltip): $Checkbox$Builder;
-        onValueChange(onValueChange: $Checkbox$OnValueChange_): $Checkbox$Builder;
         constructor(message: $Component_, font: $Font);
     }
     export class $PlayerTabOverlay$ScoreDisplayEntry extends $Record {
@@ -326,7 +326,7 @@ declare module "@package/net/minecraft/client/gui/components" {
     /**
      * Values that may be interpreted as {@link $PlayerTabOverlay$ScoreDisplayEntry}.
      */
-    export type $PlayerTabOverlay$ScoreDisplayEntry_ = { formattedScore?: $Component_, scoreWidth?: number, name?: $Component_, score?: number,  } | [formattedScore?: $Component_, scoreWidth?: number, name?: $Component_, score?: number, ];
+    export type $PlayerTabOverlay$ScoreDisplayEntry_ = { scoreWidth?: number, name?: $Component_, score?: number, formattedScore?: $Component_,  } | [scoreWidth?: number, name?: $Component_, score?: number, formattedScore?: $Component_, ];
     export class $ImageWidget$Texture extends $ImageWidget {
         packedFGColor: number;
         static UNSET_FG_COLOR: number;
@@ -375,14 +375,13 @@ declare module "@package/net/minecraft/client/gui/components" {
      */
     export type $CycleButton$OnValueChange_<T> = ((arg0: $CycleButton<T>, arg1: T) => void);
     export class $AbstractSelectionList<E extends $AbstractSelectionList$Entry<E>> extends $AbstractContainerWidget implements $AbstractSelectionListAccessor, $EntryListWidgetAccessor {
-        renderItem(guiGraphics: $GuiGraphics, mouseX: number, mouseY: number, partialTick: number, index: number, left: number, top: number, width: number, height: number): void;
         ensureVisible(entry: E): void;
         remove(index: number): E;
         addEntry(entry: E): number;
         getEntry(index: number): E;
-        nextEntry(direction: $ScreenDirection_, predicate: $Predicate_<E>, selected: E | null): E;
-        nextEntry(direction: $ScreenDirection_, predicate: $Predicate_<E>): E;
         nextEntry(direction: $ScreenDirection_): E;
+        nextEntry(direction: $ScreenDirection_, predicate: $Predicate_<E>): E;
+        nextEntry(direction: $ScreenDirection_, predicate: $Predicate_<E>, selected: E | null): E;
         /**
          * Returns the tab order group of the GUI component.
          * Tab order group determines the order in which the components are traversed when using keyboard navigation.
@@ -392,43 +391,47 @@ declare module "@package/net/minecraft/client/gui/components" {
         getItemCount(): number;
         removeEntry(entry: E): boolean;
         /**
+         * Returns the tab order group of the GUI component.
+         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
+         * 
+         * @return The tab order group of the GUI component.
+         */
+        getMaxPosition(): number;
+        replaceEntries(entries: $Collection_<E>): void;
+        removeEntryFromTop(entry: E): boolean;
+        clickedHeader(x: number, y: number): boolean;
+        renderListItems(guiGraphics: $GuiGraphics, mouseX: number, mouseY: number, partialTick: number): void;
+        /**
+         * Gets the focused GUI element.
+         */
+        getFirstElement(): E;
+        bindEntryToSelf(entry: $AbstractSelectionList$Entry<E>): void;
+        addEntryToTop(entry: E): void;
+        isValidMouseClick(index: number): boolean;
+        isSelectedItem(index: number): boolean;
+        renderDecorations(guiGraphics: $GuiGraphics, mouseX: number, mouseY: number): void;
+        getEntryAtPosition(mouseX: number, arg1: number): E;
+        clampScrollAmount(): void;
+        /**
+         * @return `true` if the GUI element is dragging, `false` otherwise
+         */
+        scrollbarVisible(): boolean;
+        getRowBottom(index: number): number;
+        renderHeader(guiGraphics: $GuiGraphics, mouseX: number, mouseY: number): void;
+        setRenderHeader(renderHeader: boolean, headerHeight: number): void;
+        /**
          * Gets the focused GUI element.
          */
         getSelected(): E;
-        updateSizeAndPosition(width: number, height: number, y: number): void;
         enableScissor(guiGraphics: $GuiGraphics): void;
         setSelected(entry: E | null): void;
-        updateSize(width: number, layout: $HeaderAndFooterLayout): void;
+        /**
+         * Gets the focused GUI element.
+         */
+        getFocused(): E;
+        updateSizeAndPosition(width: number, height: number, y: number): void;
         getRowTop(index: number): number;
-        /**
-         * Returns the tab order group of the GUI component.
-         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
-         * 
-         * @return The tab order group of the GUI component.
-         */
-        getRowLeft(): number;
-        /**
-         * Returns the tab order group of the GUI component.
-         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
-         * 
-         * @return The tab order group of the GUI component.
-         */
-        getMaxScroll(): number;
-        setScrollAmount(scroll: number): void;
-        renderSelection(guiGraphics: $GuiGraphics, top: number, width: number, height: number, outerColor: number, innerColor: number): void;
-        setClampedScrollAmount(scroll: number): void;
-        narrateListElementPosition(narrationElementOutput: $NarrationElementOutput, entry: E): void;
-        updateScrollingState(mouseX: number, arg1: number, mouseY: number): void;
-        renderListBackground(guiGraphics: $GuiGraphics): void;
-        /**
-         * Returns the tab order group of the GUI component.
-         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
-         * 
-         * @return The tab order group of the GUI component.
-         */
-        getScrollbarPosition(): number;
-        renderListSeparators(guiGraphics: $GuiGraphics): void;
-        getScrollAmount(): number;
+        modify$iaa000$essential$modifyPredicate(predicate: $Predicate_<any>): $Predicate<any>;
         /**
          * Returns the tab order group of the GUI component.
          * Tab order group determines the order in which the components are traversed when using keyboard navigation.
@@ -436,6 +439,7 @@ declare module "@package/net/minecraft/client/gui/components" {
          * @return The tab order group of the GUI component.
          */
         getRowRight(): number;
+        getScrollAmount(): number;
         /**
          * Returns the tab order group of the GUI component.
          * Tab order group determines the order in which the components are traversed when using keyboard navigation.
@@ -443,38 +447,38 @@ declare module "@package/net/minecraft/client/gui/components" {
          * @return The tab order group of the GUI component.
          */
         getRowWidth(): number;
+        renderListBackground(guiGraphics: $GuiGraphics): void;
+        updateScrollingState(mouseX: number, arg1: number, mouseY: number): void;
+        narrateListElementPosition(narrationElementOutput: $NarrationElementOutput, entry: E): void;
+        setClampedScrollAmount(scroll: number): void;
+        renderListSeparators(guiGraphics: $GuiGraphics): void;
         /**
          * Returns the tab order group of the GUI component.
          * Tab order group determines the order in which the components are traversed when using keyboard navigation.
          * 
          * @return The tab order group of the GUI component.
          */
-        getMaxPosition(): number;
-        clearEntries(): void;
+        getScrollbarPosition(): number;
+        renderItem(guiGraphics: $GuiGraphics, mouseX: number, mouseY: number, partialTick: number, index: number, left: number, top: number, width: number, height: number): void;
+        /**
+         * Returns the tab order group of the GUI component.
+         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
+         * 
+         * @return The tab order group of the GUI component.
+         */
+        getMaxScroll(): number;
+        /**
+         * Returns the tab order group of the GUI component.
+         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
+         * 
+         * @return The tab order group of the GUI component.
+         */
+        getRowLeft(): number;
+        updateSize(width: number, layout: $HeaderAndFooterLayout): void;
         centerScrollOn(entry: E): void;
-        modify$iaa000$essential$modifyPredicate(predicate: $Predicate_<any>): $Predicate<any>;
-        bindEntryToSelf(entry: $AbstractSelectionList$Entry<E>): void;
-        clickedHeader(x: number, y: number): boolean;
-        addEntryToTop(entry: E): void;
-        clampScrollAmount(): void;
-        renderListItems(guiGraphics: $GuiGraphics, mouseX: number, mouseY: number, partialTick: number): void;
-        isValidMouseClick(index: number): boolean;
-        removeEntryFromTop(entry: E): boolean;
-        getEntryAtPosition(mouseX: number, arg1: number): E;
-        getRowBottom(index: number): number;
-        renderDecorations(guiGraphics: $GuiGraphics, mouseX: number, mouseY: number): void;
-        /**
-         * @return `true` if the GUI element is dragging, `false` otherwise
-         */
-        scrollbarVisible(): boolean;
-        replaceEntries(entries: $Collection_<E>): void;
-        setRenderHeader(renderHeader: boolean, headerHeight: number): void;
-        /**
-         * Gets the focused GUI element.
-         */
-        getFirstElement(): E;
-        renderHeader(guiGraphics: $GuiGraphics, mouseX: number, mouseY: number): void;
-        isSelectedItem(index: number): boolean;
+        setScrollAmount(scroll: number): void;
+        clearEntries(): void;
+        renderSelection(guiGraphics: $GuiGraphics, top: number, width: number, height: number, outerColor: number, innerColor: number): void;
         /**
          * Returns the tab order group of the GUI component.
          * Tab order group determines the order in which the components are traversed when using keyboard navigation.
@@ -521,14 +525,15 @@ declare module "@package/net/minecraft/client/gui/components" {
         height: number;
         constructor(minecraft: $Minecraft, width: number, height: number, y: number, itemHeight: number);
         get itemCount(): number;
-        get rowLeft(): number;
-        get maxScroll(): number;
-        set clampedScrollAmount(value: number);
-        get scrollbarPosition(): number;
-        get rowRight(): number;
-        get rowWidth(): number;
         get maxPosition(): number;
         get firstElement(): E;
+        get focused(): E;
+        get rowRight(): number;
+        get rowWidth(): number;
+        set clampedScrollAmount(value: number);
+        get scrollbarPosition(): number;
+        get maxScroll(): number;
+        get rowLeft(): number;
         get defaultScrollbarPosition(): number;
     }
     export class $SpriteIconButton$TextAndIcon extends $SpriteIconButton {
@@ -557,10 +562,10 @@ declare module "@package/net/minecraft/client/gui/components" {
         constructor(arg0: number, arg1: number, arg2: $Component_, arg3: number, arg4: number, arg5: $ResourceLocation_, arg6: $Button$OnPress_, arg7: $Button$CreateNarration_ | null);
     }
     export class $AbstractContainerWidget extends $AbstractWidget implements $ContainerEventHandler {
-        setDragging(arg0: boolean): void;
+        getFocused(): $GuiEventListener;
         isDragging(): boolean;
         setFocused(arg0: $GuiEventListener | null): void;
-        getFocused(): $GuiEventListener;
+        setDragging(arg0: boolean): void;
         getChildAt(arg0: number, arg1: number): ($GuiEventListener) | undefined;
         packedFGColor: number;
         static UNSET_FG_COLOR: number;
@@ -587,39 +592,39 @@ declare module "@package/net/minecraft/client/gui/components" {
         constructor(id: $UUID_, name: $Component_, progress: number, color: $BossEvent$BossBarColor_, overlay: $BossEvent$BossBarOverlay_, darkenScreen: boolean, bossMusic: boolean, worldFog: boolean);
     }
     export class $MultilineTextField {
+        insertText(text: string): void;
         value(): string;
         setValue(text: string): void;
         cursor(): number;
+        setCharacterLimit(length: number): void;
+        setValueListener(valueListener: $Consumer_<string>): void;
         getSelected(): $MultilineTextField$StringView;
         keyPressed(keyCode: number): boolean;
-        insertText(text: string): void;
-        setValueListener(valueListener: $Consumer_<string>): void;
-        setCharacterLimit(length: number): void;
         getLineCount(): number;
         deleteText(length: number): void;
-        characterLimit(): number;
+        seekCursor(whence: $Whence_, position: number): void;
+        getSelectedText(): string;
+        seekCursorToPoint(x: number, arg1: number): void;
         hasCharacterLimit(): boolean;
+        getLineView(offset: number): $MultilineTextField$StringView;
         setCursorListener(cursorListener: $Runnable_): void;
-        hasSelection(): boolean;
         setSelecting(selecting: boolean): void;
         getLineAtCursor(): number;
-        getSelectedText(): string;
         getPreviousWord(): $MultilineTextField$StringView;
-        seekCursorLine(length: number): void;
+        hasSelection(): boolean;
         iterateLines(): $Iterable<$MultilineTextField$StringView>;
-        seekCursorToPoint(x: number, arg1: number): void;
-        getLineView(offset: number): $MultilineTextField$StringView;
+        characterLimit(): number;
         getNextWord(): $MultilineTextField$StringView;
-        seekCursor(whence: $Whence_, position: number): void;
+        seekCursorLine(length: number): void;
         static NO_CHARACTER_LIMIT: number;
         constructor(font: $Font, width: number);
-        get selected(): $MultilineTextField$StringView;
         set valueListener(value: $Consumer_<string>);
+        get selected(): $MultilineTextField$StringView;
         get lineCount(): number;
+        get selectedText(): string;
         set cursorListener(value: $Runnable_);
         set selecting(value: boolean);
         get lineAtCursor(): number;
-        get selectedText(): string;
         get previousWord(): $MultilineTextField$StringView;
         get nextWord(): $MultilineTextField$StringView;
     }
@@ -630,15 +635,11 @@ declare module "@package/net/minecraft/client/gui/components" {
         constructor(messages: $List_<$GuiMessage_>, history: $List_<string>, delayedMessageDeletions: $List_<$ChatComponent$DelayedMessageDeletion_>);
     }
     export class $ContainerObjectSelectionList$Entry<E extends $ContainerObjectSelectionList$Entry<E>> extends $AbstractSelectionList$Entry<E> implements $ContainerEventHandler {
+        focusPathAtIndex(event: $FocusNavigationEvent_, index: number): $ComponentPath;
         /**
-         * @return a List containing all GUI element children of this GUI element
+         * Gets the focused GUI element.
          */
-        narratables(): $List<$NarratableEntry>;
-        updateNarration(narrationElementOutput: $NarrationElementOutput): void;
-        /**
-         * Sets if the GUI element is dragging or not.
-         */
-        setDragging(dragging: boolean): void;
+        getFocused(): $GuiEventListener;
         /**
          * @return `true` if the GUI element is dragging, `false` otherwise
          */
@@ -648,10 +649,14 @@ declare module "@package/net/minecraft/client/gui/components" {
          */
         setFocused(listener: $GuiEventListener | null): void;
         /**
-         * Gets the focused GUI element.
+         * @return a List containing all GUI element children of this GUI element
          */
-        getFocused(): $GuiEventListener;
-        focusPathAtIndex(event: $FocusNavigationEvent_, index: number): $ComponentPath;
+        narratables(): $List<$NarratableEntry>;
+        updateNarration(narrationElementOutput: $NarrationElementOutput): void;
+        /**
+         * Sets if the GUI element is dragging or not.
+         */
+        setDragging(dragging: boolean): void;
         /**
          * Returns the first event listener that intersects with the mouse coordinates.
          */
@@ -698,10 +703,10 @@ declare module "@package/net/minecraft/client/gui/components" {
         constructor(font: $Font, message: $Component_);
     }
     export class $SpriteIconButton$Builder {
-        sprite(sprite: $ResourceLocation_, spriteWidth: number, spriteHeight: number): $SpriteIconButton$Builder;
         size(width: number, height: number): $SpriteIconButton$Builder;
         build(): $SpriteIconButton;
         width(width: number): $SpriteIconButton$Builder;
+        sprite(sprite: $ResourceLocation_, spriteWidth: number, spriteHeight: number): $SpriteIconButton$Builder;
         narration(narration: $Button$CreateNarration_): $SpriteIconButton$Builder;
         constructor(message: $Component_, onPress: $Button$OnPress_, iconOnly: boolean);
     }
@@ -752,7 +757,7 @@ declare module "@package/net/minecraft/client/gui/components" {
     /**
      * Values that may be interpreted as {@link $WidgetSprites}.
      */
-    export type $WidgetSprites_ = { enabled?: $ResourceLocation_, enabledFocused?: $ResourceLocation_, disabled?: $ResourceLocation_, disabledFocused?: $ResourceLocation_,  } | [enabled?: $ResourceLocation_, enabledFocused?: $ResourceLocation_, disabled?: $ResourceLocation_, disabledFocused?: $ResourceLocation_, ];
+    export type $WidgetSprites_ = { disabled?: $ResourceLocation_, disabledFocused?: $ResourceLocation_, enabled?: $ResourceLocation_, enabledFocused?: $ResourceLocation_,  } | [disabled?: $ResourceLocation_, disabledFocused?: $ResourceLocation_, enabled?: $ResourceLocation_, enabledFocused?: $ResourceLocation_, ];
     export class $ImageButton extends $Button {
         static SPRITES: $WidgetSprites;
         visible: boolean;
@@ -774,9 +779,9 @@ declare module "@package/net/minecraft/client/gui/components" {
         static BIG_WIDTH: number;
         static DEFAULT_SPACING: number;
         height: number;
-        constructor(x: number, y: number, width: number, height: number, sprites: $WidgetSprites_, onPress: $Button$OnPress_);
         constructor(width: number, height: number, sprites: $WidgetSprites_, onPress: $Button$OnPress_, message: $Component_);
         constructor(x: number, y: number, width: number, height: number, sprites: $WidgetSprites_, onPress: $Button$OnPress_, message: $Component_);
+        constructor(x: number, y: number, width: number, height: number, sprites: $WidgetSprites_, onPress: $Button$OnPress_);
     }
     export class $ComponentRenderUtils {
         static wrapComponents(component: $FormattedText, maxWidth: number, font: $Font): $List<$FormattedCharSequence>;
@@ -785,11 +790,11 @@ declare module "@package/net/minecraft/client/gui/components" {
     export class $PlayerTabOverlay$HealthState {
     }
     export class $StateSwitchingButton extends $AbstractWidget {
-        setStateTriggered(triggered: boolean): void;
         /**
          * @return `true` if the GUI element is focused, `false` otherwise
          */
         isStateTriggered(): boolean;
+        setStateTriggered(triggered: boolean): void;
         initTextureValues(sprites: $WidgetSprites_): void;
         visible: boolean;
         tooltip: $WidgetTooltipHolder;
@@ -812,7 +817,7 @@ declare module "@package/net/minecraft/client/gui/components" {
     /**
      * Values that may be interpreted as {@link $MultiLineLabel$TextAndWidth}.
      */
-    export type $MultiLineLabel$TextAndWidth_ = { width?: number, text?: $FormattedCharSequence_,  } | [width?: number, text?: $FormattedCharSequence_, ];
+    export type $MultiLineLabel$TextAndWidth_ = { text?: $FormattedCharSequence_, width?: number,  } | [text?: $FormattedCharSequence_, width?: number, ];
     export class $PlayerSkinWidget$Model extends $Record {
     }
     /**
@@ -824,7 +829,7 @@ declare module "@package/net/minecraft/client/gui/components" {
     /**
      * Values that may be interpreted as {@link $SubtitleOverlay$SoundPlayedAt}.
      */
-    export type $SubtitleOverlay$SoundPlayedAt_ = { time?: number, location?: $Vec3_,  } | [time?: number, location?: $Vec3_, ];
+    export type $SubtitleOverlay$SoundPlayedAt_ = { location?: $Vec3_, time?: number,  } | [location?: $Vec3_, time?: number, ];
     export class $Renderable {
     }
     export interface $Renderable {
@@ -838,70 +843,6 @@ declare module "@package/net/minecraft/client/gui/components" {
      */
     export type $Renderable_ = ((arg0: $GuiGraphics, arg1: number, arg2: number, arg3: number) => void);
     export class $AbstractWidget implements $Renderable, $GuiEventListener, $LayoutElement, $NarratableEntry, $IAbstractWidgetExtension, $IMixinAbstractWidget, $IMixinAbstractWidget$1, $UniqueWidget, $CustomizableWidget {
-        /**
-         * Returns the tab order group of the GUI component.
-         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
-         * 
-         * @return The tab order group of the GUI component.
-         */
-        getHeight(): number;
-        /**
-         * Renders the graphical user interface (GUI) element.
-         */
-        renderWidget(guiGraphics: $GuiGraphics, mouseX: number, mouseY: number, partialTick: number): void;
-        /**
-         * Returns the tab order group of the GUI component.
-         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
-         * 
-         * @return The tab order group of the GUI component.
-         */
-        getNineSliceCustomBackgroundBorderX_FancyMenu(): number;
-        /**
-         * Returns the tab order group of the GUI component.
-         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
-         * 
-         * @return The tab order group of the GUI component.
-         */
-        getNineSliceCustomBackgroundBorderBottom_FancyMenu(): number;
-        /**
-         * Returns the tab order group of the GUI component.
-         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
-         * 
-         * @return The tab order group of the GUI component.
-         */
-        getNineSliceCustomBackgroundBorderTop_FancyMenu(): number;
-        /**
-         * Returns the tab order group of the GUI component.
-         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
-         * 
-         * @return The tab order group of the GUI component.
-         */
-        getNineSliceCustomBackgroundBorderY_FancyMenu(): number;
-        /**
-         * @return `true` if the element is active, `false` otherwise
-         */
-        isNineSliceCustomBackgroundTexture_FancyMenu(): boolean;
-        /**
-         * Returns the tab order group of the GUI component.
-         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
-         * 
-         * @return The tab order group of the GUI component.
-         */
-        getNineSliceCustomBackgroundBorderRight_FancyMenu(): number;
-        /**
-         * Returns the tab order group of the GUI component.
-         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
-         * 
-         * @return The tab order group of the GUI component.
-         */
-        getNineSliceCustomBackgroundBorderLeft_FancyMenu(): number;
-        /**
-         * Returns the tab order group of the GUI component.
-         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
-         * 
-         * @return The tab order group of the GUI component.
-         */
-        getX(): number;
         getMessage(): $Component;
         /**
          * @return `true` if the element is active, `false` otherwise
@@ -914,7 +855,30 @@ declare module "@package/net/minecraft/client/gui/components" {
          * 
          * @return The tab order group of the GUI component.
          */
+        getY(): number;
+        renderScrollingString(guiGraphics: $GuiGraphics, font: $Font, width: number, color: number): void;
+        static renderScrollingString(guiGraphics: $GuiGraphics, font: $Font, text: $Component_, minX: number, minY: number, maxX: number, maxY: number, color: number): void;
+        static renderScrollingString(guiGraphics: $GuiGraphics, font: $Font, text: $Component_, centerX: number, minX: number, minY: number, maxX: number, maxY: number, color: number): void;
+        /**
+         * Returns the tab order group of the GUI component.
+         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
+         * 
+         * @return The tab order group of the GUI component.
+         */
         getRight(): number;
+        setCustomBackgroundResetBehaviorFancyMenu(arg0: $CustomizableWidget$CustomBackgroundResetBehavior_): void;
+        addResetCustomizationsListenerFancyMenu(arg0: $Runnable_): void;
+        /**
+         * Sets the focus state of the GUI element.
+         */
+        setNineSliceCustomBackground_FancyMenu(focused: boolean): void;
+        addHoverOrFocusStateListenerFancyMenu(consumer: $Consumer_<any>): void;
+        getHoverOrFocusStateListenersFancyMenu(): $List<any>;
+        resetWidgetSizeAndPositionFancyMenu(): void;
+        setCustomBackgroundInactiveFancyMenu(arg0: $RenderableResource): void;
+        getResetCustomizationsListenersFancyMenu(): $List<any>;
+        getCustomBackgroundInactiveFancyMenu(): $RenderableResource;
+        getCustomBackgroundResetBehaviorFancyMenu(): $CustomizableWidget$CustomBackgroundResetBehavior;
         /**
          * Returns the tab order group of the GUI component.
          * Tab order group determines the order in which the components are traversed when using keyboard navigation.
@@ -922,60 +886,102 @@ declare module "@package/net/minecraft/client/gui/components" {
          * @return The tab order group of the GUI component.
          */
         getWidth(): number;
-        /**
-         * Returns the tab order group of the GUI component.
-         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
-         * 
-         * @return The tab order group of the GUI component.
-         */
-        getY(): number;
         setMessage(message: $Component_): void;
         /**
          * Renders the graphical user interface (GUI) element.
          */
         render(guiGraphics: $GuiGraphics, mouseX: number, mouseY: number, partialTick: number): void;
-        resetWidgetCustomizationsFancyMenu(): void;
+        /**
+         * Returns the tab order group of the GUI component.
+         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
+         * 
+         * @return The tab order group of the GUI component.
+         */
+        getHeight(): number;
+        /**
+         * Returns the tab order group of the GUI component.
+         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
+         * 
+         * @return The tab order group of the GUI component.
+         */
+        getX(): number;
+        getHoverSoundFancyMenu(): $IAudio;
+        setCustomYFancyMenu(arg0: number): void;
         /**
          * @return `true` if the element is active, `false` otherwise
          */
-        isHiddenFancyMenu(): boolean;
-        onDrag(mouseX: number, arg1: number, mouseY: number, arg3: number): void;
+        isLabelShadowFancyMenu(): boolean;
+        setCustomHeightFancyMenu(arg0: number): void;
+        setHitboxRotationFancyMenu(arg0: number, arg1: number, arg2: number): void;
         /**
-         * Returns the tab order group of the GUI component.
-         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
-         * 
-         * @return The tab order group of the GUI component.
+         * Sets the focus state of the GUI element.
          */
-        getBottom(): number;
-        setFGColor(height: number): void;
-        onRelease(mouseX: number, arg1: number): void;
-        /**
-         * Returns the tab order group of the GUI component.
-         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
-         * 
-         * @return The tab order group of the GUI component.
-         */
-        getFGColor(): number;
-        static renderScrollingString(guiGraphics: $GuiGraphics, font: $Font, text: $Component_, minX: number, minY: number, maxX: number, maxY: number, color: number): void;
-        static renderScrollingString(guiGraphics: $GuiGraphics, font: $Font, text: $Component_, centerX: number, minX: number, minY: number, maxX: number, maxY: number, color: number): void;
-        renderScrollingString(guiGraphics: $GuiGraphics, font: $Font, width: number, color: number): void;
+        setLabelShadowFancyMenu(focused: boolean): void;
+        getUnhoverSoundFancyMenu(): $IAudio;
+        setCustomWidthFancyMenu(arg0: number): void;
+        getCustomLabelFancyMenu(): $Component;
+        setLabelScaleFancyMenu(alpha: number): void;
+        getHoverLabelFancyMenu(): $Component;
+        getCustomHeightFancyMenu(): number;
+        getLabelScaleFancyMenu(): number;
+        getCustomXFancyMenu(): number;
+        getCustomYFancyMenu(): number;
+        setCustomXFancyMenu(arg0: number): void;
+        setLabelBaseColorFancyMenu(arg0: $DrawableColor): void;
+        getCustomWidthFancyMenu(): number;
+        getLabelBaseColorFancyMenu(): $DrawableColor;
         /**
          * Called when a mouse button is clicked within the GUI element.
          * 
          * @return `true` if the event is consumed, `false` otherwise.
          */
         mouseClicked(mouseX: number, arg1: number, mouseY: number): boolean;
+        clicked(mouseX: number, arg1: number): boolean;
+        updateWidgetNarration(narrationElementOutput: $NarrationElementOutput): void;
+        createNarrationMessage(): $MutableComponent;
+        defaultButtonNarrationText(narrationElementOutput: $NarrationElementOutput): void;
+        resolveLabelScaleFancyMenu(): number;
+        /**
+         * Sets the focus state of the GUI element.
+         */
+        setLastHoverStateFancyMenu(focused: boolean): void;
+        /**
+         * @return `true` if the element is active, `false` otherwise
+         */
+        getLastHoverStateFancyMenu(): boolean;
+        /**
+         * @return `true` if the element is active, `false` otherwise
+         */
+        getLastFocusStateFancyMenu(): boolean;
+        setHoverSoundFancyMenu(arg0: $IAudio): void;
+        setUnhoverSoundFancyMenu(arg0: $IAudio): void;
+        /**
+         * Sets the focus state of the GUI element.
+         */
+        setLastFocusStateFancyMenu(focused: boolean): void;
+        setCustomLabelFancyMenu(message: $Component_): void;
+        setHoverLabelFancyMenu(message: $Component_): void;
+        setTooltip(tooltip: $Tooltip | null): void;
+        /**
+         * @return `true` if the element is active, `false` otherwise
+         */
+        isFocused(): boolean;
+        /**
+         * Sets the focus state of the GUI element.
+         */
+        setFocused(focused: boolean): void;
+        setX(height: number): void;
+        setY(height: number): void;
+        /**
+         * @return the narration priority
+         */
+        narrationPriority(): $NarratableEntry$NarrationPriority;
         /**
          * Retrieves the next focus path based on the given focus navigation event.
          * 
          * @return the next focus path as a ComponentPath, or `null` if there is no next focus path.
          */
         nextFocusPath(event: $FocusNavigationEvent_): $ComponentPath;
-        isMouseOver(mouseX: number, arg1: number): boolean;
-        /**
-         * @return the narration priority
-         */
-        narrationPriority(): $NarratableEntry$NarrationPriority;
         /**
          * Returns the tab order group of the GUI component.
          * Tab order group determines the order in which the components are traversed when using keyboard navigation.
@@ -988,6 +994,16 @@ declare module "@package/net/minecraft/client/gui/components" {
          * @return the `ScreenRectangle` occupied by the GUI element
          */
         getRectangle(): $ScreenRectangle;
+        isMouseOver(mouseX: number, arg1: number): boolean;
+        resetWidgetCustomizationsFancyMenu(): void;
+        setWidgetIdentifierFancyMenu(arg0: string): $AbstractWidget;
+        getHitboxRotationDegreesFancyMenu(): number;
+        getWidgetIdentifierFancyMenu(): string;
+        /**
+         * Renders the graphical user interface (GUI) element.
+         */
+        renderWidget(guiGraphics: $GuiGraphics, mouseX: number, mouseY: number, partialTick: number): void;
+        setTooltipDelay(tooltipDelay: $Duration_): void;
         visitWidgets(consumer: $Consumer_<$AbstractWidget>): void;
         /**
          * Called when the mouse is dragged within the GUI element.
@@ -1001,19 +1017,62 @@ declare module "@package/net/minecraft/client/gui/components" {
          * @return `true` if the event is consumed, `false` otherwise.
          */
         mouseReleased(mouseX: number, arg1: number, mouseY: number): boolean;
-        setTooltipDelay(tooltipDelay: $Duration_): void;
-        setTooltip(tooltip: $Tooltip | null): void;
-        setAlpha(alpha: number): void;
-        setWidth(height: number): void;
-        setHeight(height: number): void;
-        /**
-         * Sets the focus state of the GUI element.
-         */
-        setFocused(focused: boolean): void;
+        getTooltip(): $Tooltip;
+        getHoverStateListenersFancyMenu(): $List<any>;
+        setCustomBackgroundHoverFancyMenu(arg0: $RenderableResource): void;
+        getFocusStateListenersFancyMenu(): $List<any>;
+        addHoverStateListenerFancyMenu(consumer: $Consumer_<any>): void;
         /**
          * @return `true` if the element is active, `false` otherwise
          */
-        isFocused(): boolean;
+        getLastHoverOrFocusStateFancyMenu(): boolean;
+        /**
+         * Sets the focus state of the GUI element.
+         */
+        setLastHoverOrFocusStateFancyMenu(focused: boolean): void;
+        addFocusStateListenerFancyMenu(consumer: $Consumer_<any>): void;
+        getCustomBackgroundNormalFancyMenu(): $RenderableResource;
+        getCustomBackgroundHoverFancyMenu(): $RenderableResource;
+        static wrapDefaultNarrationMessage(message: $Component_): $MutableComponent;
+        setCustomClickSoundFancyMenu(arg0: $IAudio): void;
+        /**
+         * Sets the focus state of the GUI element.
+         */
+        setUnderlineLabelOnHoverFancyMenu(focused: boolean): void;
+        setCustomBackgroundNormalFancyMenu(arg0: $RenderableResource): void;
+        setLabelHoverColorFancyMenu(arg0: $DrawableColor): void;
+        setNineSliceBorderBottom_FancyMenu(height: number): void;
+        setNineSliceBorderLeft_FancyMenu(height: number): void;
+        getCustomClickSoundFancyMenu(): $IAudio;
+        setNineSliceBorderX_FancyMenu(height: number): void;
+        getLabelHoverColorFancyMenu(): $DrawableColor;
+        setNineSliceBorderY_FancyMenu(height: number): void;
+        setNineSliceBorderTop_FancyMenu(height: number): void;
+        setNineSliceBorderRight_FancyMenu(height: number): void;
+        /**
+         * @return `true` if the element is active, `false` otherwise
+         */
+        isUnderlineLabelOnHoverFancyMenu(): boolean;
+        /**
+         * @return `true` if the element is active, `false` otherwise
+         */
+        isHiddenFancyMenu(): boolean;
+        setAlpha(alpha: number): void;
+        setHeight(height: number): void;
+        setWidth(height: number): void;
+        setRectangle(width: number, height: number, x: number, y: number): void;
+        setTabOrderGroup(height: number): void;
+        /**
+         * @return `true` if the element is active, `false` otherwise
+         */
+        isHoveredOrFocused(): boolean;
+        playDownSound(handler: $SoundManager): void;
+        /**
+         * Sets the focus state of the GUI element.
+         */
+        setHiddenFancyMenu(focused: boolean): void;
+        isValidClickButton(button: number): boolean;
+        clearFGColor(): void;
         /**
          * @return `true` if the element is active, `false` otherwise
          */
@@ -1022,135 +1081,88 @@ declare module "@package/net/minecraft/client/gui/components" {
          * @deprecated
          */
         onClick(mouseX: number, arg1: number): void;
-        setX(height: number): void;
-        setY(height: number): void;
-        clicked(mouseX: number, arg1: number): boolean;
-        setRectangle(width: number, height: number, x: number, y: number): void;
-        playDownSound(handler: $SoundManager): void;
-        clearFGColor(): void;
-        setTabOrderGroup(height: number): void;
         /**
          * @return `true` if the element is active, `false` otherwise
          */
-        isHoveredOrFocused(): boolean;
-        isValidClickButton(button: number): boolean;
+        isNineSliceCustomBackgroundTexture_FancyMenu(): boolean;
         /**
-         * Sets the focus state of the GUI element.
+         * Returns the tab order group of the GUI component.
+         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
+         * 
+         * @return The tab order group of the GUI component.
          */
-        setHiddenFancyMenu(focused: boolean): void;
-        addHoverOrFocusStateListenerFancyMenu(consumer: $Consumer_<any>): void;
-        getCustomBackgroundInactiveFancyMenu(): $RenderableResource;
-        setCustomBackgroundInactiveFancyMenu(arg0: $RenderableResource): void;
+        getNineSliceCustomBackgroundBorderX_FancyMenu(): number;
         /**
-         * Sets the focus state of the GUI element.
+         * Returns the tab order group of the GUI component.
+         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
+         * 
+         * @return The tab order group of the GUI component.
          */
-        setNineSliceCustomBackground_FancyMenu(focused: boolean): void;
-        getResetCustomizationsListenersFancyMenu(): $List<any>;
-        getHoverOrFocusStateListenersFancyMenu(): $List<any>;
-        setCustomBackgroundResetBehaviorFancyMenu(arg0: $CustomizableWidget$CustomBackgroundResetBehavior_): void;
+        getNineSliceCustomBackgroundBorderRight_FancyMenu(): number;
+        /**
+         * Returns the tab order group of the GUI component.
+         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
+         * 
+         * @return The tab order group of the GUI component.
+         */
+        getNineSliceCustomBackgroundBorderY_FancyMenu(): number;
+        /**
+         * Returns the tab order group of the GUI component.
+         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
+         * 
+         * @return The tab order group of the GUI component.
+         */
+        getNineSliceCustomBackgroundBorderLeft_FancyMenu(): number;
+        /**
+         * Returns the tab order group of the GUI component.
+         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
+         * 
+         * @return The tab order group of the GUI component.
+         */
+        getNineSliceCustomBackgroundBorderTop_FancyMenu(): number;
+        /**
+         * Returns the tab order group of the GUI component.
+         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
+         * 
+         * @return The tab order group of the GUI component.
+         */
+        getNineSliceCustomBackgroundBorderBottom_FancyMenu(): number;
+        onDrag(mouseX: number, arg1: number, mouseY: number, arg3: number): void;
+        onRelease(mouseX: number, arg1: number): void;
+        /**
+         * Returns the tab order group of the GUI component.
+         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
+         * 
+         * @return The tab order group of the GUI component.
+         */
+        getFGColor(): number;
+        setFGColor(height: number): void;
+        /**
+         * Returns the tab order group of the GUI component.
+         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
+         * 
+         * @return The tab order group of the GUI component.
+         */
+        getBottom(): number;
         getHitboxVerticalTiltDegreesFancyMenu(): number;
         getHitboxHorizontalTiltDegreesFancyMenu(): number;
-        addResetCustomizationsListenerFancyMenu(arg0: $Runnable_): void;
-        resetWidgetSizeAndPositionFancyMenu(): void;
-        getCustomBackgroundResetBehaviorFancyMenu(): $CustomizableWidget$CustomBackgroundResetBehavior;
-        getTooltip(): $Tooltip;
-        setLabelBaseColorFancyMenu(arg0: $DrawableColor): void;
-        getHoverSoundFancyMenu(): $IAudio;
-        /**
-         * @return `true` if the element is active, `false` otherwise
-         */
-        getLastFocusStateFancyMenu(): boolean;
-        setHitboxRotationFancyMenu(arg0: number, arg1: number, arg2: number): void;
-        getLabelScaleFancyMenu(): number;
-        getCustomXFancyMenu(): number;
-        getCustomLabelFancyMenu(): $Component;
-        getLabelBaseColorFancyMenu(): $DrawableColor;
-        setHoverSoundFancyMenu(arg0: $IAudio): void;
-        getCustomHeightFancyMenu(): number;
-        /**
-         * Sets the focus state of the GUI element.
-         */
-        setLastHoverStateFancyMenu(focused: boolean): void;
-        setCustomHeightFancyMenu(arg0: number): void;
-        /**
-         * Sets the focus state of the GUI element.
-         */
-        setLabelShadowFancyMenu(focused: boolean): void;
-        setUnhoverSoundFancyMenu(arg0: $IAudio): void;
-        getUnhoverSoundFancyMenu(): $IAudio;
-        /**
-         * Sets the focus state of the GUI element.
-         */
-        setLastFocusStateFancyMenu(focused: boolean): void;
-        getCustomYFancyMenu(): number;
-        /**
-         * @return `true` if the element is active, `false` otherwise
-         */
-        isLabelShadowFancyMenu(): boolean;
-        setCustomYFancyMenu(arg0: number): void;
-        setLabelScaleFancyMenu(alpha: number): void;
-        setHoverLabelFancyMenu(message: $Component_): void;
-        setCustomXFancyMenu(arg0: number): void;
-        setCustomLabelFancyMenu(message: $Component_): void;
-        getHoverLabelFancyMenu(): $Component;
-        getCustomWidthFancyMenu(): number;
-        setCustomWidthFancyMenu(arg0: number): void;
-        updateWidgetNarration(narrationElementOutput: $NarrationElementOutput): void;
-        /**
-         * @return `true` if the element is active, `false` otherwise
-         */
-        getLastHoverStateFancyMenu(): boolean;
-        createNarrationMessage(): $MutableComponent;
-        resolveLabelScaleFancyMenu(): number;
-        defaultButtonNarrationText(narrationElementOutput: $NarrationElementOutput): void;
-        setNineSliceBorderY_FancyMenu(height: number): void;
-        /**
-         * Sets the focus state of the GUI element.
-         */
-        setLastHoverOrFocusStateFancyMenu(focused: boolean): void;
-        setNineSliceBorderX_FancyMenu(height: number): void;
-        getFocusStateListenersFancyMenu(): $List<any>;
-        setCustomBackgroundNormalFancyMenu(arg0: $RenderableResource): void;
-        addHoverStateListenerFancyMenu(consumer: $Consumer_<any>): void;
-        addFocusStateListenerFancyMenu(consumer: $Consumer_<any>): void;
-        getHoverStateListenersFancyMenu(): $List<any>;
-        /**
-         * @return `true` if the element is active, `false` otherwise
-         */
-        getLastHoverOrFocusStateFancyMenu(): boolean;
-        static wrapDefaultNarrationMessage(message: $Component_): $MutableComponent;
-        getCustomBackgroundHoverFancyMenu(): $RenderableResource;
-        setCustomBackgroundHoverFancyMenu(arg0: $RenderableResource): void;
-        setCustomClickSoundFancyMenu(arg0: $IAudio): void;
-        /**
-         * Sets the focus state of the GUI element.
-         */
-        setUnderlineLabelOnHoverFancyMenu(focused: boolean): void;
-        setLabelHoverColorFancyMenu(arg0: $DrawableColor): void;
-        /**
-         * @return `true` if the element is active, `false` otherwise
-         */
-        isUnderlineLabelOnHoverFancyMenu(): boolean;
-        getLabelHoverColorFancyMenu(): $DrawableColor;
-        getCustomBackgroundNormalFancyMenu(): $RenderableResource;
-        getCustomClickSoundFancyMenu(): $IAudio;
-        getWidgetIdentifierFancyMenu(): string;
-        getHitboxRotationDegreesFancyMenu(): number;
-        setNineSliceBorderTop_FancyMenu(height: number): void;
-        setNineSliceBorderLeft_FancyMenu(height: number): void;
-        setNineSliceBorderRight_FancyMenu(height: number): void;
-        setNineSliceBorderBottom_FancyMenu(height: number): void;
-        setWidgetIdentifierFancyMenu(arg0: string): $AbstractWidget;
-        /**
-         * @return the current focus path as a ComponentPath, or `null` if there is no current focus path.
-         */
-        getCurrentFocusPath(): $ComponentPath;
         /**
          * Called when a keyboard key is pressed within the GUI element.
          * 
          * @return `true` if the event is consumed, `false` otherwise.
          */
         keyPressed(keyCode: number, scanCode: number, modifiers: number): boolean;
+        /**
+         * Called when a character is typed within the GUI element.
+         * 
+         * @return `true` if the event is consumed, `false` otherwise.
+         */
+        charTyped(codePoint: string, modifiers: number): boolean;
+        mouseMoved(mouseX: number, arg1: number): void;
+        /**
+         * @return the current focus path as a ComponentPath, or `null` if there is no current focus path.
+         */
+        getCurrentFocusPath(): $ComponentPath;
         mouseScrolled(mouseX: number, arg1: number, mouseY: number, arg3: number): boolean;
         /**
          * Called when a keyboard key is pressed within the GUI element.
@@ -1158,13 +1170,6 @@ declare module "@package/net/minecraft/client/gui/components" {
          * @return `true` if the event is consumed, `false` otherwise.
          */
         keyReleased(keyCode: number, scanCode: number, modifiers: number): boolean;
-        mouseMoved(mouseX: number, arg1: number): void;
-        /**
-         * Called when a character is typed within the GUI element.
-         * 
-         * @return `true` if the event is consumed, `false` otherwise.
-         */
-        charTyped(codePoint: string, modifiers: number): boolean;
         setPosition(width: number, height: number): void;
         /**
          * Handles the logic for when this widget is clicked. Vanilla calls this after `AbstractWidget#mouseClicked(double, double, int)` validates that:
@@ -1174,27 +1179,27 @@ declare module "@package/net/minecraft/client/gui/components" {
          * - the mouse is over this widget
          */
         onClick(mouseX: number, mouseY: number, button: number): void;
-        renderCustomBackgroundFancyMenu(arg0: $AbstractWidget, arg1: $GuiGraphics, arg2: number, arg3: number, arg4: number, arg5: number): boolean;
-        stopCustomClickSoundFancyMenu(): void;
-        getOriginalMessageFancyMenu(): $Component;
         /**
          * Sets the focus state of the GUI element.
          */
         tickHoverOrFocusStateListenersFancyMenu(focused: boolean): void;
-        stopUnhoverSoundFancyMenu(): void;
         stopHoverSoundFancyMenu(): void;
-        /**
-         * Sets the focus state of the GUI element.
-         */
-        tickHoverStateListenersFancyMenu(focused: boolean): void;
+        stopUnhoverSoundFancyMenu(): void;
+        stopCustomClickSoundFancyMenu(): void;
+        renderCustomBackgroundFancyMenu(arg0: $AbstractWidget, arg1: $GuiGraphics, arg2: number, arg3: number, arg4: number, arg5: number): boolean;
+        getOriginalMessageFancyMenu(): $Component;
         /**
          * Sets the focus state of the GUI element.
          */
         tickFocusStateListenersFancyMenu(focused: boolean): void;
-        getAlphaFancyMenu(): number;
-        setHeightFancyMenu(height: number): void;
-        setHeightKonkrete(height: number): void;
+        /**
+         * Sets the focus state of the GUI element.
+         */
+        tickHoverStateListenersFancyMenu(focused: boolean): void;
         setMessageFieldFancyMenu(message: $Component_): void;
+        getAlphaFancyMenu(): number;
+        setHeightKonkrete(height: number): void;
+        setHeightFancyMenu(height: number): void;
         packedFGColor: number;
         static UNSET_FG_COLOR: number;
         visible: boolean;
@@ -1206,38 +1211,38 @@ declare module "@package/net/minecraft/client/gui/components" {
         active: boolean;
         height: number;
         constructor(x: number, y: number, width: number, height: number, message: $Component_);
-        get nineSliceCustomBackgroundBorderX_FancyMenu(): number;
-        get nineSliceCustomBackgroundBorderBottom_FancyMenu(): number;
-        get nineSliceCustomBackgroundBorderTop_FancyMenu(): number;
-        get nineSliceCustomBackgroundBorderY_FancyMenu(): number;
-        get nineSliceCustomBackgroundTexture_FancyMenu(): boolean;
-        get nineSliceCustomBackgroundBorderRight_FancyMenu(): number;
-        get nineSliceCustomBackgroundBorderLeft_FancyMenu(): number;
         get right(): number;
-        get bottom(): number;
-        set tooltipDelay(value: $Duration_);
-        get hovered(): boolean;
-        get hoveredOrFocused(): boolean;
         set nineSliceCustomBackground_FancyMenu(value: boolean);
-        get resetCustomizationsListenersFancyMenu(): $List<any>;
         get hoverOrFocusStateListenersFancyMenu(): $List<any>;
+        get resetCustomizationsListenersFancyMenu(): $List<any>;
+        get hitboxRotationDegreesFancyMenu(): number;
+        set tooltipDelay(value: $Duration_);
+        get hoverStateListenersFancyMenu(): $List<any>;
+        get focusStateListenersFancyMenu(): $List<any>;
+        set nineSliceBorderBottom_FancyMenu(value: number);
+        set nineSliceBorderLeft_FancyMenu(value: number);
+        set nineSliceBorderX_FancyMenu(value: number);
+        set nineSliceBorderY_FancyMenu(value: number);
+        set nineSliceBorderTop_FancyMenu(value: number);
+        set nineSliceBorderRight_FancyMenu(value: number);
+        get hoveredOrFocused(): boolean;
+        get hovered(): boolean;
+        get nineSliceCustomBackgroundTexture_FancyMenu(): boolean;
+        get nineSliceCustomBackgroundBorderX_FancyMenu(): number;
+        get nineSliceCustomBackgroundBorderRight_FancyMenu(): number;
+        get nineSliceCustomBackgroundBorderY_FancyMenu(): number;
+        get nineSliceCustomBackgroundBorderLeft_FancyMenu(): number;
+        get nineSliceCustomBackgroundBorderTop_FancyMenu(): number;
+        get nineSliceCustomBackgroundBorderBottom_FancyMenu(): number;
+        get bottom(): number;
         get hitboxVerticalTiltDegreesFancyMenu(): number;
         get hitboxHorizontalTiltDegreesFancyMenu(): number;
-        set nineSliceBorderY_FancyMenu(value: number);
-        set nineSliceBorderX_FancyMenu(value: number);
-        get focusStateListenersFancyMenu(): $List<any>;
-        get hoverStateListenersFancyMenu(): $List<any>;
-        get hitboxRotationDegreesFancyMenu(): number;
-        set nineSliceBorderTop_FancyMenu(value: number);
-        set nineSliceBorderLeft_FancyMenu(value: number);
-        set nineSliceBorderRight_FancyMenu(value: number);
-        set nineSliceBorderBottom_FancyMenu(value: number);
         get currentFocusPath(): $ComponentPath;
         get originalMessageFancyMenu(): $Component;
-        get alphaFancyMenu(): number;
-        set heightFancyMenu(value: number);
-        set heightKonkrete(value: number);
         set messageFieldFancyMenu(value: $Component_);
+        get alphaFancyMenu(): number;
+        set heightKonkrete(value: number);
+        set heightFancyMenu(value: number);
     }
     export class $Button$CreateNarration {
     }
@@ -1253,44 +1258,44 @@ declare module "@package/net/minecraft/client/gui/components" {
     /**
      * Values that may be interpreted as {@link $MultiLineTextWidget$CacheKey}.
      */
-    export type $MultiLineTextWidget$CacheKey_ = { maxWidth?: number, message?: $Component_, maxRows?: $OptionalInt,  } | [maxWidth?: number, message?: $Component_, maxRows?: $OptionalInt, ];
+    export type $MultiLineTextWidget$CacheKey_ = { message?: $Component_, maxRows?: $OptionalInt, maxWidth?: number,  } | [message?: $Component_, maxRows?: $OptionalInt, maxWidth?: number, ];
     export class $DebugScreenOverlay implements $BuggerScreenRenderLinesInvoker {
-        redirect$zei000$sodium_extra$sodiumExtra$redirectDrawRightText(arg0: $DebugScreenOverlay, arg1: $GuiGraphics, arg2: $List_<any>, arg3: boolean): void;
-        redirect$zei000$sodium_extra$sodiumExtra$redirectDrawLeftText(arg0: $DebugScreenOverlay, arg1: $GuiGraphics, arg2: $List_<any>, arg3: boolean): void;
         reset(): void;
+        toggleFpsCharts(): void;
+        toggleOverlay(): void;
         render(guiGraphics: $GuiGraphics): void;
         showProfilerChart(): boolean;
         logFrameDuration(frameDuration: number): void;
         showDebugScreen(): boolean;
-        toggleNetworkCharts(): void;
-        toggleProfilerChart(): void;
+        getTickTimeLogger(): $LocalSampleLogger;
         getPingLogger(): $LocalSampleLogger;
+        logRemoteSample(sample: number[], sampleType: $RemoteDebugSampleType_): void;
+        showNetworkCharts(): boolean;
+        toggleProfilerChart(): void;
+        toggleNetworkCharts(): void;
         clearChunkCache(): void;
-        handler$edf000$fabric_renderer_api_v1$getLeftText(arg0: $CallbackInfoReturnable<any>): void;
         drawSystemInformation(guiGraphics: $GuiGraphics): void;
         collectGameInformationText(): $List<string>;
         getSystemInformation(): $List<string>;
         drawGameInformation(guiGraphics: $GuiGraphics): void;
-        localvar$bch000$veil$modifyGameInformation(arg0: $List_<any>): $List<any>;
-        handler$dpm000$entityculling$getLeftText(callback: $CallbackInfoReturnable<any>): $List<any>;
+        redirect$zei000$sodium_extra$sodiumExtra$redirectDrawLeftText(arg0: $DebugScreenOverlay, arg1: $GuiGraphics, arg2: $List_<any>, arg3: boolean): void;
+        redirect$zei000$sodium_extra$sodiumExtra$redirectDrawRightText(arg0: $DebugScreenOverlay, arg1: $GuiGraphics, arg2: $List_<any>, arg3: boolean): void;
         handler$zei000$sodium_extra$preRender(arg0: $GuiGraphics, arg1: $CallbackInfo): void;
-        showNetworkCharts(): boolean;
-        logRemoteSample(sample: number[], sampleType: $RemoteDebugSampleType_): void;
-        getBandwidthLogger(): $LocalSampleLogger;
-        showFpsCharts(): boolean;
-        getGameInformation(): $List<string>;
-        toggleFpsCharts(): void;
-        toggleOverlay(): void;
+        handler$dpm000$entityculling$getLeftText(callback: $CallbackInfoReturnable<any>): $List<any>;
+        localvar$bch000$veil$modifyGameInformation(arg0: $List_<any>): $List<any>;
         collectSystemInformationText(): $List<string>;
         localvar$ggn000$sable$addDebugInfo(arg0: $List_<any>): $List<any>;
-        getTickTimeLogger(): $LocalSampleLogger;
+        getGameInformation(): $List<string>;
+        showFpsCharts(): boolean;
+        getBandwidthLogger(): $LocalSampleLogger;
+        handler$edf000$fabric_renderer_api_v1$getLeftText(arg0: $CallbackInfoReturnable<any>): void;
         drawLines(guiGraphics: $GuiGraphics, lines: $List_<string>, leftSide: boolean): void;
         constructor(minecraft: $Minecraft);
+        get tickTimeLogger(): $LocalSampleLogger;
         get pingLogger(): $LocalSampleLogger;
         get systemInformation(): $List<string>;
-        get bandwidthLogger(): $LocalSampleLogger;
         get gameInformation(): $List<string>;
-        get tickTimeLogger(): $LocalSampleLogger;
+        get bandwidthLogger(): $LocalSampleLogger;
     }
     export class $PopupScreen extends $Screen {
         static MENU_BACKGROUND: $ResourceLocation;
@@ -1316,9 +1321,9 @@ declare module "@package/net/minecraft/client/gui/components" {
     }
     export class $EditBox extends $AbstractWidget implements $Renderable, $AccessEditBox, $IMixinEditBox, $IMixinEditBox$1 {
         /**
-         * Deletes the given number of characters from the current cursor's position, unless there is currently a selection, in which case the selection is deleted instead.
+         * Adds the given text after the cursor, or replaces the currently selected text if there is a selection.
          */
-        setTextColor(num: number): void;
+        insertText(textToWrite: string): void;
         /**
          * Returns the text between the cursor and selectionEnd.
          */
@@ -1329,57 +1334,46 @@ declare module "@package/net/minecraft/client/gui/components" {
         setValue(textToWrite: string): void;
         setFormatter(textFormatter: $BiFunction_<string, number, $FormattedCharSequence>): void;
         setFilter(validator: $Predicate_<string>): void;
-        setVisible(select: boolean): void;
-        /**
-         * Returns the current position of the cursor.
-         */
-        getCursorPosition(): number;
-        setHint(hint: $Component_): void;
-        /**
-         * Adds the given text after the cursor, or replaces the currently selected text if there is a selection.
-         */
-        insertText(textToWrite: string): void;
         /**
          * Gets whether the background and outline of this text box should be drawn (true if so).
          */
-        isVisible(): boolean;
-        /**
-         * Deletes the given number of characters from the current cursor's position, unless there is currently a selection, in which case the selection is deleted instead.
-         */
-        setHighlightPos(num: number): void;
-        moveCursorTo(delta: number, select: boolean): void;
-        /**
-         * Deletes the given number of characters from the current cursor's position, unless there is currently a selection, in which case the selection is deleted instead.
-         */
-        setCursorPosition(num: number): void;
-        /**
-         * Deletes the given number of characters from the current cursor's position, unless there is currently a selection, in which case the selection is deleted instead.
-         */
-        setTextColorUneditable(num: number): void;
-        /**
-         * Deletes the given number of characters from the current cursor's position, unless there is currently a selection, in which case the selection is deleted instead.
-         */
-        setMaxLength(num: number): void;
-        setBordered(select: boolean): void;
-        setCanLoseFocus(select: boolean): void;
-        setResponder(responder: $Consumer_<string>): void;
+        isEditable(): boolean;
         /**
          * Gets whether the background and outline of this text box should be drawn (true if so).
          */
         canConsumeInput(): boolean;
+        /**
+         * Returns the current position of the cursor.
+         */
+        getCursorPosition(): number;
+        setVisible(select: boolean): void;
+        /**
+         * Gets whether the background and outline of this text box should be drawn (true if so).
+         */
+        isVisible(): boolean;
         setEditable(select: boolean): void;
         /**
          * Deletes the given number of characters from the current cursor's position, unless there is currently a selection, in which case the selection is deleted instead.
          */
-        deleteChars(num: number): void;
+        setTextColor(num: number): void;
+        setResponder(responder: $Consumer_<string>): void;
+        /**
+         * Deletes the given number of characters from the current cursor's position, unless there is currently a selection, in which case the selection is deleted instead.
+         */
+        setMaxLength(num: number): void;
+        setCanLoseFocus(select: boolean): void;
+        setBordered(select: boolean): void;
         /**
          * Gets whether the background and outline of this text box should be drawn (true if so).
          */
-        getTextShadow(): boolean;
+        isBordered(): boolean;
+        moveCursor(delta: number, select: boolean): void;
         /**
-         * Returns the text between the cursor and selectionEnd.
+         * Deletes the given number of characters from the current cursor's position, unless there is currently a selection, in which case the selection is deleted instead.
          */
-        getHighlighted(): string;
+        deleteText(num: number): void;
+        getScreenX(delta: number): number;
+        moveCursorToStart(select: boolean): void;
         /**
          * Adds the given text after the cursor, or replaces the currently selected text if there is a selection.
          */
@@ -1389,42 +1383,48 @@ declare module "@package/net/minecraft/client/gui/components" {
          */
         getInnerWidth(): number;
         /**
-         * Deletes the given number of characters from the current cursor's position, unless there is currently a selection, in which case the selection is deleted instead.
+         * Returns the text between the cursor and selectionEnd.
          */
-        deleteCharsToPos(num: number): void;
-        moveCursorToStart(select: boolean): void;
-        setTextShadow(select: boolean): void;
+        getHighlighted(): string;
         /**
          * Deletes the given number of characters from the current cursor's position, unless there is currently a selection, in which case the selection is deleted instead.
          */
         deleteWords(num: number): void;
-        getWordPosition(delta: number): number;
-        moveCursorToEnd(select: boolean): void;
-        getScreenX(delta: number): number;
-        /**
-         * Gets whether the background and outline of this text box should be drawn (true if so).
-         */
-        isEditable(): boolean;
-        /**
-         * Gets whether the background and outline of this text box should be drawn (true if so).
-         */
-        isBordered(): boolean;
         /**
          * Deletes the given number of characters from the current cursor's position, unless there is currently a selection, in which case the selection is deleted instead.
          */
-        deleteText(num: number): void;
-        moveCursor(delta: number, select: boolean): void;
-        getHintFancyMenu(): $Component;
+        deleteChars(num: number): void;
+        /**
+         * Deletes the given number of characters from the current cursor's position, unless there is currently a selection, in which case the selection is deleted instead.
+         */
+        deleteCharsToPos(num: number): void;
+        setTextShadow(select: boolean): void;
+        /**
+         * Gets whether the background and outline of this text box should be drawn (true if so).
+         */
+        getTextShadow(): boolean;
+        setHint(hint: $Component_): void;
+        getWordPosition(delta: number): number;
+        moveCursorTo(delta: number, select: boolean): void;
+        /**
+         * Deletes the given number of characters from the current cursor's position, unless there is currently a selection, in which case the selection is deleted instead.
+         */
+        setCursorPosition(num: number): void;
+        /**
+         * Deletes the given number of characters from the current cursor's position, unless there is currently a selection, in which case the selection is deleted instead.
+         */
+        setHighlightPos(num: number): void;
+        /**
+         * Deletes the given number of characters from the current cursor's position, unless there is currently a selection, in which case the selection is deleted instead.
+         */
+        setTextColorUneditable(num: number): void;
+        moveCursorToEnd(select: boolean): void;
         /**
          * Returns the current position of the cursor.
          */
         getTextColorUneditableFancyMenu(): number;
         invokeRenderHighlightFancyMenu(guiGraphics: $GuiGraphics, minX: number, minY: number, maxX: number, maxY: number): void;
-        getFocusedTimeFancyMenu(): number;
-        /**
-         * Returns the text between the cursor and selectionEnd.
-         */
-        getSuggestionFancyMenu(): string;
+        getHintFancyMenu(): $Component;
         /**
          * Gets whether the background and outline of this text box should be drawn (true if so).
          */
@@ -1432,50 +1432,55 @@ declare module "@package/net/minecraft/client/gui/components" {
         /**
          * Returns the current position of the cursor.
          */
-        getMaxLengthKonkrete(): number;
-        searchables$getResponder(): $Consumer<string>;
+        getHightlightPosKonkrete(): number;
+        getFormatterFancyMenu(): $BiFunction<string, number, $FormattedCharSequence>;
         /**
          * Returns the current position of the cursor.
          */
         getTextColorFancyMenu(): number;
-        searchables$getFilter(): $Predicate<string>;
-        /**
-         * Returns the current position of the cursor.
-         */
-        getHightlightPosKonkrete(): number;
-        /**
-         * Deletes the given number of characters from the current cursor's position, unless there is currently a selection, in which case the selection is deleted instead.
-         */
-        setDisplayPosFancyMenu(num: number): void;
-        getFormatterFancyMenu(): $BiFunction<string, number, $FormattedCharSequence>;
-        /**
-         * Gets whether the background and outline of this text box should be drawn (true if so).
-         */
-        getBorderedFancyMenu(): boolean;
-        /**
-         * Adds the given text after the cursor, or replaces the currently selected text if there is a selection.
-         */
-        onValueChangeKonkrete(textToWrite: string): void;
-        /**
-         * Returns the current position of the cursor.
-         */
-        getDisplayPosFancyMenu(): number;
         /**
          * Returns the current position of the cursor.
          */
         getMaxLengthFancyMenu(): number;
         /**
-         * Returns the current position of the cursor.
+         * Adds the given text after the cursor, or replaces the currently selected text if there is a selection.
          */
-        getHighlightPosFancyMenu(): number;
+        onValueChangeKonkrete(textToWrite: string): void;
         /**
          * Gets whether the background and outline of this text box should be drawn (true if so).
          */
         getIsEditableFancyMenu(): boolean;
+        getFocusedTimeFancyMenu(): number;
+        /**
+         * Returns the current position of the cursor.
+         */
+        getHighlightPosFancyMenu(): number;
+        searchables$getFilter(): $Predicate<string>;
+        /**
+         * Returns the current position of the cursor.
+         */
+        getDisplayPosFancyMenu(): number;
+        searchables$getResponder(): $Consumer<string>;
+        /**
+         * Returns the current position of the cursor.
+         */
+        getMaxLengthKonkrete(): number;
+        /**
+         * Deletes the given number of characters from the current cursor's position, unless there is currently a selection, in which case the selection is deleted instead.
+         */
+        setDisplayPosFancyMenu(num: number): void;
+        /**
+         * Gets whether the background and outline of this text box should be drawn (true if so).
+         */
+        getBorderedFancyMenu(): boolean;
         /**
          * Deletes the given number of characters from the current cursor's position, unless there is currently a selection, in which case the selection is deleted instead.
          */
         invokeDeleteTextFancyMenu(num: number): void;
+        /**
+         * Returns the text between the cursor and selectionEnd.
+         */
+        getSuggestionFancyMenu(): string;
         static SPRITES: $WidgetSprites;
         canLoseFocus: boolean;
         visible: boolean;
@@ -1498,30 +1503,30 @@ declare module "@package/net/minecraft/client/gui/components" {
         constructor(font: $Font, x: number, y: number, width: number, height: number, message: $Component_);
         set formatter(value: $BiFunction_<string, number, $FormattedCharSequence>);
         set filter(value: $Predicate_<string>);
+        set maxLength(value: number);
+        set suggestion(value: string | null);
+        get innerWidth(): number;
+        get highlighted(): string;
         set hint(value: $Component_);
         set highlightPos(value: number);
         set textColorUneditable(value: number);
-        set maxLength(value: number);
-        get highlighted(): string;
-        set suggestion(value: string | null);
-        get innerWidth(): number;
-        get hintFancyMenu(): $Component;
         get textColorUneditableFancyMenu(): number;
-        get focusedTimeFancyMenu(): number;
-        get suggestionFancyMenu(): string;
+        get hintFancyMenu(): $Component;
         get isEditableKonkrete(): boolean;
-        get maxLengthKonkrete(): number;
-        get textColorFancyMenu(): number;
         get hightlightPosKonkrete(): number;
         get formatterFancyMenu(): $BiFunction<string, number, $FormattedCharSequence>;
-        get borderedFancyMenu(): boolean;
+        get textColorFancyMenu(): number;
         get maxLengthFancyMenu(): number;
-        get highlightPosFancyMenu(): number;
         get isEditableFancyMenu(): boolean;
+        get focusedTimeFancyMenu(): number;
+        get highlightPosFancyMenu(): number;
+        get maxLengthKonkrete(): number;
+        get borderedFancyMenu(): boolean;
+        get suggestionFancyMenu(): string;
     }
     export class $StringWidget extends $AbstractStringWidget {
-        alignRight(): $StringWidget;
         alignCenter(): $StringWidget;
+        alignRight(): $StringWidget;
         alignLeft(): $StringWidget;
         packedFGColor: number;
         static UNSET_FG_COLOR: number;
@@ -1584,17 +1589,17 @@ declare module "@package/net/minecraft/client/gui/components" {
         y: number;
         active: boolean;
         height: number;
-        constructor(maxWidth: number, message: $Component_, font: $Font);
         constructor(maxWidth: number, message: $Component_, font: $Font, alwaysShowBorder: boolean, padding: number);
         constructor(maxWidth: number, message: $Component_, font: $Font, padding: number);
+        constructor(maxWidth: number, message: $Component_, font: $Font);
     }
     export class $CycleButton<T> extends $AbstractButton implements $UniqueLabeledSwitchCycleButton {
         getValue(): T;
         static builder<T>(valueStringifier: $Function_<T, $Component>): $CycleButton$Builder<T>;
         setValue(value: T): void;
         createDefaultNarrationMessage(): $MutableComponent;
-        static onOffBuilder(initialValue: boolean): $CycleButton$Builder<boolean>;
         static onOffBuilder(): $CycleButton$Builder<boolean>;
+        static onOffBuilder(initialValue: boolean): $CycleButton$Builder<boolean>;
         static booleanBuilder(componentOn: $Component_, componentOff: $Component_): $CycleButton$Builder<boolean>;
         setLabeledSwitchComponentLabel_FancyMenu(message: $Component_): void;
         getLabeledSwitchComponentLabel_FancyMenu(): $Component;
@@ -1659,8 +1664,8 @@ declare module "@package/net/minecraft/client/gui/components" {
         constructor(options: $Options, x: number, y: number, width: number, height: number, value: number);
     }
     export class $ImageWidget extends $AbstractWidget {
-        static sprite(width: number, height: number, sprite: $ResourceLocation_): $ImageWidget;
         static texture(width: number, height: number, texture: $ResourceLocation_, textureWidth: number, textureHeight: number): $ImageWidget;
+        static sprite(width: number, height: number, sprite: $ResourceLocation_): $ImageWidget;
         packedFGColor: number;
         static UNSET_FG_COLOR: number;
         visible: boolean;
@@ -1699,10 +1704,10 @@ declare module "@package/net/minecraft/client/gui/components" {
     export class $BossHealthOverlay implements $IMixinBossHealthOverlay {
         reset(): void;
         update(packet: $ClientboundBossEventPacket): void;
-        render(guiGraphics: $GuiGraphics): void;
-        shouldPlayMusic(): boolean;
         shouldDarkenScreen(): boolean;
         shouldCreateWorldFog(): boolean;
+        render(guiGraphics: $GuiGraphics): void;
+        shouldPlayMusic(): boolean;
         get_events_FancyMenu(): $Map<$UUID, $LerpingBossEvent>;
         events: $Map<$UUID, $LerpingBossEvent>;
         constructor(minecraft: $Minecraft);
@@ -1719,7 +1724,6 @@ declare module "@package/net/minecraft/client/gui/components" {
         get selectedList(): $List<T>;
     }
     export class $AbstractStringWidget extends $AbstractWidget {
-        getFont(): $Font;
         setColor(color: number): $AbstractStringWidget;
         /**
          * Returns the tab order group of the GUI component.
@@ -1728,6 +1732,7 @@ declare module "@package/net/minecraft/client/gui/components" {
          * @return The tab order group of the GUI component.
          */
         getColor(): number;
+        getFont(): $Font;
         packedFGColor: number;
         static UNSET_FG_COLOR: number;
         visible: boolean;
@@ -1744,24 +1749,20 @@ declare module "@package/net/minecraft/client/gui/components" {
     export class $AbstractSelectionList$Entry<E extends $AbstractSelectionList$Entry<E>> implements $GuiEventListener {
         render(guiGraphics: $GuiGraphics, index: number, top: number, left: number, width: number, height: number, mouseX: number, mouseY: number, hovering: boolean, partialTick: number): void;
         /**
-         * Checks if the given mouse coordinates are over the GUI element.
-         * 
-         * @return `true` if the mouse is over the GUI element, `false` otherwise.
+         * @return `true` if the GUI element is focused, `false` otherwise
          */
-        isMouseOver(mouseX: number, arg1: number): boolean;
+        isFocused(): boolean;
         /**
          * Sets the focus state of the GUI element.
          */
         setFocused(focused: boolean): void;
         /**
-         * @return `true` if the GUI element is focused, `false` otherwise
+         * Checks if the given mouse coordinates are over the GUI element.
+         * 
+         * @return `true` if the mouse is over the GUI element, `false` otherwise.
          */
-        isFocused(): boolean;
+        isMouseOver(mouseX: number, arg1: number): boolean;
         renderBack(guiGraphics: $GuiGraphics, index: number, top: number, left: number, width: number, height: number, mouseX: number, mouseY: number, hovering: boolean, partialTick: number): void;
-        /**
-         * @return the current focus path as a ComponentPath, or `null` if there is no current focus path.
-         */
-        getCurrentFocusPath(): $ComponentPath;
         /**
          * Called when a keyboard key is pressed within the GUI element.
          * 
@@ -1775,6 +1776,16 @@ declare module "@package/net/minecraft/client/gui/components" {
          */
         mouseClicked(mouseX: number, arg1: number, mouseY: number): boolean;
         /**
+         * Called when a character is typed within the GUI element.
+         * 
+         * @return `true` if the event is consumed, `false` otherwise.
+         */
+        charTyped(codePoint: string, modifiers: number): boolean;
+        /**
+         * Called when the mouse is moved within the GUI element.
+         */
+        mouseMoved(mouseX: number, arg1: number): void;
+        /**
          * Retrieves the next focus path based on the given focus navigation event.
          * 
          * @return the next focus path as a ComponentPath, or `null` if there is no next focus path.
@@ -1785,18 +1796,10 @@ declare module "@package/net/minecraft/client/gui/components" {
          */
         getRectangle(): $ScreenRectangle;
         /**
-         * Called when the mouse is dragged within the GUI element.
-         * 
-         * @return `true` if the event is consumed, `false` otherwise.
+         * @return the current focus path as a ComponentPath, or `null` if there is no current focus path.
          */
-        mouseDragged(mouseX: number, arg1: number, mouseY: number, arg3: number, button: number): boolean;
+        getCurrentFocusPath(): $ComponentPath;
         mouseScrolled(mouseX: number, arg1: number, mouseY: number, arg3: number): boolean;
-        /**
-         * Called when a mouse button is released within the GUI element.
-         * 
-         * @return `true` if the event is consumed, `false` otherwise.
-         */
-        mouseReleased(mouseX: number, arg1: number, mouseY: number): boolean;
         /**
          * Called when a keyboard key is pressed within the GUI element.
          * 
@@ -1804,15 +1807,17 @@ declare module "@package/net/minecraft/client/gui/components" {
          */
         keyReleased(keyCode: number, scanCode: number, modifiers: number): boolean;
         /**
-         * Called when the mouse is moved within the GUI element.
-         */
-        mouseMoved(mouseX: number, arg1: number): void;
-        /**
-         * Called when a character is typed within the GUI element.
+         * Called when the mouse is dragged within the GUI element.
          * 
          * @return `true` if the event is consumed, `false` otherwise.
          */
-        charTyped(codePoint: string, modifiers: number): boolean;
+        mouseDragged(mouseX: number, arg1: number, mouseY: number, arg3: number, button: number): boolean;
+        /**
+         * Called when a mouse button is released within the GUI element.
+         * 
+         * @return `true` if the event is consumed, `false` otherwise.
+         */
+        mouseReleased(mouseX: number, arg1: number, mouseY: number): boolean;
         /**
          * Returns the tab order group of the GUI component.
          * Tab order group determines the order in which the components are traversed when using keyboard navigation.
@@ -1825,8 +1830,8 @@ declare module "@package/net/minecraft/client/gui/components" {
          */
         list: $AbstractSelectionList<E>;
         constructor();
-        get currentFocusPath(): $ComponentPath;
         get rectangle(): $ScreenRectangle;
+        get currentFocusPath(): $ComponentPath;
         get tabOrderGroup(): number;
     }
     export class $AbstractSelectionList$TrackedList extends $AbstractList<E> {
@@ -1865,7 +1870,7 @@ declare module "@package/net/minecraft/client/gui/components" {
     /**
      * Values that may be interpreted as {@link $ChatComponent$DelayedMessageDeletion}.
      */
-    export type $ChatComponent$DelayedMessageDeletion_ = { signature?: $MessageSignature_, deletableAfter?: number,  } | [signature?: $MessageSignature_, deletableAfter?: number, ];
+    export type $ChatComponent$DelayedMessageDeletion_ = { deletableAfter?: number, signature?: $MessageSignature_,  } | [deletableAfter?: number, signature?: $MessageSignature_, ];
     export class $AbstractButton extends $AbstractWidget implements $IClickableWidget {
         onPress(): void;
         renderString(guiGraphics: $GuiGraphics, font: $Font, color: number): void;
@@ -1905,9 +1910,8 @@ declare module "@package/net/minecraft/client/gui/components" {
         list: $AbstractSelectionList<$OptionsList$Entry>;
     }
     export class $MultiLineTextWidget extends $AbstractStringWidget {
-        setCentered(centered: boolean): $MultiLineTextWidget;
-        setColor(color: number): $MultiLineTextWidget;
         setMaxWidth(color: number): $MultiLineTextWidget;
+        setCentered(centered: boolean): $MultiLineTextWidget;
         setMaxRows(color: number): $MultiLineTextWidget;
         packedFGColor: number;
         static UNSET_FG_COLOR: number;
@@ -1921,9 +1925,8 @@ declare module "@package/net/minecraft/client/gui/components" {
         height: number;
         constructor(message: $Component_, font: $Font);
         constructor(x: number, y: number, message: $Component_, font: $Font);
-        set centered(value: boolean);
-        set color(value: number);
         set maxWidth(value: number);
+        set centered(value: boolean);
         set maxRows(value: number);
     }
     export class $ObjectSelectionList$Entry<E extends $ObjectSelectionList$Entry<E>> extends $AbstractSelectionList$Entry<E> implements $NarrationSupplier {
@@ -1937,32 +1940,32 @@ declare module "@package/net/minecraft/client/gui/components" {
         get narration(): $Component;
     }
     export class $CommandSuggestions implements $IMixinCommandSuggestions {
-        getNarrationMessage(): $Component;
-        keyPressed(keyCode: number, scanCode: number, modifiers: number): boolean;
         render(guiGraphics: $GuiGraphics, mouseX: number, mouseY: number): void;
-        setAllowSuggestions(allowHiding: boolean): void;
+        keyPressed(keyCode: number, scanCode: number, modifiers: number): boolean;
         mouseClicked(mouseX: number, arg1: number, mouseY: number): boolean;
-        getUsageNarration(): $Component;
-        mouseScrolled(delta: number): boolean;
         isVisible(): boolean;
+        setAllowSuggestions(allowHiding: boolean): void;
+        getUsageNarration(): $Component;
+        getNarrationMessage(): $Component;
         setAllowHiding(allowHiding: boolean): void;
         updateCommandInfo(): void;
+        mouseScrolled(delta: number): boolean;
         hide(): void;
+        static calculateSuggestionSuffix(inputText: string, suggestionText: string): string;
         renderUsage(guiGraphics: $GuiGraphics): void;
         showSuggestions(allowHiding: boolean): void;
         renderSuggestions(guiGraphics: $GuiGraphics, mouseX: number, mouseY: number): boolean;
-        static calculateSuggestionSuffix(inputText: string, suggestionText: string): string;
-        getSuggestionsFancyMenu(): $CommandSuggestions$SuggestionsList;
         getCurrentParseFancyMenu(): $ParseResults<$SharedSuggestionProvider>;
+        setCurrentParseFancyMenu(arg0: $ParseResults<$SharedSuggestionProvider>): void;
+        getSuggestionsFancyMenu(): $CommandSuggestions$SuggestionsList;
         getCommandUsageFancyMenu(): $List<$FormattedCharSequence>;
         setSuggestionsFancyMenu(arg0: $CommandSuggestions$SuggestionsList): void;
-        setCurrentParseFancyMenu(arg0: $ParseResults<$SharedSuggestionProvider>): void;
-        setPendingSuggestionsFancyMenu(arg0: $CompletableFuture<$Suggestions>): void;
-        getPendingSuggestionsFancyMenu(): $CompletableFuture<$Suggestions>;
-        getKeepSuggestionsFancyMenu(): boolean;
         getAllowSuggestionsFancyMenu(): boolean;
-        invokeSortSuggestionsFancyMenu(suggestions: $Suggestions): $List<$Suggestion>;
+        setPendingSuggestionsFancyMenu(arg0: $CompletableFuture<$Suggestions>): void;
         invokeUpdateUsageInfoFancyMenu(): void;
+        getKeepSuggestionsFancyMenu(): boolean;
+        getPendingSuggestionsFancyMenu(): $CompletableFuture<$Suggestions>;
+        invokeSortSuggestionsFancyMenu(suggestions: $Suggestions): $List<$Suggestion>;
         minecraft: $Minecraft;
         fillColor: number;
         input: $EditBox;
@@ -1973,26 +1976,26 @@ declare module "@package/net/minecraft/client/gui/components" {
         suggestionLineLimit: number;
         font: $Font;
         constructor(minecraft: $Minecraft, screen: $Screen, input: $EditBox, font: $Font, commandsOnly: boolean, onlyShowIfCursorPastError: boolean, lineStartOffset: number, suggestionLineLimit: number, anchorToBottom: boolean, fillColor: number);
-        get narrationMessage(): $Component;
+        get visible(): boolean;
         set allowSuggestions(value: boolean);
         get usageNarration(): $Component;
-        get visible(): boolean;
+        get narrationMessage(): $Component;
         set allowHiding(value: boolean);
         get commandUsageFancyMenu(): $List<$FormattedCharSequence>;
-        get keepSuggestionsFancyMenu(): boolean;
         get allowSuggestionsFancyMenu(): boolean;
+        get keepSuggestionsFancyMenu(): boolean;
     }
     export class $PopupScreen$Builder {
         build(): $PopupScreen;
         onClose(onClose: $Runnable_): $PopupScreen$Builder;
-        addButton(message: $Component_, action: $Consumer_<$PopupScreen>): $PopupScreen$Builder;
         setMessage(message: $Component_): $PopupScreen$Builder;
-        setImage(image: $ResourceLocation_): $PopupScreen$Builder;
+        addButton(message: $Component_, action: $Consumer_<$PopupScreen>): $PopupScreen$Builder;
         setWidth(width: number): $PopupScreen$Builder;
+        setImage(image: $ResourceLocation_): $PopupScreen$Builder;
         constructor(backgroundScreen: $Screen, title: $Component_);
         set message(value: $Component_);
-        set image(value: $ResourceLocation_);
         set width(value: number);
+        set image(value: $ResourceLocation_);
     }
     export class $OptionsList$Entry extends $ContainerObjectSelectionList$Entry<$OptionsList$Entry> {
         /**
@@ -2001,72 +2004,72 @@ declare module "@package/net/minecraft/client/gui/components" {
         list: $AbstractSelectionList<$OptionsList$Entry>;
     }
     export class $ChatComponent {
-        static getHeight(height: number): number;
-        getHeight(): number;
         /**
          * Resets the chat scroll (executed when the GUI is closed, among others)
          */
         tick(): void;
+        getScale(): number;
+        static defaultUnfocusedPct(): number;
         static getWidth(height: number): number;
         getWidth(): number;
-        deleteMessage(messageSignature: $MessageSignature_): void;
-        restoreState(state: $ChatComponent$State): void;
-        getScale(): number;
-        addMessage(chatComponent: $Component_, headerSignature: $MessageSignature_ | null, tag: $GuiMessageTag_ | null): void;
-        addMessage(chatComponent: $Component_): void;
         render(guiGraphics: $GuiGraphics, tickCount: number, mouseX: number, mouseY: number, focused: boolean): void;
-        handleChatQueueClicked(mouseX: number, arg1: number): boolean;
-        getClickedComponentStyleAt(mouseX: number, arg1: number): $Style;
-        static defaultUnfocusedPct(): number;
-        modify$bfj000$chat_heads$chatheads$correctClickPosition(x: number, guiMessage: $GuiMessage$Line_): number;
         scrollChat(posInc: number): void;
-        storeState(): $ChatComponent$State;
-        /**
-         * Resets the chat scroll (executed when the GUI is closed, among others)
-         */
-        resetChatScroll(): void;
-        getRecentChat(): $ArrayListDeque<string>;
-        /**
-         * Adds this string to the list of sent messages, for recall using the up/down arrow keys
-         */
-        addRecentChat(message: string): void;
-        getLinesPerPage(): number;
-        getMessageTagAt(mouseX: number, arg1: number): $GuiMessageTag;
+        getHeight(): number;
+        static getHeight(height: number): number;
+        addMessage(chatComponent: $Component_): void;
+        addMessage(chatComponent: $Component_, headerSignature: $MessageSignature_ | null, tag: $GuiMessageTag_ | null): void;
         /**
          * Resets the chat scroll (executed when the GUI is closed, among others)
          */
         rescaleChat(): void;
+        restoreState(state: $ChatComponent$State): void;
+        handleChatQueueClicked(mouseX: number, arg1: number): boolean;
+        getClickedComponentStyleAt(mouseX: number, arg1: number): $Style;
+        getLinesPerPage(): number;
+        getMessageTagAt(mouseX: number, arg1: number): $GuiMessageTag;
         /**
-         * Returns `true` if the chat GUI is open
+         * Adds this string to the list of sent messages, for recall using the up/down arrow keys
          */
-        isChatFocused(): boolean;
+        addRecentChat(message: string): void;
+        getRecentChat(): $ArrayListDeque<string>;
+        /**
+         * Resets the chat scroll (executed when the GUI is closed, among others)
+         */
+        resetChatScroll(): void;
+        deleteMessage(messageSignature: $MessageSignature_): void;
+        storeState(): $ChatComponent$State;
+        modify$bfj000$chat_heads$chatheads$correctClickPosition(x: number, guiMessage: $GuiMessage$Line_): number;
+        handler$bfj000$chat_heads$chatheads$forgetRenderData(guiGraphics: $GuiGraphics, tickCount: number, mouseX: number, mouseY: number, focused: boolean, ci: $CallbackInfo): void;
+        modifyExpressionValue$bfj000$chat_heads$chatheads$fixTextOverflow(original: number): number;
+        modifyExpressionValue$dji000$longerchathistory$newMaxHistory(original: number): number;
         /**
          * Clears the chat.
          */
         clearMessages(clearSentMsgHistory: boolean): void;
-        handler$bfj000$chat_heads$chatheads$forgetRenderData(guiGraphics: $GuiGraphics, tickCount: number, mouseX: number, mouseY: number, focused: boolean, ci: $CallbackInfo): void;
+        /**
+         * Returns `true` if the chat GUI is open
+         */
+        isChatFocused(): boolean;
         handler$bfj000$chat_heads$chatheads$renderChatHead(guiGraphics: $GuiGraphics, tickCount: number, mouseX: number, mouseY: number, focused: boolean, ci: $CallbackInfo, guiMessage: $GuiMessage$Line_, yRef: $LocalIntRef, opacityRef: $LocalFloatRef): void;
         modify$bfj000$chat_heads$chatheads$moveText(font: $Font, formattedCharSequence: $FormattedCharSequence_, x: number, y: number, color: number, guiMessage: $GuiMessage$Line_, yRef: $LocalIntRef, opacityRef: $LocalFloatRef): number;
-        modifyExpressionValue$dji000$longerchathistory$newMaxHistory(original: number): number;
-        modifyExpressionValue$bfj000$chat_heads$chatheads$fixTextOverflow(original: number): number;
         constructor(minecraft: $Minecraft);
         get scale(): number;
-        get recentChat(): $ArrayListDeque<string>;
         get linesPerPage(): number;
+        get recentChat(): $ArrayListDeque<string>;
         get chatFocused(): boolean;
     }
     export class $PlayerTabOverlay implements $PlayerTabOverlayInvoker {
         reset(): void;
+        render(guiGraphics: $GuiGraphics, width: number, scoreboard: $Scoreboard, objective: $Objective | null): void;
         /**
          * Called by GuiIngame to update the information stored in the playerlist, does not actually render the list, however.
          */
         setVisible(visible: boolean): void;
-        render(guiGraphics: $GuiGraphics, width: number, scoreboard: $Scoreboard, objective: $Objective | null): void;
         setHeader(footer: $Component_ | null): void;
         setFooter(footer: $Component_ | null): void;
         redirect$hnb000$watut$renderPingIcon(arg0: $PlayerTabOverlay, arg1: $GuiGraphics, arg2: number, arg3: number, arg4: number, arg5: $PlayerInfo): void;
-        getNameForDisplay(playerInfo: $PlayerInfo): $Component;
         renderPingIcon(guiGraphics: $GuiGraphics, width: number, x: number, y: number, playerInfo: $PlayerInfo): void;
+        getNameForDisplay(playerInfo: $PlayerInfo): $Component;
         invokeRenderPingIcon(guiGraphics: $GuiGraphics, width: number, x: number, y: number, playerInfo: $PlayerInfo): void;
         static MAX_ROWS_PER_COL: number;
         visible: boolean;
@@ -2105,10 +2108,10 @@ declare module "@package/net/minecraft/client/gui/components" {
     export class $OptionsList extends $ContainerObjectSelectionList<$OptionsList$Entry> {
         findOption(option: $OptionInstance<never>): $AbstractWidget;
         applyUnsavedChanges(): void;
-        getMouseOver(mouseX: number, arg1: number): ($GuiEventListener) | undefined;
         addSmall(leftOption: $AbstractWidget, rightOption: $AbstractWidget | null): void;
-        addSmall(...options: $OptionInstance<never>[]): void;
         addSmall(options: $List_<$AbstractWidget>): void;
+        addSmall(...options: $OptionInstance<never>[]): void;
+        getMouseOver(mouseX: number, arg1: number): ($GuiEventListener) | undefined;
         addBig(option: $OptionInstance<never>): void;
         minecraft: $Minecraft;
         static SCROLLER_BACKGROUND_SPRITE: $ResourceLocation;
@@ -2137,14 +2140,10 @@ declare module "@package/net/minecraft/client/gui/components" {
         constructor(minecraft: $Minecraft);
     }
     export class $AbstractSliderButton extends $AbstractWidget implements $IMixinAbstractSliderButton, $CustomizableSlider {
-        /**
-         * Returns the tab order group of the GUI component.
-         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
-         * 
-         * @return The tab order group of the GUI component.
-         */
-        getNineSliceSliderHandleBorderX_FancyMenu(): number;
+        setNineSliceSliderHandleBorderX_FancyMenu(height: number): void;
         setCustomSliderBackgroundNormalFancyMenu(arg0: $RenderableResource): void;
+        setNineSliceSliderHandleBorderY_FancyMenu(height: number): void;
+        getCustomSliderBackgroundNormalFancyMenu(): $RenderableResource;
         /**
          * Returns the tab order group of the GUI component.
          * Tab order group determines the order in which the components are traversed when using keyboard navigation.
@@ -2152,10 +2151,25 @@ declare module "@package/net/minecraft/client/gui/components" {
          * @return The tab order group of the GUI component.
          */
         getNineSliceSliderHandleBorderY_FancyMenu(): number;
-        setNineSliceSliderHandleBorderX_FancyMenu(height: number): void;
-        setNineSliceSliderHandleBorderY_FancyMenu(height: number): void;
-        getCustomSliderBackgroundNormalFancyMenu(): $RenderableResource;
+        /**
+         * Returns the tab order group of the GUI component.
+         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
+         * 
+         * @return The tab order group of the GUI component.
+         */
+        getNineSliceSliderHandleBorderX_FancyMenu(): number;
         getSprite(): $ResourceLocation;
+        updateMessage(): void;
+        getHandleSprite(): $ResourceLocation;
+        setNineSliceSliderHandleBorderLeft_FancyMenu(height: number): void;
+        /**
+         * Returns the tab order group of the GUI component.
+         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
+         * 
+         * @return The tab order group of the GUI component.
+         */
+        getNineSliceSliderHandleBorderRight_FancyMenu(): number;
+        setNineSliceSliderHandleBorderRight_FancyMenu(height: number): void;
         setNineSliceSliderHandleBorderTop_FancyMenu(height: number): void;
         /**
          * Returns the tab order group of the GUI component.
@@ -2163,8 +2177,17 @@ declare module "@package/net/minecraft/client/gui/components" {
          * 
          * @return The tab order group of the GUI component.
          */
-        getNineSliceSliderBackgroundBorderX_FancyMenu(): number;
-        setNineSliceSliderHandleBorderLeft_FancyMenu(height: number): void;
+        getNineSliceSliderHandleBorderBottom_FancyMenu(): number;
+        setNineSliceSliderHandleBorderBottom_FancyMenu(height: number): void;
+        /**
+         * Returns the tab order group of the GUI component.
+         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
+         * 
+         * @return The tab order group of the GUI component.
+         */
+        getNineSliceSliderHandleBorderLeft_FancyMenu(): number;
+        setNineSliceCustomSliderBackground_FancyMenu(focused: boolean): void;
+        setNineSliceSliderBackgroundBorderX_FancyMenu(height: number): void;
         setNineSliceSliderBackgroundBorderY_FancyMenu(height: number): void;
         /**
          * Returns the tab order group of the GUI component.
@@ -2189,30 +2212,6 @@ declare module "@package/net/minecraft/client/gui/components" {
          * @return The tab order group of the GUI component.
          */
         getNineSliceSliderBackgroundBorderRight_FancyMenu(): number;
-        setNineSliceSliderBackgroundBorderBottom_FancyMenu(height: number): void;
-        /**
-         * Returns the tab order group of the GUI component.
-         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
-         * 
-         * @return The tab order group of the GUI component.
-         */
-        getNineSliceSliderBackgroundBorderBottom_FancyMenu(): number;
-        setNineSliceSliderBackgroundBorderLeft_FancyMenu(height: number): void;
-        /**
-         * Returns the tab order group of the GUI component.
-         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
-         * 
-         * @return The tab order group of the GUI component.
-         */
-        getNineSliceSliderBackgroundBorderLeft_FancyMenu(): number;
-        setNineSliceSliderHandleBorderRight_FancyMenu(height: number): void;
-        /**
-         * Returns the tab order group of the GUI component.
-         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
-         * 
-         * @return The tab order group of the GUI component.
-         */
-        getNineSliceSliderHandleBorderLeft_FancyMenu(): number;
         /**
          * Returns the tab order group of the GUI component.
          * Tab order group determines the order in which the components are traversed when using keyboard navigation.
@@ -2220,37 +2219,41 @@ declare module "@package/net/minecraft/client/gui/components" {
          * @return The tab order group of the GUI component.
          */
         getNineSliceSliderHandleBorderTop_FancyMenu(): number;
-        setNineSliceCustomSliderBackground_FancyMenu(focused: boolean): void;
         /**
          * Returns the tab order group of the GUI component.
          * Tab order group determines the order in which the components are traversed when using keyboard navigation.
          * 
          * @return The tab order group of the GUI component.
          */
-        getNineSliceSliderHandleBorderBottom_FancyMenu(): number;
+        getNineSliceSliderBackgroundBorderX_FancyMenu(): number;
+        /**
+         * Returns the tab order group of the GUI component.
+         * Tab order group determines the order in which the components are traversed when using keyboard navigation.
+         * 
+         * @return The tab order group of the GUI component.
+         */
+        getNineSliceSliderBackgroundBorderBottom_FancyMenu(): number;
         /**
          * @return `true` if the GUI element is focused, `false` otherwise
          */
         isNineSliceCustomSliderBackground_FancyMenu(): boolean;
-        setNineSliceSliderBackgroundBorderX_FancyMenu(height: number): void;
-        setNineSliceSliderHandleBorderBottom_FancyMenu(height: number): void;
+        setNineSliceSliderBackgroundBorderLeft_FancyMenu(height: number): void;
+        setNineSliceSliderBackgroundBorderBottom_FancyMenu(height: number): void;
         /**
          * Returns the tab order group of the GUI component.
          * Tab order group determines the order in which the components are traversed when using keyboard navigation.
          * 
          * @return The tab order group of the GUI component.
          */
-        getNineSliceSliderHandleBorderRight_FancyMenu(): number;
-        updateMessage(): void;
-        getHandleSprite(): $ResourceLocation;
-        setNineSliceCustomSliderHandle_FancyMenu(focused: boolean): void;
+        getNineSliceSliderBackgroundBorderLeft_FancyMenu(): number;
+        getCustomSliderBackgroundHighlightedFancyMenu(): $RenderableResource;
+        setCustomSliderBackgroundHighlightedFancyMenu(arg0: $RenderableResource): void;
+        applyValue(): void;
         /**
          * @return `true` if the GUI element is focused, `false` otherwise
          */
         isNineSliceCustomSliderHandle_FancyMenu(): boolean;
-        applyValue(): void;
-        setCustomSliderBackgroundHighlightedFancyMenu(arg0: $RenderableResource): void;
-        getCustomSliderBackgroundHighlightedFancyMenu(): $RenderableResource;
+        setNineSliceCustomSliderHandle_FancyMenu(focused: boolean): void;
         renderSliderBackgroundFancyMenu(arg0: $GuiGraphics, arg1: $AbstractSliderButton, arg2: boolean): boolean;
         /**
          * @return `true` if the GUI element is focused, `false` otherwise
@@ -2303,8 +2306,8 @@ declare module "@package/net/minecraft/client/gui/components" {
     export class $MultiLineEditBox extends $AbstractScrollWidget {
         getValue(): string;
         setValue(fullText: string): void;
-        setValueListener(valueListener: $Consumer_<string>): void;
         setCharacterLimit(characterLimit: number): void;
+        setValueListener(valueListener: $Consumer_<string>): void;
         packedFGColor: number;
         static UNSET_FG_COLOR: number;
         visible: boolean;
@@ -2316,7 +2319,7 @@ declare module "@package/net/minecraft/client/gui/components" {
         active: boolean;
         height: number;
         constructor(font: $Font, x: number, y: number, width: number, height: number, placeholder: $Component_, message: $Component_);
-        set valueListener(value: $Consumer_<string>);
         set characterLimit(value: number);
+        set valueListener(value: $Consumer_<string>);
     }
 }

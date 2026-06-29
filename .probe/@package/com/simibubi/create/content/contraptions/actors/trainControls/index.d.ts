@@ -43,10 +43,10 @@ declare module "@package/com/simibubi/create/content/contraptions/actors/trainCo
     }
     export class $ControlsHandler {
         static tick(): void;
+        static levelUnloaded(arg0: $LevelAccessor): void;
+        static getContraption(): $AbstractContraptionEntity;
         static startControlling(arg0: $AbstractContraptionEntity, arg1: $BlockPos_): void;
         static stopControlling(): void;
-        static getContraption(): $AbstractContraptionEntity;
-        static levelUnloaded(arg0: $LevelAccessor): void;
         static getControlsPos(): $BlockPos;
         static currentlyPressed: $Collection<number>;
         static PACKET_RATE: number;
@@ -58,34 +58,34 @@ declare module "@package/com/simibubi/create/content/contraptions/actors/trainCo
     }
     export class $ControlsMovementBehaviour implements $MovementBehaviour {
         tick(arg0: $MovementContext): void;
-        stopMoving(arg0: $MovementContext): void;
         renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
         canBeDisabledVia(arg0: $MovementContext): $ItemStack;
+        stopMoving(arg0: $MovementContext): void;
         isActive(arg0: $MovementContext): boolean;
         /**
          * @deprecated
          */
         dropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
+        onDisabledByControls(arg0: $MovementContext): void;
         getActiveAreaOffset(arg0: $MovementContext): $Vec3;
         mustTickWhileDisabled(): boolean;
-        onDisabledByControls(arg0: $MovementContext): void;
-        collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
-        onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
-        cancelStall(arg0: $MovementContext): void;
+        disableBlockEntityRendering(): boolean;
         startMoving(arg0: $MovementContext): void;
         visitNewPosition(arg0: $MovementContext, arg1: $BlockPos_): void;
-        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
+        collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
+        onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
         writeExtraData(arg0: $MovementContext): void;
-        disableBlockEntityRendering(): boolean;
+        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
+        cancelStall(arg0: $MovementContext): void;
         constructor();
     }
     export class $ControlsInputPacket extends $Record implements $ServerboundPacketPayload {
         handle(arg0: $ServerPlayer): void;
-        stopControlling(): boolean;
         getTypeProvider(): $BasePacketPayload$PacketTypeProvider;
         press(): boolean;
-        controlsPos(): $BlockPos;
+        stopControlling(): boolean;
         contraptionEntityId(): number;
+        controlsPos(): $BlockPos;
         activatedButtons(): $List<number>;
         type(): $CustomPacketPayload$Type<$CustomPacketPayload>;
         toVanillaClientbound(): $ClientboundCustomPayloadPacket;
@@ -98,7 +98,7 @@ declare module "@package/com/simibubi/create/content/contraptions/actors/trainCo
     /**
      * Values that may be interpreted as {@link $ControlsInputPacket}.
      */
-    export type $ControlsInputPacket_ = { press?: boolean, contraptionEntityId?: number, activatedButtons?: $List_<number>, controlsPos?: $BlockPos_, stopControlling?: boolean,  } | [press?: boolean, contraptionEntityId?: number, activatedButtons?: $List_<number>, controlsPos?: $BlockPos_, stopControlling?: boolean, ];
+    export type $ControlsInputPacket_ = { controlsPos?: $BlockPos_, stopControlling?: boolean, press?: boolean, contraptionEntityId?: number, activatedButtons?: $List_<number>,  } | [controlsPos?: $BlockPos_, stopControlling?: boolean, press?: boolean, contraptionEntityId?: number, activatedButtons?: $List_<number>, ];
     export class $ControlsServerHandler$ControlsContext {
     }
     export class $ControlsServerHandler {
@@ -129,16 +129,16 @@ declare module "@package/com/simibubi/create/content/contraptions/actors/trainCo
         constructor();
     }
     export class $ControlsBlock extends $HorizontalDirectionalBlock implements $IWrenchable, $ProperWaterloggedBlock {
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
-        fluidState(arg0: $BlockState_): $FluidState;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         updateWater(arg0: $LevelAccessor, arg1: $BlockState_, arg2: $BlockPos_): void;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
+        fluidState(arg0: $BlockState_): $FluidState;
+        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;

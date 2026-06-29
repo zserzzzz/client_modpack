@@ -45,11 +45,6 @@ declare module "@package/io/netty/util" {
     export class $Attribute<T> {
     }
     export interface $Attribute<T> {
-        setIfAbsent(arg0: T): T;
-        /**
-         * @deprecated
-         */
-        getAndRemove(): T;
         /**
          * @deprecated
          */
@@ -59,17 +54,22 @@ declare module "@package/io/netty/util" {
         key(): $AttributeKey<T>;
         compareAndSet(arg0: T, arg1: T): boolean;
         getAndSet(arg0: T): T;
+        setIfAbsent(arg0: T): T;
+        /**
+         * @deprecated
+         */
+        getAndRemove(): T;
         set ifAbsent(value: T);
         get andRemove(): T;
     }
     export class $ReferenceCounted {
     }
     export interface $ReferenceCounted {
-        retain(arg0: number): $ReferenceCounted;
-        retain(): $ReferenceCounted;
-        refCnt(): number;
         release(): boolean;
         release(arg0: number): boolean;
+        retain(): $ReferenceCounted;
+        retain(arg0: number): $ReferenceCounted;
+        refCnt(): number;
         touch(arg0: $Object): $ReferenceCounted;
         touch(): $ReferenceCounted;
     }

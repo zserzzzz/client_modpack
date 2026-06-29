@@ -13,10 +13,10 @@ declare module "@package/com/github/argon4w/acceleratedrendering/core/meshes" {
      */
     export type $IMesh_ = ((arg0: $IAcceleratedVertexConsumer, arg1: number, arg2: number, arg3: number) => void);
     export class $ServerMesh extends $Record implements $IMesh {
-        meshBuffer(): $IServerBuffer;
         size(): number;
         offset(): number;
         write(arg0: $IAcceleratedVertexConsumer, arg1: number, arg2: number, arg3: number): void;
+        meshBuffer(): $IServerBuffer;
         forceDense(): boolean;
         isDense(arg0: number): boolean;
         meshId(): number;
@@ -25,5 +25,5 @@ declare module "@package/com/github/argon4w/acceleratedrendering/core/meshes" {
     /**
      * Values that may be interpreted as {@link $ServerMesh}.
      */
-    export type $ServerMesh_ = { offset?: number, meshId?: number, meshBuffer?: $IServerBuffer, forceDense?: boolean, size?: number,  } | [offset?: number, meshId?: number, meshBuffer?: $IServerBuffer, forceDense?: boolean, size?: number, ];
+    export type $ServerMesh_ = { size?: number, offset?: number, meshId?: number, meshBuffer?: $IServerBuffer, forceDense?: boolean,  } | [size?: number, offset?: number, meshId?: number, meshBuffer?: $IServerBuffer, forceDense?: boolean, ];
 }

@@ -1,6 +1,6 @@
 import { $File_ } from "@package/java/io";
 import { $MinecraftServer } from "@package/net/minecraft/server";
-import { $RecipeHolder_, $RecipeManager } from "@package/net/minecraft/world/item/crafting";
+import { $RecipeManager, $RecipeHolder_ } from "@package/net/minecraft/world/item/crafting";
 import { $Item } from "@package/net/minecraft/world/item";
 import { $CompoundTag, $CompoundTag_ } from "@package/net/minecraft/nbt";
 import { $Component_, $Component } from "@package/net/minecraft/network/chat";
@@ -24,11 +24,11 @@ import { $StreamCodec } from "@package/net/minecraft/network/codec";
 
 declare module "@package/net/minecraft/stats" {
     export class $ServerRecipeBook extends $RecipeBook {
+        toNbt(): $CompoundTag;
+        fromNbt(tag: $CompoundTag_, recipeManager: $RecipeManager): void;
+        addRecipes(recipes: $Collection_<$RecipeHolder_<never>>, player: $ServerPlayer): number;
         removeRecipes(recipes: $Collection_<$RecipeHolder_<never>>, player: $ServerPlayer): number;
         sendInitialRecipeBook(player: $ServerPlayer): void;
-        fromNbt(tag: $CompoundTag_, recipeManager: $RecipeManager): void;
-        toNbt(): $CompoundTag;
-        addRecipes(recipes: $Collection_<$RecipeHolder_<never>>, player: $ServerPlayer): number;
         highlight: $Set<$ResourceLocation>;
         known: $Set<$ResourceLocation>;
         static RECIPE_BOOK_TAG: string;
@@ -124,38 +124,38 @@ declare module "@package/net/minecraft/stats" {
         constructor();
     }
     export class $RecipeBookSettings {
-        setFiltering(bookType: $RecipeBookType_, filtering: boolean): void;
-        isFiltering(bookType: $RecipeBookType_): boolean;
         isOpen(bookType: $RecipeBookType_): boolean;
-        write(tag: $CompoundTag_): void;
         write(buffer: $FriendlyByteBuf): void;
-        static read(tag: $CompoundTag_): $RecipeBookSettings;
+        write(tag: $CompoundTag_): void;
         static read(buffer: $FriendlyByteBuf): $RecipeBookSettings;
+        static read(tag: $CompoundTag_): $RecipeBookSettings;
         copy(): $RecipeBookSettings;
+        isFiltering(bookType: $RecipeBookType_): boolean;
+        setFiltering(bookType: $RecipeBookType_, filtering: boolean): void;
         replaceFrom(other: $RecipeBookSettings): void;
         setOpen(bookType: $RecipeBookType_, filtering: boolean): void;
         constructor();
     }
     export class $RecipeBook {
-        addHighlight(recipeId: $ResourceLocation_): void;
-        addHighlight(recipe: $RecipeHolder_<never>): void;
-        getBookSettings(): $RecipeBookSettings;
-        setBookSettings(settings: $RecipeBookSettings): void;
-        setFiltering(bookType: $RecipeBookType_, filtering: boolean): void;
-        isFiltering(bookMenu: $RecipeBookMenu<never, never>): boolean;
-        isFiltering(bookType: $RecipeBookType_): boolean;
-        setBookSetting(bookType: $RecipeBookType_, open: boolean, filtering: boolean): void;
         remove(recipe: $RecipeHolder_<never>): void;
         remove(recipeId: $ResourceLocation_): void;
-        add(recipe: $RecipeHolder_<never>): void;
         add(recipeId: $ResourceLocation_): void;
+        add(recipe: $RecipeHolder_<never>): void;
         contains(recipeId: $ResourceLocation_): boolean;
         contains(recipe: $RecipeHolder_<never> | null): boolean;
         isOpen(bookType: $RecipeBookType_): boolean;
-        copyOverData(other: $RecipeBook): void;
-        setOpen(bookType: $RecipeBookType_, filtering: boolean): void;
-        removeHighlight(recipe: $RecipeHolder_<never>): void;
+        getBookSettings(): $RecipeBookSettings;
+        setBookSetting(bookType: $RecipeBookType_, open: boolean, filtering: boolean): void;
+        addHighlight(recipe: $RecipeHolder_<never>): void;
+        addHighlight(recipeId: $ResourceLocation_): void;
+        isFiltering(bookMenu: $RecipeBookMenu<never, never>): boolean;
+        isFiltering(bookType: $RecipeBookType_): boolean;
+        setFiltering(bookType: $RecipeBookType_, filtering: boolean): void;
+        setBookSettings(settings: $RecipeBookSettings): void;
         willHighlight(recipe: $RecipeHolder_<never>): boolean;
+        removeHighlight(recipe: $RecipeHolder_<never>): void;
+        setOpen(bookType: $RecipeBookType_, filtering: boolean): void;
+        copyOverData(other: $RecipeBook): void;
         highlight: $Set<$ResourceLocation>;
         known: $Set<$ResourceLocation>;
         constructor();
@@ -219,9 +219,9 @@ declare module "@package/net/minecraft/stats" {
      * Server-side implementation of `StatsCounter`; handles counting, serialising, and de-serialising statistics, as well as sending them to connected clients via the award stats packet.
      */
     export class $ServerStatsCounter extends $StatsCounter {
-        markAllDirty(): void;
-        toJson(): string;
         save(): void;
+        toJson(): string;
+        markAllDirty(): void;
         parseLocal(fixerUpper: $DataFixer, json: string): void;
         sendStats(player: $ServerPlayer): void;
         stats: $Object2IntMap<$Stat<never>>;

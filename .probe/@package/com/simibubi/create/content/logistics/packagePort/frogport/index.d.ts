@@ -36,8 +36,8 @@ import { $RegisterCapabilitiesEvent } from "@package/net/neoforged/neoforge/capa
 
 declare module "@package/com/simibubi/create/content/logistics/packagePort/frogport" {
     export class $FrogportVisual extends $AbstractBlockEntityVisual<$FrogportBlockEntity> implements $SimpleDynamicVisual {
-        wrapOperation$gpc002$sable$getExactTargetLocation(arg0: $PackagePortTarget, arg1: $PackagePortBlockEntity, arg2: $LevelAccessor, arg3: $BlockPos_, arg4: $Operation_<any>): $Vec3;
         beginFrame(arg0: $DynamicVisual$Context): void;
+        wrapOperation$gpc002$sable$getExactTargetLocation(arg0: $PackagePortTarget, arg1: $PackagePortBlockEntity, arg2: $LevelAccessor, arg3: $BlockPos_, arg4: $Operation_<any>): $Vec3;
         updateGoggles(): void;
         planFrame(): $Plan<$DynamicVisual$Context>;
         constructor(arg0: $VisualizationContext, arg1: $FrogportBlockEntity, arg2: number);
@@ -45,14 +45,14 @@ declare module "@package/com/simibubi/create/content/logistics/packagePort/frogp
     export class $FrogportBlockEntity extends $PackagePortBlockEntity implements $IHaveHoveringInformation {
         static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
         getYaw(): number;
+        addToTooltip(arg0: $List_<$Component_>, arg1: boolean): boolean;
+        isAnimationInProgress(): boolean;
+        wrapOperation$glk000$sable$getExactTargetLocation(arg0: $PackagePortTarget, arg1: $PackagePortBlockEntity, arg2: $LevelAccessor, arg3: $BlockPos_, arg4: $Operation_<any>): $Vec3;
+        tryPullingFromOwnAndAdjacentInventories(): void;
+        sendAnticipate(): void;
         startAnimation(arg0: $ItemStack_, arg1: boolean): void;
         tryPullingFrom(arg0: $IItemHandler): boolean;
-        sendAnticipate(): void;
-        addToTooltip(arg0: $List_<$Component_>, arg1: boolean): boolean;
-        tryPullingFromOwnAndAdjacentInventories(): void;
-        wrapOperation$glk000$sable$getExactTargetLocation(arg0: $PackagePortTarget, arg1: $PackagePortBlockEntity, arg2: $LevelAccessor, arg3: $BlockPos_, arg4: $Operation_<any>): $Vec3;
         anticipate(): void;
-        isAnimationInProgress(): boolean;
         getIcon(arg0: boolean): $ItemStack;
         acceptsPackages: boolean;
         anticipationProgress: $LerpedFloat;
@@ -75,19 +75,19 @@ declare module "@package/com/simibubi/create/content/logistics/packagePort/frogp
         get animationInProgress(): boolean;
     }
     export class $FrogportBlock extends $Block implements $IBE<$FrogportBlockEntity>, $IWrenchable {
-        getBlockEntityType(): $BlockEntityType<$FrogportBlockEntity>;
         getBlockEntityClass(): $Class<$FrogportBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$FrogportBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$FrogportBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FrogportBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($FrogportBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FrogportBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $FrogportBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$FrogportBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($FrogportBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FrogportBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -117,14 +117,14 @@ declare module "@package/com/simibubi/create/content/logistics/packagePort/frogp
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$FrogportBlockEntity>;
         get blockEntityClass(): $Class<$FrogportBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$FrogportBlockEntity>;
     }
     export class $FrogportSounds {
         close(arg0: $Level_, arg1: $BlockPos_): void;
         open(arg0: $Level_, arg1: $BlockPos_): void;
-        depositPackage(arg0: $Level_, arg1: $BlockPos_): void;
         catchPackage(arg0: $Level_, arg1: $BlockPos_): void;
+        depositPackage(arg0: $Level_, arg1: $BlockPos_): void;
         constructor();
     }
     export class $FrogportRenderer extends $SmartBlockEntityRenderer<$FrogportBlockEntity> {

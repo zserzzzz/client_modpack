@@ -39,17 +39,17 @@ declare module "@package/net/minecraft/world/level/block/state/pattern" {
         get pos(): $BlockPos;
     }
     export class $BlockPattern implements $BlockPatternExtended {
-        getHeight(): number;
-        static createLevelCache(level: $LevelReader, forceLoad: boolean): $LoadingCache<$BlockPos, $BlockInWorld>;
-        getPattern(): $Predicate<$BlockInWorld>[][][];
         matches(level: $LevelReader, pos: $BlockPos_, finger: $Direction_, thumb: $Direction_): $BlockPattern$BlockPatternMatch;
         /**
          * Calculates whether the given world position matches the pattern. Warning, fairly heavy function.
          * @return a BlockPatternMatch if found, null otherwise.
          */
         find(level: $LevelReader, pos: $BlockPos_): $BlockPattern$BlockPatternMatch;
-        getWidth(): number;
+        getPattern(): $Predicate<$BlockInWorld>[][][];
         getDepth(): number;
+        getWidth(): number;
+        getHeight(): number;
+        static createLevelCache(level: $LevelReader, forceLoad: boolean): $LoadingCache<$BlockPos, $BlockInWorld>;
         /**
          * Offsets the position of pos in the direction of finger and thumb facing by offset amounts, follows the right-hand rule for cross products (finger, thumb, palm)
          * 
@@ -58,25 +58,25 @@ declare module "@package/net/minecraft/world/level/block/state/pattern" {
         static translateAndRotate(pos: $BlockPos_, finger: $Direction_, thumb: $Direction_, palmOffset: number, thumbOffset: number, fingerOffset: number): $BlockPos;
         lithium$setRequiredBlock(arg0: $Block_, arg1: number): void;
         constructor(pattern: $Predicate_<$BlockInWorld>[][][]);
-        get height(): number;
         get pattern(): $Predicate<$BlockInWorld>[][][];
-        get width(): number;
         get depth(): number;
+        get width(): number;
+        get height(): number;
     }
     export class $BlockPattern$BlockPatternMatch {
-        getHeight(): number;
-        getWidth(): number;
-        getForwards(): $Direction;
         getBlock(palmOffset: number, thumbOffset: number, fingerOffset: number): $BlockInWorld;
-        getDepth(): number;
-        getUp(): $Direction;
+        getForwards(): $Direction;
         getFrontTopLeft(): $BlockPos;
+        getDepth(): number;
+        getWidth(): number;
+        getHeight(): number;
+        getUp(): $Direction;
         constructor(frontTopLeft: $BlockPos_, forwards: $Direction_, up: $Direction_, cache: $LoadingCache<$BlockPos_, $BlockInWorld>, width: number, height: number, depth: number);
-        get height(): number;
-        get width(): number;
         get forwards(): $Direction;
-        get depth(): number;
-        get up(): $Direction;
         get frontTopLeft(): $BlockPos;
+        get depth(): number;
+        get width(): number;
+        get height(): number;
+        get up(): $Direction;
     }
 }

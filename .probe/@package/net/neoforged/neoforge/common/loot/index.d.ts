@@ -18,10 +18,10 @@ declare module "@package/net/neoforged/neoforge/common/loot" {
      * This LootItemCondition "neoforge:can_item_perform_ability" can be used to check if an item can perform a given ItemAbility.
      */
     export class $CanItemPerformAbility implements $LootItemCondition, $CanItemPerformAbilityAccess {
-        static canItemPerformAbility(action: $ItemAbility_): $LootItemCondition$Builder;
         test(lootContext: $LootContext): boolean;
         getType(): $LootItemConditionType;
         getReferencedContextParams(): $Set<$LootContextParam<never>>;
+        static canItemPerformAbility(action: $ItemAbility_): $LootItemCondition$Builder;
         /**
          * Validate that this object is used correctly according to the given ValidationContext.
          */
@@ -57,11 +57,11 @@ declare module "@package/net/neoforged/neoforge/common/loot" {
         static DIRECT_CODEC: $Codec<$IGlobalLootModifier>;
     }
     export interface $IGlobalLootModifier {
-        apply(generatedLoot: $ObjectArrayList<$ItemStack_>, context: $LootContext): $ObjectArrayList<$ItemStack>;
         /**
          * Returns the registered codec for this modifier
          */
         codec(): $MapCodec<$IGlobalLootModifier>;
+        apply(generatedLoot: $ObjectArrayList<$ItemStack_>, context: $LootContext): $ObjectArrayList<$ItemStack>;
     }
     export class $LootTableIdCondition implements $LootItemCondition {
         test(lootContext: $LootContext): boolean;
@@ -104,9 +104,9 @@ declare module "@package/net/neoforged/neoforge/common/loot" {
     }
     export class $LootTableIdCondition$Builder implements $LootItemCondition$Builder {
         build(): $LootItemCondition;
+        invert(): $LootItemCondition$Builder;
         or(condition: $LootItemCondition$Builder_): $AnyOfCondition$Builder;
         and(condition: $LootItemCondition$Builder_): $AllOfCondition$Builder;
-        invert(): $LootItemCondition$Builder;
         constructor(targetLootTableId: $ResourceLocation_);
     }
     export class $LootModifierManager extends $SimpleJsonResourceReloadListener {

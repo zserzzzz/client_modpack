@@ -21,12 +21,12 @@ declare module "@package/java/util" {
         getLeastSignificantBits(): number;
         getMostSignificantBits(): number;
         clockSequence(): number;
-        static fromString(arg0: string): $UUID;
         version(): number;
         compareTo(arg0: $UUID_): number;
         timestamp(): number;
         node(): number;
         variant(): number;
+        static fromString(arg0: string): $UUID;
         constructor(arg0: number, arg1: number);
         get leastSignificantBits(): number;
         get mostSignificantBits(): number;
@@ -43,9 +43,9 @@ declare module "@package/java/util" {
         constructor(arg0: $Class<K>);
     }
     export class $TimerTask implements $Runnable {
-        scheduledExecutionTime(): number;
         run(): void;
         cancel(): boolean;
+        scheduledExecutionTime(): number;
     }
     export class $Collection<E> {
         [Symbol.iterator](): Iterator<E>
@@ -693,17 +693,17 @@ declare module "@package/java/util" {
         previous(): E;
     }
     export class $Locale$LanguageRange {
-        static mapEquivalents(arg0: $List_<$Locale$LanguageRange>, arg1: $Map_<string, $List_<string>>): $List<$Locale$LanguageRange>;
-        getWeight(): number;
         static parse(arg0: string): $List<$Locale$LanguageRange>;
         static parse(arg0: string, arg1: $Map_<string, $List_<string>>): $List<$Locale$LanguageRange>;
         getRange(): string;
+        static mapEquivalents(arg0: $List_<$Locale$LanguageRange>, arg1: $Map_<string, $List_<string>>): $List<$Locale$LanguageRange>;
+        getWeight(): number;
         static MAX_WEIGHT: number;
         static MIN_WEIGHT: number;
         constructor(arg0: string);
         constructor(arg0: string, arg1: number);
-        get weight(): number;
         get range(): string;
+        get weight(): number;
     }
     export class $SortedMap<K, V> {
     }
@@ -958,8 +958,8 @@ declare module "@package/java/util" {
      * @deprecated
      */
     export class $Observable {
-        notifyObservers(): void;
         notifyObservers(arg0: $Object): void;
+        notifyObservers(): void;
         addObserver(arg0: $Observer_): void;
         deleteObserver(arg0: $Observer_): void;
         deleteObservers(): void;
@@ -1347,14 +1347,14 @@ declare module "@package/java/util" {
         elementAt(arg0: number): E;
         setSize(arg0: number): void;
         copyInto(arg0: $Object[]): void;
-        removeAllElements(): void;
-        removeElementAt(arg0: number): void;
         addElement(arg0: E): void;
         removeElement(arg0: $Object): boolean;
         insertElementAt(arg0: E, arg1: number): void;
         firstElement(): E;
         lastElement(): E;
         setElementAt(arg0: E, arg1: number): void;
+        removeAllElements(): void;
+        removeElementAt(arg0: number): void;
         reversed(): $SequencedCollection<E>;
         constructor(arg0: $Collection_<E>);
         constructor();

@@ -24,8 +24,8 @@ declare module "@package/net/neoforged/neoforge/client/textures" {
     export class $NamespacedDirectoryLister extends $Record implements $SpriteSource {
         run(arg0: $ResourceManager, arg1: $SpriteSource$Output): void;
         type(): $SpriteSourceType;
-        sourcePath(): string;
         namespace(): string;
+        sourcePath(): string;
         idPrefix(): string;
         static ID: $ResourceLocation;
         static TYPE: $SpriteSourceType;
@@ -34,7 +34,7 @@ declare module "@package/net/neoforged/neoforge/client/textures" {
     /**
      * Values that may be interpreted as {@link $NamespacedDirectoryLister}.
      */
-    export type $NamespacedDirectoryLister_ = { namespace?: string, sourcePath?: string, idPrefix?: string,  } | [namespace?: string, sourcePath?: string, idPrefix?: string, ];
+    export type $NamespacedDirectoryLister_ = { sourcePath?: string, idPrefix?: string, namespace?: string,  } | [sourcePath?: string, idPrefix?: string, namespace?: string, ];
     /**
      * Functional interface representing the signature of the SpriteContents constructor
      * but nullable to support skipping based on metadata.
@@ -56,11 +56,11 @@ declare module "@package/net/neoforged/neoforge/client/textures" {
      * to avoid potential issues when a chunk gets re-batched while resources are being reloaded.
      */
     export class $FluidSpriteCache {
+        static reload(): void;
         /**
          * @return a specified sprite or a missing sprite texture if sprite is not found
          */
         static getSprite(texture: $ResourceLocation_): $TextureAtlasSprite;
-        static reload(): void;
         /**
          * {@return an array holding the still sprite, the flowing sprite and the overlay sprite (if specified,
          * otherwise null) of the given fluid at the given position}

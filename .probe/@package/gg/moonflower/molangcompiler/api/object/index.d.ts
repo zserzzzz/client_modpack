@@ -10,10 +10,10 @@ declare module "@package/gg/moonflower/molangcompiler/api/object" {
         set(arg0: string, arg1: $MolangExpression_): void;
         getKeys(): $Collection<string>;
         has(arg0: string): boolean;
-        isMutable(): boolean;
         getCopy(): $MolangObject;
+        isMutable(): boolean;
         get keys(): $Collection<string>;
-        get mutable(): boolean;
         get copy(): $MolangObject;
+        get mutable(): boolean;
     }
 }

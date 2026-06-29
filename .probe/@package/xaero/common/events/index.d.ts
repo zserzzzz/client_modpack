@@ -19,44 +19,44 @@ declare module "@package/xaero/common/events" {
         constructor(arg0: $IXaeroMinimap);
     }
     export class $ModClientEvents {
-        handleTextureStitchEventPost(arg0: $TextureAtlas): void;
         handleRenderModOverlay(arg0: $GuiGraphics, arg1: $DeltaTracker): void;
+        handleTextureStitchEventPost(arg0: $TextureAtlas): void;
         constructor(arg0: $IXaeroMinimap);
     }
     export class $ClientEvents {
-        handleRenderStatusEffectOverlay(arg0: $GuiGraphics): boolean;
-        handleRenderCrosshairOverlay(arg0: $GuiGraphics): boolean;
-        handleForceToggleKeyMapping(arg0: $ToggleKeyMapping): boolean;
-        handleRenderGameOverlayEventPost(): void;
-        handleRenderGameOverlayEventPre(arg0: $GuiGraphics, arg1: number): void;
-        handleClientSendChatEvent(arg0: string): boolean;
         handlePlayerTickStart(arg0: $Player): void;
         handleDrawScreenEventPost(arg0: $Screen): void;
+        handleClientSendChatEvent(arg0: string): boolean;
         handlePlayerSetSpawnEvent(arg0: $BlockPos_, arg1: $Level_): void;
         handleClientTickStart(): void;
         handleRenderTickStart(): void;
+        worldUnload(arg0: $LevelAccessor): void;
+        handleGuiOpen(arg0: $Screen): $Screen;
+        getLastGuiOpen(): $Object;
+        handleRenderGameOverlayEventPre(arg0: $GuiGraphics, arg1: number): void;
+        handleRenderGameOverlayEventPost(): void;
+        handleRenderStatusEffectOverlay(arg0: $GuiGraphics): boolean;
+        handleForceToggleKeyMapping(arg0: $ToggleKeyMapping): boolean;
+        handleRenderCrosshairOverlay(arg0: $GuiGraphics): boolean;
         handleClientPlayerChatReceivedEvent(arg0: $ChatType$Bound_, arg1: $Component_, arg2: $GameProfile): boolean;
         handleClientSystemChatReceivedEvent(arg0: $Component_): boolean;
-        handleGuiOpen(arg0: $Screen): $Screen;
-        worldUnload(arg0: $LevelAccessor): void;
-        getLastGuiOpen(): $Object;
         latestRealm: $RealmsServer;
         constructor(arg0: $HudMod);
         get lastGuiOpen(): $Object;
     }
     export class $CommonEvents {
         onServerStopped(arg0: $MinecraftServer): void;
-        handlePlayerTickStart(arg0: $Player): void;
         onPlayerLogIn(arg0: $Player): void;
+        handlePlayerTickStart(arg0: $Player): void;
         onServerStarting(arg0: $MinecraftServer): void;
         onPlayerWorldJoin(arg0: $ServerPlayer): void;
         constructor(arg0: $HudMod);
     }
     export class $ClientEventsListener {
+        clientTickPost(arg0: $HudSession): void;
+        playerTickPost(arg0: $HudSession): void;
         handleRenderStatusEffectOverlay(arg0: $GuiGraphics): boolean;
         handleForceToggleKeyMapping(arg0: $ToggleKeyMapping): boolean;
-        playerTickPost(arg0: $HudSession): void;
-        clientTickPost(arg0: $HudSession): void;
         constructor();
     }
 }

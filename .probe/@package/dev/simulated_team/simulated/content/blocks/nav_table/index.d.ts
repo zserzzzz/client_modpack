@@ -20,19 +20,19 @@ declare module "@package/dev/simulated_team/simulated/content/blocks/nav_table" 
         constructor(arg0: $NavTableBlockEntity);
     }
     export class $NavTableBlockEntity extends $SmartBlockEntity implements $Clearable {
-        getClientTargetAngle(arg0: number): number;
-        getProjectedSelfPos(): $Vec3;
-        getHeldItem(): $ItemStack;
-        getRedstoneStrength(arg0: $Direction_): number;
         clearContent(): void;
-        dropHeldItem(): void;
+        getRedstoneStrength(arg0: $Direction_): number;
+        getHeldItem(): $ItemStack;
         setHeldItem(arg0: $ItemStack_): $ItemStack;
-        forceCurrentAngle(arg0: number): void;
+        distanceToTarget(): number;
+        getNavTableItem(): $NavigationTarget;
+        getProjectedSelfPos(): $Vec3;
+        getClientTargetAngle(arg0: number): number;
+        dropHeldItem(): void;
         getSublevelRot(): $Quaterniond;
         getRelativeAngle(): number;
         getTargetPosition(arg0: boolean): $Vec3;
-        getNavTableItem(): $NavigationTarget;
-        distanceToTarget(): number;
+        forceCurrentAngle(arg0: number): void;
         lastDistanceToTarget(): number;
         worldPosition: $BlockPos;
         isPowering: boolean;
@@ -44,9 +44,9 @@ declare module "@package/dev/simulated_team/simulated/content/blocks/nav_table" 
         lerpedAngleDegrees: $LerpedFloat;
         subLevel: $SubLevel;
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
+        get navTableItem(): $NavigationTarget;
         get projectedSelfPos(): $Vec3;
         get sublevelRot(): $Quaterniond;
         get relativeAngle(): number;
-        get navTableItem(): $NavigationTarget;
     }
 }

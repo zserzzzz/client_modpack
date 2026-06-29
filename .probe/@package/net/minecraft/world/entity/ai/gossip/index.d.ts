@@ -11,7 +11,7 @@ declare module "@package/net/minecraft/world/entity/ai/gossip" {
     /**
      * Values that may be interpreted as {@link $GossipContainer$GossipEntry}.
      */
-    export type $GossipContainer$GossipEntry_ = { type?: $GossipType_, target?: $UUID_, value?: number,  } | [type?: $GossipType_, target?: $UUID_, value?: number, ];
+    export type $GossipContainer$GossipEntry_ = { target?: $UUID_, value?: number, type?: $GossipType_,  } | [target?: $UUID_, value?: number, type?: $GossipType_, ];
     export class $GossipType extends $Enum<$GossipType> implements $StringRepresentable {
         static values(): $GossipType[];
         static valueOf(arg0: string): $GossipType;
@@ -42,16 +42,16 @@ declare module "@package/net/minecraft/world/entity/ai/gossip" {
     }
     export class $GossipContainer {
         transferFrom(container: $GossipContainer, randomSource: $RandomSource, amount: number): void;
+        remove(identifier: $UUID_, gossipType: $GossipType_): void;
         remove(gossipType: $GossipType_): void;
         remove(identifier: $UUID_, gossipType: $GossipType_, gossipValue: number): void;
-        remove(identifier: $UUID_, gossipType: $GossipType_): void;
         update(dynamic: $Dynamic<never>): void;
         store<T>(ops: $DynamicOps<T>): T;
         add(identifier: $UUID_, gossipType: $GossipType_, gossipValue: number): void;
         getReputation(identifier: $UUID_, gossip: $Predicate_<$GossipType>): number;
         decay(): void;
-        getGossipEntries(): $Map<$UUID, $Object2IntMap<$GossipType>>;
         getCountForType(gossipType: $GossipType_, gossipPredicate: $DoublePredicate_): number;
+        getGossipEntries(): $Map<$UUID, $Object2IntMap<$GossipType>>;
         static DISCARD_THRESHOLD: number;
         constructor();
         get gossipEntries(): $Map<$UUID, $Object2IntMap<$GossipType>>;

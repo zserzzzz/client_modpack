@@ -41,17 +41,17 @@ declare module "@package/dev/simulated_team/simulated/mixin/accessor" {
     export class $ControlledContraptionEntityAccessor {
     }
     export interface $ControlledContraptionEntityAccessor {
-        getControllerPos(): $BlockPos;
         invokeMakeStructureTransform(): $StructureTransform;
+        getControllerPos(): $BlockPos;
         get controllerPos(): $BlockPos;
     }
     export class $CreateBlockEntityBuilderAccessor<T extends $BlockEntity, P> {
     }
     export interface $CreateBlockEntityBuilderAccessor<T extends $BlockEntity, P> {
-        getRenderNormally(): $Predicate<T>;
         getVisualFactory(): $NonNullSupplier<$SimpleBlockEntityVisualizer$Factory<T>>;
-        get renderNormally(): $Predicate<T>;
+        getRenderNormally(): $Predicate<T>;
         get visualFactory(): $NonNullSupplier<$SimpleBlockEntityVisualizer$Factory<T>>;
+        get renderNormally(): $Predicate<T>;
     }
     export class $KeyMappingsAccessor {
     }
@@ -86,9 +86,9 @@ declare module "@package/dev/simulated_team/simulated/mixin/accessor" {
     export class $CreativeModeInventoryScreenAccessor {
     }
     export interface $CreativeModeInventoryScreenAccessor {
-        getLeftPos(): number;
         getTopPos(): number;
-        get leftPos(): number;
+        getLeftPos(): number;
         get topPos(): number;
+        get leftPos(): number;
     }
 }

@@ -6,19 +6,19 @@ import { $CallbackInfoReturnable } from "@package/org/spongepowered/asm/mixin/in
 
 declare module "@package/net/createmod/ponder/foundation/instruction" {
     export class $PonderInstruction {
-        isBlocking(): boolean;
+        static simple(arg0: $Consumer_<$PonderScene>): $PonderInstruction;
         reset(arg0: $PonderScene): void;
         tick(arg0: $PonderScene): void;
+        isBlocking(): boolean;
         isComplete(): boolean;
-        static simple(arg0: $Consumer_<$PonderScene>): $PonderInstruction;
         onScheduled(arg0: $PonderScene): void;
         constructor();
         get blocking(): boolean;
         get complete(): boolean;
     }
     export class $TickingInstruction extends $PonderInstruction implements $TickingInstructionAccessor, $TickingInstructionExtension {
-        handler$clp000$aeronautics$isComplete(arg0: $CallbackInfoReturnable<any>): void;
         aeronautics$stopInstruction(): void;
+        handler$clp000$aeronautics$isComplete(arg0: $CallbackInfoReturnable<any>): void;
         setRemainingTicks(arg0: number): void;
         constructor(arg0: boolean, arg1: number);
         set remainingTicks(value: number);

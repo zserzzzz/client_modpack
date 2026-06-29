@@ -54,8 +54,8 @@ import { $BlockEntityType_, $BlockEntity, $BlockEntityTicker, $BlockEntityType }
 declare module "@package/com/simibubi/create/content/equipment/armor" {
     export class $BacktankItem extends $BaseArmorItem {
         getBlock(): $Block;
-        static getWornBy(arg0: $Entity): $BacktankItem;
         static getRemainingAir(arg0: $ItemStack_): number;
+        static getWornBy(arg0: $Entity): $BacktankItem;
         static BASE_ATTACK_DAMAGE_ID: $ResourceLocation;
         static MAX_BAR_WIDTH: number;
         static ABSOLUTE_MAX_STACK_SIZE: number;
@@ -99,24 +99,24 @@ declare module "@package/com/simibubi/create/content/equipment/armor" {
         get actualItem(): $Item;
     }
     export class $CardboardArmorHandlerClient {
-        static keepCacheAliveDesignDespiteNotRendering(arg0: $PlayerTickEvent$Post): void;
         static playerRendersAsBoxWhenSneaking(arg0: $RenderPlayerEvent$Pre): void;
+        static keepCacheAliveDesignDespiteNotRendering(arg0: $PlayerTickEvent$Post): void;
         constructor();
     }
     export class $BacktankBlock extends $HorizontalKineticBlock implements $IBE<$BacktankBlockEntity>, $SimpleWaterloggedBlock, $SpecialBlockItemRequirement {
-        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
-        getBlockEntityType(): $BlockEntityType<$BacktankBlockEntity>;
         getBlockEntityClass(): $Class<$BacktankBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$BacktankBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$BacktankBlockEntity>;
+        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$BacktankBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($BacktankBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$BacktankBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $BacktankBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$BacktankBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($BacktankBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$BacktankBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
@@ -149,17 +149,17 @@ declare module "@package/com/simibubi/create/content/equipment/armor" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$BacktankBlockEntity>;
         get blockEntityClass(): $Class<$BacktankBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$BacktankBlockEntity>;
     }
     export class $NetheriteDivingHandler {
         static setBit(arg0: $LivingEntity, arg1: $EquipmentSlot_): void;
         static clearBit(arg0: $LivingEntity, arg1: $EquipmentSlot_): void;
-        static setFireImmune(arg0: $LivingEntity, arg1: boolean): void;
+        static isNetheriteDivingHelmet(arg0: $ItemStack_): boolean;
         static isNetheriteArmor(arg0: $ItemStack_): boolean;
+        static setFireImmune(arg0: $LivingEntity, arg1: boolean): void;
         static onLivingEquipmentChange(arg0: $LivingEquipmentChangeEvent): void;
         static isNetheriteBacktank(arg0: $ItemStack_): boolean;
-        static isNetheriteDivingHelmet(arg0: $ItemStack_): boolean;
         static NETHERITE_DIVING_BITS_KEY: string;
         static FIRE_IMMUNE_KEY: string;
         constructor();
@@ -182,16 +182,16 @@ declare module "@package/com/simibubi/create/content/equipment/armor" {
     export class $BacktankBlockEntity extends $KineticBlockEntity implements $Nameable, $BacktankBlockEntityAccess {
         getName(): $Component;
         static getDefaultName(arg0: $BlockState_): $Component;
-        getComponentPatch(): $DataComponentPatch;
-        setComponentPatch(arg0: $DataComponentPatch_): void;
-        getComparatorOutput(): number;
         setCustomName(arg0: $Component_): void;
+        getComparatorOutput(): number;
         setCapacityEnchantLevel(arg0: number): void;
-        getAirLevel(): number;
+        setComponentPatch(arg0: $DataComponentPatch_): void;
+        getComponentPatch(): $DataComponentPatch;
         setAirLevel(arg0: number): void;
-        getCustomName(): $Component;
+        getAirLevel(): number;
         getDisplayName(): $Component;
         hasCustomName(): boolean;
+        getCustomName(): $Component;
         getCapacityEnchantLevel(): number;
         level: $Level;
         airLevelTimer: number;
@@ -217,25 +217,25 @@ declare module "@package/com/simibubi/create/content/equipment/armor" {
         constructor(arg0: $RenderLayerParent<T, M>);
     }
     export class $BacktankRenderer extends $KineticBlockEntityRenderer<$BacktankBlockEntity> {
-        static getShaftModel(arg0: $BlockState_): $PartialModel;
         static getCogsModel(arg0: $BlockState_): $PartialModel;
+        static getShaftModel(arg0: $BlockState_): $PartialModel;
         static KINETIC_BLOCK: $SuperByteBufferCache$Compartment<$BlockState>;
         static rainbowMode: boolean;
         constructor(arg0: $BlockEntityRendererProvider$Context);
     }
     export class $CardboardArmorHandler {
         static testForStealth(arg0: $Entity): boolean;
-        static mobsMayLoseTargetWhenItIsWearingCardboard(arg0: $EntityTickEvent$Pre): void;
         static isCardboardArmor(arg0: $ItemStack_): boolean;
+        static playerChangesEquipment(arg0: $LivingEquipmentChangeEvent): void;
         static playerHitboxChangesWhenHidingAsBox(arg0: $EntityEvent$Size): void;
         static playersStealthWhenWearingCardboard(arg0: $LivingEvent$LivingVisibilityEvent): void;
-        static playerChangesEquipment(arg0: $LivingEquipmentChangeEvent): void;
+        static mobsMayLoseTargetWhenItIsWearingCardboard(arg0: $EntityTickEvent$Pre): void;
         constructor();
     }
     export class $DivingHelmetItem extends $BaseArmorItem {
         static getWornItem(arg0: $Entity): $ItemStack;
-        static breatheUnderwater(arg0: $LivingBreatheEvent): void;
         static isWornBy(arg0: $Entity): boolean;
+        static breatheUnderwater(arg0: $LivingBreatheEvent): void;
         static BASE_ATTACK_DAMAGE_ID: $ResourceLocation;
         static MAX_BAR_WIDTH: number;
         static ABSOLUTE_MAX_STACK_SIZE: number;
@@ -258,21 +258,21 @@ declare module "@package/com/simibubi/create/content/equipment/armor" {
         constructor();
     }
     export class $CardboardArmorStealthOverlay extends $Gui implements $IClientItemExtensions {
-        static clientTick(): void;
         renderHelmetOverlay(arg0: $ItemStack_, arg1: $Player, arg2: number, arg3: number, arg4: number): void;
-        getFont(arg0: $ItemStack_, arg1: $IClientItemExtensions$FontContext_): $Font;
-        shouldBobAsEntity(arg0: $ItemStack_): boolean;
-        getDefaultDyeColor(arg0: $ItemStack_): number;
+        static clientTick(): void;
         getCustomRenderer(): $BlockEntityWithoutLevelRenderer;
         getArmPose(arg0: $LivingEntity, arg1: $InteractionHand_, arg2: $ItemStack_): $HumanoidModel$ArmPose;
-        shouldSpreadAsEntity(arg0: $ItemStack_): boolean;
-        applyForgeHandTransform(arg0: $PoseStack, arg1: $LocalPlayer, arg2: $HumanoidArm_, arg3: $ItemStack_, arg4: number, arg5: number, arg6: number): boolean;
-        renderHelmetOverlay(arg0: $ItemStack_, arg1: $Player, arg2: $GuiGraphics, arg3: $DeltaTracker): void;
+        getGenericArmorModel(arg0: $LivingEntity, arg1: $ItemStack_, arg2: $EquipmentSlot_, arg3: $HumanoidModel<never>): $Model;
         getArmorLayerTintColor(arg0: $ItemStack_, arg1: $LivingEntity, arg2: $ArmorMaterial$Layer, arg3: number, arg4: number): number;
         getScopeOverlayTexture(arg0: $ItemStack_): $ResourceLocation;
-        setupModelAnimations(arg0: $LivingEntity, arg1: $ItemStack_, arg2: $EquipmentSlot_, arg3: $Model, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number): void;
         getHumanoidArmorModel(arg0: $LivingEntity, arg1: $ItemStack_, arg2: $EquipmentSlot_, arg3: $HumanoidModel<never>): $HumanoidModel<never>;
-        getGenericArmorModel(arg0: $LivingEntity, arg1: $ItemStack_, arg2: $EquipmentSlot_, arg3: $HumanoidModel<never>): $Model;
+        renderHelmetOverlay(arg0: $ItemStack_, arg1: $Player, arg2: $GuiGraphics, arg3: $DeltaTracker): void;
+        setupModelAnimations(arg0: $LivingEntity, arg1: $ItemStack_, arg2: $EquipmentSlot_, arg3: $Model, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number): void;
+        shouldSpreadAsEntity(arg0: $ItemStack_): boolean;
+        applyForgeHandTransform(arg0: $PoseStack, arg1: $LocalPlayer, arg2: $HumanoidArm_, arg3: $ItemStack_, arg4: number, arg5: number, arg6: number): boolean;
+        getFont(arg0: $ItemStack_, arg1: $IClientItemExtensions$FontContext_): $Font;
+        getDefaultDyeColor(arg0: $ItemStack_): number;
+        shouldBobAsEntity(arg0: $ItemStack_): boolean;
         static SPYGLASS_SCOPE_LOCATION: $ResourceLocation;
         vignetteBrightness: number;
         rightHeight: number;
@@ -301,8 +301,8 @@ declare module "@package/com/simibubi/create/content/equipment/armor" {
         constructor(arg0: $Holder_<$ArmorMaterial>, arg1: $Item$Properties, arg2: $ResourceLocation_, arg3: $Supplier_<$BacktankItem$BacktankBlockItem>);
     }
     export class $DivingBootsItem extends $BaseArmorItem {
-        static getWornItem(arg0: $Entity): $ItemStack;
         static getMovementMultiplier(arg0: $LivingEntity): $Vec3;
+        static getWornItem(arg0: $Entity): $ItemStack;
         static isWornBy(arg0: $Entity): boolean;
         static accelerateDescentUnderwater(arg0: $EntityTickEvent$Pre): void;
         static BASE_ATTACK_DAMAGE_ID: $ResourceLocation;
@@ -343,15 +343,15 @@ declare module "@package/com/simibubi/create/content/equipment/armor" {
         constructor();
     }
     export class $BacktankUtil {
-        static getBarWidth(arg0: $ItemStack_, arg1: number): number;
         static isBarVisible(arg0: $ItemStack_, arg1: number): boolean;
+        static getBarWidth(arg0: $ItemStack_, arg1: number): number;
         static getBarColor(arg0: $ItemStack_, arg1: number): number;
-        static consumeAir(arg0: $LivingEntity, arg1: $ItemStack_, arg2: number): void;
-        static getAir(arg0: $ItemStack_): number;
-        static maxAir(arg0: number): number;
-        static maxAir(arg0: $ItemStack_): number;
-        static getAllWithAir(arg0: $LivingEntity): $List<$ItemStack>;
         static canAbsorbDamage(arg0: $LivingEntity, arg1: number): boolean;
+        static getAllWithAir(arg0: $LivingEntity): $List<$ItemStack>;
+        static getAir(arg0: $ItemStack_): number;
+        static maxAir(arg0: $ItemStack_): number;
+        static maxAir(arg0: number): number;
+        static consumeAir(arg0: $LivingEntity, arg1: $ItemStack_, arg2: number): void;
         static hasAirRemaining(arg0: $ItemStack_): boolean;
         static maxAirWithoutEnchants(): number;
         static addBacktankSupplier(arg0: $Function_<$LivingEntity, $List<$ItemStack>>): void;

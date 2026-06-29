@@ -7,8 +7,8 @@ declare module "@package/kotlin/reflect" {
     export class $KProperty0<V> {
     }
     export interface $KProperty0<V> extends $KProperty<V>, $Function0<V> {
-        getDelegate(): $Object;
         get(): V;
+        getDelegate(): $Object;
         getGetter(): $KProperty0$Getter<V>;
         get delegate(): $Object;
         get getter(): $KProperty0$Getter<V>;
@@ -29,8 +29,6 @@ declare module "@package/kotlin/reflect" {
     export class $KClass<T> {
     }
     export interface $KClass<T> extends $KDeclarationContainer, $KAnnotatedElement, $KClassifier {
-        isValue(): boolean;
-        getSealedSubclasses(): $List<$KClass<T>>;
         equals(arg0: $Object): boolean;
         hashCode(): number;
         isInstance(arg0: $Object): boolean;
@@ -42,17 +40,17 @@ declare module "@package/kotlin/reflect" {
         isSealed(): boolean;
         isAbstract(): boolean;
         getQualifiedName(): string;
+        isValue(): boolean;
         getObjectInstance(): T;
+        isData(): boolean;
+        getSealedSubclasses(): $List<$KClass<T>>;
+        getVisibility(): $KVisibility;
         isInner(): boolean;
         getMembers(): $Collection<$KCallable<never>>;
-        isData(): boolean;
-        getVisibility(): $KVisibility;
         getSupertypes(): $List<$KType>;
-        isCompanion(): boolean;
         getNestedClasses(): $Collection<$KClass<never>>;
+        isCompanion(): boolean;
         isFun(): boolean;
-        get value(): boolean;
-        get sealedSubclasses(): $List<$KClass<T>>;
         get typeParameters(): $List<$KTypeParameter>;
         get simpleName(): string;
         get final(): boolean;
@@ -61,14 +59,16 @@ declare module "@package/kotlin/reflect" {
         get sealed(): boolean;
         get abstract(): boolean;
         get qualifiedName(): string;
+        get value(): boolean;
         get objectInstance(): T;
+        get data(): boolean;
+        get sealedSubclasses(): $List<$KClass<T>>;
+        get visibility(): $KVisibility;
         get inner(): boolean;
         get members(): $Collection<$KCallable<never>>;
-        get data(): boolean;
-        get visibility(): $KVisibility;
         get supertypes(): $List<$KType>;
-        get companion(): boolean;
         get nestedClasses(): $Collection<$KClass<never>>;
+        get companion(): boolean;
         get fun(): boolean;
     }
     export class $KMutableProperty0$Setter<V> {

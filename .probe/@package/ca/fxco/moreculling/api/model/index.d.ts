@@ -9,11 +9,11 @@ declare module "@package/ca/fxco/moreculling/api/model" {
     export class $ExtendedUnbakedModel {
     }
     export interface $ExtendedUnbakedModel {
+        moreculling$setUseModelShape(arg0: boolean): void;
         moreculling$getCullShapeElements(arg0: $ResourceLocation_): $List<$CullShapeElement>;
-        moreculling$setCullShapeElements(arg0: $List_<$CullShapeElement>): void;
         moreculling$getUseModelShape(arg0: $ResourceLocation_): boolean;
         moreculling$modifyElementFace(arg0: $BlockElementFace_): $BlockElementFace;
-        moreculling$setUseModelShape(arg0: boolean): void;
+        moreculling$setCullShapeElements(arg0: $List_<$CullShapeElement>): void;
     }
     /**
      * Values that may be interpreted as {@link $ExtendedUnbakedModel}.
@@ -27,9 +27,9 @@ declare module "@package/ca/fxco/moreculling/api/model" {
     export class $BakedOpacity {
     }
     export interface $BakedOpacity {
-        moreculling$resetTranslucencyCache(arg0: $BlockState_): void;
         moreculling$canSetCullingShape(): boolean;
-        moreculling$getCullingShape(arg0: $BlockState_): $VoxelShape;
         moreculling$setCullingShape(arg0: $VoxelShape): void;
+        moreculling$getCullingShape(arg0: $BlockState_): $VoxelShape;
+        moreculling$resetTranslucencyCache(arg0: $BlockState_): void;
     }
 }

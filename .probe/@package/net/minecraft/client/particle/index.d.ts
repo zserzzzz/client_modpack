@@ -262,11 +262,11 @@ declare module "@package/net/minecraft/client/particle" {
     }
     export class $FireworkParticles$Starter extends $NoRenderParticle {
         createParticle(x: number, arg1: number, y: number, arg3: number, z: number, arg5: number, xSpeed: $IntList, arg7: $IntList, ySpeed: boolean, arg9: boolean): void;
-        redirect$zdd000$sodium_extra$tick(arg0: $Particle, arg1: number, arg2: number, arg3: number): void;
+        handler$zdd000$sodium_extra$addExplosionParticle(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: $IntList, arg7: $IntList, arg8: boolean, arg9: boolean, arg10: $CallbackInfo): void;
         createParticleShape(speed: number, arg1: number[][], coords: $IntList, colors: $IntList, fadeColors: boolean, trail: boolean, twinkle: boolean): void;
         createParticleBurst(colors: $IntList, fadeColors: $IntList, trail: boolean, twinkle: boolean): void;
+        redirect$zdd000$sodium_extra$tick(arg0: $Particle, arg1: number, arg2: number, arg3: number): void;
         createParticleBall(speed: number, arg1: number, radius: $IntList, colors: $IntList, fadeColors: boolean, trail: boolean): void;
-        handler$zdd000$sodium_extra$addExplosionParticle(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: $IntList, arg7: $IntList, arg8: boolean, arg9: boolean, arg10: $CallbackInfo): void;
         speedUpWhenYMotionIsBlocked: boolean;
         lifetime: number;
         roll: number;
@@ -864,15 +864,15 @@ declare module "@package/net/minecraft/client/particle" {
         constructor(sprites: $SpriteSet);
     }
     export class $SingleQuadParticle extends $Particle {
-        getV0(): number;
-        getV1(): number;
-        getU0(): number;
-        getU1(): number;
-        getQuadSize(scaleFactor: number): number;
-        renderRotatedQuad(buffer: $VertexConsumer, quaternion: $Quaternionf, x: number, y: number, z: number, partialTicks: number): void;
         renderRotatedQuad(buffer: $VertexConsumer, camera: $Camera, quaternion: $Quaternionf, partialTicks: number): void;
-        getFacingCameraMode(): $SingleQuadParticle$FacingCameraMode;
+        renderRotatedQuad(buffer: $VertexConsumer, quaternion: $Quaternionf, x: number, y: number, z: number, partialTicks: number): void;
+        getQuadSize(scaleFactor: number): number;
         handler$dch000$sodium$renderRotatedQuad(arg0: $VertexConsumer, arg1: $Quaternionf, arg2: number, arg3: number, arg4: number, arg5: number, arg6: $CallbackInfo): void;
+        getV1(): number;
+        getV0(): number;
+        getU1(): number;
+        getU0(): number;
+        getFacingCameraMode(): $SingleQuadParticle$FacingCameraMode;
         speedUpWhenYMotionIsBlocked: boolean;
         lifetime: number;
         roll: number;
@@ -906,12 +906,12 @@ declare module "@package/net/minecraft/client/particle" {
         z: number;
         bbWidth: number;
         age: number;
-        constructor(level: $ClientLevel, x: number, arg2: number, y: number, arg4: number, z: number, arg6: number);
         constructor(level: $ClientLevel, x: number, arg2: number, y: number);
-        get v0(): number;
+        constructor(level: $ClientLevel, x: number, arg2: number, y: number, arg4: number, z: number, arg6: number);
         get v1(): number;
-        get u0(): number;
+        get v0(): number;
         get u1(): number;
+        get u0(): number;
         get facingCameraMode(): $SingleQuadParticle$FacingCameraMode;
     }
     export class $Particle$LifetimeAlpha extends $Record {
@@ -919,8 +919,8 @@ declare module "@package/net/minecraft/client/particle" {
         endAlpha(): number;
         startAlpha(): number;
         currentAlphaForAge(age: number, lifetime: number, partialTick: number): number;
-        endAtNormalizedAge(): number;
         startAtNormalizedAge(): number;
+        endAtNormalizedAge(): number;
         static ALWAYS_OPAQUE: $Particle$LifetimeAlpha;
         constructor(startAlpha: number, endAlpha: number, startAtNormalizedAge: number, endAtNormalizedAge: number);
         get opaque(): boolean;
@@ -928,8 +928,12 @@ declare module "@package/net/minecraft/client/particle" {
     /**
      * Values that may be interpreted as {@link $Particle$LifetimeAlpha}.
      */
-    export type $Particle$LifetimeAlpha_ = { startAlpha?: number, endAlpha?: number, startAtNormalizedAge?: number, endAtNormalizedAge?: number,  } | [startAlpha?: number, endAlpha?: number, startAtNormalizedAge?: number, endAtNormalizedAge?: number, ];
+    export type $Particle$LifetimeAlpha_ = { endAlpha?: number, startAtNormalizedAge?: number, endAtNormalizedAge?: number, startAlpha?: number,  } | [endAlpha?: number, startAtNormalizedAge?: number, endAtNormalizedAge?: number, startAlpha?: number, ];
     export class $BlockMarker extends $TextureSheetParticle implements $ParticleSubLevelKickable {
+        /**
+         * Returns `true` if this effect has not yet expired. "I feel happy! I feel happy!"
+         */
+        sable$shouldCollideWithTrackingSubLevel(): boolean;
         /**
          * Returns `true` if this effect has not yet expired. "I feel happy! I feel happy!"
          */
@@ -937,12 +941,8 @@ declare module "@package/net/minecraft/client/particle" {
         /**
          * Returns `true` if this effect has not yet expired. "I feel happy! I feel happy!"
          */
-        sable$shouldCollideWithTrackingSubLevel(): boolean;
-        sable$getUpDirection(): $Vector3dc;
-        /**
-         * Returns `true` if this effect has not yet expired. "I feel happy! I feel happy!"
-         */
         sable$shouldCareAboutIntersectingSubLevels(): boolean;
+        sable$getUpDirection(): $Vector3dc;
         speedUpWhenYMotionIsBlocked: boolean;
         lifetime: number;
         roll: number;
@@ -1181,8 +1181,8 @@ declare module "@package/net/minecraft/client/particle" {
         constructor(sprites: $SpriteSet);
     }
     export class $SculkChargeParticle$Provider extends $Record implements $ParticleProvider<$SculkChargeParticleOptions> {
-        sprite(): $SpriteSet;
         createParticle(arg0: $SculkChargeParticleOptions_, arg1: $ClientLevel, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: number): $Particle;
+        sprite(): $SpriteSet;
         constructor(arg0: $SpriteSet);
     }
     /**
@@ -1195,23 +1195,15 @@ declare module "@package/net/minecraft/client/particle" {
     }
     export class $DripParticle extends $TextureSheetParticle {
         getType(): $Fluid;
-        static createHoneyHangParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
-        static createHoneyFallParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
         static createHoneyLandParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
-        static createNectarFallParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
-        static createLavaLandParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
-        static createLavaHangParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
+        static createHoneyFallParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
         static createWaterHangParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
+        static createLavaHangParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
+        static createLavaLandParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
         static createLavaFallParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
+        static createHoneyHangParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
         static createWaterFallParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
-        static createSporeBlossomFallParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
-        static createDripstoneLavaFallParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
-        static createObsidianTearHangParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
-        static createDripstoneWaterFallParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
-        static createDripstoneLavaHangParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
-        static createObsidianTearLandParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
-        static createObsidianTearFallParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
-        static createDripstoneWaterHangParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
+        static createNectarFallParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
         /**
          * Called to indicate that this particle effect has expired and should be discontinued.
          */
@@ -1220,6 +1212,14 @@ declare module "@package/net/minecraft/client/particle" {
          * Called to indicate that this particle effect has expired and should be discontinued.
          */
         postMoveUpdate(): void;
+        static createDripstoneWaterHangParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
+        static createDripstoneLavaHangParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
+        static createSporeBlossomFallParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
+        static createObsidianTearFallParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
+        static createDripstoneWaterFallParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
+        static createDripstoneLavaFallParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
+        static createObsidianTearLandParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
+        static createObsidianTearHangParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $TextureSheetParticle;
         speedUpWhenYMotionIsBlocked: boolean;
         lifetime: number;
         roll: number;
@@ -1507,8 +1507,8 @@ declare module "@package/net/minecraft/client/particle" {
         constructor(level: $ClientLevel, x: number, arg2: number, y: number, arg4: number, z: number, arg6: number, xSpeed: $SpriteSet);
     }
     export class $SculkChargePopParticle$Provider extends $Record implements $ParticleProvider<$SimpleParticleType> {
-        sprite(): $SpriteSet;
         createParticle(arg0: $SimpleParticleType, arg1: $ClientLevel, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: number): $Particle;
+        sprite(): $SpriteSet;
         constructor(arg0: $SpriteSet);
     }
     /**
@@ -2065,8 +2065,8 @@ declare module "@package/net/minecraft/client/particle" {
         z: number;
         bbWidth: number;
         age: number;
-        constructor(level: $ClientLevel, x: number, arg2: number, y: number, arg4: number, z: number, arg6: number, xSpeed: $ItemStack_);
         constructor(level: $ClientLevel, x: number, arg2: number, y: number, arg4: $ItemStack_);
+        constructor(level: $ClientLevel, x: number, arg2: number, y: number, arg4: number, z: number, arg6: number, xSpeed: $ItemStack_);
     }
     export class $WhiteSmokeParticle$Provider implements $ParticleProvider<$SimpleParticleType> {
         createParticle(type: $SimpleParticleType, level: $ClientLevel, x: number, arg3: number, y: number, arg5: number, z: number, arg7: number): $Particle;
@@ -2403,10 +2403,6 @@ declare module "@package/net/minecraft/client/particle" {
         constructor(level: $ClientLevel, x: number, arg2: number, y: number, arg4: number, z: number, arg6: number);
     }
     export class $Particle implements $ParticleAccessor, $LightCachedParticleAddon, $ParticleAddon, $ParticleAccessor$2, $ParticleExtension, $ParticleAccessor$1 {
-        setLifetime(particleLifeTime: number): void;
-        setParticleSpeed(x: number, arg1: number, y: number): void;
-        getParticleGroup(): ($ParticleGroup) | undefined;
-        getLifetime(): number;
         /**
          * Called to indicate that this particle effect has expired and should be discontinued.
          */
@@ -2423,76 +2419,27 @@ declare module "@package/net/minecraft/client/particle" {
         tick(): void;
         setColor(particleRed: number, particleGreen: number, particleBlue: number): void;
         setSize(width: number, height: number): void;
-        render(buffer: $VertexConsumer, camera: $Camera, partialTicks: number): void;
-        setBoundingBox(bb: $AABB_): void;
-        getRenderType(): $ParticleRenderType;
-        sable$setTrackingSubLevel(arg0: $ClientSubLevel, arg1: $Vec3_): void;
-        /**
-         * Returns `true` if this effect has not yet expired. "I feel happy! I feel happy!"
-         */
-        asyncparticles$isTicked(): boolean;
-        /**
-         * Called to indicate that this particle effect has expired and should be discontinued.
-         */
-        asyncparticles$refresh(): void;
-        asyncparticles$setLight(particleLifeTime: number): void;
-        /**
-         * Called to indicate that this particle effect has expired and should be discontinued.
-         */
-        asyncparticles$setTicked(): void;
-        /**
-         * Returns `true` if this effect has not yet expired. "I feel happy! I feel happy!"
-         */
-        asyncparticles$isTickSync(): boolean;
-        /**
-         * Called to indicate that this particle effect has expired and should be discontinued.
-         */
-        asyncparticles$setTickSync(): void;
-        /**
-         * Returns `true` if this effect has not yet expired. "I feel happy! I feel happy!"
-         */
-        asyncparticles$shouldCull(): boolean;
-        getRenderBoundingBox(arg0: number): $AABB;
-        /**
-         * Called to indicate that this particle effect has expired and should be discontinued.
-         */
-        sable$initialKickOut(): void;
-        /**
-         * Called to indicate that this particle effect has expired and should be discontinued.
-         */
-        asyncparticles$resetTicked(): void;
-        /**
-         * Called to indicate that this particle effect has expired and should be discontinued.
-         */
-        setLocationFromBoundingbox(): void;
-        getPos(): $Vec3;
-        /**
-         * Sets the particle alpha (float)
-         */
-        setAlpha(alpha: number): void;
-        setPower(scale: number): $Particle;
-        sable$getTrackingSubLevel(): $SubLevel;
         setPos(x: number, arg1: number, y: number): void;
+        setLifetime(particleLifeTime: number): void;
+        getParticleGroup(): ($ParticleGroup) | undefined;
+        getLifetime(): number;
+        setParticleSpeed(x: number, arg1: number, y: number): void;
+        sable$getTrackingSubLevel(): $SubLevel;
+        setBoundingBox(bb: $AABB_): void;
+        render(buffer: $VertexConsumer, camera: $Camera, partialTicks: number): void;
         getBoundingBox(): $AABB;
-        getLightColor(partialTick: number): number;
-        asyncparticles$getCompressedLight(): number;
-        /**
-         * Called to indicate that this particle effect has expired and should be discontinued.
-         */
-        asyncparticles$setNoCulling(): void;
-        /**
-         * Called to indicate that this particle effect has expired and should be discontinued.
-         */
-        sable$moveWithInheritedVelocity(): void;
+        getRenderType(): $ParticleRenderType;
+        getPos(): $Vec3;
+        asyncparticles$invoke_getLightColor(partialTick: number): number;
+        handler$fjb01f$asyncparticles$onInit(ci: $CallbackInfo): void;
         /**
          * Returns `true` if this effect has not yet expired. "I feel happy! I feel happy!"
          */
         asyncparticles$isEnabledLightCache(): boolean;
-        asyncparticles$getRealClass(): $Class<any>;
         /**
          * Called to indicate that this particle effect has expired and should be discontinued.
          */
-        asyncparticles$setRenderSync(): void;
+        asyncparticles$tickAABBCulling(): void;
         /**
          * Returns `true` if this effect has not yet expired. "I feel happy! I feel happy!"
          */
@@ -2500,7 +2447,24 @@ declare module "@package/net/minecraft/client/particle" {
         /**
          * Called to indicate that this particle effect has expired and should be discontinued.
          */
+        asyncparticles$tickSphereCulling(): void;
+        asyncparticles$getCompressedLight(): number;
+        /**
+         * Called to indicate that this particle effect has expired and should be discontinued.
+         */
+        asyncparticles$setRenderSync(): void;
+        /**
+         * Called to indicate that this particle effect has expired and should be discontinued.
+         */
+        sable$moveWithInheritedVelocity(): void;
+        /**
+         * Called to indicate that this particle effect has expired and should be discontinued.
+         */
         asyncparticles$disableLightCache(): void;
+        /**
+         * Called to indicate that this particle effect has expired and should be discontinued.
+         */
+        asyncparticles$enableLightCache(): void;
         /**
          * Returns `true` if this effect has not yet expired. "I feel happy! I feel happy!"
          */
@@ -2508,17 +2472,53 @@ declare module "@package/net/minecraft/client/particle" {
         /**
          * Called to indicate that this particle effect has expired and should be discontinued.
          */
-        asyncparticles$enableLightCache(): void;
+        asyncparticles$setNoCulling(): void;
+        asyncparticles$getRealClass(): $Class<any>;
+        getLightColor(partialTick: number): number;
+        sable$setTrackingSubLevel(arg0: $ClientSubLevel, arg1: $Vec3_): void;
+        setPower(scale: number): $Particle;
+        /**
+         * Sets the particle alpha (float)
+         */
+        setAlpha(alpha: number): void;
+        getRenderBoundingBox(arg0: number): $AABB;
+        /**
+         * Returns `true` if this effect has not yet expired. "I feel happy! I feel happy!"
+         */
+        asyncparticles$isTickSync(): boolean;
         /**
          * Called to indicate that this particle effect has expired and should be discontinued.
          */
-        asyncparticles$tickAABBCulling(): void;
+        asyncparticles$refresh(): void;
         /**
          * Called to indicate that this particle effect has expired and should be discontinued.
          */
-        asyncparticles$tickSphereCulling(): void;
-        asyncparticles$invoke_getLightColor(partialTick: number): number;
-        handler$fjb01f$asyncparticles$onInit(ci: $CallbackInfo): void;
+        asyncparticles$setTickSync(): void;
+        asyncparticles$setLight(particleLifeTime: number): void;
+        /**
+         * Returns `true` if this effect has not yet expired. "I feel happy! I feel happy!"
+         */
+        asyncparticles$shouldCull(): boolean;
+        /**
+         * Called to indicate that this particle effect has expired and should be discontinued.
+         */
+        asyncparticles$resetTicked(): void;
+        /**
+         * Called to indicate that this particle effect has expired and should be discontinued.
+         */
+        asyncparticles$setTicked(): void;
+        /**
+         * Called to indicate that this particle effect has expired and should be discontinued.
+         */
+        sable$initialKickOut(): void;
+        /**
+         * Called to indicate that this particle effect has expired and should be discontinued.
+         */
+        setLocationFromBoundingbox(): void;
+        /**
+         * Returns `true` if this effect has not yet expired. "I feel happy! I feel happy!"
+         */
+        asyncparticles$isTicked(): boolean;
         asyncparticles$getCachedLight(): number;
         invokeSetSize(width: number, height: number): void;
         /**
@@ -2529,21 +2529,21 @@ declare module "@package/net/minecraft/client/particle" {
          * Sets the particle alpha (float)
          */
         ponderjs$setRoll(alpha: number): void;
-        /**
-         * Sets the particle alpha (float)
-         */
-        ponderjs$setGravity(alpha: number): void;
+        ponderjs$setStoppedByCollision(arg0: boolean): void;
         /**
          * Returns `true` if this effect has not yet expired. "I feel happy! I feel happy!"
          */
         isStoppedByCollision(): boolean;
         ponderjs$setLifetime(particleLifeTime: number): void;
-        ponderjs$setHasPhysics(arg0: boolean): void;
+        /**
+         * Sets the particle alpha (float)
+         */
+        ponderjs$setGravity(alpha: number): void;
         /**
          * Sets the particle alpha (float)
          */
         ponderjs$setFriction(alpha: number): void;
-        ponderjs$setStoppedByCollision(arg0: boolean): void;
+        ponderjs$setHasPhysics(arg0: boolean): void;
         speedUpWhenYMotionIsBlocked: boolean;
         lifetime: number;
         roll: number;
@@ -2578,8 +2578,8 @@ declare module "@package/net/minecraft/client/particle" {
         age: number;
         constructor(level: $ClientLevel, x: number, arg2: number, y: number);
         constructor(level: $ClientLevel, x: number, arg2: number, y: number, arg4: number, z: number, arg6: number);
-        get particleGroup(): ($ParticleGroup) | undefined;
         get alive(): boolean;
+        get particleGroup(): ($ParticleGroup) | undefined;
         get renderType(): $ParticleRenderType;
         set power(value: number);
     }
@@ -2724,16 +2724,16 @@ declare module "@package/net/minecraft/client/particle" {
         /**
          * Returns `true` if this effect has not yet expired. "I feel happy! I feel happy!"
          */
+        sable$shouldCollideWithTrackingSubLevel(): boolean;
+        /**
+         * Returns `true` if this effect has not yet expired. "I feel happy! I feel happy!"
+         */
         sable$shouldKickFromTracking(): boolean;
         /**
          * Returns `true` if this effect has not yet expired. "I feel happy! I feel happy!"
          */
-        sable$shouldCollideWithTrackingSubLevel(): boolean;
-        sable$getUpDirection(): $Vector3dc;
-        /**
-         * Returns `true` if this effect has not yet expired. "I feel happy! I feel happy!"
-         */
         sable$shouldCareAboutIntersectingSubLevels(): boolean;
+        sable$getUpDirection(): $Vector3dc;
         speedUpWhenYMotionIsBlocked: boolean;
         lifetime: number;
         roll: number;
@@ -2885,12 +2885,6 @@ declare module "@package/net/minecraft/client/particle" {
         constructor(level: $ClientLevel, x: number, arg2: number, y: number, arg4: number, z: number, arg6: number, xSpeed: number, arg8: $SpriteSet);
     }
     export class $ParticleEngine implements $PreparableReloadListener, $ParticleEngineAddon, $ParticleManagerAccessor, $ParticleEngineAccessor$1, $ParticleEngineAccessor {
-        createTrackingEmitter(entity: $Entity, data: $ParticleOptions_, lifetime: number): void;
-        createTrackingEmitter(entity: $Entity, particleData: $ParticleOptions_): void;
-        handler$bne000$acceleratedrendering$disableParticleAcceleration(arg0: $LightTexture, arg1: $Camera, arg2: number, arg3: $Frustum, arg4: $Predicate_<any>, arg5: $CallbackInfo): void;
-        handler$bne000$acceleratedrendering$resetParticleAcceleration(arg0: $LightTexture, arg1: $Camera, arg2: number, arg3: $Frustum, arg4: $Predicate_<any>, arg5: $CallbackInfo): void;
-        asyncparticle$sortRenderOrder(): void;
-        createParticle(particleData: $ParticleOptions_, x: number, arg2: number, y: number, arg4: number, z: number, arg6: number): $Particle;
         add(effect: $Particle): void;
         /**
          * @deprecated
@@ -2899,48 +2893,54 @@ declare module "@package/net/minecraft/client/particle" {
         /**
          * @deprecated
          */
-        register<T extends $ParticleOptions>(particleType: $ParticleType_<T>, sprite: $ParticleProvider$Sprite_<T>): void;
+        register<T extends $ParticleOptions>(particleType: $ParticleType_<T>, particleFactory: $ParticleProvider_<T>): void;
         /**
          * @deprecated
          */
-        register<T extends $ParticleOptions>(particleType: $ParticleType_<T>, particleFactory: $ParticleProvider_<T>): void;
+        register<T extends $ParticleOptions>(particleType: $ParticleType_<T>, sprite: $ParticleProvider$Sprite_<T>): void;
         destroy(pos: $BlockPos_, state: $BlockState_): void;
         close(): void;
         tick(): void;
         reload(stage: $PreparableReloadListener$PreparationBarrier_, resourceManager: $ResourceManager, preparationsProfiler: $ProfilerFiller, reloadProfiler: $ProfilerFiller, backgroundExecutor: $Executor_, gameExecutor: $Executor_): $CompletableFuture<void>;
         setLevel(level: $ClientLevel | null): void;
-        render(lightTexture: $LightTexture, camera: $Camera, f: number, ignored: $Frustum | null, renderTypePredicate: $Predicate_<any>): void;
+        createParticle(particleData: $ParticleOptions_, x: number, arg2: number, y: number, arg4: number, z: number, arg6: number): $Particle;
+        createTrackingEmitter(entity: $Entity, particleData: $ParticleOptions_): void;
+        createTrackingEmitter(entity: $Entity, data: $ParticleOptions_, lifetime: number): void;
+        asyncparticle$sortRenderOrder(): void;
         /**
          * @deprecated
          */
         render(lightTexture: $LightTexture, camera: $Camera, partialTick: number): void;
+        render(lightTexture: $LightTexture, camera: $Camera, f: number, ignored: $Frustum | null, renderTypePredicate: $Predicate_<any>): void;
         addBlockHitEffects(arg0: $BlockPos_, arg1: $BlockHitResult): void;
         iterateParticles(arg0: $Consumer_<$Particle>): void;
-        handler$fjl000$asyncparticles$onClearParticles(ci: $CallbackInfo): void;
-        handler$zde000$sodium_extra$addBlockBreakParticles(arg0: $BlockPos_, arg1: $BlockState_, arg2: $CallbackInfo): void;
-        handler$fjl000$asyncparticles$onTickParticle(particle: $Particle, ci: $CallbackInfo, t: $Throwable): void;
-        modifyReturnValue$dib000$polytone$applyModifiers(original: $Particle, particleData: $ParticleOptions_): $Particle;
-        handler$dib000$polytone$addExtraDestroyParticles(pos: $BlockPos_, state: $BlockState_, ci: $CallbackInfo): void;
-        handler$bde000$veil$clear(arg0: $CallbackInfo): void;
-        handler$bde000$veil$tick(arg0: $CallbackInfo): void;
-        handler$dgi000$polytone$onRenderLast(arg: $LightTexture, arg2: $Camera, f: number, frustum: $Frustum, renderTypePredicate: $Predicate_<any>, ci: $CallbackInfo): void;
-        handler$zde000$sodium_extra$addParticle(arg0: $ParticleOptions_, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: $CallbackInfoReturnable<any>): void;
-        handler$fjl000$asyncparticles$initTail(ci: $CallbackInfo): void;
-        handler$dib000$polytone$onRenderLast(lightTexture: $LightTexture, camera: $Camera, partialTick: number, ci: $CallbackInfo): void;
-        handler$dib000$polytone$addPackSpriteSets(preparationBarrier: $PreparableReloadListener$PreparationBarrier_, resourceManager: $ResourceManager, preparationsProfiler: $ProfilerFiller, reloadProfiler: $ProfilerFiller, backgroundExecutor: $Executor_, gameExecutor: $Executor_, cir: $CallbackInfoReturnable<any>): void;
         /**
          * Adds block hit particles for the specified block
          */
         crack(pos: $BlockPos_, side: $Direction_): void;
-        handler$bde000$veil$setLevel(arg0: $ClientLevel, arg1: $CallbackInfo): void;
-        handler$fjl000$asyncparticles$add(particle: $Particle, ci: $CallbackInfo): void;
-        asyncparticle$addRenderType(particleRenderType: $ParticleRenderType_): void;
-        handler$bde000$veil$countParticles(arg0: $CallbackInfoReturnable<any>): void;
         updateCount(group: $ParticleGroup, count: number): void;
         tickParticle(effect: $Particle): void;
         clearParticles(): void;
-        countParticles(): string;
+        handler$bde000$veil$tick(arg0: $CallbackInfo): void;
+        handler$bde000$veil$clear(arg0: $CallbackInfo): void;
+        modifyReturnValue$dib000$polytone$applyModifiers(original: $Particle, particleData: $ParticleOptions_): $Particle;
+        handler$zde000$sodium_extra$addBlockBreakParticles(arg0: $BlockPos_, arg1: $BlockState_, arg2: $CallbackInfo): void;
+        handler$fjl000$asyncparticles$onClearParticles(ci: $CallbackInfo): void;
+        handler$fjl000$asyncparticles$onTickParticle(particle: $Particle, ci: $CallbackInfo, t: $Throwable): void;
+        handler$dib000$polytone$addExtraDestroyParticles(pos: $BlockPos_, state: $BlockState_, ci: $CallbackInfo): void;
         handler$zde000$sodium_extra$addBlockBreakingParticles(arg0: $BlockPos_, arg1: $Direction_, arg2: $CallbackInfo): void;
+        countParticles(): string;
+        handler$bne000$acceleratedrendering$resetParticleAcceleration(arg0: $LightTexture, arg1: $Camera, arg2: number, arg3: $Frustum, arg4: $Predicate_<any>, arg5: $CallbackInfo): void;
+        handler$bne000$acceleratedrendering$disableParticleAcceleration(arg0: $LightTexture, arg1: $Camera, arg2: number, arg3: $Frustum, arg4: $Predicate_<any>, arg5: $CallbackInfo): void;
+        handler$zde000$sodium_extra$addParticle(arg0: $ParticleOptions_, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: $CallbackInfoReturnable<any>): void;
+        handler$dib000$polytone$addPackSpriteSets(preparationBarrier: $PreparableReloadListener$PreparationBarrier_, resourceManager: $ResourceManager, preparationsProfiler: $ProfilerFiller, reloadProfiler: $ProfilerFiller, backgroundExecutor: $Executor_, gameExecutor: $Executor_, cir: $CallbackInfoReturnable<any>): void;
+        handler$dgi000$polytone$onRenderLast(arg: $LightTexture, arg2: $Camera, f: number, frustum: $Frustum, renderTypePredicate: $Predicate_<any>, ci: $CallbackInfo): void;
+        handler$fjl000$asyncparticles$initTail(ci: $CallbackInfo): void;
+        handler$dib000$polytone$onRenderLast(lightTexture: $LightTexture, camera: $Camera, partialTick: number, ci: $CallbackInfo): void;
+        handler$fjl000$asyncparticles$add(particle: $Particle, ci: $CallbackInfo): void;
+        handler$bde000$veil$countParticles(arg0: $CallbackInfoReturnable<any>): void;
+        asyncparticle$addRenderType(particleRenderType: $ParticleRenderType_): void;
+        handler$bde000$veil$setLevel(arg0: $ClientLevel, arg1: $CallbackInfo): void;
         getName(): string;
         getProviders(): $Map<$ResourceLocation, $ParticleProvider<never>>;
         getParticleAtlasTexture(): $TextureAtlas;
@@ -3315,13 +3315,13 @@ declare module "@package/net/minecraft/client/particle" {
     }
     export class $TextureSheetParticle extends $SingleQuadParticle implements $GpuParticleAddon {
         setSpriteFromAge(sprite: $SpriteSet): void;
-        asyncparticles$postTick(address: number): void;
-        pickSprite(sprite: $SpriteSet): void;
-        setSprite(sprite: $TextureAtlasSprite): void;
         /**
          * Returns `true` if this effect has not yet expired. "I feel happy! I feel happy!"
          */
         asyncparticles$shouldRender(): boolean;
+        setSprite(sprite: $TextureAtlasSprite): void;
+        pickSprite(sprite: $SpriteSet): void;
+        asyncparticles$postTick(address: number): void;
         speedUpWhenYMotionIsBlocked: boolean;
         lifetime: number;
         roll: number;

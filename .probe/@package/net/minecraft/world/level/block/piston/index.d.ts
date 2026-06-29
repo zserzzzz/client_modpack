@@ -175,31 +175,31 @@ declare module "@package/net/minecraft/world/level/block/piston" {
     }
     export class $PistonMovingBlockEntity extends $BlockEntity implements $IExtendedPistonTile, $IBlockHolder {
         static tick(level: $Level_, pos: $BlockPos_, state: $BlockState_, blockEntity: $PistonMovingBlockEntity): void;
-        getProgress(progress: number): number;
+        getMovedState(): $BlockState;
         getLastTicked(): number;
+        getProgress(progress: number): number;
         /**
          * @return whether this piston is extending
          */
         isExtending(): boolean;
+        getDirection(): $Direction;
+        /**
+         * @return whether this piston is extending
+         */
+        isSourcePiston(): boolean;
+        tickMovedBlock(arg0: $Level_, arg1: $BlockPos_): void;
+        getHeldBlock(): $BlockState;
+        setHeldBlock(arg0: $BlockState_): boolean;
+        getYOff(progress: number): number;
+        getXOff(progress: number): number;
+        getZOff(progress: number): number;
+        getMovementDirection(): $Direction;
+        getCollisionShape(level: $BlockGetter, pos: $BlockPos_): $VoxelShape;
         /**
          * Removes the piston's BlockEntity and stops any movement
          */
         finalTick(): void;
         handler$hfb000$moonlight$onFinishedShortPulse(arg0: $CallbackInfo): void;
-        getDirection(): $Direction;
-        getZOff(progress: number): number;
-        getYOff(progress: number): number;
-        getXOff(progress: number): number;
-        getMovedState(): $BlockState;
-        getMovementDirection(): $Direction;
-        getCollisionShape(level: $BlockGetter, pos: $BlockPos_): $VoxelShape;
-        getHeldBlock(): $BlockState;
-        setHeldBlock(arg0: $BlockState_): boolean;
-        tickMovedBlock(arg0: $Level_, arg1: $BlockPos_): void;
-        /**
-         * @return whether this piston is extending
-         */
-        isSourcePiston(): boolean;
         worldPosition: $BlockPos;
         static TICK_MOVEMENT: number;
         level: $Level;
@@ -208,11 +208,11 @@ declare module "@package/net/minecraft/world/level/block/piston" {
         remove: boolean;
         constructor(pos: $BlockPos_, blockState: $BlockState_);
         constructor(pos: $BlockPos_, blockState: $BlockState_, movedState: $BlockState_, direction: $Direction_, extending: boolean, isSourcePiston: boolean);
+        get movedState(): $BlockState;
         get lastTicked(): number;
         get extending(): boolean;
         get direction(): $Direction;
-        get movedState(): $BlockState;
-        get movementDirection(): $Direction;
         get sourcePiston(): boolean;
+        get movementDirection(): $Direction;
     }
 }

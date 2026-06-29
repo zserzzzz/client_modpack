@@ -3,7 +3,6 @@ import { $Enum, $Record } from "@package/java/lang";
 
 declare module "@package/net/minecraft/client/gui/navigation" {
     export class $ScreenRectangle extends $Record {
-        overlaps(rectangle: $ScreenRectangle_): boolean;
         bottom(): number;
         getLength(axis: $ScreenAxis_): number;
         position(): $ScreenPosition;
@@ -14,13 +13,14 @@ declare module "@package/net/minecraft/client/gui/navigation" {
         left(): number;
         right(): number;
         width(): number;
-        intersection(rectangle: $ScreenRectangle_): $ScreenRectangle;
         height(): number;
+        overlaps(rectangle: $ScreenRectangle_): boolean;
+        intersection(rectangle: $ScreenRectangle_): $ScreenRectangle;
         containsPoint(x: number, y: number): boolean;
-        overlapsInAxis(rectangle: $ScreenRectangle_, axis: $ScreenAxis_): boolean;
-        getCenterInAxis(axis: $ScreenAxis_): number;
         getBoundInDirection(direction: $ScreenDirection_): number;
         getBorder(direction: $ScreenDirection_): $ScreenRectangle;
+        getCenterInAxis(axis: $ScreenAxis_): number;
+        overlapsInAxis(rectangle: $ScreenRectangle_, axis: $ScreenAxis_): boolean;
         constructor(x: number, y: number, width: number, height: number);
         constructor(arg0: $ScreenPosition_, arg1: number, arg2: number);
     }
@@ -34,8 +34,8 @@ declare module "@package/net/minecraft/client/gui/navigation" {
         get verticalDirectionForInitialFocus(): $ScreenDirection;
     }
     export class $FocusNavigationEvent$ArrowNavigation extends $Record implements $FocusNavigationEvent {
-        getVerticalDirectionForInitialFocus(): $ScreenDirection;
         direction(): $ScreenDirection;
+        getVerticalDirectionForInitialFocus(): $ScreenDirection;
         constructor(arg0: $ScreenDirection_);
         get verticalDirectionForInitialFocus(): $ScreenDirection;
     }
@@ -48,8 +48,8 @@ declare module "@package/net/minecraft/client/gui/navigation" {
         static valueOf(arg0: string): $ScreenAxis;
         getNegative(): $ScreenDirection;
         getDirection(isPositive: boolean): $ScreenDirection;
-        getPositive(): $ScreenDirection;
         orthogonal(): $ScreenAxis;
+        getPositive(): $ScreenDirection;
         static VERTICAL: $ScreenAxis;
         static HORIZONTAL: $ScreenAxis;
         get negative(): $ScreenDirection;
@@ -70,14 +70,14 @@ declare module "@package/net/minecraft/client/gui/navigation" {
     /**
      * Values that may be interpreted as {@link $ScreenPosition}.
      */
-    export type $ScreenPosition_ = { x?: number, y?: number,  } | [x?: number, y?: number, ];
+    export type $ScreenPosition_ = { y?: number, x?: number,  } | [y?: number, x?: number, ];
     export class $CommonInputs {
         static selected(key: number): boolean;
         constructor();
     }
     export class $FocusNavigationEvent$TabNavigation extends $Record implements $FocusNavigationEvent {
-        getVerticalDirectionForInitialFocus(): $ScreenDirection;
         forward(): boolean;
+        getVerticalDirectionForInitialFocus(): $ScreenDirection;
         constructor(arg0: boolean);
         get verticalDirectionForInitialFocus(): $ScreenDirection;
     }
@@ -91,16 +91,16 @@ declare module "@package/net/minecraft/client/gui/navigation" {
         isPositive(): boolean;
         isAfter(first: number, second: number): boolean;
         isBefore(first: number, second: number): boolean;
-        getOpposite(): $ScreenDirection;
         coordinateValueComparator(): $IntComparator;
         getAxis(): $ScreenAxis;
+        getOpposite(): $ScreenDirection;
         static DOWN: $ScreenDirection;
         static LEFT: $ScreenDirection;
         static RIGHT: $ScreenDirection;
         static UP: $ScreenDirection;
         get positive(): boolean;
-        get opposite(): $ScreenDirection;
         get axis(): $ScreenAxis;
+        get opposite(): $ScreenDirection;
     }
     /**
      * Values that may be interpreted as {@link $ScreenDirection}.

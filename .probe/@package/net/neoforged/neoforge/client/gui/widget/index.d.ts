@@ -17,8 +17,8 @@ declare module "@package/net/neoforged/neoforge/client/gui/widget" {
         getValueString(): string;
         getValue(): number;
         setValue(value: number): void;
-        getValueInt(): number;
         getValueLong(): number;
+        getValueInt(): number;
         visible: boolean;
         tooltip: $WidgetTooltipHolder;
         active: boolean;
@@ -31,14 +31,14 @@ declare module "@package/net/neoforged/neoforge/client/gui/widget" {
         y: number;
         value: number;
         height: number;
-        constructor(x: number, y: number, width: number, height: number, prefix: $Component_, suffix: $Component_, minValue: number, maxValue: number, currentValue: number, stepSize: number, precision: number, drawString: boolean);
         /**
          * Overload with `stepSize` set to 1, useful for sliders with whole number values.
          */
         constructor(x: number, y: number, width: number, height: number, prefix: $Component_, suffix: $Component_, minValue: number, maxValue: number, currentValue: number, drawString: boolean);
+        constructor(x: number, y: number, width: number, height: number, prefix: $Component_, suffix: $Component_, minValue: number, maxValue: number, currentValue: number, stepSize: number, precision: number, drawString: boolean);
         get valueString(): string;
-        get valueInt(): number;
         get valueLong(): number;
+        get valueInt(): number;
     }
     export class $ModListWidget extends $ObjectSelectionList<$ModListWidget$ModEntry> {
         refreshList(): void;
@@ -72,13 +72,13 @@ declare module "@package/net/neoforged/neoforge/client/gui/widget" {
          * @return `true` if the GUI element is dragging, `false` otherwise
          */
         isActive(): boolean;
-        constructor(client: $Minecraft, width: number, height: number, top: number, left: number);
         /**
          * Base constructor
          */
         constructor(client: $Minecraft, width: number, height: number, top: number, left: number, border: number, barWidth: number, barBgColor: number, barColor: number, barBorderColor: number);
         constructor(client: $Minecraft, width: number, height: number, top: number, left: number, border: number, barWidth: number);
         constructor(client: $Minecraft, width: number, height: number, top: number, left: number, border: number);
+        constructor(client: $Minecraft, width: number, height: number, top: number, left: number);
         get active(): boolean;
     }
     /**
@@ -109,9 +109,9 @@ declare module "@package/net/neoforged/neoforge/client/gui/widget" {
         static BIG_WIDTH: number;
         static DEFAULT_SPACING: number;
         height: number;
-        constructor(arg0: number, arg1: number, arg2: number, arg3: number, arg4: $Component_, arg5: $Button$OnPress_);
         constructor(builder: $Button$Builder);
         constructor(x: number, y: number, width: number, height: number, message: $Component_, onPress: $Button$OnPress_, createNarration: $Button$CreateNarration_);
+        constructor(arg0: number, arg1: number, arg2: number, arg3: number, arg4: $Component_, arg5: $Button$OnPress_);
     }
     /**
      * Custom button subclass to draw an indicator overlay on the button when updates are available.

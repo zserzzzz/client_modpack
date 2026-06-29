@@ -48,15 +48,15 @@ declare module "@package/com/simibubi/create/content/kinetics/motor" {
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
     }
     export class $CreativeMotorBlock extends $DirectionalKineticBlock implements $IBE<$CreativeMotorBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$CreativeMotorBlockEntity>;
         getBlockEntityClass(): $Class<$CreativeMotorBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$CreativeMotorBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$CreativeMotorBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$CreativeMotorBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($CreativeMotorBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$CreativeMotorBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $CreativeMotorBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$CreativeMotorBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($CreativeMotorBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$CreativeMotorBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -87,8 +87,8 @@ declare module "@package/com/simibubi/create/content/kinetics/motor" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$CreativeMotorBlockEntity>;
         get blockEntityClass(): $Class<$CreativeMotorBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$CreativeMotorBlockEntity>;
     }
     export class $CreativeMotorGenerator extends $SpecialBlockStateGen {
         constructor();

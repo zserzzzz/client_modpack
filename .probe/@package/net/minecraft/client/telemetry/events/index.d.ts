@@ -7,8 +7,8 @@ import { $Ticker, $Stopwatch } from "@package/com/google/common/base";
 
 declare module "@package/net/minecraft/client/telemetry/events" {
     export class $GameLoadTimesEvent {
-        setBootstrapTime(bootstrapTime: number): void;
         send(sender: $TelemetryEventSender_): void;
+        setBootstrapTime(bootstrapTime: number): void;
         beginStep(measurement: $TelemetryProperty_<$GameLoadTimesEvent$Measurement_>, stopwatch: $Stopwatch): void;
         beginStep(measurement: $TelemetryProperty_<$GameLoadTimesEvent$Measurement_>): void;
         endStep(measurement: $TelemetryProperty_<$GameLoadTimesEvent$Measurement_>): void;
@@ -32,10 +32,10 @@ declare module "@package/net/minecraft/client/telemetry/events" {
         stop(): void;
         tick(sender: $TelemetryEventSender_): void;
         getSampleCount(): number;
-        sendEvent(sender: $TelemetryEventSender_): void;
         takeSample(): void;
-        shouldTakeSample(): boolean;
+        sendEvent(sender: $TelemetryEventSender_): void;
         shouldSentEvent(): boolean;
+        shouldTakeSample(): boolean;
         constructor();
         get sampleCount(): number;
     }

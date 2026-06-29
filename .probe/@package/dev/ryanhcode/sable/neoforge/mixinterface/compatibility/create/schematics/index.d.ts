@@ -15,7 +15,7 @@ declare module "@package/dev/ryanhcode/sable/neoforge/mixinterface/compatibility
     /**
      * Values that may be interpreted as {@link $SchematicLevelExtension$SchematicSubLevel}.
      */
-    export type $SchematicLevelExtension$SchematicSubLevel_ = { position?: $Vector3d, orientation?: $Quaterniond, level?: $SchematicLevel, uuid?: $UUID_,  } | [position?: $Vector3d, orientation?: $Quaterniond, level?: $SchematicLevel, uuid?: $UUID_, ];
+    export type $SchematicLevelExtension$SchematicSubLevel_ = { level?: $SchematicLevel, uuid?: $UUID_, position?: $Vector3d, orientation?: $Quaterniond,  } | [level?: $SchematicLevel, uuid?: $UUID_, position?: $Vector3d, orientation?: $Quaterniond, ];
     export class $SchematicPrinterExtension {
     }
     export interface $SchematicPrinterExtension {
@@ -53,5 +53,5 @@ declare module "@package/dev/ryanhcode/sable/neoforge/mixinterface/compatibility
     /**
      * Values that may be interpreted as {@link $StructureTemplateExtension$SubLevelTemplate}.
      */
-    export type $StructureTemplateExtension$SubLevelTemplate_ = { position?: $Vector3d, orientation?: $Quaterniond, uuid?: $UUID_, template?: $StructureTemplate,  } | [position?: $Vector3d, orientation?: $Quaterniond, uuid?: $UUID_, template?: $StructureTemplate, ];
+    export type $StructureTemplateExtension$SubLevelTemplate_ = { uuid?: $UUID_, template?: $StructureTemplate, position?: $Vector3d, orientation?: $Quaterniond,  } | [uuid?: $UUID_, template?: $StructureTemplate, position?: $Vector3d, orientation?: $Quaterniond, ];
 }

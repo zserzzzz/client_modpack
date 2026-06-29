@@ -17,25 +17,25 @@ declare module "@package/io/github/mortuusars/exposure/world/camera/capture" {
     export class $CaptureParameters$Builder {
         build(): $CaptureParameters;
         setFilter(filter: $ResourceLocation_): $CaptureParameters$Builder;
-        setCameraHolder(holder: $CameraHolder): $CaptureParameters$Builder;
-        setCropFactor(cropFactor: number): $CaptureParameters$Builder;
-        setFilmProperties(filmProperties: $FilmProperties_): $CaptureParameters$Builder;
-        setCameraID(cameraId: $CameraId_): $CaptureParameters$Builder;
+        setProjection(projection: ($Projection_) | undefined): $CaptureParameters$Builder;
         extraData<T>(type: $ExtraData$Type_<T>, value: T): $CaptureParameters$Builder;
         extraData(extraDataUpdater: $Consumer_<$ExtraData>): $CaptureParameters$Builder;
-        setProjection(projection: ($Projection_) | undefined): $CaptureParameters$Builder;
+        setCropFactor(cropFactor: number): $CaptureParameters$Builder;
+        setCameraID(cameraId: $CameraId_): $CaptureParameters$Builder;
+        setCameraHolder(holder: $CameraHolder): $CaptureParameters$Builder;
+        setFilmProperties(filmProperties: $FilmProperties_): $CaptureParameters$Builder;
+        setFov(fov: number): $CaptureParameters$Builder;
         setChromaticChannel(chromaticChannel: ($ColorChannel_) | undefined): $CaptureParameters$Builder;
         setChromaticChannel(chromaticChannel: $ColorChannel_): $CaptureParameters$Builder;
-        setFov(fov: number): $CaptureParameters$Builder;
         setProjectionInfo(projection: $Projection_): $CaptureParameters$Builder;
         constructor(exposureId: string);
         constructor(params: $CaptureParameters_);
         set filter(value: $ResourceLocation_);
-        set cameraHolder(value: $CameraHolder);
-        set cropFactor(value: number);
-        set filmProperties(value: $FilmProperties_);
-        set cameraID(value: $CameraId_);
         set projection(value: ($Projection_) | undefined);
+        set cropFactor(value: number);
+        set cameraID(value: $CameraId_);
+        set cameraHolder(value: $CameraHolder);
+        set filmProperties(value: $FilmProperties_);
         set fov(value: number);
         set projectionInfo(value: $Projection_);
     }
@@ -58,19 +58,19 @@ declare module "@package/io/github/mortuusars/exposure/world/camera/capture" {
      */
     export type $DitherMode_ = "dithered" | "clean";
     export class $CaptureParameters extends $Record {
-        filmProperties(): $FilmProperties;
-        mutable(): $CaptureParameters$Builder;
+        fov(): (number) | undefined;
         filter(): ($ResourceLocation) | undefined;
         extraData(): $ExtraData;
-        fov(): (number) | undefined;
         projection(): ($Projection) | undefined;
-        getLightLevel(): (number) | undefined;
+        mutable(): $CaptureParameters$Builder;
+        cropFactor(): number;
+        filmProperties(): $FilmProperties;
         singleChannel(): ($ColorChannel) | undefined;
-        cameraHolderId(): (number) | undefined;
+        getLightLevel(): (number) | undefined;
+        exposureId(): string;
         cameraId(): ($CameraId) | undefined;
         getFlash(): boolean;
-        exposureId(): string;
-        cropFactor(): number;
+        cameraHolderId(): (number) | undefined;
         getShutterSpeed(): $ShutterSpeed;
         static CODEC: $Codec<$CaptureParameters>;
         static LIGHT_LEVEL: $ExtraData$Type<number>;
@@ -85,7 +85,7 @@ declare module "@package/io/github/mortuusars/exposure/world/camera/capture" {
     /**
      * Values that may be interpreted as {@link $CaptureParameters}.
      */
-    export type $CaptureParameters_ = { cameraHolderId?: (number) | undefined, singleChannel?: ($ColorChannel_) | undefined, exposureId?: string, cameraId?: ($CameraId_) | undefined, filter?: ($ResourceLocation_) | undefined, projection?: ($Projection_) | undefined, cropFactor?: number, filmProperties?: $FilmProperties_, extraData?: $ExtraData, fov?: (number) | undefined,  } | [cameraHolderId?: (number) | undefined, singleChannel?: ($ColorChannel_) | undefined, exposureId?: string, cameraId?: ($CameraId_) | undefined, filter?: ($ResourceLocation_) | undefined, projection?: ($Projection_) | undefined, cropFactor?: number, filmProperties?: $FilmProperties_, extraData?: $ExtraData, fov?: (number) | undefined, ];
+    export type $CaptureParameters_ = { projection?: ($Projection_) | undefined, cropFactor?: number, filmProperties?: $FilmProperties_, extraData?: $ExtraData, fov?: (number) | undefined, cameraHolderId?: (number) | undefined, singleChannel?: ($ColorChannel_) | undefined, exposureId?: string, cameraId?: ($CameraId_) | undefined, filter?: ($ResourceLocation_) | undefined,  } | [projection?: ($Projection_) | undefined, cropFactor?: number, filmProperties?: $FilmProperties_, extraData?: $ExtraData, fov?: (number) | undefined, cameraHolderId?: (number) | undefined, singleChannel?: ($ColorChannel_) | undefined, exposureId?: string, cameraId?: ($CameraId_) | undefined, filter?: ($ResourceLocation_) | undefined, ];
     export class $Projection extends $Record {
         mode(): $DitherMode;
         path(): string;
@@ -96,5 +96,5 @@ declare module "@package/io/github/mortuusars/exposure/world/camera/capture" {
     /**
      * Values that may be interpreted as {@link $Projection}.
      */
-    export type $Projection_ = { mode?: $DitherMode_, path?: string,  } | [mode?: $DitherMode_, path?: string, ];
+    export type $Projection_ = { path?: string, mode?: $DitherMode_,  } | [path?: string, mode?: $DitherMode_, ];
 }

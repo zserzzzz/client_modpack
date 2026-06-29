@@ -41,7 +41,7 @@ declare module "@package/net/minecraft/network/protocol" {
     /**
      * Values that may be interpreted as {@link $ProtocolInfoBuilder$Implementation}.
      */
-    export type $ProtocolInfoBuilder$Implementation_<L> = { flow?: $PacketFlow_, codec?: $StreamCodec<$ByteBuf, $Packet<$PacketListener>>, bundlerInfo?: $BundlerInfo, id?: $ConnectionProtocol_,  } | [flow?: $PacketFlow_, codec?: $StreamCodec<$ByteBuf, $Packet<$PacketListener>>, bundlerInfo?: $BundlerInfo, id?: $ConnectionProtocol_, ];
+    export type $ProtocolInfoBuilder$Implementation_<L> = { id?: $ConnectionProtocol_, flow?: $PacketFlow_, codec?: $StreamCodec<$ByteBuf, $Packet<$PacketListener>>, bundlerInfo?: $BundlerInfo,  } | [id?: $ConnectionProtocol_, flow?: $PacketFlow_, codec?: $StreamCodec<$ByteBuf, $Packet<$PacketListener>>, bundlerInfo?: $BundlerInfo, ];
     /**
      * The direction of packets.
      */
@@ -58,23 +58,23 @@ declare module "@package/net/minecraft/network/protocol" {
          */
         self(): $PacketFlow;
         /**
-         * @return the `LogicalSide` that is receiving packets in this `PacketFlow`
+         * @return an indication of whether this `PacketFlow` is clientbound
          */
-        getReceptionSide(): $LogicalSide;
+        isClientbound(): boolean;
         /**
          * @return an indication of whether this `PacketFlow` is clientbound
          */
         isServerbound(): boolean;
         /**
-         * @return an indication of whether this `PacketFlow` is clientbound
+         * @return the `LogicalSide` that is receiving packets in this `PacketFlow`
          */
-        isClientbound(): boolean;
+        getReceptionSide(): $LogicalSide;
         static CLIENTBOUND: $PacketFlow;
         static SERVERBOUND: $PacketFlow;
         get opposite(): $PacketFlow;
-        get receptionSide(): $LogicalSide;
-        get serverbound(): boolean;
         get clientbound(): boolean;
+        get serverbound(): boolean;
+        get receptionSide(): $LogicalSide;
     }
     /**
      * Values that may be interpreted as {@link $PacketFlow}.
@@ -86,20 +86,20 @@ declare module "@package/net/minecraft/network/protocol" {
     }
     export interface $BundlerInfo {
         startPacketBundling(packet: $Packet<never>): $BundlerInfo$Bundler;
+        unbundlePacket(arg0: $Packet<never>, arg1: $Consumer_<$Packet<never>>, arg2: $ChannelHandlerContext): void;
         /**
          * @deprecated
          */
         unbundlePacket(packet: $Packet<never>, consumer: $Consumer_<$Packet<never>>): void;
-        unbundlePacket(arg0: $Packet<never>, arg1: $Consumer_<$Packet<never>>, arg2: $ChannelHandlerContext): void;
     }
     export class $ProtocolInfoBuilder<T extends $PacketListener, B extends $ByteBuf> {
         build(bufferFactory: $Function_<$ByteBuf, B>): $ProtocolInfo<T>;
-        addPacket<P extends $Packet<T>>(type: $PacketType_<P>, serializer: $StreamCodec<B, P>): $ProtocolInfoBuilder<T, B>;
-        withBundlePacket<P extends $BundlePacket<T>, D extends $BundleDelimiterPacket<T>>(type: $PacketType_<P>, bundler: $Function_<$Iterable<$Packet<T>>, P>, packet: D): $ProtocolInfoBuilder<T, B>;
-        buildPacketCodec(bufferFactory: $Function_<$ByteBuf, B>, codecs: $List_<$ProtocolInfoBuilder$CodecEntry_<T, never, B>>): $StreamCodec<$ByteBuf, $Packet<T>>;
         buildUnbound(): $ProtocolInfo$Unbound<T, B>;
+        addPacket<P extends $Packet<T>>(type: $PacketType_<P>, serializer: $StreamCodec<B, P>): $ProtocolInfoBuilder<T, B>;
         static serverboundProtocol<T extends $ServerboundPacketListener, B extends $ByteBuf>(protocol: $ConnectionProtocol_, setup: $Consumer_<$ProtocolInfoBuilder<T, B>>): $ProtocolInfo$Unbound<T, B>;
         static clientboundProtocol<T extends $ClientboundPacketListener, B extends $ByteBuf>(protocol: $ConnectionProtocol_, setup: $Consumer_<$ProtocolInfoBuilder<T, B>>): $ProtocolInfo$Unbound<T, B>;
+        withBundlePacket<P extends $BundlePacket<T>, D extends $BundleDelimiterPacket<T>>(type: $PacketType_<P>, bundler: $Function_<$Iterable<$Packet<T>>, P>, packet: D): $ProtocolInfoBuilder<T, B>;
+        buildPacketCodec(bufferFactory: $Function_<$ByteBuf, B>, codecs: $List_<$ProtocolInfoBuilder$CodecEntry_<T, never, B>>): $StreamCodec<$ByteBuf, $Packet<T>>;
         protocol: $ConnectionProtocol;
         flow: $PacketFlow;
         constructor(protocol: $ConnectionProtocol_, flow: $PacketFlow_);
@@ -121,31 +121,31 @@ declare module "@package/net/minecraft/network/protocol" {
     export class $BundleDelimiterPacket<T extends $PacketListener> implements $Packet<T> {
         type(): $PacketType<$BundleDelimiterPacket<T>>;
         handle(arg0: T): void;
-        isSkippable(): boolean;
         isTerminal(): boolean;
+        isSkippable(): boolean;
         constructor();
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $Packet<T extends $PacketListener> {
         static codec<B extends $ByteBuf, T extends $Packet<never>>(encoder: $StreamMemberEncoder_<B, T>, decoder: $StreamDecoder_<B, T>): $StreamCodec<B, T>;
     }
     export interface $Packet<T extends $PacketListener> {
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isSkippable(): boolean;
-        /**
-         * Whether decoding errors will be ignored for this packet.
-         */
-        isTerminal(): boolean;
         type(): $PacketType<$Packet<T>>;
         /**
          * Passes this Packet on to the PacketListener for processing.
          */
         handle(handler: T): void;
-        get skippable(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isTerminal(): boolean;
+        /**
+         * Whether decoding errors will be ignored for this packet.
+         */
+        isSkippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $BundlePacket<T extends $PacketListener> implements $Packet<T> {
         type(): $PacketType<$BundlePacket<T>>;
@@ -153,30 +153,30 @@ declare module "@package/net/minecraft/network/protocol" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         constructor(packets: $Iterable_<$Packet<T>>);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $PacketUtils {
-        static makeReportedException<T extends $PacketListener>(exception: $Exception, packet: $Packet<T>, packetListener: T): $ReportedException;
         static fillCrashReport<T extends $PacketListener>(crashReport: $CrashReport, packetListener: T, packet: $Packet<T> | null): void;
-        /**
-         * Ensures that the given packet is handled on the main thread. If the current thread is not the main thread, this method
-         * throws `RunningOnDifferentThreadException`, which is caught and ignored in the outer call (`Packet)`). Additionally, it then re-schedules the packet to be handled on the main thread,
-         * which will then end up back here, but this time on the main thread.
-         */
-        static ensureRunningOnSameThread<T extends $PacketListener>(packet: $Packet<T>, processor: T, executor: $BlockableEventLoop<never>): void;
+        static makeReportedException<T extends $PacketListener>(exception: $Exception, packet: $Packet<T>, packetListener: T): $ReportedException;
         /**
          * Ensures that the given packet is handled on the main thread. If the current thread is not the main thread, this method
          * throws `RunningOnDifferentThreadException`, which is caught and ignored in the outer call (`Packet)`). Additionally, it then re-schedules the packet to be handled on the main thread,
          * which will then end up back here, but this time on the main thread.
          */
         static ensureRunningOnSameThread<T extends $PacketListener>(packet: $Packet<T>, processor: T, level: $ServerLevel): void;
+        /**
+         * Ensures that the given packet is handled on the main thread. If the current thread is not the main thread, this method
+         * throws `RunningOnDifferentThreadException`, which is caught and ignored in the outer call (`Packet)`). Additionally, it then re-schedules the packet to be handled on the main thread,
+         * which will then end up back here, but this time on the main thread.
+         */
+        static ensureRunningOnSameThread<T extends $PacketListener>(packet: $Packet<T>, processor: T, executor: $BlockableEventLoop<never>): void;
         constructor();
     }
 }

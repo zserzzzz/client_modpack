@@ -50,9 +50,9 @@ declare module "@package/net/minecraft/world/level/storage/loot/functions" {
      * LootItemFunction that modifies the stack's count based on an enchantment level on the tool using various formulas.
      */
     export class $ApplyBonusCount extends $LootItemConditionalFunction implements $ApplyBonusLootFunctionAccessor {
-        static addOreBonusCount(enchantment: $Holder_<$Enchantment>): $LootItemConditionalFunction$Builder<never>;
         static addUniformBonusCount(enchantment: $Holder_<$Enchantment>): $LootItemConditionalFunction$Builder<never>;
         static addUniformBonusCount(enchantment: $Holder_<$Enchantment>, bonusMultiplier: number): $LootItemConditionalFunction$Builder<never>;
+        static addOreBonusCount(enchantment: $Holder_<$Enchantment>): $LootItemConditionalFunction$Builder<never>;
         static addBonusBinomialDistributionCount(enchantment: $Holder_<$Enchantment>, probability: number, extraRounds: number): $LootItemConditionalFunction$Builder<never>;
         getEnchantment(): $Holder<$Enchantment>;
         predicates: $List<$LootItemCondition>;
@@ -67,7 +67,9 @@ declare module "@package/net/minecraft/world/level/storage/loot/functions" {
     }
     export class $EnchantWithLevelsFunction$Builder extends $LootItemConditionalFunction$Builder<$EnchantWithLevelsFunction$Builder> {
         fromOptions(options: $HolderSet_<$Enchantment>): $EnchantWithLevelsFunction$Builder;
+        getThis(): $EnchantWithLevelsFunction$Builder;
         constructor(levels: $NumberProvider_);
+        get this(): $EnchantWithLevelsFunction$Builder;
     }
     /**
      * A LootItemFunction that limits the stack's count to fall within a given `IntRange`.
@@ -91,9 +93,7 @@ declare module "@package/net/minecraft/world/level/storage/loot/functions" {
     }
     export class $SetStewEffectFunction$Builder extends $LootItemConditionalFunction$Builder<$SetStewEffectFunction$Builder> {
         withEffect(effect: $Holder_<$MobEffect>, amplifier: $NumberProvider_): $SetStewEffectFunction$Builder;
-        getThis(): $SetStewEffectFunction$Builder;
         constructor();
-        get this(): $SetStewEffectFunction$Builder;
     }
     /**
      * LootItemFunction that adds a list of attribute modifiers to the stacks.
@@ -178,15 +178,15 @@ declare module "@package/net/minecraft/world/level/storage/loot/functions" {
      * LootItemFunction that sets the stack's count based on a `NumberProvider`, optionally adding to any existing count.
      */
     export class $SetItemCountFunction extends $LootItemConditionalFunction implements $SetCountLootFunctionAccessor {
-        static setCount(countValue: $NumberProvider_, add: boolean): $LootItemConditionalFunction$Builder<never>;
         static setCount(countValue: $NumberProvider_): $LootItemConditionalFunction$Builder<never>;
-        getAdd(): boolean;
+        static setCount(countValue: $NumberProvider_, add: boolean): $LootItemConditionalFunction$Builder<never>;
         getCountRange(): $NumberProvider;
+        getAdd(): boolean;
         predicates: $List<$LootItemCondition>;
         static CODEC: $MapCodec<$SetItemCountFunction>;
         value: $NumberProvider;
-        get add(): boolean;
         get countRange(): $NumberProvider;
+        get add(): boolean;
     }
     /**
      * Registry for `LootItemFunction`
@@ -274,9 +274,9 @@ declare module "@package/net/minecraft/world/level/storage/loot/functions" {
         getShape(): ($FireworkExplosion$Shape) | undefined;
         getFadeColors(): ($IntList) | undefined;
         callApply(fireworkExplosion: $FireworkExplosion_): $FireworkExplosion;
+        getTrail(): (boolean) | undefined;
         getTwinkle(): (boolean) | undefined;
         getColors(): ($IntList) | undefined;
-        getTrail(): (boolean) | undefined;
         static DEFAULT_VALUE: $FireworkExplosion;
         trail: (boolean) | undefined;
         twinkle: (boolean) | undefined;
@@ -316,8 +316,8 @@ declare module "@package/net/minecraft/world/level/storage/loot/functions" {
     }
     export interface $ListOperation {
         mode(): $ListOperation$Type;
-        apply<T>(currentValue: $List_<T>, operand: $List_<T>, maxSize: number): $List<T>;
         apply<T>(currentValue: $List_<T>, operand: $List_<T>): $List<T>;
+        apply<T>(currentValue: $List_<T>, operand: $List_<T>, maxSize: number): $List<T>;
     }
     export class $SetNameFunction$Target extends $Enum<$SetNameFunction$Target> implements $StringRepresentable {
         static values(): $SetNameFunction$Target[];
@@ -381,9 +381,7 @@ declare module "@package/net/minecraft/world/level/storage/loot/functions" {
     }
     export class $SetContainerContents$Builder extends $LootItemConditionalFunction$Builder<$SetContainerContents$Builder> {
         withEntry(lootEntryBuilder: $LootPoolEntryContainer$Builder<never>): $SetContainerContents$Builder;
-        getThis(): $SetContainerContents$Builder;
         constructor(component: $ContainerComponentManipulator<never>);
-        get this(): $SetContainerContents$Builder;
     }
     export class $CopyCustomDataFunction$MergeStrategy extends $Enum<$CopyCustomDataFunction$MergeStrategy> implements $StringRepresentable {
         static values(): $CopyCustomDataFunction$MergeStrategy[];
@@ -421,18 +419,16 @@ declare module "@package/net/minecraft/world/level/storage/loot/functions" {
     }
     export class $ExplorationMapFunction$Builder extends $LootItemConditionalFunction$Builder<$ExplorationMapFunction$Builder> {
         setDestination(destination: $TagKey_<$Structure>): $ExplorationMapFunction$Builder;
-        setMapDecoration(mapDecoration: $Holder_<$MapDecorationType>): $ExplorationMapFunction$Builder;
-        setSearchRadius(searchRadius: number): $ExplorationMapFunction$Builder;
-        getThis(): $ExplorationMapFunction$Builder;
         setZoom(zoom: number): $ExplorationMapFunction$Builder;
         setSkipKnownStructures(skipKnownStructures: boolean): $ExplorationMapFunction$Builder;
+        setMapDecoration(mapDecoration: $Holder_<$MapDecorationType>): $ExplorationMapFunction$Builder;
+        setSearchRadius(searchRadius: number): $ExplorationMapFunction$Builder;
         constructor();
         set destination(value: $TagKey_<$Structure>);
-        set mapDecoration(value: $Holder_<$MapDecorationType>);
-        set searchRadius(value: number);
-        get this(): $ExplorationMapFunction$Builder;
         set zoom(value: number);
         set skipKnownStructures(value: boolean);
+        set mapDecoration(value: $Holder_<$MapDecorationType>);
+        set searchRadius(value: number);
     }
     /**
      * LootItemFunction that adds an effect to any suspicious stew items. A random effect is chosen from the given map every time.
@@ -458,7 +454,7 @@ declare module "@package/net/minecraft/world/level/storage/loot/functions" {
     /**
      * Values that may be interpreted as {@link $ListOperation$ReplaceSection}.
      */
-    export type $ListOperation$ReplaceSection_ = { offset?: number, size?: (number) | undefined,  } | [offset?: number, size?: (number) | undefined, ];
+    export type $ListOperation$ReplaceSection_ = { size?: (number) | undefined, offset?: number,  } | [size?: (number) | undefined, offset?: number, ];
     export class $CopyNameFunction$NameSource extends $Enum<$CopyNameFunction$NameSource> implements $StringRepresentable {
         static values(): $CopyNameFunction$NameSource[];
         static valueOf(arg0: string): $CopyNameFunction$NameSource;
@@ -478,18 +474,18 @@ declare module "@package/net/minecraft/world/level/storage/loot/functions" {
      */
     export type $CopyNameFunction$NameSource_ = "this" | "attacking_entity" | "last_damage_player" | "block_entity" | string;
     export class $SetAttributesFunction$Modifier extends $Record {
-        operation(): $AttributeModifier$Operation;
         id(): $ResourceLocation;
         slots(): $List<$EquipmentSlotGroup>;
         attribute(): $Holder<$Attribute>;
         amount(): $NumberProvider;
+        operation(): $AttributeModifier$Operation;
         static CODEC: $Codec<$SetAttributesFunction$Modifier>;
         constructor(arg0: $ResourceLocation_, arg1: $Holder_<$Attribute>, arg2: $AttributeModifier$Operation_, arg3: $NumberProvider_, arg4: $List_<$EquipmentSlotGroup_>);
     }
     /**
      * Values that may be interpreted as {@link $SetAttributesFunction$Modifier}.
      */
-    export type $SetAttributesFunction$Modifier_ = { operation?: $AttributeModifier$Operation_, attribute?: $Holder_<$Attribute>, id?: $ResourceLocation_, slots?: $List_<$EquipmentSlotGroup_>, amount?: $NumberProvider_,  } | [operation?: $AttributeModifier$Operation_, attribute?: $Holder_<$Attribute>, id?: $ResourceLocation_, slots?: $List_<$EquipmentSlotGroup_>, amount?: $NumberProvider_, ];
+    export type $SetAttributesFunction$Modifier_ = { slots?: $List_<$EquipmentSlotGroup_>, amount?: $NumberProvider_, operation?: $AttributeModifier$Operation_, attribute?: $Holder_<$Attribute>, id?: $ResourceLocation_,  } | [slots?: $List_<$EquipmentSlotGroup_>, amount?: $NumberProvider_, operation?: $AttributeModifier$Operation_, attribute?: $Holder_<$Attribute>, id?: $ResourceLocation_, ];
     /**
      * LootItemFunction that copies a set of block state properties to the `"BlockStateTag"` NBT tag of the ItemStack.
      * This tag is checked when the block is placed.
@@ -528,7 +524,7 @@ declare module "@package/net/minecraft/world/level/storage/loot/functions" {
     /**
      * Values that may be interpreted as {@link $ApplyBonusCount$BinomialWithBonusCount}.
      */
-    export type $ApplyBonusCount$BinomialWithBonusCount_ = { extraRounds?: number, probability?: number,  } | [extraRounds?: number, probability?: number, ];
+    export type $ApplyBonusCount$BinomialWithBonusCount_ = { probability?: number, extraRounds?: number,  } | [probability?: number, extraRounds?: number, ];
     /**
      * LootItemFunction that applies a random enchantment to the stack. If an empty list is given, chooses from all enchantments.
      */
@@ -609,8 +605,8 @@ declare module "@package/net/minecraft/world/level/storage/loot/functions" {
         static INSTANCE: $ListOperation$Append;
     }
     export class $EnchantRandomlyFunction$Builder extends $LootItemConditionalFunction$Builder<$EnchantRandomlyFunction$Builder> {
-        allowingIncompatibleEnchantments(): $EnchantRandomlyFunction$Builder;
         withOneOf(enchantments: $HolderSet_<$Enchantment>): $EnchantRandomlyFunction$Builder;
+        allowingIncompatibleEnchantments(): $EnchantRandomlyFunction$Builder;
         withEnchantment(enchantment: $Holder_<$Enchantment>): $EnchantRandomlyFunction$Builder;
         constructor();
     }
@@ -695,16 +691,16 @@ declare module "@package/net/minecraft/world/level/storage/loot/functions" {
         constructor(conditions: $List_<$LootItemCondition>, source: $CopyComponentsFunction$Source_, include: ($List_<$DataComponentType_<never>>) | undefined, exclude: ($List_<$DataComponentType_<never>>) | undefined);
     }
     export class $ListOperation$StandAlone<T> extends $Record {
-        operation(): $ListOperation;
+        static codec<T>(elementCodec: $Codec<T>, maxSize: number): $Codec<$ListOperation$StandAlone<T>>;
         value(): $List<T>;
         apply(list: $List_<T>): $List<T>;
-        static codec<T>(elementCodec: $Codec<T>, maxSize: number): $Codec<$ListOperation$StandAlone<T>>;
+        operation(): $ListOperation;
         constructor(arg0: $List_<T>, arg1: $ListOperation);
     }
     /**
      * Values that may be interpreted as {@link $ListOperation$StandAlone}.
      */
-    export type $ListOperation$StandAlone_<T> = { operation?: $ListOperation, value?: $List_<any>,  } | [operation?: $ListOperation, value?: $List_<any>, ];
+    export type $ListOperation$StandAlone_<T> = { value?: $List_<any>, operation?: $ListOperation,  } | [value?: $List_<any>, operation?: $ListOperation, ];
     export class $SetCustomModelDataFunction extends $LootItemConditionalFunction {
         predicates: $List<$LootItemCondition>;
         static CODEC: $MapCodec<$SetCustomModelDataFunction>;
@@ -757,8 +753,8 @@ declare module "@package/net/minecraft/world/level/storage/loot/functions" {
     }
     export class $SetLoreFunction$Builder extends $LootItemConditionalFunction$Builder<$SetLoreFunction$Builder> {
         setMode(mode: $ListOperation): $SetLoreFunction$Builder;
-        addLine(line: $Component_): $SetLoreFunction$Builder;
         getThis(): $SetLoreFunction$Builder;
+        addLine(line: $Component_): $SetLoreFunction$Builder;
         setResolutionContext(resolutionContext: $LootContext$EntityTarget_): $SetLoreFunction$Builder;
         constructor();
         set mode(value: $ListOperation);
@@ -771,12 +767,12 @@ declare module "@package/net/minecraft/world/level/storage/loot/functions" {
     export class $SetItemDamageFunction extends $LootItemConditionalFunction implements $SetDamageLootFunctionAccessor {
         static setDamage(damageValue: $NumberProvider_, add: boolean): $LootItemConditionalFunction$Builder<never>;
         static setDamage(damageValue: $NumberProvider_): $LootItemConditionalFunction$Builder<never>;
-        getAdd(): boolean;
         getDurabilityRange(): $NumberProvider;
+        getAdd(): boolean;
         predicates: $List<$LootItemCondition>;
         static CODEC: $MapCodec<$SetItemDamageFunction>;
-        get add(): boolean;
         get durabilityRange(): $NumberProvider;
+        get add(): boolean;
     }
     export class $ToggleTooltips$TooltipWither<T> {
     }
@@ -791,8 +787,8 @@ declare module "@package/net/minecraft/world/level/storage/loot/functions" {
      */
     export class $ExplorationMapFunction extends $LootItemConditionalFunction implements $ExplorationMapLootFunctionAccessor {
         static makeExplorationMap(): $ExplorationMapFunction$Builder;
-        getDestination(): $TagKey<$Structure>;
         getDecoration(): $Holder<$MapDecorationType>;
+        getDestination(): $TagKey<$Structure>;
         predicates: $List<$LootItemCondition>;
         static DEFAULT_ZOOM: number;
         static CODEC: $MapCodec<$ExplorationMapFunction>;
@@ -801,8 +797,8 @@ declare module "@package/net/minecraft/world/level/storage/loot/functions" {
         static DEFAULT_DESTINATION: $TagKey<$Structure>;
         static DEFAULT_SEARCH_RADIUS: number;
         constructor(conditons: $List_<$LootItemCondition>, destination: $TagKey_<$Structure>, mapDecoration: $Holder_<$MapDecorationType>, zoom: number, searchRadius: number, skipKnownStructures: boolean);
-        get destination(): $TagKey<$Structure>;
         get decoration(): $Holder<$MapDecorationType>;
+        get destination(): $TagKey<$Structure>;
     }
     /**
      * LootItemFunction that reduces a stack's count based on the explosion radius.
@@ -867,7 +863,7 @@ declare module "@package/net/minecraft/world/level/storage/loot/functions" {
     /**
      * Values that may be interpreted as {@link $SetStewEffectFunction$EffectEntry}.
      */
-    export type $SetStewEffectFunction$EffectEntry_ = { duration?: $NumberProvider_, effect?: $Holder_<$MobEffect>,  } | [duration?: $NumberProvider_, effect?: $Holder_<$MobEffect>, ];
+    export type $SetStewEffectFunction$EffectEntry_ = { effect?: $Holder_<$MobEffect>, duration?: $NumberProvider_,  } | [effect?: $Holder_<$MobEffect>, duration?: $NumberProvider_, ];
     export class $SetWritableBookPagesFunction extends $LootItemConditionalFunction {
         apply(writableBookContent: $WritableBookContent_): $WritableBookContent;
         predicates: $List<$LootItemCondition>;
@@ -889,5 +885,5 @@ declare module "@package/net/minecraft/world/level/storage/loot/functions" {
     /**
      * Values that may be interpreted as {@link $CopyCustomDataFunction$CopyOperation}.
      */
-    export type $CopyCustomDataFunction$CopyOperation_ = { targetPath?: $NbtPathArgument$NbtPath, sourcePath?: $NbtPathArgument$NbtPath, op?: $CopyCustomDataFunction$MergeStrategy_,  } | [targetPath?: $NbtPathArgument$NbtPath, sourcePath?: $NbtPathArgument$NbtPath, op?: $CopyCustomDataFunction$MergeStrategy_, ];
+    export type $CopyCustomDataFunction$CopyOperation_ = { sourcePath?: $NbtPathArgument$NbtPath, op?: $CopyCustomDataFunction$MergeStrategy_, targetPath?: $NbtPathArgument$NbtPath,  } | [sourcePath?: $NbtPathArgument$NbtPath, op?: $CopyCustomDataFunction$MergeStrategy_, targetPath?: $NbtPathArgument$NbtPath, ];
 }

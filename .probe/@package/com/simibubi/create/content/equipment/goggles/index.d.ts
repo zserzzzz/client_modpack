@@ -55,8 +55,8 @@ declare module "@package/com/simibubi/create/content/equipment/goggles" {
         constructor(arg0: $BakedModel);
     }
     export class $GogglesItem extends $Item implements $Equipable {
-        static isWearingGoggles(arg0: $Player): boolean;
         getEquipmentSlot(): $EquipmentSlot;
+        static isWearingGoggles(arg0: $Player): boolean;
         static addIsWearingPredicate(arg0: $Predicate_<$Player>): void;
         getEquipSound(): $Holder<$SoundEvent>;
         swapWithEquipmentSlot(arg0: $Item_, arg1: $Level_, arg2: $Player, arg3: $InteractionHand_): $InteractionResultHolder<$ItemStack>;

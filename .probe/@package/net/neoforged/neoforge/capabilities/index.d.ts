@@ -60,12 +60,12 @@ declare module "@package/net/neoforged/neoforge/capabilities" {
      * Instances are automatically cleared by the garbage collector when they are no longer in use.
      */
     export class $BlockCapabilityCache<T, C> {
-        getCapability(): T;
         context(): C;
         static create<T, C>(arg0: $BlockCapability<T, C>, arg1: $ServerLevel, arg2: $BlockPos_, arg3: C): $BlockCapabilityCache<T, C>;
         static create<T, C>(arg0: $BlockCapability<T, C>, arg1: $ServerLevel, arg2: $BlockPos_, arg3: C, arg4: $BooleanSupplier_, arg5: $Runnable_): $BlockCapabilityCache<T, C>;
         pos(): $BlockPos;
         level(): $ServerLevel;
+        getCapability(): T;
         get capability(): T;
     }
     /**
@@ -99,7 +99,6 @@ declare module "@package/net/neoforged/neoforge/capabilities" {
      * }
      */
     export class $ItemCapability<T, C> extends $BaseCapability<T, C> {
-        getCapability(arg0: $ItemStack_, arg1: C): T;
         /**
          * Creates a new item capability, or gets it if it already exists.
          */
@@ -108,6 +107,7 @@ declare module "@package/net/neoforged/neoforge/capabilities" {
          * @return a new immutable copy of all the currently known item capabilities
          */
         static getAll(): $List<$ItemCapability<never, never>>;
+        getCapability(arg0: $ItemStack_, arg1: C): T;
         /**
          * Creates a new item capability with `Void` context, or gets it if it already exists.
          * This should be used for capabilities that do not require any additional context.
@@ -120,7 +120,7 @@ declare module "@package/net/neoforged/neoforge/capabilities" {
     /**
      * Values that may be interpreted as {@link $CapabilityRegistry$StoredCap}.
      */
-    export type $CapabilityRegistry$StoredCap_<C> = { contextClass?: $Class<never>, typeClass?: $Class<never>, cap?: any,  } | [contextClass?: $Class<never>, typeClass?: $Class<never>, cap?: any, ];
+    export type $CapabilityRegistry$StoredCap_<C> = { cap?: any, contextClass?: $Class<never>, typeClass?: $Class<never>,  } | [cap?: any, contextClass?: $Class<never>, typeClass?: $Class<never>, ];
     /**
      * Capabilities provided by NeoForge itself, for modders to directly reference.
      */
@@ -144,35 +144,12 @@ declare module "@package/net/neoforged/neoforge/capabilities" {
      * Fired to register capability providers at an appropriate time.
      */
     export class $RegisterCapabilitiesEvent extends $Event implements $IModBusEvent, $ITrackingCapEvent {
+        registerBlock<T, C>(arg0: $BlockCapability<T, C>, arg1: $IBlockCapabilityProvider_<T, C>, ...arg2: $Block_[]): void;
+        registerItem<T, C>(arg0: $ItemCapability<T, C>, arg1: $ICapabilityProvider_<$ItemStack, C, T>, ...arg2: $ItemLike_[]): void;
         /**
-         * Register a capability provider for a block entity type.
-         * 
-         * **If a previously returned capability is not valid anymore, or if a new capability is available,
-         * `Level#invalidateCapabilities(BlockPos)` MUST be called to notify the caches.**
-         * See `IBlockCapabilityProvider` for details.
+         * Register a capability provider for some entity type.
          */
-        registerBlockEntity<T, C, BE extends $BlockEntity>(capability: $BlockCapability<T, C>, blockEntityType: $BlockEntityType_<BE>, provider: $ICapabilityProvider_<BE, C, T>): void;
-        /**
-         * Return `true` if a provider is registered for the given block and capability.
-         */
-        isBlockRegistered(capability: $BlockCapability<never, never>, block: $Block_): boolean;
-        /**
-         * Makes a block capability proxyable,
-         * indicating that it is always safe to forward a request for this capability to another block.
-         * (e.g. for "remote access" blocks)
-         * 
-         * This method should only be called by the mod that defines the capability,
-         * in the `EventPriority#HIGH` or `EventPriority#HIGHEST` phase.
-         */
-        setNonProxyable(capability: $BlockCapability<never, never>): void;
-        /**
-         * Return `true` if a provider is registered for the given entity type and capability.
-         */
-        isEntityRegistered(capability: $EntityCapability<never, never>, entityType: $EntityType_<never>): boolean;
-        /**
-         * Return `true` if a provider is registered for the given item and capability.
-         */
-        isItemRegistered(capability: $ItemCapability<never, never>, item: $Item_): boolean;
+        registerEntity<T, C, E extends $Entity>(capability: $EntityCapability<T, C>, entityType: $EntityType_<E>, provider: $ICapabilityProvider_<E, C, T>): void;
         /**
          * Makes a block capability proxyable,
          * indicating that it is always safe to forward a request for this capability to another block.
@@ -183,14 +160,37 @@ declare module "@package/net/neoforged/neoforge/capabilities" {
          */
         setProxyable(capability: $BlockCapability<never, never>): void;
         /**
-         * Register a capability provider for some entity type.
+         * Return `true` if a provider is registered for the given block and capability.
          */
-        registerEntity<T, C, E extends $Entity>(capability: $EntityCapability<T, C>, entityType: $EntityType_<E>, provider: $ICapabilityProvider_<E, C, T>): void;
-        registerBlock<T, C>(arg0: $BlockCapability<T, C>, arg1: $IBlockCapabilityProvider_<T, C>, ...arg2: $Block_[]): void;
-        registerItem<T, C>(arg0: $ItemCapability<T, C>, arg1: $ICapabilityProvider_<$ItemStack, C, T>, ...arg2: $ItemLike_[]): void;
+        isBlockRegistered(capability: $BlockCapability<never, never>, block: $Block_): boolean;
+        /**
+         * Return `true` if a provider is registered for the given item and capability.
+         */
+        isItemRegistered(capability: $ItemCapability<never, never>, item: $Item_): boolean;
+        /**
+         * Return `true` if a provider is registered for the given entity type and capability.
+         */
+        isEntityRegistered(capability: $EntityCapability<never, never>, entityType: $EntityType_<never>): boolean;
+        /**
+         * Makes a block capability proxyable,
+         * indicating that it is always safe to forward a request for this capability to another block.
+         * (e.g. for "remote access" blocks)
+         * 
+         * This method should only be called by the mod that defines the capability,
+         * in the `EventPriority#HIGH` or `EventPriority#HIGHEST` phase.
+         */
+        setNonProxyable(capability: $BlockCapability<never, never>): void;
+        /**
+         * Register a capability provider for a block entity type.
+         * 
+         * **If a previously returned capability is not valid anymore, or if a new capability is available,
+         * `Level#invalidateCapabilities(BlockPos)` MUST be called to notify the caches.**
+         * See `IBlockCapabilityProvider` for details.
+         */
+        registerBlockEntity<T, C, BE extends $BlockEntity>(capability: $BlockCapability<T, C>, blockEntityType: $BlockEntityType_<BE>, provider: $ICapabilityProvider_<BE, C, T>): void;
         mfix$getTrackedCaps(): $Set<any>;
-        set nonProxyable(value: $BlockCapability<never, never>);
         set proxyable(value: $BlockCapability<never, never>);
+        set nonProxyable(value: $BlockCapability<never, never>);
     }
     export class $Capabilities$EnergyStorage {
         static ITEM: $ItemCapability<$IEnergyStorage, void>;
@@ -198,13 +198,13 @@ declare module "@package/net/neoforged/neoforge/capabilities" {
         static BLOCK: $BlockCapability<$IEnergyStorage, $Direction>;
     }
     export class $CapabilityHooks {
-        static cleanCapabilityListenerReferencesOnTick(event: $LevelTickEvent$Post): void;
         static init(): void;
+        static cleanCapabilityListenerReferencesOnTick(event: $LevelTickEvent$Post): void;
         static registerVanillaProviders(event: $RegisterCapabilitiesEvent): void;
         static invalidateCapsOnChunkLoad(event: $ChunkEvent$Load): void;
         static markProxyableCapabilities(event: $RegisterCapabilitiesEvent): void;
-        static invalidateCapsOnChunkUnload(event: $ChunkEvent$Unload): void;
         static registerFallbackVanillaProviders(event: $RegisterCapabilitiesEvent): void;
+        static invalidateCapsOnChunkUnload(event: $ChunkEvent$Unload): void;
         constructor();
     }
     /**
@@ -353,7 +353,6 @@ declare module "@package/net/neoforged/neoforge/capabilities" {
      * }
      */
     export class $BlockCapability<T, C> extends $BaseCapability<T, C> {
-        getCapability(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_, arg3: $BlockEntity, arg4: C): T;
         /**
          * Creates a new block capability, or gets it if it already exists.
          */
@@ -364,6 +363,7 @@ declare module "@package/net/neoforged/neoforge/capabilities" {
          * Mods that want to forward "all" capability requests should likely use `#getAllProxyable()` instead.
          */
         static getAll(): $List<$BlockCapability<never, never>>;
+        getCapability(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_, arg3: $BlockEntity, arg4: C): T;
         /**
          * Creates a new block capability with `Void` context, or gets it if it already exists.
          * This should be used for capabilities that do not require any additional context.
@@ -432,7 +432,6 @@ declare module "@package/net/neoforged/neoforge/capabilities" {
      * }
      */
     export class $EntityCapability<T, C> extends $BaseCapability<T, C> {
-        getCapability(arg0: $Entity, arg1: C): T;
         /**
          * Creates a new entity capability, or gets it if it already exists.
          */
@@ -441,6 +440,7 @@ declare module "@package/net/neoforged/neoforge/capabilities" {
          * @return a new immutable copy of all the currently known entity capabilities
          */
         static getAll(): $List<$EntityCapability<never, never>>;
+        getCapability(arg0: $Entity, arg1: C): T;
         /**
          * Creates a new entity capability with `Void` context, or gets it if it already exists.
          * This should be used for capabilities that do not require any additional context.

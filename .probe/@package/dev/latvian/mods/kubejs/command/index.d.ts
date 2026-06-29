@@ -17,10 +17,10 @@ import { $ArgumentType } from "@package/com/mojang/brigadier/arguments";
 
 declare module "@package/dev/latvian/mods/kubejs/command" {
     export class $StageCommands {
-        static removeStage(source: $CommandSourceStack, players: $Collection_<$ServerPlayer>, stage: string): number;
-        static clearStages(source: $CommandSourceStack, players: $Collection_<$ServerPlayer>): number;
         static addStage(source: $CommandSourceStack, players: $Collection_<$ServerPlayer>, stage: string): number;
         static listStages(source: $CommandSourceStack, players: $Collection_<$ServerPlayer>): number;
+        static removeStage(source: $CommandSourceStack, players: $Collection_<$ServerPlayer>, stage: string): number;
+        static clearStages(source: $CommandSourceStack, players: $Collection_<$ServerPlayer>): number;
         constructor();
     }
     export class $ArgumentTypeWrappers extends $Enum<$ArgumentTypeWrappers> implements $ArgumentTypeWrapper {
@@ -104,19 +104,13 @@ declare module "@package/dev/latvian/mods/kubejs/command" {
         constructor();
     }
     export class $CommandRegistryKubeEvent implements $KubeEvent {
-        getCommands(): typeof $Commands;
         register(command: $LiteralArgumentBuilder<$CommandSourceStack>): $LiteralCommandNode<$CommandSourceStack>;
         getArguments(): typeof $ArgumentTypeWrappers;
+        getCommands(): typeof $Commands;
         getRegistry(): $CommandBuildContext;
         isForSinglePlayer(): boolean;
         isForMultiPlayer(): boolean;
         getBuiltinSuggestions(): typeof $SharedSuggestionProvider;
-        /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -124,11 +118,11 @@ declare module "@package/dev/latvian/mods/kubejs/command" {
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -136,23 +130,29 @@ declare module "@package/dev/latvian/mods/kubejs/command" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         selection: $Commands$CommandSelection;
         context: $CommandBuildContext;
         dispatcher: $CommandDispatcher<$CommandSourceStack>;
         constructor(dispatcher: $CommandDispatcher<$CommandSourceStack>, context: $CommandBuildContext, selection: $Commands$CommandSelection_);
-        get commands(): typeof $Commands;
         get arguments(): typeof $ArgumentTypeWrappers;
+        get commands(): typeof $Commands;
         get registry(): $CommandBuildContext;
         get forSinglePlayer(): boolean;
         get forMultiPlayer(): boolean;

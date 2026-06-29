@@ -31,7 +31,7 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/schema/function" {
     /**
      * Values that may be interpreted as {@link $SetFunction}.
      */
-    export type $SetFunction_ = { key?: string, value?: $JsonElement_,  } | [key?: string, value?: $JsonElement_, ];
+    export type $SetFunction_ = { value?: $JsonElement_, key?: string,  } | [value?: $JsonElement_, key?: string, ];
     export class $SetFunction$Resolved<T> extends $Record implements $ResolvedRecipeSchemaFunction {
         to(): T;
         key(): $RecipeKey<T>;
@@ -53,7 +53,7 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/schema/function" {
     /**
      * Values that may be interpreted as {@link $RecipeFunctionInstance}.
      */
-    export type $RecipeFunctionInstance_ = { function?: $ResolvedRecipeSchemaFunction_, name?: string, arguments?: $List_<$RecipeComponent<never>>,  } | [function?: $ResolvedRecipeSchemaFunction_, name?: string, arguments?: $List_<$RecipeComponent<never>>, ];
+    export type $RecipeFunctionInstance_ = { arguments?: $List_<$RecipeComponent<never>>, function?: $ResolvedRecipeSchemaFunction_, name?: string,  } | [arguments?: $List_<$RecipeComponent<never>>, function?: $ResolvedRecipeSchemaFunction_, name?: string, ];
     export class $RecipeSchemaJSFunction extends $BaseFunction {
         call(scope: $Scriptable, thisObj: $Scriptable, args: $Object[]): $KubeRecipe;
         argTypes: $TypeInfo[];

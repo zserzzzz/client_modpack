@@ -16,8 +16,8 @@ declare module "@package/dev/latvian/mods/kubejs/web/local" {
     export class $KubeJSWeb {
         static register(registry: $LocalWebServerRegistry): void;
         static broadcastEvent(handler: $WSHandler_<never, never>, event: string, requiredTag: string, payload: $Supplier_<$JsonElement>): number;
-        static broadcastUpdate(type: string, requiredTag: string, payload: $Supplier_<$JsonElement>): number;
         static serverStarted(instance: $LocalWebServer_): void;
+        static broadcastUpdate(type: string, requiredTag: string, payload: $Supplier_<$JsonElement>): number;
         static registerWithAuth(registry: $LocalWebServerRegistry): void;
         static addScriptTypeEndpoints(registry: $ServerRegistry_<$KJSHTTPRequest>, s: $ScriptType_, reload: $Runnable_): void;
         static UPDATES: $WSHandler<$KJSHTTPRequest, $KJSWSSession>;

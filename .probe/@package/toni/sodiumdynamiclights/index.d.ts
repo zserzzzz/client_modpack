@@ -6,17 +6,17 @@ declare module "@package/toni/sodiumdynamiclights" {
     export class $DynamicLightSource {
     }
     export interface $DynamicLightSource {
-        sdl$shouldUpdateDynamicLight(): boolean;
         sdl$getLuminance(): number;
-        sdl$resetDynamicLight(): void;
-        sdl$getDynamicLightY(): number;
-        sdl$getDynamicLightLevel(): $Level;
-        sdl$isDynamicLightEnabled(): boolean;
+        sodiumdynamiclights$updateDynamicLight(arg0: $LevelRenderer): boolean;
+        sodiumdynamiclights$scheduleTrackedChunksRebuild(arg0: $LevelRenderer): void;
+        sdl$dynamicLightTick(): void;
         sdl$getDynamicLightX(): number;
         sdl$setDynamicLightEnabled(enabled: boolean): void;
+        sdl$getDynamicLightY(): number;
+        sdl$getDynamicLightLevel(): $Level;
+        sdl$resetDynamicLight(): void;
         sdl$getDynamicLightZ(): number;
-        sdl$dynamicLightTick(): void;
-        sodiumdynamiclights$scheduleTrackedChunksRebuild(arg0: $LevelRenderer): void;
-        sodiumdynamiclights$updateDynamicLight(arg0: $LevelRenderer): boolean;
+        sdl$isDynamicLightEnabled(): boolean;
+        sdl$shouldUpdateDynamicLight(): boolean;
     }
 }

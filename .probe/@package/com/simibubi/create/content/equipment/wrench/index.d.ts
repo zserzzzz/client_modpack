@@ -33,17 +33,17 @@ declare module "@package/com/simibubi/create/content/equipment/wrench" {
         static playRemoveSound(arg0: $Level_, arg1: $BlockPos_): void;
     }
     export interface $IWrenchable {
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
     }
     export class $IWrenchableWithBracket {
     }
     export interface $IWrenchableWithBracket extends $IWrenchable {
+        onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         tryRemoveBracket(arg0: $UseOnContext): boolean;
         removeBracket(arg0: $BlockGetter, arg1: $BlockPos_, arg2: boolean): ($ItemStack) | undefined;
-        onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
     }
     /**
      * Values that may be interpreted as {@link $IWrenchableWithBracket}.

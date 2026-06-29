@@ -7,10 +7,10 @@ declare module "@package/net/minecraft/world/entity/ai/targeting" {
         copy(): $TargetingConditions;
         range(distance: number): $TargetingConditions;
         selector(customPredicate: $Predicate_<$LivingEntity> | null): $TargetingConditions;
-        static forNonCombat(): $TargetingConditions;
-        ignoreLineOfSight(): $TargetingConditions;
         ignoreInvisibilityTesting(): $TargetingConditions;
         static forCombat(): $TargetingConditions;
+        static forNonCombat(): $TargetingConditions;
+        ignoreLineOfSight(): $TargetingConditions;
         static DEFAULT: $TargetingConditions;
     }
 }

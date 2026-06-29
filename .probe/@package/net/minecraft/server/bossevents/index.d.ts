@@ -13,33 +13,33 @@ declare module "@package/net/minecraft/server/bossevents" {
         load(tag: $CompoundTag_, levelRegistry: $HolderLookup$Provider): void;
         save(levelRegistry: $HolderLookup$Provider): $CompoundTag;
         create(id: $ResourceLocation_, name: $Component_): $CustomBossEvent;
-        getEvents(): $Collection<$CustomBossEvent>;
         getIds(): $Collection<$ResourceLocation>;
-        onPlayerDisconnect(player: $ServerPlayer): void;
+        getEvents(): $Collection<$CustomBossEvent>;
         onPlayerConnect(player: $ServerPlayer): void;
+        onPlayerDisconnect(player: $ServerPlayer): void;
         constructor();
-        get events(): $Collection<$CustomBossEvent>;
         get ids(): $Collection<$ResourceLocation>;
+        get events(): $Collection<$CustomBossEvent>;
     }
     export class $CustomBossEvent extends $ServerBossEvent {
-        setMax(max: number): void;
         static load(tag: $CompoundTag_, id: $ResourceLocation_, levelRegistry: $HolderLookup$Provider): $CustomBossEvent;
         getValue(): number;
         save(levelRegistry: $HolderLookup$Provider): $CompoundTag;
         setValue(max: number): void;
         getDisplayName(): $Component;
         getMax(): number;
-        /**
-         * Makes the boss visible to the given player.
-         */
-        onPlayerDisconnect(player: $ServerPlayer): void;
+        setMax(max: number): void;
+        getTextId(): $ResourceLocation;
+        setPlayers(serverPlayerList: $Collection_<$ServerPlayer>): boolean;
         /**
          * Makes the boss visible to the given player.
          */
         onPlayerConnect(player: $ServerPlayer): void;
-        getTextId(): $ResourceLocation;
+        /**
+         * Makes the boss visible to the given player.
+         */
+        onPlayerDisconnect(player: $ServerPlayer): void;
         addOfflinePlayer(player: $UUID_): void;
-        setPlayers(serverPlayerList: $Collection_<$ServerPlayer>): boolean;
         darkenScreen: boolean;
         playBossMusic: boolean;
         color: $BossEvent$BossBarColor;

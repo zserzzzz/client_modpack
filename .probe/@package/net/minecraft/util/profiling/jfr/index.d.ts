@@ -19,10 +19,10 @@ export * as callback from "@package/net/minecraft/util/profiling/jfr/callback";
 
 declare module "@package/net/minecraft/util/profiling/jfr" {
     export class $Environment extends $Enum<$Environment> {
-        getDescription(): string;
         static values(): $Environment[];
         static valueOf(arg0: string): $Environment;
         static from(server: $MinecraftServer): $Environment;
+        getDescription(): string;
         static SERVER: $Environment;
         static CLIENT: $Environment;
         get description(): string;
@@ -40,12 +40,12 @@ declare module "@package/net/minecraft/util/profiling/jfr" {
         start(environment: $Environment_): boolean;
         stop(): $Path;
         isRunning(): boolean;
-        isAvailable(): boolean;
         onWorldLoadedStarted(): $ProfiledDuration;
-        onPacketSent(protocol: $ConnectionProtocol_, packetType: $PacketType_<never>, address: $SocketAddress, size: number): void;
-        onPacketReceived(protocol: $ConnectionProtocol_, packetType: $PacketType_<never>, address: $SocketAddress, size: number): void;
+        isAvailable(): boolean;
         onServerTick(currentAverageTickTime: number): void;
         onChunkGenerate(chunkPos: $ChunkPos, level: $ResourceKey_<$Level>, name: string): $ProfiledDuration;
+        onPacketSent(protocol: $ConnectionProtocol_, packetType: $PacketType_<never>, address: $SocketAddress, size: number): void;
+        onPacketReceived(protocol: $ConnectionProtocol_, packetType: $PacketType_<never>, address: $SocketAddress, size: number): void;
         onRegionFileWrite(regionStorageInfo: $RegionStorageInfo_, chunkPos: $ChunkPos, version: $RegionFileVersion, bytes: number): void;
         onRegionFileRead(regionStorageInfo: $RegionStorageInfo_, chunkPos: $ChunkPos, version: $RegionFileVersion, bytes: number): void;
         static TICK_CATEGORY: string;
@@ -65,12 +65,12 @@ declare module "@package/net/minecraft/util/profiling/jfr" {
         start(environment: $Environment_): boolean;
         stop(): $Path;
         isRunning(): boolean;
-        isAvailable(): boolean;
         onWorldLoadedStarted(): $ProfiledDuration;
-        onPacketSent(protocol: $ConnectionProtocol_, packetType: $PacketType_<never>, address: $SocketAddress, size: number): void;
-        onPacketReceived(protocol: $ConnectionProtocol_, packetType: $PacketType_<never>, address: $SocketAddress, size: number): void;
+        isAvailable(): boolean;
         onServerTick(currentAverageTickTime: number): void;
         onChunkGenerate(chunkPos: $ChunkPos, level: $ResourceKey_<$Level>, name: string): $ProfiledDuration;
+        onPacketSent(protocol: $ConnectionProtocol_, packetType: $PacketType_<never>, address: $SocketAddress, size: number): void;
+        onPacketReceived(protocol: $ConnectionProtocol_, packetType: $PacketType_<never>, address: $SocketAddress, size: number): void;
         onRegionFileWrite(regionStorageInfo: $RegionStorageInfo_, chunkPos: $ChunkPos, version: $RegionFileVersion, bytes: number): void;
         onRegionFileRead(regionStorageInfo: $RegionStorageInfo_, chunkPos: $ChunkPos, version: $RegionFileVersion, bytes: number): void;
         get running(): boolean;
@@ -85,12 +85,12 @@ declare module "@package/net/minecraft/util/profiling/jfr" {
         start(arg0: $Environment_): boolean;
         stop(): $Path;
         isRunning(): boolean;
-        isAvailable(): boolean;
         onWorldLoadedStarted(): $ProfiledDuration;
-        onPacketSent(arg0: $ConnectionProtocol_, arg1: $PacketType_<never>, arg2: $SocketAddress, arg3: number): void;
-        onPacketReceived(arg0: $ConnectionProtocol_, arg1: $PacketType_<never>, arg2: $SocketAddress, arg3: number): void;
+        isAvailable(): boolean;
         onServerTick(arg0: number): void;
         onChunkGenerate(arg0: $ChunkPos, arg1: $ResourceKey_<$Level>, arg2: string): $ProfiledDuration;
+        onPacketSent(arg0: $ConnectionProtocol_, arg1: $PacketType_<never>, arg2: $SocketAddress, arg3: number): void;
+        onPacketReceived(arg0: $ConnectionProtocol_, arg1: $PacketType_<never>, arg2: $SocketAddress, arg3: number): void;
         onRegionFileWrite(arg0: $RegionStorageInfo_, arg1: $ChunkPos, arg2: $RegionFileVersion, arg3: number): void;
         onRegionFileRead(arg0: $RegionStorageInfo_, arg1: $ChunkPos, arg2: $RegionFileVersion, arg3: number): void;
         static noOpCommit: $ProfiledDuration;

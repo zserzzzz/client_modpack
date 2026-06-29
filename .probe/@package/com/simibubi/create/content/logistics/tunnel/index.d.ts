@@ -69,8 +69,8 @@ declare module "@package/com/simibubi/create/content/logistics/tunnel" {
     export class $BrassTunnelBlockEntity$SelectionMode extends $Enum<$BrassTunnelBlockEntity$SelectionMode> implements $INamedIconOptions {
         static values(): $BrassTunnelBlockEntity$SelectionMode[];
         static valueOf(arg0: string): $BrassTunnelBlockEntity$SelectionMode;
-        getIcon(): $AllIcons;
         getTranslationKey(): string;
+        getIcon(): $AllIcons;
         static FORCED_ROUND_ROBIN: $BrassTunnelBlockEntity$SelectionMode;
         static SYNCHRONIZE: $BrassTunnelBlockEntity$SelectionMode;
         static ROUND_ROBIN: $BrassTunnelBlockEntity$SelectionMode;
@@ -78,8 +78,8 @@ declare module "@package/com/simibubi/create/content/logistics/tunnel" {
         static FORCED_SPLIT: $BrassTunnelBlockEntity$SelectionMode;
         static PREFER_NEAREST: $BrassTunnelBlockEntity$SelectionMode;
         static SPLIT: $BrassTunnelBlockEntity$SelectionMode;
-        get icon(): $AllIcons;
         get translationKey(): string;
+        get icon(): $AllIcons;
     }
     /**
      * Values that may be interpreted as {@link $BrassTunnelBlockEntity$SelectionMode}.
@@ -87,9 +87,9 @@ declare module "@package/com/simibubi/create/content/logistics/tunnel" {
     export type $BrassTunnelBlockEntity$SelectionMode_ = "split" | "forced_split" | "round_robin" | "forced_round_robin" | "prefer_nearest" | "randomize" | "synchronize";
     export class $BeltTunnelBlockEntity extends $SmartBlockEntity {
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
-        updateTunnelConnections(): void;
-        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
         flap(arg0: $Direction_, arg1: boolean): void;
+        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
+        updateTunnelConnections(): void;
         flaps: $Map<$Direction, $LerpedFloat>;
         worldPosition: $BlockPos;
         level: $Level;
@@ -108,15 +108,15 @@ declare module "@package/com/simibubi/create/content/logistics/tunnel" {
     }
     export class $BrassTunnelBlockEntity extends $BeltTunnelBlockEntity implements $IHaveGoggleInformation {
         isConnected(arg0: boolean): boolean;
-        testFlapFilter(arg0: $Direction_, arg1: $ItemStack_): boolean;
         addToGoggleTooltip(arg0: $List_<$Component_>, arg1: boolean): boolean;
+        getStackToDistribute(): $ItemStack;
         setStackToDistribute(arg0: $ItemStack_, arg1: $Direction_): void;
         hasDistributionBehaviour(): boolean;
-        getStackToDistribute(): $ItemStack;
         canInsert(arg0: $Direction_, arg1: $ItemStack_): boolean;
+        testFlapFilter(arg0: $Direction_, arg1: $ItemStack_): boolean;
         grabAllStacksOfGroup(arg0: boolean): $List<$ItemStack>;
-        flapFilterEmpty(arg0: $Direction_): boolean;
         getBeltCapability(): $IItemHandler;
+        flapFilterEmpty(arg0: $Direction_): boolean;
         canTakeItems(): boolean;
         containedFluidTooltip(arg0: $List_<$Component_>, arg1: boolean, arg2: $IFluidHandler): boolean;
         getIcon(arg0: boolean): $ItemStack;
@@ -188,61 +188,61 @@ declare module "@package/com/simibubi/create/content/logistics/tunnel" {
      */
     export type $BeltTunnelBlock$Shape_ = "straight" | "window" | "closed" | "t_left" | "t_right" | "cross";
     export class $BrassTunnelItemHandler implements $IItemHandler {
+        getStackInSlot(arg0: number): $ItemStack;
+        getSlots(): number;
+        insertItem(arg0: number, arg1: $ItemStack_, arg2: boolean): $ItemStack;
+        extractItem(arg0: number, arg1: number, arg2: boolean): $ItemStack;
         getSlotLimit(arg0: number): number;
         isItemValid(arg0: number, arg1: $ItemStack_): boolean;
-        extractItem(arg0: number, arg1: number, arg2: boolean): $ItemStack;
-        getSlots(): number;
-        getStackInSlot(arg0: number): $ItemStack;
-        insertItem(arg0: number, arg1: $ItemStack_, arg2: boolean): $ItemStack;
-        kjs$isMutable(): boolean;
         kjs$setStackInSlot(slot: number, stack: $ItemStack_): void;
-        kjs$self(): $IItemHandler;
+        kjs$isMutable(): boolean;
         kjs$getBlock(level: $Level_): $LevelBlock;
-        getHeight(): number;
-        insertItem(stack: $ItemStack_, simulate: boolean): $ItemStack;
+        kjs$self(): $IItemHandler;
         setChanged(): void;
+        insertItem(stack: $ItemStack_, simulate: boolean): $ItemStack;
         asContainer(): $Container;
-        countNonEmpty(): number;
         countNonEmpty(match: $ItemPredicate_): number;
-        getWidth(): number;
-        isEmpty(): boolean;
-        count(): number;
-        count(match: $ItemPredicate_): number;
-        find(match: $ItemPredicate_): number;
-        find(): number;
+        countNonEmpty(): number;
+        getHeight(): number;
+        getAllItems(): $List<$ItemStack>;
         clear(match: $ItemPredicate_): void;
         clear(): void;
-        getAllItems(): $List<$ItemStack>;
+        find(match: $ItemPredicate_): number;
+        find(): number;
+        count(): number;
+        count(match: $ItemPredicate_): number;
+        isEmpty(): boolean;
+        getWidth(): number;
         insertItem(slot: number, stack: $ItemStack_, simulate: boolean): $ItemStack;
-        extractItem(slot: number, amount: number, simulate: boolean): $ItemStack;
-        isItemValid(slot: number, stack: $ItemStack_): boolean;
         getStackInSlot(slot: number): $ItemStack;
+        isItemValid(slot: number, stack: $ItemStack_): boolean;
+        extractItem(slot: number, amount: number, simulate: boolean): $ItemStack;
         getSlotLimit(slot: number): number;
         getSlots(): number;
         constructor(arg0: $BrassTunnelBlockEntity);
         get height(): number;
-        get width(): number;
-        get empty(): boolean;
         get allItems(): $List<$ItemStack>;
+        get empty(): boolean;
+        get width(): number;
     }
     export class $BeltTunnelBlock extends $Block implements $IBE<$BeltTunnelBlockEntity>, $IWrenchable {
-        static isStraight(arg0: $BlockState_): boolean;
-        getBlockEntityType(): $BlockEntityType<$BeltTunnelBlockEntity>;
         static hasWindow(arg0: $BlockState_): boolean;
-        getBlockEntityClass(): $Class<$BeltTunnelBlockEntity>;
-        static isJunction(arg0: $BlockState_): boolean;
-        updateTunnel(arg0: $LevelAccessor, arg1: $BlockPos_): void;
-        isValidPositionForPlacement(arg0: $BlockState_, arg1: $LevelReader, arg2: $BlockPos_): boolean;
+        static isStraight(arg0: $BlockState_): boolean;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$BeltTunnelBlockEntity>): void;
+        getBlockEntityClass(): $Class<$BeltTunnelBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$BeltTunnelBlockEntity>;
+        updateTunnel(arg0: $LevelAccessor, arg1: $BlockPos_): void;
+        static isJunction(arg0: $BlockState_): boolean;
+        isValidPositionForPlacement(arg0: $BlockState_, arg1: $LevelReader, arg2: $BlockPos_): boolean;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$BeltTunnelBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($BeltTunnelBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$BeltTunnelBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $BeltTunnelBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$BeltTunnelBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($BeltTunnelBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$BeltTunnelBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
@@ -275,7 +275,7 @@ declare module "@package/com/simibubi/create/content/logistics/tunnel" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$BeltTunnelBlockEntity>;
         get blockEntityClass(): $Class<$BeltTunnelBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$BeltTunnelBlockEntity>;
     }
 }

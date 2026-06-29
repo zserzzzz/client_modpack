@@ -10,11 +10,11 @@ declare module "@package/org/apache/maven/artifact/repository" {
         isEnabled(): boolean;
         merge(arg0: $ArtifactRepositoryPolicy): void;
         setEnabled(arg0: boolean): void;
+        getChecksumPolicy(): string;
+        setChecksumPolicy(arg0: string): void;
+        checkOutOfDate(arg0: $Date): boolean;
         setUpdatePolicy(arg0: string): void;
         getUpdatePolicy(): string;
-        getChecksumPolicy(): string;
-        checkOutOfDate(arg0: $Date): boolean;
-        setChecksumPolicy(arg0: string): void;
         static CHECKSUM_POLICY_IGNORE: string;
         static UPDATE_POLICY_DAILY: string;
         static CHECKSUM_POLICY_FAIL: string;
@@ -27,66 +27,66 @@ declare module "@package/org/apache/maven/artifact/repository" {
         constructor();
     }
     export class $Authentication {
-        getPrivateKey(): string;
         getPassword(): string;
         setPassword(arg0: string): void;
-        setUsername(arg0: string): void;
+        getPrivateKey(): string;
         getUsername(): string;
+        setUsername(arg0: string): void;
+        setPrivateKey(arg0: string): void;
         getPassphrase(): string;
         setPassphrase(arg0: string): void;
-        setPrivateKey(arg0: string): void;
         constructor(arg0: string, arg1: string);
     }
     export class $ArtifactRepository {
     }
     export interface $ArtifactRepository {
-        setUrl(arg0: string): void;
-        /**
-         * @deprecated
-         */
-        isBlacklisted(): boolean;
         getKey(): string;
         find(arg0: $Artifact): $Artifact;
         getId(): string;
         getProtocol(): string;
-        getProxy(): $Proxy;
+        setId(arg0: string): void;
         getUrl(): string;
         getLayout(): $ArtifactRepositoryLayout;
         setLayout(arg0: $ArtifactRepositoryLayout): void;
-        setId(arg0: string): void;
-        getReleases(): $ArtifactRepositoryPolicy;
+        getProxy(): $Proxy;
         getSnapshots(): $ArtifactRepositoryPolicy;
+        getReleases(): $ArtifactRepositoryPolicy;
+        /**
+         * @deprecated
+         */
+        isBlacklisted(): boolean;
+        setProxy(arg0: $Proxy): void;
         isBlocked(): boolean;
         setBlocked(arg0: boolean): void;
-        setProxy(arg0: $Proxy): void;
+        setUrl(arg0: string): void;
         pathOfRemoteRepositoryMetadata(arg0: $ArtifactMetadata): string;
         pathOfLocalRepositoryMetadata(arg0: $ArtifactMetadata, arg1: $ArtifactRepository): string;
-        findVersions(arg0: $Artifact): $List<string>;
-        isProjectAware(): boolean;
-        setAuthentication(arg0: $Authentication): void;
         /**
          * @deprecated
          */
         isUniqueVersion(): boolean;
-        getAuthentication(): $Authentication;
         /**
          * @deprecated
          */
         setBlacklisted(arg0: boolean): void;
-        setSnapshotUpdatePolicy(arg0: $ArtifactRepositoryPolicy): void;
-        getMirroredRepositories(): $List<$ArtifactRepository>;
-        setMirroredRepositories(arg0: $List_<$ArtifactRepository>): void;
-        setReleaseUpdatePolicy(arg0: $ArtifactRepositoryPolicy): void;
+        findVersions(arg0: $Artifact): $List<string>;
+        isProjectAware(): boolean;
+        setAuthentication(arg0: $Authentication): void;
+        getAuthentication(): $Authentication;
         pathOf(arg0: $Artifact): string;
         getBasedir(): string;
+        getMirroredRepositories(): $List<$ArtifactRepository>;
+        setMirroredRepositories(arg0: $List_<$ArtifactRepository>): void;
+        setSnapshotUpdatePolicy(arg0: $ArtifactRepositoryPolicy): void;
+        setReleaseUpdatePolicy(arg0: $ArtifactRepositoryPolicy): void;
         get key(): string;
         get protocol(): string;
-        get releases(): $ArtifactRepositoryPolicy;
         get snapshots(): $ArtifactRepositoryPolicy;
-        get projectAware(): boolean;
+        get releases(): $ArtifactRepositoryPolicy;
         get uniqueVersion(): boolean;
+        get projectAware(): boolean;
+        get basedir(): string;
         set snapshotUpdatePolicy(value: $ArtifactRepositoryPolicy);
         set releaseUpdatePolicy(value: $ArtifactRepositoryPolicy);
-        get basedir(): string;
     }
 }

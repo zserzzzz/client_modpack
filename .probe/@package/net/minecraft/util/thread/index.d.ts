@@ -21,17 +21,17 @@ declare module "@package/net/minecraft/util/thread" {
         get empty(): boolean;
     }
     export class $ProcessorMailbox<T> implements $ProfilerMeasured, $ProcessorHandle<T>, $AutoCloseable, $Runnable {
+        hasWork(): boolean;
         name(): string;
         run(): void;
         size(): number;
         close(): void;
         static create(dispatcher: $Executor_, name: string): $ProcessorMailbox<$Runnable>;
         profiledMetrics(): $List<$MetricSampler>;
-        hasWork(): boolean;
-        tell(task: T): void;
         runAll(): void;
-        ask<Source>(task: $Function_<$ProcessorHandle<Source>, T>): $CompletableFuture<Source>;
+        tell(task: T): void;
         askEither<Source>(task: $Function_<$ProcessorHandle<$Either<Source, $Exception>>, T>): $CompletableFuture<Source>;
+        ask<Source>(task: $Function_<$ProcessorHandle<Source>, T>): $CompletableFuture<Source>;
         constructor(queue: $StrictQueue<T, $Runnable_>, dispatcher: $Executor_, name: string);
     }
     export class $StrictQueue<T, F> {
@@ -57,13 +57,11 @@ declare module "@package/net/minecraft/util/thread" {
     export interface $ProcessorHandle<Msg> extends $AutoCloseable {
         name(): string;
         close(): void;
+        askEither<Source>(task: $Function_<$ProcessorHandle<$Either<Source, $Exception>>, Msg>): $CompletableFuture<Source>;
         tell(task: Msg): void;
         ask<Source>(task: $Function_<$ProcessorHandle<Source>, Msg>): $CompletableFuture<Source>;
-        askEither<Source>(task: $Function_<$ProcessorHandle<$Either<Source, $Exception>>, Msg>): $CompletableFuture<Source>;
     }
     export class $BlockableEventLoop<R extends $Runnable> implements $ProfilerMeasured, $ProcessorHandle<R>, $Executor {
-        getPendingTasksCount(): number;
-        scheduleExecutables(): boolean;
         name(): string;
         execute(task: $Runnable_): void;
         /**
@@ -73,23 +71,25 @@ declare module "@package/net/minecraft/util/thread" {
         submit(task: $Runnable_): $CompletableFuture<void>;
         submit<V>(supplier: $Supplier_<V>): $CompletableFuture<V>;
         pollTask(): boolean;
-        handler$hpf000$essential$runEssentialTasks(callbackInfo: $CallbackInfo): void;
-        wrapRunnable(runnable: $Runnable_): R;
-        getRunningThread(): $Thread;
+        getPendingTasksCount(): number;
+        scheduleExecutables(): boolean;
         runAllTasks(): void;
         dropAllTasks(): void;
-        executeIfPossible(task: $Runnable_): void;
-        submitAsync(task: $Runnable_): $CompletableFuture<void>;
-        profiledMetrics(): $List<$MetricSampler>;
+        wrapRunnable(runnable: $Runnable_): R;
+        getRunningThread(): $Thread;
         isSameThread(): boolean;
-        waitForTasks(): void;
+        submitAsync(task: $Runnable_): $CompletableFuture<void>;
         executeBlocking(task: $Runnable_): void;
+        waitForTasks(): void;
+        profiledMetrics(): $List<$MetricSampler>;
+        executeIfPossible(task: $Runnable_): void;
+        handler$hpf000$essential$runEssentialTasks(callbackInfo: $CallbackInfo): void;
         shouldRun(runnable: R): boolean;
         doRunTask(task: R): void;
         tell(task: R): void;
         close(): void;
-        ask<Source>(task: $Function_<$ProcessorHandle<Source>, R>): $CompletableFuture<Source>;
         askEither<Source>(task: $Function_<$ProcessorHandle<$Either<Source, $Exception>>, R>): $CompletableFuture<Source>;
+        ask<Source>(task: $Function_<$ProcessorHandle<Source>, R>): $CompletableFuture<Source>;
         pendingRunnables: $Queue<R>;
         constructor(name: string);
         get pendingTasksCount(): number;

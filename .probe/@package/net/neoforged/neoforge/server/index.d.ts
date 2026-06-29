@@ -18,13 +18,13 @@ declare module "@package/net/neoforged/neoforge/server" {
         constructor();
     }
     export class $ServerLifecycleHooks {
-        static getCurrentServer(): $MinecraftServer;
-        static handleServerStopping(server: $MinecraftServer): void;
         static handleServerStarted(server: $MinecraftServer): void;
+        static handleServerStopping(server: $MinecraftServer): void;
         static handleServerStopped(server: $MinecraftServer): void;
         static expectServerStopped(): void;
         static handleServerAboutToStart(server: $MinecraftServer): void;
         static handleServerStarting(server: $MinecraftServer): void;
+        static getCurrentServer(): $MinecraftServer;
         static handleExit(retVal: number): void;
         constructor();
         static get currentServer(): $MinecraftServer;

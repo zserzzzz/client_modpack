@@ -69,91 +69,91 @@ declare module "@package/org/spongepowered/asm/mixin" {
      */
     export type $MixinEnvironment$Side_ = "unknown" | "client" | "server";
     export class $MixinEnvironment implements $ITokenProvider {
-        getRefmapObfuscationContext(): string;
-        getSide(): $MixinEnvironment$Side;
-        getPhase(): $MixinEnvironment$Phase;
-        setSide(arg0: $MixinEnvironment$Side_): $MixinEnvironment;
-        audit(): void;
-        getOption(arg0: $MixinEnvironment$Option_): boolean;
-        getOption<E extends $Enum<E>>(arg0: $MixinEnvironment$Option_, arg1: E): E;
-        setOption(arg0: $MixinEnvironment$Option_, arg1: boolean): void;
-        getToken(arg0: string): number;
-        static init(arg0: $MixinEnvironment$Phase): void;
-        getVersion(): string;
         /**
          * @deprecated
          */
-        getTransformers(): $List<$ITransformer>;
+        getMixinConfigs(): $List<string>;
         getOptionValue(arg0: $MixinEnvironment$Option_): string;
         getRemappers(): $RemapperChain;
         /**
          * @deprecated
          */
-        static getProfiler(): $Profiler;
-        /**
-         * @deprecated
-         */
         addConfiguration(arg0: string): $MixinEnvironment;
-        static getEnvironment(arg0: $MixinEnvironment$Phase): $MixinEnvironment;
         /**
          * @deprecated
          */
-        getMixinConfigs(): $List<string>;
+        static getProfiler(): $Profiler;
+        audit(): void;
+        getOption(arg0: $MixinEnvironment$Option_): boolean;
+        getOption<E extends $Enum<E>>(arg0: $MixinEnvironment$Option_, arg1: E): E;
+        setOption(arg0: $MixinEnvironment$Option_, arg1: boolean): void;
+        static init(arg0: $MixinEnvironment$Phase): void;
+        getVersion(): string;
+        getToken(arg0: string): number;
+        static getEnvironment(arg0: $MixinEnvironment$Phase): $MixinEnvironment;
         static getMinCompatibilityLevel(): $MixinEnvironment$CompatibilityLevel;
         /**
          * @deprecated
          */
         addTransformerExclusion(arg0: string): void;
-        registerTokenProviderClass(arg0: string): $MixinEnvironment;
-        static getCompatibilityLevel(): $MixinEnvironment$CompatibilityLevel;
+        getActiveTransformer(): $Object;
         getObfuscationContext(): string;
-        setActiveTransformer(arg0: $IMixinTransformer): void;
-        /**
-         * @deprecated
-         */
-        static setCompatibilityLevel(arg0: $MixinEnvironment$CompatibilityLevel_): void;
-        registerTokenProvider(arg0: $IEnvironmentTokenProvider): $MixinEnvironment;
+        static getDefaultEnvironment(): $MixinEnvironment;
+        static getCurrentEnvironment(): $MixinEnvironment;
         /**
          * @deprecated
          */
         getErrorHandlerClasses(): $Set<string>;
-        static getDefaultEnvironment(): $MixinEnvironment;
-        getActiveTransformer(): $Object;
-        static getCurrentEnvironment(): $MixinEnvironment;
-        setObfuscationContext(arg0: string): void;
-        get refmapObfuscationContext(): string;
-        get phase(): $MixinEnvironment$Phase;
-        get version(): string;
-        get transformers(): $List<$ITransformer>;
-        get remappers(): $RemapperChain;
-        static get profiler(): $Profiler;
-        get mixinConfigs(): $List<string>;
-        static get minCompatibilityLevel(): $MixinEnvironment$CompatibilityLevel;
-        get errorHandlerClasses(): $Set<string>;
-        static get defaultEnvironment(): $MixinEnvironment;
-        static get currentEnvironment(): $MixinEnvironment;
-    }
-    export class $MixinEnvironment$CompatibilityLevel extends $Enum<$MixinEnvironment$CompatibilityLevel> {
+        registerTokenProviderClass(arg0: string): $MixinEnvironment;
         /**
          * @deprecated
          */
-        supportsMethodsInInterfaces(): boolean;
-        canSupport(arg0: $MixinEnvironment$CompatibilityLevel_): boolean;
-        isAtLeast(arg0: $MixinEnvironment$CompatibilityLevel_): boolean;
-        isLessThan(arg0: $MixinEnvironment$CompatibilityLevel_): boolean;
+        static setCompatibilityLevel(arg0: $MixinEnvironment$CompatibilityLevel_): void;
+        setObfuscationContext(arg0: string): void;
+        registerTokenProvider(arg0: $IEnvironmentTokenProvider): $MixinEnvironment;
+        setActiveTransformer(arg0: $IMixinTransformer): void;
+        static getCompatibilityLevel(): $MixinEnvironment$CompatibilityLevel;
+        /**
+         * @deprecated
+         */
+        getTransformers(): $List<$ITransformer>;
+        getRefmapObfuscationContext(): string;
+        setSide(arg0: $MixinEnvironment$Side_): $MixinEnvironment;
+        getPhase(): $MixinEnvironment$Phase;
+        getSide(): $MixinEnvironment$Side;
+        get mixinConfigs(): $List<string>;
+        get remappers(): $RemapperChain;
+        static get profiler(): $Profiler;
+        get version(): string;
+        static get minCompatibilityLevel(): $MixinEnvironment$CompatibilityLevel;
+        static get defaultEnvironment(): $MixinEnvironment;
+        static get currentEnvironment(): $MixinEnvironment;
+        get errorHandlerClasses(): $Set<string>;
+        get transformers(): $List<$ITransformer>;
+        get refmapObfuscationContext(): string;
+        get phase(): $MixinEnvironment$Phase;
+    }
+    export class $MixinEnvironment$CompatibilityLevel extends $Enum<$MixinEnvironment$CompatibilityLevel> {
         canElevateTo(arg0: $MixinEnvironment$CompatibilityLevel_): boolean;
+        getClassVersion(): number;
+        static getMaxEffective(): $MixinEnvironment$CompatibilityLevel;
+        static requiredFor(arg0: number): $MixinEnvironment$CompatibilityLevel;
         /**
          * @deprecated
          */
         classVersion(): number;
-        static requiredFor(arg0: number): $MixinEnvironment$CompatibilityLevel;
-        static getMaxEffective(): $MixinEnvironment$CompatibilityLevel;
-        getClassVersion(): number;
         static values(): $MixinEnvironment$CompatibilityLevel[];
         static valueOf(arg0: string): $MixinEnvironment$CompatibilityLevel;
-        supports(arg0: number): boolean;
-        getClassMajorVersion(): number;
         getLanguageFeatures(): number;
+        getClassMajorVersion(): number;
+        /**
+         * @deprecated
+         */
+        supportsMethodsInInterfaces(): boolean;
+        supports(arg0: number): boolean;
+        isLessThan(arg0: $MixinEnvironment$CompatibilityLevel_): boolean;
+        canSupport(arg0: $MixinEnvironment$CompatibilityLevel_): boolean;
+        isAtLeast(arg0: $MixinEnvironment$CompatibilityLevel_): boolean;
         static JAVA_20: $MixinEnvironment$CompatibilityLevel;
         static JAVA_12: $MixinEnvironment$CompatibilityLevel;
         static JAVA_13: $MixinEnvironment$CompatibilityLevel;
@@ -174,8 +174,8 @@ declare module "@package/org/spongepowered/asm/mixin" {
         static DEFAULT: $MixinEnvironment$CompatibilityLevel;
         static MAX_SUPPORTED: $MixinEnvironment$CompatibilityLevel;
         static get maxEffective(): $MixinEnvironment$CompatibilityLevel;
-        get classMajorVersion(): number;
         get languageFeatures(): number;
+        get classMajorVersion(): number;
     }
     /**
      * Values that may be interpreted as {@link $MixinEnvironment$CompatibilityLevel}.

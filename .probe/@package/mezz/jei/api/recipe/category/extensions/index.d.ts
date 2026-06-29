@@ -13,8 +13,8 @@ declare module "@package/mezz/jei/api/recipe/category/extensions" {
     export class $IRecipeCategoryDecorator<T> {
     }
     export interface $IRecipeCategoryDecorator<T> {
-        decorateTooltips(arg0: $ITooltipBuilder, arg1: T, arg2: $IRecipeCategory<T>, arg3: $IRecipeSlotsView_, arg4: number, arg5: number): void;
         draw(arg0: T, arg1: $IRecipeCategory<T>, arg2: $IRecipeSlotsView_, arg3: $GuiGraphics, arg4: number, arg5: number): void;
+        decorateTooltips(arg0: $ITooltipBuilder, arg1: T, arg2: $IRecipeCategory<T>, arg3: $IRecipeSlotsView_, arg4: number, arg5: number): void;
         /**
          * @deprecated
          */
@@ -23,12 +23,7 @@ declare module "@package/mezz/jei/api/recipe/category/extensions" {
     export class $IRecipeCategoryExtension<T> {
     }
     export interface $IRecipeCategoryExtension<T> {
-        isHandled(arg0: T): boolean;
-        /**
-         * @deprecated
-         */
-        drawInfo(arg0: number, arg1: number, arg2: $GuiGraphics, arg3: number, arg4: number): void;
-        drawInfo(arg0: T, arg1: number, arg2: number, arg3: $GuiGraphics, arg4: number, arg5: number): void;
+        getTooltip(arg0: $ITooltipBuilder, arg1: T, arg2: number, arg3: number): void;
         /**
          * @deprecated
          */
@@ -50,6 +45,11 @@ declare module "@package/mezz/jei/api/recipe/category/extensions" {
          */
         createRecipeExtras(arg0: T, arg1: $IRecipeExtrasBuilder, arg2: $IRecipeSlotsView_, arg3: $ICraftingGridHelper, arg4: $IFocusGroup): void;
         createRecipeExtras(arg0: T, arg1: $IRecipeExtrasBuilder, arg2: $ICraftingGridHelper, arg3: $IFocusGroup): void;
-        getTooltip(arg0: $ITooltipBuilder, arg1: T, arg2: number, arg3: number): void;
+        isHandled(arg0: T): boolean;
+        /**
+         * @deprecated
+         */
+        drawInfo(arg0: number, arg1: number, arg2: $GuiGraphics, arg3: number, arg4: number): void;
+        drawInfo(arg0: T, arg1: number, arg2: number, arg3: $GuiGraphics, arg4: number, arg5: number): void;
     }
 }

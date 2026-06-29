@@ -14,25 +14,25 @@ declare module "@package/com/github/argon4w/acceleratedrendering/core/buffers/en
     }
     export interface $IBufferEnvironment {
         clear(): void;
-        getImmediateMeshBuffer(): $IServerBuffer;
         getLayout(): $VertexLayout;
         isAccelerated(arg0: $VertexFormat): boolean;
         getVertexSize(): number;
         setupBufferState(): void;
+        getImmediateMeshBuffer(): $IServerBuffer;
         getDrawMethod(): $IDrawMethod;
+        selectMeshUploadingProgramDispatcher(): $MeshUploadingProgramDispatcher;
+        getVertexFormats(): $Set<$VertexFormat>;
         getProgramOverride(arg0: $RenderType): $ProgramOverride;
         getProgramOverride(arg0: number): $ProgramOverride;
         getOverrideCount(): number;
-        getVertexFormats(): $Set<$VertexFormat>;
         selectCullingProgramDispatcher(arg0: $RenderType): $ICullingProgramDispatcher;
         selectProcessingProgramDispatcher(arg0: $VertexFormat$Mode_): $IPolygonProgramDispatcher;
         selectTransformProgramDispatcher(): $TransformProgramDispatcher;
-        selectMeshUploadingProgramDispatcher(): $MeshUploadingProgramDispatcher;
-        get immediateMeshBuffer(): $IServerBuffer;
         get layout(): $VertexLayout;
         get vertexSize(): number;
+        get immediateMeshBuffer(): $IServerBuffer;
         get drawMethod(): $IDrawMethod;
-        get overrideCount(): number;
         get vertexFormats(): $Set<$VertexFormat>;
+        get overrideCount(): number;
     }
 }

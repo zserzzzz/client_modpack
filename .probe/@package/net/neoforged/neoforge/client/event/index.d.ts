@@ -90,17 +90,17 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          */
         getRenderer(): $GameRenderer;
         /**
-         * @return the camera information
-         */
-        getCamera(): $Camera;
-        /**
          * @return the partial tick
          */
         getPartialTick(): number;
+        /**
+         * @return the camera information
+         */
+        getCamera(): $Camera;
         constructor(renderer: $GameRenderer, camera: $Camera, partialTick: number);
         get renderer(): $GameRenderer;
-        get camera(): $Camera;
         get partialTick(): number;
+        get camera(): $Camera;
     }
     /**
      * Fired for registering additional skull models at the appropriate time.
@@ -112,15 +112,15 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $EntityRenderersEvent$CreateSkullModels extends $EntityRenderersEvent {
         /**
-         * @return the set of entity models
-         */
-        getEntityModelSet(): $EntityModelSet;
-        /**
          * Registers the constructor for a skull block with the given `Type`.
          * These will be inserted into the maps used by the item, entity, and block model renderers at the appropriate
          * time.
          */
         registerSkullModel(type: $SkullBlock$Type_, model: $SkullModelBase): void;
+        /**
+         * @return the set of entity models
+         */
+        getEntityModelSet(): $EntityModelSet;
         constructor(builder: $ImmutableMap$Builder<$SkullBlock$Type_, $SkullModelBase>, entityModelSet: $EntityModelSet);
         get entityModelSet(): $EntityModelSet;
     }
@@ -156,6 +156,15 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          */
         isSystem(): boolean;
         /**
+         * Sets the new message to be displayed in the chat message window, if the event is not cancelled.
+         */
+        setMessage(message: $Component_): void;
+        /**
+         * @return the message sender.
+         * This will be `Util#NIL_UUID` if the message is a system message.
+         */
+        getSender(): $UUID;
+        /**
          * @return the bound chat type of the chat message.
          * This contains the chat type, display name of the sender, and nullable target name depending on the chat type.
          * 
@@ -163,23 +172,14 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          */
         getBoundChatType(): $ChatType$Bound;
         /**
-         * @return the message sender.
-         * This will be `Util#NIL_UUID` if the message is a system message.
-         */
-        getSender(): $UUID;
-        /**
-         * Sets the new message to be displayed in the chat message window, if the event is not cancelled.
-         */
-        setMessage(message: $Component_): void;
-        setCanceled(arg0: boolean): void;
-        /**
          * @return `true` if the message was sent by the system, `false` otherwise
          */
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(boundChatType: $ChatType$Bound_, message: $Component_, sender: $UUID_);
         get system(): boolean;
-        get boundChatType(): $ChatType$Bound;
         get sender(): $UUID;
+        get boundChatType(): $ChatType$Bound;
     }
     /**
      * Allows users to register custom key mappings.
@@ -219,10 +219,6 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $RenderArmEvent extends $Event implements $ICancellableEvent {
         /**
-         * @return the source of rendering buffers
-         */
-        getMultiBufferSource(): $MultiBufferSource;
-        /**
          * @return the amount of packed (sky and block) light for rendering
          */
         getPackedLight(): number;
@@ -236,16 +232,20 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          */
         getPlayer(): $AbstractClientPlayer;
         /**
+         * @return the source of rendering buffers
+         */
+        getMultiBufferSource(): $MultiBufferSource;
+        /**
          * @return the arm being rendered
          */
         getArm(): $HumanoidArm;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(poseStack: $PoseStack, multiBufferSource: $MultiBufferSource_, packedLight: number, player: $AbstractClientPlayer, arm: $HumanoidArm_);
-        get multiBufferSource(): $MultiBufferSource;
         get packedLight(): number;
         get poseStack(): $PoseStack;
         get player(): $AbstractClientPlayer;
+        get multiBufferSource(): $MultiBufferSource;
         get arm(): $HumanoidArm;
     }
     /**
@@ -282,8 +282,8 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * only on the logical client.
      */
     export class $ScreenEvent$MouseDragged$Pre extends $ScreenEvent$MouseDragged implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(screen: $Screen, mouseX: number, mouseY: number, mouseButton: number, dragX: number, dragY: number);
     }
     /**
@@ -325,17 +325,13 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $RenderTooltipEvent extends $Event {
         /**
-         * @return The font used to render the text
+         * @return the X position of the tooltip box By default, this is the mouse X position.
          */
-        getFont(): $Font;
+        getY(): number;
         /**
          * @return the X position of the tooltip box By default, this is the mouse X position.
          */
         getX(): number;
-        /**
-         * @return the X position of the tooltip box By default, this is the mouse X position.
-         */
-        getY(): number;
         /**
          * @return the graphics helper for the gui
          */
@@ -351,12 +347,16 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * Use `ItemTooltipEvent` or `GatherComponents` to modify tooltip contents or components.
          */
         getComponents(): $List<$ClientTooltipComponent>;
-        get font(): $Font;
-        get x(): number;
+        /**
+         * @return The font used to render the text
+         */
+        getFont(): $Font;
         get y(): number;
+        get x(): number;
         get graphics(): $GuiGraphics;
         get itemStack(): $ItemStack;
         get components(): $List<$ClientTooltipComponent>;
+        get font(): $Font;
     }
     /**
      * Fired when the `RecipeManager` has received and synced the recipes from the server to the client.
@@ -380,30 +380,30 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $RenderPlayerEvent extends $PlayerEvent {
         /**
+         * @return the amount of packed (sky and block) light for rendering
+         */
+        getPackedLight(): number;
+        /**
          * @return the player entity renderer
          */
         getRenderer(): $PlayerRenderer;
         /**
-         * @return the source of rendering buffers
+         * @return the pose stack used for rendering
          */
-        getMultiBufferSource(): $MultiBufferSource;
-        /**
-         * @return the amount of packed (sky and block) light for rendering
-         */
-        getPackedLight(): number;
+        getPoseStack(): $PoseStack;
         /**
          * @return the partial tick
          */
         getPartialTick(): number;
         /**
-         * @return the pose stack used for rendering
+         * @return the source of rendering buffers
          */
-        getPoseStack(): $PoseStack;
-        get renderer(): $PlayerRenderer;
-        get multiBufferSource(): $MultiBufferSource;
+        getMultiBufferSource(): $MultiBufferSource;
         get packedLight(): number;
-        get partialTick(): number;
+        get renderer(): $PlayerRenderer;
         get poseStack(): $PoseStack;
+        get partialTick(): number;
+        get multiBufferSource(): $MultiBufferSource;
     }
     /**
      * Allows users to register custom `DimensionSpecialEffects` for their dimensions.
@@ -437,24 +437,24 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $ComputeFovModifierEvent extends $Event {
         /**
-         * @return the original field of vision (FOV) of the player, before any modifications or interpolation
+         * Sets the new field of vision (FOV) of the player.
          */
-        getFovModifier(): number;
+        setNewFovModifier(newFovModifier: number): void;
         /**
          * @return the original field of vision (FOV) of the player, before any modifications or interpolation
          */
         getNewFovModifier(): number;
         /**
-         * Sets the new field of vision (FOV) of the player.
-         */
-        setNewFovModifier(newFovModifier: number): void;
-        /**
          * @return the player affected by this event
          */
         getPlayer(): $Player;
+        /**
+         * @return the original field of vision (FOV) of the player, before any modifications or interpolation
+         */
+        getFovModifier(): number;
         constructor(player: $Player, fovModifier: number);
-        get fovModifier(): number;
         get player(): $Player;
+        get fovModifier(): number;
     }
     /**
      * Fired **before** the chat messages overlay is rendered to the screen.
@@ -465,8 +465,6 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * only on the logical client.
      */
     export class $CustomizeGuiOverlayEvent$Chat extends $CustomizeGuiOverlayEvent {
-        getPosX(): number;
-        getPosY(): number;
         /**
          * Sets the new X position for rendering the chat messages overlay
          */
@@ -475,6 +473,8 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * Sets the new X position for rendering the chat messages overlay
          */
         setPosX(posX: number): void;
+        getPosY(): number;
+        getPosX(): number;
         constructor(window: $Window, guiGraphics: $GuiGraphics, partialTick: $DeltaTracker, posX: number, posY: number);
     }
     /**
@@ -488,13 +488,13 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $EntityRenderersEvent$RegisterRenderers extends $EntityRenderersEvent {
         /**
-         * Registers a block entity renderer for the given block entity type.
-         */
-        registerBlockEntityRenderer<T extends $BlockEntity>(blockEntityType: $BlockEntityType_<T>, blockEntityRendererProvider: $BlockEntityRendererProvider_<T>): void;
-        /**
          * Registers an entity renderer for the given entity type.
          */
         registerEntityRenderer<T extends $Entity>(entityType: $EntityType_<T>, entityRendererProvider: $EntityRendererProvider_<T>): void;
+        /**
+         * Registers a block entity renderer for the given block entity type.
+         */
+        registerBlockEntityRenderer<T extends $BlockEntity>(blockEntityType: $BlockEntityType_<T>, blockEntityRendererProvider: $BlockEntityRendererProvider_<T>): void;
         constructor();
     }
     /**
@@ -508,8 +508,8 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * only on the logical client.
      */
     export class $ScreenEvent$MouseButtonReleased$Pre extends $ScreenEvent$MouseButtonReleased implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(screen: $Screen, mouseX: number, mouseY: number, button: number);
     }
     /**
@@ -555,8 +555,8 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * only on the logical client.
      */
     export class $RenderGuiEvent$Pre extends $RenderGuiEvent implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(guiGraphics: $GuiGraphics, partialTick: $DeltaTracker);
     }
     /**
@@ -608,25 +608,25 @@ declare module "@package/net/neoforged/neoforge/client/event" {
         /**
          * @return the X position of the boss health bar
          */
-        getX(): number;
-        /**
-         * @return the X position of the boss health bar
-         */
         getY(): number;
         /**
          * @return the X position of the boss health bar
          */
-        getIncrement(): number;
+        getX(): number;
         /**
          * Sets the Y position increment before rendering the next boss health bar.
          */
         setIncrement(increment: number): void;
         getBossEvent(): $LerpingBossEvent;
-        setCanceled(arg0: boolean): void;
+        /**
+         * @return the X position of the boss health bar
+         */
+        getIncrement(): number;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(window: $Window, guiGraphics: $GuiGraphics, partialTick: $DeltaTracker, bossEvent: $LerpingBossEvent, x: number, y: number, increment: number);
-        get x(): number;
         get y(): number;
+        get x(): number;
         get bossEvent(): $LerpingBossEvent;
     }
     /**
@@ -639,6 +639,10 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $RegisterShadersEvent extends $Event implements $IModBusEvent {
         /**
+         * @return the client-side resource provider
+         */
+        getResourceProvider(): $ResourceProvider;
+        /**
          * Registers a shader, and a callback for when the shader is loaded.
          * 
          * When creating a `ShaderInstance`, pass in the resource provider as the resource provider.
@@ -647,10 +651,6 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * passed into the registered load callback.
          */
         registerShader(shaderInstance: $ShaderInstance, onLoaded: $Consumer_<$ShaderInstance>): void;
-        /**
-         * @return the client-side resource provider
-         */
-        getResourceProvider(): $ResourceProvider;
         constructor(resourceProvider: $ResourceProvider_, shaderList: $List_<$Pair<$ShaderInstance, $Consumer_<$ShaderInstance>>>);
         get resourceProvider(): $ResourceProvider;
     }
@@ -660,13 +660,13 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $RegisterJsonAnimationTypesEvent extends $Event implements $IModBusEvent {
         /**
-         * Register a custom `AnimationTarget` with the specified `key`.
-         */
-        registerTarget(key: $ResourceLocation_, target: $AnimationTarget_): void;
-        /**
          * Register a custom interpolation function with the specified `key`.
          */
         registerInterpolation(key: $ResourceLocation_, interpolation: $AnimationChannel$Interpolation_): void;
+        /**
+         * Register a custom `AnimationTarget` with the specified `key`.
+         */
+        registerTarget(key: $ResourceLocation_, target: $AnimationTarget_): void;
         constructor(targets: $ImmutableMap$Builder<$ResourceLocation_, $AnimationTarget_>, interpolations: $ImmutableMap$Builder<$ResourceLocation_, $AnimationChannel$Interpolation_>);
     }
     /**
@@ -686,6 +686,10 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          */
         isCompact(): boolean;
         /**
+         * The available space to the right of the inventory.
+         */
+        getHorizontalOffset(): number;
+        /**
          * Replaces the horizontal offset of the effect stack
          */
         setHorizontalOffset(offset: number): void;
@@ -696,23 +700,19 @@ declare module "@package/net/neoforged/neoforge/client/event" {
         /**
          * The available space to the right of the inventory.
          */
-        getHorizontalOffset(): number;
-        /**
-         * The available space to the right of the inventory.
-         */
         getAvailableSpace(): number;
         /**
          * Sets whether the effects should be rendered in compact mode (only icons, no text), or the default full size.
          */
         setCompact(compact: boolean): void;
         /**
-         * Sets whether the effects should be rendered in compact mode (only icons, no text), or the default full size.
-         */
-        setCanceled(compact: boolean): void;
-        /**
          * Whether the effects should be rendered in compact mode (only icons, no text), or the default full size.
          */
         isCanceled(): boolean;
+        /**
+         * Sets whether the effects should be rendered in compact mode (only icons, no text), or the default full size.
+         */
+        setCanceled(compact: boolean): void;
         constructor(screen: $Screen, availableSpace: number, compact: boolean, horizontalOffset: number);
         get availableSpace(): number;
     }
@@ -808,8 +808,8 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * only on the logical client.
      */
     export class $ScreenEvent$Render$Pre extends $ScreenEvent$Render implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(screen: $Screen, guiGraphics: $GuiGraphics, mouseX: number, mouseY: number, partialTick: number);
     }
     /**
@@ -822,14 +822,6 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $CalculatePlayerTurnEvent extends $Event {
         /**
-         * Sets the cinematic camera value.
-         */
-        setCinematicCameraEnabled(cinematicCameraEnabled: boolean): void;
-        /**
-         * Sets the mouse sensitivity value.
-         */
-        setMouseSensitivity(mouseSensitivity: number): void;
-        /**
          * Returns the raw cinematic camera value
          */
         getCinematicCameraEnabled(): boolean;
@@ -837,6 +829,14 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * Returns the raw mouse sensitivity value
          */
         getMouseSensitivity(): number;
+        /**
+         * Sets the mouse sensitivity value.
+         */
+        setMouseSensitivity(mouseSensitivity: number): void;
+        /**
+         * Sets the cinematic camera value.
+         */
+        setCinematicCameraEnabled(cinematicCameraEnabled: boolean): void;
         constructor(mouseSensitivity: number, cinematicCameraEnabled: boolean);
     }
     /**
@@ -867,8 +867,8 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * only on the logical client.
      */
     export class $InputEvent$MouseButton$Pre extends $InputEvent$MouseButton implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(button: number, action: number, modifiers: number);
     }
     /**
@@ -894,15 +894,11 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * @return the type of fog being rendered
          */
         getType(): $FogType;
-        /**
-         * Sets the new shape of the fog being rendered. The new shape will only take effect if the event is cancelled.
-         */
-        setFogShape(shape: $FogShape_): void;
         getMode(): $FogRenderer$FogMode;
         /**
-         * @return the shape of the fog being rendered
+         * Sets the distance to the far plane of the fog.
          */
-        getFogShape(): $FogShape;
+        scaleFarPlaneDistance(distance: number): void;
         /**
          * Sets the distance to the far plane of the fog.
          */
@@ -910,25 +906,29 @@ declare module "@package/net/neoforged/neoforge/client/event" {
         /**
          * Sets the distance to the far plane of the fog.
          */
-        scaleFarPlaneDistance(distance: number): void;
+        setNearPlaneDistance(distance: number): void;
         /**
          * @return the distance to the far plane where the fog ends
          */
         getFarPlaneDistance(): number;
         /**
+         * Sets the distance to the far plane of the fog.
+         */
+        setFarPlaneDistance(distance: number): void;
+        /**
          * @return the distance to the far plane where the fog ends
          */
         getNearPlaneDistance(): number;
         /**
-         * Sets the distance to the far plane of the fog.
+         * @return the shape of the fog being rendered
          */
-        setNearPlaneDistance(distance: number): void;
+        getFogShape(): $FogShape;
         /**
-         * Sets the distance to the far plane of the fog.
+         * Sets the new shape of the fog being rendered. The new shape will only take effect if the event is cancelled.
          */
-        setFarPlaneDistance(distance: number): void;
-        setCanceled(arg0: boolean): void;
+        setFogShape(shape: $FogShape_): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(arg0: $FogRenderer$FogMode_, arg1: $FogType_, arg2: $Camera, arg3: number, arg4: number, arg5: number, arg6: $FogShape_);
         get type(): $FogType;
         get mode(): $FogRenderer$FogMode;
@@ -944,8 +944,8 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * only on the logical client.
      */
     export class $ScreenEvent$MouseButtonPressed$Pre extends $ScreenEvent$MouseButtonPressed implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(screen: $Screen, mouseX: number, mouseY: number, button: number);
     }
     /**
@@ -1013,21 +1013,21 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $ScreenEvent$MouseDragged extends $ScreenEvent$MouseInput {
         /**
-         * @return amount of mouse drag along the X axis
+         * @return the mouse button's input code
          */
-        getDragX(): number;
+        getMouseButton(): number;
         /**
          * @return amount of mouse drag along the X axis
          */
         getDragY(): number;
         /**
-         * @return the mouse button's input code
+         * @return amount of mouse drag along the X axis
          */
-        getMouseButton(): number;
+        getDragX(): number;
         constructor(screen: $Screen, mouseX: number, mouseY: number, mouseButton: number, dragX: number, dragY: number);
-        get dragX(): number;
-        get dragY(): number;
         get mouseButton(): number;
+        get dragY(): number;
+        get dragX(): number;
     }
     /**
      * Fired when the colours for the tooltip background are determined.
@@ -1042,27 +1042,7 @@ declare module "@package/net/neoforged/neoforge/client/event" {
         /**
          * @return the gradient start color for the tooltip background (top edge)
          */
-        getOriginalBorderStart(): number;
-        /**
-         * @return the gradient start color for the tooltip background (top edge)
-         */
-        getOriginalBorderEnd(): number;
-        /**
-         * @return the gradient start color for the tooltip background (top edge)
-         */
-        getOriginalBackgroundEnd(): number;
-        /**
-         * @return the gradient start color for the tooltip background (top edge)
-         */
-        getOriginalBackgroundStart(): number;
-        /**
-         * @return the gradient start color for the tooltip background (top edge)
-         */
         getBackgroundEnd(): number;
-        /**
-         * @return the gradient start color for the tooltip background (top edge)
-         */
-        getBackgroundStart(): number;
         /**
          * @return the gradient start color for the tooltip background (top edge)
          */
@@ -1070,7 +1050,27 @@ declare module "@package/net/neoforged/neoforge/client/event" {
         /**
          * @return the gradient start color for the tooltip background (top edge)
          */
+        getBackgroundStart(): number;
+        /**
+         * @return the gradient start color for the tooltip background (top edge)
+         */
         getBorderStart(): number;
+        /**
+         * @return the gradient start color for the tooltip background (top edge)
+         */
+        getOriginalBorderEnd(): number;
+        /**
+         * @return the gradient start color for the tooltip background (top edge)
+         */
+        getOriginalBorderStart(): number;
+        /**
+         * @return the gradient start color for the tooltip background (top edge)
+         */
+        getOriginalBackgroundStart(): number;
+        /**
+         * @return the gradient start color for the tooltip background (top edge)
+         */
+        getOriginalBackgroundEnd(): number;
         /**
          * Sets the new color for the tooltip background. This sets both the gradient start and end color for the
          * background to this color.
@@ -1080,27 +1080,27 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * Sets the new color for the tooltip background. This sets both the gradient start and end color for the
          * background to this color.
          */
-        setBackgroundEnd(background: number): void;
-        /**
-         * Sets the new color for the tooltip background. This sets both the gradient start and end color for the
-         * background to this color.
-         */
-        setBorderEnd(background: number): void;
-        /**
-         * Sets the new color for the tooltip background. This sets both the gradient start and end color for the
-         * background to this color.
-         */
         setBackgroundStart(background: number): void;
         /**
          * Sets the new color for the tooltip background. This sets both the gradient start and end color for the
          * background to this color.
          */
+        setBackgroundEnd(background: number): void;
+        /**
+         * Sets the new color for the tooltip background. This sets both the gradient start and end color for the
+         * background to this color.
+         */
         setBorderStart(background: number): void;
+        /**
+         * Sets the new color for the tooltip background. This sets both the gradient start and end color for the
+         * background to this color.
+         */
+        setBorderEnd(background: number): void;
         constructor(stack: $ItemStack_, graphics: $GuiGraphics, x: number, y: number, fr: $Font, background: number, borderStart: number, borderEnd: number, components: $List_<$ClientTooltipComponent>);
-        get originalBorderStart(): number;
         get originalBorderEnd(): number;
-        get originalBackgroundEnd(): number;
+        get originalBorderStart(): number;
         get originalBackgroundStart(): number;
+        get originalBackgroundEnd(): number;
         set background(value: number);
     }
     /**
@@ -1114,10 +1114,9 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $CalculateDetachedCameraDistanceEvent extends $Event {
         /**
-         * Returns the scaling factor that will be applied to the final distance,
-         * based on the size of the camera entity.
+         * Returns the camera instance.
          */
-        getDistance(): number;
+        getCamera(): $Camera;
         /**
          * Sets the pre-scaling factor distance from the camera to the camera entity.
          */
@@ -1126,18 +1125,19 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * Returns the scaling factor that will be applied to the final distance,
          * based on the size of the camera entity.
          */
-        getEntityScalingFactor(): number;
+        getDistance(): number;
         /**
-         * Returns the camera instance.
+         * Returns the scaling factor that will be applied to the final distance,
+         * based on the size of the camera entity.
          */
-        getCamera(): $Camera;
+        getEntityScalingFactor(): number;
         /**
          * Returns `true` if the camera is flipped (ie facing backward instead of forward).
          */
         isCameraFlipped(): boolean;
         constructor(camera: $Camera, cameraFlipped: boolean, entityScale: number, distance: number);
-        get entityScalingFactor(): number;
         get camera(): $Camera;
+        get entityScalingFactor(): number;
         get cameraFlipped(): boolean;
     }
     /**
@@ -1152,19 +1152,18 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * only on the logical client.
      */
     export class $RenderTooltipEvent$Pre extends $RenderTooltipEvent implements $ICancellableEvent {
-        getTooltipPositioner(): $ClientTooltipPositioner;
-        /**
-         * @return the width of the screen.
-         * The lines of text within the tooltip are wrapped to be within the screen width, and the tooltip box itself
-         * is moved to be within the screen width.
-         */
-        getScreenWidth(): number;
         /**
          * @return the width of the screen.
          * The lines of text within the tooltip are wrapped to be within the screen width, and the tooltip box itself
          * is moved to be within the screen width.
          */
         getScreenHeight(): number;
+        /**
+         * @return the width of the screen.
+         * The lines of text within the tooltip are wrapped to be within the screen width, and the tooltip box itself
+         * is moved to be within the screen width.
+         */
+        getScreenWidth(): number;
         /**
          * Sets the X origin of the tooltip.
          */
@@ -1173,18 +1172,19 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * Sets the X origin of the tooltip.
          */
         setY(x: number): void;
+        getTooltipPositioner(): $ClientTooltipPositioner;
         /**
          * Sets the font to be used to render text.
          */
         setFont(fr: $Font): void;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(stack: $ItemStack_, graphics: $GuiGraphics, x: number, y: number, screenWidth: number, screenHeight: number, font: $Font, components: $List_<$ClientTooltipComponent>, positioner: $ClientTooltipPositioner_);
-        get tooltipPositioner(): $ClientTooltipPositioner;
-        get screenWidth(): number;
         get screenHeight(): number;
+        get screenWidth(): number;
         set x(value: number);
         set y(value: number);
+        get tooltipPositioner(): $ClientTooltipPositioner;
         set font(value: $Font);
     }
     /**
@@ -1199,19 +1199,15 @@ declare module "@package/net/neoforged/neoforge/client/event" {
         /**
          * @return the red color value of the fog
          */
+        getBlue(): number;
+        /**
+         * @return the red color value of the fog
+         */
         getRed(): number;
         /**
          * @return the red color value of the fog
          */
         getGreen(): number;
-        /**
-         * @return the red color value of the fog
-         */
-        getBlue(): number;
-        /**
-         * Sets the new red color value of the fog.
-         */
-        setGreen(red: number): void;
         /**
          * Sets the new red color value of the fog.
          */
@@ -1220,6 +1216,10 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * Sets the new red color value of the fog.
          */
         setRed(red: number): void;
+        /**
+         * Sets the new red color value of the fog.
+         */
+        setGreen(red: number): void;
         constructor(camera: $Camera, partialTicks: number, red: number, green: number, blue: number);
     }
     /**
@@ -1235,12 +1235,12 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $ModelEvent$BakingCompleted extends $ModelEvent implements $IModBusEvent {
         getModelManager(): $ModelManager;
-        getModelBakery(): $ModelBakery;
         getModels(): $Map<$ModelResourceLocation, $BakedModel>;
+        getModelBakery(): $ModelBakery;
         constructor(modelManager: $ModelManager, models: $Map_<$ModelResourceLocation_, $BakedModel>, modelBakery: $ModelBakery);
         get modelManager(): $ModelManager;
-        get modelBakery(): $ModelBakery;
         get models(): $Map<$ModelResourceLocation, $BakedModel>;
+        get modelBakery(): $ModelBakery;
     }
     /**
      * Fired before a block's selection highlight is rendered.
@@ -1256,8 +1256,8 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * @return the block hit result
          */
         getTarget(): $BlockHitResult;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(levelRenderer: $LevelRenderer, camera: $Camera, target: $BlockHitResult, deltaTracker: $DeltaTracker, poseStack: $PoseStack, bufferSource: $MultiBufferSource_);
         get target(): $BlockHitResult;
     }
@@ -1273,33 +1273,25 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          */
         getContent(): $Component;
         /**
-         * Sets the new text on the nameplate.
-         */
-        setContent(contents: $Component_): void;
-        /**
-         * @return the source of rendering buffers
-         */
-        getMultiBufferSource(): $MultiBufferSource;
-        /**
          * @return the amount of packed (sky and block) light for rendering
          */
         getPackedLight(): number;
         /**
-         * @return the partial tick
+         * Sets the new text on the nameplate.
          */
-        getPartialTick(): number;
+        setContent(contents: $Component_): void;
         /**
          * @return the pose stack used for rendering
          */
         getPoseStack(): $PoseStack;
         /**
-         * @return if the nameplate will render or not
+         * @return the partial tick
          */
-        canRender(): $TriState;
+        getPartialTick(): number;
         /**
-         * @return the entity renderer rendering the nameplate
+         * @return the source of rendering buffers
          */
-        getEntityRenderer(): $EntityRenderer<never>;
+        getMultiBufferSource(): $MultiBufferSource;
         /**
          * Changes if the content of the nameplate will be rendered.
          * `TriState#TRUE` and `TriState#FALSE` will allow/deny the render respectively.
@@ -1311,13 +1303,21 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * @return the text on the nameplate that will be rendered
          */
         getOriginalContent(): $Component;
+        /**
+         * @return the entity renderer rendering the nameplate
+         */
+        getEntityRenderer(): $EntityRenderer<never>;
+        /**
+         * @return if the nameplate will render or not
+         */
+        canRender(): $TriState;
         constructor(entity: $Entity, content: $Component_, entityRenderer: $EntityRenderer<never>, poseStack: $PoseStack, multiBufferSource: $MultiBufferSource_, packedLight: number, partialTick: number);
-        get multiBufferSource(): $MultiBufferSource;
         get packedLight(): number;
-        get partialTick(): number;
         get poseStack(): $PoseStack;
-        get entityRenderer(): $EntityRenderer<never>;
+        get partialTick(): number;
+        get multiBufferSource(): $MultiBufferSource;
         get originalContent(): $Component;
+        get entityRenderer(): $EntityRenderer<never>;
     }
     export class $RegisterGuiLayersEvent$Ordering extends $Enum<$RegisterGuiLayersEvent$Ordering> {
     }
@@ -1338,10 +1338,11 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $RenderTooltipEvent$GatherComponents extends $Event implements $ICancellableEvent {
         /**
-         * {@return the item stack which the tooltip is being rendered for, or an empty
-         * item stack if there is no associated item stack}
+         * @return the width of the screen.
+         * The lines of text within the tooltip are wrapped to be within the screen width, and the tooltip box itself
+         * is moved to be within the screen width.
          */
-        getItemStack(): $ItemStack;
+        getScreenHeight(): number;
         /**
          * @return the width of the screen.
          * The lines of text within the tooltip are wrapped to be within the screen width, and the tooltip box itself
@@ -1349,16 +1350,10 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          */
         getScreenWidth(): number;
         /**
-         * @return the width of the screen.
-         * The lines of text within the tooltip are wrapped to be within the screen width, and the tooltip box itself
-         * is moved to be within the screen width.
+         * {@return the item stack which the tooltip is being rendered for, or an empty
+         * item stack if there is no associated item stack}
          */
-        getScreenHeight(): number;
-        /**
-         * @return the modifiable list of elements to be rendered on the tooltip These elements can be either
-         * formatted text or custom tooltip components.
-         */
-        getTooltipElements(): $List<$Either<$FormattedText, $TooltipComponent>>;
+        getItemStack(): $ItemStack;
         /**
          * Sets the maximum width of the tooltip. Use `-1` for unlimited maximum width.
          */
@@ -1369,12 +1364,17 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * is moved to be within the screen width.
          */
         getMaxWidth(): number;
-        setCanceled(arg0: boolean): void;
+        /**
+         * @return the modifiable list of elements to be rendered on the tooltip These elements can be either
+         * formatted text or custom tooltip components.
+         */
+        getTooltipElements(): $List<$Either<$FormattedText, $TooltipComponent>>;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(itemStack: $ItemStack_, screenWidth: number, screenHeight: number, tooltipElements: $List_<$Either<$FormattedText, $TooltipComponent>>, maxWidth: number);
-        get itemStack(): $ItemStack;
-        get screenWidth(): number;
         get screenHeight(): number;
+        get screenWidth(): number;
+        get itemStack(): $ItemStack;
         get tooltipElements(): $List<$Either<$FormattedText, $TooltipComponent>>;
     }
     export class $RegisterMenuScreensEvent extends $Event implements $IModBusEvent {
@@ -1392,13 +1392,17 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $RenderHandEvent extends $Event implements $ICancellableEvent {
         /**
+         * @return the amount of packed (sky and block) light for rendering
+         */
+        getPackedLight(): number;
+        /**
+         * @return the pose stack used for rendering
+         */
+        getPoseStack(): $PoseStack;
+        /**
          * @return the partial tick
          */
-        getInterpolatedPitch(): number;
-        /**
-         * @return the source of rendering buffers
-         */
-        getMultiBufferSource(): $MultiBufferSource;
+        getPartialTick(): number;
         /**
          * @return the item stack to be rendered
          */
@@ -1408,37 +1412,33 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          */
         getHand(): $InteractionHand;
         /**
-         * @return the amount of packed (sky and block) light for rendering
+         * @return the source of rendering buffers
          */
-        getPackedLight(): number;
+        getMultiBufferSource(): $MultiBufferSource;
         /**
          * @return the partial tick
          */
-        getPartialTick(): number;
-        /**
-         * @return the pose stack used for rendering
-         */
-        getPoseStack(): $PoseStack;
-        /**
-         * @return the partial tick
-         */
-        getSwingProgress(): number;
+        getInterpolatedPitch(): number;
         /**
          * @return the partial tick
          */
         getEquipProgress(): number;
-        setCanceled(arg0: boolean): void;
+        /**
+         * @return the partial tick
+         */
+        getSwingProgress(): number;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(hand: $InteractionHand_, poseStack: $PoseStack, multiBufferSource: $MultiBufferSource_, packedLight: number, partialTick: number, interpolatedPitch: number, swingProgress: number, equipProgress: number, stack: $ItemStack_);
-        get interpolatedPitch(): number;
-        get multiBufferSource(): $MultiBufferSource;
+        get packedLight(): number;
+        get poseStack(): $PoseStack;
+        get partialTick(): number;
         get itemStack(): $ItemStack;
         get hand(): $InteractionHand;
-        get packedLight(): number;
-        get partialTick(): number;
-        get poseStack(): $PoseStack;
-        get swingProgress(): number;
+        get multiBufferSource(): $MultiBufferSource;
+        get interpolatedPitch(): number;
         get equipProgress(): number;
+        get swingProgress(): number;
     }
     /**
      * Fired **after** the key press is handled, if not handled by the screen
@@ -1451,8 +1451,8 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * only on the logical client.
      */
     export class $ScreenEvent$KeyPressed$Post extends $ScreenEvent$KeyPressed implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(screen: $Screen, keyCode: number, scanCode: number, modifiers: number);
     }
     /**
@@ -1487,8 +1487,8 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * only on the logical client.
      */
     export class $ScreenEvent$CharacterTyped$Pre extends $ScreenEvent$CharacterTyped implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(screen: $Screen, codePoint: string, modifiers: number);
     }
     /**
@@ -1505,9 +1505,11 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $ScreenEvent$Opening extends $ScreenEvent implements $ICancellableEvent {
         /**
-         * Sets the new screen to be opened if the event is not cancelled. May be null.
+         * Gets the currently open screen at the time of the event being fired.
+         * 
+         * May be null if no screen was open.
          */
-        setNewScreen(newScreen: $Screen): void;
+        getNewScreen(): $Screen;
         /**
          * Gets the currently open screen at the time of the event being fired.
          * 
@@ -1515,13 +1517,11 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          */
         getCurrentScreen(): $Screen;
         /**
-         * Gets the currently open screen at the time of the event being fired.
-         * 
-         * May be null if no screen was open.
+         * Sets the new screen to be opened if the event is not cancelled. May be null.
          */
-        getNewScreen(): $Screen;
-        setCanceled(arg0: boolean): void;
+        setNewScreen(newScreen: $Screen): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(currentScreen: $Screen, screen: $Screen);
         get currentScreen(): $Screen;
     }
@@ -1530,10 +1530,10 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * See the two subclasses for listening to the two possible phases.
      */
     export class $RenderGuiEvent extends $Event {
-        getPartialTick(): $DeltaTracker;
         getGuiGraphics(): $GuiGraphics;
-        get partialTick(): $DeltaTracker;
+        getPartialTick(): $DeltaTracker;
         get guiGraphics(): $GuiGraphics;
+        get partialTick(): $DeltaTracker;
     }
     /**
      * Fired when the client player logs out. This event may also fire when a new integrated server is being created.
@@ -1721,35 +1721,35 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $RenderHighlightEvent extends $Event {
         /**
-         * @return the level renderer
-         */
-        getLevelRenderer(): $LevelRenderer;
-        /**
          * @return the hit result which triggered the selection highlight
          */
         getTarget(): $HitResult;
         /**
-         * @return the delta tracker
+         * @return the level renderer
          */
-        getDeltaTracker(): $DeltaTracker;
+        getLevelRenderer(): $LevelRenderer;
         /**
-         * @return the source of rendering buffers
+         * @return the pose stack used for rendering
          */
-        getMultiBufferSource(): $MultiBufferSource;
+        getPoseStack(): $PoseStack;
         /**
          * @return the camera information
          */
         getCamera(): $Camera;
         /**
-         * @return the pose stack used for rendering
+         * @return the source of rendering buffers
          */
-        getPoseStack(): $PoseStack;
-        get levelRenderer(): $LevelRenderer;
+        getMultiBufferSource(): $MultiBufferSource;
+        /**
+         * @return the delta tracker
+         */
+        getDeltaTracker(): $DeltaTracker;
         get target(): $HitResult;
-        get deltaTracker(): $DeltaTracker;
-        get multiBufferSource(): $MultiBufferSource;
-        get camera(): $Camera;
+        get levelRenderer(): $LevelRenderer;
         get poseStack(): $PoseStack;
+        get camera(): $Camera;
+        get multiBufferSource(): $MultiBufferSource;
+        get deltaTracker(): $DeltaTracker;
     }
     /**
      * Fired when a screenshot is taken, but before it is written to disk.
@@ -1763,14 +1763,9 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $ScreenshotEvent extends $Event implements $ICancellableEvent {
         /**
-         * @return the custom cancellation message, or `null` if no custom message is set
+         * @return the in-memory image of the screenshot
          */
-        getResultMessage(): $Component;
-        getScreenshotFile(): $File;
-        /**
-         * Sets the new file where the screenshot will be saved to.
-         */
-        setScreenshotFile(screenshotFile: $File_): void;
+        getImage(): $NativeImage;
         /**
          * Sets the new custom cancellation message used to inform the player.
          * It may be `null`, in which case the default cancel reason will be used.
@@ -1779,17 +1774,22 @@ declare module "@package/net/neoforged/neoforge/client/event" {
         /**
          * @return the custom cancellation message, or `null` if no custom message is set
          */
+        getResultMessage(): $Component;
+        getScreenshotFile(): $File;
+        /**
+         * @return the custom cancellation message, or `null` if no custom message is set
+         */
         getCancelMessage(): $Component;
         /**
-         * @return the in-memory image of the screenshot
+         * Sets the new file where the screenshot will be saved to.
          */
-        getImage(): $NativeImage;
-        setCanceled(arg0: boolean): void;
+        setScreenshotFile(screenshotFile: $File_): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         static DEFAULT_CANCEL_REASON: $Component;
         constructor(image: $NativeImage, screenshotFile: $File_);
-        get cancelMessage(): $Component;
         get image(): $NativeImage;
+        get cancelMessage(): $Component;
     }
     /**
      * Fired when pause is already changed
@@ -1830,24 +1830,11 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * only on the logical client.
      */
     export class $EntityRenderersEvent$AddLayers extends $EntityRenderersEvent {
-        getRenderer<T extends $Entity, R extends $EntityRenderer<T>>(arg0: $EntityType_<T>): R;
         /**
          * @return the context for the entity renderer provider
          */
         getContext(): $EntityRendererProvider$Context;
-        /**
-         * @return the set of entity models
-         */
-        getEntityModels(): $EntityModelSet;
-        /**
-         * @return the set of player skin names which have a renderer
-         * 
-         * Minecraft provides two default skin names: `default` for the
-         * regular player model and `slim` for the
-         * slim player model.
-         */
-        getSkins(): $Set<$PlayerSkin$Model>;
-        getSkin<R extends $EntityRenderer<$Player>>(arg0: $PlayerSkin$Model_): R;
+        getRenderer<T extends $Entity, R extends $EntityRenderer<T>>(arg0: $EntityType_<T>): R;
         /**
          * @return the set of player skin names which have a renderer
          * 
@@ -1856,11 +1843,24 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * slim player model.
          */
         getEntityTypes(): $Set<$EntityType<never>>;
+        /**
+         * @return the set of player skin names which have a renderer
+         * 
+         * Minecraft provides two default skin names: `default` for the
+         * regular player model and `slim` for the
+         * slim player model.
+         */
+        getSkins(): $Set<$PlayerSkin$Model>;
+        /**
+         * @return the set of entity models
+         */
+        getEntityModels(): $EntityModelSet;
+        getSkin<R extends $EntityRenderer<$Player>>(arg0: $PlayerSkin$Model_): R;
         constructor(renderers: $Map_<$EntityType_<never>, $EntityRenderer<never>>, playerRenderers: $Map_<$PlayerSkin$Model_, $EntityRenderer<$Player>>, context: $EntityRendererProvider$Context);
         get context(): $EntityRendererProvider$Context;
-        get entityModels(): $EntityModelSet;
-        get skins(): $Set<$PlayerSkin$Model>;
         get entityTypes(): $Set<$EntityType<never>>;
+        get skins(): $Set<$PlayerSkin$Model>;
+        get entityModels(): $EntityModelSet;
     }
     /**
      * This event can be used to add static geometry to chunk sections. The event is fired on the main client thread
@@ -1877,13 +1877,13 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $AddSectionGeometryEvent extends $Event {
         getLevel(): $Level;
-        getAdditionalRenderers(): $List<$AddSectionGeometryEvent$AdditionalSectionRenderer>;
-        addRenderer(arg0: $AddSectionGeometryEvent$AdditionalSectionRenderer_): void;
         getSectionOrigin(): $BlockPos;
+        addRenderer(arg0: $AddSectionGeometryEvent$AdditionalSectionRenderer_): void;
+        getAdditionalRenderers(): $List<$AddSectionGeometryEvent$AdditionalSectionRenderer>;
         constructor(sectionOrigin: $BlockPos_, level: $Level_);
         get level(): $Level;
-        get additionalRenderers(): $List<$AddSectionGeometryEvent$AdditionalSectionRenderer>;
         get sectionOrigin(): $BlockPos;
+        get additionalRenderers(): $List<$AddSectionGeometryEvent$AdditionalSectionRenderer>;
     }
     /**
      * Fired **before** textual information is rendered to the debug screen.
@@ -1895,11 +1895,11 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * only on the logical client.
      */
     export class $CustomizeGuiOverlayEvent$DebugText extends $CustomizeGuiOverlayEvent {
-        getRight(): $List<string>;
         getLeft(): $List<string>;
+        getRight(): $List<string>;
         constructor(window: $Window, guiGraphics: $GuiGraphics, partialTick: $DeltaTracker, left: $List_<string>, right: $List_<string>);
-        get right(): $List<string>;
         get left(): $List<string>;
+        get right(): $List<string>;
     }
     /**
      * Allows users to register custom IItemDecorator to Items.
@@ -1940,21 +1940,9 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $RegisterGuiLayersEvent extends $Event implements $IModBusEvent {
         /**
-         * Registers a layer that renders below all others.
-         */
-        registerBelowAll(id: $ResourceLocation_, layer: $LayeredDraw$Layer_): void;
-        /**
-         * Registers a layer that renders below all others.
-         */
-        replaceLayer(id: $ResourceLocation_, layer: $LayeredDraw$Layer_): void;
-        /**
          * Registers a layer that renders below another.
          */
-        registerBelow(other: $ResourceLocation_, id: $ResourceLocation_, layer: $LayeredDraw$Layer_): void;
-        /**
-         * Registers a layer that renders below all others.
-         */
-        registerAboveAll(id: $ResourceLocation_, layer: $LayeredDraw$Layer_): void;
+        registerAbove(other: $ResourceLocation_, id: $ResourceLocation_, layer: $LayeredDraw$Layer_): void;
         /**
          * Wrap the layer with the given `id` in a new layer.
          * 
@@ -1964,7 +1952,19 @@ declare module "@package/net/neoforged/neoforge/client/event" {
         /**
          * Registers a layer that renders below another.
          */
-        registerAbove(other: $ResourceLocation_, id: $ResourceLocation_, layer: $LayeredDraw$Layer_): void;
+        registerBelow(other: $ResourceLocation_, id: $ResourceLocation_, layer: $LayeredDraw$Layer_): void;
+        /**
+         * Registers a layer that renders below all others.
+         */
+        registerAboveAll(id: $ResourceLocation_, layer: $LayeredDraw$Layer_): void;
+        /**
+         * Registers a layer that renders below all others.
+         */
+        registerBelowAll(id: $ResourceLocation_, layer: $LayeredDraw$Layer_): void;
+        /**
+         * Registers a layer that renders below all others.
+         */
+        replaceLayer(id: $ResourceLocation_, layer: $LayeredDraw$Layer_): void;
         constructor(layers: $List_<$GuiLayerManager$NamedLayer_>);
     }
     /**
@@ -2012,31 +2012,31 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * only on the logical client.
      */
     export class $RenderBlockScreenEffectEvent extends $Event implements $ICancellableEvent {
-        getOverlayType(): $RenderBlockScreenEffectEvent$OverlayType;
-        /**
-         * @return the block which the overlay is gotten from
-         */
-        getBlockState(): $BlockState;
-        /**
-         * @return the position of the block which the overlay is gotten from
-         */
-        getBlockPos(): $BlockPos;
         /**
          * @return the pose stack used for rendering
          */
         getPoseStack(): $PoseStack;
         /**
+         * @return the position of the block which the overlay is gotten from
+         */
+        getBlockPos(): $BlockPos;
+        /**
+         * @return the block which the overlay is gotten from
+         */
+        getBlockState(): $BlockState;
+        /**
          * @return the player which the overlay will apply to
          */
         getPlayer(): $Player;
-        setCanceled(arg0: boolean): void;
+        getOverlayType(): $RenderBlockScreenEffectEvent$OverlayType;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(arg0: $Player, arg1: $PoseStack, arg2: $RenderBlockScreenEffectEvent$OverlayType_, arg3: $BlockState_, arg4: $BlockPos_);
-        get overlayType(): $RenderBlockScreenEffectEvent$OverlayType;
-        get blockState(): $BlockState;
-        get blockPos(): $BlockPos;
         get poseStack(): $PoseStack;
+        get blockPos(): $BlockPos;
+        get blockState(): $BlockState;
         get player(): $Player;
+        get overlayType(): $RenderBlockScreenEffectEvent$OverlayType;
     }
     /**
      * Allows users to register custom named render types.
@@ -2067,8 +2067,8 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * only on the logical client.
      */
     export class $ScreenEvent$KeyReleased$Pre extends $ScreenEvent$KeyReleased implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(screen: $Screen, keyCode: number, scanCode: number, modifiers: number);
     }
     /**
@@ -2080,6 +2080,10 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $RegisterRecipeBookCategoriesEvent extends $Event implements $IModBusEvent {
         /**
+         * Registers a category lookup for a certain recipe type.
+         */
+        registerRecipeCategoryFinder(type: $RecipeType_<never>, lookup: $Function_<$RecipeHolder<never>, $RecipeBookCategories>): void;
+        /**
          * Registers the list of categories that compose an aggregate category.
          */
         registerAggregateCategory(category: $RecipeBookCategories_, others: $List_<$RecipeBookCategories_>): void;
@@ -2087,10 +2091,6 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * Registers the list of categories that compose a recipe book.
          */
         registerBookCategories(type: $RecipeBookType_, categories: $List_<$RecipeBookCategories_>): void;
-        /**
-         * Registers a category lookup for a certain recipe type.
-         */
-        registerRecipeCategoryFinder(type: $RecipeType_<never>, lookup: $Function_<$RecipeHolder<never>, $RecipeBookCategories>): void;
         constructor(aggregateCategories: $Map_<$RecipeBookCategories_, $ImmutableList<$RecipeBookCategories_>>, typeCategories: $Map_<$RecipeBookType_, $ImmutableList<$RecipeBookCategories_>>, recipeCategoryLookups: $Map_<$RecipeType_<never>, $Function_<$RecipeHolder<never>, $RecipeBookCategories>>);
     }
     /**
@@ -2102,6 +2102,10 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $ContainerScreenEvent$Render extends $ContainerScreenEvent {
         /**
+         * @return the gui graphics used for rendering
+         */
+        getGuiGraphics(): $GuiGraphics;
+        /**
          * @return the X coordinate of the mouse pointer
          */
         getMouseY(): number;
@@ -2109,13 +2113,9 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * @return the X coordinate of the mouse pointer
          */
         getMouseX(): number;
-        /**
-         * @return the gui graphics used for rendering
-         */
-        getGuiGraphics(): $GuiGraphics;
+        get guiGraphics(): $GuiGraphics;
         get mouseY(): number;
         get mouseX(): number;
-        get guiGraphics(): $GuiGraphics;
     }
     /**
      * Fired **after** the mouse scroll is handled, if not handled by the screen
@@ -2199,6 +2199,10 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $InputEvent$InteractionKeyMappingTriggered extends $InputEvent implements $ICancellableEvent {
         /**
+         * @return the key mapping which triggered this event
+         */
+        getKeyMapping(): $KeyMapping;
+        /**
          * @return whether to swing the hand; always takes effect, regardless of cancellation
          */
         shouldSwingHand(): boolean;
@@ -2211,17 +2215,13 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          */
         getHand(): $InteractionHand;
         /**
-         * @return the key mapping which triggered this event
+         * Sets whether to swing the hand. This takes effect whether or not the event is cancelled.
          */
-        getKeyMapping(): $KeyMapping;
+        setSwingHand(value: boolean): void;
         /**
          * @return whether to swing the hand; always takes effect, regardless of cancellation
          */
         isPickBlock(): boolean;
-        /**
-         * Sets whether to swing the hand. This takes effect whether or not the event is cancelled.
-         */
-        setSwingHand(value: boolean): void;
         /**
          * @return whether to swing the hand; always takes effect, regardless of cancellation
          */
@@ -2231,18 +2231,18 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          */
         isAttack(): boolean;
         /**
-         * Sets whether to swing the hand. This takes effect whether or not the event is cancelled.
-         */
-        setCanceled(value: boolean): void;
-        /**
          * @return whether to swing the hand; always takes effect, regardless of cancellation
          */
         isCanceled(): boolean;
+        /**
+         * Sets whether to swing the hand. This takes effect whether or not the event is cancelled.
+         */
+        setCanceled(value: boolean): void;
         constructor(button: number, keyMapping: $KeyMapping, hand: $InteractionHand_);
-        get hand(): $InteractionHand;
         get keyMapping(): $KeyMapping;
-        get pickBlock(): boolean;
+        get hand(): $InteractionHand;
         set swingHand(value: boolean);
+        get pickBlock(): boolean;
         get useItem(): boolean;
         get attack(): boolean;
     }
@@ -2258,6 +2258,10 @@ declare module "@package/net/neoforged/neoforge/client/event" {
         /**
          * @return the `GLFW` (platform-agnostic) key code
          */
+        getAction(): number;
+        /**
+         * @return the `GLFW` (platform-agnostic) key code
+         */
         getModifiers(): number;
         /**
          * @return the `GLFW` (platform-agnostic) key code
@@ -2267,15 +2271,11 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * @return the `GLFW` (platform-agnostic) key code
          */
         getScanCode(): number;
-        /**
-         * @return the `GLFW` (platform-agnostic) key code
-         */
-        getAction(): number;
         constructor(key: number, scanCode: number, action: number, modifiers: number);
+        get action(): number;
         get modifiers(): number;
         get key(): number;
         get scanCode(): number;
-        get action(): number;
     }
     /**
      * Fired when an input is detected from the user's input devices.
@@ -2295,8 +2295,8 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $ToastAddEvent extends $Event implements $ICancellableEvent {
         getToast(): $Toast;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(toast: $Toast_);
         get toast(): $Toast;
     }
@@ -2311,8 +2311,8 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * only on the logical client.
      */
     export class $ScreenEvent$KeyReleased$Post extends $ScreenEvent$KeyReleased implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(screen: $Screen, keyCode: number, scanCode: number, modifiers: number);
     }
     /**
@@ -2325,7 +2325,6 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * only on the logical client.
      */
     export class $ClientPauseChangeEvent$Pre extends $ClientPauseChangeEvent implements $ICancellableEvent {
-        setCanceled(pause: boolean): void;
         /**
          * On Pre it returns what is the upcoming pause state.
          * Cancelling will not modify this value.
@@ -2335,6 +2334,7 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * @return the pause state
          */
         isCanceled(): boolean;
+        setCanceled(pause: boolean): void;
         constructor(pause: boolean);
     }
     /**
@@ -2348,8 +2348,8 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * only on the logical client.
      */
     export class $ScreenEvent$KeyPressed$Pre extends $ScreenEvent$KeyPressed implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(screen: $Screen, keyCode: number, scanCode: number, modifiers: number);
     }
     /**
@@ -2408,34 +2408,34 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $SelectMusicEvent extends $Event implements $ICancellableEvent {
         /**
+         * @return the original situational music that was selected
+         */
+        getMusic(): $Music;
+        /**
          * Changes the situational music. If this is set to `null`, any currently playing music will be cancelled.
          * 
          * If this *was* `null` but on the next tick isn't, the music given will be immediately played.
          */
         overrideMusic(newMusic: $Music): void;
         /**
-         * @return the original situational music that was selected
-         */
-        getOriginalMusic(): $Music;
-        /**
          * @return the current track that the `MusicManager` is playing, or `null` if there is none
          */
         getPlayingMusic(): $SoundInstance;
+        /**
+         * @return the original situational music that was selected
+         */
+        getOriginalMusic(): $Music;
         /**
          * Changes the situational music. If this is set to `null`, any currently playing music will be cancelled.
          * 
          * If this *was* `null` but on the next tick isn't, the music given will be immediately played.
          */
         setMusic(newMusic: $Music): void;
-        /**
-         * @return the original situational music that was selected
-         */
-        getMusic(): $Music;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(music: $Music, playingMusic: $SoundInstance);
-        get originalMusic(): $Music;
         get playingMusic(): $SoundInstance;
+        get originalMusic(): $Music;
     }
     /**
      * Fired when a system chat message is received on the client.
@@ -2466,37 +2466,37 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $RenderItemInFrameEvent extends $Event implements $ICancellableEvent {
         /**
-         * @return the renderer for the item frame entity
-         */
-        getRenderer(): $ItemFrameRenderer<never>;
-        /**
-         * @return the source of rendering buffers
-         */
-        getMultiBufferSource(): $MultiBufferSource;
-        /**
-         * @return the item stack being rendered
-         */
-        getItemStack(): $ItemStack;
-        /**
          * @return the amount of packed (sky and block) light for rendering
          */
         getPackedLight(): number;
+        /**
+         * @return the renderer for the item frame entity
+         */
+        getRenderer(): $ItemFrameRenderer<never>;
         /**
          * @return the pose stack used for rendering
          */
         getPoseStack(): $PoseStack;
         /**
+         * @return the item stack being rendered
+         */
+        getItemStack(): $ItemStack;
+        /**
+         * @return the source of rendering buffers
+         */
+        getMultiBufferSource(): $MultiBufferSource;
+        /**
          * @return the item frame entity
          */
         getItemFrameEntity(): $ItemFrame;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(itemFrame: $ItemFrame, renderItemFrame: $ItemFrameRenderer<never>, poseStack: $PoseStack, multiBufferSource: $MultiBufferSource_, packedLight: number);
-        get renderer(): $ItemFrameRenderer<never>;
-        get multiBufferSource(): $MultiBufferSource;
-        get itemStack(): $ItemStack;
         get packedLight(): number;
+        get renderer(): $ItemFrameRenderer<never>;
         get poseStack(): $PoseStack;
+        get itemStack(): $ItemStack;
+        get multiBufferSource(): $MultiBufferSource;
         get itemFrameEntity(): $ItemFrame;
     }
     /**
@@ -2509,17 +2509,17 @@ declare module "@package/net/neoforged/neoforge/client/event" {
         /**
          * @return the mouse button's input code
          */
-        getModifiers(): number;
-        /**
-         * @return the mouse button's input code
-         */
         getAction(): number;
         /**
          * @return the mouse button's input code
          */
+        getModifiers(): number;
+        /**
+         * @return the mouse button's input code
+         */
         getButton(): number;
-        get modifiers(): number;
         get action(): number;
+        get modifiers(): number;
         get button(): number;
     }
     /**
@@ -2534,8 +2534,8 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * only on the logical client.
      */
     export class $RenderPlayerEvent$Pre extends $RenderPlayerEvent implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(player: $Player, renderer: $PlayerRenderer, partialTick: number, poseStack: $PoseStack, multiBufferSource: $MultiBufferSource_, packedLight: number);
     }
     export class $ScreenEvent$MouseButtonPressed$Post$Result extends $Enum<$ScreenEvent$MouseButtonPressed$Post$Result> {
@@ -2560,8 +2560,8 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * only on the logical client.
      */
     export class $ScreenEvent$MouseScrolled$Pre extends $ScreenEvent$MouseScrolled implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(screen: $Screen, mouseX: number, mouseY: number, scrollDeltaX: number, scrollDeltaY: number);
     }
     /**
@@ -2577,14 +2577,6 @@ declare module "@package/net/neoforged/neoforge/client/event" {
         /**
          * @return the yaw of the player's camera
          */
-        getRoll(): number;
-        /**
-         * Sets the yaw of the player's camera.
-         */
-        setRoll(yaw: number): void;
-        /**
-         * @return the yaw of the player's camera
-         */
         getPitch(): number;
         /**
          * @return the yaw of the player's camera
@@ -2593,11 +2585,19 @@ declare module "@package/net/neoforged/neoforge/client/event" {
         /**
          * Sets the yaw of the player's camera.
          */
+        setYaw(yaw: number): void;
+        /**
+         * Sets the yaw of the player's camera.
+         */
         setPitch(yaw: number): void;
         /**
          * Sets the yaw of the player's camera.
          */
-        setYaw(yaw: number): void;
+        setRoll(yaw: number): void;
+        /**
+         * @return the yaw of the player's camera
+         */
+        getRoll(): number;
         constructor(camera: $Camera, renderPartialTicks: number, yaw: number, pitch: number, roll: number);
     }
     export class $AddSectionGeometryEvent$SectionRenderingContext {
@@ -2632,14 +2632,14 @@ declare module "@package/net/neoforged/neoforge/client/event" {
         /**
          * @return the amount of change / delta of the mouse scroll on the X axis
          */
-        getScrollDeltaY(): number;
+        getScrollDeltaX(): number;
         /**
          * @return the amount of change / delta of the mouse scroll on the X axis
          */
-        getScrollDeltaX(): number;
+        getScrollDeltaY(): number;
         constructor(screen: $Screen, mouseX: number, mouseY: number, scrollDeltaX: number, scrollDeltaY: number);
-        get scrollDeltaY(): number;
         get scrollDeltaX(): number;
+        get scrollDeltaY(): number;
     }
     /**
      * Fired for registering block color handlers.
@@ -2661,12 +2661,12 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * Fired when an overlay is about to be rendered to the screen to allow the user to modify it.
      */
     export class $CustomizeGuiOverlayEvent extends $Event {
-        getWindow(): $Window;
-        getPartialTick(): $DeltaTracker;
         getGuiGraphics(): $GuiGraphics;
-        get window(): $Window;
-        get partialTick(): $DeltaTracker;
+        getPartialTick(): $DeltaTracker;
+        getWindow(): $Window;
         get guiGraphics(): $GuiGraphics;
+        get partialTick(): $DeltaTracker;
+        get window(): $Window;
     }
     export class $RenderBlockScreenEffectEvent$OverlayType extends $Enum<$RenderBlockScreenEffectEvent$OverlayType> {
         static values(): $RenderBlockScreenEffectEvent$OverlayType[];
@@ -2711,8 +2711,8 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * only on the logical client.
      */
     export class $RenderGuiLayerEvent$Pre extends $RenderGuiLayerEvent implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(guiGraphics: $GuiGraphics, partialTick: $DeltaTracker, name: $ResourceLocation_, layer: $LayeredDraw$Layer_);
     }
     /**
@@ -2748,12 +2748,12 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * returned function
          */
         getTextureGetter(): $Function<$Material, $TextureAtlasSprite>;
-        getModelBakery(): $ModelBakery;
         getModels(): $Map<$ModelResourceLocation, $BakedModel>;
+        getModelBakery(): $ModelBakery;
         constructor(models: $Map_<$ModelResourceLocation_, $BakedModel>, textureGetter: $Function_<$Material, $TextureAtlasSprite>, modelBakery: $ModelBakery);
         get textureGetter(): $Function<$Material, $TextureAtlasSprite>;
-        get modelBakery(): $ModelBakery;
         get models(): $Map<$ModelResourceLocation, $BakedModel>;
+        get modelBakery(): $ModelBakery;
     }
     /**
      * Fired when a `LivingEntity` is rendered.
@@ -2763,30 +2763,30 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * and should not be treated as such (such as using generic-specific listeners, which may cause a `ClassCastException`).
      */
     export class $RenderLivingEvent<T extends $LivingEntity, M extends $EntityModel<T>> extends $Event {
-        getRenderer(): $LivingEntityRenderer<T, M>;
-        getEntity(): $LivingEntity;
-        /**
-         * @return the source of rendering buffers
-         */
-        getMultiBufferSource(): $MultiBufferSource;
         /**
          * @return the amount of packed (sky and block) light for rendering
          */
         getPackedLight(): number;
+        getEntity(): $LivingEntity;
+        getRenderer(): $LivingEntityRenderer<T, M>;
+        /**
+         * @return the pose stack used for rendering
+         */
+        getPoseStack(): $PoseStack;
         /**
          * @return the partial tick
          */
         getPartialTick(): number;
         /**
-         * @return the pose stack used for rendering
+         * @return the source of rendering buffers
          */
-        getPoseStack(): $PoseStack;
-        get renderer(): $LivingEntityRenderer<T, M>;
-        get entity(): $LivingEntity;
-        get multiBufferSource(): $MultiBufferSource;
+        getMultiBufferSource(): $MultiBufferSource;
         get packedLight(): number;
-        get partialTick(): number;
+        get entity(): $LivingEntity;
+        get renderer(): $LivingEntityRenderer<T, M>;
         get poseStack(): $PoseStack;
+        get partialTick(): number;
+        get multiBufferSource(): $MultiBufferSource;
     }
     /**
      * Fired when the client is about to send a chat message to the server.
@@ -2807,8 +2807,8 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * @return the message that will be sent to the server, if the event is not cancelled. This can be changed by mods
          */
         getOriginalMessage(): string;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(message: string);
         get originalMessage(): string;
     }
@@ -2822,12 +2822,12 @@ declare module "@package/net/neoforged/neoforge/client/event" {
     export class $RenderGuiLayerEvent extends $Event {
         getName(): $ResourceLocation;
         getLayer(): $LayeredDraw$Layer;
-        getPartialTick(): $DeltaTracker;
         getGuiGraphics(): $GuiGraphics;
+        getPartialTick(): $DeltaTracker;
         get name(): $ResourceLocation;
         get layer(): $LayeredDraw$Layer;
-        get partialTick(): $DeltaTracker;
         get guiGraphics(): $GuiGraphics;
+        get partialTick(): $DeltaTracker;
     }
     /**
      * Fired when a keyboard key is pressed.
@@ -2849,17 +2849,17 @@ declare module "@package/net/neoforged/neoforge/client/event" {
     export class $RegisterColorHandlersEvent$Item extends $RegisterColorHandlersEvent {
         register(arg0: $ItemColor_, ...arg1: $ItemLike_[]): void;
         /**
-         * @return the item colors registry
-         */
-        getItemColors(): $ItemColors;
-        /**
          * @return the block colors registry
          * This should only be used for referencing or delegating item colors to their respective block colors.
          */
         getBlockColors(): $BlockColors;
+        /**
+         * @return the item colors registry
+         */
+        getItemColors(): $ItemColors;
         constructor(itemColors: $ItemColors, blockColors: $BlockColors);
-        get itemColors(): $ItemColors;
         get blockColors(): $BlockColors;
+        get itemColors(): $ItemColors;
     }
     /**
      * Fired when a mouse scroll wheel is used outside of a screen and a player is loaded, **before** being
@@ -2883,11 +2883,11 @@ declare module "@package/net/neoforged/neoforge/client/event" {
         /**
          * @return the amount of change / delta of the mouse scroll on the X axis
          */
-        getScrollDeltaY(): number;
+        getScrollDeltaX(): number;
         /**
          * @return the amount of change / delta of the mouse scroll on the X axis
          */
-        getScrollDeltaX(): number;
+        getScrollDeltaY(): number;
         /**
          * @return `true` if the left mouse button is pressed
          */
@@ -2900,16 +2900,16 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * @return `true` if the left mouse button is pressed
          */
         isLeftDown(): boolean;
-        setCanceled(arg0: boolean): void;
         /**
          * @return `true` if the left mouse button is pressed
          */
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(scrollDeltaX: number, scrollDeltaY: number, leftDown: boolean, middleDown: boolean, rightDown: boolean, mouseX: number, mouseY: number);
         get mouseY(): number;
         get mouseX(): number;
-        get scrollDeltaY(): number;
         get scrollDeltaX(): number;
+        get scrollDeltaY(): number;
         get rightDown(): boolean;
         get middleDown(): boolean;
         get leftDown(): boolean;
@@ -2933,8 +2933,8 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * only on the logical client.
      */
     export class $ScreenEvent$Init$Pre extends $ScreenEvent$Init implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(screen: $Screen, list: $List_<$GuiEventListener>, add: $Consumer_<$GuiEventListener>, remove: $Consumer_<$GuiEventListener>);
     }
     /**
@@ -2959,8 +2959,8 @@ declare module "@package/net/neoforged/neoforge/client/event" {
     export class $ScreenEvent$MouseButtonReleased$Post extends $ScreenEvent$MouseButtonReleased {
         setResult(arg0: $ScreenEvent$MouseButtonReleased$Post$Result_): void;
         getResult(): $ScreenEvent$MouseButtonReleased$Post$Result;
-        getReleaseResult(): boolean;
         wasReleaseHandled(): boolean;
+        getReleaseResult(): boolean;
         constructor(screen: $Screen, mouseX: number, mouseY: number, button: number, handled: boolean);
         get releaseResult(): boolean;
     }
@@ -3013,14 +3013,6 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          */
         isSkippingAll(): boolean;
         /**
-         * Marks the id of a specific attribute modifier as skipped, causing it to not be displayed in the tooltip.
-         */
-        skipId(id: $ResourceLocation_): void;
-        /**
-         * Marks an entire `EquipmentSlotGroup` as skipped, preventing all modifiers for that group from showing.
-         */
-        skipGroup(group: $EquipmentSlotGroup_): void;
-        /**
          * Checks if a given id is skipped or not. If all modifiers are skipped, this method always returns true.
          */
         isSkipped(id: $ResourceLocation_): boolean;
@@ -3028,6 +3020,14 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * Checks if a given group is skipped or not. If all modifiers are skipped, this method always returns true.
          */
         isSkipped(group: $EquipmentSlotGroup_): boolean;
+        /**
+         * Marks an entire `EquipmentSlotGroup` as skipped, preventing all modifiers for that group from showing.
+         */
+        skipGroup(group: $EquipmentSlotGroup_): void;
+        /**
+         * Marks the id of a specific attribute modifier as skipped, causing it to not be displayed in the tooltip.
+         */
+        skipId(id: $ResourceLocation_): void;
         /**
          * Sets if the event should skip displaying all attribute modifiers.
          */
@@ -3044,6 +3044,14 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      */
     export class $ScreenEvent$Render extends $ScreenEvent implements $KonkreteDrawScreenEventAcc, $KonkreteGuiScreenEventAcc {
         /**
+         * @return the gui graphics used for rendering
+         */
+        getGuiGraphics(): $GuiGraphics;
+        /**
+         * @return the partial tick
+         */
+        getPartialTick(): number;
+        /**
          * @return the X coordinate of the mouse pointer
          */
         getMouseY(): number;
@@ -3051,14 +3059,6 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * @return the X coordinate of the mouse pointer
          */
         getMouseX(): number;
-        /**
-         * @return the partial tick
-         */
-        getPartialTick(): number;
-        /**
-         * @return the gui graphics used for rendering
-         */
-        getGuiGraphics(): $GuiGraphics;
         /**
          * @return the X coordinate of the mouse pointer
          */
@@ -3068,17 +3068,17 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          */
         invokeGetMouseY(): number;
         /**
-         * @return the gui graphics used for rendering
-         */
-        invokeGetDrawContext(): $GuiGraphics;
-        /**
          * @return the partial tick
          */
         invokeGetRenderPartialTicks(): number;
+        /**
+         * @return the gui graphics used for rendering
+         */
+        invokeGetDrawContext(): $GuiGraphics;
+        get guiGraphics(): $GuiGraphics;
+        get partialTick(): number;
         get mouseY(): number;
         get mouseX(): number;
-        get partialTick(): number;
-        get guiGraphics(): $GuiGraphics;
     }
     /**
      * Fired when a mouse button is pressed.
@@ -3205,6 +3205,18 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          */
         getLevelRenderer(): $LevelRenderer;
         /**
+         * @return the pose stack used for rendering
+         */
+        getPoseStack(): $PoseStack;
+        /**
+         * @return the current partialTick value used for rendering
+         */
+        getPartialTick(): $DeltaTracker;
+        /**
+         * @return the model view matrix used for rendering
+         */
+        getProjectionMatrix(): $Matrix4f;
+        /**
          * @return the model view matrix used for rendering
          */
         getModelViewMatrix(): $Matrix4f;
@@ -3212,10 +3224,7 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * @return the camera
          */
         getCamera(): $Camera;
-        /**
-         * @return the model view matrix used for rendering
-         */
-        getProjectionMatrix(): $Matrix4f;
+        getStage(): $RenderLevelStageEvent$Stage;
         /**
          * @return the frustum
          */
@@ -3224,25 +3233,16 @@ declare module "@package/net/neoforged/neoforge/client/event" {
          * @return the current "ticks" value in the level renderer
          */
         getRenderTick(): number;
-        /**
-         * @return the current partialTick value used for rendering
-         */
-        getPartialTick(): $DeltaTracker;
-        /**
-         * @return the pose stack used for rendering
-         */
-        getPoseStack(): $PoseStack;
-        getStage(): $RenderLevelStageEvent$Stage;
         constructor(arg0: $RenderLevelStageEvent$Stage, arg1: $LevelRenderer, arg2: $PoseStack, arg3: $Matrix4f, arg4: $Matrix4f, arg5: number, arg6: $DeltaTracker, arg7: $Camera, arg8: $Frustum);
         get levelRenderer(): $LevelRenderer;
+        get poseStack(): $PoseStack;
+        get partialTick(): $DeltaTracker;
+        get projectionMatrix(): $Matrix4f;
         get modelViewMatrix(): $Matrix4f;
         get camera(): $Camera;
-        get projectionMatrix(): $Matrix4f;
+        get stage(): $RenderLevelStageEvent$Stage;
         get frustum(): $Frustum;
         get renderTick(): number;
-        get partialTick(): $DeltaTracker;
-        get poseStack(): $PoseStack;
-        get stage(): $RenderLevelStageEvent$Stage;
     }
     /**
      * Fired when a player chat message is received on the client.
@@ -3274,8 +3274,8 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * only on the logical client.
      */
     export class $RenderLivingEvent$Pre<T extends $LivingEntity, M extends $EntityModel<T>> extends $RenderLivingEvent<T, M> implements $ICancellableEvent {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(entity: $LivingEntity, renderer: $LivingEntityRenderer<T, M>, partialTick: number, poseStack: $PoseStack, multiBufferSource: $MultiBufferSource_, packedLight: number);
     }
     /**
@@ -3291,9 +3291,9 @@ declare module "@package/net/neoforged/neoforge/client/event" {
      * This event is fired on the mod-specific event bus, only on the logical client.
      */
     export class $RegisterDimensionTransitionScreenEvent extends $Event implements $IModBusEvent {
+        registerConditionalEffect(arg0: $ResourceKey_<$Level>, arg1: $ResourceKey_<$Level>, arg2: $DimensionTransitionScreenManager$ReceivingLevelScreenFactory_): boolean;
         registerOutgoingEffect(arg0: $ResourceKey_<$Level>, arg1: $DimensionTransitionScreenManager$ReceivingLevelScreenFactory_): boolean;
         registerIncomingEffect(arg0: $ResourceKey_<$Level>, arg1: $DimensionTransitionScreenManager$ReceivingLevelScreenFactory_): boolean;
-        registerConditionalEffect(arg0: $ResourceKey_<$Level>, arg1: $ResourceKey_<$Level>, arg2: $DimensionTransitionScreenManager$ReceivingLevelScreenFactory_): boolean;
         constructor(conditionalDimensionEffects: $Map_<$Pair<$ResourceKey_<$Level>, $ResourceKey_<$Level>>, $DimensionTransitionScreenManager$ReceivingLevelScreenFactory_>, toEffects: $Map_<$ResourceKey_<$Level>, $DimensionTransitionScreenManager$ReceivingLevelScreenFactory_>, fromEffects: $Map_<$ResourceKey_<$Level>, $DimensionTransitionScreenManager$ReceivingLevelScreenFactory_>);
     }
 }

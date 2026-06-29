@@ -50,12 +50,12 @@ declare module "@package/net/minecraft/client/multiplayer/chat/report" {
         comments(): string;
         reason(): $ReportReason;
         build(reportingContext: $ReportingContext): $Either<$Report$Result, $Report$CannotBuildReason>;
+        checkBuildable(): $Report$CannotBuildReason;
+        setAttested(attested: boolean): void;
+        reportedProfileId(): $UUID;
         hasContent(): boolean;
         report(): R;
         setReason(reason: $ReportReason_): void;
-        setAttested(attested: boolean): void;
-        reportedProfileId(): $UUID;
-        checkBuildable(): $Report$CannotBuildReason;
         setComments(comments: string): void;
         attested(): boolean;
         limits: $AbuseReportLimits;
@@ -78,9 +78,9 @@ declare module "@package/net/minecraft/client/multiplayer/chat/report" {
     export class $AbuseReportSender$Services extends $Record implements $AbuseReportSender {
         isEnabled(): boolean;
         environment(): $ReportEnvironment;
+        reportLimits(): $AbuseReportLimits;
         send(id: $UUID_, reportType: $ReportType_, report: $AbuseReport_): $CompletableFuture<$Unit>;
         userApiService(): $UserApiService;
-        reportLimits(): $AbuseReportLimits;
         constructor(arg0: $ReportEnvironment_, arg1: $UserApiService);
         get enabled(): boolean;
     }
@@ -91,31 +91,31 @@ declare module "@package/net/minecraft/client/multiplayer/chat/report" {
     export class $ReportingContext {
         matches(environment: $ReportEnvironment_): boolean;
         static create(environment: $ReportEnvironment_, userApiService: $UserApiService): $ReportingContext;
-        draftReportHandled(minecraft: $Minecraft, screen: $Screen, quitter: $Runnable_, quitToTitle: boolean): void;
-        hasDraftReport(): boolean;
-        sender(): $AbuseReportSender;
-        hasDraftReportFor(uuid: $UUID_): boolean;
-        setReportDraft(draftReport: $Report | null): void;
         chatLog(): $ChatLog;
+        hasDraftReport(): boolean;
+        draftReportHandled(minecraft: $Minecraft, screen: $Screen, quitter: $Runnable_, quitToTitle: boolean): void;
+        sender(): $AbuseReportSender;
+        setReportDraft(draftReport: $Report | null): void;
+        hasDraftReportFor(uuid: $UUID_): boolean;
         constructor(sender: $AbuseReportSender, enviroment: $ReportEnvironment_, chatLog: $ChatLog);
         set reportDraft(value: $Report | null);
     }
     export class $ReportEnvironment extends $Record {
-        static realm(realmsServer: $RealmsServer): $ReportEnvironment;
         server(): $ReportEnvironment$Server;
         static create(server: $ReportEnvironment$Server | null): $ReportEnvironment;
         static local(): $ReportEnvironment;
+        static realm(realmsServer: $RealmsServer): $ReportEnvironment;
         clientVersion(): string;
-        thirdPartyServerInfo(): $AbuseReportRequest$ThirdPartyServerInfo;
+        static thirdParty(ip: string): $ReportEnvironment;
         clientInfo(): $AbuseReportRequest$ClientInfo;
         realmInfo(): $AbuseReportRequest$RealmInfo;
-        static thirdParty(ip: string): $ReportEnvironment;
+        thirdPartyServerInfo(): $AbuseReportRequest$ThirdPartyServerInfo;
         constructor(arg0: string, arg1: $ReportEnvironment$Server | null);
     }
     /**
      * Values that may be interpreted as {@link $ReportEnvironment}.
      */
-    export type $ReportEnvironment_ = { server?: $ReportEnvironment$Server, clientVersion?: string,  } | [server?: $ReportEnvironment$Server, clientVersion?: string, ];
+    export type $ReportEnvironment_ = { clientVersion?: string, server?: $ReportEnvironment$Server,  } | [clientVersion?: string, server?: $ReportEnvironment$Server, ];
     export class $AbuseReportSender$SendException extends $ThrowingComponent {
         constructor(arg0: $Component_, arg1: $Throwable);
     }
@@ -147,8 +147,8 @@ declare module "@package/net/minecraft/client/multiplayer/chat/report" {
         static values(): $ReportReason[];
         static valueOf(arg0: string): $ReportReason;
         description(): $Component;
-        title(): $Component;
         backendName(): string;
+        title(): $Component;
         static HATE_SPEECH: $ReportReason;
         static ALCOHOL_TOBACCO_DRUGS: $ReportReason;
         static GENERIC: $ReportReason;
@@ -167,8 +167,8 @@ declare module "@package/net/minecraft/client/multiplayer/chat/report" {
     export class $ChatReport$Builder extends $Report$Builder<$ChatReport> {
         copy(): $ChatReport$Builder;
         reportedMessages(): $IntSet;
-        toggleReported(id: number): void;
         isReported(id: number): boolean;
+        toggleReported(id: number): void;
         limits: $AbuseReportLimits;
         constructor(report: $ChatReport, limits: $AbuseReportLimits_);
         constructor(reportedProfileId: $UUID_, limits: $AbuseReportLimits_);
@@ -209,22 +209,22 @@ declare module "@package/net/minecraft/client/multiplayer/chat/report" {
      */
     export type $BanReason_ = "generic_violation" | "false_reporting" | "hate_speech" | "hate_terrorism_notorious_figure" | "harassment_or_bullying" | "defamation_impersonation_false_information" | "drugs" | "fraud" | "spam_or_advertising" | "nudity_or_pornography" | "sexually_inappropriate" | "extreme_violence_or_gore" | "imminent_harm_to_person_or_property";
     export class $ReportEnvironment$Server$Realm extends $Record implements $ReportEnvironment$Server {
-        slotId(): number;
         realmId(): number;
+        slotId(): number;
         constructor(realmsServer: $RealmsServer);
         constructor(arg0: number, arg1: number);
     }
     /**
      * Values that may be interpreted as {@link $ReportEnvironment$Server$Realm}.
      */
-    export type $ReportEnvironment$Server$Realm_ = { realmId?: number, slotId?: number,  } | [realmId?: number, slotId?: number, ];
+    export type $ReportEnvironment$Server$Realm_ = { slotId?: number, realmId?: number,  } | [slotId?: number, realmId?: number, ];
     export class $AbuseReportSender {
         static create(environment: $ReportEnvironment_, userApiService: $UserApiService): $AbuseReportSender;
     }
     export interface $AbuseReportSender {
         isEnabled(): boolean;
-        send(id: $UUID_, reportType: $ReportType_, report: $AbuseReport_): $CompletableFuture<$Unit>;
         reportLimits(): $AbuseReportLimits;
+        send(id: $UUID_, reportType: $ReportType_, report: $AbuseReport_): $CompletableFuture<$Unit>;
         get enabled(): boolean;
     }
     export class $ChatReportContextBuilder$Handler {
@@ -270,5 +270,5 @@ declare module "@package/net/minecraft/client/multiplayer/chat/report" {
     /**
      * Values that may be interpreted as {@link $Report$Result}.
      */
-    export type $Report$Result_ = { report?: $AbuseReport_, reportType?: $ReportType_, id?: $UUID_,  } | [report?: $AbuseReport_, reportType?: $ReportType_, id?: $UUID_, ];
+    export type $Report$Result_ = { id?: $UUID_, report?: $AbuseReport_, reportType?: $ReportType_,  } | [id?: $UUID_, report?: $AbuseReport_, reportType?: $ReportType_, ];
 }

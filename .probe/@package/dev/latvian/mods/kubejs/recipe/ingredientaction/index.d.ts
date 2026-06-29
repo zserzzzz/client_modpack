@@ -46,19 +46,19 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/ingredientaction" {
      */
     export type $ReplaceAction_ = { item?: $ItemStack_,  } | [item?: $ItemStack_, ];
     export class $IngredientActionType<T extends $IngredientAction> extends $Record {
-        id(): $ResourceLocation;
         codec(): $MapCodec<T>;
+        id(): $ResourceLocation;
         streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, T>;
         static TYPES: $Lazy<$Map<$ResourceLocation, $IngredientActionType<never>>>;
         static CODEC: $Codec<$IngredientActionType<never>>;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $IngredientActionType<never>>;
-        constructor(id: $ResourceLocation_, codec: $MapCodec_<T>);
         constructor(id: $ResourceLocation_, codec: $MapCodec_<T>, streamCodec: $StreamCodec<$RegistryFriendlyByteBuf, T>);
+        constructor(id: $ResourceLocation_, codec: $MapCodec_<T>);
     }
     /**
      * Values that may be interpreted as {@link $IngredientActionType}.
      */
-    export type $IngredientActionType_<T> = { codec?: $MapCodec_<$IngredientAction>, streamCodec?: $StreamCodec<$RegistryFriendlyByteBuf, $IngredientAction>, id?: $ResourceLocation_,  } | [codec?: $MapCodec_<$IngredientAction>, streamCodec?: $StreamCodec<$RegistryFriendlyByteBuf, $IngredientAction>, id?: $ResourceLocation_, ];
+    export type $IngredientActionType_<T> = { id?: $ResourceLocation_, codec?: $MapCodec_<$IngredientAction>, streamCodec?: $StreamCodec<$RegistryFriendlyByteBuf, $IngredientAction>,  } | [id?: $ResourceLocation_, codec?: $MapCodec_<$IngredientAction>, streamCodec?: $StreamCodec<$RegistryFriendlyByteBuf, $IngredientAction>, ];
     export class $IngredientAction {
         static getRemaining(input: $CraftingInput, index: number, ingredientActions: $List_<$IngredientActionHolder_>): $ItemStack;
         static CODEC: $Codec<$IngredientAction>;

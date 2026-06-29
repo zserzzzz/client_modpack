@@ -1,7 +1,8 @@
 import { $GoalSelector } from "@package/net/minecraft/world/entity/ai/goal";
-import { $JumpControl, $MoveControl, $LookControl } from "@package/net/minecraft/world/entity/ai/control";
+import { $MoveControl, $LookControl, $JumpControl } from "@package/net/minecraft/world/entity/ai/control";
 import { $SensorType, $Sensor } from "@package/net/minecraft/world/entity/ai/sensing";
-import { $AnimationState, $EntityDimensions, $EntityType_, $Entity$RemovalReason, $LivingEntity, $Pose, $PortalProcessor, $WalkAnimationState } from "@package/net/minecraft/world/entity";
+import { $CompoundTag } from "@package/net/minecraft/nbt";
+import { $EntityType_, $Pose, $PortalProcessor, $AnimationState, $EntityDimensions, $Entity$RemovalReason, $LivingEntity, $WalkAnimationState } from "@package/net/minecraft/world/entity";
 import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
 import { $AttributeSupplier$Builder } from "@package/net/minecraft/world/entity/ai/attributes";
 import { $UUID, $List, $Stack, $Map } from "@package/java/util";
@@ -9,24 +10,24 @@ import { $RandomSource } from "@package/net/minecraft/util";
 import { $InteractionHand } from "@package/net/minecraft/world";
 import { $ServerLevel } from "@package/net/minecraft/server/level";
 import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos } from "@package/net/minecraft/core";
+import { $HolderLookup$Provider, $BlockPos } from "@package/net/minecraft/core";
 import { $Brain } from "@package/net/minecraft/world/entity/ai";
 import { $PathNavigation } from "@package/net/minecraft/world/entity/ai/navigation";
 import { $Object } from "@package/java/lang";
 import { $EntityInLevelCallback } from "@package/net/minecraft/world/level/entity";
-import { $Behavior, $MoveToTargetSink } from "@package/net/minecraft/world/entity/ai/behavior";
 import { $Level_ } from "@package/net/minecraft/world/level";
+import { $Behavior, $MoveToTargetSink } from "@package/net/minecraft/world/entity/ai/behavior";
 import { $TagKey } from "@package/net/minecraft/tags";
 import { $ItemStack } from "@package/net/minecraft/world/item";
 import { $Fluid } from "@package/net/minecraft/world/level/material";
 import { $Player } from "@package/net/minecraft/world/entity/player";
-import { $MemoryStatus, $MemoryModuleType } from "@package/net/minecraft/world/entity/ai/memory";
-import { $SynchedEntityData, $EntityDataAccessor } from "@package/net/minecraft/network/syncher";
+import { $MemoryModuleType, $MemoryStatus } from "@package/net/minecraft/world/entity/ai/memory";
+import { $EntityDataAccessor, $SynchedEntityData } from "@package/net/minecraft/network/syncher";
 import { $DamageContainer } from "@package/net/neoforged/neoforge/common/damagesource";
 import { $AtomicInteger } from "@package/java/util/concurrent/atomic";
 import { $ResourceLocation } from "@package/net/minecraft/resources";
 import { $Monster } from "@package/net/minecraft/world/entity/monster";
-import { $Vec3_, $Vec3 } from "@package/net/minecraft/world/phys";
+import { $Vec3, $Vec3_ } from "@package/net/minecraft/world/phys";
 
 declare module "@package/net/minecraft/world/entity/monster/breeze" {
     export class $Slide extends $Behavior<$Breeze> {
@@ -51,21 +52,22 @@ declare module "@package/net/minecraft/world/entity/monster/breeze" {
         stop(level: $ServerLevel, entity: $Breeze, gameTime: number): void;
         tick(level: $ServerLevel, entity: $Breeze, gameTime: number): void;
         static canRun(level: $ServerLevel, breeze: $Breeze): boolean;
-        checkExtraStartConditions(level: $ServerLevel, breeze: $Breeze): boolean;
         canStillUse(level: $ServerLevel, entity: $Breeze, gameTime: number): boolean;
+        checkExtraStartConditions(level: $ServerLevel, breeze: $Breeze): boolean;
         static DEFAULT_DURATION: number;
         entryCondition: $Map<$MemoryModuleType<never>, $MemoryStatus>;
         constructor();
     }
     export class $ShootWhenStuck extends $Behavior<$Breeze> {
         start(arg0: $ServerLevel, arg1: $Breeze, arg2: number): void;
-        checkExtraStartConditions(arg0: $ServerLevel, arg1: $Breeze): boolean;
         canStillUse(arg0: $ServerLevel, arg1: $Breeze, arg2: number): boolean;
+        checkExtraStartConditions(arg0: $ServerLevel, arg1: $Breeze): boolean;
         static DEFAULT_DURATION: number;
         entryCondition: $Map<$MemoryModuleType<never>, $MemoryStatus>;
         constructor();
     }
     export class $Breeze extends $Monster {
+        getHurtBy(): ($LivingEntity) | undefined;
         static createAttributes(): $AttributeSupplier$Builder;
         /**
          * Plays living's sound at its position
@@ -73,13 +75,13 @@ declare module "@package/net/minecraft/world/entity/monster/breeze" {
         playWhirlSound(): void;
         getSnoutYPosition(): number;
         resetJumpTrail(): $Breeze;
-        withinInnerCircleRange(pos: $Vec3_): boolean;
         /**
          * Plays living's sound at its position
          */
         emitJumpTrailParticles(): void;
         emitGroundParticles(count: number): void;
-        getHurtBy(): ($LivingEntity) | undefined;
+        withinInnerCircleRange(pos: $Vec3_): boolean;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -250,16 +252,16 @@ declare module "@package/net/minecraft/world/entity/monster/breeze" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(entityType: $EntityType_<$Monster>, level: $Level_);
-        get snoutYPosition(): number;
         get hurtBy(): ($LivingEntity) | undefined;
+        get snoutYPosition(): number;
     }
     export class $Shoot extends $Behavior<$Breeze> {
         start(level: $ServerLevel, entity: $Breeze, gameTime: number): void;
         stop(level: $ServerLevel, entity: $Breeze, gameTime: number): void;
         tick(level: $ServerLevel, entity: $Breeze, gameTime: number): void;
-        checkExtraStartConditions(level: $ServerLevel, owner: $Breeze): boolean;
-        canStillUse(level: $ServerLevel, entity: $Breeze, gameTime: number): boolean;
         static isFacingTarget(breeze: $Breeze, target: $LivingEntity): boolean;
+        canStillUse(level: $ServerLevel, entity: $Breeze, gameTime: number): boolean;
+        checkExtraStartConditions(level: $ServerLevel, owner: $Breeze): boolean;
         static DEFAULT_DURATION: number;
         entryCondition: $Map<$MemoryModuleType<never>, $MemoryStatus>;
         constructor();

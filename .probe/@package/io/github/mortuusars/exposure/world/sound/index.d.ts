@@ -6,8 +6,8 @@ declare module "@package/io/github/mortuusars/exposure/world/sound" {
     export class $SoundEffect extends $Record {
         get(): $SoundEvent;
         volume(): number;
-        sound(): $Supplier<$SoundEvent>;
         pitch(): number;
+        sound(): $Supplier<$SoundEvent>;
         pitchVariability(): number;
         getFinalPitch(): number;
         constructor(sound: $Supplier_<$SoundEvent>, volume: number, pitch: number, pitchVariability: number);
@@ -19,5 +19,5 @@ declare module "@package/io/github/mortuusars/exposure/world/sound" {
     /**
      * Values that may be interpreted as {@link $SoundEffect}.
      */
-    export type $SoundEffect_ = { pitchVariability?: number, pitch?: number, sound?: $Supplier_<$SoundEvent>, volume?: number,  } | [pitchVariability?: number, pitch?: number, sound?: $Supplier_<$SoundEvent>, volume?: number, ];
+    export type $SoundEffect_ = { volume?: number, pitchVariability?: number, pitch?: number, sound?: $Supplier_<$SoundEvent>,  } | [volume?: number, pitchVariability?: number, pitch?: number, sound?: $Supplier_<$SoundEvent>, ];
 }

@@ -8,13 +8,13 @@ import { $List_ } from "@package/java/util";
 
 declare module "@package/foundry/veil/api/client/property" {
     export class $Property<T> {
-        modify(arg0: T, arg1: $PropertyModifier$PropertyModifierMode_, arg2: ($List_<$MolangExpression_>) | undefined): void;
+        static codec<T, M extends $Property<T>>(arg0: $PropertyRegistry$PropertyType_<T, M>): $MapCodec<M>;
         getType(): $PropertyRegistry$PropertyType<T, $Property<T>>;
         getEnvironment(): $Supplier<$MolangEnvironment>;
-        static codec<T, M extends $Property<T>>(arg0: $PropertyRegistry$PropertyType_<T, M>): $MapCodec<M>;
+        modify(arg0: T, arg1: $PropertyModifier$PropertyModifierMode_, arg2: ($List_<$MolangExpression_>) | undefined): void;
         static createCodec<T, M extends $Property<T>>(arg0: $Function_<T, M>, arg1: $Codec<T>): $MapCodec<M>;
-        resetOverrideValue(): void;
         applyValue(arg0: string, arg1: $ShaderInstance): void;
+        resetOverrideValue(): void;
         constructor(arg0: $PropertyRegistry$PropertyType_<T, $Property<T>>, arg1: T);
         get type(): $PropertyRegistry$PropertyType<T, $Property<T>>;
         get environment(): $Supplier<$MolangEnvironment>;

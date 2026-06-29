@@ -77,25 +77,25 @@ declare module "@package/com/simibubi/create/content/trains" {
         toVanillaServerbound(): $ServerboundCustomPayloadPacket;
     }
     export class $GlobalRailwayManager {
-        tick(arg0: $Level_): void;
         cleanUp(): void;
-        markTracksDirty(): void;
-        tickSignalOverlay(): void;
-        removeGraph(arg0: $TrackGraph): void;
-        removeTrain(arg0: $UUID_): void;
-        playerLogout(arg0: $Player): void;
-        updateSplitGraph(arg0: $LevelAccessor, arg1: $TrackGraph): void;
-        getOrCreateGraph(arg0: $UUID_, arg1: number): $TrackGraph;
-        playerLogin(arg0: $Player): void;
-        levelLoaded(arg0: $LevelAccessor): void;
+        tick(arg0: $Level_): void;
+        putGraphWithDefaultGroup(arg0: $TrackGraph): void;
+        removeGraphAndGroup(arg0: $TrackGraph): void;
         addTrain(arg0: $Train): void;
+        sided(arg0: $LevelAccessor): $GlobalRailwayManager;
         getGraph(arg0: $LevelAccessor, arg1: $TrackNodeLocation): $TrackGraph;
         getGraphs(arg0: $LevelAccessor, arg1: $TrackNodeLocation): $List<$TrackGraph>;
-        sided(arg0: $LevelAccessor): $GlobalRailwayManager;
         putGraph(arg0: $TrackGraph): void;
-        removeGraphAndGroup(arg0: $TrackGraph): void;
-        putGraphWithDefaultGroup(arg0: $TrackGraph): void;
         clientTick(): void;
+        getOrCreateGraph(arg0: $UUID_, arg1: number): $TrackGraph;
+        tickSignalOverlay(): void;
+        playerLogout(arg0: $Player): void;
+        levelLoaded(arg0: $LevelAccessor): void;
+        markTracksDirty(): void;
+        removeGraph(arg0: $TrackGraph): void;
+        updateSplitGraph(arg0: $LevelAccessor, arg1: $TrackGraph): void;
+        removeTrain(arg0: $UUID_): void;
+        playerLogin(arg0: $Player): void;
         trackNetworks: $Map<$UUID, $TrackGraph>;
         signalEdgeGroups: $Map<$UUID, $SignalEdgeGroup>;
         trains: $Map<$UUID, $Train>;
@@ -114,12 +114,12 @@ declare module "@package/com/simibubi/create/content/trains" {
     export class $RailwaySavedData extends $SavedData {
         static load(arg0: $MinecraftServer): $RailwaySavedData;
         static factory(): $SavedData$Factory<$RailwaySavedData>;
+        getTrains(): $Map<$UUID, $Train>;
         getTrackNetworks(): $Map<$UUID, $TrackGraph>;
         getSignalBlocks(): $Map<$UUID, $SignalEdgeGroup>;
-        getTrains(): $Map<$UUID, $Train>;
+        get trains(): $Map<$UUID, $Train>;
         get trackNetworks(): $Map<$UUID, $TrackGraph>;
         get signalBlocks(): $Map<$UUID, $SignalEdgeGroup>;
-        get trains(): $Map<$UUID, $Train>;
     }
     export class $HonkPacket implements $CustomPacketPayload {
         toVanillaClientbound(): $ClientboundCustomPayloadPacket;
@@ -142,8 +142,8 @@ declare module "@package/com/simibubi/create/content/trains" {
     }
     export class $CubeParticle extends $Particle {
         setScale(arg0: number): void;
-        averageAge(arg0: number): void;
         setHot(arg0: boolean): void;
+        averageAge(arg0: number): void;
         speedUpWhenYMotionIsBlocked: boolean;
         lifetime: number;
         roll: number;

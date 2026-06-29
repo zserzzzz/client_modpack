@@ -7,12 +7,12 @@ declare module "@package/ca/fxco/moreculling/api/sprite" {
     }
     export interface $SpriteOpacity {
         moreculling$getUnmipmappedImage(): $NativeImage;
+        moreculling$hasTranslucency(arg0: $QuadBounds): boolean;
+        moreculling$hasTranslucency(arg0: $List_<$NativeImage>): boolean;
+        moreculling$hasTranslucency(arg0: $QuadBounds, arg1: $List_<$NativeImage>): boolean;
+        moreculling$hasTranslucency(): boolean;
         moreculling$hasTransparency(arg0: $QuadBounds): boolean;
         moreculling$hasTransparency(): boolean;
-        moreculling$hasTranslucency(arg0: $QuadBounds, arg1: $List_<$NativeImage>): boolean;
-        moreculling$hasTranslucency(arg0: $List_<$NativeImage>): boolean;
-        moreculling$hasTranslucency(arg0: $QuadBounds): boolean;
-        moreculling$hasTranslucency(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $SpriteOpacity}.

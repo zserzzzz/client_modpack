@@ -19,11 +19,11 @@ declare module "@package/com/simibubi/create/content/logistics/depot/storage" {
     export class $DepotMountedStorage extends $WrapperMountedItemStorage<$DepotMountedStorage$Handler> implements $SyncedMountedStorage {
         isDirty(): boolean;
         getItem(): $ItemStack;
-        setItem(arg0: $ItemStack_): void;
-        static fromDepot(arg0: $DepotBlockEntity): $DepotMountedStorage;
-        static fromLegacy(arg0: $HolderLookup$Provider, arg1: $CompoundTag_): $DepotMountedStorage;
-        markClean(): void;
         afterSync(arg0: $Contraption, arg1: $BlockPos_): void;
+        markClean(): void;
+        setItem(arg0: $ItemStack_): void;
+        static fromLegacy(arg0: $HolderLookup$Provider, arg1: $CompoundTag_): $DepotMountedStorage;
+        static fromDepot(arg0: $DepotBlockEntity): $DepotMountedStorage;
         static CODEC: $MapCodec<$DepotMountedStorage>;
         type: $MountedItemStorageType<$MountedItemStorage>;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $MountedItemStorage>;

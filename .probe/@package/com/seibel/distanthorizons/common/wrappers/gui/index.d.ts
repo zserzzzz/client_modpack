@@ -24,7 +24,7 @@ declare module "@package/com/seibel/distanthorizons/common/wrappers/gui" {
         renderBackground: boolean;
         static DEFAULT_SPACING: number;
         height: number;
-        constructor(x: number, y: number, width: number, height: number, u: number, v: number, hoveredVOffset: number, textureResourceLocation: $ResourceLocation_, textureWidth: number, textureHeight: number, pressAction: $Button$OnPress_, text: $Component_, renderBackground: boolean);
         constructor(x: number, y: number, width: number, height: number, u: number, v: number, hoveredVOffset: number, textureResourceLocation: $ResourceLocation_, textureWidth: number, textureHeight: number, pressAction: $Button$OnPress_, text: $Component_);
+        constructor(x: number, y: number, width: number, height: number, u: number, v: number, hoveredVOffset: number, textureResourceLocation: $ResourceLocation_, textureWidth: number, textureHeight: number, pressAction: $Button$OnPress_, text: $Component_, renderBackground: boolean);
     }
 }

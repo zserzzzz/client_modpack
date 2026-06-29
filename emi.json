@@ -1,13 +1,27 @@
 {
   "favorites": [],
   "lookup_history": [
+    "item:kubejs:andesite_powder",
+    "item:createdieselgenerators:mold{\"createdieselgenerators:mold_type\":\"createdieselgenerators:chain\"}",
+    "item:create:basin",
+    "item:minecraft:tuff",
+    "#item:create:stone_types/tuff",
+    "item:aeronautics:end_stone_powder",
+    "item:create:smart_fluid_pipe",
+    {
+      "type": "fluid",
+      "id": "kubejs:liquid_brass",
+      "amount": 1000
+    },
     {
       "type": "fluid",
       "id": "kubejs:molten_brass",
-      "amount": 0
+      "amount": 1000
     },
-    "item:create:brass_sheet",
     "item:create:brass_ingot",
+    "item:minecraft:coal_block",
+    "item:minecraft:diamond_block",
+    "item:create:brass_sheet",
     "item:create:brass_nugget",
     "item:create:brass_hand",
     "item:createdieselgenerators:burner",

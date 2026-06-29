@@ -123,7 +123,7 @@ declare module "@package/com/mojang/realmsclient/gui/screens" {
     /**
      * Values that may be interpreted as {@link $RealmsGenericErrorScreen$ErrorMessage}.
      */
-    export type $RealmsGenericErrorScreen$ErrorMessage_ = { title?: $Component_, detail?: $Component_,  } | [title?: $Component_, detail?: $Component_, ];
+    export type $RealmsGenericErrorScreen$ErrorMessage_ = { detail?: $Component_, title?: $Component_,  } | [detail?: $Component_, title?: $Component_, ];
     export class $RealmsParentalConsentScreen extends $RealmsScreen {
         static MENU_BACKGROUND: $ResourceLocation;
         minecraft: $Minecraft;
@@ -213,11 +213,6 @@ declare module "@package/com/mojang/realmsclient/gui/screens" {
     }
     export class $RealmsNotificationsScreen extends $RealmsScreen implements $IMixinRealmsNotificationsScreen {
         /**
-         * @return `true` if the GUI element is dragging, `false` otherwise
-         */
-        get_hasUnseenNotifications(): boolean;
-        get_validClient_FancyMenu(): $CompletableFuture<boolean>;
-        /**
          * Returns the tab order group of the GUI component.
          * Tab order group determines the order in which the components are traversed when using keyboard navigation.
          * 
@@ -227,11 +222,16 @@ declare module "@package/com/mojang/realmsclient/gui/screens" {
         /**
          * @return `true` if the GUI element is dragging, `false` otherwise
          */
-        get_hasUnreadNews_FancyMenu(): boolean;
+        get_hasUnseenNotifications(): boolean;
+        get_validClient_FancyMenu(): $CompletableFuture<boolean>;
         /**
          * @return `true` if the GUI element is dragging, `false` otherwise
          */
         get_trialAvailable_FancyMenu(): boolean;
+        /**
+         * @return `true` if the GUI element is dragging, `false` otherwise
+         */
+        get_hasUnreadNews_FancyMenu(): boolean;
         static MENU_BACKGROUND: $ResourceLocation;
         minecraft: $Minecraft;
         static INWORLD_FOOTER_SEPARATOR: $ResourceLocation;
@@ -259,11 +259,11 @@ declare module "@package/com/mojang/realmsclient/gui/screens" {
         static COLOR_LINK: number;
         font: $Font;
         constructor();
+        get _numberOfPendingInvites_FancyMenu(): number;
         get _hasUnseenNotifications(): boolean;
         get _validClient_FancyMenu(): $CompletableFuture<boolean>;
-        get _numberOfPendingInvites_FancyMenu(): number;
-        get _hasUnreadNews_FancyMenu(): boolean;
         get _trialAvailable_FancyMenu(): boolean;
+        get _hasUnreadNews_FancyMenu(): boolean;
     }
     export class $RealmsSlotOptionsScreen extends $RealmsScreen {
         static MENU_BACKGROUND: $ResourceLocation;
@@ -318,9 +318,9 @@ declare module "@package/com/mojang/realmsclient/gui/screens" {
         height: number;
     }
     export class $RealmsResetWorldScreen extends $RealmsScreen {
-        static forResetSlot(lastScreen: $Screen, serverData: $RealmsServer, resetWorldRunnable: $Runnable_): $RealmsResetWorldScreen;
         static forEmptySlot(lastScreen: $Screen, slot: number, serverData: $RealmsServer, resetWorldRunnable: $Runnable_): $RealmsResetWorldScreen;
         static forNewRealm(lastScreen: $Screen, serverData: $RealmsServer, realmCreationTask: $RealmCreationTask, resetWorldRunnable: $Runnable_): $RealmsResetWorldScreen;
+        static forResetSlot(lastScreen: $Screen, serverData: $RealmsServer, resetWorldRunnable: $Runnable_): $RealmsResetWorldScreen;
         static MENU_BACKGROUND: $ResourceLocation;
         minecraft: $Minecraft;
         static INWORLD_FOOTER_SEPARATOR: $ResourceLocation;
@@ -436,9 +436,9 @@ declare module "@package/com/mojang/realmsclient/gui/screens" {
         screenExecutor: $Executor;
         static COLOR_LINK: number;
         font: $Font;
+        constructor(serviceException: $RealmsServiceException, nextScreen: $Screen);
         constructor(title: $Component_, line2: $Component_, message: $Screen);
         constructor(message: $Component_, nextScreen: $Screen);
-        constructor(serviceException: $RealmsServiceException, nextScreen: $Screen);
     }
     export class $RealmsLongRunningMcoTaskScreen extends $RealmsScreen {
         setTitle(title: $Component_): void;
@@ -726,8 +726,8 @@ declare module "@package/com/mojang/realmsclient/gui/screens" {
         height: number;
     }
     export class $RealmsPopups {
-        static infoPopupScreen(backgroundScreen: $Screen, message: $Component_, onContinue: $Consumer_<$PopupScreen>): $PopupScreen;
         static warningPopupScreen(backgroundScreen: $Screen, message: $Component_, onContinue: $Consumer_<$PopupScreen>): $PopupScreen;
+        static infoPopupScreen(backgroundScreen: $Screen, message: $Component_, onContinue: $Consumer_<$PopupScreen>): $PopupScreen;
         static warningAcknowledgePopupScreen(backgroundScreen: $Screen, message: $Component_, onContinue: $Consumer_<$PopupScreen>): $PopupScreen;
         constructor();
     }
@@ -953,12 +953,12 @@ declare module "@package/com/mojang/realmsclient/gui/screens" {
     export interface $RealmsNotificationsScreen$DataFetcherConfiguration {
     }
     export class $RealmsConfigureWorldScreen extends $RealmsScreen {
-        stateChanged(): void;
-        getNewScreen(): $RealmsConfigureWorldScreen;
         openTheWorld(join: boolean): void;
         saveSettings(key: string, value: string): void;
-        closeTheWorld(): void;
         saveSlotSettings(worldOptions: $RealmsWorldOptions): void;
+        closeTheWorld(): void;
+        getNewScreen(): $RealmsConfigureWorldScreen;
+        stateChanged(): void;
         static MENU_BACKGROUND: $ResourceLocation;
         minecraft: $Minecraft;
         static INWORLD_FOOTER_SEPARATOR: $ResourceLocation;

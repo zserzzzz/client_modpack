@@ -8,8 +8,8 @@ import { $List, $List_, $Map_, $Map } from "@package/java/util";
 
 declare module "@package/net/neoforged/neoforge/network/negotiation" {
     export class $NetworkComponentNegotiator$ComponentNegotiationResult extends $Record {
-        failureReason(): $Component;
         success(): boolean;
+        failureReason(): $Component;
         constructor(success: boolean, failureReason: $Component_);
     }
     /**
@@ -28,7 +28,7 @@ declare module "@package/net/neoforged/neoforge/network/negotiation" {
     /**
      * Values that may be interpreted as {@link $NegotiableNetworkComponent}.
      */
-    export type $NegotiableNetworkComponent_ = { version?: string, optional?: boolean, flow?: ($PacketFlow_) | undefined, id?: $ResourceLocation_,  } | [version?: string, optional?: boolean, flow?: ($PacketFlow_) | undefined, id?: $ResourceLocation_, ];
+    export type $NegotiableNetworkComponent_ = { id?: $ResourceLocation_, version?: string, optional?: boolean, flow?: ($PacketFlow_) | undefined,  } | [id?: $ResourceLocation_, version?: string, optional?: boolean, flow?: ($PacketFlow_) | undefined, ];
     export class $NegotiationResult extends $Record {
         success(): boolean;
         components(): $List<$NegotiatedNetworkComponent>;
@@ -38,7 +38,7 @@ declare module "@package/net/neoforged/neoforge/network/negotiation" {
     /**
      * Values that may be interpreted as {@link $NegotiationResult}.
      */
-    export type $NegotiationResult_ = { components?: $List_<$NegotiatedNetworkComponent_>, failureReasons?: $Map_<$ResourceLocation_, $Component_>, success?: boolean,  } | [components?: $List_<$NegotiatedNetworkComponent_>, failureReasons?: $Map_<$ResourceLocation_, $Component_>, success?: boolean, ];
+    export type $NegotiationResult_ = { failureReasons?: $Map_<$ResourceLocation_, $Component_>, success?: boolean, components?: $List_<$NegotiatedNetworkComponent_>,  } | [failureReasons?: $Map_<$ResourceLocation_, $Component_>, success?: boolean, components?: $List_<$NegotiatedNetworkComponent_>, ];
     /**
      * Negotiates the network components between the server and client.
      */

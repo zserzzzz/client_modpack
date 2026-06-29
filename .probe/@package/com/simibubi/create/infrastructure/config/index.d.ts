@@ -210,13 +210,13 @@ declare module "@package/com/simibubi/create/infrastructure/config" {
         constructor();
     }
     export class $AllConfigs {
-        static onReload(arg0: $ModConfigEvent$Reloading): void;
         static server(): $CServer;
         static register(arg0: $ModLoadingContext, arg1: $ModContainer): void;
         static common(): $CCommon;
         static client(): $CClient;
         static onLoad(arg0: $ModConfigEvent$Loading): void;
         static byType(arg0: $ModConfig$Type_): $ConfigBase;
+        static onReload(arg0: $ModConfigEvent$Reloading): void;
         constructor();
     }
     export class $CClient extends $ConfigBase {
@@ -257,8 +257,8 @@ declare module "@package/com/simibubi/create/infrastructure/config" {
         constructor();
     }
     export class $CStress extends $ConfigBase {
-        static setCapacity<B extends $Block, P>(arg0: number): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
         getCapacity(arg0: $Block_): $DoubleSupplier;
+        static setCapacity<B extends $Block, P>(arg0: number): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
         getImpact(arg0: $Block_): $DoubleSupplier;
         static setNoImpact<B extends $Block, P>(): $NonNullUnaryOperator<$BlockBuilder<B, P>>;
         static setImpact<B extends $Block, P>(arg0: number): $NonNullUnaryOperator<$BlockBuilder<B, P>>;

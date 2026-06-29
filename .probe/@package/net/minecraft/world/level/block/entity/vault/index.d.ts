@@ -47,20 +47,20 @@ declare module "@package/net/minecraft/world/level/block/entity/vault" {
         constructor();
     }
     export class $VaultClientData {
-        previousSpin(): number;
         currentSpin(): number;
+        previousSpin(): number;
         updateDisplayItemSpin(): void;
         static ROTATION_SPEED: number;
         constructor();
     }
     export class $VaultConfig extends $Record {
+        keyItem(): $ItemStack;
+        lootTable(): $ResourceKey<$LootTable>;
+        overrideLootTableToDisplay(): ($ResourceKey<$LootTable>) | undefined;
         entitySelector(): $PlayerDetector$EntitySelector;
         playerDetector(): $PlayerDetector;
-        lootTable(): $ResourceKey<$LootTable>;
         activationRange(): number;
         deactivationRange(): number;
-        overrideLootTableToDisplay(): ($ResourceKey<$LootTable>) | undefined;
-        keyItem(): $ItemStack;
         static CODEC: $Codec<$VaultConfig>;
         static DEFAULT: $VaultConfig;
         static TAG_NAME: string;
@@ -70,7 +70,7 @@ declare module "@package/net/minecraft/world/level/block/entity/vault" {
     /**
      * Values that may be interpreted as {@link $VaultConfig}.
      */
-    export type $VaultConfig_ = { keyItem?: $ItemStack_, playerDetector?: $PlayerDetector_, lootTable?: $ResourceKey_<$LootTable>, entitySelector?: $PlayerDetector$EntitySelector, deactivationRange?: number, overrideLootTableToDisplay?: ($ResourceKey_<$LootTable>) | undefined, activationRange?: number,  } | [keyItem?: $ItemStack_, playerDetector?: $PlayerDetector_, lootTable?: $ResourceKey_<$LootTable>, entitySelector?: $PlayerDetector$EntitySelector, deactivationRange?: number, overrideLootTableToDisplay?: ($ResourceKey_<$LootTable>) | undefined, activationRange?: number, ];
+    export type $VaultConfig_ = { lootTable?: $ResourceKey_<$LootTable>, entitySelector?: $PlayerDetector$EntitySelector, deactivationRange?: number, overrideLootTableToDisplay?: ($ResourceKey_<$LootTable>) | undefined, activationRange?: number, keyItem?: $ItemStack_, playerDetector?: $PlayerDetector_,  } | [lootTable?: $ResourceKey_<$LootTable>, entitySelector?: $PlayerDetector$EntitySelector, deactivationRange?: number, overrideLootTableToDisplay?: ($ResourceKey_<$LootTable>) | undefined, activationRange?: number, keyItem?: $ItemStack_, playerDetector?: $PlayerDetector_, ];
     export class $VaultState$LightLevel extends $Enum<$VaultState$LightLevel> {
     }
     /**
@@ -79,19 +79,19 @@ declare module "@package/net/minecraft/world/level/block/entity/vault" {
     export type $VaultState$LightLevel_ = "half_lit" | "lit";
     export class $VaultServerData {
         set(other: $VaultServerData): void;
-        getRewardedPlayers(): $Set<$UUID>;
-        setItemsToEject(itemsToEject: $List_<$ItemStack_>): void;
-        getItemsToEject(): $List<$ItemStack>;
-        ejectionProgress(): number;
-        popNextItemToEject(): $ItemStack;
-        hasRewardedPlayer(player: $Player): boolean;
-        getNextItemToEject(): $ItemStack;
+        setLastInsertFailTimestamp(time: number): void;
         markEjectionFinished(): void;
         stateUpdatingResumesAt(): number;
         pauseStateUpdatingUntil(time: number): void;
-        getLastInsertFailTimestamp(): number;
         addToRewardedPlayers(player: $Player): void;
-        setLastInsertFailTimestamp(time: number): void;
+        getLastInsertFailTimestamp(): number;
+        getItemsToEject(): $List<$ItemStack>;
+        getRewardedPlayers(): $Set<$UUID>;
+        ejectionProgress(): number;
+        popNextItemToEject(): $ItemStack;
+        getNextItemToEject(): $ItemStack;
+        setItemsToEject(itemsToEject: $List_<$ItemStack_>): void;
+        hasRewardedPlayer(player: $Player): boolean;
         static CODEC: $Codec<$VaultServerData>;
         isDirty: boolean;
         static TAG_NAME: string;
@@ -103,12 +103,12 @@ declare module "@package/net/minecraft/world/level/block/entity/vault" {
     export class $VaultSharedData {
         set(other: $VaultSharedData): void;
         updateConnectedPlayersWithinRange(level: $ServerLevel, pos: $BlockPos_, serverData: $VaultServerData, config: $VaultConfig_, deactivationRange: number): void;
-        hasDisplayItem(): boolean;
+        connectedParticlesRange(): number;
+        hasConnectedPlayers(): boolean;
+        getConnectedPlayers(): $Set<$UUID>;
         getDisplayItem(): $ItemStack;
         setDisplayItem(displayItem: $ItemStack_): void;
-        hasConnectedPlayers(): boolean;
-        connectedParticlesRange(): number;
-        getConnectedPlayers(): $Set<$UUID>;
+        hasDisplayItem(): boolean;
         static CODEC: $Codec<$VaultSharedData>;
         isDirty: boolean;
         static TAG_NAME: string;
@@ -120,11 +120,11 @@ declare module "@package/net/minecraft/world/level/block/entity/vault" {
         static values(): $VaultState[];
         static valueOf(arg0: string): $VaultState;
         onExit(level: $ServerLevel, pos: $BlockPos_, config: $VaultConfig_, sharedData: $VaultSharedData): void;
+        onEnter(level: $ServerLevel, pos: $BlockPos_, config: $VaultConfig_, sharedData: $VaultSharedData, isOminous: boolean): void;
+        lightLevel(): number;
+        onTransition(level: $ServerLevel, pos: $BlockPos_, state: $VaultState_, config: $VaultConfig_, sharedData: $VaultSharedData, isOminous: boolean): void;
         getSerializedName(): string;
         tickAndGetNext(level: $ServerLevel, pos: $BlockPos_, config: $VaultConfig_, serverData: $VaultServerData, sharedData: $VaultSharedData): $VaultState;
-        onTransition(level: $ServerLevel, pos: $BlockPos_, state: $VaultState_, config: $VaultConfig_, sharedData: $VaultSharedData, isOminous: boolean): void;
-        lightLevel(): number;
-        onEnter(level: $ServerLevel, pos: $BlockPos_, config: $VaultConfig_, sharedData: $VaultSharedData, isOminous: boolean): void;
         getRemappedEnumConstantName(): string;
         static ACTIVE: $VaultState;
         static INACTIVE: $VaultState;

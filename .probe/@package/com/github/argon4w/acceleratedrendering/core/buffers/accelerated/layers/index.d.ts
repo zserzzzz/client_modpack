@@ -5,14 +5,14 @@ export * as functions from "@package/com/github/argon4w/acceleratedrendering/cor
 
 declare module "@package/com/github/argon4w/acceleratedrendering/core/buffers/accelerated/layers" {
     export class $LayerKey extends $Record {
-        renderType(): $RenderType;
         layer(): number;
+        renderType(): $RenderType;
         constructor(layer: number, renderType: $RenderType);
     }
     /**
      * Values that may be interpreted as {@link $LayerKey}.
      */
-    export type $LayerKey_ = { renderType?: $RenderType, layer?: number,  } | [renderType?: $RenderType, layer?: number, ];
+    export type $LayerKey_ = { layer?: number, renderType?: $RenderType,  } | [layer?: number, renderType?: $RenderType, ];
     export class $LayerDrawType extends $Enum<$LayerDrawType> {
         static values(): $LayerDrawType[];
         static valueOf(arg0: string): $LayerDrawType;

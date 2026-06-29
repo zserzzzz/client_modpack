@@ -31,10 +31,10 @@ declare module "@package/net/fabricmc/fabric/api/transfer/v1/transaction" {
     export class $TransactionContext {
     }
     export interface $TransactionContext {
-        openNested(): $Transaction;
+        nestingDepth(): number;
         getOpenTransaction(arg0: number): $Transaction;
         addCloseCallback(arg0: $TransactionContext$CloseCallback_): void;
-        nestingDepth(): number;
+        openNested(): $Transaction;
         addOuterCloseCallback(arg0: $TransactionContext$OuterCloseCallback_): void;
     }
     export class $Transaction$Lifecycle extends $Enum<$Transaction$Lifecycle> {
@@ -52,8 +52,8 @@ declare module "@package/net/fabricmc/fabric/api/transfer/v1/transaction" {
     export class $TransactionContext$Result extends $Enum<$TransactionContext$Result> {
         static values(): $TransactionContext$Result[];
         static valueOf(arg0: string): $TransactionContext$Result;
-        wasCommitted(): boolean;
         wasAborted(): boolean;
+        wasCommitted(): boolean;
         static ABORTED: $TransactionContext$Result;
         static COMMITTED: $TransactionContext$Result;
     }

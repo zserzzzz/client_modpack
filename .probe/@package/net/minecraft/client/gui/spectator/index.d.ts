@@ -32,9 +32,9 @@ declare module "@package/net/minecraft/client/gui/spectator" {
         exit(): void;
         getItem(index: number): $SpectatorMenuItem;
         getSelectedItem(): $SpectatorMenuItem;
-        getItems(): $List<$SpectatorMenuItem>;
-        selectSlot(slot: number): void;
         selectCategory(category: $SpectatorMenuCategory): void;
+        selectSlot(slot: number): void;
+        getItems(): $List<$SpectatorMenuItem>;
         getSelectedCategory(): $SpectatorMenuCategory;
         getSelectedSlot(): number;
         getCurrentPage(): $SpectatorPage;
@@ -58,10 +58,10 @@ declare module "@package/net/minecraft/client/gui/spectator" {
     export class $SpectatorMenuCategory {
     }
     export interface $SpectatorMenuCategory {
-        getItems(): $List<$SpectatorMenuItem>;
         getPrompt(): $Component;
-        get items(): $List<$SpectatorMenuItem>;
+        getItems(): $List<$SpectatorMenuItem>;
         get prompt(): $Component;
+        get items(): $List<$SpectatorMenuItem>;
     }
     export class $PlayerMenuItem implements $SpectatorMenuItem {
         getName(): $Component;
@@ -73,10 +73,10 @@ declare module "@package/net/minecraft/client/gui/spectator" {
         get enabled(): boolean;
     }
     export class $RootSpectatorMenuCategory implements $SpectatorMenuCategory {
-        getItems(): $List<$SpectatorMenuItem>;
         getPrompt(): $Component;
+        getItems(): $List<$SpectatorMenuItem>;
         constructor();
-        get items(): $List<$SpectatorMenuItem>;
         get prompt(): $Component;
+        get items(): $List<$SpectatorMenuItem>;
     }
 }

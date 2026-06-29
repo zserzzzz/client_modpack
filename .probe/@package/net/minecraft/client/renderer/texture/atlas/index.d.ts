@@ -51,7 +51,7 @@ declare module "@package/net/minecraft/client/renderer/texture/atlas" {
     }
     export class $SpriteSources implements $AtlasSourceManagerAccessor {
         static register(name: string, codec: $MapCodec_<$SpriteSource>): $SpriteSourceType;
-        static getSourceTypeById$fabric_rendering_v1_$md$942995$0(): $BiMap<any, any>;
+        static getSourceTypeById$fabric_rendering_v1_$md$c99f8a$0(): $BiMap<any, any>;
         static TYPE_CODEC: $Codec<$SpriteSourceType>;
         static PALETTED_PERMUTATIONS: $SpriteSourceType;
         static FILE_CODEC: $Codec<$List<$SpriteSource>>;
@@ -61,7 +61,7 @@ declare module "@package/net/minecraft/client/renderer/texture/atlas" {
         static SINGLE_FILE: $SpriteSourceType;
         static UNSTITCHER: $SpriteSourceType;
         constructor();
-        static get sourceTypeById$fabric_rendering_v1_$md$942995$0(): $BiMap<any, any>;
+        static get sourceTypeById$fabric_rendering_v1_$md$c99f8a$0(): $BiMap<any, any>;
     }
     export class $SpriteSourceList {
         static load(resourceManager: $ResourceManager, sprite: $ResourceLocation_): $SpriteSourceList;

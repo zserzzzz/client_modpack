@@ -24,7 +24,7 @@ declare module "@package/dev/ryanhcode/sable/neoforge/mixinterface/compatibility
     export class $StickerBlockEntityExtension {
     }
     export interface $StickerBlockEntityExtension {
-        sable$tickConstraint(): void;
         sable$removeConstraint(): void;
+        sable$tickConstraint(): void;
     }
 }

@@ -1,4 +1,4 @@
-import { $MathValue, $MathValue_ } from "@package/software/bernie/geckolib/loading/math";
+import { $MathValue_, $MathValue } from "@package/software/bernie/geckolib/loading/math";
 import { $GeoBone } from "@package/software/bernie/geckolib/cache/object";
 import { $Record } from "@package/java/lang";
 import { $LinkedList, $List, $List_ } from "@package/java/util";
@@ -23,63 +23,63 @@ declare module "@package/software/bernie/geckolib/animation/keyframe" {
     /**
      * Values that may be interpreted as {@link $KeyframeStack}.
      */
-    export type $KeyframeStack_<T> = { yKeyframes?: $List_<$Keyframe_<never>>, xKeyframes?: $List_<$Keyframe_<never>>, zKeyframes?: $List_<$Keyframe_<never>>,  } | [yKeyframes?: $List_<$Keyframe_<never>>, xKeyframes?: $List_<$Keyframe_<never>>, zKeyframes?: $List_<$Keyframe_<never>>, ];
+    export type $KeyframeStack_<T> = { zKeyframes?: $List_<$Keyframe_<never>>, yKeyframes?: $List_<$Keyframe_<never>>, xKeyframes?: $List_<$Keyframe_<never>>,  } | [zKeyframes?: $List_<$Keyframe_<never>>, yKeyframes?: $List_<$Keyframe_<never>>, xKeyframes?: $List_<$Keyframe_<never>>, ];
     export class $BoneAnimationQueue extends $Record {
         bone(): $GeoBone;
-        addNextPosition(arg0: $Keyframe_<never>, arg1: number, arg2: number, arg3: $BoneSnapshot, arg4: $AnimationPoint_, arg5: $AnimationPoint_, arg6: $AnimationPoint_): void;
-        addRotations(arg0: $AnimationPoint_, arg1: $AnimationPoint_, arg2: $AnimationPoint_): void;
-        addNextRotation(arg0: $Keyframe_<never>, arg1: number, arg2: number, arg3: $BoneSnapshot, arg4: $BoneSnapshot, arg5: $AnimationPoint_, arg6: $AnimationPoint_, arg7: $AnimationPoint_): void;
-        addNextScale(arg0: $Keyframe_<never>, arg1: number, arg2: number, arg3: $BoneSnapshot, arg4: $AnimationPoint_, arg5: $AnimationPoint_, arg6: $AnimationPoint_): void;
-        addPositions(arg0: $AnimationPoint_, arg1: $AnimationPoint_, arg2: $AnimationPoint_): void;
         addScales(arg0: $AnimationPoint_, arg1: $AnimationPoint_, arg2: $AnimationPoint_): void;
+        addPositions(arg0: $AnimationPoint_, arg1: $AnimationPoint_, arg2: $AnimationPoint_): void;
+        addNextPosition(arg0: $Keyframe_<never>, arg1: number, arg2: number, arg3: $BoneSnapshot, arg4: $AnimationPoint_, arg5: $AnimationPoint_, arg6: $AnimationPoint_): void;
+        addNextScale(arg0: $Keyframe_<never>, arg1: number, arg2: number, arg3: $BoneSnapshot, arg4: $AnimationPoint_, arg5: $AnimationPoint_, arg6: $AnimationPoint_): void;
+        addNextRotation(arg0: $Keyframe_<never>, arg1: number, arg2: number, arg3: $BoneSnapshot, arg4: $BoneSnapshot, arg5: $AnimationPoint_, arg6: $AnimationPoint_, arg7: $AnimationPoint_): void;
+        addRotations(arg0: $AnimationPoint_, arg1: $AnimationPoint_, arg2: $AnimationPoint_): void;
+        rotationYQueue(): $AnimationPointQueue;
+        rotationXQueue(): $AnimationPointQueue;
+        positionZQueue(): $AnimationPointQueue;
         rotationZQueue(): $AnimationPointQueue;
+        addRotationYPoint(arg0: $Keyframe_<never>, arg1: number, arg2: number, arg3: number, arg4: number): void;
+        positionYQueue(): $AnimationPointQueue;
+        addScaleZPoint(arg0: $Keyframe_<never>, arg1: number, arg2: number, arg3: number, arg4: number): void;
         scaleXQueue(): $AnimationPointQueue;
         scaleYQueue(): $AnimationPointQueue;
-        scaleZQueue(): $AnimationPointQueue;
-        rotationXQueue(): $AnimationPointQueue;
+        addPosZPoint(arg0: $Keyframe_<never>, arg1: number, arg2: number, arg3: number, arg4: number): void;
         positionXQueue(): $AnimationPointQueue;
-        positionYQueue(): $AnimationPointQueue;
-        rotationYQueue(): $AnimationPointQueue;
-        positionZQueue(): $AnimationPointQueue;
+        addRotationZPoint(arg0: $Keyframe_<never>, arg1: number, arg2: number, arg3: number, arg4: number): void;
+        scaleZQueue(): $AnimationPointQueue;
+        addScaleYPoint(arg0: $Keyframe_<never>, arg1: number, arg2: number, arg3: number, arg4: number): void;
+        addRotationXPoint(arg0: $Keyframe_<never>, arg1: number, arg2: number, arg3: number, arg4: number): void;
+        addScaleXPoint(arg0: $Keyframe_<never>, arg1: number, arg2: number, arg3: number, arg4: number): void;
         addPosXPoint(arg0: $Keyframe_<never>, arg1: number, arg2: number, arg3: number, arg4: number): void;
         addPosYPoint(arg0: $Keyframe_<never>, arg1: number, arg2: number, arg3: number, arg4: number): void;
-        addScaleZPoint(arg0: $Keyframe_<never>, arg1: number, arg2: number, arg3: number, arg4: number): void;
-        addPosZPoint(arg0: $Keyframe_<never>, arg1: number, arg2: number, arg3: number, arg4: number): void;
-        addRotationYPoint(arg0: $Keyframe_<never>, arg1: number, arg2: number, arg3: number, arg4: number): void;
-        addRotationXPoint(arg0: $Keyframe_<never>, arg1: number, arg2: number, arg3: number, arg4: number): void;
-        addScaleYPoint(arg0: $Keyframe_<never>, arg1: number, arg2: number, arg3: number, arg4: number): void;
-        addRotationZPoint(arg0: $Keyframe_<never>, arg1: number, arg2: number, arg3: number, arg4: number): void;
-        addScaleXPoint(arg0: $Keyframe_<never>, arg1: number, arg2: number, arg3: number, arg4: number): void;
         constructor(arg0: $GeoBone);
         constructor(bone: $GeoBone, rotationXQueue: $AnimationPointQueue, rotationYQueue: $AnimationPointQueue, rotationZQueue: $AnimationPointQueue, positionXQueue: $AnimationPointQueue, positionYQueue: $AnimationPointQueue, positionZQueue: $AnimationPointQueue, scaleXQueue: $AnimationPointQueue, scaleYQueue: $AnimationPointQueue, scaleZQueue: $AnimationPointQueue);
     }
     /**
      * Values that may be interpreted as {@link $BoneAnimationQueue}.
      */
-    export type $BoneAnimationQueue_ = { scaleXQueue?: $AnimationPointQueue, rotationXQueue?: $AnimationPointQueue, positionYQueue?: $AnimationPointQueue, bone?: $GeoBone, rotationYQueue?: $AnimationPointQueue, scaleYQueue?: $AnimationPointQueue, positionZQueue?: $AnimationPointQueue, positionXQueue?: $AnimationPointQueue, rotationZQueue?: $AnimationPointQueue, scaleZQueue?: $AnimationPointQueue,  } | [scaleXQueue?: $AnimationPointQueue, rotationXQueue?: $AnimationPointQueue, positionYQueue?: $AnimationPointQueue, bone?: $GeoBone, rotationYQueue?: $AnimationPointQueue, scaleYQueue?: $AnimationPointQueue, positionZQueue?: $AnimationPointQueue, positionXQueue?: $AnimationPointQueue, rotationZQueue?: $AnimationPointQueue, scaleZQueue?: $AnimationPointQueue, ];
+    export type $BoneAnimationQueue_ = { positionZQueue?: $AnimationPointQueue, positionXQueue?: $AnimationPointQueue, rotationZQueue?: $AnimationPointQueue, scaleZQueue?: $AnimationPointQueue, scaleXQueue?: $AnimationPointQueue, rotationXQueue?: $AnimationPointQueue, positionYQueue?: $AnimationPointQueue, bone?: $GeoBone, rotationYQueue?: $AnimationPointQueue, scaleYQueue?: $AnimationPointQueue,  } | [positionZQueue?: $AnimationPointQueue, positionXQueue?: $AnimationPointQueue, rotationZQueue?: $AnimationPointQueue, scaleZQueue?: $AnimationPointQueue, scaleXQueue?: $AnimationPointQueue, rotationXQueue?: $AnimationPointQueue, positionYQueue?: $AnimationPointQueue, bone?: $GeoBone, rotationYQueue?: $AnimationPointQueue, scaleYQueue?: $AnimationPointQueue, ];
     export class $BoneAnimation extends $Record {
         scaleKeyFrames(): $KeyframeStack<$Keyframe<$MathValue>>;
-        positionKeyFrames(): $KeyframeStack<$Keyframe<$MathValue>>;
         rotationKeyFrames(): $KeyframeStack<$Keyframe<$MathValue>>;
+        positionKeyFrames(): $KeyframeStack<$Keyframe<$MathValue>>;
         boneName(): string;
         constructor(boneName: string, rotationKeyFrames: $KeyframeStack_<$Keyframe_<$MathValue_>>, positionKeyFrames: $KeyframeStack_<$Keyframe_<$MathValue_>>, scaleKeyFrames: $KeyframeStack_<$Keyframe_<$MathValue_>>);
     }
     /**
      * Values that may be interpreted as {@link $BoneAnimation}.
      */
-    export type $BoneAnimation_ = { boneName?: string, rotationKeyFrames?: $KeyframeStack_<$Keyframe_<$MathValue_>>, positionKeyFrames?: $KeyframeStack_<$Keyframe_<$MathValue_>>, scaleKeyFrames?: $KeyframeStack_<$Keyframe_<$MathValue_>>,  } | [boneName?: string, rotationKeyFrames?: $KeyframeStack_<$Keyframe_<$MathValue_>>, positionKeyFrames?: $KeyframeStack_<$Keyframe_<$MathValue_>>, scaleKeyFrames?: $KeyframeStack_<$Keyframe_<$MathValue_>>, ];
+    export type $BoneAnimation_ = { positionKeyFrames?: $KeyframeStack_<$Keyframe_<$MathValue_>>, scaleKeyFrames?: $KeyframeStack_<$Keyframe_<$MathValue_>>, boneName?: string, rotationKeyFrames?: $KeyframeStack_<$Keyframe_<$MathValue_>>,  } | [positionKeyFrames?: $KeyframeStack_<$Keyframe_<$MathValue_>>, scaleKeyFrames?: $KeyframeStack_<$Keyframe_<$MathValue_>>, boneName?: string, rotationKeyFrames?: $KeyframeStack_<$Keyframe_<$MathValue_>>, ];
     export class $AnimationPoint extends $Record {
         currentTick(): number;
-        transitionLength(): number;
         keyFrame(): $Keyframe<never>;
-        animationStartValue(): number;
         animationEndValue(): number;
+        animationStartValue(): number;
+        transitionLength(): number;
         constructor(keyFrame: $Keyframe_<never>, currentTick: number, transitionLength: number, animationStartValue: number, animationEndValue: number);
     }
     /**
      * Values that may be interpreted as {@link $AnimationPoint}.
      */
-    export type $AnimationPoint_ = { animationStartValue?: number, keyFrame?: $Keyframe_<never>, currentTick?: number, animationEndValue?: number, transitionLength?: number,  } | [animationStartValue?: number, keyFrame?: $Keyframe_<never>, currentTick?: number, animationEndValue?: number, transitionLength?: number, ];
+    export type $AnimationPoint_ = { animationEndValue?: number, transitionLength?: number, animationStartValue?: number, keyFrame?: $Keyframe_<never>, currentTick?: number,  } | [animationEndValue?: number, transitionLength?: number, animationStartValue?: number, keyFrame?: $Keyframe_<never>, currentTick?: number, ];
     export class $Keyframe<T extends $MathValue> extends $Record {
         length(): number;
         endValue(): T;
@@ -93,5 +93,5 @@ declare module "@package/software/bernie/geckolib/animation/keyframe" {
     /**
      * Values that may be interpreted as {@link $Keyframe}.
      */
-    export type $Keyframe_<T> = { easingType?: $EasingType_, endValue?: $MathValue_, length?: number, startValue?: $MathValue_, easingArgs?: $List_<$MathValue_>,  } | [easingType?: $EasingType_, endValue?: $MathValue_, length?: number, startValue?: $MathValue_, easingArgs?: $List_<$MathValue_>, ];
+    export type $Keyframe_<T> = { startValue?: $MathValue_, easingArgs?: $List_<$MathValue_>, easingType?: $EasingType_, endValue?: $MathValue_, length?: number,  } | [startValue?: $MathValue_, easingArgs?: $List_<$MathValue_>, easingType?: $EasingType_, endValue?: $MathValue_, length?: number, ];
 }

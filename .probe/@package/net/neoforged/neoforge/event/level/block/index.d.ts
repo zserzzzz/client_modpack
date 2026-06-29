@@ -52,15 +52,15 @@ declare module "@package/net/neoforged/neoforge/event/level/block" {
         canConvert(): boolean;
         getFluidState(): $FluidState;
         /**
-         * Sets if the fluid will be converted to a source block.
-         */
-        setCanConvert(convert: boolean): void;
-        /**
          * Returns if the fluid would normally be converted to a source block.
          * 
          * This is computed by calling `IFluidStateExtension#canConvertToSource(Level, BlockPos)`.
          */
         getVanillaResult(): boolean;
+        /**
+         * Sets if the fluid will be converted to a source block.
+         */
+        setCanConvert(convert: boolean): void;
         constructor(level: $Level_, pos: $BlockPos_, state: $BlockState_);
         get fluidState(): $FluidState;
         get vanillaResult(): boolean;

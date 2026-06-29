@@ -21,25 +21,25 @@ declare module "@package/net/mehvahdjukaar/moonlight/core/misc" {
     }
     export interface $IMapDataPacketExtension {
         moonlight$getDirtyCustomData(): ($List<$CustomMapData$DirtyDataPatch<never, never>>) | undefined;
-        moonlight$getCustomDecorations(): ($List<$MLMapDecoration>) | undefined;
-        moonlight$setCustomDecorations(arg0: ($List_<$MLMapDecoration>) | undefined): void;
-        moonlight$setDirtyCustomData(arg0: ($List_<$CustomMapData$DirtyDataPatch_<never, never>>) | undefined): void;
+        moonlight$getMapCenterZ(): number;
         moonlight$getDimension(): $ResourceLocation;
         moonlight$setDimension(arg0: $ResourceLocation_): void;
-        moonlight$getMapCenterZ(): number;
-        moonlight$setMapCenter(arg0: number, arg1: number): void;
         moonlight$getMapCenterX(): number;
+        moonlight$setMapCenter(arg0: number, arg1: number): void;
+        moonlight$getCustomDecorations(): ($List<$MLMapDecoration>) | undefined;
+        moonlight$setDirtyCustomData(arg0: ($List_<$CustomMapData$DirtyDataPatch_<never, never>>) | undefined): void;
+        moonlight$setCustomDecorations(arg0: ($List_<$MLMapDecoration>) | undefined): void;
     }
     export class $VillagerBrainEventInternal {
-        getVillager(): $Villager;
-        getMemories(): $Map<$MemoryModuleType<never>, ($ExpirableValue<never>) | undefined>;
-        scheduleActivity(arg0: $Activity_, arg1: number, arg2: number): void;
-        addTaskToActivity<P extends $Pair<number, $Behavior<$Villager>>>(arg0: $Activity_, arg1: P): boolean;
-        addSensor(arg0: $SensorType_<$Sensor<$Villager>>): void;
         addOrReplaceActivity(arg0: $Activity_, arg1: $ImmutableList<$Pair<number, $BehaviorControl<$Villager>>>): void;
+        getMemories(): $Map<$MemoryModuleType<never>, ($ExpirableValue<never>) | undefined>;
+        getVillager(): $Villager;
+        addTaskToActivity<P extends $Pair<number, $Behavior<$Villager>>>(arg0: $Activity_, arg1: P): boolean;
+        scheduleActivity(arg0: $Activity_, arg1: number, arg2: number): void;
+        addSensor(arg0: $SensorType_<$Sensor<$Villager>>): void;
         constructor(arg0: $Brain<$Villager>, arg1: $Villager);
-        get villager(): $Villager;
         get memories(): $Map<$MemoryModuleType<never>, ($ExpirableValue<never>) | undefined>;
+        get villager(): $Villager;
     }
     export class $IExtendedItem {
     }

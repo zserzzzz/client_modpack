@@ -51,8 +51,8 @@ declare module "@package/com/simibubi/create/compat/trainmap" {
     export class $FTBChunksTrainMap {
         static tick(): void;
         static mouseClick(arg0: $InputEvent$MouseButton$Pre): void;
-        static renderGui(arg0: $ScreenEvent$Render$Post): void;
         static cancelTooltips(arg0: $RenderTooltipEvent$Pre): void;
+        static renderGui(arg0: $ScreenEvent$Render$Post): void;
         constructor();
     }
     export class $TrainMapSync {
@@ -85,37 +85,37 @@ declare module "@package/com/simibubi/create/compat/trainmap" {
         get typeProvider(): $BasePacketPayload$PacketTypeProvider;
     }
     export class $TrainMapRenderer$TrainMapInstance implements $AutoCloseable {
-        close(): void;
-        draw(arg0: $PoseStack, arg1: $MultiBufferSource_, arg2: boolean): void;
-        canBeSkipped(arg0: $Rect2i): boolean;
         getImage(): $NativeImage;
+        close(): void;
+        canBeSkipped(arg0: $Rect2i): boolean;
+        draw(arg0: $PoseStack, arg1: $MultiBufferSource_, arg2: boolean): void;
         location: $ResourceLocation;
         get image(): $NativeImage;
     }
     export class $TrainMapEvents {
         static tick(arg0: $ClientTickEvent$Post): void;
         static mouseClick(arg0: $InputEvent$MouseButton$Pre): void;
-        static renderGui(arg0: $ScreenEvent$Render$Post): void;
         static cancelTooltips(arg0: $RenderTooltipEvent$Pre): void;
+        static renderGui(arg0: $ScreenEvent$Render$Post): void;
         constructor();
     }
     export class $TrainMapRenderer implements $AutoCloseable {
-        getMaps(): $Object2ObjectMap<$Couple<number>, $TrainMapRenderer$TrainMapInstance>;
         isEmpty(arg0: number, arg1: number): boolean;
         close(): void;
         is(arg0: number, arg1: number, arg2: number): boolean;
-        render(arg0: $GuiGraphics, arg1: boolean, arg2: $Rect2i): void;
+        getMaps(): $Object2ObjectMap<$Couple<number>, $TrainMapRenderer$TrainMapInstance>;
         getPixel(arg0: number, arg1: number): number;
         setPixel(arg0: number, arg1: number, arg2: number): void;
+        render(arg0: $GuiGraphics, arg1: boolean, arg2: $Rect2i): void;
         setPixels(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number): void;
         resetData(): void;
         blendPixel(arg0: number, arg1: number, arg2: number, arg3: number): void;
         startDrawing(): void;
-        getOrCreateAt(arg0: number, arg1: number): $TrainMapRenderer$TrainMapInstance;
+        alphaAt(arg0: number, arg1: number): number;
+        toSectionKey(arg0: number, arg1: number): $Couple<number>;
         blendPixels(arg0: number, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number): void;
         finishDrawing(): void;
-        toSectionKey(arg0: number, arg1: number): $Couple<number>;
-        alphaAt(arg0: number, arg1: number): number;
+        getOrCreateAt(arg0: number, arg1: number): $TrainMapRenderer$TrainMapInstance;
         trackingTheme: $CClient$TrainMapTheme;
         static INSTANCE: $TrainMapRenderer;
         static WIDTH: number;
@@ -126,10 +126,10 @@ declare module "@package/com/simibubi/create/compat/trainmap" {
         get maps(): $Object2ObjectMap<$Couple<number>, $TrainMapRenderer$TrainMapInstance>;
     }
     export class $XaeroTrainMap {
-        static tick(): void;
         static onRender(arg0: $GuiGraphics, arg1: $GuiMap, arg2: number, arg3: number, arg4: number): void;
-        static mouseClick(arg0: $InputEvent$MouseButton$Pre): void;
+        static tick(): void;
         static isMapOpen(arg0: $Screen): boolean;
+        static mouseClick(arg0: $InputEvent$MouseButton$Pre): void;
         static getRenderedDimension(): $ResourceKey<$Level>;
         constructor();
         static get renderedDimension(): $ResourceKey<$Level>;

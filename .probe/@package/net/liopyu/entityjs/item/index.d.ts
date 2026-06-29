@@ -15,13 +15,13 @@ import { $ContextUtils$ItemUseContext } from "@package/net/liopyu/entityjs/util"
 declare module "@package/net/liopyu/entityjs/item" {
     export class $SpawnEggItemBuilder extends $ItemBuilder {
         /**
-         * Sets the highlight color of the egg item
-         */
-        highlightColor(arg0: number): $SpawnEggItemBuilder;
-        /**
          * Sets the background color of the egg item
          */
         backgroundColor(arg0: number): $SpawnEggItemBuilder;
+        /**
+         * Sets the highlight color of the egg item
+         */
+        highlightColor(arg0: number): $SpawnEggItemBuilder;
         sourceLine: $SourceLine;
         id: $ResourceLocation;
         registryKey: $ResourceKey<$Registry<$Item>>;
@@ -39,23 +39,39 @@ declare module "@package/net/liopyu/entityjs/item" {
     }
     export class $EyeOfEnderItemBuilder extends $ItemBuilder {
         /**
+         * A function to determine where the thrown ender eye item will head towards.
+         * 
+         * Example usage:
+         * ```javascript
+         * builder.signalTo(context => {
+         *     const { level, player, hand } = context
+         *     return // Some BlockPos for the eye to navigate to when thrown
+         * });
+         * ```
+         */
+        signalTo(arg0: $Function_<$ContextUtils$ItemUseContext, $Object>): $EyeOfEnderItemBuilder;
+        /**
+         * A function to determine which structure tag the thrown ender eye item will head towards in a certain chunk radius.
+         * 
+         * Example usage:
+         * ```javascript
+         * builder.signalToStructureTag("minecraft:village", 100);
+         * ```
+         */
+        signalToStructureTag(arg0: $ResourceLocation_, arg1: number): $EyeOfEnderItemBuilder;
+        /**
+         * A function to determine which structure tag the thrown ender eye item will head towards in a 100 chunk radius.
+         * 
+         * Example usage:
+         * ```javascript
+         * builder.signalToStructureTag("minecraft:village");
+         * ```
+         */
+        signalToStructureTag(arg0: $ResourceLocation_): $EyeOfEnderItemBuilder;
+        /**
          * Sets if the eye of ender triggers the USED_ENDER_EYE Criteria
          */
         triggersCriteria(arg0: boolean): $EyeOfEnderItemBuilder;
-        /**
-         * Sets the sound to play when the eye item is thrown at the coordinates of the player
-         * 
-         * @param sPlayer The player to play the sound to, can be null.
-         * @param soundEvent The sound to play when the eye item is thrown
-         * @param soundSource The source of the sound in the mixer.
-         * @param soundVolume The volume of the sound.
-         * @param soundPitch The pitch of the sound.
-         * 
-         * ```javascript
-         * item.playSoundOverride(null,"ambient.basalt_deltas.additions","ambient",1,1)
-         * ```
-         */
-        playSoundOverride(arg0: $Player, arg1: $SoundEvent_, arg2: $SoundSource_, arg3: number, arg4: number): $EyeOfEnderItemBuilder;
         /**
          * A function to determine structure the thrown ender eye item will head towards in a 100 chunk radius.
          * 
@@ -75,35 +91,19 @@ declare module "@package/net/liopyu/entityjs/item" {
          */
         signalToStructure(arg0: $ResourceLocation_, arg1: number): $EyeOfEnderItemBuilder;
         /**
-         * A function to determine where the thrown ender eye item will head towards.
+         * Sets the sound to play when the eye item is thrown at the coordinates of the player
          * 
-         * Example usage:
+         * @param sPlayer The player to play the sound to, can be null.
+         * @param soundEvent The sound to play when the eye item is thrown
+         * @param soundSource The source of the sound in the mixer.
+         * @param soundVolume The volume of the sound.
+         * @param soundPitch The pitch of the sound.
+         * 
          * ```javascript
-         * builder.signalTo(context => {
-         *     const { level, player, hand } = context
-         *     return // Some BlockPos for the eye to navigate to when thrown
-         * });
+         * item.playSoundOverride(null,"ambient.basalt_deltas.additions","ambient",1,1)
          * ```
          */
-        signalTo(arg0: $Function_<$ContextUtils$ItemUseContext, $Object>): $EyeOfEnderItemBuilder;
-        /**
-         * A function to determine which structure tag the thrown ender eye item will head towards in a 100 chunk radius.
-         * 
-         * Example usage:
-         * ```javascript
-         * builder.signalToStructureTag("minecraft:village");
-         * ```
-         */
-        signalToStructureTag(arg0: $ResourceLocation_): $EyeOfEnderItemBuilder;
-        /**
-         * A function to determine which structure tag the thrown ender eye item will head towards in a certain chunk radius.
-         * 
-         * Example usage:
-         * ```javascript
-         * builder.signalToStructureTag("minecraft:village", 100);
-         * ```
-         */
-        signalToStructureTag(arg0: $ResourceLocation_, arg1: number): $EyeOfEnderItemBuilder;
+        playSoundOverride(arg0: $Player, arg1: $SoundEvent_, arg2: $SoundSource_, arg3: number, arg4: number): $EyeOfEnderItemBuilder;
         sourceLine: $SourceLine;
         id: $ResourceLocation;
         registryKey: $ResourceKey<$Registry<$Item>>;
@@ -111,29 +111,29 @@ declare module "@package/net/liopyu/entityjs/item" {
     }
     export class $TridentItemBuilder extends $ProjectileItemBuilder {
         /**
-         * Sets the sound event for the riptide level 3
+         * Sets the sound event for the riptide level 2
          */
-        setRiptide3Sound(arg0: $SoundEvent_): void;
+        setRiptide2Sound(arg0: $SoundEvent_): void;
         /**
          * Sets the sound event for the riptide level 1
          */
         setRiptide1Sound(arg0: $SoundEvent_): void;
         /**
+         * Sets the sound event for the riptide level 3
+         */
+        setRiptide3Sound(arg0: $SoundEvent_): void;
+        /**
          * Sets the sound event for throwing the item
          */
         setThrowSound(arg0: $SoundEvent_): void;
-        /**
-         * Sets the sound event for the riptide level 2
-         */
-        setRiptide2Sound(arg0: $SoundEvent_): void;
         sourceLine: $SourceLine;
         id: $ResourceLocation;
         registryKey: $ResourceKey<$Registry<$Item>>;
         constructor(arg0: $ResourceLocation_, arg1: $BuilderBase<never>);
-        set riptide3Sound(value: $SoundEvent_);
-        set riptide1Sound(value: $SoundEvent_);
-        set throwSound(value: $SoundEvent_);
         set riptide2Sound(value: $SoundEvent_);
+        set riptide1Sound(value: $SoundEvent_);
+        set riptide3Sound(value: $SoundEvent_);
+        set throwSound(value: $SoundEvent_);
     }
     export class $ProjectileItemBuilder extends $ItemBuilder {
         /**
@@ -148,16 +148,16 @@ declare module "@package/net/liopyu/entityjs/item" {
          */
         canThrow(arg0: boolean): $ItemBuilder;
         /**
-         * Sets the velocity of the projectile.
+         * Sets the inaccuracy of the projectile.
          * 
-         * @param projectileVelocity The velocity of the projectile.
+         * @param projectileInaccuracy The inaccuracy of the projectile.
          * 
          * Example usage:
          * ```javascript
-         * itemBuilder.projectileVelocity(1.5f);
+         * itemBuilder.projectileInaccuracy(0.1f);
          * ```
          */
-        projectileVelocity(arg0: number): $ItemBuilder;
+        projectileInaccuracy(arg0: number): $ItemBuilder;
         /**
          * Sets the Z offset for the projectile.
          * 
@@ -170,16 +170,16 @@ declare module "@package/net/liopyu/entityjs/item" {
          */
         projectileZ(arg0: number): $ItemBuilder;
         /**
-         * Sets the inaccuracy of the projectile.
+         * Sets the velocity of the projectile.
          * 
-         * @param projectileInaccuracy The inaccuracy of the projectile.
+         * @param projectileVelocity The velocity of the projectile.
          * 
          * Example usage:
          * ```javascript
-         * itemBuilder.projectileInaccuracy(0.1f);
+         * itemBuilder.projectileVelocity(1.5f);
          * ```
          */
-        projectileInaccuracy(arg0: number): $ItemBuilder;
+        projectileVelocity(arg0: number): $ItemBuilder;
         sourceLine: $SourceLine;
         id: $ResourceLocation;
         registryKey: $ResourceKey<$Registry<$Item>>;

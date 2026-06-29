@@ -8,8 +8,8 @@ declare module "@package/xaero/map/server/level" {
         read(arg0: $BufferedReader): void;
         static read(arg0: $FriendlyByteBuf): $LevelMapProperties;
         getId(): number;
-        setUsable(arg0: boolean): void;
         isUsable(): boolean;
+        setUsable(arg0: boolean): void;
         constructor();
         get id(): number;
     }

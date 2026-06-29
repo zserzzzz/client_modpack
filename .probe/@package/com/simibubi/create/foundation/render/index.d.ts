@@ -2,7 +2,7 @@ import { $Level_, $LevelReader } from "@package/net/minecraft/world/level";
 import { $ScrollInstance, $ScrollTransformedInstance } from "@package/com/simibubi/create/content/processing/burner";
 import { $InstanceType } from "@package/dev/engine_room/flywheel/api/instance";
 import { $VirtualRenderWorld } from "@package/com/simibubi/create/foundation/virtualWorld";
-import { $RenderStateShard$TexturingStateShard, $RenderStateShard$TransparencyStateShard, $RenderStateShard$OutputStateShard, $MultiBufferSource_, $RenderStateShard$WriteMaskStateShard, $RenderStateShard$LineStateShard, $RenderStateShard$OverlayStateShard, $RenderStateShard$CullStateShard, $RenderType, $RenderStateShard$EmptyTextureStateShard, $RenderStateShard$ShaderStateShard, $RenderStateShard, $RenderStateShard$DepthTestStateShard, $RenderStateShard$LightmapStateShard, $RenderStateShard$ColorLogicStateShard, $RenderStateShard$TextureStateShard, $RenderStateShard$LayeringStateShard } from "@package/net/minecraft/client/renderer";
+import { $RenderStateShard$TexturingStateShard, $RenderStateShard$TransparencyStateShard, $RenderStateShard$OutputStateShard, $MultiBufferSource_, $RenderStateShard$WriteMaskStateShard, $RenderStateShard$LineStateShard, $RenderStateShard$OverlayStateShard, $RenderType, $RenderStateShard$CullStateShard, $RenderStateShard$EmptyTextureStateShard, $RenderStateShard$ShaderStateShard, $RenderStateShard, $RenderStateShard$DepthTestStateShard, $RenderStateShard$LightmapStateShard, $RenderStateShard$ColorLogicStateShard, $RenderStateShard$TextureStateShard, $RenderStateShard$LayeringStateShard } from "@package/net/minecraft/client/renderer";
 import { $Player } from "@package/net/minecraft/world/entity/player";
 import { $BitSet, $UUID_, $Collection_, $List_ } from "@package/java/util";
 import { $HumanoidModel } from "@package/net/minecraft/client/model";
@@ -21,14 +21,14 @@ import { $Matrix4f } from "@package/org/joml";
 
 declare module "@package/com/simibubi/create/foundation/render" {
     export class $SpecialModels {
+        static flatLit(arg0: $PartialModel): $Model;
         static smoothLit(arg0: $PartialModel): $Model;
         static chunkDiffuse(arg0: $PartialModel): $Model;
-        static flatLit(arg0: $PartialModel): $Model;
         static flatChunk(arg0: $PartialModel): $Model;
         constructor();
     }
     export class $MutableTemplateMesh extends $TemplateMesh {
-        light(arg0: number, arg1: number): void;
+        overlay(arg0: number, arg1: number): void;
         x(arg0: number, arg1: number): void;
         v(arg0: number, arg1: number): void;
         z(arg0: number, arg1: number): void;
@@ -38,7 +38,7 @@ declare module "@package/com/simibubi/create/foundation/render" {
         normal(arg0: number, arg1: number): void;
         copyFrom(arg0: number, arg1: $TemplateMesh): void;
         toImmutable(): $TemplateMesh;
-        overlay(arg0: number, arg1: number): void;
+        light(arg0: number, arg1: number): void;
         static NORMAL_OFFSET: number;
         static LIGHT_OFFSET: number;
         static U_OFFSET: number;
@@ -56,7 +56,7 @@ declare module "@package/com/simibubi/create/foundation/render" {
     export class $RenderTypes$Shaders {
     }
     export class $TemplateMesh {
-        light(arg0: number): number;
+        overlay(arg0: number): number;
         isEmpty(): boolean;
         x(arg0: number): number;
         v(arg0: number): number;
@@ -65,7 +65,7 @@ declare module "@package/com/simibubi/create/foundation/render" {
         y(arg0: number): number;
         color(arg0: number): number;
         normal(arg0: number): number;
-        overlay(arg0: number): number;
+        light(arg0: number): number;
         vertexCount(): number;
         static NORMAL_OFFSET: number;
         static LIGHT_OFFSET: number;
@@ -87,7 +87,7 @@ declare module "@package/com/simibubi/create/foundation/render" {
     /**
      * Values that may be interpreted as {@link $SpecialModels$Key}.
      */
-    export type $SpecialModels$Key_ = { partial?: $PartialModel, light?: $LightShader_, cardinalLightingMode?: $CardinalLightingMode_,  } | [partial?: $PartialModel, light?: $LightShader_, cardinalLightingMode?: $CardinalLightingMode_, ];
+    export type $SpecialModels$Key_ = { light?: $LightShader_, cardinalLightingMode?: $CardinalLightingMode_, partial?: $PartialModel,  } | [light?: $LightShader_, cardinalLightingMode?: $CardinalLightingMode_, partial?: $PartialModel, ];
     export class $ShadowRenderHelper {
         static renderShadow(arg0: $PoseStack, arg1: $MultiBufferSource_, arg2: $LevelReader, arg3: $Vec3_, arg4: number, arg5: number): void;
         static renderShadow(arg0: $PoseStack, arg1: $MultiBufferSource_, arg2: number, arg3: number): void;
@@ -96,11 +96,11 @@ declare module "@package/com/simibubi/create/foundation/render" {
     export class $RenderTypes extends $RenderStateShard {
         static chain(arg0: $ResourceLocation_): $RenderType;
         static additive(): $RenderType;
-        static entityTranslucentBlockMipped(): $RenderType;
+        static entitySolidBlockMipped(): $RenderType;
         static itemGlowingTranslucent(): $RenderType;
         static entityCutoutBlockMipped(): $RenderType;
-        static entitySolidBlockMipped(): $RenderType;
         static itemGlowingSolid(): $RenderType;
+        static entityTranslucentBlockMipped(): $RenderType;
         static RENDERTYPE_ARMOR_CUTOUT_NO_CULL_SHADER: $RenderStateShard$ShaderStateShard;
         static RENDERTYPE_ENTITY_DECAL_SHADER: $RenderStateShard$ShaderStateShard;
         static GLOWING_SHADER: $RenderStateShard$ShaderStateShard;
@@ -215,8 +215,8 @@ declare module "@package/com/simibubi/create/foundation/render" {
     }
     export class $PlayerSkyhookRenderer {
         static updatePlayerList(arg0: $Collection_<$UUID_>): void;
-        static afterSetupAnim(arg0: $Player, arg1: $HumanoidModel<never>): void;
         static beforeSetupAnim(arg0: $Player, arg1: $HumanoidModel<never>): void;
+        static afterSetupAnim(arg0: $Player, arg1: $HumanoidModel<never>): void;
         constructor();
     }
 }

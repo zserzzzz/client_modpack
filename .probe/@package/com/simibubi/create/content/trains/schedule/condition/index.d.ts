@@ -13,13 +13,13 @@ import { $StreamCodec } from "@package/net/minecraft/network/codec";
 
 declare module "@package/com/simibubi/create/content/trains/schedule/condition" {
     export class $TimedWaitCondition extends $ScheduleWaitCondition {
-        getValue(): number;
         getUnit(): $TimedWaitCondition$TimeUnit;
+        getValue(): number;
         totalWaitTicks(): number;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ScheduleWaitCondition>;
         constructor();
-        get value(): number;
         get unit(): $TimedWaitCondition$TimeUnit;
+        get value(): number;
     }
     export class $TimeOfDayCondition extends $ScheduleWaitCondition {
         getRotation(): number;
@@ -30,15 +30,15 @@ declare module "@package/com/simibubi/create/content/trains/schedule/condition" 
         get rotation(): number;
     }
     export class $CargoThresholdCondition extends $LazyTickedScheduleCondition {
+        getThreshold(): number;
         getOperator(): $CargoThresholdCondition$Ops;
         getMeasure(): number;
-        getThreshold(): number;
         lazyTickCompletion(arg0: $Level_, arg1: $Train, arg2: $CompoundTag_): boolean;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ScheduleWaitCondition>;
         constructor();
+        get threshold(): number;
         get operator(): $CargoThresholdCondition$Ops;
         get measure(): number;
-        get threshold(): number;
     }
     export class $ScheduleWaitCondition extends $ScheduleDataEntry {
         write(arg0: $HolderLookup$Provider): $CompoundTag;

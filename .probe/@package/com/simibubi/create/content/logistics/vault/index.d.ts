@@ -31,22 +31,22 @@ import { $RegisterCapabilitiesEvent } from "@package/net/neoforged/neoforge/capa
 
 declare module "@package/com/simibubi/create/content/logistics/vault" {
     export class $ItemVaultBlock extends $Block implements $IWrenchable, $IBE<$ItemVaultBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$ItemVaultBlockEntity>;
-        getBlockEntityClass(): $Class<$ItemVaultBlockEntity>;
         static isLarge(arg0: $BlockState_): boolean;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
+        getBlockEntityClass(): $Class<$ItemVaultBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$ItemVaultBlockEntity>;
         static isVault(arg0: $BlockState_): boolean;
         static getVaultBlockAxis(arg0: $BlockState_): $Direction$Axis;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ItemVaultBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ItemVaultBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ItemVaultBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ItemVaultBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $ItemVaultBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ItemVaultBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ItemVaultBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ItemVaultBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static SILENCED_METAL: $SoundType;
@@ -79,12 +79,12 @@ declare module "@package/com/simibubi/create/content/logistics/vault" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$ItemVaultBlockEntity>;
         get blockEntityClass(): $Class<$ItemVaultBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$ItemVaultBlockEntity>;
     }
     export class $ItemVaultMountedStorage extends $WrapperMountedItemStorage<$ItemStackHandler> {
-        static fromLegacy(arg0: $HolderLookup$Provider, arg1: $CompoundTag_): $ItemVaultMountedStorage;
         static fromVault(arg0: $ItemVaultBlockEntity): $ItemVaultMountedStorage;
+        static fromLegacy(arg0: $HolderLookup$Provider, arg1: $CompoundTag_): $ItemVaultMountedStorage;
         static CODEC: $MapCodec<$ItemVaultMountedStorage>;
         type: $MountedItemStorageType<$MountedItemStorage>;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $MountedItemStorage>;
@@ -112,42 +112,42 @@ declare module "@package/com/simibubi/create/content/logistics/vault" {
         constructor(arg0: $Block_, arg1: $Item$Properties);
     }
     export class $ItemVaultBlockEntity extends $SmartBlockEntity implements $IMultiBlockEntityContainer$Inventory, $Clearable {
-        getHeight(): number;
+        clearContent(): void;
+        setController(arg0: $BlockPos_): void;
         getWidth(): number;
-        static getMaxLength(arg0: number): number;
         getMaxLength(arg0: $Direction$Axis_, arg1: number): number;
+        static getMaxLength(arg0: number): number;
         getController(): $BlockPos;
         static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
-        setWidth(arg0: number): void;
+        getHeight(): number;
         setHeight(arg0: number): void;
-        clearContent(): void;
-        getControllerBE(): $ItemVaultBlockEntity;
-        isController(): boolean;
-        notifyMultiUpdated(): void;
-        removeController(arg0: boolean): void;
+        setWidth(arg0: number): void;
         getLastKnownPos(): $BlockPos;
+        removeController(arg0: boolean): void;
+        notifyMultiUpdated(): void;
+        isController(): boolean;
+        getMaxWidth(): number;
+        preventConnectivityUpdate(): void;
+        getMainConnectionAxis(): $Direction$Axis;
+        hasInventory(): boolean;
+        getControllerBE(): $ItemVaultBlockEntity;
         applyInventoryToBlock(arg0: $ItemStackHandler): void;
         getInventoryOfBlock(): $ItemStackHandler;
-        setController(arg0: $BlockPos_): void;
-        getMainConnectionAxis(): $Direction$Axis;
-        preventConnectivityUpdate(): void;
-        hasInventory(): boolean;
-        getMaxWidth(): number;
         getInvId(): $InventoryIdentifier;
         setExtraData(arg0: $Object): void;
-        modifyExtraData(arg0: $Object): $Object;
         getMainAxisOf(arg0: $BlockEntity): $Direction$Axis;
+        modifyExtraData(arg0: $Object): $Object;
         getExtraData(): $Object;
         worldPosition: $BlockPos;
         level: $Level;
         static ATTACHMENTS_NBT_KEY: string;
         hasComparators: number;
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
-        get controllerBE(): $ItemVaultBlockEntity;
         get lastKnownPos(): $BlockPos;
-        get inventoryOfBlock(): $ItemStackHandler;
-        get mainConnectionAxis(): $Direction$Axis;
         get maxWidth(): number;
+        get mainConnectionAxis(): $Direction$Axis;
+        get controllerBE(): $ItemVaultBlockEntity;
+        get inventoryOfBlock(): $ItemStackHandler;
         get invId(): $InventoryIdentifier;
     }
 }

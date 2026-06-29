@@ -4,17 +4,17 @@ import { $SingleObserver, $CompletableObserver, $Observer, $MaybeObserver } from
 
 declare module "@package/io/reactivex/rxjava3/observers" {
     export class $TestObserver<T> extends $BaseTestConsumer<T, $TestObserver<T>> implements $Observer<T>, $Disposable, $MaybeObserver<T>, $SingleObserver<T>, $CompletableObserver {
-        static create<T>(): $TestObserver<T>;
-        static create<T>(delegate: $Observer<T>): $TestObserver<T>;
-        dispose(): void;
-        isDisposed(): boolean;
         onError(t: $Throwable): void;
-        onComplete(): void;
-        onSuccess(value: T): void;
-        onSubscribe(d: $Disposable): void;
+        static create<T>(delegate: $Observer<T>): $TestObserver<T>;
+        static create<T>(): $TestObserver<T>;
+        dispose(): void;
         onNext(t: T): void;
+        onSuccess(value: T): void;
+        isDisposed(): boolean;
+        onComplete(): void;
+        onSubscribe(d: $Disposable): void;
         hasSubscription(): boolean;
-        constructor();
         constructor(downstream: $Observer<T>);
+        constructor();
     }
 }

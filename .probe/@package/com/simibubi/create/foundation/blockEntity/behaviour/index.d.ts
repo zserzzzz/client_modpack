@@ -42,8 +42,8 @@ export * as simple from "@package/com/simibubi/create/foundation/blockEntity/beh
 
 declare module "@package/com/simibubi/create/foundation/blockEntity/behaviour" {
     export class $ValueSettingsScreen extends $AbstractSimiScreen {
-        getCoordinateOfValue(arg0: number, arg1: number): $Vec2;
         getClosestCoordinate(arg0: number, arg1: number): $ValueSettingsBehaviour$ValueSettings;
+        getCoordinateOfValue(arg0: number, arg1: number): $Vec2;
         static MENU_BACKGROUND: $ResourceLocation;
         minecraft: $Minecraft;
         static INWORLD_FOOTER_SEPARATOR: $ResourceLocation;
@@ -81,15 +81,15 @@ declare module "@package/com/simibubi/create/foundation/blockEntity/behaviour" {
         transform(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $PoseStack): void;
         rotate(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $PoseStack): void;
         getScale(): number;
-        getOverrideColor(): number;
-        getFontScale(): number;
-        getLocalOffset(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_): $Vec3;
         shouldRender(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_): boolean;
+        getFontScale(): number;
+        getOverrideColor(): number;
+        getLocalOffset(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_): $Vec3;
         testHit(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $Vec3_): boolean;
         constructor();
         get scale(): number;
-        get overrideColor(): number;
         get fontScale(): number;
+        get overrideColor(): number;
     }
     export class $ValueSettingsBehaviour$ValueSettings extends $Record {
         value(): number;
@@ -100,7 +100,7 @@ declare module "@package/com/simibubi/create/foundation/blockEntity/behaviour" {
     /**
      * Values that may be interpreted as {@link $ValueSettingsBehaviour$ValueSettings}.
      */
-    export type $ValueSettingsBehaviour$ValueSettings_ = { row?: number, value?: number,  } | [row?: number, value?: number, ];
+    export type $ValueSettingsBehaviour$ValueSettings_ = { value?: number, row?: number,  } | [value?: number, row?: number, ];
     export class $ValueSettingsInputHandler {
         static canInteract(arg0: $Player): boolean;
         static onBlockActivated(arg0: $PlayerInteractEvent$RightClickBlock): void;
@@ -110,22 +110,22 @@ declare module "@package/com/simibubi/create/foundation/blockEntity/behaviour" {
     }
     export interface $ValueSettingsBehaviour extends $ClipboardCloneable {
         isActive(): boolean;
+        mayInteract(arg0: $Player): boolean;
+        netId(): number;
         readFromClipboard(arg0: $HolderLookup$Provider, arg1: $CompoundTag_, arg2: $Player, arg3: $Direction_, arg4: boolean): boolean;
         getClipboardKey(): string;
         writeToClipboard(arg0: $HolderLookup$Provider, arg1: $CompoundTag_, arg2: $Direction_): boolean;
-        mayInteract(arg0: $Player): boolean;
-        getValueSettings(): $ValueSettingsBehaviour$ValueSettings;
-        setValueSettings(arg0: $Player, arg1: $ValueSettingsBehaviour$ValueSettings_, arg2: boolean): void;
-        newSettingHovered(arg0: $ValueSettingsBehaviour$ValueSettings_): void;
-        onShortInteract(arg0: $Player, arg1: $InteractionHand_, arg2: $Direction_, arg3: $BlockHitResult): void;
-        playFeedbackSound(arg0: $BlockEntityBehaviour): void;
-        bypassesInput(arg0: $ItemStack_): boolean;
-        getSlotPositioning(): $ValueBoxTransform;
-        createBoard(arg0: $Player, arg1: $BlockHitResult): $ValueSettingsBoard;
-        netId(): number;
         testHit(arg0: $Vec3_): boolean;
         acceptsValueSettings(): boolean;
         onlyVisibleWithWrench(): boolean;
+        bypassesInput(arg0: $ItemStack_): boolean;
+        getSlotPositioning(): $ValueBoxTransform;
+        newSettingHovered(arg0: $ValueSettingsBehaviour$ValueSettings_): void;
+        setValueSettings(arg0: $Player, arg1: $ValueSettingsBehaviour$ValueSettings_, arg2: boolean): void;
+        getValueSettings(): $ValueSettingsBehaviour$ValueSettings;
+        createBoard(arg0: $Player, arg1: $BlockHitResult): $ValueSettingsBoard;
+        onShortInteract(arg0: $Player, arg1: $InteractionHand_, arg2: $Direction_, arg3: $BlockHitResult): void;
+        playFeedbackSound(arg0: $BlockEntityBehaviour): void;
         get active(): boolean;
         get clipboardKey(): string;
         get slotPositioning(): $ValueBoxTransform;
@@ -139,9 +139,9 @@ declare module "@package/com/simibubi/create/foundation/blockEntity/behaviour" {
     export class $ValueBox extends $ChasingAABBOutline {
         transform(arg0: $ValueBoxTransform): $ValueBox;
         withColor(arg0: number): $ValueBox;
+        renderContents(arg0: $PoseStack, arg1: $MultiBufferSource_): void;
         getOutline(): $AllIcons;
         passive(arg0: boolean): $ValueBox;
-        renderContents(arg0: $PoseStack, arg1: $MultiBufferSource_): void;
         wideOutline(): $ValueBox;
         redirect$hab001$sable$translate(arg0: $PoseStack, arg1: number, arg2: number, arg3: number): void;
         overrideColor: number;
@@ -151,8 +151,6 @@ declare module "@package/com/simibubi/create/foundation/blockEntity/behaviour" {
         get outline(): $AllIcons;
     }
     export class $BlockEntityBehaviour {
-        getRequiredItems(): $ItemRequirement;
-        setLazyTickRate(arg0: number): void;
         static get<T extends $BlockEntityBehaviour>(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $BehaviourType<T>): T;
         static get<T extends $BlockEntityBehaviour>(arg0: $BlockEntity, arg1: $BehaviourType<T>): T;
         initialize(): void;
@@ -162,27 +160,29 @@ declare module "@package/com/simibubi/create/foundation/blockEntity/behaviour" {
         getType(): $BehaviourType<never>;
         unload(): void;
         tick(): void;
-        onNeighborChanged(arg0: $BlockPos_): void;
-        lazyTick(): void;
-        writeSafe(arg0: $CompoundTag_, arg1: $HolderLookup$Provider): void;
-        isSafeNBT(): boolean;
+        setLazyTickRate(arg0: number): void;
         getPos(): $BlockPos;
         getWorld(): $Level;
+        writeSafe(arg0: $CompoundTag_, arg1: $HolderLookup$Provider): void;
+        isSafeNBT(): boolean;
+        lazyTick(): void;
+        getRequiredItems(): $ItemRequirement;
+        onNeighborChanged(arg0: $BlockPos_): void;
         onBlockChanged(arg0: $BlockState_): void;
         blockEntity: $SmartBlockEntity;
         constructor(arg0: $SmartBlockEntity);
-        get requiredItems(): $ItemRequirement;
-        set lazyTickRate(value: number);
         get type(): $BehaviourType<never>;
-        get safeNBT(): boolean;
+        set lazyTickRate(value: number);
         get pos(): $BlockPos;
         get world(): $Level;
+        get safeNBT(): boolean;
+        get requiredItems(): $ItemRequirement;
     }
     export class $ValueSettingsClient implements $LayeredDraw$Layer {
         tick(): void;
-        cancelIfWarmupAlreadyStarted(arg0: $PlayerInteractEvent$RightClickBlock): void;
         render(arg0: $GuiGraphics, arg1: $DeltaTracker): void;
         startInteractionWith(arg0: $BlockPos_, arg1: $BehaviourType<never>, arg2: $InteractionHand_, arg3: $Direction_): void;
+        cancelIfWarmupAlreadyStarted(arg0: $PlayerInteractEvent$RightClickBlock): void;
         cancelInteraction(): void;
         showHoverTip(arg0: $List_<$MutableComponent_>): void;
         interactHeldBehaviour: $BehaviourType<never>;
@@ -237,7 +237,7 @@ declare module "@package/com/simibubi/create/foundation/blockEntity/behaviour" {
     /**
      * Values that may be interpreted as {@link $ValueSettingsBoard}.
      */
-    export type $ValueSettingsBoard_ = { maxValue?: number, formatter?: $ValueSettingsFormatter, rows?: $List_<$Component_>, title?: $Component_, milestoneInterval?: number,  } | [maxValue?: number, formatter?: $ValueSettingsFormatter, rows?: $List_<$Component_>, title?: $Component_, milestoneInterval?: number, ];
+    export type $ValueSettingsBoard_ = { milestoneInterval?: number, maxValue?: number, formatter?: $ValueSettingsFormatter, rows?: $List_<$Component_>, title?: $Component_,  } | [milestoneInterval?: number, maxValue?: number, formatter?: $ValueSettingsFormatter, rows?: $List_<$Component_>, title?: $Component_, ];
     export class $CenteredSideValueBoxTransform extends $ValueBoxTransform$Sided {
         constructor();
         constructor(arg0: $BiPredicate_<$BlockState, $Direction>);

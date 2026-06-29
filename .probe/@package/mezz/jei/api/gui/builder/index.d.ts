@@ -26,55 +26,55 @@ declare module "@package/mezz/jei/api/gui/builder" {
     export class $IIngredientAcceptor<THIS extends $IIngredientAcceptor<THIS>> {
     }
     export interface $IIngredientAcceptor<THIS extends $IIngredientAcceptor<THIS>> extends $IIngredientConsumer {
+        addItemStack(arg0: $ItemStack_): THIS;
         addTypedIngredient<I>(arg0: $ITypedIngredient<I>): THIS;
         addItemLike(arg0: $ItemLike_): $IIngredientConsumer;
+        addFluidStack(arg0: $Fluid_, arg1: number, arg2: $DataComponentPatch_): THIS;
         addFluidStack(arg0: $Fluid_): THIS;
-        addItemStacks(arg0: $List_<$ItemStack_>): THIS;
-        addTypedIngredients(arg0: $List_<$ITypedIngredient<never>>): THIS;
-        addFluidStack(arg0: $Fluid_, arg1: number): $IIngredientConsumer;
-        addFluidStack(arg0: $Fluid_, arg1: number, arg2: $DataComponentPatch_): $IIngredientConsumer;
-        addIngredients<I>(arg0: $IIngredientType_<I>, arg1: $List_<I>): $IIngredientConsumer;
+        addFluidStack(arg0: $Fluid_, arg1: number): THIS;
         addIngredients(arg0: $Ingredient_): $IIngredientConsumer;
-        addItemStack(arg0: $ItemStack_): $IIngredientConsumer;
+        addIngredients<I>(arg0: $IIngredientType_<I>, arg1: $List_<I>): $IIngredientConsumer;
         addIngredient<I>(arg0: $IIngredientType_<I>, arg1: I): $IIngredientConsumer;
+        addItemStacks(arg0: $List_<$ItemStack_>): $IIngredientConsumer;
         addOptionalTypedIngredients(arg0: $List_<($ITypedIngredient<never>) | undefined>): $IIngredientConsumer;
+        addTypedIngredients(arg0: $List_<$ITypedIngredient<never>>): $IIngredientConsumer;
         addIngredientsUnsafe(arg0: $List_<never>): $IIngredientConsumer;
     }
     export class $IIngredientConsumer {
     }
     export interface $IIngredientConsumer {
+        addItemStack(arg0: $ItemStack_): $IIngredientConsumer;
+        addIngredients(arg0: $Ingredient_): $IIngredientConsumer;
+        addIngredients<I>(arg0: $IIngredientType_<I>, arg1: $List_<I>): $IIngredientConsumer;
+        addIngredient<I>(arg0: $IIngredientType_<I>, arg1: I): $IIngredientConsumer;
+        addItemStacks(arg0: $List_<$ItemStack_>): $IIngredientConsumer;
+        addOptionalTypedIngredients(arg0: $List_<($ITypedIngredient<never>) | undefined>): $IIngredientConsumer;
+        addTypedIngredients(arg0: $List_<$ITypedIngredient<never>>): $IIngredientConsumer;
+        addIngredientsUnsafe(arg0: $List_<never>): $IIngredientConsumer;
         addTypedIngredient<I>(arg0: $ITypedIngredient<I>): $IIngredientConsumer;
         addItemLike(arg0: $ItemLike_): $IIngredientConsumer;
-        addFluidStack(arg0: $Fluid_, arg1: number, arg2: $DataComponentPatch_): $IIngredientConsumer;
         addFluidStack(arg0: $Fluid_): $IIngredientConsumer;
         addFluidStack(arg0: $Fluid_, arg1: number): $IIngredientConsumer;
-        addItemStacks(arg0: $List_<$ItemStack_>): $IIngredientConsumer;
-        addIngredients<I>(arg0: $IIngredientType_<I>, arg1: $List_<I>): $IIngredientConsumer;
-        addIngredients(arg0: $Ingredient_): $IIngredientConsumer;
-        addItemStack(arg0: $ItemStack_): $IIngredientConsumer;
-        addIngredient<I>(arg0: $IIngredientType_<I>, arg1: I): $IIngredientConsumer;
-        addOptionalTypedIngredients(arg0: $List_<($ITypedIngredient<never>) | undefined>): $IIngredientConsumer;
-        addIngredientsUnsafe(arg0: $List_<never>): $IIngredientConsumer;
-        addTypedIngredients(arg0: $List_<$ITypedIngredient<never>>): $IIngredientConsumer;
+        addFluidStack(arg0: $Fluid_, arg1: number, arg2: $DataComponentPatch_): $IIngredientConsumer;
     }
     export class $IRecipeLayoutBuilder {
     }
     export interface $IRecipeLayoutBuilder {
+        addSlot(arg0: $RecipeIngredientRole_, arg1: number, arg2: number): $IRecipeSlotBuilder;
+        addSlot(arg0: $RecipeIngredientRole_): $IRecipeSlotBuilder;
+        createFocusLink(...arg0: $IIngredientAcceptor<never>[]): void;
         /**
          * @deprecated
          */
         addSlotToWidget(arg0: $RecipeIngredientRole_, arg1: $ISlottedWidgetFactory_<never>): $IRecipeSlotBuilder;
-        addInputSlot(arg0: number, arg1: number): $IRecipeSlotBuilder;
-        addInputSlot(): $IRecipeSlotBuilder;
-        createFocusLink(...arg0: $IIngredientAcceptor<never>[]): void;
-        addOutputSlot(arg0: number, arg1: number): $IRecipeSlotBuilder;
-        addOutputSlot(): $IRecipeSlotBuilder;
-        setShapeless(arg0: number, arg1: number): void;
         setShapeless(): void;
-        addSlot(arg0: $RecipeIngredientRole_, arg1: number, arg2: number): $IRecipeSlotBuilder;
-        addSlot(arg0: $RecipeIngredientRole_): $IRecipeSlotBuilder;
-        addInvisibleIngredients(arg0: $RecipeIngredientRole_): $IIngredientAcceptor<never>;
+        setShapeless(arg0: number, arg1: number): void;
+        addInputSlot(): $IRecipeSlotBuilder;
+        addInputSlot(arg0: number, arg1: number): $IRecipeSlotBuilder;
+        addOutputSlot(): $IRecipeSlotBuilder;
+        addOutputSlot(arg0: number, arg1: number): $IRecipeSlotBuilder;
         moveRecipeTransferButton(arg0: number, arg1: number): void;
+        addInvisibleIngredients(arg0: $RecipeIngredientRole_): $IIngredientAcceptor<never>;
     }
     export class $ITooltipBuilder {
     }
@@ -102,19 +102,19 @@ declare module "@package/mezz/jei/api/gui/builder" {
     }
     export interface $IRecipeSlotBuilder extends $IIngredientAcceptor<$IRecipeSlotBuilder>, $IPlaceable<$IRecipeSlotBuilder> {
         setOverlay(arg0: $IDrawable, arg1: number, arg2: number): $IRecipeSlotBuilder;
-        setCustomRenderer<T>(arg0: $IIngredientType_<T>, arg1: $IIngredientRenderer<T>): $IRecipeSlotBuilder;
-        setSlotName(arg0: string): $IRecipeSlotBuilder;
-        addFluidStack(arg0: $Fluid_, arg1: number, arg2: $DataComponentPatch_): $IRecipeSlotBuilder;
-        addFluidStack(arg0: $Fluid_, arg1: number): $IRecipeSlotBuilder;
+        setBackground(arg0: $IDrawable, arg1: number, arg2: number): $IRecipeSlotBuilder;
         /**
          * @deprecated
          */
         addTooltipCallback(arg0: $IRecipeSlotTooltipCallback_): $IRecipeSlotBuilder;
         setFluidRenderer(arg0: number, arg1: boolean, arg2: number, arg3: number): $IRecipeSlotBuilder;
         addRichTooltipCallback(arg0: $IRecipeSlotRichTooltipCallback_): $IRecipeSlotBuilder;
-        setBackground(arg0: $IDrawable, arg1: number, arg2: number): $IRecipeSlotBuilder;
-        setStandardSlotBackground(): $IRecipeSlotBuilder;
         setOutputSlotBackground(): $IRecipeSlotBuilder;
+        setStandardSlotBackground(): $IRecipeSlotBuilder;
+        setSlotName(arg0: string): $IRecipeSlotBuilder;
+        setCustomRenderer<T>(arg0: $IIngredientType_<T>, arg1: $IIngredientRenderer<T>): $IRecipeSlotBuilder;
+        addFluidStack(arg0: $Fluid_, arg1: number): $IRecipeSlotBuilder;
+        addFluidStack(arg0: $Fluid_, arg1: number, arg2: $DataComponentPatch_): $IRecipeSlotBuilder;
         set slotName(value: string);
     }
     export class $IClickableIngredientFactory {

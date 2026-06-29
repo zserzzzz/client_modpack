@@ -24,12 +24,12 @@ declare module "@package/com/github/argon4w/acceleratedrendering/core/buffers/ac
     export class $IElementPool {
     }
     export interface $IElementPool {
-        bindBuffer(): void;
         reset(): void;
         get(): $IElementPool$IElementSegment;
         "delete"(): void;
         prepare(): void;
         getBuffer(): $IServerBuffer;
+        bindBuffer(): void;
         isResized(): boolean;
         get buffer(): $IServerBuffer;
         get resized(): boolean;

@@ -28,12 +28,12 @@ declare module "@package/rbasamoyai/createbigcannons/crafting" {
     export interface $BlockRecipe {
         matches(arg0: $Level_, arg1: $BlockPos_): boolean;
         getType(): $BlockRecipeType<never>;
-        getResultBlock(): $Block;
         getSerializer(): $BlockRecipeSerializer<never>;
         assembleInWorld(arg0: $Level_, arg1: $BlockPos_): void;
+        getResultBlock(): $Block;
         get type(): $BlockRecipeType<never>;
-        get resultBlock(): $Block;
         get serializer(): $BlockRecipeSerializer<never>;
+        get resultBlock(): $Block;
     }
     export interface $BlockRecipeSerializer<T> extends RegistryMarked<RegistryTypes.CreatebigcannonsBlockRecipeSerializersTag, RegistryTypes.CreatebigcannonsBlockRecipeSerializers> {}
     export class $BlockRecipeType<T extends $BlockRecipe> {
@@ -51,10 +51,10 @@ declare module "@package/rbasamoyai/createbigcannons/crafting" {
     export class $BlockRecipeIngredient implements $Predicate<$BlockState> {
         static of(arg0: $TagKey_<$Block>): $BlockRecipeIngredient;
         static of(arg0: $Block_): $BlockRecipeIngredient;
-        ingredientType(): $BlockRecipeIngredient$Type;
         toNetwork(arg0: $FriendlyByteBuf): void;
-        stringForSerialization(): string;
+        ingredientType(): $BlockRecipeIngredient$Type;
         getBlockItems(): $List<$ItemStack>;
+        stringForSerialization(): string;
         or(arg0: $Predicate_<$BlockState>): $Predicate<$BlockState>;
         negate(): $Predicate<$BlockState>;
         and(arg0: $Predicate_<$BlockState>): $Predicate<$BlockState>;

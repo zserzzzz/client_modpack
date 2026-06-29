@@ -39,7 +39,7 @@ import { $SearchTree_, $SearchTree } from "@package/net/minecraft/client/searcht
 import { $Vec2, $Vec3_, $HitResult } from "@package/net/minecraft/world/phys";
 import { $Matrix4f, $Vector3f } from "@package/org/joml";
 import { $ItemColors } from "@package/net/minecraft/client/color/item";
-import { $BakedModel, $ModelResourceLocation_, $ModelManager, $ModelBakery, $AtlasSet$StitchResult, $Material } from "@package/net/minecraft/client/resources/model";
+import { $BakedModel, $ModelResourceLocation_, $ModelManager, $AtlasSet$StitchResult, $ModelBakery, $Material } from "@package/net/minecraft/client/resources/model";
 import { $UUID_, $Set_, $Map, $Spliterator, $List, $Map_, $Collection_, $List_, $Comparator, $Iterator, $BitSet } from "@package/java/util";
 import { $Model, $HumanoidModel } from "@package/net/minecraft/client/model";
 import { $ChunkRenderTypeSetAccessor } from "@package/net/caffeinemc/mods/sodium/mixin/platform/neoforge";
@@ -118,17 +118,17 @@ declare module "@package/net/neoforged/neoforge/client" {
         static intersection(arg0: $Iterable_<$ChunkRenderTypeSet>): $ChunkRenderTypeSet;
         static intersection(arg0: $Collection_<$ChunkRenderTypeSet>): $ChunkRenderTypeSet;
         static none(): $ChunkRenderTypeSet;
+        static setChunkRenderTypesList$aeronautics_$md$c99f8a$0(arg0: $List_<any>): void;
+        static setChunkRenderTypes$aeronautics_$md$c99f8a$1(arg0: $RenderType[]): void;
+        static create$sodium_$md$c99f8a$2(arg0: $BitSet): $ChunkRenderTypeSet;
         sinytra$firstLayer(): $RenderType;
-        static setChunkRenderTypes$aeronautics_$md$942995$1(arg0: $RenderType[]): void;
-        static setChunkRenderTypesList$aeronautics_$md$942995$0(arg0: $List_<any>): void;
-        static create$sodium_$md$942995$2(arg0: $BitSet): $ChunkRenderTypeSet;
         spliterator(): $Spliterator<$RenderType>;
         forEach(arg0: $Consumer_<$RenderType>): void;
         getBits(): $BitSet;
         [Symbol.iterator](): Iterator<$RenderType>
         get empty(): boolean;
-        static set chunkRenderTypes$aeronautics_$md$942995$1(value: $RenderType[]);
-        static set chunkRenderTypesList$aeronautics_$md$942995$0(value: $List_<any>);
+        static set chunkRenderTypesList$aeronautics_$md$c99f8a$0(value: $List_<any>);
+        static set chunkRenderTypes$aeronautics_$md$c99f8a$1(value: $RenderType[]);
         get bits(): $BitSet;
     }
     export class $ItemDecoratorHandler {
@@ -151,23 +151,23 @@ declare module "@package/net/neoforged/neoforge/client" {
      * overrides for `CommandSourceStack` so that the methods will run successfully client side
      */
     export class $ClientCommandSourceStack extends $CommandSourceStack implements $FabricClientCommandSource, $VeilClientSuggestionProvider {
-        sendFeedback(message: $Component_): void;
-        sendError(message: $Component_): void;
-        getWorld(): $ClientLevel;
-        getClient(): $Minecraft;
         getPlayer(): $LocalPlayer;
+        getClient(): $Minecraft;
+        getWorld(): $ClientLevel;
+        sendError(message: $Component_): void;
         /**
          * @return a `Stream` of recipe ids that are available on the client
          */
         veil$getPostPipelineNames(): $Stream<any>;
+        sendFeedback(message: $Component_): void;
         getMeta(arg0: string): $Object;
         source: $CommandSource;
         static ERROR_NOT_ENTITY: $SimpleCommandExceptionType;
         static ERROR_NOT_PLAYER: $SimpleCommandExceptionType;
         constructor(source: $CommandSource, position: $Vec3_, rotation: $Vec2, permission: number, plainTextName: string, displayName: $Component_, executing: $Entity);
-        get world(): $ClientLevel;
-        get client(): $Minecraft;
         get player(): $LocalPlayer;
+        get client(): $Minecraft;
+        get world(): $ClientLevel;
     }
     export class $BlockEntityRenderBoundsDebugRenderer {
         static onRenderLevelStage(event: $RenderLevelStageEvent): void;
@@ -189,67 +189,37 @@ declare module "@package/net/neoforged/neoforge/client" {
      * Class for various client-side-only hooks.
      */
     export class $ClientHooks {
-        static onMovementInputUpdate(player: $Player, movementInput: $Input): void;
-        static getFilteredRecipeBookTypeValues(): $RecipeBookType[];
+        static shouldCauseReequipAnimation(from: $ItemStack_, to: $ItemStack_, slot: number): boolean;
+        static getGuiFarPlane(): number;
+        static getFieldOfView(renderer: $GameRenderer, camera: $Camera, partialTick: number, fov: number, usedConfiguredFov: boolean): number;
+        static loadEntityShader(entity: $Entity, entityRenderer: $GameRenderer): void;
+        static onRenderTooltipColor(stack: $ItemStack_, graphics: $GuiGraphics, x: number, y: number, font: $Font, components: $List_<$ClientTooltipComponent>): $RenderTooltipEvent$Color;
+        static gatherTooltipComponents(stack: $ItemStack_, textElements: $List_<$FormattedText>, mouseX: number, screenWidth: number, screenHeight: number, fallbackFont: $Font): $List<$ClientTooltipComponent>;
+        static gatherTooltipComponents(stack: $ItemStack_, textElements: $List_<$FormattedText>, itemComponent: ($TooltipComponent) | undefined, mouseX: number, screenWidth: number, screenHeight: number, fallbackFont: $Font): $List<$ClientTooltipComponent>;
         static onClientPauseChangePre(pause: boolean): boolean;
-        static onClientPauseChangePost(pause: boolean): void;
         /**
          * Fires `Pre`. Called just before `GameRenderer#render(float, long, boolean)` in `Minecraft#runTick(boolean)`.
          * 
          * Fired before the profiler section for "gameRenderer" is started.
          */
         static fireRenderFramePost(partialTick: $DeltaTracker): void;
-        /**
-         * Fires the `GatherEffectScreenTooltipsEvent` and returns the resulting tooltip lines.
-         * 
-         * Called from `EffectRenderingInventoryScreen#renderEffects` just before `GuiGraphics#renderTooltip(Font, List, Optional, int, int)` is called.
-         */
-        static getEffectTooltip(screen: $EffectRenderingInventoryScreen<never>, effectInst: $MobEffectInstance, tooltip: $List_<$Component_>): $List<$Component>;
-        static shouldRenderEffect(effectInstance: $MobEffectInstance): boolean;
-        static onScreenPotionSize(screen: $Screen, availableSpace: number, compact: boolean, horizontalOffset: number): $ScreenEvent$RenderInventoryMobEffects;
-        static getDetachedCameraDistance(camera: $Camera, flipped: boolean, entityScale: number, distance: number): number;
-        static onRegisterParticleProviders(particleEngine: $ParticleEngine): void;
+        static onClientPauseChangePost(pause: boolean): void;
         static onMouseScroll(mouseHelper: $MouseHandler, scrollDeltaX: number, scrollDeltaY: number): boolean;
-        static firePlayerRespawn(pc: $MultiPlayerGameMode, oldPlayer: $LocalPlayer, newPlayer: $LocalPlayer, networkManager: $Connection): void;
-        static onRenderTooltipColor(stack: $ItemStack_, graphics: $GuiGraphics, x: number, y: number, font: $Font, components: $List_<$ClientTooltipComponent>): $RenderTooltipEvent$Color;
-        static gatherTooltipComponents(stack: $ItemStack_, textElements: $List_<$FormattedText>, itemComponent: ($TooltipComponent) | undefined, mouseX: number, screenWidth: number, screenHeight: number, fallbackFont: $Font): $List<$ClientTooltipComponent>;
-        static gatherTooltipComponents(stack: $ItemStack_, textElements: $List_<$FormattedText>, mouseX: number, screenWidth: number, screenHeight: number, fallbackFont: $Font): $List<$ClientTooltipComponent>;
-        static onToastAdd(toast: $Toast_): boolean;
-        static isBlockEntityRendererVisible<T extends $BlockEntity>(dispatcher: $BlockEntityRenderDispatcher, blockEntity: $BlockEntity, frustum: $Frustum): boolean;
-        static onScreenMouseClickedPost(guiScreen: $Screen, mouseX: number, mouseY: number, button: number, handled: boolean): boolean;
-        static onScreenMouseScrollPost(mouseHelper: $MouseHandler, guiScreen: $Screen, scrollDeltaX: number, scrollDeltaY: number): void;
-        static onScreenMouseReleasedPost(guiScreen: $Screen, mouseX: number, mouseY: number, button: number, handled: boolean): boolean;
-        static onScreenMouseScrollPre(mouseHelper: $MouseHandler, guiScreen: $Screen, scrollDeltaX: number, scrollDeltaY: number): boolean;
-        static onScreenMouseReleasedPre(guiScreen: $Screen, mouseX: number, mouseY: number, button: number): boolean;
-        static onScreenMouseDragPre(guiScreen: $Screen, mouseX: number, mouseY: number, mouseButton: number, dragX: number, dragY: number): boolean;
-        static getTurnPlayerValues(mouseSensitivity: number, cinematicCameraEnabled: boolean): $CalculatePlayerTurnEvent;
-        static onScreenMouseClickedPre(guiScreen: $Screen, mouseX: number, mouseY: number, button: number): boolean;
-        static onScreenMouseDragPost(guiScreen: $Screen, mouseX: number, mouseY: number, mouseButton: number, dragX: number, dragY: number): void;
-        static loadLayerDefinitions(builder: $ImmutableMap$Builder<$ModelLayerLocation, $LayerDefinition>): void;
-        /**
-         * Mimics the behavior of `ItemBlockRenderTypes#getRenderType(BlockState, boolean)`
-         * for the input `RenderType`.
-         */
-        static getEntityRenderType(chunkRenderType: $RenderType, cull: boolean): $RenderType;
-        static onClientChangeGameType(info: $PlayerInfo, currentGameMode: $GameType_, newGameMode: $GameType_): void;
-        static renderPistonMovedBlocks(pos: $BlockPos_, state: $BlockState_, stack: $PoseStack, bufferSource: $MultiBufferSource_, level: $Level_, checkSides: boolean, packedOverlay: number, blockRenderer: $BlockRenderDispatcher): void;
-        static getShaderImportLocation(basePath: string, isRelative: boolean, importPath: string): $ResourceLocation;
-        static gatherAdditionalRenderers(sectionOrigin: $BlockPos_, level: $Level_): $List<$AddSectionGeometryEvent$AdditionalSectionRenderer>;
-        static onModifyBakingResult(models: $Map_<$ModelResourceLocation_, $BakedModel>, stitchResults: $Map_<$ResourceLocation_, $AtlasSet$StitchResult>, modelBakery: $ModelBakery): void;
-        static calculateFaceWithoutAO(getter: $BlockAndTintGetter, state: $BlockState_, pos: $BlockPos_, quad: $BakedQuad, isFaceCubic: boolean, brightness: number[], lightmap: number[]): boolean;
-        static onRegisterAdditionalModels(additionalModels: $Set_<$ModelResourceLocation_>): void;
-        static addAdditionalGeometry(additionalRenderers: $List_<$AddSectionGeometryEvent$AdditionalSectionRenderer_>, getOrCreateBuilder: $Function_<$RenderType, $VertexConsumer>, region: $RenderChunkRegion, transformation: $PoseStack): void;
-        static isNameplateInRenderDistance(entity: $Entity, squareDistance: number): boolean;
-        static makeParticleRenderTypeComparator(renderOrder: $List_<$ParticleRenderType_>): $Comparator<$ParticleRenderType>;
-        static renderSpecificFirstPersonArm(poseStack: $PoseStack, multiBufferSource: $MultiBufferSource_, packedLight: number, player: $AbstractClientPlayer, arm: $HumanoidArm_): boolean;
-        static renderSpecificFirstPersonHand(hand: $InteractionHand_, poseStack: $PoseStack, bufferSource: $MultiBufferSource_, packedLight: number, partialTick: number, interpPitch: number, swingProgress: number, equipProgress: number, stack: $ItemStack_): boolean;
-        static onCustomizeBossEventProgress(guiGraphics: $GuiGraphics, window: $Window, bossInfo: $LerpingBossEvent, x: number, y: number, increment: number): $CustomizeGuiOverlayEvent$BossEventProgress;
+        static onDrawHighlight(context: $LevelRenderer, camera: $Camera, target: $HitResult, deltaTracker: $DeltaTracker, poseStack: $PoseStack, bufferSource: $MultiBufferSource_): boolean;
+        static resolveLookup<T>(arg0: $ResourceKey_<$Registry<T>>): $HolderLookup$RegistryLookup<T>;
+        static onMovementInputUpdate(player: $Player, movementInput: $Input): void;
+        static onRegisterParticleProviders(particleEngine: $ParticleEngine): void;
+        static onModelBake(modelManager: $ModelManager, models: $Map_<$ModelResourceLocation_, $BakedModel>, modelBakery: $ModelBakery): void;
         static gatherTooltipComponentsFromElements(stack: $ItemStack_, textElements: $List_<$Either<$FormattedText, $TooltipComponent>>, mouseX: number, screenWidth: number, screenHeight: number, fallbackFont: $Font): $List<$ClientTooltipComponent>;
-        static registerLayerDefinition(layerLocation: $ModelLayerLocation, supplier: $Supplier_<$LayerDefinition>): void;
-        static popGuiLayer(minecraft: $Minecraft): void;
-        static pushGuiLayer(minecraft: $Minecraft, screen: $Screen): void;
+        static dispatchRenderStage(renderType: $RenderType, levelRenderer: $LevelRenderer, modelViewMatrix: $Matrix4f, projectionMatrix: $Matrix4f, renderTick: number, camera: $Camera, frustum: $Frustum): void;
+        static dispatchRenderStage(stage: $RenderLevelStageEvent$Stage, levelRenderer: $LevelRenderer, poseStack: $PoseStack, modelViewMatrix: $Matrix4f, projectionMatrix: $Matrix4f, renderTick: number, camera: $Camera, frustum: $Frustum): void;
+        static onTextureAtlasStitched(atlas: $TextureAtlas): void;
+        static playSound(manager: $SoundEngine, sound: $SoundInstance): $SoundInstance;
+        static onMouseButtonPost(button: number, action: number, mods: number): void;
+        static onMouseButtonPre(button: number, action: number, mods: number): boolean;
         static onRenderTooltipPre(stack: $ItemStack_, graphics: $GuiGraphics, x: number, y: number, screenWidth: number, screenHeight: number, components: $List_<$ClientTooltipComponent>, fallbackFont: $Font, positioner: $ClientTooltipPositioner_): $RenderTooltipEvent$Pre;
         static initClientHooks(mc: $Minecraft, resourceManager: $ReloadableResourceManager): void;
+        static clearGuiLayers(minecraft: $Minecraft): void;
         static resizeGuiLayers(minecraft: $Minecraft, width: number, height: number): void;
         /**
          * Fires `Pre`. Called just before `GameRenderer#render(float, long, boolean)` in `Minecraft#runTick(boolean)`.
@@ -257,81 +227,118 @@ declare module "@package/net/neoforged/neoforge/client" {
          * Fired before the profiler section for "gameRenderer" is started.
          */
         static fireRenderFramePre(partialTick: $DeltaTracker): void;
-        static clearGuiLayers(minecraft: $Minecraft): void;
         static onClickInput(button: number, keyBinding: $KeyMapping, hand: $InteractionHand_): $InputEvent$InteractionKeyMappingTriggered;
         static fireClientTickPre(): void;
-        static firePlayerLogout(pc: $MultiPlayerGameMode, player: $LocalPlayer): void;
         static fireClientTickPost(): void;
-        static loadEntityShader(entity: $Entity, entityRenderer: $GameRenderer): void;
-        static getGuiFarPlane(): number;
-        static getFieldOfView(renderer: $GameRenderer, camera: $Camera, partialTick: number, fov: number, usedConfiguredFov: boolean): number;
-        static shouldCauseReequipAnimation(from: $ItemStack_, to: $ItemStack_, slot: number): boolean;
-        static playSound(manager: $SoundEngine, sound: $SoundInstance): $SoundInstance;
-        static onMouseButtonPre(button: number, action: number, mods: number): boolean;
-        static onMouseButtonPost(button: number, action: number, mods: number): void;
-        static onScreenCharTypedPre(guiScreen: $Screen, codePoint: string, modifiers: number): boolean;
-        static onScreenKeyPressedPost(guiScreen: $Screen, keyCode: number, scanCode: number, modifiers: number): boolean;
-        static onScreenCharTypedPost(guiScreen: $Screen, codePoint: string, modifiers: number): void;
+        static firePlayerLogout(pc: $MultiPlayerGameMode, player: $LocalPlayer): void;
+        static popGuiLayer(minecraft: $Minecraft): void;
+        static pushGuiLayer(minecraft: $Minecraft, screen: $Screen): void;
+        /**
+         * Copies humanoid model properties from the original model to another, used for armor models
+         */
+        static copyModelProperties<T extends $LivingEntity>(original: $HumanoidModel<T>, replacement: $HumanoidModel<never>): void;
+        static handleCameraTransforms(poseStack: $PoseStack, model: $BakedModel, cameraTransformType: $ItemDisplayContext_, applyLeftHandTransform: boolean): $BakedModel;
+        static reloadRenderer(): void;
+        static drawScreen(screen: $Screen, guiGraphics: $GuiGraphics, mouseX: number, mouseY: number, partialTick: number): void;
+        static registerSpriteSourceTypes(): void;
+        static getFieldOfViewModifier(entity: $Player, fovModifier: number): number;
+        static onScreenMouseDragPost(guiScreen: $Screen, mouseX: number, mouseY: number, mouseButton: number, dragX: number, dragY: number): void;
+        static getTurnPlayerValues(mouseSensitivity: number, cinematicCameraEnabled: boolean): $CalculatePlayerTurnEvent;
+        static onScreenMouseDragPre(guiScreen: $Screen, mouseX: number, mouseY: number, mouseButton: number, dragX: number, dragY: number): boolean;
+        static onScreenMouseClickedPost(guiScreen: $Screen, mouseX: number, mouseY: number, button: number, handled: boolean): boolean;
+        static onScreenMouseScrollPost(mouseHelper: $MouseHandler, guiScreen: $Screen, scrollDeltaX: number, scrollDeltaY: number): void;
+        static onScreenMouseReleasedPost(guiScreen: $Screen, mouseX: number, mouseY: number, button: number, handled: boolean): boolean;
+        static onScreenMouseScrollPre(mouseHelper: $MouseHandler, guiScreen: $Screen, scrollDeltaX: number, scrollDeltaY: number): boolean;
+        static onScreenMouseReleasedPre(guiScreen: $Screen, mouseX: number, mouseY: number, button: number): boolean;
+        static onScreenMouseClickedPre(guiScreen: $Screen, mouseX: number, mouseY: number, button: number): boolean;
+        static gatherMaterialAtlases(vanillaAtlases: $Map_<$ResourceLocation_, $ResourceLocation_>): $Map<$ResourceLocation, $ResourceLocation>;
+        static onModifyBakingResult(models: $Map_<$ModelResourceLocation_, $BakedModel>, stitchResults: $Map_<$ResourceLocation_, $AtlasSet$StitchResult>, modelBakery: $ModelBakery): void;
+        static loadLayerDefinitions(builder: $ImmutableMap$Builder<$ModelLayerLocation, $LayerDefinition>): void;
+        /**
+         * Mimics the behavior of `ItemBlockRenderTypes#getRenderType(BlockState, boolean)`
+         * for the input `RenderType`.
+         */
+        static getEntityRenderType(chunkRenderType: $RenderType, cull: boolean): $RenderType;
+        static addAdditionalGeometry(additionalRenderers: $List_<$AddSectionGeometryEvent$AdditionalSectionRenderer_>, getOrCreateBuilder: $Function_<$RenderType, $VertexConsumer>, region: $RenderChunkRegion, transformation: $PoseStack): void;
+        static renderPistonMovedBlocks(pos: $BlockPos_, state: $BlockState_, stack: $PoseStack, bufferSource: $MultiBufferSource_, level: $Level_, checkSides: boolean, packedOverlay: number, blockRenderer: $BlockRenderDispatcher): void;
+        static onClientChangeGameType(info: $PlayerInfo, currentGameMode: $GameType_, newGameMode: $GameType_): void;
+        static getShaderImportLocation(basePath: string, isRelative: boolean, importPath: string): $ResourceLocation;
+        static calculateFaceWithoutAO(getter: $BlockAndTintGetter, state: $BlockState_, pos: $BlockPos_, quad: $BakedQuad, isFaceCubic: boolean, brightness: number[], lightmap: number[]): boolean;
+        static gatherAdditionalRenderers(sectionOrigin: $BlockPos_, level: $Level_): $List<$AddSectionGeometryEvent$AdditionalSectionRenderer>;
+        static onRegisterAdditionalModels(additionalModels: $Set_<$ModelResourceLocation_>): void;
+        static isBlockEntityRendererVisible<T extends $BlockEntity>(dispatcher: $BlockEntityRenderDispatcher, blockEntity: $BlockEntity, frustum: $Frustum): boolean;
+        static onCustomizeBossEventProgress(guiGraphics: $GuiGraphics, window: $Window, bossInfo: $LerpingBossEvent, x: number, y: number, increment: number): $CustomizeGuiOverlayEvent$BossEventProgress;
+        static makeParticleRenderTypeComparator(renderOrder: $List_<$ParticleRenderType_>): $Comparator<$ParticleRenderType>;
+        static renderSpecificFirstPersonHand(hand: $InteractionHand_, poseStack: $PoseStack, bufferSource: $MultiBufferSource_, packedLight: number, partialTick: number, interpPitch: number, swingProgress: number, equipProgress: number, stack: $ItemStack_): boolean;
+        static isNameplateInRenderDistance(entity: $Entity, squareDistance: number): boolean;
+        static renderSpecificFirstPersonArm(poseStack: $PoseStack, multiBufferSource: $MultiBufferSource_, packedLight: number, player: $AbstractClientPlayer, arm: $HumanoidArm_): boolean;
+        static onClientSendMessage(message: string): string;
+        static getFogColor(camera: $Camera, partialTick: number, level: $ClientLevel, renderDistance: number, darkenWorldAmount: number, fogRed: number, fogGreen: number, fogBlue: number): $Vector3f;
+        /**
+         * Fires the `GatherEffectScreenTooltipsEvent` and returns the resulting tooltip lines.
+         * 
+         * Called from `EffectRenderingInventoryScreen#renderEffects` just before `GuiGraphics#renderTooltip(Font, List, Optional, int, int)` is called.
+         */
+        static getEffectTooltip(screen: $EffectRenderingInventoryScreen<never>, effectInst: $MobEffectInstance, tooltip: $List_<$Component_>): $List<$Component>;
+        static onScreenPotionSize(screen: $Screen, availableSpace: number, compact: boolean, horizontalOffset: number): $ScreenEvent$RenderInventoryMobEffects;
+        static shouldRenderEffect(effectInstance: $MobEffectInstance): boolean;
+        static renderMainMenu(gui: $TitleScreen, guiGraphics: $GuiGraphics, font: $Font, width: number, height: number, alpha: number): void;
+        static getArmorTexture(entity: $Entity, armor: $ItemStack_, layer: $ArmorMaterial$Layer, innerModel: boolean, slot: $EquipmentSlot_): $ResourceLocation;
+        static isBlockInSolidLayer(state: $BlockState_): boolean;
+        static onKeyInput(key: number, scanCode: number, action: number, modifiers: number): void;
+        static firePlayerLogin(pc: $MultiPlayerGameMode, player: $LocalPlayer, networkManager: $Connection): void;
+        static firePlayerRespawn(pc: $MultiPlayerGameMode, oldPlayer: $LocalPlayer, newPlayer: $LocalPlayer, networkManager: $Connection): void;
+        static onRecipesUpdated(mgr: $RecipeManager): void;
+        static onToastAdd(toast: $Toast_): boolean;
+        static getFilteredRecipeBookTypeValues(): $RecipeBookType[];
+        static getDetachedCameraDistance(camera: $Camera, flipped: boolean, entityScale: number, distance: number): number;
+        static makeSpriteSourceTypesMap(): $BiMap<$ResourceLocation, $SpriteSourceType>;
+        static registerLayerDefinition(layerLocation: $ModelLayerLocation, supplier: $Supplier_<$LayerDefinition>): void;
         static onScreenKeyReleasedPost(guiScreen: $Screen, keyCode: number, scanCode: number, modifiers: number): boolean;
+        static onScreenCharTypedPre(guiScreen: $Screen, codePoint: string, modifiers: number): boolean;
+        static onScreenCharTypedPost(guiScreen: $Screen, codePoint: string, modifiers: number): void;
         static onScreenKeyPressedPre(guiScreen: $Screen, keyCode: number, scanCode: number, modifiers: number): boolean;
         static onScreenKeyReleasedPre(guiScreen: $Screen, keyCode: number, scanCode: number, modifiers: number): boolean;
-        static dispatchRenderStage(stage: $RenderLevelStageEvent$Stage, levelRenderer: $LevelRenderer, poseStack: $PoseStack, modelViewMatrix: $Matrix4f, projectionMatrix: $Matrix4f, renderTick: number, camera: $Camera, frustum: $Frustum): void;
-        static dispatchRenderStage(renderType: $RenderType, levelRenderer: $LevelRenderer, modelViewMatrix: $Matrix4f, projectionMatrix: $Matrix4f, renderTick: number, camera: $Camera, frustum: $Frustum): void;
-        static firePlayerLogin(pc: $MultiPlayerGameMode, player: $LocalPlayer, networkManager: $Connection): void;
-        static drawScreen(screen: $Screen, guiGraphics: $GuiGraphics, mouseX: number, mouseY: number, partialTick: number): void;
-        static getFieldOfViewModifier(entity: $Player, fovModifier: number): number;
-        static reloadRenderer(): void;
-        static makeSpriteSourceTypesMap(): $BiMap<$ResourceLocation, $SpriteSourceType>;
-        static resolveLookup<T>(arg0: $ResourceKey_<$Registry<T>>): $HolderLookup$RegistryLookup<T>;
+        static onScreenKeyPressedPost(guiScreen: $Screen, keyCode: number, scanCode: number, modifiers: number): boolean;
+        static onRegisterKeyMappings(options: $Options): void;
         static onBlockColorsInit(blockColors: $BlockColors): void;
-        static selectMusic(situational: $Music, playing: $SoundInstance): $Music;
         static onItemColorsInit(itemColors: $ItemColors, blockColors: $BlockColors): void;
         static getArmorModel(entityLiving: $LivingEntity, itemStack: $ItemStack_, slot: $EquipmentSlot_, _default: $HumanoidModel<never>): $Model;
-        static onClientPlayerChat(boundChatType: $ChatType$Bound_, message: $Component_, playerChatMessage: $PlayerChatMessage_, sender: $UUID_): $Component;
-        static getBlockMaterial(loc: $ResourceLocation_): $Material;
+        static onFogRender(mode: $FogRenderer$FogMode_, type: $FogType_, camera: $Camera, partialTick: number, renderDistance: number, nearDistance: number, farDistance: number, shape: $FogShape_): void;
         /**
          * Modify the position and UVs of the edge quads of generated item models to account for sprite expansion of the
          * front and back quad. Fixes MC-73186 on generated item models.
          */
         static fixItemModelSeams(elements: $List_<$BlockElement>, sprite: $TextureAtlasSprite): $List<$BlockElement>;
-        static renderWaterOverlay(player: $Player, mat: $PoseStack): boolean;
+        static getBlockMaterial(loc: $ResourceLocation_): $Material;
+        static selectMusic(situational: $Music, playing: $SoundInstance): $Music;
         static onClientSystemChat(message: $Component_, overlay: boolean): $Component;
-        static onScreenshot(image: $NativeImage, screenshotFile: $File_): $ScreenshotEvent;
-        static getMaxMipmapLevel(width: number, height: number): number;
-        static renderBlockOverlay(player: $Player, mat: $PoseStack, type: $RenderBlockScreenEffectEvent$OverlayType_, block: $BlockState_, pos: $BlockPos_): boolean;
-        static getTooltipFont(stack: $ItemStack_, fallbackFont: $Font): $Font;
-        static onFogRender(mode: $FogRenderer$FogMode_, type: $FogType_, camera: $Camera, partialTick: number, renderDistance: number, nearDistance: number, farDistance: number, shape: $FogShape_): void;
-        static renderFireOverlay(player: $Player, mat: $PoseStack): boolean;
         static onClientChat(boundChatType: $ChatType$Bound_, message: $Component_, sender: $UUID_): $Component;
-        static gatherMaterialAtlases(vanillaAtlases: $Map_<$ResourceLocation_, $ResourceLocation_>): $Map<$ResourceLocation, $ResourceLocation>;
-        static registerSpriteSourceTypes(): void;
-        static isBlockInSolidLayer(state: $BlockState_): boolean;
-        static onRegisterKeyMappings(options: $Options): void;
-        static getArmorTexture(entity: $Entity, armor: $ItemStack_, layer: $ArmorMaterial$Layer, innerModel: boolean, slot: $EquipmentSlot_): $ResourceLocation;
-        static onTextureAtlasStitched(atlas: $TextureAtlas): void;
-        static handleCameraTransforms(poseStack: $PoseStack, model: $BakedModel, cameraTransformType: $ItemDisplayContext_, applyLeftHandTransform: boolean): $BakedModel;
-        static onDrawHighlight(context: $LevelRenderer, camera: $Camera, target: $HitResult, deltaTracker: $DeltaTracker, poseStack: $PoseStack, bufferSource: $MultiBufferSource_): boolean;
-        static renderMainMenu(gui: $TitleScreen, guiGraphics: $GuiGraphics, font: $Font, width: number, height: number, alpha: number): void;
-        static getFogColor(camera: $Camera, partialTick: number, level: $ClientLevel, renderDistance: number, darkenWorldAmount: number, fogRed: number, fogGreen: number, fogBlue: number): $Vector3f;
-        static onModelBake(modelManager: $ModelManager, models: $Map_<$ModelResourceLocation_, $BakedModel>, modelBakery: $ModelBakery): void;
-        static onRecipesUpdated(mgr: $RecipeManager): void;
-        static onKeyInput(key: number, scanCode: number, action: number, modifiers: number): void;
-        /**
-         * Copies humanoid model properties from the original model to another, used for armor models
-         */
-        static copyModelProperties<T extends $LivingEntity>(original: $HumanoidModel<T>, replacement: $HumanoidModel<never>): void;
-        static fillNormal(faceData: number[], facing: $Direction_): void;
+        static renderWaterOverlay(player: $Player, mat: $PoseStack): boolean;
+        static onClientPlayerChat(boundChatType: $ChatType$Bound_, message: $Component_, playerChatMessage: $PlayerChatMessage_, sender: $UUID_): $Component;
+        static renderFireOverlay(player: $Player, mat: $PoseStack): boolean;
+        static getMaxMipmapLevel(width: number, height: number): number;
+        static onScreenshot(image: $NativeImage, screenshotFile: $File_): $ScreenshotEvent;
+        static getTooltipFont(stack: $ItemStack_, fallbackFont: $Font): $Font;
+        static renderBlockOverlay(player: $Player, mat: $PoseStack, type: $RenderBlockScreenEffectEvent$OverlayType_, block: $BlockState_, pos: $BlockPos_): boolean;
         static fixDomain(base: string, complex: string): string;
-        static onClientSendMessage(message: string): string;
+        static fillNormal(faceData: number[], facing: $Direction_): void;
         static forgeStatusLine: string;
         constructor();
-        static get filteredRecipeBookTypeValues(): $RecipeBookType[];
         static get guiFarPlane(): number;
+        static get filteredRecipeBookTypeValues(): $RecipeBookType[];
     }
     /**
      * Provides helper functions replacing those in `ItemBlockRenderTypes`.
      */
     export class $RenderTypeHelper {
+        /**
+         * Provides a fallback `RenderType` for the given `ItemStack` in the case that none is explicitly specified.
+         * 
+         * Mimics the behavior of vanilla's `ItemBlockRenderTypes#getRenderType(ItemStack, boolean)`
+         * but removes the need to query the model again if the item is a `BlockItem`.
+         */
+        static getFallbackItemRenderType(stack: $ItemStack_, model: $BakedModel, cull: boolean): $RenderType;
         /**
          * Provides a `RenderType` using `DefaultVertexFormat#NEW_ENTITY` for the given `DefaultVertexFormat#BLOCK` format.
          * This should be called for each `RenderType` returned by `BakedModel#getRenderTypes(BlockState, RandomSource, ModelData)`.
@@ -346,18 +353,11 @@ declare module "@package/net/neoforged/neoforge/client" {
          * Mimics the behavior of vanilla's `ItemBlockRenderTypes#getMovingBlockRenderType(BlockState)`.
          */
         static getMovingBlockRenderType(renderType: $RenderType): $RenderType;
-        /**
-         * Provides a fallback `RenderType` for the given `ItemStack` in the case that none is explicitly specified.
-         * 
-         * Mimics the behavior of vanilla's `ItemBlockRenderTypes#getRenderType(ItemStack, boolean)`
-         * but removes the need to query the model again if the item is a `BlockItem`.
-         */
-        static getFallbackItemRenderType(stack: $ItemStack_, model: $BakedModel, cull: boolean): $RenderType;
     }
     export class $ExtendedServerListData extends $Record {
-        isCompatible(): boolean;
         truncated(): boolean;
         type(): string;
+        isCompatible(): boolean;
         numberOfMods(): number;
         extraReason(): string;
         constructor(arg0: string, arg1: boolean, arg2: number, arg3: string);
@@ -367,7 +367,7 @@ declare module "@package/net/neoforged/neoforge/client" {
     /**
      * Values that may be interpreted as {@link $ExtendedServerListData}.
      */
-    export type $ExtendedServerListData_ = { type?: string, truncated?: boolean, isCompatible?: boolean, extraReason?: string, numberOfMods?: number,  } | [type?: string, truncated?: boolean, isCompatible?: boolean, extraReason?: string, numberOfMods?: number, ];
+    export type $ExtendedServerListData_ = { numberOfMods?: number, type?: string, truncated?: boolean, isCompatible?: boolean, extraReason?: string,  } | [numberOfMods?: number, type?: string, truncated?: boolean, isCompatible?: boolean, extraReason?: string, ];
     export class $RenderTypeGroup extends $Record {
         isEmpty(): boolean;
         block(): $RenderType;
@@ -381,7 +381,7 @@ declare module "@package/net/neoforged/neoforge/client" {
     /**
      * Values that may be interpreted as {@link $RenderTypeGroup}.
      */
-    export type $RenderTypeGroup_ = { entity?: $RenderType, entityFabulous?: $RenderType, block?: $RenderType,  } | [entity?: $RenderType, entityFabulous?: $RenderType, block?: $RenderType, ];
+    export type $RenderTypeGroup_ = { entityFabulous?: $RenderType, block?: $RenderType, entity?: $RenderType,  } | [entityFabulous?: $RenderType, block?: $RenderType, entity?: $RenderType, ];
     /**
      * Manager for recipe book types and categories.
      * 
@@ -389,12 +389,12 @@ declare module "@package/net/neoforged/neoforge/client" {
      */
     export class $RecipeBookManager {
         static init(): void;
-        static getCustomCategoriesOrEmpty(recipeBookType: $RecipeBookType_): $List<$RecipeBookCategories>;
-        static getAggregateCategories(): $Map<$RecipeBookCategories, $List<$RecipeBookCategories>>;
         /**
          * Finds the category the specified recipe should display in, or null if none.
          */
         static findCategories<T extends $Recipe<never>>(type: $RecipeType_<T>, recipe: $RecipeHolder_<T>): $RecipeBookCategories;
+        static getAggregateCategories(): $Map<$RecipeBookCategories, $List<$RecipeBookCategories>>;
+        static getCustomCategoriesOrEmpty(recipeBookType: $RecipeBookType_): $List<$RecipeBookCategories>;
         constructor();
         static get aggregateCategories(): $Map<$RecipeBookCategories, $List<$RecipeBookCategories>>;
     }
@@ -414,16 +414,16 @@ declare module "@package/net/neoforged/neoforge/client" {
     }
     export class $StencilManager {
         /**
+         * Release the stencil bit for other use
+         */
+        static releaseBit(bit: number): void;
+        /**
          * Reserve a stencil bit for use in rendering
          * 
          * Note: you must check the `RenderTarget` you are working with to
          * determine if stencil bits are enabled on it before use.
          */
         static reserveBit(): number;
-        /**
-         * Release the stencil bit for other use
-         */
-        static releaseBit(bit: number): void;
     }
     export class $FireworkShapeFactoryRegistry$Factory {
     }
@@ -440,25 +440,25 @@ declare module "@package/net/neoforged/neoforge/client" {
     export class $TagConventionLogWarningClient {
     }
     export class $ClientTooltipFlag extends $Record implements $TooltipFlag, $TooltipFlagExtension {
-        controlDown(): boolean;
         static of(arg0: $TooltipFlag): $TooltipFlag;
-        shiftDown(): boolean;
-        creative(): boolean;
-        hasShiftDown(): boolean;
         hasControlDown(): boolean;
+        hasShiftDown(): boolean;
         isAdvanced(): boolean;
+        creative(): boolean;
         isCreative(): boolean;
         advanced(): boolean;
         hasAltDown(): boolean;
+        shiftDown(): boolean;
         altDown(): boolean;
-        simulated$getCreativeSearch(): boolean;
         simulated$setCreativeSearch(arg0: boolean): void;
+        simulated$getCreativeSearch(): boolean;
+        controlDown(): boolean;
         constructor(advanced: boolean, creative: boolean, shiftDown: boolean, controlDown: boolean, altDown: boolean);
     }
     /**
      * Values that may be interpreted as {@link $ClientTooltipFlag}.
      */
-    export type $ClientTooltipFlag_ = { controlDown?: boolean, shiftDown?: boolean, creative?: boolean, advanced?: boolean, altDown?: boolean,  } | [controlDown?: boolean, shiftDown?: boolean, creative?: boolean, advanced?: boolean, altDown?: boolean, ];
+    export type $ClientTooltipFlag_ = { creative?: boolean, advanced?: boolean, altDown?: boolean, controlDown?: boolean, shiftDown?: boolean,  } | [creative?: boolean, advanced?: boolean, altDown?: boolean, controlDown?: boolean, shiftDown?: boolean, ];
     export class $NeoForgeRenderTypes$CustomizableTextureState extends $RenderStateShard$TextureStateShard {
         static RENDERTYPE_ARMOR_CUTOUT_NO_CULL_SHADER: $RenderStateShard$ShaderStateShard;
         static RENDERTYPE_ENTITY_DECAL_SHADER: $RenderStateShard$ShaderStateShard;
@@ -607,17 +607,17 @@ declare module "@package/net/neoforged/neoforge/client" {
         constructor();
     }
     export class $CreativeModeTabSearchRegistry {
-        static getTagSearchKey(tab: $CreativeModeTab_): $SessionSearchTrees$Key;
         static getNameSearchKey(tab: $CreativeModeTab_): $SessionSearchTrees$Key;
+        static getTagSearchKey(tab: $CreativeModeTab_): $SessionSearchTrees$Key;
+        static getTagSearchTree(key: $SessionSearchTrees$Key): $CompletableFuture<$SearchTree<$ItemStack>>;
+        static putTagSearchTree(key: $SessionSearchTrees$Key, future: $CompletableFuture<$SearchTree_<$ItemStack>>): void;
         static putNameSearchTree(key: $SessionSearchTrees$Key, future: $CompletableFuture<$SearchTree_<$ItemStack>>): void;
         static getNameSearchTree(key: $SessionSearchTrees$Key): $CompletableFuture<$SearchTree<$ItemStack>>;
-        static putTagSearchTree(key: $SessionSearchTrees$Key, future: $CompletableFuture<$SearchTree_<$ItemStack>>): void;
-        static getTagSearchTree(key: $SessionSearchTrees$Key): $CompletableFuture<$SearchTree<$ItemStack>>;
-        static getNameSearchKeys(): $Map<$CreativeModeTab, $SessionSearchTrees$Key>;
         static getTagSearchKeys(): $Map<$CreativeModeTab, $SessionSearchTrees$Key>;
+        static getNameSearchKeys(): $Map<$CreativeModeTab, $SessionSearchTrees$Key>;
         constructor();
-        static get nameSearchKeys(): $Map<$CreativeModeTab, $SessionSearchTrees$Key>;
         static get tagSearchKeys(): $Map<$CreativeModeTab, $SessionSearchTrees$Key>;
+        static get nameSearchKeys(): $Map<$CreativeModeTab, $SessionSearchTrees$Key>;
     }
     /**
      * Keeps track of custom firework shape types, because Particle is client side only this can't be on the Shape itself.
@@ -646,14 +646,14 @@ declare module "@package/net/neoforged/neoforge/client" {
     export class $ColorResolverManager {
         static init(): void;
         /**
+         * Register a `BlockTintCache` for every registered `ColorResolver` into the given target map.
+         */
+        static registerBlockTintCaches(level: $ClientLevel, target: $Map_<$ColorResolver_, $BlockTintCache>): void;
+        /**
          * Get all registered custom `ColorResolver`s. The returned list does not include vanilla resolvers,
          * since they are not explicitly registered.
          */
         static getRegisteredResolvers(): $ImmutableList<$ColorResolver>;
-        /**
-         * Register a `BlockTintCache` for every registered `ColorResolver` into the given target map.
-         */
-        static registerBlockTintCaches(level: $ClientLevel, target: $Map_<$ColorResolver_, $BlockTintCache>): void;
         static get registeredResolvers(): $ImmutableList<$ColorResolver>;
     }
     export class $PresetEditorManager {
@@ -666,6 +666,7 @@ declare module "@package/net/neoforged/neoforge/client" {
         static init(): void;
         static getSource(): $ClientCommandSourceStack;
         static getDispatcher(): $CommandDispatcher<$CommandSourceStack>;
+        static mergeServerCommands(serverCommands: $CommandDispatcher<$SharedSuggestionProvider>, buildContext: $CommandBuildContext): $CommandDispatcher<$SharedSuggestionProvider>;
         /**
          * Always try to execute the cached parsing of a typed command as a clientside command. Requires that the execute field of the commands to be set to send to server so that they aren't
          * treated as client command's that do nothing.
@@ -673,7 +674,6 @@ declare module "@package/net/neoforged/neoforge/client" {
          * `Commands#performCommand(ParseResults, String)` for reference
          */
         static runCommand(command: string): boolean;
-        static mergeServerCommands(serverCommands: $CommandDispatcher<$SharedSuggestionProvider>, buildContext: $CommandBuildContext): $CommandDispatcher<$SharedSuggestionProvider>;
         constructor();
         static get source(): $ClientCommandSourceStack;
         static get dispatcher(): $CommandDispatcher<$CommandSourceStack>;
@@ -710,23 +710,23 @@ declare module "@package/net/neoforged/neoforge/client" {
      */
     export type $IItemDecorator_ = ((arg0: $GuiGraphics, arg1: $Font, arg2: $ItemStack, arg3: number, arg4: number) => boolean);
     export class $NeoForgeRenderTypes extends $Enum<$NeoForgeRenderTypes> {
-        static getTextIntensityPolygonOffset(arg0: $ResourceLocation_): $RenderType;
         get(): $RenderType;
         static values(): $NeoForgeRenderTypes[];
         static valueOf(arg0: string): $NeoForgeRenderTypes;
         static getText(arg0: $ResourceLocation_): $RenderType;
-        static getTextIntensity(arg0: $ResourceLocation_): $RenderType;
         static getTextIntensitySeeThrough(arg0: $ResourceLocation_): $RenderType;
         static getTextPolygonOffset(arg0: $ResourceLocation_): $RenderType;
-        static getTextSeeThrough(arg0: $ResourceLocation_): $RenderType;
-        static getUnsortedTranslucent(arg0: $ResourceLocation_): $RenderType;
+        static getTextIntensityPolygonOffset(arg0: $ResourceLocation_): $RenderType;
+        static getItemLayeredCutoutMipped(arg0: $ResourceLocation_): $RenderType;
         static getEntityCutoutMipped(arg0: $ResourceLocation_): $RenderType;
-        static getItemLayeredCutout(arg0: $ResourceLocation_): $RenderType;
+        static getUnsortedTranslucent(arg0: $ResourceLocation_): $RenderType;
         static getItemLayeredSolid(arg0: $ResourceLocation_): $RenderType;
         static getItemLayeredTranslucent(arg0: $ResourceLocation_): $RenderType;
-        static getItemLayeredCutoutMipped(arg0: $ResourceLocation_): $RenderType;
-        static getUnlitTranslucent(arg0: $ResourceLocation_, arg1: boolean): $RenderType;
+        static getItemLayeredCutout(arg0: $ResourceLocation_): $RenderType;
         static getUnlitTranslucent(arg0: $ResourceLocation_): $RenderType;
+        static getUnlitTranslucent(arg0: $ResourceLocation_, arg1: boolean): $RenderType;
+        static getTextIntensity(arg0: $ResourceLocation_): $RenderType;
+        static getTextSeeThrough(arg0: $ResourceLocation_): $RenderType;
         static getTranslucentParticlesTarget(arg0: $ResourceLocation_): $RenderType;
         static enableTextTextureLinearFiltering: boolean;
         static TRANSLUCENT_ON_PARTICLES_TARGET: $NeoForgeRenderTypes;

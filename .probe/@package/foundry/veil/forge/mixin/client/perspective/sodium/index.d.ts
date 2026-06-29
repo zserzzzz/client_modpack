@@ -7,8 +7,8 @@ declare module "@package/foundry/veil/forge/mixin/client/perspective/sodium" {
     }
     export interface $RenderSectionManagerAccessor {
         getTaskLists(): $Map<$ChunkUpdateType, $ArrayDeque<$RenderSection>>;
-        setTaskLists(arg0: $Map_<$ChunkUpdateType_, $ArrayDeque<$RenderSection>>): void;
         setRenderLists(arg0: $SortedRenderLists): void;
+        setTaskLists(arg0: $Map_<$ChunkUpdateType_, $ArrayDeque<$RenderSection>>): void;
         set renderLists(value: $SortedRenderLists);
     }
 }

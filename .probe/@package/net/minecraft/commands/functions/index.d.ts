@@ -13,9 +13,9 @@ declare module "@package/net/minecraft/commands/functions" {
         constructor(id: $ResourceLocation_, entries: $List_<$MacroFunction$Entry<T>>, parameters: $List_<string>);
     }
     export class $CommandFunction<T> {
-        static fromLines<T extends $ExecutionCommandSource<T>>(id: $ResourceLocation_, dispatcher: $CommandDispatcher<T>, source: T, lines: $List_<string>): $CommandFunction<T>;
         static parseCommand<T extends $ExecutionCommandSource<T>>(dispatcher: $CommandDispatcher<T>, source: T, command: $StringReader): $UnboundEntryAction<T>;
         static checkCommandLineLength(command: $CharSequence): void;
+        static fromLines<T extends $ExecutionCommandSource<T>>(id: $ResourceLocation_, dispatcher: $CommandDispatcher<T>, source: T, lines: $List_<string>): $CommandFunction<T>;
     }
     export interface $CommandFunction<T> {
         id(): $ResourceLocation;
@@ -32,8 +32,8 @@ declare module "@package/net/minecraft/commands/functions" {
         entries(): $List<$UnboundEntryAction<T>>;
     }
     export class $StringTemplate extends $Record {
-        static fromString(name: string, lineNumber: number): $StringTemplate;
         segments(): $List<string>;
+        static fromString(name: string, lineNumber: number): $StringTemplate;
         variables(): $List<string>;
         substitute(_arguments: $List_<string>): string;
         constructor(arg0: $List_<string>, arg1: $List_<string>);

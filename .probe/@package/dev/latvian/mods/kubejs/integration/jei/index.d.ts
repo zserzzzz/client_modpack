@@ -20,23 +20,17 @@ declare module "@package/dev/latvian/mods/kubejs/integration/jei" {
     export class $JEIAddInformationKubeEvent implements $AddInformationKubeEvent {
         add(filter: $Object, info: $List_<$Component_>): void;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -44,39 +38,39 @@ declare module "@package/dev/latvian/mods/kubejs/integration/jei" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(type: $RecipeViewerEntryType, ingredientType: $IIngredientType_<never>, registration: $IRecipeRegistration);
     }
     export class $JEIRemoveCategoriesKubeEvent implements $RemoveCategoriesKubeEvent {
         remove(ids: $ResourceLocation_[]): void;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -84,39 +78,39 @@ declare module "@package/dev/latvian/mods/kubejs/integration/jei" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(recipeManager: $IRecipeManager, categories: $Map_<$ResourceLocation_, $IRecipeCategory<never>>);
     }
     export class $JEIRemoveEntriesKubeEvent implements $RemoveEntriesKubeEvent {
         remove(filter: $Object): void;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -124,17 +118,23 @@ declare module "@package/dev/latvian/mods/kubejs/integration/jei" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(r: $IJeiRuntime, type: $RecipeViewerEntryType, t: $IIngredientType_<never>);
     }
     export class $JEIRegisterSubtypesKubeEvent implements $RegisterSubtypesKubeEvent {
@@ -142,23 +142,17 @@ declare module "@package/dev/latvian/mods/kubejs/integration/jei" {
         useComponents(filter: $Object, components: $List_<$DataComponentType_<never>>): void;
         useComponents(filter: $Object): void;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -166,40 +160,40 @@ declare module "@package/dev/latvian/mods/kubejs/integration/jei" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(type: $RecipeViewerEntryType, ingredientType: $IIngredientTypeWithSubtypes<never, never>, registration: $ISubtypeRegistration);
     }
     export class $JEIRemoveRecipesKubeEvent implements $RemoveRecipesKubeEvent {
         remove(recipesToRemove: $ResourceLocation_[]): void;
         removeFromCategory(category: $ResourceLocation_, recipesToRemove: $ResourceLocation_[]): void;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -207,39 +201,45 @@ declare module "@package/dev/latvian/mods/kubejs/integration/jei" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(recipeManager: $IRecipeManager, categories: $Map_<$ResourceLocation_, $IRecipeCategory<never>>);
     }
     export class $KubeJSJEIPlugin implements $IModPlugin {
-        registerRecipes(registration: $IRecipeRegistration): void;
-        getPluginUid(): $ResourceLocation;
-        onRuntimeAvailable(runtime: $IJeiRuntime): void;
         registerItemSubtypes(registration: $ISubtypeRegistration): void;
         registerFluidSubtypes<T>(registration: $ISubtypeRegistration, platformFluidHelper: $IPlatformFluidHelper<T>): void;
         loadRemote(event: $RemoteRecipeViewerDataUpdatedEvent): void;
-        registerRuntime(arg0: $IRuntimeRegistration): void;
-        registerModInfo(arg0: $IModInfoRegistration_): void;
-        registerCategories(arg0: $IRecipeCategoryRegistration): void;
-        registerAdvanced(arg0: $IAdvancedRegistration): void;
-        registerVanillaCategoryExtensions(arg0: $IVanillaCategoryExtensionRegistration): void;
-        registerRecipeTransferHandlers(arg0: $IRecipeTransferRegistration): void;
-        registerIngredientAliases(arg0: $IIngredientAliasRegistration): void;
-        registerIngredients(arg0: $IModIngredientRegistration): void;
+        registerRecipes(registration: $IRecipeRegistration): void;
+        getPluginUid(): $ResourceLocation;
+        onRuntimeAvailable(runtime: $IJeiRuntime): void;
         registerExtraIngredients(arg0: $IExtraIngredientRegistration_): void;
+        registerIngredients(arg0: $IModIngredientRegistration): void;
+        registerIngredientAliases(arg0: $IIngredientAliasRegistration): void;
         registerRecipeCatalysts(arg0: $IRecipeCatalystRegistration): void;
         registerGuiHandlers(arg0: $IGuiHandlerRegistration): void;
         onRuntimeUnavailable(): void;
         onConfigManagerAvailable(arg0: $IJeiConfigManager_): void;
+        registerVanillaCategoryExtensions(arg0: $IVanillaCategoryExtensionRegistration): void;
+        registerRecipeTransferHandlers(arg0: $IRecipeTransferRegistration): void;
+        registerModInfo(arg0: $IModInfoRegistration_): void;
+        registerRuntime(arg0: $IRuntimeRegistration): void;
+        registerCategories(arg0: $IRecipeCategoryRegistration): void;
+        registerAdvanced(arg0: $IAdvancedRegistration): void;
         static DISABLED: boolean;
         static ID: $ResourceLocation;
         constructor();
@@ -273,23 +273,17 @@ declare module "@package/dev/latvian/mods/kubejs/integration/jei" {
     export class $JEIAddEntriesKubeEvent implements $AddEntriesKubeEvent {
         add(items: $Object[]): void;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -297,17 +291,23 @@ declare module "@package/dev/latvian/mods/kubejs/integration/jei" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(r: $IJeiRuntime, type: $RecipeViewerEntryType, t: $IIngredientType_<never>);
     }
 }

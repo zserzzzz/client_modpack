@@ -18,14 +18,14 @@ export * as component from "@package/io/github/mortuusars/exposure/world/camera/
 
 declare module "@package/io/github/mortuusars/exposure/world/camera" {
     export class $ColorChannel extends $Enum<$ColorChannel> implements $StringRepresentable {
+        getShader(): $ResourceLocation;
         static values(): $ColorChannel[];
         static valueOf(name: string): $ColorChannel;
-        static fromStringOrDefault(serializedName: string, defaultValue: $ColorChannel_): $ColorChannel;
         getSerializedName(): string;
         static fromFilterStack(stack: $ItemStack_): ($ColorChannel) | undefined;
-        getShader(): $ResourceLocation;
-        static fromStringOrThrow(serializedName: string): $ColorChannel;
         getRepresentationColor(): number;
+        static fromStringOrDefault(serializedName: string, defaultValue: $ColorChannel_): $ColorChannel;
+        static fromStringOrThrow(serializedName: string): $ColorChannel;
         static fromStringOptional(serializedName: string): ($ColorChannel) | undefined;
         getRemappedEnumConstantName(): string;
         static RED: $ColorChannel;
@@ -33,8 +33,8 @@ declare module "@package/io/github/mortuusars/exposure/world/camera" {
         static BLUE: $ColorChannel;
         static GREEN: $ColorChannel;
         static STREAM_CODEC: $StreamCodec<$ByteBuf, $ColorChannel>;
-        get serializedName(): string;
         get shader(): $ResourceLocation;
+        get serializedName(): string;
         get representationColor(): number;
         get remappedEnumConstantName(): string;
     }
@@ -65,7 +65,7 @@ declare module "@package/io/github/mortuusars/exposure/world/camera" {
     /**
      * Values that may be interpreted as {@link $FilmColor}.
      */
-    export type $FilmColor_ = { a?: number, g?: number, b?: number, r?: number,  } | [a?: number, g?: number, b?: number, r?: number, ];
+    export type $FilmColor_ = { b?: number, r?: number, a?: number, g?: number,  } | [b?: number, r?: number, a?: number, g?: number, ];
     export class $Camera {
         update(): void;
         isEmpty(): boolean;
@@ -78,14 +78,14 @@ declare module "@package/io/github/mortuusars/exposure/world/camera" {
         isActive(): boolean;
         ifPresent(ifPresent: $BiConsumer_<$CameraItem, $ItemStack>, orElse: $Runnable_): $Camera;
         ifPresent(ifPresent: $BiConsumer_<$CameraItem, $ItemStack>): $Camera;
-        deactivate(): boolean;
-        inSelfieMode(): boolean;
-        createSyncPacket(): $Packet;
         getItemStack(): $ItemStack;
+        deactivate(): boolean;
         getHolder(): $CameraHolder;
         idMatches(id: $CameraId_): boolean;
-        isShutterOpen(): boolean;
+        createSyncPacket(): $Packet;
+        inSelfieMode(): boolean;
         mapAttachment<T extends $Item, R>(attachment: $Attachment_<T>, func: $BiFunction_<T, $ItemStack, R>): (R) | undefined;
+        isShutterOpen(): boolean;
         constructor(holder: $CameraHolder, id: $CameraId_);
         get empty(): boolean;
         get id(): $CameraId;
@@ -97,8 +97,8 @@ declare module "@package/io/github/mortuusars/exposure/world/camera" {
     export class $ExposureType extends $Enum<$ExposureType> implements $StringRepresentable {
         static values(): $ExposureType[];
         static valueOf(name: string): $ExposureType;
-        getSerializedName(): string;
         static byName(name: string): ($ExposureType) | undefined;
+        getSerializedName(): string;
         getImageColor(): $Color;
         getFilmColor(): $FilmColor;
         getRemappedEnumConstantName(): string;

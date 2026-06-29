@@ -60,15 +60,15 @@ declare module "@package/gg/essential/mixins/transformers/client/gui" {
     export class $PackLoadingManagerAccessor {
     }
     export interface $PackLoadingManagerAccessor {
-        essential$getEnabledList(): $List<$Pack>;
         essential$getDisabledList(): $List<$Pack>;
+        essential$getEnabledList(): $List<$Pack>;
         essential$getChangeRunnable(): $Runnable;
     }
     export class $ServerSelectionListAccessor {
     }
     export interface $ServerSelectionListAccessor {
-        updateList(): void;
         getServerListInternet(): $List<$ServerSelectionList$OnlineServerEntry>;
+        updateList(): void;
         getServerListLan(): $List<$ServerSelectionList$NetworkServerEntry>;
         get serverListInternet(): $List<$ServerSelectionList$OnlineServerEntry>;
         get serverListLan(): $List<$ServerSelectionList$NetworkServerEntry>;
@@ -76,10 +76,10 @@ declare module "@package/gg/essential/mixins/transformers/client/gui" {
     export class $GuiScreenAccessor {
     }
     export interface $GuiScreenAccessor {
-        essential$addDrawableChild<T extends $GuiEventListener>(arg0: T): T;
-        essential$getChildren(): $List<$GuiEventListener>;
         getDrawables(): $List<$Renderable>;
         getSelectables(): $List<$NarratableEntry>;
+        essential$getChildren(): $List<$GuiEventListener>;
+        essential$addDrawableChild<T extends $GuiEventListener>(arg0: T): T;
         get drawables(): $List<$Renderable>;
         get selectables(): $List<$NarratableEntry>;
     }

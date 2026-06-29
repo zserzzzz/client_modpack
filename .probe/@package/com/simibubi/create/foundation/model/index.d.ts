@@ -15,21 +15,21 @@ import { $Vec3_, $AABB_, $Vec3 } from "@package/net/minecraft/world/phys";
 
 declare module "@package/com/simibubi/create/foundation/model" {
     export class $ModelSwapper {
-        static getAllBlockStateModelLocations(arg0: $Block_): $List<$ModelResourceLocation>;
         getCustomBlockModels(): $CustomBlockModels;
         getCustomItemModels(): $CustomItemModels;
-        static swapModels<T extends $BakedModel>(arg0: $Map_<$ModelResourceLocation_, $BakedModel>, arg1: $List_<$ModelResourceLocation_>, arg2: $Function_<$BakedModel, T>): void;
-        static swapModels<T extends $BakedModel>(arg0: $Map_<$ModelResourceLocation_, $BakedModel>, arg1: $ModelResourceLocation_, arg2: $Function_<$BakedModel, T>): void;
-        static getItemModelLocation(arg0: $Item_): $ModelResourceLocation;
         registerListeners(arg0: $IEventBus): void;
         onModelBake(arg0: $ModelEvent$ModifyBakingResult): void;
+        static swapModels<T extends $BakedModel>(arg0: $Map_<$ModelResourceLocation_, $BakedModel>, arg1: $ModelResourceLocation_, arg2: $Function_<$BakedModel, T>): void;
+        static swapModels<T extends $BakedModel>(arg0: $Map_<$ModelResourceLocation_, $BakedModel>, arg1: $List_<$ModelResourceLocation_>, arg2: $Function_<$BakedModel, T>): void;
+        static getItemModelLocation(arg0: $Item_): $ModelResourceLocation;
+        static getAllBlockStateModelLocations(arg0: $Block_): $List<$ModelResourceLocation>;
         constructor();
         get customBlockModels(): $CustomBlockModels;
         get customItemModels(): $CustomItemModels;
     }
     export class $BakedModelHelper {
-        static generateModel(arg0: $BakedModel, arg1: $UnaryOperator_<$TextureAtlasSprite>): $BakedModel;
         static cropAndMove(arg0: number[], arg1: $TextureAtlasSprite, arg2: $AABB_, arg3: $Vec3_): number[];
+        static generateModel(arg0: $BakedModel, arg1: $UnaryOperator_<$TextureAtlasSprite>): $BakedModel;
         static swapSprites(arg0: $List_<$BakedQuad>, arg1: $UnaryOperator_<$TextureAtlasSprite>): $List<$BakedQuad>;
         constructor();
     }
@@ -37,16 +37,16 @@ declare module "@package/com/simibubi/create/foundation/model" {
         constructor(arg0: $BakedModel);
     }
     export class $BakedQuadHelper {
-        static getV(arg0: number[], arg1: number): number;
-        static getU(arg0: number[], arg1: number): number;
         static clone(arg0: $BakedQuad): $BakedQuad;
+        static getU(arg0: number[], arg1: number): number;
+        static getV(arg0: number[], arg1: number): number;
         static setNormalXYZ(arg0: number[], arg1: number, arg2: $Vec3_): void;
         static getNormalXYZ(arg0: number[], arg1: number): $Vec3;
-        static setV(arg0: number[], arg1: number, arg2: number): void;
-        static setU(arg0: number[], arg1: number, arg2: number): void;
+        static cloneWithCustomGeometry(arg0: $BakedQuad, arg1: number[]): $BakedQuad;
         static setXYZ(arg0: number[], arg1: number, arg2: $Vec3_): void;
         static getXYZ(arg0: number[], arg1: number): $Vec3;
-        static cloneWithCustomGeometry(arg0: $BakedQuad, arg1: number[]): $BakedQuad;
+        static setU(arg0: number[], arg1: number, arg2: number): void;
+        static setV(arg0: number[], arg1: number, arg2: number): void;
         static NORMAL_OFFSET: number;
         static LIGHT_OFFSET: number;
         static U_OFFSET: number;

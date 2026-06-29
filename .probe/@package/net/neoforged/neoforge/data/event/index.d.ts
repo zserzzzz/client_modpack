@@ -61,35 +61,35 @@ declare module "@package/net/neoforged/neoforge/data/event" {
      */
     export type $GatherDataEvent$DataProviderFromOutput_<T> = ((arg0: $PackOutput) => T);
     export class $GatherDataEvent extends $Event implements $IModBusEvent {
-        getGenerator(): $DataGenerator;
         getModContainer(): $ModContainer;
         validate(): boolean;
         addProvider<T extends $DataProvider>(arg0: T): T;
+        getGenerator(): $DataGenerator;
         getInputs(): $Collection<$Path>;
-        includeDev(): boolean;
         getMods(): $Set<string>;
+        createBlockAndItemTags(arg0: $GatherDataEvent$DataProviderFromOutputLookup_<$TagsProvider<$Block>>, arg1: $GatherDataEvent$ItemTagsProvider_): void;
+        getExistingFileHelper(): $ExistingFileHelper;
         getResourceManager(packType: $PackType_): $ResourceManager;
-        includeReports(): boolean;
+        includeClient(): boolean;
+        includeServer(): boolean;
+        getLookupProvider(): $CompletableFuture<$HolderLookup$Provider>;
+        createDatapackRegistryObjects(datapackEntriesBuilder: $RegistrySetBuilder, conditions: $Map_<$ResourceKey_<never>, $List_<$ICondition>>): void;
+        createDatapackRegistryObjects(datapackEntriesBuilder: $RegistrySetBuilder, modIds: $Set_<string>): void;
+        createDatapackRegistryObjects(datapackEntriesBuilder: $RegistrySetBuilder): void;
+        createDatapackRegistryObjects(datapackEntriesBuilder: $RegistrySetBuilder, conditions: $Map_<$ResourceKey_<never>, $List_<$ICondition>>, modIds: $Set_<string>): void;
+        createDatapackRegistryObjects(datapackEntriesBuilder: $RegistrySetBuilder, conditionsBuilder: $Consumer_<$BiConsumer<$ResourceKey<never>, $ICondition>>): void;
+        createDatapackRegistryObjects(datapackEntriesBuilder: $RegistrySetBuilder, conditionsBuilder: $Consumer_<$BiConsumer<$ResourceKey<never>, $ICondition>>, modIds: $Set_<string>): void;
         createProvider<T extends $DataProvider>(arg0: $GatherDataEvent$DataProviderFromOutputLookup_<T>): T;
         createProvider<T extends $DataProvider>(arg0: $GatherDataEvent$DataProviderFromOutput_<T>): T;
-        includeClient(): boolean;
-        getLookupProvider(): $CompletableFuture<$HolderLookup$Provider>;
-        includeServer(): boolean;
-        getExistingFileHelper(): $ExistingFileHelper;
-        createDatapackRegistryObjects(datapackEntriesBuilder: $RegistrySetBuilder): void;
-        createDatapackRegistryObjects(datapackEntriesBuilder: $RegistrySetBuilder, conditionsBuilder: $Consumer_<$BiConsumer<$ResourceKey<never>, $ICondition>>, modIds: $Set_<string>): void;
-        createDatapackRegistryObjects(datapackEntriesBuilder: $RegistrySetBuilder, conditionsBuilder: $Consumer_<$BiConsumer<$ResourceKey<never>, $ICondition>>): void;
-        createDatapackRegistryObjects(datapackEntriesBuilder: $RegistrySetBuilder, modIds: $Set_<string>): void;
-        createDatapackRegistryObjects(datapackEntriesBuilder: $RegistrySetBuilder, conditions: $Map_<$ResourceKey_<never>, $List_<$ICondition>>): void;
-        createDatapackRegistryObjects(datapackEntriesBuilder: $RegistrySetBuilder, conditions: $Map_<$ResourceKey_<never>, $List_<$ICondition>>, modIds: $Set_<string>): void;
-        createBlockAndItemTags(arg0: $GatherDataEvent$DataProviderFromOutputLookup_<$TagsProvider<$Block>>, arg1: $GatherDataEvent$ItemTagsProvider_): void;
+        includeReports(): boolean;
+        includeDev(): boolean;
         constructor(arg0: $ModContainer, arg1: $DataGenerator, arg2: $GatherDataEvent$DataGeneratorConfig, arg3: $ExistingFileHelper);
-        get generator(): $DataGenerator;
         get modContainer(): $ModContainer;
+        get generator(): $DataGenerator;
         get inputs(): $Collection<$Path>;
         get mods(): $Set<string>;
-        get lookupProvider(): $CompletableFuture<$HolderLookup$Provider>;
         get existingFileHelper(): $ExistingFileHelper;
+        get lookupProvider(): $CompletableFuture<$HolderLookup$Provider>;
     }
     export class $GatherDataEvent$ItemTagsProvider {
     }

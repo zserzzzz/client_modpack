@@ -48,11 +48,11 @@ declare module "@package/net/neoforged/neoforge/server/command" {
      * **For modders and NeoForge to both use.**
      */
     export class $CommandUtils {
+        static getResourceKey<T>(ctx: $CommandContext<$CommandSourceStack>, name: string, registryKey: $ResourceKey_<$Registry<T>>): ($ResourceKey<T>) | undefined;
         static makeTranslatableWithFallback(key: string): $MutableComponent;
         static makeTranslatableWithFallback(arg0: string, ...arg1: $Object[]): $MutableComponent;
-        static getResourceKey<T>(ctx: $CommandContext<$CommandSourceStack>, name: string, registryKey: $ResourceKey_<$Registry<T>>): ($ResourceKey<T>) | undefined;
-        static suggestRegistries(ctx: $CommandContext<$CommandSourceStack>, builder: $SuggestionsBuilder): $CompletableFuture<$Suggestions>;
         static suggestFromRegistry<T extends $Registry<never>>(namesFunction: $Function_<$Registry<never>, $Iterable<$ResourceLocation>>, argumentString: string, registryKey: $ResourceKey_<$Registry<T>>): $SuggestionProvider<$CommandSourceStack>;
+        static suggestRegistries(ctx: $CommandContext<$CommandSourceStack>, builder: $SuggestionsBuilder): $CompletableFuture<$Suggestions>;
     }
     /**
      * Internal utility class for various command-related operations.
@@ -70,8 +70,8 @@ declare module "@package/net/neoforged/neoforge/server/command" {
     }
     export class $EnumArgument<T extends $Enum<T>> implements $ArgumentType<T> {
         getExamples(): $Collection<string>;
-        static enumArgument<R extends $Enum<R>>(enumClass: $Class<R>): $EnumArgument<R>;
         listSuggestions<S>(context: $CommandContext<S>, builder: $SuggestionsBuilder): $CompletableFuture<$Suggestions>;
+        static enumArgument<R extends $Enum<R>>(enumClass: $Class<R>): $EnumArgument<R>;
         parse<S>(arg0: $StringReader, arg1: S): T;
         parse(arg0: $StringReader): T;
         get examples(): $Collection<string>;

@@ -5,9 +5,9 @@ declare module "@package/net/fabricmc/fabric/mixin/screen" {
     export class $ScreenAccessor {
     }
     export interface $ScreenAccessor {
-        getFont(): $Font;
         getMinecraft(): $Minecraft;
-        get font(): $Font;
+        getFont(): $Font;
         get minecraft(): $Minecraft;
+        get font(): $Font;
     }
 }

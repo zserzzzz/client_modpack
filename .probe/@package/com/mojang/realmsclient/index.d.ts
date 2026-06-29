@@ -139,9 +139,9 @@ declare module "@package/com/mojang/realmsclient" {
         list: $AbstractSelectionList<$RealmsMainScreen$Entry>;
     }
     export class $Unit extends $Enum<$Unit> {
+        static convertTo(bytes: number, arg1: $Unit_): number;
         static values(): $Unit[];
         static valueOf(arg0: string): $Unit;
-        static convertTo(bytes: number, arg1: $Unit_): number;
         static humanReadable(bytes: number, arg1: $Unit_): string;
         static humanReadable(bytes: number): string;
         static getLargest(bytes: number): $Unit;
@@ -161,17 +161,17 @@ declare module "@package/com/mojang/realmsclient" {
      */
     export type $RealmsMainScreen$LayoutState_ = "loading" | "no_realms" | "list";
     export class $RealmsMainScreen extends $RealmsScreen {
+        static getVersionComponent(version: string, compatible: boolean): $Component;
+        static getVersionComponent(version: string, color: number): $Component;
+        static refreshPendingInvites(): void;
+        static play(realmsServer: $RealmsServer | null, lastScreen: $Screen): void;
+        static play(realmsServer: $RealmsServer | null, lastScreen: $Screen, allowSnapshots: boolean): void;
         /**
          * @return `true` if the GUI element is dragging, `false` otherwise
          */
         static isSnapshot(): boolean;
-        static play(realmsServer: $RealmsServer | null, lastScreen: $Screen): void;
-        static play(realmsServer: $RealmsServer | null, lastScreen: $Screen, allowSnapshots: boolean): void;
-        static getVersionComponent(version: string, compatible: boolean): $Component;
-        static getVersionComponent(version: string, color: number): $Component;
-        static refreshServerList(): void;
         resetScreen(): void;
-        static refreshPendingInvites(): void;
+        static refreshServerList(): void;
         static MENU_BACKGROUND: $ResourceLocation;
         minecraft: $Minecraft;
         static INWORLD_FOOTER_SEPARATOR: $ResourceLocation;

@@ -39,8 +39,8 @@ import { $RegisterCapabilitiesEvent } from "@package/net/neoforged/neoforge/capa
 
 declare module "@package/com/simibubi/create/content/kinetics/gauge" {
     export class $GaugeRenderer extends $ShaftRenderer<$GaugeBlockEntity> {
-        static stress(arg0: $BlockEntityRendererProvider$Context): $GaugeRenderer;
         static speed(arg0: $BlockEntityRendererProvider$Context): $GaugeRenderer;
+        static stress(arg0: $BlockEntityRendererProvider$Context): $GaugeRenderer;
         static KINETIC_BLOCK: $SuperByteBufferCache$Compartment<$BlockState>;
         static rainbowMode: boolean;
     }
@@ -67,8 +67,8 @@ declare module "@package/com/simibubi/create/content/kinetics/gauge" {
         constructor(arg0: $BlockPos_);
     }
     export class $StressGaugeBlockEntity extends $GaugeBlockEntity {
-        onObserved(): void;
         static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
+        onObserved(): void;
         getNetworkCapacity(): number;
         getNetworkStress(): number;
         color: number;
@@ -125,18 +125,18 @@ declare module "@package/com/simibubi/create/content/kinetics/gauge" {
     export class $GaugeVisual$DialFace extends $Couple<$TransformedInstance> {
     }
     export class $GaugeBlock extends $DirectionalAxisKineticBlock implements $IBE<$GaugeBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$GaugeBlockEntity>;
-        getBlockEntityClass(): $Class<$GaugeBlockEntity>;
-        static stress(arg0: $BlockBehaviour$Properties): $GaugeBlock;
         static speed(arg0: $BlockBehaviour$Properties): $GaugeBlock;
+        getBlockEntityClass(): $Class<$GaugeBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$GaugeBlockEntity>;
+        static stress(arg0: $BlockBehaviour$Properties): $GaugeBlock;
         shouldRenderHeadOnFace(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_, arg3: $Direction_): boolean;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$GaugeBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$GaugeBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($GaugeBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$GaugeBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $GaugeBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$GaugeBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($GaugeBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$GaugeBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -168,8 +168,8 @@ declare module "@package/com/simibubi/create/content/kinetics/gauge" {
         static UPDATE_CLIENTS: number;
         static FACING: $DirectionProperty;
         hasCollision: boolean;
-        get blockEntityType(): $BlockEntityType<$GaugeBlockEntity>;
         get blockEntityClass(): $Class<$GaugeBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$GaugeBlockEntity>;
     }
     export class $GaugeVisual$Stress extends $GaugeVisual {
         static rainbowMode: boolean;

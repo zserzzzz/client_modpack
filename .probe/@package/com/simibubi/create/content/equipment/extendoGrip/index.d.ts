@@ -50,22 +50,22 @@ declare module "@package/com/simibubi/create/content/equipment/extendoGrip" {
     /**
      * Values that may be interpreted as {@link $ExtendoGripInteractionPacket}.
      */
-    export type $ExtendoGripInteractionPacket_ = { hand?: $InteractionHand_, point?: $Vec3_, target?: number,  } | [hand?: $InteractionHand_, point?: $Vec3_, target?: number, ];
+    export type $ExtendoGripInteractionPacket_ = { point?: $Vec3_, target?: number, hand?: $InteractionHand_,  } | [point?: $Vec3_, target?: number, hand?: $InteractionHand_, ];
     export class $ExtendoGripItemRenderer extends $CustomRenderedItemModelRenderer {
         constructor();
     }
     export class $ExtendoGripItem extends $Item {
-        static dontMissEntitiesWhenYouHaveHighReachDistance(arg0: $InputEvent$InteractionKeyMappingTriggered): void;
-        static notifyServerOfLongRangeSpecificInteractions(arg0: $PlayerInteractEvent$EntityInteractSpecific): void;
+        static bufferLivingAttackEvent(arg0: $LivingIncomingDamageEvent): void;
+        static isHoldingExtendoGrip(arg0: $Player): boolean;
+        static consumeDurabilityOnPlace(arg0: $BlockEvent$EntityPlaceEvent): void;
+        static holdingExtendoGripIncreasesRange(arg0: $EntityTickEvent$Pre): void;
+        static notifyServerOfLongRangeAttacks(arg0: $AttackEntityEvent): void;
+        static consumeDurabilityOnBlockBreak(arg0: $BlockEvent$BreakEvent): void;
         static notifyServerOfLongRangeInteractions(arg0: $PlayerInteractEvent$EntityInteract): void;
         static addReachToJoiningPlayersHoldingExtendo(arg0: $PlayerEvent$PlayerLoggedInEvent): void;
         static attacksByExtendoGripHaveMoreKnockback(arg0: $LivingKnockBackEvent): void;
-        static isHoldingExtendoGrip(arg0: $Player): boolean;
-        static bufferLivingAttackEvent(arg0: $LivingIncomingDamageEvent): void;
-        static consumeDurabilityOnPlace(arg0: $BlockEvent$EntityPlaceEvent): void;
-        static holdingExtendoGripIncreasesRange(arg0: $EntityTickEvent$Pre): void;
-        static consumeDurabilityOnBlockBreak(arg0: $BlockEvent$BreakEvent): void;
-        static notifyServerOfLongRangeAttacks(arg0: $AttackEntityEvent): void;
+        static dontMissEntitiesWhenYouHaveHighReachDistance(arg0: $InputEvent$InteractionKeyMappingTriggered): void;
+        static notifyServerOfLongRangeSpecificInteractions(arg0: $PlayerInteractEvent$EntityInteractSpecific): void;
         static doubleRangeAttributeModifier: $AttributeModifier;
         static BASE_ATTACK_DAMAGE_ID: $ResourceLocation;
         static MAX_BAR_WIDTH: number;

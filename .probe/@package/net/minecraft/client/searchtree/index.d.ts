@@ -31,7 +31,6 @@ declare module "@package/net/minecraft/client/searchtree" {
          * @return A list of all matching items in this search tree.
          */
         search(query: string): $List<T>;
-        searchResourceLocation(namespace: string, path: string): $List<T>;
         /**
          * Searches this search tree for the given text.
          * 
@@ -39,6 +38,7 @@ declare module "@package/net/minecraft/client/searchtree" {
          * @return A list of all matching items in this search tree.
          */
         searchPlainText(query: string): $List<T>;
+        searchResourceLocation(namespace: string, path: string): $List<T>;
         resourceLocationSearchTree: $ResourceLocationSearchTree<T>;
         additionOrder: $Comparator<T>;
         constructor(idGetter: $Function_<T, $Stream<$ResourceLocation>>, contents: $List_<T>);
@@ -57,8 +57,8 @@ declare module "@package/net/minecraft/client/searchtree" {
         constructor(firstIterator: $Iterator<T>, secondIterator: $Iterator<T>, comparator: $Comparator<T>);
     }
     export class $SearchTree<T> {
-        static plainText<T>(contents: $List_<T>, filter: $Function_<T, $Stream<string>>): $SearchTree<T>;
         static empty<T>(): $SearchTree<T>;
+        static plainText<T>(contents: $List_<T>, filter: $Function_<T, $Stream<string>>): $SearchTree<T>;
     }
     export interface $SearchTree<T> {
         /**

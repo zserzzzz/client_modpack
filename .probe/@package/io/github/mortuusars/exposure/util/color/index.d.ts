@@ -14,11 +14,8 @@ declare module "@package/io/github/mortuusars/exposure/util/color" {
     /**
      * Values that may be interpreted as {@link $Color$Unbounded}.
      */
-    export type $Color$Unbounded_ = { a?: number, g?: number, b?: number, r?: number,  } | [a?: number, g?: number, b?: number, r?: number, ];
+    export type $Color$Unbounded_ = { b?: number, r?: number, a?: number, g?: number,  } | [b?: number, r?: number, a?: number, g?: number, ];
     export class $Color extends $Record {
-        getA(): number;
-        getB(): number;
-        static pack(alpha: number, red: number, green: number, blue: number): number;
         static clamp(channel: number): number;
         add(other: $Color_): $Color;
         b(): number;
@@ -28,59 +25,62 @@ declare module "@package/io/github/mortuusars/exposure/util/color" {
         multiply(scalar: number): $Color;
         static red(argb: number): number;
         subtract(other: $Color_): $Color;
-        addUnbounded(other: $Color_): $Color$Unbounded;
-        addUnbounded(other: $Color$Unbounded_): $Color$Unbounded;
-        asHexString(): string;
-        subtractUnbounded(other: $Color_): $Color$Unbounded;
-        static alpha(argb: number): number;
+        getA(): number;
+        getB(): number;
         getG(): number;
+        static rgb(rgb: number): $Color;
+        static rgb(r: number, g: number, b: number): $Color;
+        static pack(alpha: number, red: number, green: number, blue: number): number;
         static blue(argb: number): number;
         static green(argb: number): number;
+        static alpha(argb: number): number;
+        static argb(a: number, r: number, g: number, b: number): $Color;
+        static argb(argb: number): $Color;
+        getARGB(): number;
+        withAlpha(alpha: number): $Color;
+        getRGB(): number;
         squaredDifferenceTo(color: $Color_): number;
         squaredDifferenceTo(argb: number): number;
-        static rgb(r: number, g: number, b: number): $Color;
-        static rgb(rgb: number): $Color;
-        getRGB(): number;
-        static argb(argb: number): $Color;
-        static argb(a: number, r: number, g: number, b: number): $Color;
-        static abgr(abgr: number): $Color;
-        static alphaF(argb: number): number;
-        getBF(): number;
         static greenF(argb: number): number;
-        getGF(): number;
-        getBGR(): number;
-        static bgr(bgr: number): $Color;
-        getRF(): number;
-        getR(): number;
-        getABGR(): number;
-        withAlphaF(alpha: number): $Color;
-        static ARGBtoABGR(ARGB: number): number;
-        static ABGRtoARGB(ABGR: number): number;
-        static redF(argb: number): number;
-        static rgbF(r: number, g: number, b: number): $Color;
         static argbF(a: number, r: number, g: number, b: number): $Color;
+        static abgr(abgr: number): $Color;
+        static rgbF(r: number, g: number, b: number): $Color;
+        getAF(): number;
+        static bgr(bgr: number): $Color;
+        getR(): number;
+        getRF(): number;
+        getGF(): number;
+        getBF(): number;
+        getABGR(): number;
+        getBGR(): number;
+        withAlphaF(alpha: number): $Color;
+        static alphaF(argb: number): number;
+        static redF(argb: number): number;
+        static ABGRtoARGB(ABGR: number): number;
+        static ARGBtoABGR(ARGB: number): number;
         static fromHex(hexColor: string): $Color;
         static blueF(argb: number): number;
-        getAF(): number;
-        withAlpha(alpha: number): $Color;
-        getARGB(): number;
+        asHexString(): string;
+        subtractUnbounded(other: $Color_): $Color$Unbounded;
+        addUnbounded(other: $Color$Unbounded_): $Color$Unbounded;
+        addUnbounded(other: $Color_): $Color$Unbounded;
         static WHITE: $Color;
         static CODEC: $Codec<$Color>;
         static HEX_STRING_CODEC: $Codec<$Color>;
         static BLACK: $Color;
         static TRANSPARENT: $Color;
         constructor(a: number, r: number, g: number, b: number);
-        get RGB(): number;
-        get BF(): number;
-        get GF(): number;
-        get BGR(): number;
-        get RF(): number;
-        get ABGR(): number;
-        get AF(): number;
         get ARGB(): number;
+        get RGB(): number;
+        get AF(): number;
+        get RF(): number;
+        get GF(): number;
+        get BF(): number;
+        get ABGR(): number;
+        get BGR(): number;
     }
     /**
      * Values that may be interpreted as {@link $Color}.
      */
-    export type $Color_ = { a?: number, g?: number, b?: number, r?: number,  } | [a?: number, g?: number, b?: number, r?: number, ];
+    export type $Color_ = { b?: number, r?: number, a?: number, g?: number,  } | [b?: number, r?: number, a?: number, g?: number, ];
 }

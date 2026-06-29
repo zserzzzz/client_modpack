@@ -21,18 +21,18 @@ export * as listeners from "@package/net/caffeinemc/mods/lithium/common/world/li
 declare module "@package/net/caffeinemc/mods/lithium/common/world" {
     export class $LithiumData$Data extends $Record {
         ominousBanner(): $ItemStack;
-        chunkSectionChangeCallbacks(): $Long2ReferenceOpenHashMap<$ChunkSectionChangeCallback>;
         activeNavigations(): $ReferenceOpenHashSet<$PathNavigation>;
         gameEventDispatchers(): $GameEventDispatcherStorage;
         blockChangeTrackers(): $LithiumInterner<$SectionedBlockChangeTracker>;
         entityMovementTrackers(): $LithiumInterner<$SectionedEntityMovementTracker<never, never>>;
+        chunkSectionChangeCallbacks(): $Long2ReferenceOpenHashMap<$ChunkSectionChangeCallback>;
         constructor(arg0: $HolderLookup$Provider);
         constructor(gameEventDispatchers: $GameEventDispatcherStorage_, ominousBanner: $ItemStack_, activeNavigations: $ReferenceOpenHashSet<$PathNavigation>, blockChangeTrackers: $LithiumInterner<$SectionedBlockChangeTracker>, entityMovementTrackers: $LithiumInterner<$SectionedEntityMovementTracker<never, never>>, chunkSectionChangeCallbacks: $Long2ReferenceOpenHashMap<$ChunkSectionChangeCallback>);
     }
     /**
      * Values that may be interpreted as {@link $LithiumData$Data}.
      */
-    export type $LithiumData$Data_ = { entityMovementTrackers?: $LithiumInterner<$SectionedEntityMovementTracker<never, never>>, activeNavigations?: $ReferenceOpenHashSet<$PathNavigation>, gameEventDispatchers?: $GameEventDispatcherStorage_, blockChangeTrackers?: $LithiumInterner<$SectionedBlockChangeTracker>, ominousBanner?: $ItemStack_, chunkSectionChangeCallbacks?: $Long2ReferenceOpenHashMap<$ChunkSectionChangeCallback>,  } | [entityMovementTrackers?: $LithiumInterner<$SectionedEntityMovementTracker<never, never>>, activeNavigations?: $ReferenceOpenHashSet<$PathNavigation>, gameEventDispatchers?: $GameEventDispatcherStorage_, blockChangeTrackers?: $LithiumInterner<$SectionedBlockChangeTracker>, ominousBanner?: $ItemStack_, chunkSectionChangeCallbacks?: $Long2ReferenceOpenHashMap<$ChunkSectionChangeCallback>, ];
+    export type $LithiumData$Data_ = { ominousBanner?: $ItemStack_, chunkSectionChangeCallbacks?: $Long2ReferenceOpenHashMap<$ChunkSectionChangeCallback>, entityMovementTrackers?: $LithiumInterner<$SectionedEntityMovementTracker<never, never>>, activeNavigations?: $ReferenceOpenHashSet<$PathNavigation>, gameEventDispatchers?: $GameEventDispatcherStorage_, blockChangeTrackers?: $LithiumInterner<$SectionedBlockChangeTracker>,  } | [ominousBanner?: $ItemStack_, chunkSectionChangeCallbacks?: $Long2ReferenceOpenHashMap<$ChunkSectionChangeCallback>, entityMovementTrackers?: $LithiumInterner<$SectionedEntityMovementTracker<never, never>>, activeNavigations?: $ReferenceOpenHashSet<$PathNavigation>, gameEventDispatchers?: $GameEventDispatcherStorage_, blockChangeTrackers?: $LithiumInterner<$SectionedBlockChangeTracker>, ];
     export class $ChunkAwareEntityIterable<T extends $EntityAccess> {
     }
     export interface $ChunkAwareEntityIterable<T extends $EntityAccess> {
@@ -63,8 +63,8 @@ declare module "@package/net/caffeinemc/mods/lithium/common/world" {
     export class $ServerWorldExtended {
     }
     export interface $ServerWorldExtended {
-        lithium$setNavigationInactive(arg0: $Mob): void;
         lithium$setNavigationActive(arg0: $Mob): void;
+        lithium$setNavigationInactive(arg0: $Mob): void;
     }
     export class $ChunkRandomSource {
     }
@@ -78,9 +78,9 @@ declare module "@package/net/caffeinemc/mods/lithium/common/world" {
     export class $GameEventDispatcherStorage extends $Record {
         get(arg0: number): $Int2ObjectMap<$GameEventListenerRegistry>;
         replace(arg0: number, arg1: $Int2ObjectMap<$GameEventListenerRegistry>): void;
+        removeChunk(arg0: number): void;
         storage(): $Long2ReferenceOpenHashMap<$Int2ObjectMap<$GameEventListenerRegistry>>;
         loadedChunks(): $LongOpenHashSet;
-        removeChunk(arg0: number): void;
         addChunk(arg0: number, arg1: $Int2ObjectMap<$GameEventListenerRegistry>): void;
         constructor();
         constructor(storage: $Long2ReferenceOpenHashMap<$Int2ObjectMap<$GameEventListenerRegistry>>, loadedChunks: $LongOpenHashSet);

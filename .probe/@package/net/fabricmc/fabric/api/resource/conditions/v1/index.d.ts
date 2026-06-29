@@ -9,8 +9,8 @@ declare module "@package/net/fabricmc/fabric/api/resource/conditions/v1" {
         static TYPE_CODEC: $Codec<$ResourceConditionType<never>>;
     }
     export interface $ResourceConditionType<T extends $ResourceCondition> {
-        id(): $ResourceLocation;
         codec(): $MapCodec<T>;
+        id(): $ResourceLocation;
     }
     export class $ResourceCondition {
         static CONDITION_CODEC: $Codec<$ResourceCondition>;

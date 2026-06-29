@@ -9,11 +9,11 @@ declare module "@package/dev/architectury/event/events/client" {
     export class $ClientCommandRegistrationEvent$ClientCommandSourceStack {
     }
     export interface $ClientCommandRegistrationEvent$ClientCommandSourceStack extends $SharedSuggestionProvider {
-        arch$getPlayer(): $LocalPlayer;
         arch$sendSuccess(arg0: $Supplier_<$Component>, arg1: boolean): void;
-        arch$getLevel(): $ClientLevel;
-        arch$sendFailure(arg0: $Component_): void;
+        arch$getPlayer(): $LocalPlayer;
         arch$getPosition(): $Vec3;
         arch$getRotation(): $Vec2;
+        arch$sendFailure(arg0: $Component_): void;
+        arch$getLevel(): $ClientLevel;
     }
 }

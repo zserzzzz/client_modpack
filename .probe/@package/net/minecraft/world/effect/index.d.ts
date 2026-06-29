@@ -35,13 +35,10 @@ declare module "@package/net/minecraft/world/effect" {
     }
     export class $MobEffect implements $FeatureElement, $IMobEffectExtension {
         getDisplayName(): $Component;
-        /**
-         * Returns the color of the potion liquid.
-         */
-        getColor(): number;
-        getCategory(): $MobEffectCategory;
-        requiredFeatures(): $FeatureFlagSet;
         requiredFeatures(...requiredFeatures: $FeatureFlag[]): $MobEffect;
+        requiredFeatures(): $FeatureFlagSet;
+        getCategory(): $MobEffectCategory;
+        onMobHurt(livingEntity: $LivingEntity, amplifier: number, damageSource: $DamageSource_, amount: number): void;
         /**
          * Returns the name of the effect.
          */
@@ -50,47 +47,50 @@ declare module "@package/net/minecraft/world/effect" {
          * Returns the color of the potion liquid.
          */
         getBlendDurationTicks(): number;
-        applyInstantenousEffect(source: $Entity | null, indirectSource: $Entity | null, livingEntity: $LivingEntity, amplifier: number, health: number): void;
+        removeAttributeModifiers(attributeMap: $AttributeMap): void;
+        addAttributeModifier(attribute: $Holder_<$Attribute>, id: $ResourceLocation_, amount: number, arg3: $AttributeModifier$Operation_): $MobEffect;
+        addAttributeModifier(arg0: $Holder_<$Attribute>, arg1: $ResourceLocation_, arg2: $AttributeModifier$Operation_, arg3: $Int2DoubleFunction_): $MobEffect;
         /**
          * Returns the name of the effect.
          */
         getOrCreateDescriptionId(): string;
-        addAttributeModifier(arg0: $Holder_<$Attribute>, arg1: $ResourceLocation_, arg2: $AttributeModifier$Operation_, arg3: $Int2DoubleFunction_): $MobEffect;
-        addAttributeModifier(attribute: $Holder_<$Attribute>, id: $ResourceLocation_, amount: number, arg3: $AttributeModifier$Operation_): $MobEffect;
-        createParticleOptions(effect: $MobEffectInstance): $ParticleOptions;
-        removeAttributeModifiers(attributeMap: $AttributeMap): void;
         addAttributeModifiers(attributeMap: $AttributeMap, amplifier: number): void;
+        applyInstantenousEffect(source: $Entity | null, indirectSource: $Entity | null, livingEntity: $LivingEntity, amplifier: number, health: number): void;
+        createParticleOptions(effect: $MobEffectInstance): $ParticleOptions;
+        /**
+         * Returns the color of the potion liquid.
+         */
+        getColor(): number;
         shouldApplyEffectTickThisTick(duration: number, amplifier: number): boolean;
-        onMobHurt(livingEntity: $LivingEntity, amplifier: number, damageSource: $DamageSource_, amount: number): void;
-        applyEffectTick(livingEntity: $LivingEntity, amplifier: number): boolean;
-        onEffectStarted(livingEntity: $LivingEntity, amplifier: number): void;
-        onMobRemoved(livingEntity: $LivingEntity, amplifier: number, reason: $Entity$RemovalReason_): void;
-        setBlendDuration(blendDuration: number): $MobEffect;
         createModifiers(amplifier: number, output: $BiConsumer_<$Holder<$Attribute>, $AttributeModifier>): void;
-        /**
-         * Get if the potion is beneficial to the player. Beneficial potions are shown on the first row of the HUD
-         */
-        isBeneficial(): boolean;
-        onEffectAdded(livingEntity: $LivingEntity, amplifier: number): void;
-        /**
-         * Get if the potion is beneficial to the player. Beneficial potions are shown on the first row of the HUD
-         */
-        isInstantenous(): boolean;
-        withSoundOnAdded(sound: $SoundEvent_): $MobEffect;
         /**
          * @deprecated
          */
         initializeClient(arg0: $Consumer_<$IClientMobEffectExtensions>): void;
+        withSoundOnAdded(sound: $SoundEvent_): $MobEffect;
+        applyEffectTick(livingEntity: $LivingEntity, amplifier: number): boolean;
+        setBlendDuration(blendDuration: number): $MobEffect;
+        onEffectStarted(livingEntity: $LivingEntity, amplifier: number): void;
+        onEffectAdded(livingEntity: $LivingEntity, amplifier: number): void;
+        onMobRemoved(livingEntity: $LivingEntity, amplifier: number, reason: $Entity$RemovalReason_): void;
+        /**
+         * Get if the potion is beneficial to the player. Beneficial potions are shown on the first row of the HUD
+         */
+        isInstantenous(): boolean;
+        /**
+         * Get if the potion is beneficial to the player. Beneficial potions are shown on the first row of the HUD
+         */
+        isBeneficial(): boolean;
         isEnabled(enabledFeatures: $FeatureFlagSet): boolean;
+        /**
+         * Fill the given set with the `EffectCure`s this effect should be curable with by default
+         */
+        fillEffectCures(cures: $Set_<$EffectCure>, effectInstance: $MobEffectInstance): void;
         /**
          * Used for determining `MobEffect` sort order in GUIs.
          * Defaults to the `MobEffect`'s liquid color.
          */
         getSortOrder(effectInstance: $MobEffectInstance): number;
-        /**
-         * Fill the given set with the `EffectCure`s this effect should be curable with by default
-         */
-        fillEffectCures(cures: $Set_<$EffectCure>, effectInstance: $MobEffectInstance): void;
         static CODEC: $Codec<$Holder<$MobEffect>>;
         color: number;
         particleFactory: $Function<$MobEffectInstance, $ParticleOptions>;
@@ -104,8 +104,8 @@ declare module "@package/net/minecraft/world/effect" {
         get blendDurationTicks(): number;
         get orCreateDescriptionId(): string;
         set blendDuration(value: number);
-        get beneficial(): boolean;
         get instantenous(): boolean;
+        get beneficial(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $MobEffect}.
@@ -116,7 +116,7 @@ declare module "@package/net/minecraft/world/effect" {
     /**
      * Values that may be interpreted as {@link $MobEffectInstance$Details}.
      */
-    export type $MobEffectInstance$Details_ = { ambient?: boolean, amplifier?: number, showParticles?: boolean, cures?: ($Set_<$EffectCure>) | undefined, showIcon?: boolean, hiddenEffect?: ($MobEffectInstance$Details_) | undefined, duration?: number,  } | [ambient?: boolean, amplifier?: number, showParticles?: boolean, cures?: ($Set_<$EffectCure>) | undefined, showIcon?: boolean, hiddenEffect?: ($MobEffectInstance$Details_) | undefined, duration?: number, ];
+    export type $MobEffectInstance$Details_ = { cures?: ($Set_<$EffectCure>) | undefined, showIcon?: boolean, hiddenEffect?: ($MobEffectInstance$Details_) | undefined, duration?: number, ambient?: boolean, amplifier?: number, showParticles?: boolean,  } | [cures?: ($Set_<$EffectCure>) | undefined, showIcon?: boolean, hiddenEffect?: ($MobEffectInstance$Details_) | undefined, duration?: number, ambient?: boolean, amplifier?: number, showParticles?: boolean, ];
     export class $HealOrHarmMobEffect extends $InstantenousMobEffect {
         static CODEC: $Codec<$Holder<$MobEffect>>;
         color: number;
@@ -182,7 +182,6 @@ declare module "@package/net/minecraft/world/effect" {
         constructor();
     }
     export class $MobEffectInstance implements $Comparable<$MobEffectInstance>, $MobEffectInstanceAccessor {
-        getAmplifier(): number;
         compareTo(other: $MobEffectInstance): number;
         update(other: $MobEffectInstance): boolean;
         /**
@@ -193,9 +192,16 @@ declare module "@package/net/minecraft/world/effect" {
         is(effect: $Holder_<$MobEffect>): boolean;
         tick(entity: $LivingEntity, onExpirationRunnable: $Runnable_): boolean;
         getDuration(): number;
-        copyBlendState(other: $MobEffectInstance): void;
         getParticleOptions(): $ParticleOptions;
-        getDescriptionId(): string;
+        copyBlendState(other: $MobEffectInstance): void;
+        /**
+         * Gets whether this potion effect originated from a beacon
+         */
+        isInfiniteDuration(): boolean;
+        getBlendFactor(entity: $LivingEntity, delta: number): number;
+        skipBlending(): void;
+        setDetailsFrom(other: $MobEffectInstance): void;
+        mapDuration(mapper: $Int2IntFunction_): number;
         /**
          * Gets whether this potion effect originated from a beacon
          */
@@ -206,23 +212,17 @@ declare module "@package/net/minecraft/world/effect" {
          */
         isAmbient(): boolean;
         onMobHurt(livingEntity: $LivingEntity, damageSource: $DamageSource_, amount: number): void;
-        onEffectStarted(livingEntity: $LivingEntity): void;
-        onMobRemoved(livingEntity: $LivingEntity, reason: $Entity$RemovalReason_): void;
-        onEffectAdded(livingEntity: $LivingEntity): void;
+        getDescriptionId(): string;
+        getAmplifier(): number;
         getEffect(): $Holder<$MobEffect>;
         /**
          * Gets whether this potion effect originated from a beacon
          */
         isVisible(): boolean;
         getCures(): $Set<$EffectCure>;
-        getBlendFactor(entity: $LivingEntity, delta: number): number;
-        /**
-         * Gets whether this potion effect originated from a beacon
-         */
-        isInfiniteDuration(): boolean;
-        mapDuration(mapper: $Int2IntFunction_): number;
-        setDetailsFrom(other: $MobEffectInstance): void;
-        skipBlending(): void;
+        onEffectStarted(livingEntity: $LivingEntity): void;
+        onEffectAdded(livingEntity: $LivingEntity): void;
+        onMobRemoved(livingEntity: $LivingEntity, reason: $Entity$RemovalReason_): void;
         create$getHiddenEffect(): $MobEffectInstance;
         static MAX_AMPLIFIER: number;
         static CODEC: $Codec<$MobEffectInstance>;
@@ -236,16 +236,16 @@ declare module "@package/net/minecraft/world/effect" {
         constructor(effect: $Holder_<$MobEffect>, duration: number);
         constructor(effect: $Holder_<$MobEffect>, duration: number, amplifier: number);
         constructor(effect: $Holder_<$MobEffect>, duration: number, amplifier: number, ambient: boolean, visible: boolean);
-        get amplifier(): number;
         get duration(): number;
         get particleOptions(): $ParticleOptions;
-        get descriptionId(): string;
+        get infiniteDuration(): boolean;
+        set detailsFrom(value: $MobEffectInstance);
         get ambient(): boolean;
+        get descriptionId(): string;
+        get amplifier(): number;
         get effect(): $Holder<$MobEffect>;
         get visible(): boolean;
         get cures(): $Set<$EffectCure>;
-        get infiniteDuration(): boolean;
-        set detailsFrom(value: $MobEffectInstance);
     }
     export class $SaturationMobEffect extends $InstantenousMobEffect {
         static CODEC: $Codec<$Holder<$MobEffect>>;
@@ -262,10 +262,10 @@ declare module "@package/net/minecraft/world/effect" {
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $Holder<$MobEffect>>;
     }
     export class $MobEffectUtil {
+        static hasWaterBreathing(entity: $LivingEntity): boolean;
+        static formatDuration(effect: $MobEffectInstance, durationFactor: number, ticksPerSecond: number): $Component;
         static hasDigSpeed(entity: $LivingEntity): boolean;
         static getDigSpeedAmplification(entity: $LivingEntity): number;
-        static formatDuration(effect: $MobEffectInstance, durationFactor: number, ticksPerSecond: number): $Component;
-        static hasWaterBreathing(entity: $LivingEntity): boolean;
         static addEffectToPlayersAround(level: $ServerLevel, source: $Entity | null, pos: $Vec3_, radius: number, arg4: $MobEffectInstance, effect: number): $List<$ServerPlayer>;
         constructor();
     }
@@ -298,18 +298,18 @@ declare module "@package/net/minecraft/world/effect" {
     export type $MobEffectCategory_ = "beneficial" | "harmful" | "neutral";
     export interface $MobEffect extends RegistryMarked<RegistryTypes.MobEffectTag, RegistryTypes.MobEffect> {}
     export class $MobEffect$AttributeTemplate extends $Record {
-        curve(): $Int2DoubleFunction;
-        operation(): $AttributeModifier$Operation;
         id(): $ResourceLocation;
         create(level: number): $AttributeModifier;
         amount(): number;
+        operation(): $AttributeModifier$Operation;
+        curve(): $Int2DoubleFunction;
         constructor(arg0: $ResourceLocation_, arg1: number, arg2: $AttributeModifier$Operation_);
         constructor(id: $ResourceLocation_, amount: number, operation: $AttributeModifier$Operation_, curve: $Int2DoubleFunction_ | null);
     }
     /**
      * Values that may be interpreted as {@link $MobEffect$AttributeTemplate}.
      */
-    export type $MobEffect$AttributeTemplate_ = { operation?: $AttributeModifier$Operation_, amount?: number, curve?: $Int2DoubleFunction_, id?: $ResourceLocation_,  } | [operation?: $AttributeModifier$Operation_, amount?: number, curve?: $Int2DoubleFunction_, id?: $ResourceLocation_, ];
+    export type $MobEffect$AttributeTemplate_ = { id?: $ResourceLocation_, operation?: $AttributeModifier$Operation_, amount?: number, curve?: $Int2DoubleFunction_,  } | [id?: $ResourceLocation_, operation?: $AttributeModifier$Operation_, amount?: number, curve?: $Int2DoubleFunction_, ];
     export class $WeavingMobEffect extends $MobEffect {
         static CODEC: $Codec<$Holder<$MobEffect>>;
         color: number;

@@ -46,8 +46,10 @@ declare module "@package/com/simibubi/create/foundation/virtualWorld" {
         constructor(arg0: $VirtualRenderWorld, arg1: number, arg2: number);
     }
     export class $VirtualChunkSource extends $ChunkSource {
+        getLevel(): $Level;
         getChunk(arg0: number, arg1: number): $ChunkAccess;
         constructor(arg0: $VirtualRenderWorld);
+        get level(): $Level;
     }
     export class $VirtualChunkSection extends $LevelChunkSection {
         owner: $VirtualChunk;
@@ -63,15 +65,16 @@ declare module "@package/com/simibubi/create/foundation/virtualWorld" {
     export class $VirtualRenderWorld extends $Level implements $VisualizationLevel {
         clear(): void;
         getBlockState(arg0: number, arg1: number, arg2: number): $BlockState;
-        runLightEngine(): void;
         static nextMultipleOf16(arg0: number): number;
+        runLightEngine(): void;
         setBlockEntities(arg0: $Collection_<$BlockEntity>): void;
+        getAnyChunkImmediately(arg0: number, arg1: number): $ChunkAccess;
+        getChunkAtImmediately(arg0: number, arg1: number): $LevelChunk;
         setExternalLight(arg0: number): void;
         resetExternalLight(): void;
-        getChunkAtImmediately(arg0: number, arg1: number): $LevelChunk;
-        getAnyChunkImmediately(arg0: number, arg1: number): $ChunkAccess;
         supportsVisualization(): boolean;
         self(): $EntityGetter;
+        getChunk(arg0: number, arg1: number): $ChunkAccess;
         restoringBlockSnapshots: boolean;
         neighborUpdater: $NeighborUpdater;
         static LONG_PARTICLE_CLIP_RANGE: number;

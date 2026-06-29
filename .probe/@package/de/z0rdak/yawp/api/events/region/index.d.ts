@@ -6,10 +6,10 @@ import { $IMarkableRegion } from "@package/de/z0rdak/yawp/core/region";
 declare module "@package/de/z0rdak/yawp/api/events/region" {
     export class $RegionEvent$Rename extends $RegionEvent implements $Cancelable {
         getOldName(): string;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
-        getNewName(): string;
+        setCanceled(arg0: boolean): void;
         setNewName(arg0: string): void;
+        getNewName(): string;
         constructor(arg0: $IMarkableRegion, arg1: string, arg2: string, arg3: $ServerPlayer);
         get oldName(): string;
     }
@@ -20,20 +20,20 @@ declare module "@package/de/z0rdak/yawp/api/events/region" {
         get player(): $ServerPlayer;
     }
     export class $RegionEvent$UpdateArea extends $RegionEvent implements $Cancelable {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         setMarkedArea(arg0: $IMarkableArea): void;
         markedArea(): $IMarkableArea;
         constructor(arg0: $IMarkableRegion, arg1: $IMarkableArea, arg2: $ServerPlayer);
     }
     export class $RegionEvent$Create extends $RegionEvent implements $Cancelable {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(arg0: $IMarkableRegion, arg1: $ServerPlayer);
     }
     export class $RegionEvent$Remove extends $RegionEvent implements $Cancelable {
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(arg0: $IMarkableRegion, arg1: $ServerPlayer);
     }
 }

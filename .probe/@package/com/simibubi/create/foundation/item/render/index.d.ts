@@ -24,11 +24,11 @@ declare module "@package/com/simibubi/create/foundation/item/render" {
     }
     export class $PartialItemModelRenderer {
         static of(arg0: $ItemStack_, arg1: $ItemDisplayContext_, arg2: $PoseStack, arg3: $MultiBufferSource_, arg4: number): $PartialItemModelRenderer;
+        renderSolid(arg0: $BakedModel, arg1: number): void;
         render(arg0: $BakedModel, arg1: $RenderType, arg2: number): void;
         render(arg0: $BakedModel, arg1: number): void;
-        renderSolid(arg0: $BakedModel, arg1: number): void;
-        renderGlowing(arg0: $BakedModel, arg1: number): void;
         renderSolidGlowing(arg0: $BakedModel, arg1: number): void;
+        renderGlowing(arg0: $BakedModel, arg1: number): void;
         wrapMethod$bop000$acceleratedrendering$renderBakedModelFast(arg0: $BakedModel, arg1: number, arg2: $PoseStack, arg3: $VertexConsumer, arg4: $Operation_<any>): void;
         constructor();
     }
@@ -47,22 +47,22 @@ declare module "@package/com/simibubi/create/foundation/item/render" {
     }
     export class $SimpleCustomRenderer implements $IClientItemExtensions {
         static create(arg0: $Item_, arg1: $CustomRenderedItemModelRenderer): $SimpleCustomRenderer;
-        getFont(arg0: $ItemStack_, arg1: $IClientItemExtensions$FontContext_): $Font;
-        shouldBobAsEntity(arg0: $ItemStack_): boolean;
-        getDefaultDyeColor(arg0: $ItemStack_): number;
         getArmPose(arg0: $LivingEntity, arg1: $InteractionHand_, arg2: $ItemStack_): $HumanoidModel$ArmPose;
-        shouldSpreadAsEntity(arg0: $ItemStack_): boolean;
-        applyForgeHandTransform(arg0: $PoseStack, arg1: $LocalPlayer, arg2: $HumanoidArm_, arg3: $ItemStack_, arg4: number, arg5: number, arg6: number): boolean;
+        getGenericArmorModel(arg0: $LivingEntity, arg1: $ItemStack_, arg2: $EquipmentSlot_, arg3: $HumanoidModel<never>): $Model;
+        getArmorLayerTintColor(arg0: $ItemStack_, arg1: $LivingEntity, arg2: $ArmorMaterial$Layer, arg3: number, arg4: number): number;
+        getScopeOverlayTexture(arg0: $ItemStack_): $ResourceLocation;
+        getHumanoidArmorModel(arg0: $LivingEntity, arg1: $ItemStack_, arg2: $EquipmentSlot_, arg3: $HumanoidModel<never>): $HumanoidModel<never>;
         /**
          * @deprecated
          */
         renderHelmetOverlay(arg0: $ItemStack_, arg1: $Player, arg2: number, arg3: number, arg4: number): void;
         renderHelmetOverlay(arg0: $ItemStack_, arg1: $Player, arg2: $GuiGraphics, arg3: $DeltaTracker): void;
-        getArmorLayerTintColor(arg0: $ItemStack_, arg1: $LivingEntity, arg2: $ArmorMaterial$Layer, arg3: number, arg4: number): number;
-        getScopeOverlayTexture(arg0: $ItemStack_): $ResourceLocation;
         setupModelAnimations(arg0: $LivingEntity, arg1: $ItemStack_, arg2: $EquipmentSlot_, arg3: $Model, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number): void;
-        getHumanoidArmorModel(arg0: $LivingEntity, arg1: $ItemStack_, arg2: $EquipmentSlot_, arg3: $HumanoidModel<never>): $HumanoidModel<never>;
-        getGenericArmorModel(arg0: $LivingEntity, arg1: $ItemStack_, arg2: $EquipmentSlot_, arg3: $HumanoidModel<never>): $Model;
+        shouldSpreadAsEntity(arg0: $ItemStack_): boolean;
+        applyForgeHandTransform(arg0: $PoseStack, arg1: $LocalPlayer, arg2: $HumanoidArm_, arg3: $ItemStack_, arg4: number, arg5: number, arg6: number): boolean;
+        getFont(arg0: $ItemStack_, arg1: $IClientItemExtensions$FontContext_): $Font;
+        getDefaultDyeColor(arg0: $ItemStack_): number;
+        shouldBobAsEntity(arg0: $ItemStack_): boolean;
         getCustomRenderer(): $BlockEntityWithoutLevelRenderer;
         get customRenderer(): $BlockEntityWithoutLevelRenderer;
     }

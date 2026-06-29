@@ -42,16 +42,16 @@ declare module "@package/net/irisshaders/iris/mixin/texture" {
     }
     export interface $AnimationMetadataSectionAccessor {
         setFrameHeight(arg0: number): void;
+        setFrameWidth(arg0: number): void;
         getFrameWidth(): number;
         getFrameHeight(): number;
-        setFrameWidth(arg0: number): void;
     }
     export class $TextureAtlasAccessor {
     }
     export interface $TextureAtlasAccessor {
         getMipLevel(): number;
-        callGetWidth(): number;
         getTexturesByName(): $Map<$ResourceLocation, $TextureAtlasSprite>;
+        callGetWidth(): number;
         callGetHeight(): number;
         get mipLevel(): number;
         get texturesByName(): $Map<$ResourceLocation, $TextureAtlasSprite>;
@@ -59,8 +59,8 @@ declare module "@package/net/irisshaders/iris/mixin/texture" {
     export class $SpriteContentsTickerAccessor {
     }
     export interface $SpriteContentsTickerAccessor {
-        setFrame(arg0: number): void;
         getFrame(): number;
+        setFrame(arg0: number): void;
         getSubFrame(): number;
         setSubFrame(arg0: number): void;
         getAnimationInfo(): $SpriteContents$AnimatedTexture;

@@ -35,8 +35,8 @@ import { $WitherBoss } from "@package/net/minecraft/world/entity/boss/wither";
 declare module "@package/net/minecraft/client/renderer/entity/layers" {
     export class $StuckInBodyLayer<T extends $LivingEntity, M extends $PlayerModel<T>> extends $RenderLayer<T, M> {
         render(poseStack: $PoseStack, buffer: $MultiBufferSource_, packedLight: number, livingEntity: T, limbSwing: number, limbSwingAmount: number, partialTicks: number, ageInTicks: number, netHeadYaw: number, headPitch: number): void;
-        numStuck(entity: T): number;
         renderStuckItem(poseStack: $PoseStack, buffer: $MultiBufferSource_, packedLight: number, entity: $Entity, x: number, y: number, z: number, partialTick: number): void;
+        numStuck(entity: T): number;
         constructor(renderer: $LivingEntityRenderer<T, M>);
     }
     export class $IronGolemFlowerLayer extends $RenderLayer<$IronGolem, $IronGolemModel<$IronGolem>> {
@@ -118,22 +118,22 @@ declare module "@package/net/minecraft/client/renderer/entity/layers" {
     }
     export class $HumanoidArmorLayer<T extends $LivingEntity, M extends $HumanoidModel<T>, A extends $HumanoidModel<T>> extends $RenderLayer<T, M> implements $HumanoidArmorLayerAccessor, $AccessorHumanoidArmorLayer<any, any> {
         render(poseStack: $PoseStack, buffer: $MultiBufferSource_, packedLight: number, livingEntity: $Object, limbSwing: number, limbSwingAmount: number, partialTicks: number, ageInTicks: number, netHeadYaw: number, headPitch: number): void;
-        static getArmorLocationCache$create_$md$942995$0(): $Map<any, any>;
-        getArmorModelHook(arg0: $Object, arg1: $ItemStack_, arg2: $EquipmentSlot_, arg3: $Object): $Model;
-        setPartVisibility(model: $Object, slot: $EquipmentSlot_): void;
-        wrapWithCondition$edk000$geckolib$wrapArmorPieceRender(arg0: $HumanoidArmorLayer<any, any, any>, arg1: $PoseStack, arg2: $MultiBufferSource_, arg3: $LivingEntity, arg4: $EquipmentSlot_, arg5: number, arg6: $HumanoidModel<any>, arg7: number, arg8: number, arg9: number, arg10: number, arg11: number, arg12: number): boolean;
         wrapOperation$bon000$acceleratedrendering$setupTrimLayer(arg0: $HumanoidArmorLayer<any, any, any>, arg1: $Holder_<any>, arg2: $PoseStack, arg3: $MultiBufferSource_, arg4: number, arg5: $ArmorTrim, arg6: $Model, arg7: boolean, arg8: $Operation_<any>): void;
+        wrapWithCondition$edk000$geckolib$wrapArmorPieceRender(arg0: $HumanoidArmorLayer<any, any, any>, arg1: $PoseStack, arg2: $MultiBufferSource_, arg3: $LivingEntity, arg4: $EquipmentSlot_, arg5: number, arg6: $HumanoidModel<any>, arg7: number, arg8: number, arg9: number, arg10: number, arg11: number, arg12: number): boolean;
+        setPartVisibility(model: $Object, slot: $EquipmentSlot_): void;
+        getArmorModelHook(arg0: $Object, arg1: $ItemStack_, arg2: $EquipmentSlot_, arg3: $Object): $Model;
         handler$fpk000$creategoggles$onRenderArmorTrim(armorMaterial: $Holder_<any>, poseStack: $PoseStack, multiBufferSource: $MultiBufferSource_, i: number, armorTrim: $ArmorTrim, humanoidModel: $HumanoidModel<any>, bl: boolean, ci: $CallbackInfo): void;
+        static getArmorLocationCache$create_$md$c99f8a$0(): $Map<any, any>;
         ears$getBodyModel(): $HumanoidModel<never>;
         ears$getArmor(slot: $EquipmentSlot_): $HumanoidModel<never>;
         create$callSetPartVisibility(model: $HumanoidModel<never>, slot: $EquipmentSlot_): void;
-        create$getOuterModel(): $HumanoidModel<never>;
         create$getInnerModel(): $HumanoidModel<never>;
+        create$getOuterModel(): $HumanoidModel<never>;
         ears$getLeggingsModel(): $HumanoidModel<never>;
         ears$usesSecondLayer(slot: $EquipmentSlot_): boolean;
         ears$renderArmorParts(poseStack: $PoseStack, bufferSource: $MultiBufferSource_, packedLight: number, model: $Object, dyeColor: number, textureLocation: $ResourceLocation_): void;
         constructor(renderer: $RenderLayerParent<$Object, M>, innerModel: $Object, outerModel: $Object, modelManager: $ModelManager);
-        static get armorLocationCache$create_$md$942995$0(): $Map<any, any>;
+        static get armorLocationCache$create_$md$c99f8a$0(): $Map<any, any>;
     }
     export class $EnderEyesLayer<T extends $LivingEntity> extends $EyesLayer<T, $EndermanModel<T>> {
         constructor(arg0: $RenderLayerParent<T, $EndermanModel<T>>);
@@ -143,8 +143,8 @@ declare module "@package/net/minecraft/client/renderer/entity/layers" {
         constructor(renderer: $RenderLayerParent<T, M>, itemInHandRenderer: $ItemInHandRenderer);
     }
     export class $ElytraLayer<T extends $LivingEntity, M extends $EntityModel<T>> extends $RenderLayer<T, M> implements $ElytraPoseSupplier {
-        render(poseStack: $PoseStack, buffer: $MultiBufferSource_, packedLight: number, livingEntity: T, limbSwing: number, limbSwingAmount: number, partialTicks: number, ageInTicks: number, netHeadYaw: number, headPitch: number): void;
         shouldRender(arg0: $ItemStack_, arg1: T): boolean;
+        render(poseStack: $PoseStack, buffer: $MultiBufferSource_, packedLight: number, livingEntity: T, limbSwing: number, limbSwingAmount: number, partialTicks: number, ageInTicks: number, netHeadYaw: number, headPitch: number): void;
         getElytraTexture(arg0: $ItemStack_, arg1: T): $ResourceLocation;
         getWingsPose(): $Pair<any, any>;
         constructor(renderer: $RenderLayerParent<T, M>, modelSet: $EntityModelSet);
@@ -186,8 +186,8 @@ declare module "@package/net/minecraft/client/renderer/entity/layers" {
         constructor(renderer: $RenderLayerParent<$Panda, $PandaModel<$Panda>>, itemInHandRenderer: $ItemInHandRenderer);
     }
     export class $EnergySwirlLayer<T extends $Entity, M extends $EntityModel<T>> extends $RenderLayer<T, M> {
-        xOffset(tickCount: number): number;
         model(): $EntityModel<T>;
+        xOffset(tickCount: number): number;
         getTextureLocation(): $ResourceLocation;
         constructor(renderer: $RenderLayerParent<T, M>);
         get textureLocation(): $ResourceLocation;
@@ -197,8 +197,8 @@ declare module "@package/net/minecraft/client/renderer/entity/layers" {
     }
     export class $CapeLayer extends $RenderLayer<$AbstractClientPlayer, $PlayerModel<$AbstractClientPlayer>> implements $CapePoseSupplier {
         render(poseStack: $PoseStack, buffer: $MultiBufferSource_, packedLight: number, livingEntity: $AbstractClientPlayer, limbSwing: number, limbSwingAmount: number, partialTicks: number, ageInTicks: number, netHeadYaw: number, headPitch: number): void;
-        handler$cnd000$fabric_rendering_v1$injectCapeRenderCheck(arg0: $PoseStack, arg1: $MultiBufferSource_, arg2: number, arg3: $AbstractClientPlayer, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number, arg10: $CallbackInfo): void;
         getCapePose(): $PlayerPose$Part;
+        handler$cnd000$fabric_rendering_v1$injectCapeRenderCheck(arg0: $PoseStack, arg1: $MultiBufferSource_, arg2: number, arg3: $AbstractClientPlayer, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number, arg10: $CallbackInfo): void;
         constructor(renderer: $RenderLayerParent<$AbstractClientPlayer, $PlayerModel<$AbstractClientPlayer>>);
         get capePose(): $PlayerPose$Part;
     }
@@ -241,9 +241,9 @@ declare module "@package/net/minecraft/client/renderer/entity/layers" {
     export class $RenderLayer<T extends $Entity, M extends $EntityModel<T>> {
         render(poseStack: $PoseStack, bufferSource: $MultiBufferSource_, packedLight: number, livingEntity: T, limbSwing: number, limbSwingAmount: number, partialTick: number, ageInTicks: number, netHeadYaw: number, headPitch: number): void;
         getTextureLocation(entity: T): $ResourceLocation;
-        getParentModel(): M;
-        static coloredCutoutModelCopyLayerRender<T extends $LivingEntity>(modelParent: $EntityModel<T>, model: $EntityModel<T>, textureLocation: $ResourceLocation_, poseStack: $PoseStack, buffer: $MultiBufferSource_, packedLight: number, entity: T, limbSwing: number, limbSwingAmount: number, ageInTicks: number, netHeadYaw: number, headPitch: number, partialTick: number, color: number): void;
         static renderColoredCutoutModel<T extends $LivingEntity>(model: $EntityModel<T>, textureLocation: $ResourceLocation_, poseStack: $PoseStack, buffer: $MultiBufferSource_, packedLight: number, entity: T, color: number): void;
+        static coloredCutoutModelCopyLayerRender<T extends $LivingEntity>(modelParent: $EntityModel<T>, model: $EntityModel<T>, textureLocation: $ResourceLocation_, poseStack: $PoseStack, buffer: $MultiBufferSource_, packedLight: number, entity: T, limbSwing: number, limbSwingAmount: number, ageInTicks: number, netHeadYaw: number, headPitch: number, partialTick: number, color: number): void;
+        getParentModel(): M;
         constructor(renderer: $RenderLayerParent<T, M>);
         get parentModel(): M;
     }

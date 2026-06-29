@@ -41,7 +41,6 @@ declare module "@package/net/neoforged/neoforge/client/model/lighting" {
      * Contains all the shared elements needed for `BakedQuad` processing and defers lighting logic to inheritors.
      */
     export class $QuadLighter {
-        static calculateShade(normalX: number, normalY: number, normalZ: number, constantAmbientLight: boolean): number;
         /**
          * Invalidate and reset any cached state of this lighter.
          */
@@ -51,6 +50,19 @@ declare module "@package/net/neoforged/neoforge/client/model/lighting" {
          */
         setup(level: $BlockAndTintGetter, pos: $BlockPos_, state: $BlockState_): void;
         process(consumer: $VertexConsumer, pose: $PoseStack$Pose, quad: $BakedQuad, overlay: number): void;
+        static calculateShade(normalX: number, normalY: number, normalZ: number, constantAmbientLight: boolean): number;
+        /**
+         * Returns the computed lightmap for each vertex of this quad.
+         * 
+         * The returned array is only valid until this lighter is asked to light another quad.
+         */
+        getComputedLightmap(): number[];
+        /**
+         * Returns the computed brightness for each vertex of this quad.
+         * 
+         * The returned array is only valid until this lighter is asked to light another quad.
+         */
+        getComputedBrightness(): number[];
         /**
          * Compute the brightness and lightmap values for each vertex of this quad. After a call to this method, the
          * values may be accessed using `QuadLighter#getComputedBrightness()` and `QuadLighter#getComputedLightmap()`.
@@ -63,19 +75,7 @@ declare module "@package/net/neoforged/neoforge/client/model/lighting" {
          * values may be accessed using `QuadLighter#getComputedBrightness()` and `QuadLighter#getComputedLightmap()`.
          */
         computeLightingForQuad(quad: $BakedQuad): void;
-        /**
-         * Returns the computed brightness for each vertex of this quad.
-         * 
-         * The returned array is only valid until this lighter is asked to light another quad.
-         */
-        getComputedBrightness(): number[];
-        /**
-         * Returns the computed lightmap for each vertex of this quad.
-         * 
-         * The returned array is only valid until this lighter is asked to light another quad.
-         */
-        getComputedLightmap(): number[];
-        get computedBrightness(): number[];
         get computedLightmap(): number[];
+        get computedBrightness(): number[];
     }
 }

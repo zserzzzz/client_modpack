@@ -16,9 +16,9 @@ declare module "@package/net/minecraft/world/level/timers" {
         constructor(triggerTime: number, arg1: $UnsignedLong, sequentialId: string, id: $TimerCallback_<T>);
     }
     export class $TimerCallback$Serializer<T, C extends $TimerCallback<T>> {
-        serialize(tag: $CompoundTag_, callback: C): void;
-        deserialize(tag: $CompoundTag_): C;
         getId(): $ResourceLocation;
+        deserialize(tag: $CompoundTag_): C;
+        serialize(tag: $CompoundTag_, callback: C): void;
         getCls(): $Class<never>;
         constructor(id: $ResourceLocation_, cls: $Class<never>);
         get id(): $ResourceLocation;
@@ -44,9 +44,9 @@ declare module "@package/net/minecraft/world/level/timers" {
         get eventsIds(): $Set<string>;
     }
     export class $TimerCallbacks<C> {
-        serialize<T extends $TimerCallback<C>>(callback: T): $CompoundTag;
-        deserialize(tag: $CompoundTag_): $TimerCallback<C>;
         register(serializer: $TimerCallback$Serializer<C, never>): $TimerCallbacks<C>;
+        deserialize(tag: $CompoundTag_): $TimerCallback<C>;
+        serialize<T extends $TimerCallback<C>>(callback: T): $CompoundTag;
         static SERVER_CALLBACKS: $TimerCallbacks<$MinecraftServer>;
         constructor();
     }

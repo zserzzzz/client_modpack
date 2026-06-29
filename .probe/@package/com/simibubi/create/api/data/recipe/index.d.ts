@@ -123,15 +123,15 @@ declare module "@package/com/simibubi/create/api/data/recipe" {
     export class $DatagenMod {
     }
     export interface $DatagenMod {
-        asResource(arg0: string): $ResourceLocation;
         getId(): string;
+        asResource(arg0: string): $ResourceLocation;
+        ingotOf(arg0: string): $ResourceLocation;
+        nuggetOf(arg0: string): $ResourceLocation;
+        oreOf(arg0: string): $ResourceLocation;
+        recipeId(arg0: string): string;
         strippedIsSuffix(): boolean;
         omitWoodSuffix(): boolean;
         deepslateOreOf(arg0: string): $ResourceLocation;
-        ingotOf(arg0: string): $ResourceLocation;
-        oreOf(arg0: string): $ResourceLocation;
-        nuggetOf(arg0: string): $ResourceLocation;
-        recipeId(arg0: string): string;
         reversedMetalPrefix(): boolean;
         get id(): string;
     }

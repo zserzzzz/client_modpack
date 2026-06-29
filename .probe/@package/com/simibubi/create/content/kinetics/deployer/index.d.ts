@@ -49,8 +49,8 @@ import { $PlayerInteractEvent$RightClickBlock } from "@package/net/neoforged/neo
 import { $SizedFluidIngredient } from "@package/net/neoforged/neoforge/fluids/crafting";
 import { $Supplier_, $Consumer_, $Function_, $Supplier } from "@package/java/util/function";
 import { $Object2ByteLinkedOpenHashMap, $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $ServerPlayerGameMode, $ServerLevel, $ServerPlayer } from "@package/net/minecraft/server/level";
 import { $BlockPos, $BlockPos_, $HolderLookup$Provider, $Direction_, $Direction, $IdMapper } from "@package/net/minecraft/core";
+import { $ServerPlayerGameMode, $ServerLevel, $ServerPlayer } from "@package/net/minecraft/server/level";
 import { $KineticBlockEntity, $ShaftVisual, $DirectionalAxisKineticBlock } from "@package/com/simibubi/create/content/kinetics/base";
 import { $SequencedAssemblySubCategory } from "@package/com/simibubi/create/compat/jei/category/sequencedAssembly";
 import { $BlockEntityRendererProvider$Context } from "@package/net/minecraft/client/renderer/blockentity";
@@ -84,16 +84,16 @@ import { $StreamCodec } from "@package/net/minecraft/network/codec";
 declare module "@package/com/simibubi/create/content/kinetics/deployer" {
     export class $DeployerBlock$PlacementHelper implements $IPlacementHelper {
         getOffset(arg0: $Player, arg1: $Level_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockHitResult, arg5: $ItemStack_): $PlacementOffset;
-        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
-        matchesState(arg0: $BlockState_): boolean;
-        displayGhost(arg0: $PlacementOffset): void;
         matchesItem(arg0: $ItemStack_): boolean;
+        matchesState(arg0: $BlockState_): boolean;
+        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
+        displayGhost(arg0: $PlacementOffset): void;
     }
     export class $DeployerApplicationRecipe extends $ItemApplicationRecipe implements $IAssemblyRecipe {
         static convert(arg0: $RecipeHolder_<never>): $RecipeHolder<$DeployerApplicationRecipe>;
         addAssemblyIngredients(arg0: $List_<$Ingredient_>): void;
-        getDescriptionForAssembly(): $Component;
         addRequiredMachines(arg0: $Set_<$ItemLike_>): void;
+        getDescriptionForAssembly(): $Component;
         getJEISubCategory(): $Supplier<$Supplier<$SequencedAssemblySubCategory>>;
         addAssemblyFluidIngredients(arg0: $List_<$SizedFluidIngredient>): void;
         supportsAssembly(): boolean;
@@ -107,45 +107,45 @@ declare module "@package/com/simibubi/create/content/kinetics/deployer" {
     }
     export class $DeployerItemHandler implements $IItemHandlerModifiable {
         set(arg0: $ItemStack_): void;
+        getStackInSlot(arg0: number): $ItemStack;
+        getSlots(): number;
+        setStackInSlot(arg0: number, arg1: $ItemStack_): void;
+        insertItem(arg0: number, arg1: $ItemStack_, arg2: boolean): $ItemStack;
+        extractItem(arg0: number, arg1: number, arg2: boolean): $ItemStack;
         getSlotLimit(arg0: number): number;
         isItemValid(arg0: number, arg1: $ItemStack_): boolean;
-        extractItem(arg0: number, arg1: number, arg2: boolean): $ItemStack;
-        getSlots(): number;
-        getStackInSlot(arg0: number): $ItemStack;
-        insertItem(arg0: number, arg1: $ItemStack_, arg2: boolean): $ItemStack;
-        setStackInSlot(arg0: number, arg1: $ItemStack_): void;
         getHeld(): $ItemStack;
-        kjs$isMutable(): boolean;
         kjs$setStackInSlot(slot: number, stack: $ItemStack_): void;
-        kjs$self(): $IItemHandler;
+        kjs$isMutable(): boolean;
         kjs$getBlock(level: $Level_): $LevelBlock;
-        getHeight(): number;
-        insertItem(stack: $ItemStack_, simulate: boolean): $ItemStack;
+        kjs$self(): $IItemHandler;
         setChanged(): void;
+        insertItem(stack: $ItemStack_, simulate: boolean): $ItemStack;
         asContainer(): $Container;
-        countNonEmpty(): number;
         countNonEmpty(match: $ItemPredicate_): number;
-        getWidth(): number;
-        isEmpty(): boolean;
-        count(): number;
-        count(match: $ItemPredicate_): number;
-        find(match: $ItemPredicate_): number;
-        find(): number;
+        countNonEmpty(): number;
+        getHeight(): number;
+        getAllItems(): $List<$ItemStack>;
         clear(match: $ItemPredicate_): void;
         clear(): void;
-        getAllItems(): $List<$ItemStack>;
+        find(match: $ItemPredicate_): number;
+        find(): number;
+        count(): number;
+        count(match: $ItemPredicate_): number;
+        isEmpty(): boolean;
+        getWidth(): number;
         insertItem(slot: number, stack: $ItemStack_, simulate: boolean): $ItemStack;
-        extractItem(slot: number, amount: number, simulate: boolean): $ItemStack;
-        isItemValid(slot: number, stack: $ItemStack_): boolean;
         getStackInSlot(slot: number): $ItemStack;
+        isItemValid(slot: number, stack: $ItemStack_): boolean;
+        extractItem(slot: number, amount: number, simulate: boolean): $ItemStack;
         getSlotLimit(slot: number): number;
         getSlots(): number;
         constructor(arg0: $DeployerBlockEntity);
         get held(): $ItemStack;
         get height(): number;
-        get width(): number;
-        get empty(): boolean;
         get allItems(): $List<$ItemStack>;
+        get empty(): boolean;
+        get width(): number;
     }
     export class $DeployerMovingInteraction extends $MovingInteractionBehaviour {
         static REGISTRY: $SimpleRegistry<$Block, $MovingInteractionBehaviour>;
@@ -153,26 +153,26 @@ declare module "@package/com/simibubi/create/content/kinetics/deployer" {
     }
     export class $BeltDeployerCallbacks {
         static activate(arg0: $TransportedItemStack, arg1: $TransportedItemStackHandlerBehaviour, arg2: $DeployerBlockEntity, arg3: $Recipe<never>): void;
-        static onItemReceived(arg0: $TransportedItemStack, arg1: $TransportedItemStackHandlerBehaviour, arg2: $DeployerBlockEntity): $BeltProcessingBehaviour$ProcessingResult;
         static whenItemHeld(arg0: $TransportedItemStack, arg1: $TransportedItemStackHandlerBehaviour, arg2: $DeployerBlockEntity): $BeltProcessingBehaviour$ProcessingResult;
+        static onItemReceived(arg0: $TransportedItemStack, arg1: $TransportedItemStackHandlerBehaviour, arg2: $DeployerBlockEntity): $BeltProcessingBehaviour$ProcessingResult;
         constructor();
     }
     export class $DeployerHandler {
-        static tryHarvestBlock(arg0: $ServerPlayer, arg1: $ServerPlayerGameMode, arg2: $BlockPos_): boolean;
         static safeOnUse(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $Player, arg4: $InteractionHand_, arg5: $BlockHitResult): $InteractionResult;
+        static tryHarvestBlock(arg0: $ServerPlayer, arg1: $ServerPlayerGameMode, arg2: $BlockPos_): boolean;
         static CAPTURED_BLOCK_DROPS_VIEW: $Map<$BlockPos, $List<$ItemEntity>>;
         constructor();
     }
     export class $DeployerBlockEntity extends $KineticBlockEntity implements $Clearable {
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
-        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
-        getRecipe(arg0: $ItemStack_): $RecipeHolder<$Recipe<$RecipeInput>>;
         clearContent(): void;
+        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
         getPlayer(): $DeployerFakePlayer;
-        changeMode(): void;
-        discardPlayer(): void;
+        getRecipe(arg0: $ItemStack_): $RecipeHolder<$Recipe<$RecipeInput>>;
         redstoneUpdate(): void;
+        discardPlayer(): void;
         getHandPose(): $PartialModel;
+        changeMode(): void;
         getHandOffset(arg0: number): number;
         setAnimatedOffset(arg0: number): void;
         startFistBump(arg0: $Direction_): boolean;
@@ -194,13 +194,13 @@ declare module "@package/com/simibubi/create/content/kinetics/deployer" {
         set animatedOffset(value: number);
     }
     export class $DeployerRecipeSearchEvent extends $Event implements $ICancellableEvent {
-        addRecipe(arg0: $Supplier_<($RecipeHolder<$Recipe<$RecipeInput>>) | undefined>, arg1: number): void;
-        shouldAddRecipeWithPriority(arg0: number): boolean;
         getInventory(): $RecipeWrapper;
         getBlockEntity(): $DeployerBlockEntity;
         getRecipe(): $RecipeHolder<$Recipe<$RecipeInput>>;
-        setCanceled(arg0: boolean): void;
+        addRecipe(arg0: $Supplier_<($RecipeHolder<$Recipe<$RecipeInput>>) | undefined>, arg1: number): void;
+        shouldAddRecipeWithPriority(arg0: number): boolean;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         constructor(arg0: $DeployerBlockEntity, arg1: $RecipeWrapper);
         get inventory(): $RecipeWrapper;
         get blockEntity(): $DeployerBlockEntity;
@@ -214,25 +214,25 @@ declare module "@package/com/simibubi/create/content/kinetics/deployer" {
     export class $DeployerMovementBehaviour implements $MovementBehaviour {
         tick(arg0: $MovementContext): void;
         activate(arg0: $MovementContext, arg1: $BlockPos_, arg2: $DeployerFakePlayer, arg3: $DeployerBlockEntity$Mode_): void;
-        stopMoving(arg0: $MovementContext): void;
-        getActiveAreaOffset(arg0: $MovementContext): $Vec3;
         renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
-        cancelStall(arg0: $MovementContext): void;
-        visitNewPosition(arg0: $MovementContext, arg1: $BlockPos_): void;
-        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
-        writeExtraData(arg0: $MovementContext): void;
+        getActiveAreaOffset(arg0: $MovementContext): $Vec3;
         disableBlockEntityRendering(): boolean;
+        visitNewPosition(arg0: $MovementContext, arg1: $BlockPos_): void;
+        writeExtraData(arg0: $MovementContext): void;
+        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
+        cancelStall(arg0: $MovementContext): void;
+        stopMoving(arg0: $MovementContext): void;
         isActive(arg0: $MovementContext): boolean;
         /**
          * @deprecated
          */
         dropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
-        mustTickWhileDisabled(): boolean;
         onDisabledByControls(arg0: $MovementContext): void;
-        collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
-        onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
+        mustTickWhileDisabled(): boolean;
         startMoving(arg0: $MovementContext): void;
         canBeDisabledVia(arg0: $MovementContext): $ItemStack;
+        collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
+        onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
         constructor();
     }
     export class $DeployerHandler$ItemUseWorld extends $WrappedLevel implements $ServerLevelAccessor {
@@ -280,11 +280,11 @@ declare module "@package/com/simibubi/create/content/kinetics/deployer" {
         constructor(arg0: $ItemApplicationRecipe$Factory_<R>, arg1: $ResourceLocation_);
     }
     export class $ManualApplicationRecipe extends $ItemApplicationRecipe {
-        static asDeploying(arg0: $RecipeHolder_<never>): $RecipeHolder<$DeployerApplicationRecipe>;
-        getRollableResultsExceptBlock(): $List<$ProcessingOutput>;
         testBlock(arg0: $BlockState_): boolean;
-        static manualApplicationRecipesApplyInWorld(arg0: $PlayerInteractEvent$RightClickBlock): void;
+        static asDeploying(arg0: $RecipeHolder_<never>): $RecipeHolder<$DeployerApplicationRecipe>;
         transformBlock(arg0: $BlockState_, arg1: $RandomSource): $BlockState;
+        static manualApplicationRecipesApplyInWorld(arg0: $PlayerInteractEvent$RightClickBlock): void;
+        getRollableResultsExceptBlock(): $List<$ProcessingOutput>;
         constructor(arg0: $ItemApplicationRecipeParams);
         get rollableResultsExceptBlock(): $List<$ProcessingOutput>;
     }
@@ -303,15 +303,15 @@ declare module "@package/com/simibubi/create/content/kinetics/deployer" {
     export class $DeployerFakePlayer$DeployerGameProfile extends $GameProfile {
     }
     export class $DeployerBlock extends $DirectionalAxisKineticBlock implements $IBE<$DeployerBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$DeployerBlockEntity>;
         getBlockEntityClass(): $Class<$DeployerBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$DeployerBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$DeployerBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$DeployerBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($DeployerBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$DeployerBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $DeployerBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$DeployerBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($DeployerBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$DeployerBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -343,8 +343,8 @@ declare module "@package/com/simibubi/create/content/kinetics/deployer" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$DeployerBlockEntity>;
         get blockEntityClass(): $Class<$DeployerBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$DeployerBlockEntity>;
     }
     export class $ItemApplicationRecipe$Serializer<R extends $ItemApplicationRecipe> implements $RecipeSerializer<R> {
         codec(): $MapCodec<R>;
@@ -356,6 +356,7 @@ declare module "@package/com/simibubi/create/content/kinetics/deployer" {
         static deployerKillsDoNotSpawnXP(arg0: $LivingExperienceDropEvent): void;
         static deployerHasEyesOnHisFeet(arg0: $EntityEvent$Size): void;
         static deployerCollectsDropsFromKilledEntities(arg0: $LivingDropsEvent): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $Player;
         lerpYRot: number;
         static USE_ITEM_INTERVAL: number;
         lerpYHeadRot: number;
@@ -565,8 +566,8 @@ declare module "@package/com/simibubi/create/content/kinetics/deployer" {
     export class $ItemApplicationRecipe extends $ProcessingRecipe<$RecipeWrapper, $ItemApplicationRecipeParams> {
         matches(arg0: $RecipeWrapper, arg1: $Level_): boolean;
         getRequiredHeldItem(): $Ingredient;
-        getProcessedItem(): $Ingredient;
         shouldKeepHeldItem(): boolean;
+        getProcessedItem(): $Ingredient;
         constructor(arg0: $AllRecipeTypes_, arg1: $ItemApplicationRecipeParams);
         get requiredHeldItem(): $Ingredient;
         get processedItem(): $Ingredient;

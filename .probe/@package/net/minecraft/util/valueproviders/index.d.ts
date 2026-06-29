@@ -59,22 +59,22 @@ declare module "@package/net/minecraft/util/valueproviders" {
         constructor(source: $IntProvider_, minInclusive: number, maxInclusive: number);
     }
     export class $IntProvider {
-        getMinValue(): number;
-        getMaxValue(): number;
-        getType(): $IntProviderType<never>;
-        sample(random: $RandomSource): number;
         /**
          * Creates a codec for an IntProvider that only accepts numbers in the given range.
          */
         static codec(minInclusive: number, maxInclusive: number): $Codec<$IntProvider>;
+        getType(): $IntProviderType<never>;
         static validateCodec<T extends $IntProvider>(min: number, max: number, codec: $Codec<T>): $Codec<T>;
+        getMinValue(): number;
+        getMaxValue(): number;
+        sample(random: $RandomSource): number;
         static CODEC: $Codec<$IntProvider>;
         static NON_NEGATIVE_CODEC: $Codec<$IntProvider>;
         static POSITIVE_CODEC: $Codec<$IntProvider>;
         constructor();
+        get type(): $IntProviderType<never>;
         get minValue(): number;
         get maxValue(): number;
-        get type(): $IntProviderType<never>;
     }
     /**
      * Values that may be interpreted as {@link $IntProvider}.
@@ -133,17 +133,17 @@ declare module "@package/net/minecraft/util/valueproviders" {
         get value(): number;
     }
     export class $FloatProvider implements $SampledFloat {
-        getMinValue(): number;
-        getMaxValue(): number;
-        getType(): $FloatProviderType<never>;
         /**
          * Creates a codec for a FloatProvider that only accepts numbers in the given range.
          */
         static codec(minInclusive: number, maxInclusive: number): $Codec<$FloatProvider>;
+        getType(): $FloatProviderType<never>;
+        getMinValue(): number;
+        getMaxValue(): number;
         static CODEC: $Codec<$FloatProvider>;
         constructor();
+        get type(): $FloatProviderType<never>;
         get minValue(): number;
         get maxValue(): number;
-        get type(): $FloatProviderType<never>;
     }
 }

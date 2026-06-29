@@ -26,22 +26,20 @@ declare module "@package/de/z0rdak/yawp/core/region" {
     export class $IMarkableRegion {
     }
     export interface $IMarkableRegion extends $IProtectedRegion {
-        getTpAnchors(): $RegionAnchors;
         contains(arg0: $BlockPos_): boolean;
         setPriority(arg0: number): void;
         getPriority(): number;
         rename(arg0: string): void;
-        setArea(arg0: $IMarkableArea): void;
-        getAreaType(): $AreaType;
         getArea(): $IMarkableArea;
-        get tpAnchors(): $RegionAnchors;
+        getAreaType(): $AreaType;
+        setArea(arg0: $IMarkableArea): void;
+        getTpAnchors(): $RegionAnchors;
         get areaType(): $AreaType;
+        get tpAnchors(): $RegionAnchors;
     }
     export class $IProtectedRegion {
     }
     export interface $IProtectedRegion {
-        clearChildren(): void;
-        setFlags(arg0: $RegionFlags): void;
         getName(): string;
         getParent(): $IProtectedRegion;
         isActive(): boolean;
@@ -49,32 +47,34 @@ declare module "@package/de/z0rdak/yawp/core/region" {
         getFlags(): $RegionFlags;
         getChildren(): $Map<string, $IProtectedRegion>;
         permits(arg0: $Player): boolean;
-        addChild(arg0: $IProtectedRegion): boolean;
-        getFlag(arg0: string): $IFlag;
-        removeChild(arg0: $IProtectedRegion): void;
         getGroup(arg0: string): $PlayerContainer;
-        removeFlag(arg0: string): void;
-        getGroups(): $Map<string, $PlayerContainer>;
+        setFlags(arg0: $RegionFlags): void;
         getParentName(): string;
+        removeChild(arg0: $IProtectedRegion): void;
+        getFlag(arg0: string): $IFlag;
+        addChild(arg0: $IProtectedRegion): boolean;
+        clearChildren(): void;
         isMuted(): boolean;
-        addPlayer(arg0: $Player, arg1: string): void;
-        addPlayer(arg0: $UUID_, arg1: string, arg2: string): void;
-        hasPlayer(arg0: $UUID_, arg1: string): boolean;
+        getGroups(): $Map<string, $PlayerContainer>;
         getDim(): $ResourceKey<$Level>;
-        removePlayer(arg0: $UUID_, arg1: string): void;
+        hasPlayer(arg0: $UUID_, arg1: string): boolean;
         hasChild(arg0: $IProtectedRegion): boolean;
-        resetGroups(): void;
-        getChildrenNames(): $Set<string>;
+        removePlayer(arg0: $UUID_, arg1: string): void;
+        addPlayer(arg0: $UUID_, arg1: string, arg2: string): void;
+        addPlayer(arg0: $Player, arg1: string): void;
+        removeFlag(arg0: string): void;
+        removeTeam(arg0: string, arg1: string): void;
+        setIsMuted(arg0: boolean): void;
+        setGroups(arg0: $Map_<string, $PlayerContainer>): void;
+        addTeam(arg0: string, arg1: string): void;
+        hasTeam(arg0: string, arg1: string): boolean;
+        isInGroup(arg0: $Player, arg1: string): boolean;
         getRegionType(): $RegionType;
+        getChildrenNames(): $Set<string>;
         containsFlag(arg0: $RegionFlag_): boolean;
         containsFlag(arg0: string): boolean;
         setIsActive(arg0: boolean): void;
-        addTeam(arg0: string, arg1: string): void;
-        setIsMuted(arg0: boolean): void;
-        setGroups(arg0: $Map_<string, $PlayerContainer>): void;
-        hasTeam(arg0: string, arg1: string): boolean;
-        removeTeam(arg0: string, arg1: string): void;
-        isInGroup(arg0: $Player, arg1: string): boolean;
+        resetGroups(): void;
         get name(): string;
         get parent(): $IProtectedRegion;
         get active(): boolean;
@@ -82,7 +82,7 @@ declare module "@package/de/z0rdak/yawp/core/region" {
         get parentName(): string;
         get muted(): boolean;
         get dim(): $ResourceKey<$Level>;
-        get childrenNames(): $Set<string>;
         get regionType(): $RegionType;
+        get childrenNames(): $Set<string>;
     }
 }

@@ -29,15 +29,15 @@ declare module "@package/com/simibubi/create/content/kinetics/gearbox" {
         constructor(arg0: $BlockEntityRendererProvider$Context);
     }
     export class $GearboxBlock extends $RotatedPillarKineticBlock implements $IBE<$GearboxBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$GearboxBlockEntity>;
         getBlockEntityClass(): $Class<$GearboxBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$GearboxBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$GearboxBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$GearboxBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($GearboxBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$GearboxBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $GearboxBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$GearboxBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($GearboxBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$GearboxBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -68,8 +68,8 @@ declare module "@package/com/simibubi/create/content/kinetics/gearbox" {
         hasCollision: boolean;
         static AXIS: $EnumProperty<$Direction$Axis>;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$GearboxBlockEntity>;
         get blockEntityClass(): $Class<$GearboxBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$GearboxBlockEntity>;
     }
     export class $VerticalGearboxItem extends $BlockItem {
         static BASE_ATTACK_DAMAGE_ID: $ResourceLocation;

@@ -21,6 +21,7 @@ import { $Cipher } from "@package/javax/crypto";
 import { $OutputStream } from "@package/java/io";
 import { $IntList } from "@package/it/unimi/dsi/fastutil/ints";
 import { $ChunkPos } from "@package/net/minecraft/world/level";
+import { $ReferenceCounted } from "@package/io/netty/util";
 import { $Marker } from "@package/org/slf4j";
 import { $Component_, $Component } from "@package/net/minecraft/network/chat";
 import { $ClientLoginPacketListener } from "@package/net/minecraft/network/protocol/login";
@@ -81,15 +82,15 @@ declare module "@package/net/minecraft/network" {
     }
     export class $DisconnectionDetails extends $Record {
         reason(): $Component;
-        report(): ($Path) | undefined;
         bugReportLink(): ($URI) | undefined;
+        report(): ($Path) | undefined;
         constructor(reason: $Component_);
         constructor(arg0: $Component_, arg1: ($Path_) | undefined, arg2: ($URI) | undefined);
     }
     /**
      * Values that may be interpreted as {@link $DisconnectionDetails}.
      */
-    export type $DisconnectionDetails_ = { report?: ($Path_) | undefined, bugReportLink?: ($URI) | undefined, reason?: $Component_,  } | [report?: ($Path_) | undefined, bugReportLink?: ($URI) | undefined, reason?: $Component_, ];
+    export type $DisconnectionDetails_ = { reason?: $Component_, report?: ($Path_) | undefined, bugReportLink?: ($URI) | undefined,  } | [reason?: $Component_, report?: ($Path_) | undefined, bugReportLink?: ($URI) | undefined, ];
     /**
      * Describes how packets are handled. There are various implementations of this class for each possible protocol (e.g. PLAY, CLIENTBOUND; PLAY, SERVERBOUND; etc.)
      */
@@ -97,14 +98,14 @@ declare module "@package/net/minecraft/network" {
     }
     export interface $PacketListener {
         protocol(): $ConnectionProtocol;
-        flow(): $PacketFlow;
-        shouldHandleMessage(packet: $Packet<never>): boolean;
-        createDisconnectionInfo(reason: $Component_, error: $Throwable): $DisconnectionDetails;
         fillCrashReport(crashReport: $CrashReport): void;
+        flow(): $PacketFlow;
+        createDisconnectionInfo(reason: $Component_, error: $Throwable): $DisconnectionDetails;
+        shouldHandleMessage(packet: $Packet<never>): boolean;
+        fillListenerSpecificCrashDetails(crashReport: $CrashReport, category: $CrashReportCategory): void;
         onDisconnect(details: $DisconnectionDetails_): void;
         onPacketError(packet: $Packet<any>, exception: $Exception): void;
         isAcceptingMessages(): boolean;
-        fillListenerSpecificCrashDetails(crashReport: $CrashReport, category: $CrashReportCategory): void;
         get acceptingMessages(): boolean;
     }
     export class $ProtocolInfo$Unbound<T extends $PacketListener, B extends $ByteBuf> {
@@ -131,15 +132,15 @@ declare module "@package/net/minecraft/network" {
         static values(): $ConnectionProtocol[];
         static valueOf(arg0: string): $ConnectionProtocol;
         id(): string;
-        isPlay(): boolean;
         isConfiguration(): boolean;
+        isPlay(): boolean;
         static PLAY: $ConnectionProtocol;
         static STATUS: $ConnectionProtocol;
         static CONFIGURATION: $ConnectionProtocol;
         static LOGIN: $ConnectionProtocol;
         static HANDSHAKING: $ConnectionProtocol;
-        get play(): boolean;
         get configuration(): boolean;
+        get play(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ConnectionProtocol}.
@@ -154,8 +155,8 @@ declare module "@package/net/minecraft/network" {
          * @deprecated
          */
         static decorator(registry: $RegistryAccess): $Function<$ByteBuf, $RegistryFriendlyByteBuf>;
-        getConnectionType(): $ConnectionType;
         registryAccess(): $RegistryAccess;
+        getConnectionType(): $ConnectionType;
         static MAX_COMPONENT_STRING_LENGTH: number;
         static MAX_STRING_LENGTH: number;
         static DEFAULT_NBT_QUOTA: number;
@@ -167,8 +168,8 @@ declare module "@package/net/minecraft/network" {
         get connectionType(): $ConnectionType;
     }
     export class $ProtocolSwapHandler {
-        static handleInboundTerminalPacket(context: $ChannelHandlerContext, packet: $Packet<never>): void;
         static handleOutboundTerminalPacket(context: $ChannelHandlerContext, packet: $Packet<never>): void;
+        static handleInboundTerminalPacket(context: $ChannelHandlerContext, packet: $Packet<never>): void;
     }
     export interface $ProtocolSwapHandler {
     }
@@ -187,94 +188,31 @@ declare module "@package/net/minecraft/network" {
         tick(): void;
     }
     export class $FriendlyByteBuf extends $ByteBuf implements $IFriendlyByteBufExtension {
-        static writeBlockPos(buffer: $ByteBuf, pos: $BlockPos_): void;
-        /**
-         * Writes a BlockPos encoded as a long to the buffer.
-         * 
-         * @see #readBlockPos
-         */
-        writeBlockPos(pos: $BlockPos_): $FriendlyByteBuf;
-        setMedium(index: number, value: number): $FriendlyByteBuf;
-        static limitValue<T>(_function: $IntFunction_<T>, limit: number): $IntFunction<T>;
-        setZero(index: number, value: number): $FriendlyByteBuf;
-        setIntLE(index: number, value: number): $FriendlyByteBuf;
-        writeIntLE(newCapacity: number): $FriendlyByteBuf;
-        setBytes(index: number, destination: number[]): $FriendlyByteBuf;
-        setBytes(index: number, destination: $ByteBuf, destinationIndex: number, length: number): $FriendlyByteBuf;
-        setBytes(index: number, destination: number[], destinationIndex: number, length: number): $FriendlyByteBuf;
-        setBytes(index: number, destination: $ByteBuf, length: number): $FriendlyByteBuf;
-        /**
-         * Writes a String with a maximum length.
-         * 
-         * @see #readUtf
-         */
-        writeUtf(string: string, maxLength: number): $FriendlyByteBuf;
-        /**
-         * Writes a String with a maximum length of `Short.MAX_VALUE`.
-         * 
-         * @see #readUtf
-         */
-        writeUtf(string: string): $FriendlyByteBuf;
-        writeVec3(vec3: $Vec3_): void;
-        /**
-         * Reads a compressed int from the buffer. To do so it maximally reads 5 byte-sized chunks whose most significant bit dictates whether another byte should be read.
-         * 
-         * @see #writeVarInt
-         */
-        readVarInt(): number;
-        readVec3(): $Vec3;
-        readById<T>(idLookuo: $IntFunction_<T>): T;
-        /**
-         * Writes an enum of the given type T using the ordinal encoded as a VarInt to the buffer.
-         * 
-         * @see #readEnum
-         */
-        writeEnum(value: $Enum<never>): $FriendlyByteBuf;
-        /**
-         * Read a BitSet as a long[].
-         * 
-         * @see #writeBitSet
-         */
-        readBitSet(): $BitSet;
-        writeById<T>(idGetter: $ToIntFunction_<T>, value: T): $FriendlyByteBuf;
-        /**
-         * Read a timestamp as milliseconds since the unix epoch.
-         * 
-         * @see #writeDate
-         */
-        readDate(): $Date;
+        writeMap<K, V>(map: $Map_<K, V>, keyWriter: $StreamEncoder_<$FriendlyByteBuf, K>, valueWriter: $StreamEncoder_<$FriendlyByteBuf, V>): void;
         clear(): $FriendlyByteBuf;
-        getBytes(index: number, destination: $ByteBuf, length: number): $FriendlyByteBuf;
-        getBytes(index: number, destination: $ByteBuf, destinationIndex: number, length: number): $FriendlyByteBuf;
+        getBytes(index: number, destination: $ByteBuf): $FriendlyByteBuf;
         getBytes(index: number, out: $OutputStream, length: number): $FriendlyByteBuf;
-        getBytes(index: number, destination: $ByteBuffer): $FriendlyByteBuf;
         getBytes(index: number, destination: number[], destinationIndex: number, length: number): $FriendlyByteBuf;
         getBytes(index: number, destination: number[]): $FriendlyByteBuf;
+        getBytes(index: number, destination: $ByteBuf, destinationIndex: number, length: number): $FriendlyByteBuf;
+        getBytes(index: number, destination: $ByteBuf, length: number): $FriendlyByteBuf;
+        getBytes(index: number, destination: $ByteBuffer): $FriendlyByteBuf;
         writeInt(newCapacity: number): $FriendlyByteBuf;
+        setBoolean(index: number, value: boolean): $FriendlyByteBuf;
         setByte(index: number, value: number): $FriendlyByteBuf;
-        setFloat(index: number, value: number): $FriendlyByteBuf;
+        setShort(index: number, value: number): $FriendlyByteBuf;
         setDouble(index: number, value: number): $FriendlyByteBuf;
         capacity(newCapacity: number): $FriendlyByteBuf;
-        readBytes(destination: $ByteBuf, destinationIndex: number, length: number): $FriendlyByteBuf;
-        readBytes(destination: $ByteBuf, length: number): $FriendlyByteBuf;
         readBytes(destination: $ByteBuf): $FriendlyByteBuf;
-        writeBytes(destination: number[]): $FriendlyByteBuf;
-        writeBytes(destination: $ByteBuf, destinationIndex: number, length: number): $FriendlyByteBuf;
-        writeBytes(destination: $ByteBuf, length: number): $FriendlyByteBuf;
-        writeBytes(destination: $ByteBuf): $FriendlyByteBuf;
-        skipBytes(newCapacity: number): $FriendlyByteBuf;
-        writeBoolean(value: boolean): $FriendlyByteBuf;
+        readBytes(destination: $ByteBuf, length: number): $FriendlyByteBuf;
+        readBytes(out: $OutputStream, length: number): $FriendlyByteBuf;
+        writeChar(newCapacity: number): $FriendlyByteBuf;
         writeByte(newCapacity: number): $FriendlyByteBuf;
         writeShort(newCapacity: number): $FriendlyByteBuf;
+        writeLong(value: number): $FriendlyByteBuf;
+        writeDouble(value: number): $FriendlyByteBuf;
         setIndex(index: number, value: number): $FriendlyByteBuf;
         getSource(): $ByteBuf;
-        /**
-         * Reads a String with a maximum length of `Short.MAX_VALUE`.
-         * 
-         * @see #readUtf(int)
-         * @see #writeUtf
-         */
-        readUtf(): string;
         /**
          * Reads a string with a maximum length from this buffer.
          * 
@@ -282,159 +220,62 @@ declare module "@package/net/minecraft/network" {
          */
         readUtf(maxLength: number): string;
         /**
-         * Read a ResourceLocation using its String representation.
+         * Reads a String with a maximum length of `Short.MAX_VALUE`.
          * 
-         * @see #writeResourceLocation
+         * @see #readUtf(int)
+         * @see #writeUtf
          */
-        readResourceLocation(): $ResourceLocation;
+        readUtf(): string;
+        readList<T>(elementReader: $StreamDecoder_<$FriendlyByteBuf, T>): $List<T>;
+        readMap<K, V, M extends $Map<K, V>>(mapFactory: $IntFunction_<M>, keyReader: $StreamDecoder_<$FriendlyByteBuf, K>, valueReader: $StreamDecoder_<$FriendlyByteBuf, V>): M;
+        readMap<K, V>(keyReader: $StreamDecoder_<$FriendlyByteBuf, K>, valueReader: $StreamDecoder_<$FriendlyByteBuf, V>): $Map<K, V>;
         /**
-         * Write a ResourceLocation using its String representation.
+         * Reads a compressed int from the buffer. To do so it maximally reads 5 byte-sized chunks whose most significant bit dictates whether another byte should be read.
          * 
-         * @see #readResourceLocation
+         * @see #writeVarInt
          */
-        writeResourceLocation(resourceLocation: $ResourceLocation_): $FriendlyByteBuf;
+        readVarInt(): number;
+        retain(): $FriendlyByteBuf;
+        setIntLE(index: number, value: number): $FriendlyByteBuf;
+        writeIntLE(newCapacity: number): $FriendlyByteBuf;
+        setShortLE(index: number, value: number): $FriendlyByteBuf;
+        setLongLE(index: number, value: number): $FriendlyByteBuf;
         /**
-         * @deprecated
-         */
-        readWithCodecTrusted<T>(ops: $DynamicOps<$Tag_>, codec: $Codec<T>): T;
-        /**
-         * Write a BlockHitResult.
+         * Writes a String with a maximum length of `Short.MAX_VALUE`.
          * 
-         * @see #readBlockHitResult
+         * @see #readUtf
          */
-        writeBlockHitResult(result: $BlockHitResult): void;
-        resetReaderIndex(): $FriendlyByteBuf;
-        resetWriterIndex(): $FriendlyByteBuf;
-        writerIndex(newCapacity: number): $FriendlyByteBuf;
-        writeMedium(newCapacity: number): $FriendlyByteBuf;
-        writeLongLE(value: number): $FriendlyByteBuf;
-        readerIndex(newCapacity: number): $FriendlyByteBuf;
-        setMediumLE(index: number, value: number): $FriendlyByteBuf;
-        readFixedBitSet(size: number): $BitSet;
+        writeUtf(string: string): $FriendlyByteBuf;
         /**
-         * Reads a SectionPos encoded as a long from the buffer.
+         * Writes a String with a maximum length.
          * 
-         * @see #writeSectionPos
+         * @see #readUtf
          */
-        readSectionPos(): $SectionPos;
+        writeUtf(string: string, maxLength: number): $FriendlyByteBuf;
+        setBytes(index: number, destination: number[]): $FriendlyByteBuf;
+        static limitValue<T>(_function: $IntFunction_<T>, limit: number): $IntFunction<T>;
+        writeVec3(vec3: $Vec3_): void;
+        readById<T>(idLookuo: $IntFunction_<T>): T;
+        writeById<T>(idGetter: $ToIntFunction_<T>, value: T): $FriendlyByteBuf;
+        readVec3(): $Vec3;
         /**
-         * Writes a SectionPos encoded as a long to the buffer.
+         * Writes an enum of the given type T using the ordinal encoded as a VarInt to the buffer.
          * 
-         * @see #readSectionPos
+         * @see #readEnum
          */
-        writeSectionPos(sectionPos: $SectionPos): $FriendlyByteBuf;
-        readEnumSet<E extends $Enum<E>>(enumClass: $Class<E>): $EnumSet<E>;
+        writeEnum(value: $Enum<never>): $FriendlyByteBuf;
         /**
-         * Writes an array of longs to the buffer, prefixed by the length of the array (as a VarInt).
+         * Read a timestamp as milliseconds since the unix epoch.
          * 
-         * @see #readLongArray
+         * @see #writeDate
          */
-        writeLongArray(array: number[]): $FriendlyByteBuf;
-        writeGlobalPos(pos: $GlobalPos_): void;
+        readDate(): $Date;
         /**
-         * @deprecated
-         */
-        readWithCodec<T>(ops: $DynamicOps<$Tag_>, codec: $Codec<T>, nbtAccounter: $NbtAccounter): T;
-        writePublicKey(publicKey: $PublicKey): $FriendlyByteBuf;
-        /**
-         * Read a BlockHitResult.
+         * Read a BitSet as a long[].
          * 
-         * @see #writeBlockHitResult
+         * @see #writeBitSet
          */
-        readBlockHitResult(): $BlockHitResult;
-        /**
-         * Write a BitSet as a long[].
-         * 
-         * @see #readBitSet
-         */
-        writeBitSet(bitSet: $BitSet): void;
-        /**
-         * Writes an array of VarInts to the buffer, prefixed by the length of the array (as a VarInt).
-         * 
-         * @see #readVarIntArray
-         */
-        writeVarIntArray(array: number[]): $FriendlyByteBuf;
-        readCollection<T, C extends $Collection<T>>(collectionFactory: $IntFunction_<C>, elementReader: $StreamDecoder_<$FriendlyByteBuf, T>): C;
-        /**
-         * Read an IntList of VarInts from this buffer.
-         * 
-         * @see #writeIntIdList
-         */
-        readIntIdList(): $IntList;
-        readJsonWithCodec<T>(codec: $Codec<T>): T;
-        /**
-         * Write an IntList to this buffer. Every element is encoded as a VarInt.
-         * 
-         * @see #readIntIdList
-         */
-        writeIntIdList(itIdList: $IntList): void;
-        /**
-         * @deprecated
-         */
-        writeWithCodec<T>(ops: $DynamicOps<$Tag_>, codec: $Codec<T>, value: T): $FriendlyByteBuf;
-        writeJsonWithCodec<T>(codec: $Codec<T>, value: T): void;
-        writeCollection<T>(collection: $Collection_<T>, elementWriter: $StreamEncoder_<$FriendlyByteBuf, T>): void;
-        writeVarInt(newCapacity: number): $FriendlyByteBuf;
-        writeFixedBitSet(bitSet: $BitSet, size: number): void;
-        /**
-         * Read a VarInt N from this buffer, then reads N values by calling `reader`.
-         */
-        readWithCount(reader: $Consumer_<$FriendlyByteBuf>): void;
-        /**
-         * Reads a length-prefixed array of longs from the buffer.
-         */
-        readLongArray(): number[];
-        /**
-         * Reads a length-prefixed array of longs from the buffer.
-         * Will try to use the given long[] if possible. Note that if an array with the correct size is given, maxLength is ignored.
-         */
-        readLongArray(array: number[] | null): number[];
-        /**
-         * Reads a length-prefixed array of longs with a maximum length from the buffer.
-         * Will try to use the given long[] if possible. Note that if an array with the correct size is given, maxLength is ignored.
-         */
-        readLongArray(array: number[] | null, maxLength: number): number[];
-        /**
-         * Writes a ChunkPos encoded as a long to the buffer.
-         * 
-         * @see #readChunkPos
-         */
-        writeChunkPos(chunkPos: $ChunkPos): $FriendlyByteBuf;
-        /**
-         * Reads an array of VarInts from this buffer.
-         * 
-         * @see #writeVarIntArray
-         */
-        readVarIntArray(): number[];
-        /**
-         * Reads an array of VarInts with a maximum length from this buffer.
-         * 
-         * @see #writeVarIntArray
-         */
-        readVarIntArray(maxLength: number): number[];
-        readGlobalPos(): $GlobalPos;
-        readResourceKey<T>(registryKey: $ResourceKey_<$Registry<T>>): $ResourceKey<T>;
-        readOptional<T>(reader: $StreamDecoder_<$FriendlyByteBuf, T>): (T) | undefined;
-        /**
-         * Reads a ChunkPos encoded as a long from the buffer.
-         * 
-         * @see #writeChunkPos
-         */
-        readChunkPos(): $ChunkPos;
-        /**
-         * Reads a compressed long from the buffer. To do so it maximally reads 10 byte-sized chunks whose most significant bit dictates whether another byte should be read.
-         * 
-         * @see #writeVarLong
-         */
-        readVarLong(): number;
-        writeVarLong(value: number): $FriendlyByteBuf;
-        writeResourceKey(resourceKey: $ResourceKey_<never>): void;
-        readRegistryKey<T>(): $ResourceKey<$Registry<T>>;
-        writeEnumSet<E extends $Enum<E>>(enumSet: $EnumSet<E>, enumClass: $Class<E>): void;
-        readInstant(): $Instant;
-        writeOptional<T>(optional: (T) | undefined, writer: $StreamEncoder_<$FriendlyByteBuf, T>): void;
-        writeInstant(instant: $Instant): void;
-        readPublicKey(): $PublicKey;
+        readBitSet(): $BitSet;
         /**
          * Reads an enum of the given type T using the ordinal encoded as a VarInt from the buffer.
          * 
@@ -447,30 +288,13 @@ declare module "@package/net/minecraft/network" {
          * @see #readDate
          */
         writeDate(time: $Date): $FriendlyByteBuf;
-        static readNbt(buffer: $ByteBuf, nbtAccounter: $NbtAccounter): $Tag;
-        static readNbt(buffer: $ByteBuf): $CompoundTag;
+        static writeBlockPos(buffer: $ByteBuf, pos: $BlockPos_): void;
         /**
-         * Reads a NBT CompoundTag from this buffer.
-         * `null` is a valid value and may be returned.
+         * Writes a BlockPos encoded as a long to the buffer.
          * 
-         * This method will read a maximum of 0x200000 bytes.
-         * 
-         * @see #writeNbt
-         * @see #readAnySizeNbt
-         * @see #readNbt(NbtAccounter)
+         * @see #readBlockPos
          */
-        readNbt(): $CompoundTag;
-        readNbt(nbtAccounter: $NbtAccounter): $Tag;
-        static writeNbt(buffer: $ByteBuf, nbt: $Tag_ | null): void;
-        writeNbt(tag: $Tag_ | null): $FriendlyByteBuf;
-        writeMap<K, V>(map: $Map_<K, V>, keyWriter: $StreamEncoder_<$FriendlyByteBuf, K>, valueWriter: $StreamEncoder_<$FriendlyByteBuf, V>): void;
-        static readBlockPos(buffer: $ByteBuf): $BlockPos;
-        /**
-         * Reads a BlockPos encoded as a long from the buffer.
-         * 
-         * @see #writeBlockPos
-         */
-        readBlockPos(): $BlockPos;
+        writeBlockPos(pos: $BlockPos_): $FriendlyByteBuf;
         static readUUID(buffer: $ByteBuf): $UUID;
         /**
          * Reads a UUID encoded as two longs from this buffer.
@@ -485,49 +309,222 @@ declare module "@package/net/minecraft/network" {
          * @see #readUUID
          */
         writeUUID(uuid: $UUID_): $FriendlyByteBuf;
-        readMap<K, V>(keyReader: $StreamDecoder_<$FriendlyByteBuf, K>, valueReader: $StreamDecoder_<$FriendlyByteBuf, V>): $Map<K, V>;
-        readMap<K, V, M extends $Map<K, V>>(mapFactory: $IntFunction_<M>, keyReader: $StreamDecoder_<$FriendlyByteBuf, K>, valueReader: $StreamDecoder_<$FriendlyByteBuf, V>): M;
-        readList<T>(elementReader: $StreamDecoder_<$FriendlyByteBuf, T>): $List<T>;
-        static readByteArray(buffer: $ByteBuf): number[];
-        readByteArray(): number[];
-        static readByteArray(buffer: $ByteBuf, maxSize: number): number[];
-        readByteArray(maxLength: number): number[];
-        static writeByteArray(buffer: $ByteBuf, array: number[]): void;
-        writeByteArray(destination: number[]): $FriendlyByteBuf;
-        readNullable<T>(reader: $StreamDecoder_<$FriendlyByteBuf, T>): T;
+        touch(): $FriendlyByteBuf;
+        writeQuaternion(quaternion: $Quaternionf): void;
+        static writeQuaternion(buffer: $ByteBuf, quaternion: $Quaternionf): void;
+        writeNullable<T>(value: T | null, writer: $StreamEncoder_<$FriendlyByteBuf, T>): void;
+        static writeNullable<T, B extends $ByteBuf>(buffer: B, value: T | null, writer: $StreamEncoder_<B, T>): void;
         static readNullable<T, B extends $ByteBuf>(buffer: B, reader: $StreamDecoder_<B, T>): T;
+        readNullable<T>(reader: $StreamDecoder_<$FriendlyByteBuf, T>): T;
+        static readByteArray(buffer: $ByteBuf): number[];
+        static readByteArray(buffer: $ByteBuf, maxSize: number): number[];
+        readByteArray(): number[];
+        readByteArray(maxLength: number): number[];
+        writeByteArray(destination: number[]): $FriendlyByteBuf;
+        static writeByteArray(buffer: $ByteBuf, array: number[]): void;
         static writeVector3f(buffer: $ByteBuf, vector3f: $Vector3f): void;
         writeVector3f(vector3f: $Vector3f): void;
         readQuaternion(): $Quaternionf;
         static readQuaternion(buffer: $ByteBuf): $Quaternionf;
         readVector3f(): $Vector3f;
         static readVector3f(buffer: $ByteBuf): $Vector3f;
-        static writeQuaternion(buffer: $ByteBuf, quaternion: $Quaternionf): void;
-        writeQuaternion(quaternion: $Quaternionf): void;
-        static writeNullable<T, B extends $ByteBuf>(buffer: B, value: T | null, writer: $StreamEncoder_<B, T>): void;
-        writeNullable<T>(value: T | null, writer: $StreamEncoder_<$FriendlyByteBuf, T>): void;
-        readArray<T>(arg0: $IntFunction_<T[]>, arg1: $StreamDecoder_<$FriendlyByteBuf, T>): T[];
+        discardSomeReadBytes(): $FriendlyByteBuf;
         /**
-         * Writes a byte to the buffer
+         * @deprecated
          */
-        writeByte(value: number): $FriendlyByteBuf;
+        readWithCodecTrusted<T>(ops: $DynamicOps<$Tag_>, codec: $Codec<T>): T;
         /**
-         * Writes the entries in the given set to the buffer, by first writing the count and then writing each entry.
+         * Write a BlockHitResult.
+         * 
+         * @see #readBlockHitResult
          */
-        writeObjectCollection<T>(set: $Collection_<T>, writer: $BiConsumer_<T, $FriendlyByteBuf>): void;
+        writeBlockHitResult(result: $BlockHitResult): void;
+        /**
+         * Read a ResourceLocation using its String representation.
+         * 
+         * @see #writeResourceLocation
+         */
+        readResourceLocation(): $ResourceLocation;
+        /**
+         * Write a ResourceLocation using its String representation.
+         * 
+         * @see #readResourceLocation
+         */
+        writeResourceLocation(resourceLocation: $ResourceLocation_): $FriendlyByteBuf;
+        readerIndex(newCapacity: number): $FriendlyByteBuf;
+        /**
+         * @deprecated
+         */
+        writeWithCodec<T>(ops: $DynamicOps<$Tag_>, codec: $Codec<T>, value: T): $FriendlyByteBuf;
+        writeLongLE(value: number): $FriendlyByteBuf;
+        resetWriterIndex(): $FriendlyByteBuf;
+        /**
+         * Read a VarInt N from this buffer, then reads N values by calling `reader`.
+         */
+        readWithCount(reader: $Consumer_<$FriendlyByteBuf>): void;
+        /**
+         * @deprecated
+         */
+        readWithCodec<T>(ops: $DynamicOps<$Tag_>, codec: $Codec<T>, nbtAccounter: $NbtAccounter): T;
+        writeEnumSet<E extends $Enum<E>>(enumSet: $EnumSet<E>, enumClass: $Class<E>): void;
+        readEnumSet<E extends $Enum<E>>(enumClass: $Class<E>): $EnumSet<E>;
+        ensureWritable(newCapacity: number): $FriendlyByteBuf;
+        readJsonWithCodec<T>(codec: $Codec<T>): T;
+        writeJsonWithCodec<T>(codec: $Codec<T>, value: T): void;
+        readCollection<T, C extends $Collection<T>>(collectionFactory: $IntFunction_<C>, elementReader: $StreamDecoder_<$FriendlyByteBuf, T>): C;
+        /**
+         * Write an IntList to this buffer. Every element is encoded as a VarInt.
+         * 
+         * @see #readIntIdList
+         */
+        writeIntIdList(itIdList: $IntList): void;
+        /**
+         * Read an IntList of VarInts from this buffer.
+         * 
+         * @see #writeIntIdList
+         */
+        readIntIdList(): $IntList;
+        writeCollection<T>(collection: $Collection_<T>, elementWriter: $StreamEncoder_<$FriendlyByteBuf, T>): void;
+        writeVarInt(newCapacity: number): $FriendlyByteBuf;
+        writeFixedBitSet(bitSet: $BitSet, size: number): void;
+        writeMediumLE(newCapacity: number): $FriendlyByteBuf;
+        /**
+         * Reads a length-prefixed array of longs with a maximum length from the buffer.
+         * Will try to use the given long[] if possible. Note that if an array with the correct size is given, maxLength is ignored.
+         */
+        readLongArray(array: number[] | null, maxLength: number): number[];
+        /**
+         * Reads a length-prefixed array of longs from the buffer.
+         * Will try to use the given long[] if possible. Note that if an array with the correct size is given, maxLength is ignored.
+         */
+        readLongArray(array: number[] | null): number[];
+        /**
+         * Reads a length-prefixed array of longs from the buffer.
+         */
+        readLongArray(): number[];
+        /**
+         * Writes a SectionPos encoded as a long to the buffer.
+         * 
+         * @see #readSectionPos
+         */
+        writeSectionPos(sectionPos: $SectionPos): $FriendlyByteBuf;
+        /**
+         * Reads an array of VarInts with a maximum length from this buffer.
+         * 
+         * @see #writeVarIntArray
+         */
+        readVarIntArray(maxLength: number): number[];
+        /**
+         * Reads an array of VarInts from this buffer.
+         * 
+         * @see #writeVarIntArray
+         */
+        readVarIntArray(): number[];
+        readOptional<T>(reader: $StreamDecoder_<$FriendlyByteBuf, T>): (T) | undefined;
+        /**
+         * Writes an array of longs to the buffer, prefixed by the length of the array (as a VarInt).
+         * 
+         * @see #readLongArray
+         */
+        writeLongArray(array: number[]): $FriendlyByteBuf;
+        readGlobalPos(): $GlobalPos;
+        writeGlobalPos(pos: $GlobalPos_): void;
+        /**
+         * Reads a compressed long from the buffer. To do so it maximally reads 10 byte-sized chunks whose most significant bit dictates whether another byte should be read.
+         * 
+         * @see #writeVarLong
+         */
+        readVarLong(): number;
+        writeInstant(instant: $Instant): void;
+        writeResourceKey(resourceKey: $ResourceKey_<never>): void;
+        /**
+         * Writes a ChunkPos encoded as a long to the buffer.
+         * 
+         * @see #readChunkPos
+         */
+        writeChunkPos(chunkPos: $ChunkPos): $FriendlyByteBuf;
+        /**
+         * Reads a ChunkPos encoded as a long from the buffer.
+         * 
+         * @see #writeChunkPos
+         */
+        readChunkPos(): $ChunkPos;
+        writeOptional<T>(optional: (T) | undefined, writer: $StreamEncoder_<$FriendlyByteBuf, T>): void;
+        /**
+         * Write a BitSet as a long[].
+         * 
+         * @see #readBitSet
+         */
+        writeBitSet(bitSet: $BitSet): void;
+        readPublicKey(): $PublicKey;
+        /**
+         * Read a BlockHitResult.
+         * 
+         * @see #writeBlockHitResult
+         */
+        readBlockHitResult(): $BlockHitResult;
+        readRegistryKey<T>(): $ResourceKey<$Registry<T>>;
+        writePublicKey(publicKey: $PublicKey): $FriendlyByteBuf;
+        readResourceKey<T>(registryKey: $ResourceKey_<$Registry<T>>): $ResourceKey<T>;
+        readFixedBitSet(size: number): $BitSet;
+        /**
+         * Reads a SectionPos encoded as a long from the buffer.
+         * 
+         * @see #writeSectionPos
+         */
+        readSectionPos(): $SectionPos;
+        /**
+         * Writes an array of VarInts to the buffer, prefixed by the length of the array (as a VarInt).
+         * 
+         * @see #readVarIntArray
+         */
+        writeVarIntArray(array: number[]): $FriendlyByteBuf;
+        writeVarLong(value: number): $FriendlyByteBuf;
+        readInstant(): $Instant;
+        static writeNbt(buffer: $ByteBuf, nbt: $Tag_ | null): void;
+        writeNbt(tag: $Tag_ | null): $FriendlyByteBuf;
+        static readNbt(buffer: $ByteBuf, nbtAccounter: $NbtAccounter): $Tag;
+        static readNbt(buffer: $ByteBuf): $CompoundTag;
+        readNbt(nbtAccounter: $NbtAccounter): $Tag;
+        /**
+         * Reads a NBT CompoundTag from this buffer.
+         * `null` is a valid value and may be returned.
+         * 
+         * This method will read a maximum of 0x200000 bytes.
+         * 
+         * @see #writeNbt
+         * @see #readAnySizeNbt
+         * @see #readNbt(NbtAccounter)
+         */
+        readNbt(): $CompoundTag;
+        /**
+         * Reads a BlockPos encoded as a long from the buffer.
+         * 
+         * @see #writeBlockPos
+         */
+        readBlockPos(): $BlockPos;
+        static readBlockPos(buffer: $ByteBuf): $BlockPos;
         /**
          * Variant of `FriendlyByteBuf#writeMap(Map, StreamEncoder, StreamEncoder)` that allows writing values
          * that depend on the key.
          */
         writeMap<K, V>(map: $Map_<K, V>, keyWriter: $StreamEncoder_<$FriendlyByteBuf, K>, valueWriter: $TriConsumer_<$FriendlyByteBuf, K, V>): void;
+        readArray<T>(arg0: $IntFunction_<T[]>, arg1: $StreamDecoder_<$FriendlyByteBuf, T>): T[];
         writeArray<T>(arg0: T[], arg1: $StreamEncoder_<$FriendlyByteBuf, T>): $FriendlyByteBuf;
+        /**
+         * Writes a byte to the buffer
+         */
+        writeByte(value: number): $FriendlyByteBuf;
         /**
          * Variant of `FriendlyByteBuf#readMap(StreamDecoder, StreamDecoder)` that allows reading values
          * that depend on the key.
          */
         readMap<K, V>(keyReader: $StreamDecoder_<$FriendlyByteBuf, K>, valueReader: $BiFunction_<$FriendlyByteBuf, K, V>): $Map<K, V>;
-        touch(): $ByteBuf;
-        touch(arg0: $Object): $ByteBuf;
+        /**
+         * Writes the entries in the given set to the buffer, by first writing the count and then writing each entry.
+         */
+        writeObjectCollection<T>(set: $Collection_<T>, writer: $BiConsumer_<T, $FriendlyByteBuf>): void;
+        touch(arg0: $Object): $ReferenceCounted;
         static MAX_COMPONENT_STRING_LENGTH: number;
         static MAX_STRING_LENGTH: number;
         static DEFAULT_NBT_QUOTA: number;
@@ -583,8 +580,8 @@ declare module "@package/net/minecraft/network" {
         static exceptionallySend(exceptionalPacketSupplier: $Supplier_<$Packet<never>>): $PacketSendListener;
     }
     export interface $PacketSendListener {
-        onFailure(): $Packet<never>;
         onSuccess(): void;
+        onFailure(): $Packet<never>;
     }
     /**
      * Handles compression of network traffic.
@@ -592,9 +589,9 @@ declare module "@package/net/minecraft/network" {
      * @see Connection#setupCompression
      */
     export class $CompressionEncoder extends $MessageToByteEncoder<$ByteBuf> {
+        getThreshold(): number;
         encode(context: $ChannelHandlerContext, encodingByteBuf: $ByteBuf, byteBuf: $ByteBuf): void;
         setThreshold(threshold: number): void;
-        getThreshold(): number;
         constructor(threshold: number);
     }
     export class $PacketBundlePacker extends $MessageToMessageDecoder<$Packet<never>> {
@@ -634,8 +631,8 @@ declare module "@package/net/minecraft/network" {
         constructor();
     }
     export class $CipherBase {
-        decipher(ctx: $ChannelHandlerContext, buffer: $ByteBuf): $ByteBuf;
         encipher(input: $ByteBuf, out: $ByteBuf): void;
+        decipher(ctx: $ChannelHandlerContext, buffer: $ByteBuf): $ByteBuf;
         constructor(cipher: $Cipher);
     }
     /**
@@ -676,11 +673,11 @@ declare module "@package/net/minecraft/network" {
         constructor(bundlerInfo: $BundlerInfo);
     }
     export class $UnconfiguredPipelineHandler {
-        static setupOutboundProtocol<T extends $PacketListener>(protocolInfo: $ProtocolInfo<T>): $UnconfiguredPipelineHandler$OutboundConfigurationTask;
         static setupInboundProtocol<T extends $PacketListener>(protocolInfo: $ProtocolInfo<T>): $UnconfiguredPipelineHandler$InboundConfigurationTask;
+        static setupOutboundProtocol<T extends $PacketListener>(protocolInfo: $ProtocolInfo<T>): $UnconfiguredPipelineHandler$OutboundConfigurationTask;
         constructor();
-        static set upOutboundProtocol(value: $ProtocolInfo<T>);
         static set upInboundProtocol(value: $ProtocolInfo<T>);
+        static set upOutboundProtocol(value: $ProtocolInfo<T>);
     }
     export class $ServerboundPacketListener {
     }
@@ -691,32 +688,6 @@ declare module "@package/net/minecraft/network" {
         constructor();
     }
     export class $Connection extends $SimpleChannelInboundHandler<$Packet<never>> implements $ConnectionExtension, $NetworkManagerAccessor {
-        /**
-         * Prepares a clientside Connection for a local in-memory connection ("single player").
-         * Establishes a connection to the socket supplied and configures the channel pipeline (only the packet handler is necessary,
-         * since this is for an in-memory connection). Returns the newly created instance.
-         */
-        static connectToLocalServer(address: $SocketAddress): $Connection;
-        disconnect(disconnectionDetails: $DisconnectionDetails_): void;
-        /**
-         * Closes the channel with a given reason. The reason is stored for later and will be used for informational purposes (info log on server,
-         * disconnection screen on the client). This method is also called on the client when the server requests disconnection via
-         * `ClientboundDisconnectPacket`.
-         * 
-         * Closing the channel this way does not send any disconnection packets, it simply terminates the underlying netty channel.
-         */
-        disconnect(message: $Component_): void;
-        configurePacketHandler(pipeline: $ChannelPipeline): void;
-        getAverageReceivedPackets(): number;
-        sable$getUDPChannel(): $Channel;
-        sable$setUDPChannel(arg0: $Channel): void;
-        static configureInMemoryPipeline(pipeline: $ChannelPipeline, flow: $PacketFlow_): void;
-        static configureSerialization(pipeline: $ChannelPipeline, flow: $PacketFlow_, memoryOnly: boolean, bandwithDebugMonitor: $BandwidthDebugMonitor | null): void;
-        getAverageSentPackets(): number;
-        getDisconnectionDetails(): $DisconnectionDetails;
-        initiateServerboundPlayConnection(hostName: string, port: number, packetListener: $ClientLoginPacketListener): void;
-        initiateServerboundPlayConnection<S extends $ServerboundPacketListener, C extends $ClientboundPacketListener>(hostName: string, port: number, serverboundProtocol: $ProtocolInfo<S>, clientbountProtocol: $ProtocolInfo<C>, packetListener: C, isTransfer: boolean): void;
-        static connectToServer(address: $InetSocketAddress, useEpollIfAvailable: boolean, sampleLogger: $LocalSampleLogger | null): $Connection;
         /**
          * Returns `true` if this `Connection` has an active channel, `false` otherwise.
          */
@@ -735,27 +706,37 @@ declare module "@package/net/minecraft/network" {
          * Returns the socket address of the remote side. Server-only.
          */
         getRemoteAddress(): $SocketAddress;
-        send(packet: $Packet<never>, sendListener: $PacketSendListener | null, flush: boolean): void;
-        send(packet: $Packet<never>): void;
-        send(packet: $Packet<never>, sendListener: $PacketSendListener | null): void;
         /**
-         * Will iterate through the outboundPacketQueue and dispatch all Packets
+         * Prepares a clientside Connection for a local in-memory connection ("single player").
+         * Establishes a connection to the socket supplied and configures the channel pipeline (only the packet handler is necessary,
+         * since this is for an in-memory connection). Returns the newly created instance.
          */
-        handleDisconnection(): void;
+        static connectToLocalServer(address: $SocketAddress): $Connection;
+        /**
+         * Closes the channel with a given reason. The reason is stored for later and will be used for informational purposes (info log on server,
+         * disconnection screen on the client). This method is also called on the client when the server requests disconnection via
+         * `ClientboundDisconnectPacket`.
+         * 
+         * Closing the channel this way does not send any disconnection packets, it simply terminates the underlying netty channel.
+         */
+        disconnect(message: $Component_): void;
+        disconnect(disconnectionDetails: $DisconnectionDetails_): void;
         /**
          * The receiving packet direction (i.e. SERVERBOUND on the server and CLIENTBOUND on the client).
          */
         getDirection(): $PacketFlow;
-        getInboundProtocol(): $ProtocolInfo<never>;
+        initiateServerboundPlayConnection<S extends $ServerboundPacketListener, C extends $ClientboundPacketListener>(hostName: string, port: number, serverboundProtocol: $ProtocolInfo<S>, clientbountProtocol: $ProtocolInfo<C>, packetListener: C, isTransfer: boolean): void;
+        initiateServerboundPlayConnection(hostName: string, port: number, packetListener: $ClientLoginPacketListener): void;
+        send(packet: $Packet<never>, sendListener: $PacketSendListener | null): void;
+        send(packet: $Packet<never>, sendListener: $PacketSendListener | null, flush: boolean): void;
+        send(packet: $Packet<never>): void;
+        handler$bfo000$chat_heads$chatheads$resetServerKnowledge(ci: $CallbackInfo): void;
         /**
-         * Enables encryption for this connection using the given decrypting and encrypting ciphers.
-         * This adds new handlers to this connection's pipeline which handle the decrypting and encrypting.
-         * This happens as part of the normal network handshake.
-         * 
-         * @see net.minecraft.network.protocol.login.ClientboundHelloPacket
-         * @see net.minecraft.network.protocol.login.ServerboundKeyPacket
+         * Will iterate through the outboundPacketQueue and dispatch all Packets
          */
-        setEncryptionKey(decryptingCipher: $Cipher, encryptingCipher: $Cipher): void;
+        handleDisconnection(): void;
+        setupInboundProtocol<T extends $PacketListener>(protocolInfo: $ProtocolInfo<T>, packetInfo: T): void;
+        setupOutboundProtocol(protocolInfo: $ProtocolInfo<never>): void;
         /**
          * Returns `true` if this `Connection` has an active channel, `false` otherwise.
          */
@@ -765,19 +746,46 @@ declare module "@package/net/minecraft/network" {
          */
         isMemoryConnection(): boolean;
         /**
-         * Will iterate through the outboundPacketQueue and dispatch all Packets
+         * Enables encryption for this connection using the given decrypting and encrypting ciphers.
+         * This adds new handlers to this connection's pipeline which handle the decrypting and encrypting.
+         * This happens as part of the normal network handshake.
+         * 
+         * @see net.minecraft.network.protocol.login.ClientboundHelloPacket
+         * @see net.minecraft.network.protocol.login.ServerboundKeyPacket
          */
-        tickSecond(): void;
+        setEncryptionKey(decryptingCipher: $Cipher, encryptingCipher: $Cipher): void;
+        initiateServerboundStatusConnection(hostName: string, port: number, packetListener: $ClientStatusPacketListener): void;
+        static connectToServer(address: $InetSocketAddress, useEpollIfAvailable: boolean, sampleLogger: $LocalSampleLogger | null): $Connection;
+        getAverageSentPackets(): number;
+        getAverageReceivedPackets(): number;
+        sable$setUDPChannel(arg0: $Channel): void;
+        sable$getUDPChannel(): $Channel;
+        getDisconnectionDetails(): $DisconnectionDetails;
+        static configureInMemoryPipeline(pipeline: $ChannelPipeline, flow: $PacketFlow_): void;
+        configurePacketHandler(pipeline: $ChannelPipeline): void;
+        static configureSerialization(pipeline: $ChannelPipeline, flow: $PacketFlow_, memoryOnly: boolean, bandwithDebugMonitor: $BandwidthDebugMonitor | null): void;
+        setListenerForServerboundHandshake(packetListener: $PacketListener): void;
+        getInboundProtocol(): $ProtocolInfo<never>;
+        runOnceConnected(action: $Consumer_<$Connection>): void;
+        channelRead0(context: $ChannelHandlerContext, packet: $Packet<never>): void;
+        setBandwidthLogger(bandwithLogger: $LocalSampleLogger): void;
         /**
          * The receiving packet direction (i.e. SERVERBOUND on the server and CLIENTBOUND on the client).
          */
-        getSending(): $PacketFlow;
-        setBandwidthLogger(bandwithLogger: $LocalSampleLogger): void;
+        getReceiving(): $PacketFlow;
+        getLoggableAddress(logIps: boolean): string;
+        /**
+         * Gets the current handler for processing packets
+         */
+        getPacketListener(): $PacketListener;
+        /**
+         * Returns `true` if this `Connection` has an active channel, `false` otherwise.
+         */
+        isConnecting(): boolean;
         /**
          * Will iterate through the outboundPacketQueue and dispatch all Packets
          */
         flushChannel(): void;
-        channelRead0(context: $ChannelHandlerContext, packet: $Packet<never>): void;
         /**
          * Enables or disables compression for this connection. If `threshold` is >= 0 then a `CompressionDecoder` and `CompressionEncoder`
          * are installed in the pipeline or updated if they already exist. If `threshold` is < 0 then any such codec are removed.
@@ -786,24 +794,13 @@ declare module "@package/net/minecraft/network" {
          */
         setupCompression(threshold: number, validateDecompressed: boolean): void;
         /**
+         * Will iterate through the outboundPacketQueue and dispatch all Packets
+         */
+        tickSecond(): void;
+        /**
          * The receiving packet direction (i.e. SERVERBOUND on the server and CLIENTBOUND on the client).
          */
-        getReceiving(): $PacketFlow;
-        /**
-         * Returns `true` if this `Connection` has an active channel, `false` otherwise.
-         */
-        isConnecting(): boolean;
-        /**
-         * Gets the current handler for processing packets
-         */
-        getPacketListener(): $PacketListener;
-        runOnceConnected(action: $Consumer_<$Connection>): void;
-        getLoggableAddress(logIps: boolean): string;
-        setListenerForServerboundHandshake(packetListener: $PacketListener): void;
-        initiateServerboundStatusConnection(hostName: string, port: number, packetListener: $ClientStatusPacketListener): void;
-        setupOutboundProtocol(protocolInfo: $ProtocolInfo<never>): void;
-        setupInboundProtocol<T extends $PacketListener>(protocolInfo: $ProtocolInfo<T>, packetInfo: T): void;
-        handler$bfo000$chat_heads$chatheads$resetServerKnowledge(ci: $CallbackInfo): void;
+        getSending(): $PacketFlow;
         getChannel(): $Channel;
         static PACKET_MARKER: $Marker;
         bandwidthDebugMonitor: $BandwidthDebugMonitor;
@@ -814,29 +811,29 @@ declare module "@package/net/minecraft/network" {
         static ROOT_MARKER: $Marker;
         static NETWORK_EPOLL_WORKER_GROUP: $Supplier<$EpollEventLoopGroup>;
         constructor(receiving: $PacketFlow_);
-        get averageReceivedPackets(): number;
-        get averageSentPackets(): number;
-        get disconnectionDetails(): $DisconnectionDetails;
         get connected(): boolean;
         get remoteAddress(): $SocketAddress;
         get direction(): $PacketFlow;
-        get inboundProtocol(): $ProtocolInfo<never>;
+        set upOutboundProtocol(value: $ProtocolInfo<never>);
         get encrypted(): boolean;
         get memoryConnection(): boolean;
-        get sending(): $PacketFlow;
+        get averageSentPackets(): number;
+        get averageReceivedPackets(): number;
+        get disconnectionDetails(): $DisconnectionDetails;
+        set listenerForServerboundHandshake(value: $PacketListener);
+        get inboundProtocol(): $ProtocolInfo<never>;
         set bandwidthLogger(value: $LocalSampleLogger);
         get receiving(): $PacketFlow;
-        get connecting(): boolean;
         get packetListener(): $PacketListener;
-        set listenerForServerboundHandshake(value: $PacketListener);
-        set upOutboundProtocol(value: $ProtocolInfo<never>);
+        get connecting(): boolean;
+        get sending(): $PacketFlow;
     }
     export class $ProtocolInfo<T extends $PacketListener> {
     }
     export interface $ProtocolInfo<T extends $PacketListener> {
+        codec(): $StreamCodec<$ByteBuf, $Packet<T>>;
         id(): $ConnectionProtocol;
         flow(): $PacketFlow;
-        codec(): $StreamCodec<$ByteBuf, $Packet<T>>;
         bundlerInfo(): $BundlerInfo;
     }
     /**

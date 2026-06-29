@@ -4,7 +4,7 @@ declare module "@package/dev/tr7zw/transition/mixin" {
     export class $EntityAccessor {
     }
     export interface $EntityAccessor {
-        transition$setRawPosition(arg0: $Vec3_): void;
         transition$getRawPosition(): $Vec3;
+        transition$setRawPosition(arg0: $Vec3_): void;
     }
 }

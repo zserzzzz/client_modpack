@@ -52,15 +52,15 @@ declare module "@package/com/simibubi/create/content/kinetics/transmission/seque
         getInstruction(): $SequencerInstructions;
         static STREAM_CODEC: $StreamCodec<$ByteBuf, $Instruction>;
         constructor(arg0: $SequencerInstructions_);
-        constructor(arg0: $SequencerInstructions_, arg1: number);
         constructor(arg0: $SequencerInstructions_, arg1: $InstructionSpeedModifiers_, arg2: number);
+        constructor(arg0: $SequencerInstructions_, arg1: number);
         get instruction(): $SequencerInstructions;
     }
     export class $SequencerInstructions extends $Enum<$SequencerInstructions> {
         static values(): $SequencerInstructions[];
         static valueOf(arg0: string): $SequencerInstructions;
-        static invokeInit$create_connected_$md$942995$0(arg0: string, arg1: number, arg2: string, arg3: $AllGuiTextures_): $SequencerInstructions;
-        static invokeInit$create_connected_$md$942995$1(arg0: string, arg1: number, arg2: string, arg3: $AllGuiTextures_, arg4: boolean, arg5: boolean, arg6: number, arg7: number, arg8: number): $SequencerInstructions;
+        static invokeInit$create_connected_$md$c99f8a$0(arg0: string, arg1: number, arg2: string, arg3: $AllGuiTextures_): $SequencerInstructions;
+        static invokeInit$create_connected_$md$c99f8a$1(arg0: string, arg1: number, arg2: string, arg3: $AllGuiTextures_, arg4: boolean, arg5: boolean, arg6: number, arg7: number, arg8: number): $SequencerInstructions;
         needsPropagation(): boolean;
         translationKey: string;
         maxValue: number;
@@ -117,10 +117,10 @@ declare module "@package/com/simibubi/create/content/kinetics/transmission/seque
         getModifier(): number;
         static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
         isIdle(): boolean;
-        getInstruction(arg0: number): $Instruction;
         onRedstoneUpdate(arg0: boolean, arg1: boolean): void;
-        risingFlank(): void;
+        getInstruction(arg0: number): $Instruction;
         getInstructions(): $Vector<$Instruction>;
+        risingFlank(): void;
         sequenceContext: $SequencedGearshiftBlockEntity$SequenceContext;
         networkDirty: boolean;
         worldPosition: $BlockPos;
@@ -139,21 +139,21 @@ declare module "@package/com/simibubi/create/content/kinetics/transmission/seque
     }
     export class $SequencedGearshiftBlockEntity$SequenceContext extends $Record {
         instruction(): $SequencerInstructions;
+        static fromNBT(arg0: $CompoundTag_): $SequencedGearshiftBlockEntity$SequenceContext;
         serializeNBT(): $CompoundTag;
         relativeValue(): number;
-        static fromNBT(arg0: $CompoundTag_): $SequencedGearshiftBlockEntity$SequenceContext;
-        static fromGearshift(arg0: $SequencerInstructions_, arg1: number, arg2: number): $SequencedGearshiftBlockEntity$SequenceContext;
         getEffectiveValue(arg0: number): number;
+        static fromGearshift(arg0: $SequencerInstructions_, arg1: number, arg2: number): $SequencedGearshiftBlockEntity$SequenceContext;
         constructor(instruction: $SequencerInstructions_, relativeValue: number);
     }
     /**
      * Values that may be interpreted as {@link $SequencedGearshiftBlockEntity$SequenceContext}.
      */
-    export type $SequencedGearshiftBlockEntity$SequenceContext_ = { instruction?: $SequencerInstructions_, relativeValue?: number,  } | [instruction?: $SequencerInstructions_, relativeValue?: number, ];
+    export type $SequencedGearshiftBlockEntity$SequenceContext_ = { relativeValue?: number, instruction?: $SequencerInstructions_,  } | [relativeValue?: number, instruction?: $SequencerInstructions_, ];
     export class $SequencedGearshiftScreen extends $AbstractSimiScreen {
         sendPacket(): void;
-        initInputsOfRow(arg0: number, arg1: number, arg2: number): void;
         updateParamsOfRow(arg0: number): void;
+        initInputsOfRow(arg0: number, arg1: number, arg2: number): void;
         handler$fae000$create_connected$updateParamsOfRow(arg0: number, arg1: $CallbackInfo): void;
         static MENU_BACKGROUND: $ResourceLocation;
         minecraft: $Minecraft;
@@ -176,15 +176,15 @@ declare module "@package/com/simibubi/create/content/kinetics/transmission/seque
     }
     export class $SequencedGearshiftBlock extends $HorizontalAxisKineticBlock implements $IBE<$SequencedGearshiftBlockEntity>, $TransformableBlock {
         transform(arg0: $BlockState_, arg1: $StructureTransform): $BlockState;
-        getBlockEntityType(): $BlockEntityType<$SequencedGearshiftBlockEntity>;
         getBlockEntityClass(): $Class<$SequencedGearshiftBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$SequencedGearshiftBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$SequencedGearshiftBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SequencedGearshiftBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($SequencedGearshiftBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SequencedGearshiftBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $SequencedGearshiftBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$SequencedGearshiftBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($SequencedGearshiftBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SequencedGearshiftBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static STATE: $IntegerProperty;
@@ -217,7 +217,7 @@ declare module "@package/com/simibubi/create/content/kinetics/transmission/seque
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$SequencedGearshiftBlockEntity>;
         get blockEntityClass(): $Class<$SequencedGearshiftBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$SequencedGearshiftBlockEntity>;
     }
 }

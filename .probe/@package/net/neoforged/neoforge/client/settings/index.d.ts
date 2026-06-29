@@ -13,8 +13,8 @@ declare module "@package/net/neoforged/neoforge/client/settings" {
     export class $IKeyConflictContext {
     }
     export interface $IKeyConflictContext {
-        isActive(): boolean;
         conflicts(other: $IKeyConflictContext): boolean;
+        isActive(): boolean;
         get active(): boolean;
     }
     export class $KeyMappingLookup {
@@ -34,14 +34,14 @@ declare module "@package/net/neoforged/neoforge/client/settings" {
         constructor();
     }
     export class $KeyModifier extends $Enum<$KeyModifier> {
-        static getKeyModifier(arg0: $InputConstants$Key): $KeyModifier;
-        getCombinedName(arg0: $InputConstants$Key, arg1: $Supplier_<$Component>): $Component;
-        codes(): $InputConstants$Key[];
         static values(): $KeyModifier[];
         static valueOf(arg0: string): $KeyModifier;
         matches(arg0: $InputConstants$Key): boolean;
         isActive(arg0: $IKeyConflictContext): boolean;
+        codes(): $InputConstants$Key[];
         static valueFromString(arg0: string): $KeyModifier;
+        getCombinedName(arg0: $InputConstants$Key, arg1: $Supplier_<$Component>): $Component;
+        static getKeyModifier(arg0: $InputConstants$Key): $KeyModifier;
         static getActiveModifiers(): $List<$KeyModifier>;
         static isKeyCodeModifier(arg0: $InputConstants$Key): boolean;
         /**

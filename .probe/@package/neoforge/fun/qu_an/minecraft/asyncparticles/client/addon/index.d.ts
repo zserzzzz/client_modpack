@@ -24,8 +24,8 @@ declare module "@package/neoforge/fun/qu_an/minecraft/asyncparticles/client/addo
         static oCOLOR_ALPHA_OFFSET: number;
     }
     export interface $GpuParticleAddon {
-        asyncparticles$postTick(arg0: number): void;
         asyncparticles$shouldRender(): boolean;
+        asyncparticles$postTick(arg0: number): void;
     }
     export class $LightCachedParticleAddon {
         static compress(light: number): number;
@@ -33,31 +33,31 @@ declare module "@package/neoforge/fun/qu_an/minecraft/asyncparticles/client/addo
         static INITIAL_LIGHT_CACHE: number;
     }
     export interface $LightCachedParticleAddon {
+        asyncparticles$invoke_getLightColor(arg0: number): number;
+        asyncparticles$isEnabledLightCache(): boolean;
+        asyncparticles$getCompressedLight(): number;
+        asyncparticles$getCachedLight(): number;
+        asyncparticles$disableLightCache(): void;
+        asyncparticles$enableLightCache(): void;
         asyncparticles$refresh(): void;
         asyncparticles$setLight(arg0: number): void;
-        asyncparticles$getCompressedLight(): number;
-        asyncparticles$isEnabledLightCache(): boolean;
-        asyncparticles$disableLightCache(): void;
-        asyncparticles$getCachedLight(): number;
-        asyncparticles$enableLightCache(): void;
-        asyncparticles$invoke_getLightColor(arg0: number): number;
     }
     export class $ParticleAddon {
     }
     export interface $ParticleAddon {
-        asyncparticles$isTicked(): boolean;
-        asyncparticles$setTicked(): void;
+        asyncparticles$tickAABBCulling(): void;
+        asyncparticles$isRenderSync(): boolean;
+        asyncparticles$tickSphereCulling(): void;
+        asyncparticles$setRenderSync(): void;
+        asyncparticles$isVisibleOnScreen(): boolean;
+        asyncparticles$setNoCulling(): void;
+        asyncparticles$getRealClass(): $Class<$Particle>;
+        getRenderBoundingBox(arg0: number): $AABB;
         asyncparticles$isTickSync(): boolean;
         asyncparticles$setTickSync(): void;
         asyncparticles$shouldCull(): boolean;
-        getRenderBoundingBox(arg0: number): $AABB;
         asyncparticles$resetTicked(): void;
-        asyncparticles$setNoCulling(): void;
-        asyncparticles$getRealClass(): $Class<$Particle>;
-        asyncparticles$setRenderSync(): void;
-        asyncparticles$isRenderSync(): boolean;
-        asyncparticles$isVisibleOnScreen(): boolean;
-        asyncparticles$tickAABBCulling(): void;
-        asyncparticles$tickSphereCulling(): void;
+        asyncparticles$setTicked(): void;
+        asyncparticles$isTicked(): boolean;
     }
 }

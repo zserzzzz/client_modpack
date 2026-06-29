@@ -12,8 +12,8 @@ declare module "@package/net/minecraft/sounds" {
     export class $Music {
         getMaxDelay(): number;
         getMinDelay(): number;
-        replaceCurrentMusic(): boolean;
         getEvent(): $Holder<$SoundEvent>;
+        replaceCurrentMusic(): boolean;
         static CODEC: $Codec<$Music>;
         constructor(event: $Holder_<$SoundEvent>, minDelay: number, maxDelay: number, replaceCurrentMusic: boolean);
         get maxDelay(): number;
@@ -22,10 +22,10 @@ declare module "@package/net/minecraft/sounds" {
     }
     export interface $SoundEvent extends RegistryMarked<RegistryTypes.SoundEventTag, RegistryTypes.SoundEvent> {}
     export class $SoundEvent {
-        static createVariableRangeEvent(location: $ResourceLocation_): $SoundEvent;
-        static createFixedRangeEvent(location: $ResourceLocation_, range: number): $SoundEvent;
         getLocation(): $ResourceLocation;
         getRange(volume: number): number;
+        static createVariableRangeEvent(location: $ResourceLocation_): $SoundEvent;
+        static createFixedRangeEvent(location: $ResourceLocation_, range: number): $SoundEvent;
         static CODEC: $Codec<$Holder<$SoundEvent>>;
         static DIRECT_CODEC: $Codec<$SoundEvent>;
         static DIRECT_STREAM_CODEC: $StreamCodec<$ByteBuf, $SoundEvent>;

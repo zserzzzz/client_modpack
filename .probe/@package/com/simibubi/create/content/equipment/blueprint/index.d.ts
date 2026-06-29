@@ -33,7 +33,7 @@ import { $ServerboundCustomPayloadPacket, $ClientboundCustomPayloadPacket } from
 import { $Predicate } from "@package/java/util/function";
 import { $ServerPlayer } from "@package/net/minecraft/server/level";
 import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos, $BlockPos_, $Direction_, $NonNullList, $Direction } from "@package/net/minecraft/core";
+import { $BlockPos, $BlockPos_, $HolderLookup$Provider, $Direction_, $NonNullList, $Direction } from "@package/net/minecraft/core";
 import { $Record, $Object } from "@package/java/lang";
 import { $Couple } from "@package/net/createmod/catnip/data";
 import { $Level_ } from "@package/net/minecraft/world/level";
@@ -64,18 +64,19 @@ declare module "@package/com/simibubi/create/content/equipment/blueprint" {
         constructor(arg0: $EntityRendererProvider$Context);
     }
     export class $BlueprintEntity extends $HangingEntity implements $IEntityWithComplexSpawn, $SpecialEntityItemRequirement, $ISyncPersistentData, $IInteractionChecker {
-        getRequiredItems(): $ItemRequirement;
-        getHeight(): number;
         static build(arg0: $EntityType$Builder<never>): $EntityType$Builder<never>;
         getWidth(): number;
-        onPersistentDataUpdated(): void;
+        canPlayerUse(arg0: $Player): boolean;
+        getHeight(): number;
         getSection(arg0: number): $BlueprintEntity$BlueprintSection;
         readSpawnData(arg0: $RegistryFriendlyByteBuf): void;
         writeSpawnData(arg0: $RegistryFriendlyByteBuf): void;
-        canPlayerUse(arg0: $Player): boolean;
-        getOrCreateRecipeCompound(): $CompoundTag;
+        getRequiredItems(): $ItemRequirement;
         getSectionAt(arg0: $Vec3_): $BlueprintEntity$BlueprintSection;
+        onPersistentDataUpdated(): void;
+        getOrCreateRecipeCompound(): $CompoundTag;
         syncPersistentDataWithTracking(arg0: $Entity): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -150,24 +151,24 @@ declare module "@package/com/simibubi/create/content/equipment/blueprint" {
         horizontalCollision: boolean;
         constructor(arg0: $EntityType_<never>, arg1: $Level_);
         constructor(arg0: $Level_, arg1: $BlockPos_, arg2: $Direction_, arg3: $Direction_);
-        get requiredItems(): $ItemRequirement;
-        get height(): number;
         get width(): number;
+        get height(): number;
+        get requiredItems(): $ItemRequirement;
         get orCreateRecipeCompound(): $CompoundTag;
     }
     export class $BlueprintOverlayRenderer implements $BlueprintOverlayRendererAccess {
         static tick(): void;
         static renderOverlay(arg0: $GuiGraphics, arg1: $DeltaTracker): void;
         static rebuild(arg0: $BlueprintEntity$BlueprintSection, arg1: boolean): void;
-        static displayChainRequirements(arg0: $Item_, arg1: number, arg2: boolean): void;
+        static getResults$jadeaddons_$md$c99f8a$0(): $List<any>;
+        static displayClothShop(arg0: $TableClothBlockEntity, arg1: number, arg2: $ShoppingListItem$ShoppingList_): void;
+        static drawItemStack(arg0: $GuiGraphics, arg1: $Minecraft, arg2: number, arg3: number, arg4: $ItemStack_, arg5: string): void;
         static displayTrackRequirements(arg0: $TrackPlacement$PlacementInfo, arg1: $ItemStack_): void;
         static displayShoppingList(arg0: $Couple<$InventorySummary>): void;
-        static getResults$jadeaddons_$md$942995$0(): $List<any>;
-        static drawItemStack(arg0: $GuiGraphics, arg1: $Minecraft, arg2: number, arg3: number, arg4: $ItemStack_, arg5: string): void;
-        static displayClothShop(arg0: $TableClothBlockEntity, arg1: number, arg2: $ShoppingListItem$ShoppingList_): void;
+        static displayChainRequirements(arg0: $Item_, arg1: number, arg2: boolean): void;
         static OVERLAY: $LayeredDraw$Layer;
         constructor();
-        static get results$jadeaddons_$md$942995$0(): $List<any>;
+        static get results$jadeaddons_$md$c99f8a$0(): $List<any>;
     }
     export class $BlueprintEntity$BlueprintCraftingInventory extends $TransientCraftingContainer {
         menu: $AbstractContainerMenu;

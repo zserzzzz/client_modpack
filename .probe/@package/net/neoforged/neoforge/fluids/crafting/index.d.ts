@@ -39,8 +39,8 @@ declare module "@package/net/neoforged/neoforge/fluids/crafting" {
     export class $FluidIngredientType<T extends $FluidIngredient> extends $Record {
         codec(): $MapCodec<T>;
         streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, T>;
-        constructor(arg0: $MapCodec_<T>);
         constructor(codec: $MapCodec_<T>, streamCodec: $StreamCodec<$RegistryFriendlyByteBuf, T>);
+        constructor(arg0: $MapCodec_<T>);
     }
     /**
      * Values that may be interpreted as {@link $FluidIngredientType}.
@@ -61,11 +61,11 @@ declare module "@package/net/neoforged/neoforge/fluids/crafting" {
          * Creates a new ingredient matching any fluid from the list, containing the given components
          */
         static of(strict: boolean, map: $DataComponentMap_, fluids: $HolderSet_<$Fluid>): $FluidIngredient;
-        static of(arg0: boolean, arg1: $DataComponentPredicate, ...arg2: $Fluid_[]): $FluidIngredient;
         /**
          * Creates a new ingredient matching any fluid from the list, containing the given components
          */
         static of(strict: boolean, predicate: $DataComponentPredicate, fluids: $HolderSet_<$Fluid>): $FluidIngredient;
+        static of(arg0: boolean, arg1: $DataComponentPredicate, ...arg2: $Fluid_[]): $FluidIngredient;
         static of(arg0: boolean, arg1: $DataComponentMap_, ...arg2: $Fluid_[]): $FluidIngredient;
         /**
          * Creates a new ingredient matching the given fluid, containing the given components
@@ -123,15 +123,15 @@ declare module "@package/net/neoforged/neoforge/fluids/crafting" {
          */
         static of(stack: $FluidStack_): $SizedFluidIngredient;
         amount(): number;
+        ingredient(): $FluidIngredient;
         /**
          * Returns a list of the stacks from this `#ingredient`, with an updated `#amount`.
          */
         getFluids(): $FluidStack[];
-        ingredient(): $FluidIngredient;
-        matches(cx: $RecipeMatchContext, arg1: $FluidIngredient_, exact: boolean): boolean;
         matches(cx: $RecipeMatchContext, s: $FluidStack_, exact: boolean): boolean;
-        self(): $SizedFluidIngredient;
+        matches(cx: $RecipeMatchContext, arg1: $FluidIngredient_, exact: boolean): boolean;
         replaceThisWith(cx: $RecipeScriptContext, arg1: $Object): $Object;
+        self(): $SizedFluidIngredient;
         toFlatJson(): $JsonElement;
         toNestedJson(): $JsonElement;
         static NESTED_CODEC: $Codec<$SizedFluidIngredient>;
@@ -154,10 +154,6 @@ declare module "@package/net/neoforged/neoforge/fluids/crafting" {
      */
     export class $FluidIngredient implements $Predicate<$FluidStack>, $FluidIngredientKJS, $FluidIngredientStacksInvoker {
         /**
-         * Returns whether this fluid ingredient always requires direct stack testing.
-         */
-        isSimple(): boolean;
-        /**
          * Returns an array of fluid stacks that this ingredient accepts.
          * The fluid stacks within the returned array **must not** be modified by the caller!
          * @return an array of fluid stacks this ingredient accepts
@@ -176,8 +172,8 @@ declare module "@package/net/neoforged/neoforge/fluids/crafting" {
         static of(...arg0: $FluidStack_[]): $FluidIngredient;
         static of(): $FluidIngredient;
         static single(fluids: $FluidStack_): $FluidIngredient;
-        static single(fluids: $Fluid_): $FluidIngredient;
         static single(holder: $Holder_<$Fluid>): $FluidIngredient;
+        static single(fluids: $Fluid_): $FluidIngredient;
         static empty(): $FluidIngredient;
         /**
          * @return The type of this fluid ingredient.
@@ -186,6 +182,10 @@ declare module "@package/net/neoforged/neoforge/fluids/crafting" {
          */
         getType(): $FluidIngredientType<never>;
         static tag(tag: $TagKey_<$Fluid>): $FluidIngredient;
+        /**
+         * Returns whether this fluid ingredient always requires direct stack testing.
+         */
+        isSimple(): boolean;
         self(): $FluidIngredient;
         /**
          * Returns whether this fluid ingredient always requires direct stack testing.
@@ -198,8 +198,8 @@ declare module "@package/net/neoforged/neoforge/fluids/crafting" {
         matches(cx: $RecipeMatchContext, arg1: $FluidIngredient_, exact: boolean): boolean;
         matches(cx: $RecipeMatchContext, s: $FluidStack_, exact: boolean): boolean;
         withAmount(amount: number): $SizedFluidIngredient;
-        toNBT(): $Tag;
         toJson(): $JsonElement;
+        toNBT(): $Tag;
         callGenerateStacks(): $Stream<$FluidStack>;
         static CODEC_NON_EMPTY: $Codec<$FluidIngredient>;
         static CODEC: $Codec<$FluidIngredient>;
@@ -208,9 +208,9 @@ declare module "@package/net/neoforged/neoforge/fluids/crafting" {
         static MAP_CODEC_NONEMPTY: $MapCodec<$FluidIngredient>;
         static LIST_CODEC_NON_EMPTY: $Codec<$List<$FluidIngredient>>;
         constructor();
-        get simple(): boolean;
         get stacks(): $FluidStack[];
         get type(): $FluidIngredientType<never>;
+        get simple(): boolean;
         get codec(): $Codec<never>;
     }
     /**
@@ -258,8 +258,8 @@ declare module "@package/net/neoforged/neoforge/fluids/crafting" {
          * Creates a compound ingredient from the given list of ingredients.
          */
         static of(children: $List_<$FluidIngredient_>): $FluidIngredient;
-        static of(...arg0: $FluidIngredient_[]): $FluidIngredient;
         static of(stream: $Stream<$FluidIngredient_>): $FluidIngredient;
+        static of(...arg0: $FluidIngredient_[]): $FluidIngredient;
         children(): $List<$FluidIngredient>;
         generateStacks(): $Stream<$FluidStack>;
         static CODEC_NON_EMPTY: $Codec<$FluidIngredient>;

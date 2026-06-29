@@ -77,8 +77,8 @@ declare module "@package/com/simibubi/create/content/logistics/packager/repackag
     export class $PackageRepackageHelper {
         clear(): void;
         repack(arg0: number, arg1: $RandomSource): $List<$BigItemStack>;
-        isFragmented(arg0: $ItemStack_): boolean;
         addPackageFragment(arg0: $ItemStack_): number;
+        isFragmented(arg0: $ItemStack_): boolean;
         constructor();
     }
 }

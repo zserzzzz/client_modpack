@@ -29,24 +29,24 @@ declare module "@package/com/simibubi/create/content/contraptions/behaviour" {
     export class $CampfireMovementBehaviour implements $MovementBehaviour {
         tick(arg0: $MovementContext): void;
         isActive(arg0: $MovementContext): boolean;
-        stopMoving(arg0: $MovementContext): void;
         /**
          * @deprecated
          */
         dropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
+        onDisabledByControls(arg0: $MovementContext): void;
+        renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
         getActiveAreaOffset(arg0: $MovementContext): $Vec3;
         mustTickWhileDisabled(): boolean;
-        renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
-        onDisabledByControls(arg0: $MovementContext): void;
-        collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
-        onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
-        cancelStall(arg0: $MovementContext): void;
+        disableBlockEntityRendering(): boolean;
         startMoving(arg0: $MovementContext): void;
         visitNewPosition(arg0: $MovementContext, arg1: $BlockPos_): void;
-        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
         canBeDisabledVia(arg0: $MovementContext): $ItemStack;
+        collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
+        onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
         writeExtraData(arg0: $MovementContext): void;
-        disableBlockEntityRendering(): boolean;
+        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
+        cancelStall(arg0: $MovementContext): void;
+        stopMoving(arg0: $MovementContext): void;
         constructor();
     }
     export class $LeverMovingInteraction extends $SimpleBlockMovingInteraction {
@@ -54,9 +54,9 @@ declare module "@package/com/simibubi/create/content/contraptions/behaviour" {
         constructor();
     }
     export class $MovementContext {
-        writeToNBT(arg0: $CompoundTag_): $CompoundTag;
         static readNBT(arg0: $Level_, arg1: $StructureTemplate$StructureBlockInfo_, arg2: $CompoundTag_, arg3: $Contraption): $MovementContext;
         getItemStorage(): $MountedItemStorage;
+        writeToNBT(arg0: $CompoundTag_): $CompoundTag;
         getAnimationSpeed(): number;
         getFilterFromBE(): $FilterItemStack;
         getFluidStorage(): $MountedFluidStorage;
@@ -95,25 +95,25 @@ declare module "@package/com/simibubi/create/content/contraptions/behaviour" {
     export class $BellMovementBehaviour implements $MovementBehaviour {
         isActive(arg0: $MovementContext): boolean;
         tick(arg0: $MovementContext): void;
-        stopMoving(arg0: $MovementContext): void;
         static playSound(arg0: $MovementContext): void;
         onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
+        stopMoving(arg0: $MovementContext): void;
         /**
          * @deprecated
          */
         dropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
+        onDisabledByControls(arg0: $MovementContext): void;
+        renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
         getActiveAreaOffset(arg0: $MovementContext): $Vec3;
         mustTickWhileDisabled(): boolean;
-        renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
-        onDisabledByControls(arg0: $MovementContext): void;
-        collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
-        cancelStall(arg0: $MovementContext): void;
+        disableBlockEntityRendering(): boolean;
         startMoving(arg0: $MovementContext): void;
         visitNewPosition(arg0: $MovementContext, arg1: $BlockPos_): void;
-        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
         canBeDisabledVia(arg0: $MovementContext): $ItemStack;
+        collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
         writeExtraData(arg0: $MovementContext): void;
-        disableBlockEntityRendering(): boolean;
+        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
+        cancelStall(arg0: $MovementContext): void;
         constructor();
     }
 }

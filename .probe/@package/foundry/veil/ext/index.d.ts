@@ -30,9 +30,9 @@ declare module "@package/foundry/veil/ext" {
     export class $VertexBufferExtension {
     }
     export interface $VertexBufferExtension {
-        veil$drawInstanced(arg0: number): void;
-        veil$drawIndirect(arg0: number, arg1: number, arg2: number): void;
         veil$getIndexCount(): number;
+        veil$drawIndirect(arg0: number, arg1: number, arg2: number): void;
+        veil$drawInstanced(arg0: number): void;
     }
     export class $PerformanceRenderTargetExtension {
     }
@@ -61,21 +61,21 @@ declare module "@package/foundry/veil/ext" {
     export class $AutoStorageIndexBufferExtension {
     }
     export interface $AutoStorageIndexBufferExtension {
-        veil$ensureStorage(arg0: number): void;
         veil$getBuffer(): number;
+        veil$ensureStorage(arg0: number): void;
     }
     export class $PackResourcesExtension {
-        static findDevPath(arg0: $Path_, arg1: $Path_): $Path;
         static findDevPaths(arg0: $Path_, arg1: $Path_): $List<$Path>;
+        static findDevPath(arg0: $Path_, arg1: $Path_): $Path;
         static BUILD_RESOURCES_NAME: string;
     }
     export interface $PackResourcesExtension {
         veil$getRawResourceRoots(): $List<$Path>;
-        veil$isStatic(): boolean;
         veil$listPacks(): $Stream<$PackResources>;
-        veil$blurIcon(): boolean;
         veil$getIcon(): $IoSupplier<$InputStream>;
+        veil$isStatic(): boolean;
         veil$listResources(arg0: $PackResourcesExtension$PackResourceConsumer_): void;
+        veil$blurIcon(): boolean;
     }
     export class $FrustumExtension {
     }
@@ -98,12 +98,12 @@ declare module "@package/foundry/veil/ext" {
     export class $ShaderInstanceExtension {
     }
     export interface $ShaderInstanceExtension {
-        veil$recompile(arg0: boolean, arg1: string, arg2: number): void;
-        veil$getShaderSources(): $Collection<$ResourceLocation>;
         veil$getActiveBuffers(): number;
+        veil$getShaderSources(): $Collection<$ResourceLocation>;
         veil$isRecompileReady(arg0: number): boolean;
-        veil$swapBuffers(arg0: number): boolean;
+        veil$recompile(arg0: boolean, arg1: string, arg2: number): void;
         veil$applyCompile(): boolean;
+        veil$swapBuffers(arg0: number): boolean;
     }
     export class $CompositeStateExtension {
     }
@@ -117,8 +117,8 @@ declare module "@package/foundry/veil/ext" {
     export class $LevelRendererExtension {
     }
     export interface $LevelRendererExtension extends $LevelRendererBlockLayerExtension {
-        veil$markChunksDirty(): void;
         veil$getCullFrustum(): $CullFrustum;
+        veil$markChunksDirty(): void;
     }
     export class $DebugVertexBufferExt {
     }

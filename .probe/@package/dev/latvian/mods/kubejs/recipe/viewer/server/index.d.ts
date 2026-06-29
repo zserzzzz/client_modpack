@@ -16,23 +16,17 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
     export class $ServerRemoveItemEntriesKubeEvent implements $RemoveEntriesKubeEvent {
         remove(filter: $Object): void;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -40,17 +34,23 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(removedEntries: $List_<$Ingredient_>);
     }
     export class $FluidData$DataComponentSubtypes extends $Record {
@@ -66,23 +66,17 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
     export class $ServerGroupFluidEntriesKubeEvent implements $GroupEntriesKubeEvent {
         group(filter: $Object, groupId: $ResourceLocation_, description: $Component_): void;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -90,27 +84,33 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(list: $List_<$FluidData$Group_>);
     }
     export class $ItemData extends $Record {
         isEmpty(): boolean;
         static collect(): $ItemData;
         info(): $List<$ItemData$Info>;
+        completelyRemovedEntries(): $List<$Ingredient>;
+        dataComponentSubtypes(): $List<$ItemData$DataComponentSubtypes>;
         removedEntries(): $List<$Ingredient>;
         addedEntries(): $List<$ItemStack>;
-        dataComponentSubtypes(): $List<$ItemData$DataComponentSubtypes>;
-        completelyRemovedEntries(): $List<$Ingredient>;
         groupedEntries(): $List<$ItemData$Group>;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ItemData>;
         constructor(addedEntries: $List_<$ItemStack_>, removedEntries: $List_<$Ingredient_>, completelyRemovedEntries: $List_<$Ingredient_>, groupedEntries: $List_<$ItemData$Group_>, info: $List_<$ItemData$Info_>, dataComponentSubtypes: $List_<$ItemData$DataComponentSubtypes_>);
@@ -119,16 +119,10 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
     /**
      * Values that may be interpreted as {@link $ItemData}.
      */
-    export type $ItemData_ = { groupedEntries?: $List_<$ItemData$Group_>, removedEntries?: $List_<$Ingredient_>, dataComponentSubtypes?: $List_<$ItemData$DataComponentSubtypes_>, addedEntries?: $List_<$ItemStack_>, info?: $List_<$ItemData$Info_>, completelyRemovedEntries?: $List_<$Ingredient_>,  } | [groupedEntries?: $List_<$ItemData$Group_>, removedEntries?: $List_<$Ingredient_>, dataComponentSubtypes?: $List_<$ItemData$DataComponentSubtypes_>, addedEntries?: $List_<$ItemStack_>, info?: $List_<$ItemData$Info_>, completelyRemovedEntries?: $List_<$Ingredient_>, ];
+    export type $ItemData_ = { info?: $List_<$ItemData$Info_>, completelyRemovedEntries?: $List_<$Ingredient_>, groupedEntries?: $List_<$ItemData$Group_>, removedEntries?: $List_<$Ingredient_>, dataComponentSubtypes?: $List_<$ItemData$DataComponentSubtypes_>, addedEntries?: $List_<$ItemStack_>,  } | [info?: $List_<$ItemData$Info_>, completelyRemovedEntries?: $List_<$Ingredient_>, groupedEntries?: $List_<$ItemData$Group_>, removedEntries?: $List_<$Ingredient_>, dataComponentSubtypes?: $List_<$ItemData$DataComponentSubtypes_>, addedEntries?: $List_<$ItemStack_>, ];
     export class $ServerRemoveRecipesKubeEvent implements $RemoveRecipesKubeEvent {
         remove(recipesToRemove: $ResourceLocation_[]): void;
         removeFromCategory(category: $ResourceLocation_, recipesToRemove: $ResourceLocation_[]): void;
-        /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -136,11 +130,11 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -148,17 +142,23 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(global: $Set_<$ResourceLocation_>, categoryData: $Map_<$ResourceLocation_, $CategoryData_>);
     }
     export class $RemoteRecipeViewerDataUpdatedEvent extends $Event {
@@ -176,7 +176,7 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
     /**
      * Values that may be interpreted as {@link $CategoryData}.
      */
-    export type $CategoryData_ = { category?: $ResourceLocation_, removedRecipes?: $List_<$ResourceLocation_>,  } | [category?: $ResourceLocation_, removedRecipes?: $List_<$ResourceLocation_>, ];
+    export type $CategoryData_ = { removedRecipes?: $List_<$ResourceLocation_>, category?: $ResourceLocation_,  } | [removedRecipes?: $List_<$ResourceLocation_>, category?: $ResourceLocation_, ];
     export class $ItemData$Info extends $Record {
         filter(): $Ingredient;
         info(): $List<$Component>;
@@ -190,10 +190,10 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
     export class $RecipeViewerData extends $Record {
         isEmpty(): boolean;
         static collect(): $RecipeViewerData;
-        removedCategories(): $List<$ResourceLocation>;
-        fluidData(): $FluidData;
-        itemData(): $ItemData;
         removedGlobalRecipes(): $List<$ResourceLocation>;
+        itemData(): $ItemData;
+        fluidData(): $FluidData;
+        removedCategories(): $List<$ResourceLocation>;
         categoryData(): $List<$CategoryData>;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $RecipeViewerData>;
         constructor(removedCategories: $List_<$ResourceLocation_>, removedGlobalRecipes: $List_<$ResourceLocation_>, categoryData: $List_<$CategoryData_>, itemData: $ItemData_, fluidData: $FluidData_);
@@ -202,7 +202,7 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
     /**
      * Values that may be interpreted as {@link $RecipeViewerData}.
      */
-    export type $RecipeViewerData_ = { removedGlobalRecipes?: $List_<$ResourceLocation_>, fluidData?: $FluidData_, itemData?: $ItemData_, categoryData?: $List_<$CategoryData_>, removedCategories?: $List_<$ResourceLocation_>,  } | [removedGlobalRecipes?: $List_<$ResourceLocation_>, fluidData?: $FluidData_, itemData?: $ItemData_, categoryData?: $List_<$CategoryData_>, removedCategories?: $List_<$ResourceLocation_>, ];
+    export type $RecipeViewerData_ = { categoryData?: $List_<$CategoryData_>, removedCategories?: $List_<$ResourceLocation_>, removedGlobalRecipes?: $List_<$ResourceLocation_>, fluidData?: $FluidData_, itemData?: $ItemData_,  } | [categoryData?: $List_<$CategoryData_>, removedCategories?: $List_<$ResourceLocation_>, removedGlobalRecipes?: $List_<$ResourceLocation_>, fluidData?: $FluidData_, itemData?: $ItemData_, ];
     export class $FluidData$Info extends $Record {
         filter(): $FluidIngredient;
         info(): $List<$Component>;
@@ -217,10 +217,10 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
         isEmpty(): boolean;
         static collect(): $FluidData;
         info(): $List<$FluidData$Info>;
+        completelyRemovedEntries(): $List<$FluidIngredient>;
+        dataComponentSubtypes(): $List<$FluidData$DataComponentSubtypes>;
         removedEntries(): $List<$FluidIngredient>;
         addedEntries(): $List<$FluidStack>;
-        dataComponentSubtypes(): $List<$FluidData$DataComponentSubtypes>;
-        completelyRemovedEntries(): $List<$FluidIngredient>;
         groupedEntries(): $List<$FluidData$Group>;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $FluidData>;
         constructor(addedEntries: $List_<$FluidStack_>, removedEntries: $List_<$FluidIngredient_>, completelyRemovedEntries: $List_<$FluidIngredient_>, groupedEntries: $List_<$FluidData$Group_>, info: $List_<$FluidData$Info_>, dataComponentSubtypes: $List_<$FluidData$DataComponentSubtypes_>);
@@ -229,7 +229,7 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
     /**
      * Values that may be interpreted as {@link $FluidData}.
      */
-    export type $FluidData_ = { groupedEntries?: $List_<$FluidData$Group_>, removedEntries?: $List_<$FluidIngredient_>, dataComponentSubtypes?: $List_<$FluidData$DataComponentSubtypes_>, addedEntries?: $List_<$FluidStack_>, info?: $List_<$FluidData$Info_>, completelyRemovedEntries?: $List_<$FluidIngredient_>,  } | [groupedEntries?: $List_<$FluidData$Group_>, removedEntries?: $List_<$FluidIngredient_>, dataComponentSubtypes?: $List_<$FluidData$DataComponentSubtypes_>, addedEntries?: $List_<$FluidStack_>, info?: $List_<$FluidData$Info_>, completelyRemovedEntries?: $List_<$FluidIngredient_>, ];
+    export type $FluidData_ = { info?: $List_<$FluidData$Info_>, completelyRemovedEntries?: $List_<$FluidIngredient_>, groupedEntries?: $List_<$FluidData$Group_>, removedEntries?: $List_<$FluidIngredient_>, dataComponentSubtypes?: $List_<$FluidData$DataComponentSubtypes_>, addedEntries?: $List_<$FluidStack_>,  } | [info?: $List_<$FluidData$Info_>, completelyRemovedEntries?: $List_<$FluidIngredient_>, groupedEntries?: $List_<$FluidData$Group_>, removedEntries?: $List_<$FluidIngredient_>, dataComponentSubtypes?: $List_<$FluidData$DataComponentSubtypes_>, addedEntries?: $List_<$FluidStack_>, ];
     export class $ItemData$DataComponentSubtypes extends $Record {
         filter(): $Ingredient;
         components(): $List<$DataComponentType<never>>;
@@ -243,23 +243,17 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
     export class $ServerRemoveFluidEntriesKubeEvent implements $RemoveEntriesKubeEvent {
         remove(filter: $Object): void;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -267,39 +261,39 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(removedEntries: $List_<$FluidIngredient_>);
     }
     export class $ServerAddItemInformationKubeEvent implements $AddInformationKubeEvent {
         add(filter: $Object, info: $List_<$Component_>): void;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -307,39 +301,39 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(list: $List_<$ItemData$Info_>);
     }
     export class $ServerAddFluidEntriesKubeEvent implements $AddEntriesKubeEvent {
         add(items: $Object[]): void;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -347,39 +341,39 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(list: $List_<$FluidStack_>);
     }
     export class $ServerAddFluidInformationKubeEvent implements $AddInformationKubeEvent {
         add(filter: $Object, info: $List_<$Component_>): void;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -387,39 +381,39 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(list: $List_<$FluidData$Info_>);
     }
     export class $ServerGroupItemEntriesKubeEvent implements $GroupEntriesKubeEvent {
         group(filter: $Object, groupId: $ResourceLocation_, description: $Component_): void;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -427,39 +421,39 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(list: $List_<$ItemData$Group_>);
     }
     export class $ServerRemoveCategoriesKubeEvent implements $RemoveCategoriesKubeEvent {
         remove(categories: $ResourceLocation_[]): void;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -467,39 +461,39 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(categories: $Set_<$ResourceLocation_>);
     }
     export class $ServerAddItemEntriesKubeEvent implements $AddEntriesKubeEvent {
         add(items: $Object[]): void;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -507,17 +501,23 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(list: $List_<$ItemStack_>);
     }
     export class $ServerRegisterFluidSubtypesKubeEvent implements $RegisterSubtypesKubeEvent {
@@ -525,23 +525,17 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
         useComponents(filter: $Object, components: $List_<$DataComponentType_<never>>): void;
         useComponents(filter: $Object): void;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -549,17 +543,23 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(list: $List_<$FluidData$DataComponentSubtypes_>);
     }
     export class $FluidData$Group extends $Record {
@@ -572,17 +572,11 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
     /**
      * Values that may be interpreted as {@link $FluidData$Group}.
      */
-    export type $FluidData$Group_ = { filter?: $FluidIngredient_, description?: $Component_, groupId?: $ResourceLocation_,  } | [filter?: $FluidIngredient_, description?: $Component_, groupId?: $ResourceLocation_, ];
+    export type $FluidData$Group_ = { description?: $Component_, groupId?: $ResourceLocation_, filter?: $FluidIngredient_,  } | [description?: $Component_, groupId?: $ResourceLocation_, filter?: $FluidIngredient_, ];
     export class $ServerRegisterItemSubtypesKubeEvent implements $RegisterSubtypesKubeEvent {
         register(filter: $Object, interpreter: $SubtypeInterpreter_): void;
         useComponents(filter: $Object, components: $List_<$DataComponentType_<never>>): void;
         useComponents(filter: $Object): void;
-        /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -590,11 +584,11 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -602,17 +596,23 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(list: $List_<$ItemData$DataComponentSubtypes_>);
     }
     export class $ItemData$Group extends $Record {
@@ -625,5 +625,5 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/viewer/server" {
     /**
      * Values that may be interpreted as {@link $ItemData$Group}.
      */
-    export type $ItemData$Group_ = { filter?: $Ingredient_, description?: $Component_, groupId?: $ResourceLocation_,  } | [filter?: $Ingredient_, description?: $Component_, groupId?: $ResourceLocation_, ];
+    export type $ItemData$Group_ = { description?: $Component_, groupId?: $ResourceLocation_, filter?: $Ingredient_,  } | [description?: $Component_, groupId?: $ResourceLocation_, filter?: $Ingredient_, ];
 }

@@ -7,12 +7,12 @@ import { $MinimapWriter } from "@package/xaero/common/minimap/write";
 declare module "@package/xaero/common/minimap/highlight" {
     export class $DimensionHighlighterHandler {
         getVersion(): number;
-        shouldApplyTileChunkHighlights(arg0: number, arg1: number, arg2: number, arg3: number, arg4: boolean): boolean;
         requestRefresh(arg0: number, arg1: number): void;
         requestRefresh(): void;
-        addBlockHighlightTooltips(arg0: $InfoDisplayCompiler, arg1: number, arg2: number, arg3: number, arg4: boolean): void;
         applyChunkHighlightColors(arg0: number, arg1: number): number[];
+        shouldApplyTileChunkHighlights(arg0: number, arg1: number, arg2: number, arg3: number, arg4: boolean): boolean;
         shouldApplyRegionHighlights(arg0: number, arg1: number, arg2: boolean): boolean;
+        addBlockHighlightTooltips(arg0: $InfoDisplayCompiler, arg1: number, arg2: number, arg3: number, arg4: boolean): void;
         constructor(arg0: $ResourceKey_<$Level>, arg1: $HighlighterRegistry, arg2: $MinimapWriter);
         get version(): number;
     }

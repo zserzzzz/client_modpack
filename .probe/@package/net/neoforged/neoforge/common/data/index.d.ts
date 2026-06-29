@@ -11,7 +11,7 @@ import { $AdvancementHolder } from "@package/net/minecraft/advancements";
 import { $BiConsumer, $Consumer, $Supplier_, $Consumer_ } from "@package/java/util/function";
 import { $HolderLookup$Provider, $Holder_, $RegistrySetBuilder$PatchedRegistries_, $Registry, $RegistrySetBuilder } from "@package/net/minecraft/core";
 import { $Path_ } from "@package/java/nio/file";
-import { $OverlayMetadataSection$OverlayEntry_, $OverlayMetadataSection$OverlayEntry, $PackType_, $PackType } from "@package/net/minecraft/server/packs";
+import { $OverlayMetadataSection$OverlayEntry, $OverlayMetadataSection$OverlayEntry_, $PackType_, $PackType } from "@package/net/minecraft/server/packs";
 import { $WithConditions$Builder, $WithConditions_, $ICondition, $WithConditions } from "@package/net/neoforged/neoforge/common/conditions";
 import { $Enum, $Record } from "@package/java/lang";
 import { $File_ } from "@package/java/io";
@@ -45,17 +45,17 @@ declare module "@package/net/neoforged/neoforge/common/data" {
      * - Preload: false
      */
     export class $SoundDefinition$Sound {
-        stream(arg0: boolean): $SoundDefinition$Sound;
         stream(): $SoundDefinition$Sound;
-        attenuationDistance(arg0: number): $SoundDefinition$Sound;
+        stream(arg0: boolean): $SoundDefinition$Sound;
         weight(arg0: number): $SoundDefinition$Sound;
         volume(arg0: number): $SoundDefinition$Sound;
         volume(arg0: number): $SoundDefinition$Sound;
-        preload(): $SoundDefinition$Sound;
         preload(arg0: boolean): $SoundDefinition$Sound;
+        preload(): $SoundDefinition$Sound;
+        pitch(arg0: number): $SoundDefinition$Sound;
+        pitch(arg0: number): $SoundDefinition$Sound;
         static sound(arg0: $ResourceLocation_, arg1: $SoundDefinition$SoundType_): $SoundDefinition$Sound;
-        pitch(arg0: number): $SoundDefinition$Sound;
-        pitch(arg0: number): $SoundDefinition$Sound;
+        attenuationDistance(arg0: number): $SoundDefinition$Sound;
     }
     /**
      * Provider for forge's GlobalLootModifier system. See `LootModifier`
@@ -111,11 +111,11 @@ declare module "@package/net/neoforged/neoforge/common/data" {
     }
     export interface $ExistingFileHelper$IResourceType {
         getPrefix(): string;
-        getSuffix(): string;
         getPackType(): $PackType;
+        getSuffix(): string;
         get prefix(): string;
-        get suffix(): string;
         get packType(): $PackType;
+        get suffix(): string;
     }
     /**
      * A data provider for `ParticleDescription`s.
@@ -154,8 +154,8 @@ declare module "@package/net/neoforged/neoforge/common/data" {
     export class $DataMapProvider implements $DataProvider {
         getName(): string;
         run(cache: $CachedOutput_): $CompletableFuture<never>;
-        builder<T, R, VR extends $DataMapValueRemover<R, T>>(arg0: $AdvancedDataMapType<R, T, VR>): $DataMapProvider$AdvancedBuilder<T, R, VR>;
         builder<T, R>(arg0: $DataMapType<R, T>): $DataMapProvider$Builder<T, R>;
+        builder<T, R, VR extends $DataMapValueRemover<R, T>>(arg0: $AdvancedDataMapType<R, T, VR>): $DataMapProvider$AdvancedBuilder<T, R, VR>;
         get name(): string;
     }
     export class $DataMapProvider$AdvancedBuilder<T, R, VR extends $DataMapValueRemover<R, T>> extends $DataMapProvider$Builder<T, R> {
@@ -176,12 +176,12 @@ declare module "@package/net/neoforged/neoforge/common/data" {
     export type $SoundDefinition$SoundType_ = "sound" | "event";
     export class $ExistingFileHelper$ResourceType implements $ExistingFileHelper$IResourceType {
         getPrefix(): string;
-        getSuffix(): string;
         getPackType(): $PackType;
+        getSuffix(): string;
         constructor(type: $PackType_, suffix: string, prefix: string);
         get prefix(): string;
-        get suffix(): string;
         get packType(): $PackType;
+        get suffix(): string;
     }
     /**
      * An extension of the `RegistriesDatapackGenerator` which properly handles
@@ -256,16 +256,15 @@ declare module "@package/net/neoforged/neoforge/common/data" {
         isEnabled(): boolean;
         getResource(loc: $ResourceLocation_, packType: $PackType_, pathSuffix: string, pathPrefix: string): $Resource;
         getResource(loc: $ResourceLocation_, packType: $PackType_): $Resource;
-        exists(arg0: $ResourceLocation_, arg1: $ExistingFileHelper$IResourceType): boolean;
-        /**
-         * Check if a given resource exists in the known resource packs.
-         */
-        exists(loc: $ResourceLocation_, packType: $PackType_): boolean;
         /**
          * Check if a given resource exists in the known resource packs.
          */
         exists(loc: $ResourceLocation_, packType: $PackType_, pathSuffix: string, pathPrefix: string): boolean;
-        getResourceStack(loc: $ResourceLocation_, packType: $PackType_): $List<$Resource>;
+        /**
+         * Check if a given resource exists in the known resource packs.
+         */
+        exists(loc: $ResourceLocation_, packType: $PackType_): boolean;
+        exists(arg0: $ResourceLocation_, arg1: $ExistingFileHelper$IResourceType): boolean;
         trackGenerated(arg0: $ResourceLocation_, arg1: $ExistingFileHelper$IResourceType): void;
         /**
          * Track the existence of a generated file.
@@ -280,6 +279,7 @@ declare module "@package/net/neoforged/neoforge/common/data" {
          * datagen may rely on this file existing.
          */
         trackGenerated(loc: $ResourceLocation_, packType: $PackType_, pathSuffix: string, pathPrefix: string): void;
+        getResourceStack(loc: $ResourceLocation_, packType: $PackType_): $List<$Resource>;
         /**
          * Create a new helper. This should probably *NOT* be used by mods, as
          * the instance provided by forge is designed to be a central instance that
@@ -329,8 +329,8 @@ declare module "@package/net/neoforged/neoforge/common/data" {
          * same sound event previously applied, rather than overwriting it.
          */
         replace(replace: boolean): $SoundDefinition;
-        "with"(arg0: $SoundDefinition$Sound): $SoundDefinition;
         "with"(...arg0: $SoundDefinition$Sound[]): $SoundDefinition;
+        "with"(arg0: $SoundDefinition$Sound): $SoundDefinition;
         /**
          * Creates a new `SoundDefinition`, which will host a set of
          * `Sound`s and the necessary parameters.
@@ -355,10 +355,10 @@ declare module "@package/net/neoforged/neoforge/common/data" {
         add(key: $EntityType_<never>, name: string): void;
         add(key: string, value: string): void;
         add(key: $Block_, name: string): void;
+        addEffect(key: $Supplier_<$MobEffect>, name: string): void;
+        addBlock(key: $Supplier_<$Block>, name: string): void;
         addItem(key: $Supplier_<$Item>, name: string): void;
         addTag(key: $Supplier_<$TagKey<never>>, name: string): void;
-        addBlock(key: $Supplier_<$Block>, name: string): void;
-        addEffect(key: $Supplier_<$MobEffect>, name: string): void;
         addEntityType(key: $Supplier_<$EntityType<never>>, name: string): void;
         addItemStack(key: $Supplier_<$ItemStack>, name: string): void;
         addDimension(dimension: $ResourceKey_<$Level>, value: string): void;

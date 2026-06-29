@@ -21,11 +21,11 @@ declare module "@package/net/minecraft/client/tutorial" {
          * Called when the player opens his inventory
          */
         tick(): void;
-        onMouse(velocityX: number, arg1: number): void;
         /**
          * Handles the player movement
          */
         onInput(input: $Input): void;
+        onMouse(velocityX: number, arg1: number): void;
         /**
          * Called when the player opens his inventory
          */
@@ -55,11 +55,15 @@ declare module "@package/net/minecraft/client/tutorial" {
          * Called when the player opens his inventory
          */
         tick(): void;
+        static hasCraftedPlanksPreviously(player: $LocalPlayer, items: $TagKey_<$Item>): boolean;
         /**
          * Called when the player pick up an ItemStack
          */
         onGetItem(stack: $ItemStack_): void;
-        static hasCraftedPlanksPreviously(player: $LocalPlayer, items: $TagKey_<$Item>): boolean;
+        /**
+         * Handles the player movement
+         */
+        onInput(input: $Input): void;
         /**
          * Called when the player opens his inventory
          */
@@ -73,10 +77,6 @@ declare module "@package/net/minecraft/client/tutorial" {
          * Called when a player hits block to destroy it.
          */
         onDestroyBlock(level: $ClientLevel, pos: $BlockPos_, state: $BlockState_, diggingStage: number): void;
-        /**
-         * Handles the player movement
-         */
-        onInput(input: $Input): void;
         constructor(tutorial: $Tutorial);
     }
     export class $TutorialStepInstance {
@@ -91,6 +91,10 @@ declare module "@package/net/minecraft/client/tutorial" {
          */
         tick(): void;
         /**
+         * Handles the player movement
+         */
+        onInput(input: $Input): void;
+        /**
          * Called when the player opens his inventory
          */
         onOpenInventory(): void;
@@ -107,10 +111,6 @@ declare module "@package/net/minecraft/client/tutorial" {
          * Called when a player hits block to destroy it.
          */
         onDestroyBlock(level: $ClientLevel, pos: $BlockPos_, state: $BlockState_, diggingStage: number): void;
-        /**
-         * Handles the player movement
-         */
-        onInput(input: $Input): void;
     }
     export class $BundleTutorial {
         onInventoryAction(carriedStack: $ItemStack_, slottedStack: $ItemStack_, action: $ClickAction_): void;
@@ -125,6 +125,7 @@ declare module "@package/net/minecraft/client/tutorial" {
          * Called when the player opens his inventory
          */
         tick(): void;
+        static hasPunchedTreesPreviously(player: $LocalPlayer): boolean;
         /**
          * Called when the player pick up an ItemStack
          */
@@ -133,7 +134,10 @@ declare module "@package/net/minecraft/client/tutorial" {
          * Handles blocks and entities hovering
          */
         onLookAt(level: $ClientLevel, result: $HitResult): void;
-        static hasPunchedTreesPreviously(player: $LocalPlayer): boolean;
+        /**
+         * Handles the player movement
+         */
+        onInput(input: $Input): void;
         /**
          * Called when the player opens his inventory
          */
@@ -143,10 +147,6 @@ declare module "@package/net/minecraft/client/tutorial" {
          * Called when a player hits block to destroy it.
          */
         onDestroyBlock(level: $ClientLevel, pos: $BlockPos_, state: $BlockState_, diggingStage: number): void;
-        /**
-         * Handles the player movement
-         */
-        onInput(input: $Input): void;
         constructor(tutorial: $Tutorial);
     }
     export class $CompletedTutorialStepInstance implements $TutorialStepInstance {
@@ -159,6 +159,10 @@ declare module "@package/net/minecraft/client/tutorial" {
          */
         tick(): void;
         /**
+         * Handles the player movement
+         */
+        onInput(input: $Input): void;
+        /**
          * Called when the player opens his inventory
          */
         onOpenInventory(): void;
@@ -175,10 +179,6 @@ declare module "@package/net/minecraft/client/tutorial" {
          * Called when a player hits block to destroy it.
          */
         onDestroyBlock(level: $ClientLevel, pos: $BlockPos_, state: $BlockState_, diggingStage: number): void;
-        /**
-         * Handles the player movement
-         */
-        onInput(input: $Input): void;
         constructor(tutorial: $Tutorial);
     }
     export class $Tutorial {
@@ -195,31 +195,31 @@ declare module "@package/net/minecraft/client/tutorial" {
          * Called when the player opens his inventory
          */
         tick(): void;
+        onInput(input: $Input): void;
         addTimedToast(toast: $TutorialToast, durationTicks: number): void;
         removeTimedToast(toast: $TutorialToast): void;
         /**
          * Called when the player opens his inventory
          */
         onOpenInventory(): void;
-        getMinecraft(): $Minecraft;
+        isSurvival(): boolean;
         /**
          * Sets a new step to the tutorial
          */
         setStep(step: $TutorialSteps_): void;
         onMouse(velocityX: number, arg1: number): void;
+        getMinecraft(): $Minecraft;
+        onInventoryAction(carriedStack: $ItemStack_, slottedStack: $ItemStack_, action: $ClickAction_): void;
         /**
          * Called when the player pick up an ItemStack
          */
         onGetItem(stack: $ItemStack_): void;
         onLookAt(level: $ClientLevel | null, result: $HitResult | null): void;
-        isSurvival(): boolean;
-        onInventoryAction(carriedStack: $ItemStack_, slottedStack: $ItemStack_, action: $ClickAction_): void;
         onDestroyBlock(level: $ClientLevel, pos: $BlockPos_, state: $BlockState_, diggingStage: number): void;
-        onInput(input: $Input): void;
         constructor(minecraft: $Minecraft, options: $Options);
-        get minecraft(): $Minecraft;
-        set step(value: $TutorialSteps_);
         get survival(): boolean;
+        set step(value: $TutorialSteps_);
+        get minecraft(): $Minecraft;
     }
     export class $OpenInventoryTutorialStep implements $TutorialStepInstance {
         /**
@@ -234,6 +234,10 @@ declare module "@package/net/minecraft/client/tutorial" {
          * Called when the player opens his inventory
          */
         onOpenInventory(): void;
+        /**
+         * Handles the player movement
+         */
+        onInput(input: $Input): void;
         onMouse(velocityX: number, arg1: number): void;
         /**
          * Called when the player pick up an ItemStack
@@ -247,10 +251,6 @@ declare module "@package/net/minecraft/client/tutorial" {
          * Called when a player hits block to destroy it.
          */
         onDestroyBlock(level: $ClientLevel, pos: $BlockPos_, state: $BlockState_, diggingStage: number): void;
-        /**
-         * Handles the player movement
-         */
-        onInput(input: $Input): void;
         constructor(tutorial: $Tutorial);
     }
     export class $PunchTreeTutorialStepInstance implements $TutorialStepInstance {
@@ -271,6 +271,10 @@ declare module "@package/net/minecraft/client/tutorial" {
          */
         onDestroyBlock(level: $ClientLevel, pos: $BlockPos_, state: $BlockState_, diggingStage: number): void;
         /**
+         * Handles the player movement
+         */
+        onInput(input: $Input): void;
+        /**
          * Called when the player opens his inventory
          */
         onOpenInventory(): void;
@@ -279,10 +283,6 @@ declare module "@package/net/minecraft/client/tutorial" {
          * Handles blocks and entities hovering
          */
         onLookAt(level: $ClientLevel, result: $HitResult): void;
-        /**
-         * Handles the player movement
-         */
-        onInput(input: $Input): void;
         constructor(tutorial: $Tutorial);
     }
     export class $TutorialSteps extends $Enum<$TutorialSteps> {

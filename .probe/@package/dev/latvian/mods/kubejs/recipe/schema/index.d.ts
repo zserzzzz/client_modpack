@@ -37,22 +37,22 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/schema" {
      */
     export type $RecipeOptional_<T> = ((type: $RecipeSchemaType) => T);
     export class $RecipeSchemaData extends $Record {
-        hidden(): (boolean) | undefined;
         parent(): ($ResourceLocation) | undefined;
         merge(): $RecipeSchemaData$MergeData;
         constructors(): ($List<$RecipeSchemaData$ConstructorData>) | undefined;
         keys(): ($List<$RecipeSchemaData$RecipeKeyData>) | undefined;
         mappings(): $List<string>;
         functions(): ($Map<string, $RecipeSchemaFunction>) | undefined;
-        unique(): ($List<string>) | undefined;
         postProcessors(): ($List<$RecipePostProcessor>) | undefined;
+        unique(): ($List<string>) | undefined;
+        hidden(): (boolean) | undefined;
         overrideType(): ($ResourceLocation) | undefined;
         mergeKeys(): boolean;
-        mergePostProcessors(): boolean;
-        recipeFactory(): ($ResourceLocation) | undefined;
         mergeUnique(): boolean;
         overrideKeys(): $Map<string, $JsonElement>;
         mergeConstructors(): boolean;
+        recipeFactory(): ($ResourceLocation) | undefined;
+        mergePostProcessors(): boolean;
         static CODEC: $Function<$RecipeTypeRegistryContext, $Codec<$RecipeSchemaData>>;
         constructor(parent: $ResourceLocation_, overrideType: $ResourceLocation_, recipeFactory: $ResourceLocation_, keys: $List_<$RecipeSchemaData$RecipeKeyData_>, constructors: $List_<$RecipeSchemaData$ConstructorData_>, functions: $Map_<string, $RecipeSchemaFunction>, overrideKeys: $Map_<string, $JsonElement_>, hidden: boolean, mappings: $List_<string>, unique: $List_<string>, postProcessors: $List_<$RecipePostProcessor>, merge: $RecipeSchemaData$MergeData_);
         constructor(parent: ($ResourceLocation_) | undefined, overrideType: ($ResourceLocation_) | undefined, recipeFactory: ($ResourceLocation_) | undefined, keys: ($List_<$RecipeSchemaData$RecipeKeyData_>) | undefined, constructors: ($List_<$RecipeSchemaData$ConstructorData_>) | undefined, functions: ($Map_<string, $RecipeSchemaFunction>) | undefined, overrideKeys: $Map_<string, $JsonElement_>, hidden: (boolean) | undefined, mappings: $List_<string>, unique: ($List_<string>) | undefined, postProcessors: ($List_<$RecipePostProcessor>) | undefined, merge: $RecipeSchemaData$MergeData_);
@@ -60,7 +60,7 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/schema" {
     /**
      * Values that may be interpreted as {@link $RecipeSchemaData}.
      */
-    export type $RecipeSchemaData_ = { recipeFactory?: ($ResourceLocation_) | undefined, functions?: ($Map_<string, $RecipeSchemaFunction>) | undefined, merge?: $RecipeSchemaData$MergeData_, mappings?: $List_<string>, unique?: ($List_<string>) | undefined, constructors?: ($List_<$RecipeSchemaData$ConstructorData_>) | undefined, overrideType?: ($ResourceLocation_) | undefined, keys?: ($List_<$RecipeSchemaData$RecipeKeyData_>) | undefined, hidden?: (boolean) | undefined, parent?: ($ResourceLocation_) | undefined, postProcessors?: ($List_<$RecipePostProcessor>) | undefined, overrideKeys?: $Map_<string, $JsonElement_>,  } | [recipeFactory?: ($ResourceLocation_) | undefined, functions?: ($Map_<string, $RecipeSchemaFunction>) | undefined, merge?: $RecipeSchemaData$MergeData_, mappings?: $List_<string>, unique?: ($List_<string>) | undefined, constructors?: ($List_<$RecipeSchemaData$ConstructorData_>) | undefined, overrideType?: ($ResourceLocation_) | undefined, keys?: ($List_<$RecipeSchemaData$RecipeKeyData_>) | undefined, hidden?: (boolean) | undefined, parent?: ($ResourceLocation_) | undefined, postProcessors?: ($List_<$RecipePostProcessor>) | undefined, overrideKeys?: $Map_<string, $JsonElement_>, ];
+    export type $RecipeSchemaData_ = { overrideType?: ($ResourceLocation_) | undefined, keys?: ($List_<$RecipeSchemaData$RecipeKeyData_>) | undefined, hidden?: (boolean) | undefined, parent?: ($ResourceLocation_) | undefined, postProcessors?: ($List_<$RecipePostProcessor>) | undefined, overrideKeys?: $Map_<string, $JsonElement_>, recipeFactory?: ($ResourceLocation_) | undefined, functions?: ($Map_<string, $RecipeSchemaFunction>) | undefined, merge?: $RecipeSchemaData$MergeData_, mappings?: $List_<string>, unique?: ($List_<string>) | undefined, constructors?: ($List_<$RecipeSchemaData$ConstructorData_>) | undefined,  } | [overrideType?: ($ResourceLocation_) | undefined, keys?: ($List_<$RecipeSchemaData$RecipeKeyData_>) | undefined, hidden?: (boolean) | undefined, parent?: ($ResourceLocation_) | undefined, postProcessors?: ($List_<$RecipePostProcessor>) | undefined, overrideKeys?: $Map_<string, $JsonElement_>, recipeFactory?: ($ResourceLocation_) | undefined, functions?: ($Map_<string, $RecipeSchemaFunction>) | undefined, merge?: $RecipeSchemaData$MergeData_, mappings?: $List_<string>, unique?: ($List_<string>) | undefined, constructors?: ($List_<$RecipeSchemaData$ConstructorData_>) | undefined, ];
     export class $UnknownRecipeSchemaType extends $RecipeSchemaType {
         schema: $RecipeSchema;
         parent: $RecipeSchemaType;
@@ -84,23 +84,17 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/schema" {
         register(id: $ResourceLocation_, schema: $RecipeSchema): void;
         namespace(namespace: string): $RecipeNamespace;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -108,17 +102,23 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/schema" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(storage: $RecipeSchemaStorage);
     }
     export class $KubeRecipeFactory extends $Record {
@@ -133,7 +133,7 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/schema" {
     /**
      * Values that may be interpreted as {@link $KubeRecipeFactory}.
      */
-    export type $KubeRecipeFactory_ = { factory?: $Supplier_<$KubeRecipe>, recipeType?: $TypeInfo_, id?: $ResourceLocation_,  } | [factory?: $Supplier_<$KubeRecipe>, recipeType?: $TypeInfo_, id?: $ResourceLocation_, ];
+    export type $KubeRecipeFactory_ = { id?: $ResourceLocation_, factory?: $Supplier_<$KubeRecipe>, recipeType?: $TypeInfo_,  } | [id?: $ResourceLocation_, factory?: $Supplier_<$KubeRecipe>, recipeType?: $TypeInfo_, ];
     export class $RecipeOptional$Unit<T> {
     }
     export interface $RecipeOptional$Unit<T> extends $RecipeOptional<T> {
@@ -179,23 +179,17 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/schema" {
     export class $RecipeMappingRegistry implements $KubeEvent {
         register(name: string, type: $ResourceLocation_): void;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -203,25 +197,31 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/schema" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(storage: $RecipeSchemaStorage);
     }
     export class $RecipeConstructor {
-        toJson(type: $RecipeSchemaType, ops: $DynamicOps<$JsonElement_>): $JsonObject;
         toString(ops: $OpsContainer): string;
         defaultValue<T>(key: $RecipeKey<T>, value: $RecipeOptional_<T>): $RecipeConstructor;
         override<T>(key: $RecipeKey<T>, value: $RecipeOptional_<T>): $RecipeConstructor;
         create(sourceLine: $SourceLine_, type: $RecipeTypeFunction, schemaType: $RecipeSchemaType, from: $ComponentValueMap): $KubeRecipe;
+        toJson(type: $RecipeSchemaType, ops: $DynamicOps<$JsonElement_>): $JsonObject;
         setValues(cx: $RecipeScriptContext, schemaType: $RecipeSchemaType, from: $ComponentValueMap): void;
         overrideValue<T>(key: $RecipeKey<T>, value: T): $RecipeConstructor;
         keys: $List<$RecipeKey<never>>;
@@ -247,11 +247,11 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/schema" {
         register(id: string, type: $RegistryAwareSchema_): $RecipeNamespace;
         register(id: string, type: $RecipeSchema): $RecipeNamespace;
         special(id: string): $RecipeNamespace;
-        withExistingParent(id: string, parent: $ResourceLocation_): $RecipeNamespace;
-        shapeless(id: string): $RecipeNamespace;
         shaped(id: string): $RecipeNamespace;
-        getRegisteredOrThrow(id: string): $RecipeSchemaType;
+        shapeless(id: string): $RecipeNamespace;
+        withExistingParent(id: string, parent: $ResourceLocation_): $RecipeNamespace;
         registerBasic(id: string, ...keys: $RecipeKey<never>[]): $RecipeNamespace;
+        getRegisteredOrThrow(id: string): $RecipeSchemaType;
         name: string;
         storage: $RecipeSchemaStorage;
         constructor(storage: $RecipeSchemaStorage, name: string);
@@ -272,8 +272,8 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/schema" {
     export class $RecipeSchemaData$MergeData extends $Record {
         constructors(): boolean;
         keys(): boolean;
-        unique(): boolean;
         postProcessors(): boolean;
+        unique(): boolean;
         static CODEC: $Codec<$RecipeSchemaData$MergeData>;
         static DEFAULT: $RecipeSchemaData$MergeData;
         constructor(keys: boolean, constructors: boolean, unique: boolean, postProcessors: boolean);
@@ -281,10 +281,10 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/schema" {
     /**
      * Values that may be interpreted as {@link $RecipeSchemaData$MergeData}.
      */
-    export type $RecipeSchemaData$MergeData_ = { constructors?: boolean, keys?: boolean, unique?: boolean, postProcessors?: boolean,  } | [constructors?: boolean, keys?: boolean, unique?: boolean, postProcessors?: boolean, ];
+    export type $RecipeSchemaData$MergeData_ = { keys?: boolean, unique?: boolean, postProcessors?: boolean, constructors?: boolean,  } | [keys?: boolean, unique?: boolean, postProcessors?: boolean, constructors?: boolean, ];
     export class $RecipeSchemaStorage {
-        namespace(namespace: string): $RecipeNamespace;
         fireEvents(registries: $RegistryAccessContainer, resourceManager: $ResourceManager): void;
+        namespace(namespace: string): $RecipeNamespace;
         mappings: $Map<string, $ResourceLocation>;
         recipeTypes: $Map<$ResourceLocation, $KubeRecipeFactory>;
         schemaTypes: $Map<string, $RecipeSchemaType>;
@@ -322,29 +322,29 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/schema" {
         constructor();
     }
     export class $RecipeSchema {
-        toJson(storage: $RecipeSchemaStorage, schemaType: $RecipeSchemaType, ops: $RegistryOps<$JsonElement_>): $JsonObject;
-        deserialize(sourceLine: $SourceLine_, type: $RecipeTypeFunction, id: $ResourceLocation_, json: $JsonObject_): $KubeRecipe;
         isHidden(): boolean;
         getKey<T>(id: string): $RecipeKey<T>;
         factory(factory: $KubeRecipeFactory_): $RecipeSchema;
-        "constructor"(arg0: $RecipeConstructor): $RecipeSchema;
         addConstructor(...keys: $RecipeKey<never>[]): $RecipeSchema;
+        "constructor"(arg0: $RecipeConstructor): $RecipeSchema;
         constructors(): $Int2ObjectMap<$RecipeConstructor>;
         "function"(arg0: $RecipeFunctionInstance_): $RecipeSchema;
+        deserialize(sourceLine: $SourceLine_, type: $RecipeTypeFunction, id: $ResourceLocation_, json: $JsonObject_): $KubeRecipe;
+        toJson(storage: $RecipeSchemaStorage, schemaType: $RecipeSchemaType, ops: $RegistryOps<$JsonElement_>): $JsonObject;
+        postProcessors(): $List<$RecipePostProcessor>;
         uniqueId(key: $RecipeKey<never>): $RecipeSchema;
         postProcessor(processor: $RecipePostProcessor): $RecipeSchema;
-        postProcessors(): $List<$RecipePostProcessor>;
         inputCount(): number;
+        outputCount(): number;
         uniqueIds(): $List<$RecipeKey<never>>;
         uniqueIds(keys: $SequencedCollection<$RecipeKey<never>>): $RecipeSchema;
-        outputCount(): number;
-        minRequiredArguments(): number;
+        setOpFunction<T>(name: string, key: $RecipeKey<T>, value: T): $RecipeSchema;
+        getOptionalKey<T>(id: string): $RecipeKey<T>;
         constructorsGenerated(): boolean;
+        minRequiredArguments(): number;
         addToListOpFunction<T>(name: string, key: $RecipeKey<$List_<T>>): $RecipeSchema;
         buildUniqueId(r: $KubeRecipe): string;
-        getOptionalKey<T>(id: string): $RecipeKey<T>;
         typeOverride(id: $ResourceLocation_): $RecipeSchema;
-        setOpFunction<T>(name: string, key: $RecipeKey<T>, value: T): $RecipeSchema;
         functions: $Map<string, $RecipeFunctionInstance>;
         recipeFactory: $KubeRecipeFactory;
         keys: $List<$RecipeKey<never>>;
@@ -361,14 +361,14 @@ declare module "@package/dev/latvian/mods/kubejs/recipe/schema" {
         excluded(): boolean;
         role(): $ComponentRole;
         functionNames(): $List<string>;
-        alwaysWrite(): boolean;
         defaultOptional(): boolean;
         alternativeNames(): $List<string>;
+        alwaysWrite(): boolean;
         static CODEC: $Function<$RecipeTypeRegistryContext, $Codec<$RecipeSchemaData$RecipeKeyData>>;
         constructor(name: string, role: $ComponentRole_, type: $RecipeComponent<never>, optional: ($JsonElement_) | undefined, defaultOptional: boolean, alternativeNames: $List_<string>, excluded: boolean, functionNames: $List_<string>, alwaysWrite: boolean);
     }
     /**
      * Values that may be interpreted as {@link $RecipeSchemaData$RecipeKeyData}.
      */
-    export type $RecipeSchemaData$RecipeKeyData_ = { defaultOptional?: boolean, role?: $ComponentRole_, optional?: ($JsonElement_) | undefined, functionNames?: $List_<string>, alternativeNames?: $List_<string>, alwaysWrite?: boolean, excluded?: boolean, type?: $RecipeComponent<never>, name?: string,  } | [defaultOptional?: boolean, role?: $ComponentRole_, optional?: ($JsonElement_) | undefined, functionNames?: $List_<string>, alternativeNames?: $List_<string>, alwaysWrite?: boolean, excluded?: boolean, type?: $RecipeComponent<never>, name?: string, ];
+    export type $RecipeSchemaData$RecipeKeyData_ = { type?: $RecipeComponent<never>, name?: string, defaultOptional?: boolean, role?: $ComponentRole_, optional?: ($JsonElement_) | undefined, functionNames?: $List_<string>, alternativeNames?: $List_<string>, alwaysWrite?: boolean, excluded?: boolean,  } | [type?: $RecipeComponent<never>, name?: string, defaultOptional?: boolean, role?: $ComponentRole_, optional?: ($JsonElement_) | undefined, functionNames?: $List_<string>, alternativeNames?: $List_<string>, alwaysWrite?: boolean, excluded?: boolean, ];
 }

@@ -1,4 +1,4 @@
-import { $SensorType, $Sensor, $SensorType_ } from "@package/net/minecraft/world/entity/ai/sensing";
+import { $Sensor, $SensorType, $SensorType_ } from "@package/net/minecraft/world/entity/ai/sensing";
 import { $LivingEntity } from "@package/net/minecraft/world/entity";
 import { $Map_, $Map } from "@package/java/util";
 
@@ -16,9 +16,9 @@ declare module "@package/net/caffeinemc/mods/lithium/mixin/ai/useless_sensors" {
     export class $SensorAccessor {
     }
     export interface $SensorAccessor {
-        getSenseInterval(): number;
-        setLastSenseTime(arg0: number): void;
         getLastSenseTime(): number;
+        setLastSenseTime(arg0: number): void;
+        getSenseInterval(): number;
         get senseInterval(): number;
     }
 }

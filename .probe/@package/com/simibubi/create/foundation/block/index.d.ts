@@ -41,16 +41,16 @@ declare module "@package/com/simibubi/create/foundation/block" {
         getFactory(arg0: $CopperBlockSet, arg1: $WeatheringCopper$WeatherState_, arg2: boolean): $NonNullFunction<$BlockBehaviour$Properties, $SlabBlock>;
         getSuffix(): string;
         generateRecipes(arg0: $BlockEntry<never>, arg1: $DataGenContext<$Block_, $SlabBlock>, arg2: $RegistrateRecipeProvider): void;
-        generateLootTable(arg0: $RegistrateBlockLootTables, arg1: $SlabBlock, arg2: $CopperBlockSet, arg3: $WeatheringCopper$WeatherState_, arg4: boolean): void;
         generateBlockState(arg0: $DataGenContext<$Block_, $SlabBlock>, arg1: $RegistrateBlockstateProvider, arg2: $CopperBlockSet, arg3: $WeatheringCopper$WeatherState_, arg4: boolean): void;
+        generateLootTable(arg0: $RegistrateBlockLootTables, arg1: $SlabBlock, arg2: $CopperBlockSet, arg3: $WeatheringCopper$WeatherState_, arg4: boolean): void;
         static INSTANCE: $CopperBlockSet$SlabVariant;
         get suffix(): string;
     }
     export class $WrenchableDirectionalBlock extends $DirectionalBlock implements $IWrenchable {
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
+        onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -86,9 +86,9 @@ declare module "@package/com/simibubi/create/foundation/block" {
         static WATERLOGGED: $BooleanProperty;
     }
     export interface $ProperWaterloggedBlock extends $SimpleWaterloggedBlock {
-        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
-        fluidState(arg0: $BlockState_): $FluidState;
         updateWater(arg0: $LevelAccessor, arg1: $BlockState_, arg2: $BlockPos_): void;
+        fluidState(arg0: $BlockState_): $FluidState;
+        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
     }
     export class $CopperBlockSet$BlockVariant implements $CopperBlockSet$Variant<$Block> {
         getFactory(arg0: $CopperBlockSet, arg1: $WeatheringCopper$WeatherState_, arg2: boolean): $NonNullFunction<$BlockBehaviour$Properties, $Block>;
@@ -156,8 +156,8 @@ declare module "@package/com/simibubi/create/foundation/block" {
         getFactory(arg0: $CopperBlockSet, arg1: $WeatheringCopper$WeatherState_, arg2: boolean): $NonNullFunction<$BlockBehaviour$Properties, T>;
         getSuffix(): string;
         generateRecipes(arg0: $BlockEntry<never>, arg1: $DataGenContext<$Block_, T>, arg2: $RegistrateRecipeProvider): void;
-        generateLootTable(arg0: $RegistrateBlockLootTables, arg1: T, arg2: $CopperBlockSet, arg3: $WeatheringCopper$WeatherState_, arg4: boolean): void;
         generateBlockState(arg0: $DataGenContext<$Block_, T>, arg1: $RegistrateBlockstateProvider, arg2: $CopperBlockSet, arg3: $WeatheringCopper$WeatherState_, arg4: boolean): void;
+        generateLootTable(arg0: $RegistrateBlockLootTables, arg1: T, arg2: $CopperBlockSet, arg3: $WeatheringCopper$WeatherState_, arg4: boolean): void;
         get suffix(): string;
     }
     export class $CopperBlockSet$StairVariant implements $CopperBlockSet$Variant<$StairBlock> {
@@ -170,8 +170,8 @@ declare module "@package/com/simibubi/create/foundation/block" {
         get suffix(): string;
     }
     export class $ItemUseOverrides {
-        static onBlockActivated(arg0: $PlayerInteractEvent$RightClickBlock): void;
         static addBlock(arg0: $Block_): void;
+        static onBlockActivated(arg0: $PlayerInteractEvent$RightClickBlock): void;
         constructor();
     }
     export class $CopperRegistries {
@@ -188,9 +188,9 @@ declare module "@package/com/simibubi/create/foundation/block" {
         get(arg0: $CopperBlockSet$Variant<never>, arg1: $WeatheringCopper$WeatherState_, arg2: boolean): $BlockEntry<never>;
         getVariants(): $CopperBlockSet$Variant<never>[];
         hasVariant(arg0: $CopperBlockSet$Variant<never>): boolean;
-        static getWeatherStatePrefix(arg0: $WeatheringCopper$WeatherState_): string;
         getEndTextureName(): string;
         getStandard(): $BlockEntry<never>;
+        static getWeatherStatePrefix(arg0: $WeatheringCopper$WeatherState_): string;
         static DEFAULT_VARIANTS: $CopperBlockSet$Variant<never>[];
         constructor(arg0: $AbstractRegistrate<never>, arg1: string, arg2: string, arg3: $CopperBlockSet$Variant<never>[], arg4: $NonNullBiConsumer_<$DataGenContext<$Block, never>, $RegistrateRecipeProvider>, arg5: $NonNullBiConsumer_<$WeatheringCopper$WeatherState, $Block>);
         constructor(arg0: $AbstractRegistrate<never>, arg1: string, arg2: string, arg3: $CopperBlockSet$Variant<never>[], arg4: $NonNullBiConsumer_<$DataGenContext<$Block, never>, $RegistrateRecipeProvider>, arg5: string, arg6: $NonNullBiConsumer_<$WeatheringCopper$WeatherState, $Block>);
@@ -257,16 +257,16 @@ declare module "@package/com/simibubi/create/foundation/block" {
         static onRemove(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $BlockState_): void;
     }
     export interface $IBE<T extends $BlockEntity> extends $EntityBlock {
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<T>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<T, $InteractionResult>): $InteractionResult;
-        getBlockEntityType(): $BlockEntityType<T>;
-        getBlockEntityClass(): $Class<T>;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): (T) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<T, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): T;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        get blockEntityType(): $BlockEntityType<T>;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<T>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): (T) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<T, $ItemInteractionResult>): $ItemInteractionResult;
+        getBlockEntityClass(): $Class<T>;
+        getBlockEntityType(): $BlockEntityType<T>;
         get blockEntityClass(): $Class<T>;
+        get blockEntityType(): $BlockEntityType<T>;
     }
 }

@@ -36,8 +36,8 @@ declare module "@package/com/mojang/authlib/yggdrasil" {
     export interface $ServicesKeyInfo {
         signature(): $Signature;
         validateProperty(arg0: $Property_): boolean;
-        keyBitCount(): number;
         signatureBitCount(): number;
+        keyBitCount(): number;
     }
     export class $ProfileResult extends $Record {
         profile(): $GameProfile;
@@ -48,7 +48,7 @@ declare module "@package/com/mojang/authlib/yggdrasil" {
     /**
      * Values that may be interpreted as {@link $ProfileResult}.
      */
-    export type $ProfileResult_ = { actions?: $Set_<$ProfileActionType_>, profile?: $GameProfile,  } | [actions?: $Set_<$ProfileActionType_>, profile?: $GameProfile, ];
+    export type $ProfileResult_ = { profile?: $GameProfile, actions?: $Set_<$ProfileActionType_>,  } | [profile?: $GameProfile, actions?: $Set_<$ProfileActionType_>, ];
     export class $ServicesKeyType extends $Enum<$ServicesKeyType> {
         static values(): $ServicesKeyType[];
         static valueOf(arg0: string): $ServicesKeyType;

@@ -8,8 +8,8 @@ import { $Comparable, $Iterable } from "@package/java/lang";
 declare module "@package/xaero/hud/minimap/radar/state" {
     export class $RadarState {
         getRadarLists(): $Iterable<$RadarList>;
-        getListsGeneratedForSyncedConfig(): $EntityRadarCategory;
         setListsGeneratedForSyncedConfig(arg0: $EntityRadarCategory): void;
+        getListsGeneratedForSyncedConfig(): $EntityRadarCategory;
         getListsReversedOrder(): boolean;
         getListsGeneratedForConfig(): $EntityRadarCategory;
         constructor();
@@ -24,11 +24,11 @@ declare module "@package/xaero/hud/minimap/radar/state" {
         add(arg0: $Entity): boolean;
         getEntities(): $Iterable<$Entity>;
         clearEntities(): void;
-        getSyncedCategory(): $EntityRadarCategory;
-        getClientCategory(): $EntityRadarCategory;
-        setClientCategory(arg0: $EntityRadarCategory): $RadarList;
-        setSyncedCategory(arg0: $EntityRadarCategory): $RadarList;
         getEffective<T>(arg0: $ObjectCategorySetting<T>): T;
+        setClientCategory(arg0: $EntityRadarCategory): $RadarList;
+        getClientCategory(): $EntityRadarCategory;
+        setSyncedCategory(arg0: $EntityRadarCategory): $RadarList;
+        getSyncedCategory(): $EntityRadarCategory;
         get entities(): $Iterable<$Entity>;
     }
     export class $RadarStateUpdater {

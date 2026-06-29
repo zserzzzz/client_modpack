@@ -21,19 +21,23 @@ declare module "@package/com/electronwill/nightconfig/core" {
         static wrap(arg0: $Map_<string, $Object>, arg1: $ConfigFormat<never>): $Config;
         static of(arg0: $ConfigFormat<$Config>): $Config;
         static of(arg0: $Supplier_<$Map<string, $Object>>, arg1: $ConfigFormat<never>): $Config;
-        static copy(arg0: $UnmodifiableConfig, arg1: $ConfigFormat<never>): $Config;
         static copy(arg0: $UnmodifiableConfig, arg1: $Supplier_<$Map<string, $Object>>): $Config;
-        static copy(arg0: $UnmodifiableConfig): $Config;
         static copy(arg0: $UnmodifiableConfig, arg1: $Supplier_<$Map<string, $Object>>, arg2: $ConfigFormat<never>): $Config;
-        static inMemory(): $Config;
-        /**
-         * @deprecated
-         */
-        static inMemoryUniversalConcurrent(): $Config;
+        static copy(arg0: $UnmodifiableConfig, arg1: $ConfigFormat<never>): $Config;
+        static copy(arg0: $UnmodifiableConfig): $Config;
         /**
          * @deprecated
          */
         static ofConcurrent(arg0: $ConfigFormat<$Config>): $Config;
+        static inMemoryUniversal(): $Config;
+        /**
+         * @deprecated
+         */
+        static inMemoryConcurrent(): $Config;
+        /**
+         * @deprecated
+         */
+        static concurrentCopy(arg0: $UnmodifiableConfig, arg1: $ConfigFormat<never>): $Config;
         /**
          * @deprecated
          */
@@ -41,14 +45,8 @@ declare module "@package/com/electronwill/nightconfig/core" {
         /**
          * @deprecated
          */
-        static concurrentCopy(arg0: $UnmodifiableConfig, arg1: $ConfigFormat<never>): $Config;
-        static inMemoryUniversal(): $Config;
-        /**
-         * @deprecated
-         */
-        static inMemoryConcurrent(): $Config;
-        static setInsertionOrderPreserved(arg0: boolean): void;
-        static isInsertionOrderPreserved(): boolean;
+        static inMemoryUniversalConcurrent(): $Config;
+        static inMemory(): $Config;
         /**
          * @deprecated
          */
@@ -57,6 +55,8 @@ declare module "@package/com/electronwill/nightconfig/core" {
          * @deprecated
          */
         static getDefaultMapCreator<T>(arg0: boolean): $Supplier<$Map<string, T>>;
+        static isInsertionOrderPreserved(): boolean;
+        static setInsertionOrderPreserved(arg0: boolean): void;
     }
     export interface $Config extends $UnmodifiableConfig {
         remove<T>(arg0: $List_<string>): T;
@@ -73,27 +73,25 @@ declare module "@package/com/electronwill/nightconfig/core" {
         set<T>(arg0: $List_<string>, arg1: $Object): T;
         checked(): $Config;
         removeAll(arg0: $UnmodifiableConfig): void;
+        unmodifiable(): $UnmodifiableConfig;
+        createSubConfig(): $Config;
         /**
          * @deprecated
          */
         valueMap(): $Map<string, $Object>;
-        unmodifiable(): $UnmodifiableConfig;
-        createSubConfig(): $Config;
     }
     export class $CommentedConfig {
-        static fake(arg0: $Config): $CommentedConfig;
         static wrap(arg0: $Map_<string, $Object>, arg1: $ConfigFormat<never>): $CommentedConfig;
-        static of(arg0: $Supplier_<$Map<string, $Object>>, arg1: $ConfigFormat<$CommentedConfig>): $CommentedConfig;
         static of(arg0: $ConfigFormat<$CommentedConfig>): $CommentedConfig;
-        static copy(arg0: $UnmodifiableConfig): $CommentedConfig;
-        static copy(arg0: $UnmodifiableConfig, arg1: $ConfigFormat<never>): $CommentedConfig;
-        static copy(arg0: $UnmodifiableCommentedConfig): $CommentedConfig;
+        static of(arg0: $Supplier_<$Map<string, $Object>>, arg1: $ConfigFormat<$CommentedConfig>): $CommentedConfig;
         static copy(arg0: $UnmodifiableConfig, arg1: $Supplier_<$Map<string, $Object>>): $CommentedConfig;
+        static copy(arg0: $UnmodifiableConfig, arg1: $ConfigFormat<never>): $CommentedConfig;
+        static copy(arg0: $UnmodifiableConfig): $CommentedConfig;
+        static copy(arg0: $UnmodifiableCommentedConfig, arg1: $Supplier_<$Map<string, $Object>>, arg2: $ConfigFormat<$CommentedConfig>): $CommentedConfig;
         static copy(arg0: $UnmodifiableCommentedConfig, arg1: $ConfigFormat<never>): $CommentedConfig;
         static copy(arg0: $UnmodifiableCommentedConfig, arg1: $Supplier_<$Map<string, $Object>>): $CommentedConfig;
-        static copy(arg0: $UnmodifiableCommentedConfig, arg1: $Supplier_<$Map<string, $Object>>, arg2: $ConfigFormat<$CommentedConfig>): $CommentedConfig;
         static copy(arg0: $UnmodifiableConfig, arg1: $Supplier_<$Map<string, $Object>>, arg2: $ConfigFormat<never>): $CommentedConfig;
-        static inMemory(): $CommentedConfig;
+        static copy(arg0: $UnmodifiableCommentedConfig): $CommentedConfig;
         /**
          * @deprecated
          */
@@ -101,11 +99,7 @@ declare module "@package/com/electronwill/nightconfig/core" {
         /**
          * @deprecated
          */
-        static concurrentCopy(arg0: $UnmodifiableConfig, arg1: $ConfigFormat<never>): $CommentedConfig;
-        /**
-         * @deprecated
-         */
-        static concurrentCopy(arg0: $UnmodifiableCommentedConfig): $CommentedConfig;
+        static inMemoryConcurrent(): $CommentedConfig;
         /**
          * @deprecated
          */
@@ -113,27 +107,33 @@ declare module "@package/com/electronwill/nightconfig/core" {
         /**
          * @deprecated
          */
+        static concurrentCopy(arg0: $UnmodifiableConfig, arg1: $ConfigFormat<never>): $CommentedConfig;
+        /**
+         * @deprecated
+         */
         static concurrentCopy(arg0: $UnmodifiableCommentedConfig, arg1: $ConfigFormat<never>): $CommentedConfig;
         /**
          * @deprecated
          */
-        static inMemoryConcurrent(): $CommentedConfig;
+        static concurrentCopy(arg0: $UnmodifiableCommentedConfig): $CommentedConfig;
+        static fake(arg0: $Config): $CommentedConfig;
+        static inMemory(): $CommentedConfig;
     }
     export interface $CommentedConfig extends $UnmodifiableCommentedConfig, $Config {
         entrySet(): $Set<$CommentedConfig$Entry>;
-        checked(): $CommentedConfig;
         setComment(arg0: string, arg1: string): string;
         setComment(arg0: $List_<string>, arg1: string): string;
+        unmodifiable(): $UnmodifiableCommentedConfig;
+        putAllComments(arg0: $UnmodifiableCommentedConfig): void;
+        putAllComments(arg0: $Map_<string, $UnmodifiableCommentedConfig$CommentNode>): void;
+        removeComment(arg0: string): string;
+        removeComment(arg0: $List_<string>): string;
+        clearComments(): void;
         /**
          * @deprecated
          */
         commentMap(): $Map<string, string>;
-        unmodifiable(): $UnmodifiableCommentedConfig;
-        putAllComments(arg0: $UnmodifiableCommentedConfig): void;
-        putAllComments(arg0: $Map_<string, $UnmodifiableCommentedConfig$CommentNode>): void;
-        clearComments(): void;
-        removeComment(arg0: string): string;
-        removeComment(arg0: $List_<string>): string;
+        checked(): $Config;
         createSubConfig(): $Config;
     }
     export class $CommentedConfig$Entry {
@@ -166,15 +166,15 @@ declare module "@package/com/electronwill/nightconfig/core" {
         getKey(): string;
         isNull(): boolean;
         getRawValue<T>(): T;
-        getOrElse<T>(arg0: T): T;
-        getCharOrElse(arg0: string): string;
-        getShortOrElse(arg0: number): number;
         getLongOrElse(arg0: number): number;
-        getOptionalLong(): $OptionalLong;
-        getOptional<T>(): (T) | undefined;
+        getShortOrElse(arg0: number): number;
         getOptionalInt(): $OptionalInt;
         getIntOrElse(arg0: number): number;
+        getOptional<T>(): (T) | undefined;
+        getOptionalLong(): $OptionalLong;
         getByteOrElse(arg0: number): number;
+        getCharOrElse(arg0: string): string;
+        getOrElse<T>(arg0: T): T;
         get byte(): number;
         get short(): number;
         get char(): string;
@@ -184,24 +184,24 @@ declare module "@package/com/electronwill/nightconfig/core" {
         get key(): string;
         get null(): boolean;
         get rawValue(): T;
-        get optionalLong(): $OptionalLong;
-        get optional(): (T) | undefined;
         get optionalInt(): $OptionalInt;
+        get optional(): (T) | undefined;
+        get optionalLong(): $OptionalLong;
     }
     export class $ConfigFormat<C extends $Config> {
     }
     export interface $ConfigFormat<C extends $Config> {
-        isInMemory(): boolean;
-        createConfig(arg0: $Supplier_<$Map<string, $Object>>): C;
         createConfig(): C;
+        createConfig(arg0: $Supplier_<$Map<string, $Object>>): C;
+        supportsComments(): boolean;
+        createParser(): $ConfigParser<C>;
         supportsType(arg0: $Class<never>): boolean;
-        createWriter(): $ConfigWriter;
         initEmptyFile(arg0: $Path_): void;
+        initEmptyFile(arg0: $File_): void;
         initEmptyFile(arg0: $WriterSupplier_): void;
         initEmptyFile(arg0: $Writer): void;
-        initEmptyFile(arg0: $File_): void;
-        createParser(): $ConfigParser<C>;
-        supportsComments(): boolean;
+        createWriter(): $ConfigWriter;
+        isInMemory(): boolean;
         createConcurrentConfig(): C;
         get inMemory(): boolean;
     }
@@ -233,58 +233,58 @@ declare module "@package/com/electronwill/nightconfig/core" {
         isEmpty(): boolean;
         apply<T>(arg0: string): T;
         apply<T>(arg0: $List_<string>): T;
-        contains(arg0: $List_<string>): boolean;
         contains(arg0: string): boolean;
+        contains(arg0: $List_<string>): boolean;
         entrySet(): $Set<$UnmodifiableConfig$Entry>;
-        isNull(arg0: string): boolean;
         isNull(arg0: $List_<string>): boolean;
-        getOrElse<T>(arg0: $List_<string>, arg1: $Supplier_<T>): T;
-        getOrElse<T>(arg0: $List_<string>, arg1: T): T;
-        getOrElse<T>(arg0: string, arg1: $Supplier_<T>): T;
-        getOrElse<T>(arg0: string, arg1: T): T;
-        getEnum<T extends $Enum<T>>(arg0: string, arg1: $Class<T>, arg2: $EnumGetMethod_): T;
-        getEnum<T extends $Enum<T>>(arg0: string, arg1: $Class<T>): T;
-        getEnum<T extends $Enum<T>>(arg0: $List_<string>, arg1: $Class<T>): T;
-        getEnum<T extends $Enum<T>>(arg0: $List_<string>, arg1: $Class<T>, arg2: $EnumGetMethod_): T;
-        getRaw<T>(arg0: string): T;
-        getRaw<T>(arg0: $List_<string>): T;
-        /**
-         * @deprecated
-         */
-        valueMap(): $Map<string, $Object>;
-        getCharOrElse(arg0: string, arg1: string): string;
-        getCharOrElse(arg0: $List_<string>, arg1: string): string;
-        getShortOrElse(arg0: $List_<string>, arg1: number): number;
-        getShortOrElse(arg0: string, arg1: number): number;
-        getLongOrElse(arg0: $List_<string>, arg1: number): number;
+        isNull(arg0: string): boolean;
         getLongOrElse(arg0: string, arg1: number): number;
+        getLongOrElse(arg0: $List_<string>, arg1: number): number;
         getLongOrElse(arg0: $List_<string>, arg1: $LongSupplier_): number;
         getLongOrElse(arg0: string, arg1: $LongSupplier_): number;
-        getOptionalEnum<T extends $Enum<T>>(arg0: $List_<string>, arg1: $Class<T>, arg2: $EnumGetMethod_): (T) | undefined;
-        getOptionalEnum<T extends $Enum<T>>(arg0: $List_<string>, arg1: $Class<T>): (T) | undefined;
-        getOptionalEnum<T extends $Enum<T>>(arg0: string, arg1: $Class<T>, arg2: $EnumGetMethod_): (T) | undefined;
-        getOptionalEnum<T extends $Enum<T>>(arg0: string, arg1: $Class<T>): (T) | undefined;
-        getOptionalLong(arg0: $List_<string>): $OptionalLong;
-        getOptionalLong(arg0: string): $OptionalLong;
-        getOptional<T>(arg0: $List_<string>): (T) | undefined;
-        getOptional<T>(arg0: string): (T) | undefined;
-        configFormat(): $ConfigFormat<never>;
-        getEnumOrElse<T extends $Enum<T>>(arg0: string, arg1: T, arg2: $EnumGetMethod_): T;
-        getEnumOrElse<T extends $Enum<T>>(arg0: string, arg1: $Class<T>, arg2: $Supplier_<T>): T;
-        getEnumOrElse<T extends $Enum<T>>(arg0: string, arg1: $Class<T>, arg2: $EnumGetMethod_, arg3: $Supplier_<T>): T;
-        getEnumOrElse<T extends $Enum<T>>(arg0: string, arg1: T): T;
-        getEnumOrElse<T extends $Enum<T>>(arg0: $List_<string>, arg1: T): T;
         getEnumOrElse<T extends $Enum<T>>(arg0: $List_<string>, arg1: T, arg2: $EnumGetMethod_): T;
-        getEnumOrElse<T extends $Enum<T>>(arg0: $List_<string>, arg1: $Class<T>, arg2: $EnumGetMethod_, arg3: $Supplier_<T>): T;
+        getEnumOrElse<T extends $Enum<T>>(arg0: string, arg1: T): T;
+        getEnumOrElse<T extends $Enum<T>>(arg0: string, arg1: T, arg2: $EnumGetMethod_): T;
         getEnumOrElse<T extends $Enum<T>>(arg0: $List_<string>, arg1: $Class<T>, arg2: $Supplier_<T>): T;
-        getOptionalInt(arg0: $List_<string>): $OptionalInt;
+        getEnumOrElse<T extends $Enum<T>>(arg0: string, arg1: $Class<T>, arg2: $Supplier_<T>): T;
+        getEnumOrElse<T extends $Enum<T>>(arg0: $List_<string>, arg1: $Class<T>, arg2: $EnumGetMethod_, arg3: $Supplier_<T>): T;
+        getEnumOrElse<T extends $Enum<T>>(arg0: string, arg1: $Class<T>, arg2: $EnumGetMethod_, arg3: $Supplier_<T>): T;
+        getEnumOrElse<T extends $Enum<T>>(arg0: $List_<string>, arg1: T): T;
+        getOptionalEnum<T extends $Enum<T>>(arg0: $List_<string>, arg1: $Class<T>, arg2: $EnumGetMethod_): (T) | undefined;
+        getOptionalEnum<T extends $Enum<T>>(arg0: string, arg1: $Class<T>, arg2: $EnumGetMethod_): (T) | undefined;
+        getOptionalEnum<T extends $Enum<T>>(arg0: $List_<string>, arg1: $Class<T>): (T) | undefined;
+        getOptionalEnum<T extends $Enum<T>>(arg0: string, arg1: $Class<T>): (T) | undefined;
+        getShortOrElse(arg0: string, arg1: number): number;
+        getShortOrElse(arg0: $List_<string>, arg1: number): number;
         getOptionalInt(arg0: string): $OptionalInt;
+        getOptionalInt(arg0: $List_<string>): $OptionalInt;
         getIntOrElse(arg0: string, arg1: $IntSupplier_): number;
         getIntOrElse(arg0: $List_<string>, arg1: $IntSupplier_): number;
         getIntOrElse(arg0: string, arg1: number): number;
         getIntOrElse(arg0: $List_<string>, arg1: number): number;
+        getOptional<T>(arg0: $List_<string>): (T) | undefined;
+        getOptional<T>(arg0: string): (T) | undefined;
+        configFormat(): $ConfigFormat<never>;
+        getOptionalLong(arg0: string): $OptionalLong;
+        getOptionalLong(arg0: $List_<string>): $OptionalLong;
         getByteOrElse(arg0: string, arg1: number): number;
         getByteOrElse(arg0: $List_<string>, arg1: number): number;
+        getCharOrElse(arg0: $List_<string>, arg1: string): string;
+        getCharOrElse(arg0: string, arg1: string): string;
+        getEnum<T extends $Enum<T>>(arg0: $List_<string>, arg1: $Class<T>, arg2: $EnumGetMethod_): T;
+        getEnum<T extends $Enum<T>>(arg0: string, arg1: $Class<T>): T;
+        getEnum<T extends $Enum<T>>(arg0: $List_<string>, arg1: $Class<T>): T;
+        getEnum<T extends $Enum<T>>(arg0: string, arg1: $Class<T>, arg2: $EnumGetMethod_): T;
+        getRaw<T>(arg0: $List_<string>): T;
+        getRaw<T>(arg0: string): T;
+        getOrElse<T>(arg0: $List_<string>, arg1: $Supplier_<T>): T;
+        getOrElse<T>(arg0: $List_<string>, arg1: T): T;
+        getOrElse<T>(arg0: string, arg1: $Supplier_<T>): T;
+        getOrElse<T>(arg0: string, arg1: T): T;
+        /**
+         * @deprecated
+         */
+        valueMap(): $Map<string, $Object>;
         get empty(): boolean;
     }
     export class $UnmodifiableCommentedConfig$Entry {
@@ -300,16 +300,16 @@ declare module "@package/com/electronwill/nightconfig/core" {
         entrySet(): $Set<$UnmodifiableCommentedConfig$Entry>;
         getComment(arg0: string): string;
         getComment(arg0: $List_<string>): string;
+        containsComment(arg0: $List_<string>): boolean;
+        containsComment(arg0: string): boolean;
+        getOptionalComment(arg0: $List_<string>): (string) | undefined;
+        getOptionalComment(arg0: string): (string) | undefined;
+        getComments(arg0: $Map_<string, $UnmodifiableCommentedConfig$CommentNode>): void;
+        getComments(): $Map<string, $UnmodifiableCommentedConfig$CommentNode>;
         /**
          * @deprecated
          */
         commentMap(): $Map<string, string>;
-        getOptionalComment(arg0: string): (string) | undefined;
-        getOptionalComment(arg0: $List_<string>): (string) | undefined;
-        containsComment(arg0: $List_<string>): boolean;
-        containsComment(arg0: string): boolean;
-        getComments(arg0: $Map_<string, $UnmodifiableCommentedConfig$CommentNode>): void;
-        getComments(): $Map<string, $UnmodifiableCommentedConfig$CommentNode>;
     }
     export class $Config$Entry {
     }

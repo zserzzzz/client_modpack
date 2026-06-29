@@ -75,44 +75,44 @@ declare module "@package/net/minecraft/world/level/chunk/storage" {
         constructor(info: $RegionStorageInfo_, folder: $Path_, sync: boolean);
     }
     export class $ChunkStorage implements $AutoCloseable, $IVersionedChunkStorage {
-        handleLegacyStructureIndex(chunkPos: $ChunkPos): void;
         write(chunkPos: $ChunkPos, data: $CompoundTag_): $CompletableFuture<void>;
         read(chunkPos: $ChunkPos): $CompletableFuture<($CompoundTag) | undefined>;
         close(): void;
         static getVersion(chunkData: $CompoundTag_): number;
         chunkScanner(): $ChunkScanAccess;
-        flushWorker(): void;
-        static injectDatafixingContext(chunkData: $CompoundTag_, levelKey: $ResourceKey_<$Level>, chunkGeneratorKey: ($ResourceKey_<$MapCodec<$ChunkGenerator>>) | undefined): void;
         storageInfo(): $RegionStorageInfo;
-        upgradeChunkTag(levelKey: $ResourceKey_<$Level>, storage: $Supplier_<$DimensionDataStorage>, chunkData: $CompoundTag_, chunkGeneratorKey: ($ResourceKey_<$MapCodec<$ChunkGenerator>>) | undefined): $CompoundTag;
         isOldChunkAround(pos: $ChunkPos, radius: number): boolean;
-        invokeGetStorageKey(): $RegionStorageInfo;
+        upgradeChunkTag(levelKey: $ResourceKey_<$Level>, storage: $Supplier_<$DimensionDataStorage>, chunkData: $CompoundTag_, chunkGeneratorKey: ($ResourceKey_<$MapCodec<$ChunkGenerator>>) | undefined): $CompoundTag;
+        handleLegacyStructureIndex(chunkPos: $ChunkPos): void;
+        static injectDatafixingContext(chunkData: $CompoundTag_, levelKey: $ResourceKey_<$Level>, chunkGeneratorKey: ($ResourceKey_<$MapCodec<$ChunkGenerator>>) | undefined): void;
+        flushWorker(): void;
         getWorker(): $IOWorker;
+        invokeGetStorageKey(): $RegionStorageInfo;
         fixerUpper: $DataFixer;
         static LAST_MONOLYTH_STRUCTURE_DATA_VERSION: number;
         worker: $IOWorker;
         constructor(info: $RegionStorageInfo_, folder: $Path_, fixerUpper: $DataFixer, sync: boolean);
     }
     export class $RegionStorageInfo extends $Record {
-        dimension(): $ResourceKey<$Level>;
         type(): string;
         level(): string;
+        dimension(): $ResourceKey<$Level>;
         withTypeSuffix(suffix: string): $RegionStorageInfo;
         constructor(arg0: string, arg1: $ResourceKey_<$Level>, arg2: string);
     }
     /**
      * Values that may be interpreted as {@link $RegionStorageInfo}.
      */
-    export type $RegionStorageInfo_ = { type?: string, dimension?: $ResourceKey_<$Level>, level?: string,  } | [type?: string, dimension?: $ResourceKey_<$Level>, level?: string, ];
+    export type $RegionStorageInfo_ = { level?: string, type?: string, dimension?: $ResourceKey_<$Level>,  } | [level?: string, type?: string, dimension?: $ResourceKey_<$Level>, ];
     export class $IOWorker implements $ChunkScanAccess, $AutoCloseable, $IStorageIoWorker, $IDirectStorage {
-        synchronize(flushStorage: boolean): $CompletableFuture<void>;
         store(chunkPos: $ChunkPos, chunkData: $CompoundTag_ | null): $CompletableFuture<void>;
         close(): void;
+        synchronize(flushStorage: boolean): $CompletableFuture<void>;
         loadAsync(chunkPos: $ChunkPos): $CompletableFuture<($CompoundTag) | undefined>;
+        scanChunk(chunkPos: $ChunkPos, visitor: $StreamTagVisitor): $CompletableFuture<void>;
         storageInfo(): $RegionStorageInfo;
         isOldChunkAround(chunkPos: $ChunkPos, radius: number): boolean;
         setRawChunkData(pos: $ChunkPos, data: number[]): $CompletableFuture<any>;
-        scanChunk(chunkPos: $ChunkPos, visitor: $StreamTagVisitor): $CompletableFuture<void>;
         invokeGetOrComputeBlendingStatus(chunkX: number, chunkZ: number): $CompletableFuture<$BitSet>;
         storage: $RegionFileStorage;
         constructor(info: $RegionStorageInfo_, folder: $Path_, sync: boolean);
@@ -120,8 +120,8 @@ declare module "@package/net/minecraft/world/level/chunk/storage" {
     export class $ChunkSerializer {
         static write(level: $ServerLevel, chunk: $ChunkAccess): $CompoundTag;
         static read(level: $ServerLevel, poiManager: $PoiManager, regionStorageInfo: $RegionStorageInfo_, pos: $ChunkPos, tag: $CompoundTag_): $ProtoChunk;
-        static getChunkTypeFromTag(tag: $CompoundTag_ | null): $ChunkType;
         static packOffsets(list: $ShortList[]): $ListTag;
+        static getChunkTypeFromTag(tag: $CompoundTag_ | null): $ChunkType;
         static SKY_LIGHT_TAG: string;
         static Z_POS_TAG: string;
         static SECTIONS_TAG: string;
@@ -144,8 +144,8 @@ declare module "@package/net/minecraft/world/level/chunk/storage" {
         static createMisplacedChunkReport(pos: $ChunkPos, expectedPos: $ChunkPos): $ReportedException;
     }
     export interface $ChunkIOErrorReporter {
-        reportChunkSaveFailure(throwable: $Throwable, regionStorageInfo: $RegionStorageInfo_, chunkPos: $ChunkPos): void;
         reportChunkLoadFailure(throwable: $Throwable, regionStorageInfo: $RegionStorageInfo_, chunkPos: $ChunkPos): void;
+        reportChunkSaveFailure(throwable: $Throwable, regionStorageInfo: $RegionStorageInfo_, chunkPos: $ChunkPos): void;
         reportMisplacedChunk(pos: $ChunkPos, expectedPos: $ChunkPos, regionStorageInfo: $RegionStorageInfo_): void;
     }
     export class $ChunkScanAccess {
@@ -158,6 +158,7 @@ declare module "@package/net/minecraft/world/level/chunk/storage" {
      */
     export type $ChunkScanAccess_ = ((arg0: $ChunkPos, arg1: $StreamTagVisitor) => $CompletableFuture<void>);
     export class $SectionStorage<R> implements $AutoCloseable, $RegionBasedStorageSectionExtended<any>, $ISerializingRegionBasedStorage, $IPOIUnloading, $SerializingRegionBasedStorageExtension {
+        hasWork(): boolean;
         getOrCreate(sectionKey: number): $Object;
         remove(sectionKey: number): void;
         get(sectionKey: number): (never) | undefined;
@@ -165,14 +166,13 @@ declare module "@package/net/minecraft/world/level/chunk/storage" {
         flush(chunkPos: $ChunkPos): void;
         close(): void;
         tick(aheadOfTime: $BooleanSupplier_): void;
-        lithium$getWithinChunkColumn(arg0: number, arg1: number): $Stream<any>;
-        hasWork(): boolean;
-        setDirty(sectionKey: number): void;
         getOrLoad(sectionKey: number): (never) | undefined;
+        setDirty(sectionKey: number): void;
+        lithium$getWithinChunkColumn(arg0: number, arg1: number): $Stream<any>;
+        lithium$getInChunkColumn(arg0: number, arg1: number): $Iterable<any>;
         c2me$unloadPoi(chunkPos: $ChunkPos): void;
         outsideStoredRange(sectionKey: number): boolean;
         onSectionLoad(sectionKey: number): void;
-        lithium$getInChunkColumn(arg0: number, arg1: number): $Iterable<any>;
         c2me$shouldUnloadPoi(pos: $ChunkPos): boolean;
         getStorageAccess(): $SimpleRegionStorage;
         levelHeightAccessor: $LevelHeightAccessor;
@@ -204,13 +204,13 @@ declare module "@package/net/minecraft/world/level/chunk/storage" {
      * @see net.minecraft.world.level.chunk.storage.RegionFileVersion#VERSION_NONE
      */
     export class $RegionFileVersion {
-        static isValidVersion(id: number): boolean;
         wrap(inputWrapper: $InputStream): $InputStream;
         wrap(outputWrapper: $OutputStream): $OutputStream;
         getId(): number;
         static configure(optionValue: string): void;
-        static getSelected(): $RegionFileVersion;
+        static isValidVersion(id: number): boolean;
         static fromId(id: number): $RegionFileVersion;
+        static getSelected(): $RegionFileVersion;
         static VERSION_GZIP: $RegionFileVersion;
         static VERSION_LZ4: $RegionFileVersion;
         static VERSION_DEFLATE: $RegionFileVersion;
@@ -241,20 +241,20 @@ declare module "@package/net/minecraft/world/level/chunk/storage" {
         get used(): $IntSet;
     }
     export class $SimpleRegionStorage implements $AutoCloseable {
-        synchronize(flushStorage: boolean): $CompletableFuture<void>;
         write(chunkPos: $ChunkPos, data: $CompoundTag_ | null): $CompletableFuture<void>;
         read(chunkPos: $ChunkPos): $CompletableFuture<($CompoundTag) | undefined>;
         close(): void;
+        synchronize(flushStorage: boolean): $CompletableFuture<void>;
         storageInfo(): $RegionStorageInfo;
-        upgradeChunkTag(tag: $Dynamic<$Tag_>, version: number): $Dynamic<$Tag>;
         upgradeChunkTag(tag: $CompoundTag_, version: number): $CompoundTag;
+        upgradeChunkTag(tag: $Dynamic<$Tag_>, version: number): $Dynamic<$Tag>;
         constructor(info: $RegionStorageInfo_, folder: $Path_, fixerUpper: $DataFixer, sync: boolean, dataFixType: $DataFixTypes_);
     }
     export class $EntityStorage implements $EntityPersistentStorage<$Entity> {
         flush(synchronize: boolean): void;
         close(): void;
-        loadEntities(pos: $ChunkPos): $CompletableFuture<$ChunkEntities<$Entity>>;
         storeEntities(entities: $ChunkEntities<$Entity>): void;
+        loadEntities(pos: $ChunkPos): $CompletableFuture<$ChunkEntities<$Entity>>;
         constructor(simpleRegionStorage: $SimpleRegionStorage, level: $ServerLevel, executor: $Executor_);
     }
     export class $RegionFileVersion$StreamWrapper<O> {

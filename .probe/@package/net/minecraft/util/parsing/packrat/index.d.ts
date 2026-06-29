@@ -13,13 +13,13 @@ declare module "@package/net/minecraft/util/parsing/packrat" {
     /**
      * Values that may be interpreted as {@link $ErrorEntry}.
      */
-    export type $ErrorEntry_<S> = { cursor?: number, suggestions?: $SuggestionSupplier_<any>, reason?: $Object,  } | [cursor?: number, suggestions?: $SuggestionSupplier_<any>, reason?: $Object, ];
+    export type $ErrorEntry_<S> = { reason?: $Object, cursor?: number, suggestions?: $SuggestionSupplier_<any>,  } | [reason?: $Object, cursor?: number, suggestions?: $SuggestionSupplier_<any>, ];
     export class $ParseState$CacheEntry<T> extends $Record {
     }
     /**
      * Values that may be interpreted as {@link $ParseState$CacheEntry}.
      */
-    export type $ParseState$CacheEntry_<T> = { mark?: number, value?: (T) | undefined,  } | [mark?: number, value?: (T) | undefined, ];
+    export type $ParseState$CacheEntry_<T> = { value?: (T) | undefined, mark?: number,  } | [value?: (T) | undefined, mark?: number, ];
     export class $Dictionary<S> {
         get<T>(atom: $Atom_<T>): $Rule<S, T>;
         put<T>(atom: $Atom_<T>, rule: $Rule_<S, T>): void;
@@ -53,7 +53,7 @@ declare module "@package/net/minecraft/util/parsing/packrat" {
     /**
      * Values that may be interpreted as {@link $Term$Marker}.
      */
-    export type $Term$Marker_<S, T> = { name?: $Atom_<any>, value?: any,  } | [name?: $Atom_<any>, value?: any, ];
+    export type $Term$Marker_<S, T> = { value?: any, name?: $Atom_<any>,  } | [value?: any, name?: $Atom_<any>, ];
     export class $Term$Reference<S, T> extends $Record implements $Term<S> {
         name(): $Atom<T>;
         parse(arg0: $ParseState<S>, arg1: $Scope, arg2: $Control_): boolean;
@@ -64,11 +64,11 @@ declare module "@package/net/minecraft/util/parsing/packrat" {
      */
     export type $Term$Reference_<S, T> = { name?: $Atom_<any>,  } | [name?: $Atom_<any>, ];
     export class $Term<S> {
+        static alternative<S>(...elements: $Term_<S>[]): $Term<S>;
         static empty<S>(): $Term<S>;
         static optional<S>(term: $Term_<S>): $Term<S>;
         static sequence<S>(...elements: $Term_<S>[]): $Term<S>;
         static named<S>(name: $Atom_<never>): $Term<S>;
-        static alternative<S>(...elements: $Term_<S>[]): $Term<S>;
         static marker<S, T>(name: $Atom_<T>, value: T): $Term<S>;
         static cut<S>(): $Term<S>;
     }
@@ -106,12 +106,12 @@ declare module "@package/net/minecraft/util/parsing/packrat" {
         finish(cursor: number): void;
     }
     export class $Scope {
+        getOrThrow<T>(atom: $Atom_<T>): T;
+        getAny<T>(...atoms: $Atom_<T>[]): T;
         get<T>(atom: $Atom_<T>): T;
         put<T>(atom: $Atom_<T>, value: T | null): void;
         putAll(scope: $Scope): void;
         getOrDefault<T>(atom: $Atom_<T>, defaultValue: T): T;
-        getAny<T>(...atoms: $Atom_<T>[]): T;
-        getOrThrow<T>(atom: $Atom_<T>): T;
         getAnyOrThrow<T>(...atoms: $Atom_<T>[]): T;
         constructor();
     }
@@ -120,12 +120,12 @@ declare module "@package/net/minecraft/util/parsing/packrat" {
     /**
      * Values that may be interpreted as {@link $ParseState$CacheKey}.
      */
-    export type $ParseState$CacheKey_<T> = { name?: $Atom_<any>, mark?: number,  } | [name?: $Atom_<any>, mark?: number, ];
+    export type $ParseState$CacheKey_<T> = { mark?: number, name?: $Atom_<any>,  } | [mark?: number, name?: $Atom_<any>, ];
     export class $ParseState<S> {
-        restore(cursor: number): void;
         parse<T>(atom: $Atom_<T>): (T) | undefined;
         input(): S;
         mark(): number;
+        restore(cursor: number): void;
         errorCollector(): $ErrorCollector<S>;
         parseTopRule<T>(atom: $Atom_<T>): (T) | undefined;
         constructor(dictionary: $Dictionary<S>, errorCollector: $ErrorCollector<S>);

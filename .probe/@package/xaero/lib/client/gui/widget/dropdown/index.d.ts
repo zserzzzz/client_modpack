@@ -3,21 +3,21 @@ import { $GuiGraphics } from "@package/net/minecraft/client/gui";
 
 declare module "@package/xaero/lib/client/gui/widget/dropdown" {
     export class $DropDownWidget extends $AbstractWidget {
-        setActive(arg0: boolean): void;
         isClosed(): boolean;
         size(): number;
         getSelected(): number;
-        onDropDown(arg0: number, arg1: number, arg2: number): boolean;
-        onDropDown(arg0: number, arg1: number, arg2: boolean, arg3: number): boolean;
         render(arg0: $GuiGraphics, arg1: number, arg2: number, arg3: number, arg4: boolean): void;
+        setActive(arg0: boolean): void;
         mouseClicked(arg0: number, arg1: number, arg2: number, arg3: number): boolean;
         mouseScrolled(arg0: number, arg1: number, arg2: number, arg3: number): void;
         mouseReleased(arg0: number, arg1: number, arg2: number, arg3: number): void;
-        selectId(arg0: number, arg1: boolean): void;
         setClosed(arg0: boolean): void;
+        onDropDown(arg0: number, arg1: number, arg2: number): boolean;
+        onDropDown(arg0: number, arg1: number, arg2: boolean, arg3: number): boolean;
         getRenderY(): number;
         getRenderYWithOffset(): number;
         getXWithOffset(): number;
+        selectId(arg0: number, arg1: boolean): void;
         visible: boolean;
         static TRIM: number;
         static TRIM_OPEN: number;
@@ -43,7 +43,7 @@ declare module "@package/xaero/lib/client/gui/widget/dropdown" {
     export class $IDropDownContainer {
     }
     export interface $IDropDownContainer {
-        onDropdownClosed(arg0: $DropDownWidget): void;
         onDropdownOpen(arg0: $DropDownWidget): void;
+        onDropdownClosed(arg0: $DropDownWidget): void;
     }
 }

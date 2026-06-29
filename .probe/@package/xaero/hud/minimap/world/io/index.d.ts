@@ -8,21 +8,21 @@ import { $RootConfigIO } from "@package/xaero/hud/minimap/world/container/config
 
 declare module "@package/xaero/hud/minimap/world/io" {
     export class $MinimapWorldManagerIO {
-        loadAllWorlds(arg0: $MinimapSession): void;
-        static copyTempFilesBack(arg0: $Path_): void;
-        loadWorldFile(arg0: $MinimapWorldContainer, arg1: string, arg2: $Path_): boolean;
-        checkWorldFileLine(arg0: string[], arg1: $MinimapWorld): boolean;
-        getRootConfigIO(): $RootConfigIO;
         loadWorldsFromAllSources(arg0: $MinimapSession, arg1: $ClientPacketListener): void;
-        saveWorld(arg0: $MinimapWorld, arg1: boolean): void;
         saveWorld(arg0: $MinimapWorld): void;
-        saveAllWorlds(arg0: $MinimapSession): void;
-        getWorldFile(arg0: $MinimapWorld): $Path;
+        saveWorld(arg0: $MinimapWorld, arg1: boolean): void;
         saveWorlds(arg0: $MinimapWorldContainer): void;
-        loadWorld(arg0: $MinimapWorld, arg1: $Path_): void;
+        getWorldFile(arg0: $MinimapWorld): $Path;
+        saveAllWorlds(arg0: $MinimapSession): void;
+        getRootConfigIO(): $RootConfigIO;
+        convertWorldDimFoldersToSingleFolder(arg0: $MinimapSession): void;
         onRootContainerAdded(arg0: $MinimapWorldRootContainer): void;
         convertWorldDimFilesToFolders(): void;
-        convertWorldDimFoldersToSingleFolder(arg0: $MinimapSession): void;
+        loadAllWorlds(arg0: $MinimapSession): void;
+        checkWorldFileLine(arg0: string[], arg1: $MinimapWorld): boolean;
+        static copyTempFilesBack(arg0: $Path_): void;
+        loadWorldFile(arg0: $MinimapWorldContainer, arg1: string, arg2: $Path_): boolean;
+        loadWorld(arg0: $MinimapWorld, arg1: $Path_): void;
         constructor(arg0: $HudMod);
         get rootConfigIO(): $RootConfigIO;
     }

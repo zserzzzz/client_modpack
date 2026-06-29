@@ -20,14 +20,14 @@ declare module "@package/dev/simulated_team/simulated/mixin_interface" {
     export class $SpriteContentsExtension {
     }
     export interface $SpriteContentsExtension {
-        simulated$getTicker(): $SpriteContents$Ticker;
         simulated$setTicker(arg0: $SpriteContents$Ticker): void;
+        simulated$getTicker(): $SpriteContents$Ticker;
     }
     export class $TickerExtension {
     }
     export interface $TickerExtension {
-        simulated$isPlaying(): boolean;
         simulated$setPlaying(arg0: boolean): void;
+        simulated$isPlaying(): boolean;
     }
     export class $PlayerTypewriterExtension {
     }

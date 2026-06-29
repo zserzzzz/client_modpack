@@ -68,8 +68,8 @@ declare module "@package/com/simibubi/create/foundation/mixin/accessor" {
     export class $PotionBrewingAccessor {
     }
     export interface $PotionBrewingAccessor {
-        create$getContainerMixes(): $List<$PotionBrewing$Mix<$Item>>;
         create$getPotionMixes(): $List<$PotionBrewing$Mix<$Potion>>;
+        create$getContainerMixes(): $List<$PotionBrewing$Mix<$Item>>;
         create$isContainer(arg0: $ItemStack_): boolean;
     }
     export class $DispenserBlockAccessor {
@@ -94,20 +94,20 @@ declare module "@package/com/simibubi/create/foundation/mixin/accessor" {
     }
     export interface $GuiAccessor {
         create$getSubtitleOverlay(): $SubtitleOverlay;
-        create$getToolHighlightTimer(): number;
         create$renderTextureOverlay(arg0: $GuiGraphics, arg1: $ResourceLocation_, arg2: number): void;
+        create$getToolHighlightTimer(): number;
     }
     export class $ProjectileDispenseBehaviorAccessor {
     }
     export interface $ProjectileDispenseBehaviorAccessor {
-        create$getProjectileItem(): $ProjectileItem;
         create$getDispenseConfig(): $ProjectileItem$DispenseConfig;
+        create$getProjectileItem(): $ProjectileItem;
     }
     export class $MinecartFurnaceAccessor {
     }
     export interface $MinecartFurnaceAccessor {
-        create$setFuel(arg0: number): void;
         create$getFuel(): number;
+        create$setFuel(arg0: number): void;
     }
     export class $NbtAccounterAccessor {
     }
@@ -178,8 +178,8 @@ declare module "@package/com/simibubi/create/foundation/mixin/accessor" {
     }
     export interface $HumanoidArmorLayerAccessor {
         create$callSetPartVisibility(arg0: $HumanoidModel<never>, arg1: $EquipmentSlot_): void;
-        create$getOuterModel(): $HumanoidModel<never>;
         create$getInnerModel(): $HumanoidModel<never>;
+        create$getOuterModel(): $HumanoidModel<never>;
     }
     export class $UseOnContextAccessor {
     }
@@ -209,10 +209,10 @@ declare module "@package/com/simibubi/create/foundation/mixin/accessor" {
      */
     export type $LivingEntityAccessor_ = ((arg0: $ItemStack, arg1: number) => void);
     export class $SystemReportAccessor {
-        static getOPERATING_SYSTEM(): string;
         static getJAVA_VERSION(): string;
-        static get OPERATING_SYSTEM(): string;
+        static getOPERATING_SYSTEM(): string;
         static get JAVA_VERSION(): string;
+        static get OPERATING_SYSTEM(): string;
     }
     export interface $SystemReportAccessor {
         getEntries(): $Map<string, string>;

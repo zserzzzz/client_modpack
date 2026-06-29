@@ -9,16 +9,16 @@ import { $SerializationConstructorMarker } from "@package/kotlinx/serialization/
 
 declare module "@package/gg/essential/mod/cosmetics/database" {
     export class $GitRepoCosmeticsDatabase$CosmeticImplicitOwnership {
-        static copy$default(arg0: $GitRepoCosmeticsDatabase$CosmeticImplicitOwnership, arg1: string, arg2: $List_<any>, arg3: $GitRepoCosmeticsDatabase$ImplicitOwnershipCriterion_, arg4: number, arg5: $Object): $GitRepoCosmeticsDatabase$CosmeticImplicitOwnership;
         getId(): string;
         copy(arg0: string, arg1: $List_<string>, arg2: $GitRepoCosmeticsDatabase$ImplicitOwnershipCriterion_): $GitRepoCosmeticsDatabase$CosmeticImplicitOwnership;
-        static access$get$childSerializers$cp(): $Lazy<any>[];
+        static copy$default(arg0: $GitRepoCosmeticsDatabase$CosmeticImplicitOwnership, arg1: string, arg2: $List_<any>, arg3: $GitRepoCosmeticsDatabase$ImplicitOwnershipCriterion_, arg4: number, arg5: $Object): $GitRepoCosmeticsDatabase$CosmeticImplicitOwnership;
         getCosmetics(): $List<string>;
-        component2(): $List<string>;
-        component3(): $GitRepoCosmeticsDatabase$ImplicitOwnershipCriterion;
         static write$Self$cosmetics(arg0: $GitRepoCosmeticsDatabase$CosmeticImplicitOwnership, arg1: $CompositeEncoder, arg2: $SerialDescriptor): void;
-        component1(): string;
         getCriterion(): $GitRepoCosmeticsDatabase$ImplicitOwnershipCriterion;
+        component3(): $GitRepoCosmeticsDatabase$ImplicitOwnershipCriterion;
+        component2(): $List<string>;
+        component1(): string;
+        static access$get$childSerializers$cp(): $Lazy<any>[];
         static Companion: $GitRepoCosmeticsDatabase$CosmeticImplicitOwnership$Companion;
         constructor(arg0: string, arg1: $List_<string>, arg2: $GitRepoCosmeticsDatabase$ImplicitOwnershipCriterion_);
         constructor(arg0: number, arg1: string, arg2: $List_<any>, arg3: $GitRepoCosmeticsDatabase$ImplicitOwnershipCriterion_, arg4: $SerializationConstructorMarker);

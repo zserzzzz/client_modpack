@@ -1,49 +1,50 @@
 import { $MapCodec } from "@package/com/mojang/serialization";
-import { $SequencedGearshiftBlockEntity$SequenceContext } from "@package/com/simibubi/create/content/kinetics/transmission/sequencer";
+import { $CompoundTag } from "@package/net/minecraft/nbt";
 import { $EntityType_, $Pose, $PortalProcessor, $Entity, $Entity$RemovalReason } from "@package/net/minecraft/world/entity";
 import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
-import { $GameEventListener } from "@package/net/minecraft/world/level/gameevent";
 import { $CustomPacketPayload$Type, $CustomPacketPayload } from "@package/net/minecraft/network/protocol/common/custom";
-import { $UUID, $List_, $Map, $Set } from "@package/java/util";
-import { $ClientboundCustomPayloadPacket, $ServerboundCustomPayloadPacket } from "@package/net/minecraft/network/protocol/common";
 import { $RandomSource } from "@package/net/minecraft/util";
 import { $Plan } from "@package/dev/engine_room/flywheel/api/task";
 import { $SuperByteBufferCache$Compartment } from "@package/net/createmod/catnip/render";
-import { $Function_, $Consumer_ } from "@package/java/util/function";
 import { $InteractionResult, $ItemInteractionResult } from "@package/net/minecraft/world";
-import { $ServerLevel } from "@package/net/minecraft/server/level";
-import { $Object2DoubleMap, $Object2ByteLinkedOpenHashMap, $Object2BooleanMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos, $Direction$Axis_, $BlockPos_, $Direction_, $Direction$Axis, $Direction, $IdMapper } from "@package/net/minecraft/core";
 import { $TranslatingContraption, $AssemblyException, $IDisplayAssemblyExceptions, $AbstractContraptionEntity, $Contraption } from "@package/com/simibubi/create/content/contraptions";
-import { $DirectionalAxisKineticBlock, $KineticBlockEntityRenderer, $KineticBlockEntity, $ShaftVisual } from "@package/com/simibubi/create/content/kinetics/base";
 import { $StateDefinition, $BlockBehaviour$Properties, $BlockState_, $BlockState } from "@package/net/minecraft/world/level/block/state";
-import { $BlockEntityRendererProvider$Context } from "@package/net/minecraft/client/renderer/blockentity";
-import { $IBE } from "@package/com/simibubi/create/foundation/block";
-import { $Record, $Class, $ThreadLocal } from "@package/java/lang";
-import { $LootTable } from "@package/net/minecraft/world/level/storage/loot";
 import { $EntityInLevelCallback } from "@package/net/minecraft/world/level/entity";
-import { $Level, $BlockGetter, $Level_ } from "@package/net/minecraft/world/level";
-import { $CollisionList } from "@package/com/simibubi/create/foundation/collision";
-import { $TagKey } from "@package/net/minecraft/tags";
-import { $VisualizationContext } from "@package/dev/engine_room/flywheel/api/visualization";
 import { $Item } from "@package/net/minecraft/world/item";
-import { $Fluid } from "@package/net/minecraft/world/level/material";
-import { $CanLoadBigCannon } from "@package/rbasamoyai/createbigcannons/cannon_loading";
 import { $Component_ } from "@package/net/minecraft/network/chat";
-import { $LocalPlayer } from "@package/net/minecraft/client/player";
 import { $HasFragileContraption } from "@package/rbasamoyai/createbigcannons/remix";
 import { $Player } from "@package/net/minecraft/world/entity/player";
-import { $EntityDataAccessor, $SynchedEntityData } from "@package/net/minecraft/network/syncher";
 import { $DirectionProperty, $BooleanProperty } from "@package/net/minecraft/world/level/block/state/properties";
 import { $AtomicInteger } from "@package/java/util/concurrent/atomic";
-import { $ResourceKey } from "@package/net/minecraft/resources";
 import { $DynamicVisual$Context } from "@package/dev/engine_room/flywheel/api/visual";
 import { $SimpleDynamicVisual } from "@package/dev/engine_room/flywheel/lib/visual";
 import { $MutableInt } from "@package/org/apache/commons/lang3/mutable";
 import { $Block$BlockStatePairKey, $SoundType, $Block } from "@package/net/minecraft/world/level/block";
-import { $ByteBuf } from "@package/io/netty/buffer";
 import { $Vec3, $AABB } from "@package/net/minecraft/world/phys";
 import { $ClientboundPacketPayload, $BasePacketPayload$PacketTypeProvider } from "@package/net/createmod/catnip/net/base";
+import { $SequencedGearshiftBlockEntity$SequenceContext } from "@package/com/simibubi/create/content/kinetics/transmission/sequencer";
+import { $GameEventListener } from "@package/net/minecraft/world/level/gameevent";
+import { $UUID, $List_, $Map, $Set } from "@package/java/util";
+import { $ClientboundCustomPayloadPacket, $ServerboundCustomPayloadPacket } from "@package/net/minecraft/network/protocol/common";
+import { $Function_, $Consumer_ } from "@package/java/util/function";
+import { $ServerLevel } from "@package/net/minecraft/server/level";
+import { $Object2DoubleMap, $Object2ByteLinkedOpenHashMap, $Object2BooleanMap } from "@package/it/unimi/dsi/fastutil/objects";
+import { $HolderLookup$Provider, $BlockPos, $Direction$Axis_, $BlockPos_, $Direction_, $Direction$Axis, $Direction, $IdMapper } from "@package/net/minecraft/core";
+import { $DirectionalAxisKineticBlock, $KineticBlockEntityRenderer, $KineticBlockEntity, $ShaftVisual } from "@package/com/simibubi/create/content/kinetics/base";
+import { $BlockEntityRendererProvider$Context } from "@package/net/minecraft/client/renderer/blockentity";
+import { $IBE } from "@package/com/simibubi/create/foundation/block";
+import { $Record, $Class, $ThreadLocal } from "@package/java/lang";
+import { $LootTable } from "@package/net/minecraft/world/level/storage/loot";
+import { $Level, $BlockGetter, $Level_ } from "@package/net/minecraft/world/level";
+import { $CollisionList } from "@package/com/simibubi/create/foundation/collision";
+import { $TagKey } from "@package/net/minecraft/tags";
+import { $VisualizationContext } from "@package/dev/engine_room/flywheel/api/visualization";
+import { $Fluid } from "@package/net/minecraft/world/level/material";
+import { $CanLoadBigCannon } from "@package/rbasamoyai/createbigcannons/cannon_loading";
+import { $LocalPlayer } from "@package/net/minecraft/client/player";
+import { $EntityDataAccessor, $SynchedEntityData } from "@package/net/minecraft/network/syncher";
+import { $ResourceKey } from "@package/net/minecraft/resources";
+import { $ByteBuf } from "@package/io/netty/buffer";
 import { $BlockEntityTicker, $BlockEntityType, $BlockEntityType_, $BlockEntity } from "@package/net/minecraft/world/level/block/entity";
 import { $StreamCodec } from "@package/net/minecraft/network/codec";
 
@@ -55,10 +56,10 @@ declare module "@package/com/simibubi/create/content/contraptions/gantry" {
         constructor(arg0: $VisualizationContext, arg1: $GantryCarriageBlockEntity, arg2: number);
     }
     export class $GantryCarriageBlockEntity extends $KineticBlockEntity implements $IDisplayAssemblyExceptions {
-        queueAssembly(): void;
         getLastAssemblyException(): $AssemblyException;
-        static getGantryPinionModifier(arg0: $Direction_, arg1: $Direction_): number;
         checkValidGantryShaft(): void;
+        static getGantryPinionModifier(arg0: $Direction_, arg1: $Direction_): number;
+        queueAssembly(): void;
         addExceptionToTooltip(arg0: $List_<$Component_>): boolean;
         sequenceContext: $SequencedGearshiftBlockEntity$SequenceContext;
         networkDirty: boolean;
@@ -80,18 +81,18 @@ declare module "@package/com/simibubi/create/content/contraptions/gantry" {
         constructor(arg0: $BlockEntityRendererProvider$Context);
     }
     export class $GantryCarriageBlock extends $DirectionalAxisKineticBlock implements $IBE<$GantryCarriageBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$GantryCarriageBlockEntity>;
         getBlockEntityClass(): $Class<$GantryCarriageBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$GantryCarriageBlockEntity>;
+        static isValidGantryShaftAxis(arg0: $BlockState_, arg1: $BlockState_): boolean;
         static getValidGantryPinionAxis(arg0: $BlockState_, arg1: $Direction$Axis_): $Direction$Axis;
         static getValidGantryShaftAxis(arg0: $BlockState_): $Direction$Axis;
-        static isValidGantryShaftAxis(arg0: $BlockState_, arg1: $BlockState_): boolean;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$GantryCarriageBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$GantryCarriageBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($GantryCarriageBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$GantryCarriageBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $GantryCarriageBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$GantryCarriageBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($GantryCarriageBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$GantryCarriageBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -123,16 +124,16 @@ declare module "@package/com/simibubi/create/content/contraptions/gantry" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$GantryCarriageBlockEntity>;
         get blockEntityClass(): $Class<$GantryCarriageBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$GantryCarriageBlockEntity>;
     }
     export class $GantryContraptionUpdatePacket extends $Record implements $ClientboundPacketPayload {
         handle(arg0: $LocalPlayer): void;
         coord(): number;
         getTypeProvider(): $BasePacketPayload$PacketTypeProvider;
-        sequenceLimit(): number;
         motion(): number;
         entityID(): number;
+        sequenceLimit(): number;
         handleInternal(arg0: $Player): void;
         type(): $CustomPacketPayload$Type<$CustomPacketPayload>;
         toVanillaClientbound(): $ClientboundCustomPayloadPacket;
@@ -144,20 +145,20 @@ declare module "@package/com/simibubi/create/content/contraptions/gantry" {
     /**
      * Values that may be interpreted as {@link $GantryContraptionUpdatePacket}.
      */
-    export type $GantryContraptionUpdatePacket_ = { entityID?: number, motion?: number, coord?: number, sequenceLimit?: number,  } | [entityID?: number, motion?: number, coord?: number, sequenceLimit?: number, ];
+    export type $GantryContraptionUpdatePacket_ = { sequenceLimit?: number, entityID?: number, motion?: number, coord?: number,  } | [sequenceLimit?: number, entityID?: number, motion?: number, coord?: number, ];
     export class $GantryContraption extends $TranslatingContraption implements $CanLoadBigCannon, $HasFragileContraption {
-        createbigcannons$setBrokenDisassembly(arg0: boolean): void;
-        createbigcannons$isBrokenDisassembly(): boolean;
-        createbigcannons$getOriginalForcedDirection(arg0: $Level_): $Direction;
-        createbigcannons$getAssemblyMovementDirection(arg0: $Level_): $Direction;
-        createbigcannons$getEncounteredBlocks(): $Map<any, any>;
-        createbigcannons$fragileDisassemble(): void;
-        getFacing(): $Direction;
-        createbigcannons$shouldCheckFragility(): boolean;
         createbigcannons$blockBreaksDisassembly(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_): boolean;
         createbigcannons$getFragileBlockPositions(): $Set<any>;
+        getFacing(): $Direction;
+        createbigcannons$isBrokenDisassembly(): boolean;
+        createbigcannons$setBrokenDisassembly(arg0: boolean): void;
         createbigcannons$toLocalPos(arg0: $BlockPos_): $BlockPos;
+        createbigcannons$getAssemblyMovementDirection(arg0: $Level_): $Direction;
+        createbigcannons$getOriginalForcedDirection(arg0: $Level_): $Direction;
+        createbigcannons$getEncounteredBlocks(): $Map<any, any>;
+        createbigcannons$fragileDisassemble(): void;
         createbigcannons$getCannonLoadingColliders(): $Set<any>;
+        createbigcannons$shouldCheckFragility(): boolean;
         hasUniversalCreativeCrate: boolean;
         isLegacy: $Object2BooleanMap<$BlockPos>;
         anchor: $BlockPos;
@@ -177,6 +178,7 @@ declare module "@package/com/simibubi/create/content/contraptions/gantry" {
         updateClientMotion(): void;
         getAxisCoord(): number;
         limitMovement(arg0: number): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;

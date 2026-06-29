@@ -28,38 +28,38 @@ declare module "@package/dev/ryanhcode/sable/api/physics" {
         init(arg0: $Vector3dc, arg1: number): void;
         tick(): void;
         dispose(): void;
-        applyLinearAndAngularImpulse(arg0: $PhysicsPipelineBody, arg1: $Vector3dc, arg2: $Vector3dc, arg3: boolean): void;
-        physicsTick(arg0: number): void;
-        teleport(arg0: $PhysicsPipelineBody, arg1: $Vector3dc, arg2: $Quaterniondc): void;
         handleBlockChange(arg0: $SectionPos, arg1: $LevelChunkSection, arg2: number, arg3: number, arg4: number, arg5: $BlockState_, arg6: $BlockState_): void;
-        readPose(arg0: $ServerSubLevel, arg1: $Pose3d): $Pose3d;
         wakeUp(arg0: $PhysicsPipelineBody): void;
-        postPhysicsTicks(): void;
-        updateConfigFrom(arg0: $PhysicsConfigData): void;
+        readPose(arg0: $ServerSubLevel, arg1: $Pose3d): $Pose3d;
+        teleport(arg0: $PhysicsPipelineBody, arg1: $Vector3dc, arg2: $Quaterniondc): void;
+        addRope(arg0: $RopePhysicsObject): $RopeHandle;
+        addBox(arg0: $BoxPhysicsObject): $BoxHandle;
+        getNextRuntimeID(): number;
         prePhysicsTicks(): void;
         onStatsChanged(arg0: $ServerSubLevel): void;
-        getNextRuntimeID(): number;
-        getAngularVelocity(arg0: $PhysicsPipelineBody, arg1: $Vector3d): $Vector3d;
+        updateConfigFrom(arg0: $PhysicsConfigData): void;
+        postPhysicsTicks(): void;
+        physicsTick(arg0: number): void;
+        applyLinearAndAngularImpulse(arg0: $PhysicsPipelineBody, arg1: $Vector3dc, arg2: $Vector3dc, arg3: boolean): void;
         getLinearVelocity(arg0: $PhysicsPipelineBody, arg1: $Vector3d): $Vector3d;
+        getAngularVelocity(arg0: $PhysicsPipelineBody, arg1: $Vector3d): $Vector3d;
         handleChunkSectionAddition(arg0: $LevelChunkSection, arg1: number, arg2: number, arg3: number, arg4: boolean): void;
+        handleChunkSectionRemoval(arg0: number, arg1: number, arg2: number): void;
+        addConstraint<T extends $PhysicsConstraintHandle>(arg0: $ServerSubLevel, arg1: $ServerSubLevel, arg2: $PhysicsConstraintConfiguration<T>): T;
         resetVelocity(arg0: $PhysicsPipelineBody): void;
         applyImpulse(arg0: $PhysicsPipelineBody, arg1: $Vector3dc, arg2: $Vector3dc): void;
-        handleChunkSectionRemoval(arg0: number, arg1: number, arg2: number): void;
-        addBox(arg0: $BoxPhysicsObject): $BoxHandle;
-        addRope(arg0: $RopePhysicsObject): $RopeHandle;
         addLinearAndAngularVelocity(arg0: $PhysicsPipelineBody, arg1: $Vector3dc, arg2: $Vector3dc): void;
-        addConstraint<T extends $PhysicsConstraintHandle>(arg0: $ServerSubLevel, arg1: $ServerSubLevel, arg2: $PhysicsConstraintConfiguration<T>): T;
         get nextRuntimeID(): number;
     }
     export class $PhysicsPipelineBody {
         static NULL_RUNTIME_ID: number;
     }
     export interface $PhysicsPipelineBody {
-        isRemoved(): boolean;
         getMassTracker(): $MassData;
+        isRemoved(): boolean;
         getRuntimeId(): number;
-        get removed(): boolean;
         get massTracker(): $MassData;
+        get removed(): boolean;
         get runtimeId(): number;
     }
 }

@@ -4,8 +4,8 @@ declare module "@package/net/caffeinemc/mods/lithium/mixin/world/block_entity_ti
     export class $WrappedBlockEntityTickInvokerAccessor {
     }
     export interface $WrappedBlockEntityTickInvokerAccessor {
-        getWrapped(): $TickingBlockEntity;
         callSetWrapped(arg0: $TickingBlockEntity): void;
+        getWrapped(): $TickingBlockEntity;
         get wrapped(): $TickingBlockEntity;
     }
 }

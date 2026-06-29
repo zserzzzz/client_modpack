@@ -29,22 +29,22 @@ declare module "@package/com/mojang/blaze3d/font" {
     /**
      * Values that may be interpreted as {@link $GlyphProvider$Conditional}.
      */
-    export type $GlyphProvider$Conditional_ = { filter?: $FontOption$Filter, provider?: $GlyphProvider_,  } | [filter?: $FontOption$Filter, provider?: $GlyphProvider_, ];
+    export type $GlyphProvider$Conditional_ = { provider?: $GlyphProvider_, filter?: $FontOption$Filter,  } | [provider?: $GlyphProvider_, filter?: $FontOption$Filter, ];
     export class $GlyphInfo {
     }
     export interface $GlyphInfo {
         bake(glyphProvider: $Function_<$SheetGlyphInfo, $BakedGlyph>): $BakedGlyph;
         getAdvance(): number;
         getAdvance(bold: boolean): number;
-        getShadowOffset(): number;
         getBoldOffset(): number;
-        get shadowOffset(): number;
+        getShadowOffset(): number;
         get boldOffset(): number;
+        get shadowOffset(): number;
     }
     export class $TrueTypeGlyphProvider implements $GlyphProvider {
         close(): void;
-        getGlyph(character: number): $GlyphInfo;
         getSupportedGlyphs(): $IntSet;
+        getGlyph(character: number): $GlyphInfo;
         constructor(fontMemory: $ByteBuffer, face: $FT_Face, size: number, oversample: number, shiftX: number, shiftY: number, skip: string);
         get supportedGlyphs(): $IntSet;
     }
@@ -61,14 +61,14 @@ declare module "@package/com/mojang/blaze3d/font" {
     export type $SpaceProvider$Definition_ = { advances?: $Map_<number, number>,  } | [advances?: $Map_<number, number>, ];
     export class $TrueTypeGlyphProvider$Glyph implements $GlyphInfo {
         getAdvance(bold: boolean): number;
-        getShadowOffset(): number;
         getBoldOffset(): number;
-        get shadowOffset(): number;
+        getShadowOffset(): number;
         get boldOffset(): number;
+        get shadowOffset(): number;
     }
     export class $SpaceProvider implements $GlyphProvider {
-        getGlyph(character: number): $GlyphInfo;
         getSupportedGlyphs(): $IntSet;
+        getGlyph(character: number): $GlyphInfo;
         close(): void;
         constructor(glyphs: $Map_<number, number>);
         get supportedGlyphs(): $IntSet;
@@ -76,35 +76,35 @@ declare module "@package/com/mojang/blaze3d/font" {
     export class $SheetGlyphInfo {
     }
     export interface $SheetGlyphInfo {
-        getRight(): number;
         getLeft(): number;
+        getRight(): number;
         upload(xOffset: number, yOffset: number): void;
-        getBottom(): number;
         getTop(): number;
-        isColored(): boolean;
-        getBearingLeft(): number;
+        getBottom(): number;
         getPixelWidth(): number;
-        getPixelHeight(): number;
         getOversample(): number;
+        getPixelHeight(): number;
+        getBearingLeft(): number;
         getBearingTop(): number;
-        get right(): number;
+        isColored(): boolean;
         get left(): number;
-        get bottom(): number;
+        get right(): number;
         get top(): number;
-        get colored(): boolean;
-        get bearingLeft(): number;
+        get bottom(): number;
         get pixelWidth(): number;
-        get pixelHeight(): number;
         get oversample(): number;
+        get pixelHeight(): number;
+        get bearingLeft(): number;
         get bearingTop(): number;
+        get colored(): boolean;
     }
     export class $GlyphProvider {
         static BASELINE: number;
     }
     export interface $GlyphProvider extends $AutoCloseable {
         close(): void;
-        getGlyph(character: number): $GlyphInfo;
         getSupportedGlyphs(): $IntSet;
+        getGlyph(character: number): $GlyphInfo;
         get supportedGlyphs(): $IntSet;
     }
     /**

@@ -4,7 +4,7 @@ import { $BlockPos_ } from "@package/net/minecraft/core";
 import { RegistryMarked, RegistryTypes } from "@special/types";
 import { $BlockState_, $BlockState } from "@package/net/minecraft/world/level/block/state";
 import { $PropertySetter } from "@package/rbasamoyai/createbigcannons/base";
-import { $Block_, $Block } from "@package/net/minecraft/world/level/block";
+import { $Block, $Block_ } from "@package/net/minecraft/world/level/block";
 import { $NonNullSupplier_ } from "@package/com/tterrag/registrate/util/nullness";
 import { $BlockRecipe, $BlockRecipeType, $BlockRecipeSerializer } from "@package/rbasamoyai/createbigcannons/crafting";
 
@@ -14,23 +14,23 @@ declare module "@package/rbasamoyai/createbigcannons/crafting/casting" {
         matches(arg0: $Level_, arg1: $BlockPos_): boolean;
         getType(): $BlockRecipeType<never>;
         shape(): $CannonCastShape;
-        getResultBlock(): $Block;
         getSerializer(): $BlockRecipeSerializer<never>;
-        assembleInWorld(arg0: $Level_, arg1: $BlockPos_): void;
         ingredient(): $FluidIngredient;
+        assembleInWorld(arg0: $Level_, arg1: $BlockPos_): void;
+        getResultBlock(): $Block;
         constructor(arg0: $CannonCastShape_, arg1: $FluidIngredient_, arg2: $Block_);
         get type(): $BlockRecipeType<never>;
-        get resultBlock(): $Block;
         get serializer(): $BlockRecipeSerializer<never>;
+        get resultBlock(): $Block;
     }
     export class $CannonCastShape {
         static register(): void;
-        applyTo(arg0: $BlockState_): $BlockState;
-        isLarge(): boolean;
-        diameter(): number;
-        castMould(): $Block;
-        fluidSize(): number;
         texturesCanConnect(): boolean;
+        isLarge(): boolean;
+        applyTo(arg0: $BlockState_): $BlockState;
+        castMould(): $Block;
+        diameter(): number;
+        fluidSize(): number;
         static VERY_LARGE: $CannonCastShape;
         static AUTOCANNON_BARREL: $CannonCastShape;
         static VERY_SMALL: $CannonCastShape;

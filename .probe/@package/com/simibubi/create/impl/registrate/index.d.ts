@@ -10,7 +10,7 @@ declare module "@package/com/simibubi/create/impl/registrate" {
     /**
      * Values that may be interpreted as {@link $CreateRegistrateRegistrationCallbackImpl$CallbackImpl}.
      */
-    export type $CreateRegistrateRegistrationCallbackImpl$CallbackImpl_<R, T> = { callback?: $NonNullConsumer_<R>, registry?: $ResourceKey_<$Registry<any>>, id?: $ResourceLocation_,  } | [callback?: $NonNullConsumer_<R>, registry?: $ResourceKey_<$Registry<any>>, id?: $ResourceLocation_, ];
+    export type $CreateRegistrateRegistrationCallbackImpl$CallbackImpl_<R, T> = { id?: $ResourceLocation_, callback?: $NonNullConsumer_<R>, registry?: $ResourceKey_<$Registry<any>>,  } | [id?: $ResourceLocation_, callback?: $NonNullConsumer_<R>, registry?: $ResourceKey_<$Registry<any>>, ];
     export class $CreateRegistrateRegistrationCallbackImpl {
         static register<R, T extends R>(arg0: $ResourceKey_<$Registry<R>>, arg1: $ResourceLocation_, arg2: $NonNullConsumer_<T>): void;
         static provideRegistrate(arg0: $CreateRegistrate): void;

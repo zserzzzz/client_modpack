@@ -1,7 +1,7 @@
 import { $GoalSelector } from "@package/net/minecraft/world/entity/ai/goal";
 import { $MoveControl, $LookControl, $JumpControl } from "@package/net/minecraft/world/entity/ai/control";
 import { $SensorType, $Sensor } from "@package/net/minecraft/world/entity/ai/sensing";
-import { $CompoundTag_ } from "@package/net/minecraft/nbt";
+import { $CompoundTag, $CompoundTag_ } from "@package/net/minecraft/nbt";
 import { $EntityType_, $Pose, $PortalProcessor, $PathfinderMob, $EntityDimensions, $Entity$RemovalReason, $LivingEntity, $WalkAnimationState } from "@package/net/minecraft/world/entity";
 import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
 import { $GameEventListener, $GameEvent, $GameEvent$Context_, $GameEventListener$DeliveryMode } from "@package/net/minecraft/world/level/gameevent";
@@ -37,6 +37,21 @@ declare module "@package/net/minecraft/world/entity/animal/allay" {
         get deliveryMode(): $GameEventListener$DeliveryMode;
     }
     export class $Allay extends $PathfinderMob implements $InventoryCarrier, $VibrationSystem {
+        getVibrationData(): $VibrationSystem$Data;
+        getVibrationUser(): $VibrationSystem$User;
+        getSpinningProgress(partialTick: number): number;
+        setDancing(dancing: boolean): void;
+        /**
+         * If a rider of this entity can interact with this entity. Should return true on the
+         * ridden entity if so.
+         */
+        isDancing(): boolean;
+        /**
+         * If a rider of this entity can interact with this entity. Should return true on the
+         * ridden entity if so.
+         */
+        isSpinning(): boolean;
+        getInventory(): $SimpleContainer;
         static createAttributes(): $AttributeSupplier$Builder;
         setJukeboxPlaying(jukeboxPos: $BlockPos_, jukeboxPlaying: boolean): void;
         /**
@@ -44,24 +59,10 @@ declare module "@package/net/minecraft/world/entity/animal/allay" {
          * ridden entity if so.
          */
         hasItemInHand(): boolean;
-        getVibrationUser(): $VibrationSystem$User;
-        getVibrationData(): $VibrationSystem$Data;
-        getInventory(): $SimpleContainer;
-        /**
-         * If a rider of this entity can interact with this entity. Should return true on the
-         * ridden entity if so.
-         */
-        isDancing(): boolean;
-        setDancing(dancing: boolean): void;
-        /**
-         * If a rider of this entity can interact with this entity. Should return true on the
-         * ridden entity if so.
-         */
-        isSpinning(): boolean;
-        getSpinningProgress(partialTick: number): number;
         getHoldingItemAnimationProgress(partialTick: number): number;
-        readInventoryFromTag(tag: $CompoundTag_, levelRegistry: $HolderLookup$Provider): void;
         writeInventoryToTag(tag: $CompoundTag_, levelRegistry: $HolderLookup$Provider): void;
+        readInventoryFromTag(tag: $CompoundTag_, levelRegistry: $HolderLookup$Provider): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -230,24 +231,24 @@ declare module "@package/net/minecraft/world/entity/animal/allay" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(entityType: $EntityType_<$Allay>, level: $Level_);
-        get vibrationUser(): $VibrationSystem$User;
         get vibrationData(): $VibrationSystem$Data;
-        get inventory(): $SimpleContainer;
+        get vibrationUser(): $VibrationSystem$User;
         get spinning(): boolean;
+        get inventory(): $SimpleContainer;
     }
     export class $AllayAi {
-        static hearNoteblock(entity: $LivingEntity, pos: $BlockPos_): void;
-        static getLikedPlayer(entity: $LivingEntity): ($ServerPlayer) | undefined;
         static updateActivity(allay: $Allay): void;
         static makeBrain(brain: $Brain<$Allay>): $Brain<never>;
+        static getLikedPlayer(entity: $LivingEntity): ($ServerPlayer) | undefined;
+        static hearNoteblock(entity: $LivingEntity, pos: $BlockPos_): void;
         constructor();
     }
     export class $Allay$VibrationUser implements $VibrationSystem$User {
-        isValidVibration(arg0: $Holder_<$GameEvent>, arg1: $GameEvent$Context_): boolean;
-        onDataChanged(): void;
         getListenableEvents(): $TagKey<$GameEvent>;
-        canTriggerAvoidVibration(): boolean;
         calculateTravelTimeInTicks(arg0: number): number;
+        canTriggerAvoidVibration(): boolean;
+        onDataChanged(): void;
+        isValidVibration(arg0: $Holder_<$GameEvent>, arg1: $GameEvent$Context_): boolean;
         requiresAdjacentChunksToBeTicking(): boolean;
         get listenableEvents(): $TagKey<$GameEvent>;
     }

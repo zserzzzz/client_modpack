@@ -29,66 +29,66 @@ declare module "@package/com/copycatsplus/copycats/foundation/copycat" {
         static writeSafe(self: $ICopycatBlockEntity, tag: $CompoundTag_, registries: $HolderLookup$Provider): void;
     }
     export interface $ICopycatBlockEntity extends $SpecialBlockEntityItemRequirement, $TransformableBlockEntity, $PartialSafeNBT, $IMergeableBE {
-        getRequiredItems(state: $BlockState_): $ItemRequirement;
         transform(blockEntity: $BlockEntity, transform: $StructureTransform): void;
         init(): void;
         accept(other: $BlockEntity): void;
         getLevel(): $Level;
         setLevel(arg0: $Level_): void;
-        onLoad(): void;
         getBlock(): $ICopycatBlock;
-        blockHolderGetter(): $HolderGetter<$Block>;
-        notifyUpdate(): void;
+        onLoad(): void;
         setBlockState(arg0: $BlockState_): void;
-        getBlockState(): $BlockState;
         getBlockPos(): $BlockPos;
+        getBlockState(): $BlockState;
         getMaterial(): $BlockState;
-        setCTEnabledInternal(arg0: boolean): void;
-        setConsumedItemInternal(arg0: $ItemStack_): void;
-        setMaterialInternal(arg0: $BlockState_): void;
-        isCTEnabled(): boolean;
-        setCTEnabled(value: boolean): void;
+        notifyUpdate(): void;
+        blockHolderGetter(): $HolderGetter<$Block>;
+        getRequiredItems(state: $BlockState_): $ItemRequirement;
         getConsumedItem(): $ItemStack;
         setMaterial(blockState: $BlockState_): void;
         cycleMaterial(): boolean;
         hasCustomMaterial(): boolean;
+        setCTEnabled(value: boolean): void;
         setConsumedItem(stack: $ItemStack_): void;
+        isCTEnabled(): boolean;
+        setMaterialInternal(arg0: $BlockState_): void;
+        setCTEnabledInternal(arg0: boolean): void;
+        setConsumedItemInternal(arg0: $ItemStack_): void;
         get block(): $ICopycatBlock;
         get blockPos(): $BlockPos;
+        set materialInternal(value: $BlockState_);
         set CTEnabledInternal(value: boolean);
         set consumedItemInternal(value: $ItemStack_);
-        set materialInternal(value: $BlockState_);
     }
     export class $ICopycatBlock {
-        static wrappedColor(): $BlockColor;
-        static hidesNeighborFace(level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, neighborState: $BlockState_, dir: $Direction_): boolean;
         static getAppearance(block: $ICopycatBlock, state: $BlockState_, level: $BlockAndTintGetter, pos: $BlockPos_, side: $Direction_, queryState: $BlockState_ | null, queryPos: $BlockPos_ | null): $BlockState;
+        static hidesNeighborFace(level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, neighborState: $BlockState_, dir: $Direction_): boolean;
         static getMaterial(reader: $BlockGetter, targetPos: $BlockPos_): $BlockState;
+        static wrappedColor(): $BlockColor;
         static getRequiredItemsForLayer(state: $BlockState_, property: $IntegerProperty): $ItemRequirement;
     }
     export interface $ICopycatBlock extends $IWrenchable, $IStateType, $TransformableBlock {
-        onRemove(state: $BlockState_, world: $Level_, pos: $BlockPos_, newState: $BlockState_, isMoving: boolean, handler: $ICopycatBlock$OnRemoveHandler_): void;
+        mirror(pState: $BlockState_, pMirror: $Mirror_): $BlockState;
+        shapeCanOccludeNeighbor(level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, neighborPos: $BlockPos_, dir: $Direction_): (boolean) | undefined;
         transform(state: $BlockState_, transform: $StructureTransform): $BlockState;
         rotate(pState: $BlockState_, pRot: $Rotation_): $BlockState;
-        onSneakWrenched(state: $BlockState_, context: $UseOnContext): $InteractionResult;
-        mirror(pState: $BlockState_, pMirror: $Mirror_): $BlockState;
-        useItemOn(stack: $ItemStack_, state: $BlockState_, level: $Level_, pos: $BlockPos_, player: $Player, hand: $InteractionHand_, hitResult: $BlockHitResult): $ItemInteractionResult;
-        canOcclude(level: $BlockGetter, state: $BlockState_, pos: $BlockPos_): boolean;
-        shapeCanOccludeNeighbor(level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, neighborPos: $BlockPos_, dir: $Direction_): (boolean) | undefined;
+        useWithoutItem(state: $BlockState_, level: $Level_, pos: $BlockPos_, player: $Player, hitResult: $BlockHitResult): $InteractionResult;
         setPlacedBy(worldIn: $Level_, pos: $BlockPos_, state: $BlockState_, placer: $LivingEntity | null, stack: $ItemStack_): void;
         playerWillDestroy(level: $Level_, pos: $BlockPos_, state: $BlockState_, player: $Player): $BlockState;
-        useWithoutItem(state: $BlockState_, level: $Level_, pos: $BlockPos_, player: $Player, hitResult: $BlockHitResult): $InteractionResult;
+        onRemove(state: $BlockState_, world: $Level_, pos: $BlockPos_, newState: $BlockState_, isMoving: boolean, handler: $ICopycatBlock$OnRemoveHandler_): void;
+        useItemOn(stack: $ItemStack_, state: $BlockState_, level: $Level_, pos: $BlockPos_, player: $Player, hand: $InteractionHand_, hitResult: $BlockHitResult): $ItemInteractionResult;
+        canOcclude(level: $BlockGetter, state: $BlockState_, pos: $BlockPos_): boolean;
+        onWrenched(state: $BlockState_, context: $UseOnContext): $InteractionResult;
+        toggleCT(state: $BlockState_, level: $Level_, pos: $BlockPos_, player: $Player, hitResult: $BlockHitResult): $InteractionResult;
+        onSneakWrenched(state: $BlockState_, context: $UseOnContext): $InteractionResult;
+        canToggleCT(state: $BlockState_, level: $BlockAndTintGetter, pos: $BlockPos_): boolean;
+        prepareMaterial(pLevel: $Level_, pPos: $BlockPos_, pState: $BlockState_, pPlayer: $Player, pHand: $InteractionHand_, pHit: $BlockHitResult, material: $BlockState_): $BlockState;
+        checkConnection(reader: $BlockAndTintGetter, fromPos: $BlockPos_, toPos: $BlockPos_, fromState: $BlockState_): boolean;
+        isCTEnabled(state: $BlockState_, level: $BlockAndTintGetter, pos: $BlockPos_ | null): boolean;
         canConnectTexturesToward(reader: $BlockAndTintGetter, fromPos: $BlockPos_, toPos: $BlockPos_, fromState: $BlockState_): boolean;
         isIgnoredConnectivitySide(reader: $BlockAndTintGetter, fromState: $BlockState_, face: $Direction_, fromPos: $BlockPos_, toPos: $BlockPos_ | null, toState: $BlockState_ | null): boolean;
-        toggleCT(state: $BlockState_, level: $Level_, pos: $BlockPos_, player: $Player, hitResult: $BlockHitResult): $InteractionResult;
-        onWrenched(state: $BlockState_, context: $UseOnContext): $InteractionResult;
-        isCTEnabled(state: $BlockState_, level: $BlockAndTintGetter, pos: $BlockPos_ | null): boolean;
-        prepareMaterial(pLevel: $Level_, pPos: $BlockPos_, pState: $BlockState_, pPlayer: $Player, pHand: $InteractionHand_, pHit: $BlockHitResult, material: $BlockState_): $BlockState;
-        canToggleCT(state: $BlockState_, level: $BlockAndTintGetter, pos: $BlockPos_): boolean;
-        checkConnection(reader: $BlockAndTintGetter, fromPos: $BlockPos_, toPos: $BlockPos_, fromState: $BlockState_): boolean;
-        getAcceptedBlockState(pLevel: $Level_, pPos: $BlockPos_, item: $ItemStack_, face: $Direction_): $BlockState;
         isAcceptedRegardless(material: $BlockState_): boolean;
         getCopycatBlockEntity(worldIn: $BlockGetter, pos: $BlockPos_): $ICopycatBlockEntity;
+        getAcceptedBlockState(pLevel: $Level_, pPos: $BlockPos_, item: $ItemStack_, face: $Direction_): $BlockState;
     }
     export class $ICopycatBlock$OnRemoveHandler {
     }

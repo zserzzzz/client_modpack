@@ -23,15 +23,15 @@ declare module "@package/net/minecraft/network/protocol/status" {
     }
     export class $ServerStatus$Players extends $Record {
         max(): number;
-        sample(): $List<$GameProfile>;
         online(): number;
+        sample(): $List<$GameProfile>;
         static CODEC: $Codec<$ServerStatus$Players>;
         constructor(max: number, online: number, sample: $List_<$GameProfile>);
     }
     /**
      * Values that may be interpreted as {@link $ServerStatus$Players}.
      */
-    export type $ServerStatus$Players_ = { online?: number, sample?: $List_<$GameProfile>, max?: number,  } | [online?: number, sample?: $List_<$GameProfile>, max?: number, ];
+    export type $ServerStatus$Players_ = { max?: number, online?: number, sample?: $List_<$GameProfile>,  } | [max?: number, online?: number, sample?: $List_<$GameProfile>, ];
     /**
      * PacketListener for the client side of the STATUS protocol.
      */
@@ -63,16 +63,16 @@ declare module "@package/net/minecraft/network/protocol/status" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static STREAM_CODEC: $StreamCodec<$FriendlyByteBuf, $ClientboundStatusResponsePacket>;
         constructor(status: $ServerStatus_, cachedStatus: string);
         constructor(status: $ServerStatus_);
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     /**
      * Values that may be interpreted as {@link $ClientboundStatusResponsePacket}.
@@ -87,15 +87,15 @@ declare module "@package/net/minecraft/network/protocol/status" {
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isSkippable(): boolean;
+        isTerminal(): boolean;
         /**
          * Whether decoding errors will be ignored for this packet.
          */
-        isTerminal(): boolean;
+        isSkippable(): boolean;
         static INSTANCE: $ServerboundStatusRequestPacket;
         static STREAM_CODEC: $StreamCodec<$ByteBuf, $ServerboundStatusRequestPacket>;
-        get skippable(): boolean;
         get terminal(): boolean;
+        get skippable(): boolean;
     }
     export class $ServerStatus$Favicon extends $Record {
         iconBytes(): number[];
@@ -114,12 +114,12 @@ declare module "@package/net/minecraft/network/protocol/status" {
     export class $ServerStatus extends $Record implements $ServerDataExtension {
         version(): ($ServerStatus$Version) | undefined;
         description(): $Component;
-        preventsChatReports(): boolean;
         setPreventsChatReports(arg0: boolean): void;
+        preventsChatReports(): boolean;
         favicon(): ($ServerStatus$Favicon) | undefined;
-        players(): ($ServerStatus$Players) | undefined;
-        isModded(): boolean;
         enforcesSecureChat(): boolean;
+        isModded(): boolean;
+        players(): ($ServerStatus$Players) | undefined;
         static CODEC: $Codec<$ServerStatus>;
         /**
          * @deprecated
@@ -131,7 +131,7 @@ declare module "@package/net/minecraft/network/protocol/status" {
     /**
      * Values that may be interpreted as {@link $ServerStatus}.
      */
-    export type $ServerStatus_ = { description?: $Component_, favicon?: ($ServerStatus$Favicon_) | undefined, version?: ($ServerStatus$Version_) | undefined, isModded?: boolean, players?: ($ServerStatus$Players_) | undefined, enforcesSecureChat?: boolean,  } | [description?: $Component_, favicon?: ($ServerStatus$Favicon_) | undefined, version?: ($ServerStatus$Version_) | undefined, isModded?: boolean, players?: ($ServerStatus$Players_) | undefined, enforcesSecureChat?: boolean, ];
+    export type $ServerStatus_ = { players?: ($ServerStatus$Players_) | undefined, enforcesSecureChat?: boolean, description?: $Component_, favicon?: ($ServerStatus$Favicon_) | undefined, version?: ($ServerStatus$Version_) | undefined, isModded?: boolean,  } | [players?: ($ServerStatus$Players_) | undefined, enforcesSecureChat?: boolean, description?: $Component_, favicon?: ($ServerStatus$Favicon_) | undefined, version?: ($ServerStatus$Version_) | undefined, isModded?: boolean, ];
     export class $StatusProtocols {
         static CLIENTBOUND: $ProtocolInfo<$ClientStatusPacketListener>;
         static CLIENTBOUND_TEMPLATE: $ProtocolInfo$Unbound<$ClientStatusPacketListener, $FriendlyByteBuf>;

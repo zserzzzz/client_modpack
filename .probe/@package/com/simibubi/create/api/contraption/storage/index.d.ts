@@ -8,8 +8,8 @@ declare module "@package/com/simibubi/create/api/contraption/storage" {
     }
     export interface $SyncedMountedStorage {
         isDirty(): boolean;
-        markClean(): void;
         afterSync(arg0: $Contraption, arg1: $BlockPos_): void;
+        markClean(): void;
         get dirty(): boolean;
     }
 }

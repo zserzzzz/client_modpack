@@ -24,8 +24,8 @@ declare module "@package/dev/emi/emi/api/widget" {
     }
     export class $Widget implements $Renderable, $GlobalMixin {
         getBounds(): $Bounds;
-        keyPressed(keyCode: number, scanCode: number, modifiers: number): boolean;
         render(arg0: $GuiGraphics, arg1: number, arg2: number, arg3: number): void;
+        keyPressed(keyCode: number, scanCode: number, modifiers: number): boolean;
         mouseClicked(mouseX: number, mouseY: number, button: number): boolean;
         getTooltip(mouseX: number, mouseY: number): $List<$ClientTooltipComponent>;
         constructor();
@@ -39,22 +39,22 @@ declare module "@package/dev/emi/emi/api/widget" {
         constructor(texture: $ResourceLocation_, x: number, y: number, width: number, height: number, u: number, v: number);
     }
     export class $SlotWidget extends $Widget implements $GlobalMixin {
-        drawBackground(draw: $GuiGraphics, mouseX: number, mouseY: number, delta: number): void;
         getStack(): $EmiIngredient;
-        recipeContext(recipe: $EmiRecipe): $SlotWidget;
-        customBackground(id: $ResourceLocation_, u: number, v: number, width: number, height: number): $SlotWidget;
-        drawStack(draw: $GuiGraphics, mouseX: number, mouseY: number, delta: number): void;
-        catalyst(catalyst: boolean): $SlotWidget;
-        getRecipe(): $EmiRecipe;
-        backgroundTexture(id: $ResourceLocation_, u: number, v: number): $SlotWidget;
         large(large: boolean): $SlotWidget;
-        appendTooltip(supplier: $Supplier_<$ClientTooltipComponent>): $SlotWidget;
-        appendTooltip(arg0: $Function_<$EmiIngredient, $ClientTooltipComponent>): $SlotWidget;
+        backgroundTexture(id: $ResourceLocation_, u: number, v: number): $SlotWidget;
+        customBackground(id: $ResourceLocation_, u: number, v: number, width: number, height: number): $SlotWidget;
+        drawBackground(draw: $GuiGraphics, mouseX: number, mouseY: number, delta: number): void;
+        getRecipe(): $EmiRecipe;
+        catalyst(catalyst: boolean): $SlotWidget;
+        recipeContext(recipe: $EmiRecipe): $SlotWidget;
         appendTooltip(text: $Component_): $SlotWidget;
-        drawOverlay(draw: $GuiGraphics, mouseX: number, mouseY: number, delta: number): void;
-        drawSlotHighlight(draw: $GuiGraphics, bounds: $Bounds_): void;
-        drawBack(drawBack: boolean): $SlotWidget;
+        appendTooltip(arg0: $Function_<$EmiIngredient, $ClientTooltipComponent>): $SlotWidget;
+        appendTooltip(supplier: $Supplier_<$ClientTooltipComponent>): $SlotWidget;
         shouldDrawSlotHighlight(mouseX: number, mouseY: number): boolean;
+        drawSlotHighlight(draw: $GuiGraphics, bounds: $Bounds_): void;
+        drawOverlay(draw: $GuiGraphics, mouseX: number, mouseY: number, delta: number): void;
+        drawBack(drawBack: boolean): $SlotWidget;
+        drawStack(draw: $GuiGraphics, mouseX: number, mouseY: number, delta: number): void;
         constructor(stack: $EmiIngredient, x: number, y: number);
         get stack(): $EmiIngredient;
         get recipe(): $EmiRecipe;
@@ -69,8 +69,8 @@ declare module "@package/dev/emi/emi/api/widget" {
      */
     export type $ButtonWidget$ClickAction_ = ((arg0: number, arg1: number, arg2: number) => void);
     export class $TextWidget extends $Widget implements $GlobalMixin {
-        horizontalAlign(alignment: $TextWidget$Alignment_): $TextWidget;
         verticalAlign(alignment: $TextWidget$Alignment_): $TextWidget;
+        horizontalAlign(alignment: $TextWidget$Alignment_): $TextWidget;
         constructor(text: $FormattedCharSequence_, x: number, y: number, color: number, shadow: boolean);
     }
     export class $Bounds extends $Record implements $GlobalMixin {
@@ -142,30 +142,30 @@ declare module "@package/dev/emi/emi/api/widget" {
     export class $WidgetHolder {
     }
     export interface $WidgetHolder extends $GlobalMixin {
-        getHeight(): number;
         add<T extends $Widget>(arg0: T): T;
-        getWidth(): number;
-        addButton(x: number, y: number, width: number, height: number, u: number, v: number, isActive: $BooleanSupplier_, action: $ButtonWidget$ClickAction_): $ButtonWidget;
-        addButton(x: number, y: number, width: number, height: number, u: number, v: number, texture: $ResourceLocation_, isActive: $BooleanSupplier_, action: $ButtonWidget$ClickAction_): $ButtonWidget;
-        addText(text: $FormattedCharSequence_, x: number, y: number, color: number, shadow: boolean): $TextWidget;
-        addText(text: $Component_, x: number, y: number, color: number, shadow: boolean): $TextWidget;
-        addTexture(texture: $ResourceLocation_, x: number, y: number, width: number, height: number, u: number, v: number): $TextureWidget;
-        addTexture(texture: $EmiTexture, x: number, y: number): $TextureWidget;
-        addTexture(texture: $ResourceLocation_, x: number, y: number, width: number, height: number, u: number, v: number, regionWidth: number, regionHeight: number, textureWidth: number, textureHeight: number): $TextureWidget;
-        addTooltip(tooltipSupplier: $BiFunction_<number, number, $List<$ClientTooltipComponent>>, x: number, y: number, width: number, height: number): $TooltipWidget;
         addTooltip(tooltip: $List_<$ClientTooltipComponent>, x: number, y: number, width: number, height: number): $TooltipWidget;
+        addTooltip(tooltipSupplier: $BiFunction_<number, number, $List<$ClientTooltipComponent>>, x: number, y: number, width: number, height: number): $TooltipWidget;
+        getWidth(): number;
+        getHeight(): number;
         addSlot(x: number, y: number): $SlotWidget;
         addSlot(ingredient: $EmiIngredient, x: number, y: number): $SlotWidget;
-        addTooltipText(tooltip: $List_<$Component_>, x: number, y: number, width: number, height: number): $TooltipWidget;
+        addButton(x: number, y: number, width: number, height: number, u: number, v: number, isActive: $BooleanSupplier_, action: $ButtonWidget$ClickAction_): $ButtonWidget;
+        addButton(x: number, y: number, width: number, height: number, u: number, v: number, texture: $ResourceLocation_, isActive: $BooleanSupplier_, action: $ButtonWidget$ClickAction_): $ButtonWidget;
+        addTexture(texture: $EmiTexture, x: number, y: number): $TextureWidget;
+        addTexture(texture: $ResourceLocation_, x: number, y: number, width: number, height: number, u: number, v: number): $TextureWidget;
+        addTexture(texture: $ResourceLocation_, x: number, y: number, width: number, height: number, u: number, v: number, regionWidth: number, regionHeight: number, textureWidth: number, textureHeight: number): $TextureWidget;
+        addText(text: $FormattedCharSequence_, x: number, y: number, color: number, shadow: boolean): $TextWidget;
+        addText(text: $Component_, x: number, y: number, color: number, shadow: boolean): $TextWidget;
         addDrawable(x: number, y: number, width: number, height: number, consumer: $DrawableWidget$DrawableWidgetConsumer_): $DrawableWidget;
-        addAnimatedTexture(texture: $ResourceLocation_, x: number, y: number, width: number, height: number, u: number, v: number, regionWidth: number, regionHeight: number, textureWidth: number, textureHeight: number, time: number, horizontal: boolean, endToStart: boolean, fullToEmpty: boolean): $AnimatedTextureWidget;
-        addAnimatedTexture(texture: $ResourceLocation_, x: number, y: number, width: number, height: number, u: number, v: number, time: number, horizontal: boolean, endToStart: boolean, fullToEmpty: boolean): $AnimatedTextureWidget;
-        addAnimatedTexture(texture: $EmiTexture, x: number, y: number, time: number, horizontal: boolean, endToStart: boolean, fullToEmpty: boolean): $AnimatedTextureWidget;
-        addGeneratedSlot(stackSupplier: $Function_<$Random, $EmiIngredient>, unique: number, x: number, y: number): $GeneratedSlotWidget;
-        addFillingArrow(x: number, y: number, time: number): $FillingArrowWidget;
         addTank(stack: $EmiIngredient, x: number, y: number, width: number, height: number, capacity: number): $TankWidget;
-        get height(): number;
+        addAnimatedTexture(texture: $ResourceLocation_, x: number, y: number, width: number, height: number, u: number, v: number, time: number, horizontal: boolean, endToStart: boolean, fullToEmpty: boolean): $AnimatedTextureWidget;
+        addAnimatedTexture(texture: $ResourceLocation_, x: number, y: number, width: number, height: number, u: number, v: number, regionWidth: number, regionHeight: number, textureWidth: number, textureHeight: number, time: number, horizontal: boolean, endToStart: boolean, fullToEmpty: boolean): $AnimatedTextureWidget;
+        addAnimatedTexture(texture: $EmiTexture, x: number, y: number, time: number, horizontal: boolean, endToStart: boolean, fullToEmpty: boolean): $AnimatedTextureWidget;
+        addFillingArrow(x: number, y: number, time: number): $FillingArrowWidget;
+        addGeneratedSlot(stackSupplier: $Function_<$Random, $EmiIngredient>, unique: number, x: number, y: number): $GeneratedSlotWidget;
+        addTooltipText(tooltip: $List_<$Component_>, x: number, y: number, width: number, height: number): $TooltipWidget;
         get width(): number;
+        get height(): number;
     }
     export class $TooltipWidget extends $Widget implements $GlobalMixin {
         constructor(tooltipSupplier: $BiFunction_<number, number, $List<$ClientTooltipComponent>>, x: number, y: number, width: number, height: number);

@@ -43,15 +43,15 @@ export * as frogport from "@package/com/simibubi/create/content/logistics/packag
 
 declare module "@package/com/simibubi/create/content/logistics/packagePort" {
     export class $PackagePortTarget {
-        canSupport(arg0: $BlockEntity): boolean;
         register(arg0: $PackagePortBlockEntity, arg1: $LevelAccessor, arg2: $BlockPos_): void;
         setup(arg0: $PackagePortBlockEntity, arg1: $LevelAccessor, arg2: $BlockPos_): void;
         be(arg0: $LevelAccessor, arg1: $BlockPos_): $BlockEntity;
         "export"(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $ItemStack_, arg3: boolean): boolean;
         getIcon(): $ItemStack;
-        depositImmediately(): boolean;
-        deregister(arg0: $PackagePortBlockEntity, arg1: $LevelAccessor, arg2: $BlockPos_): void;
+        canSupport(arg0: $BlockEntity): boolean;
         getExactTargetLocation(arg0: $PackagePortBlockEntity, arg1: $LevelAccessor, arg2: $BlockPos_): $Vec3;
+        deregister(arg0: $PackagePortBlockEntity, arg1: $LevelAccessor, arg2: $BlockPos_): void;
+        depositImmediately(): boolean;
         static CODEC: $Codec<$PackagePortTarget>;
         relativePos: $BlockPos;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $PackagePortTarget>;
@@ -181,7 +181,7 @@ declare module "@package/com/simibubi/create/content/logistics/packagePort" {
     /**
      * Values that may be interpreted as {@link $PackagePortPlacementPacket}.
      */
-    export type $PackagePortPlacementPacket_ = { pos?: $BlockPos_, target?: $PackagePortTarget,  } | [pos?: $BlockPos_, target?: $PackagePortTarget, ];
+    export type $PackagePortPlacementPacket_ = { target?: $PackagePortTarget, pos?: $BlockPos_,  } | [target?: $PackagePortTarget, pos?: $BlockPos_, ];
     export class $AllPackagePortTargetTypes {
         static register(arg0: $IEventBus): void;
         static TRAIN_STATION: $Holder<$PackagePortTargetType>;
@@ -192,8 +192,8 @@ declare module "@package/com/simibubi/create/content/logistics/packagePort" {
         static tick(): void;
         static onUse(): boolean;
         static flushSettings(arg0: $BlockPos_): void;
-        static animateConnection(arg0: $Minecraft, arg1: $Vec3_, arg2: $Vec3_, arg3: $Color): void;
         static validateDiff(arg0: $Vec3_, arg1: $BlockPos_): string;
+        static animateConnection(arg0: $Minecraft, arg1: $Vec3_, arg2: $Vec3_, arg3: $Color): void;
         static exactPositionOfTarget: $Vec3;
         static isPostbox: boolean;
         static activePackageTarget: $PackagePortTarget;
@@ -237,12 +237,12 @@ declare module "@package/com/simibubi/create/content/logistics/packagePort" {
         drop(arg0: $ItemStack_): void;
         use(arg0: $Player): $ItemInteractionResult;
         getDisplayName(): $Component;
-        createMenu(arg0: number, arg1: $Inventory, arg2: $Player): $AbstractContainerMenu;
         clearContent(): void;
-        filterChanged(): void;
         getComparatorOutput(): number;
-        getFilterString(): string;
+        createMenu(arg0: number, arg1: $Inventory, arg2: $Player): $AbstractContainerMenu;
         isBackedUp(): boolean;
+        filterChanged(): void;
+        getFilterString(): string;
         shouldTriggerClientSideContainerClosingOnOpen(): boolean;
         writeClientSideData(arg0: $AbstractContainerMenu, arg1: $RegistryFriendlyByteBuf): void;
         shouldCloseCurrentScreen(): boolean;
@@ -257,7 +257,7 @@ declare module "@package/com/simibubi/create/content/logistics/packagePort" {
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
         get displayName(): $Component;
         get comparatorOutput(): number;
-        get filterString(): string;
         get backedUp(): boolean;
+        get filterString(): string;
     }
 }

@@ -9,10 +9,10 @@ import { $UUID_, $UUID, $List, $List_ } from "@package/java/util";
 declare module "@package/dev/ryanhcode/sable/sublevel/storage/serialization" {
     export class $SubLevelData {
         bounds(): $BoundingBox3d;
-        fullTag(): $CompoundTag;
-        pose(): $Pose3d;
-        uuid(): $UUID;
         dependencies(): $List<$UUID>;
+        uuid(): $UUID;
+        pose(): $Pose3d;
+        fullTag(): $CompoundTag;
         setOriginLoadedChunk(arg0: $ChunkPos): void;
         getOriginLoadedChunk(): $ChunkPos;
         constructor(arg0: $UUID_, arg1: $BoundingBox3d, arg2: $Pose3d, arg3: $List_<$UUID_>, arg4: $CompoundTag_);
@@ -21,11 +21,11 @@ declare module "@package/dev/ryanhcode/sable/sublevel/storage/serialization" {
         flush(): void;
         close(): void;
         getFolder(): $Path;
-        attemptLoadSubLevel(arg0: $ChunkPos, arg1: $SavedSubLevelPointer_): $SubLevelData;
-        attemptLoadHoldingChunk(arg0: $ChunkPos): $SubLevelHoldingChunk;
-        attemptSaveHoldingChunk(arg0: $ChunkPos, arg1: $SubLevelHoldingChunk): void;
         attemptSaveSubLevel(arg0: $GlobalSavedSubLevelPointer_, arg1: $SubLevelData): void;
         attemptSaveSubLevel(arg0: $ChunkPos, arg1: $SubLevelData): $GlobalSavedSubLevelPointer;
+        attemptSaveHoldingChunk(arg0: $ChunkPos, arg1: $SubLevelHoldingChunk): void;
+        attemptLoadHoldingChunk(arg0: $ChunkPos): $SubLevelHoldingChunk;
+        attemptLoadSubLevel(arg0: $ChunkPos, arg1: $SavedSubLevelPointer_): $SubLevelData;
         static MAX_CACHE_SIZE: number;
         constructor(arg0: $Path_);
         get folder(): $Path;

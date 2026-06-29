@@ -25,22 +25,22 @@ declare module "@package/com/ishland/c2me/rewrites/chunksystem/common" {
     /**
      * Values that may be interpreted as {@link $ChunkLoadingContext}.
      */
-    export type $ChunkLoadingContext_ = { dependencies?: $KeyStatusPair<$ChunkPos, $ChunkState_, $ChunkLoadingContext_>[], tacs?: $ChunkMap, chunks?: $StaticCache2D<$GenerationChunkHolder>, schedulingManager?: $SchedulingManager, holder?: $ItemHolder<$ChunkPos, $ChunkState_, $ChunkLoadingContext_, $NewChunkHolderVanillaInterface>,  } | [dependencies?: $KeyStatusPair<$ChunkPos, $ChunkState_, $ChunkLoadingContext_>[], tacs?: $ChunkMap, chunks?: $StaticCache2D<$GenerationChunkHolder>, schedulingManager?: $SchedulingManager, holder?: $ItemHolder<$ChunkPos, $ChunkState_, $ChunkLoadingContext_, $NewChunkHolderVanillaInterface>, ];
+    export type $ChunkLoadingContext_ = { schedulingManager?: $SchedulingManager, holder?: $ItemHolder<$ChunkPos, $ChunkState_, $ChunkLoadingContext_, $NewChunkHolderVanillaInterface>, dependencies?: $KeyStatusPair<$ChunkPos, $ChunkState_, $ChunkLoadingContext_>[], tacs?: $ChunkMap, chunks?: $StaticCache2D<$GenerationChunkHolder>,  } | [schedulingManager?: $SchedulingManager, holder?: $ItemHolder<$ChunkPos, $ChunkState_, $ChunkLoadingContext_, $NewChunkHolderVanillaInterface>, dependencies?: $KeyStatusPair<$ChunkPos, $ChunkState_, $ChunkLoadingContext_>[], tacs?: $ChunkMap, chunks?: $StaticCache2D<$GenerationChunkHolder>, ];
     export class $ChunkState extends $Record {
-        reachedStatus(): $ChunkStatus;
-        wasFullChunk(): boolean;
         chunk(): $ChunkAccess;
         protoChunk(): $ProtoChunk;
+        wasFullChunk(): boolean;
+        reachedStatus(): $ChunkStatus;
         constructor(chunk: $ChunkAccess, protoChunk: $ProtoChunk, reachedStatus: $ChunkStatus_, wasFullChunk: boolean);
     }
     /**
      * Values that may be interpreted as {@link $ChunkState}.
      */
-    export type $ChunkState_ = { protoChunk?: $ProtoChunk, chunk?: $ChunkAccess, wasFullChunk?: boolean, reachedStatus?: $ChunkStatus_,  } | [protoChunk?: $ProtoChunk, chunk?: $ChunkAccess, wasFullChunk?: boolean, reachedStatus?: $ChunkStatus_, ];
+    export type $ChunkState_ = { reachedStatus?: $ChunkStatus_, protoChunk?: $ProtoChunk, chunk?: $ChunkAccess, wasFullChunk?: boolean,  } | [reachedStatus?: $ChunkStatus_, protoChunk?: $ProtoChunk, chunk?: $ChunkAccess, wasFullChunk?: boolean, ];
     export class $NewChunkHolderVanillaInterface extends $ChunkHolder implements $IFastChunkHolder {
+        c2me$immediateWorldChunk(): $LevelChunk;
         updateDeferredStatus(status: $NewChunkStatus): void;
         triggerDeferredLoad(requestedStatus: $NewChunkStatus): void;
-        c2me$immediateWorldChunk(): $LevelChunk;
         static UNLOADED_LEVEL_CHUNK_FUTURE: $CompletableFuture<$ChunkResult<$LevelChunk>>;
         currentlyLoading: $LevelChunk;
         pos: $ChunkPos;
@@ -55,20 +55,20 @@ declare module "@package/com/ishland/c2me/rewrites/chunksystem/common" {
         constructor(chunkSystem: $TheChunkSystem, newHolder: $ItemHolder<$ChunkPos, $ChunkState_, $ChunkLoadingContext_, $NewChunkHolderVanillaInterface>, world: $LevelHeightAccessor, lightingProvider: $LevelLightEngine, playersWatchingChunkProvider: $ChunkHolder$PlayerProvider_);
     }
     export class $TheChunkSystem extends $StatusAdvancingScheduler<$ChunkPos, $ChunkState, $ChunkLoadingContext, $NewChunkHolderVanillaInterface> {
-        vanillaIf$setLevel(pos: number, level: number): $ChunkHolder;
         vanillaIf$getManagedLevel(pos: number): number;
+        vanillaIf$setLevel(pos: number, level: number): $ChunkHolder;
         static NO_OP: $Runnable;
         constructor(tacs: $ChunkMap);
     }
     export class $NewChunkStatus implements $ItemStatus<$ChunkPos, $ChunkState, $ChunkLoadingContext> {
-        static fromVanillaLevel(level: number): $NewChunkStatus;
-        toChunkLevelType(): $FullChunkStatus;
-        toVanillaLevel(): number;
-        static fromVanillaStatus(status: $ChunkStatus_): $NewChunkStatus;
+        getDependencies(holder: $ItemHolder<$ChunkPos, $ChunkState_, $ChunkLoadingContext_, never>): $KeyStatusPair<$ChunkPos, $ChunkState, $ChunkLoadingContext>[];
         ordinal(): number;
         getEffectiveVanillaStatus(): $ChunkStatus;
-        getDependencies(holder: $ItemHolder<$ChunkPos, $ChunkState_, $ChunkLoadingContext_, never>): $KeyStatusPair<$ChunkPos, $ChunkState, $ChunkLoadingContext>[];
         getAllStatuses(): $ItemStatus<$ChunkPos, $ChunkState, $ChunkLoadingContext>[];
+        toChunkLevelType(): $FullChunkStatus;
+        static fromVanillaLevel(level: number): $NewChunkStatus;
+        static fromVanillaStatus(status: $ChunkStatus_): $NewChunkStatus;
+        toVanillaLevel(): number;
         getNext(): $ItemStatus<$ChunkPos, $ChunkState, $ChunkLoadingContext>;
         getPrev(): $ItemStatus<$ChunkPos, $ChunkState, $ChunkLoadingContext>;
         getDependenciesToRemove(holder: $ItemHolder<$ChunkPos, $ChunkState_, $ChunkLoadingContext_, never>): $KeyStatusPair<$ChunkPos, $ChunkState, $ChunkLoadingContext>[];

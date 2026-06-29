@@ -10,8 +10,8 @@ import { $CreateSceneBuilder } from "@package/com/simibubi/create/foundation/pon
 
 declare module "@package/com/simibubi/create/infrastructure/ponder/scenes/highLogistics" {
     export class $StockTickerScenes {
-        static stockTicker(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
         static stockTickerAddress(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
+        static stockTicker(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
         constructor();
     }
     export class $StockLinkScenes {
@@ -19,14 +19,14 @@ declare module "@package/com/simibubi/create/infrastructure/ponder/scenes/highLo
         constructor();
     }
     export class $PostboxScenes {
-        static animatePostbox(arg0: $CreateSceneBuilder, arg1: $BlockPos_, arg2: boolean): void;
         static postbox(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
+        static animatePostbox(arg0: $CreateSceneBuilder, arg1: $BlockPos_, arg2: boolean): void;
         constructor();
     }
     export class $FrogAndConveyorScenes {
-        static boxTransfer(arg0: $BlockPos_, arg1: $BlockPos_, arg2: $ChainConveyorBlockEntity): void;
-        static frogPort(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
         static conveyor(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
+        static frogPort(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
+        static boxTransfer(arg0: $BlockPos_, arg1: $BlockPos_, arg2: $ChainConveyorBlockEntity): void;
         constructor();
     }
     export class $TableClothScenes {
@@ -34,14 +34,14 @@ declare module "@package/com/simibubi/create/infrastructure/ponder/scenes/highLo
         constructor();
     }
     export class $PackagerScenes {
-        static packagerAddress(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
         static packager(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
+        static packagerAddress(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
         constructor();
     }
     export class $FactoryGaugeScenes {
         static recipe(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
-        static links(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
         static crafting(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
+        static links(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
         static restocker(arg0: $SceneBuilder, arg1: $SceneBuildingUtil): void;
         constructor();
     }
@@ -54,12 +54,12 @@ declare module "@package/com/simibubi/create/infrastructure/ponder/scenes/highLo
         constructor();
     }
     export class $PonderHilo {
-        static linkEffect(arg0: $CreateSceneBuilder, arg1: $BlockPos_): void;
         static packagerUnpack(arg0: $CreateSceneBuilder, arg1: $BlockPos_, arg2: $ItemStack_): void;
-        static packagerCreate(arg0: $CreateSceneBuilder, arg1: $BlockPos_, arg2: $ItemStack_): void;
-        static packagerClear(arg0: $CreateSceneBuilder, arg1: $BlockPos_): void;
-        static requesterEffect(arg0: $CreateSceneBuilder, arg1: $BlockPos_): void;
         static packageHopsOffBelt(arg0: $CreateSceneBuilder, arg1: $BlockPos_, arg2: $Direction_, arg3: $ItemStack_): $ElementLink<$EntityElement>;
+        static packagerClear(arg0: $CreateSceneBuilder, arg1: $BlockPos_): void;
+        static packagerCreate(arg0: $CreateSceneBuilder, arg1: $BlockPos_, arg2: $ItemStack_): void;
+        static requesterEffect(arg0: $CreateSceneBuilder, arg1: $BlockPos_): void;
+        static linkEffect(arg0: $CreateSceneBuilder, arg1: $BlockPos_): void;
         constructor();
     }
     export class $FrogAndConveyorScenes$ChainConveyorParrotElement extends $ParrotElementImpl {

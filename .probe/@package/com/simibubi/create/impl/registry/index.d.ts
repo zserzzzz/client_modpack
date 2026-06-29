@@ -17,10 +17,10 @@ declare module "@package/com/simibubi/create/impl/registry" {
     export class $SimpleRegistryImpl$SingleImpl<K, V> extends $SimpleRegistryImpl<K, V> {
     }
     export class $SimpleRegistryImpl<K, V> implements $SimpleRegistry<K, V> {
-        registerProvider(arg0: $SimpleRegistry$Provider_<K, V>): void;
         get(arg0: $StateHolder<K, never>): V;
         static single<K, V>(): $SimpleRegistry<K, V>;
         register(arg0: K, arg1: V): void;
+        registerProvider(arg0: $SimpleRegistry$Provider_<K, V>): void;
         static multi<K, V>(): $SimpleRegistry$Multi<K, V>;
         constructor();
     }
@@ -36,8 +36,8 @@ declare module "@package/com/simibubi/create/impl/registry" {
      */
     export type $SimpleRegistryImpl$MultiImpl$ProviderWrapper_<K, V> = { wrapped?: $SimpleRegistry$Provider_<any, any>,  } | [wrapped?: $SimpleRegistry$Provider_<any, any>, ];
     export class $TagProviderImpl<K, V> implements $SimpleRegistry$Provider<K, V> {
-        onRegister(arg0: $Runnable_): void;
         get(arg0: K): V;
+        onRegister(arg0: $Runnable_): void;
         static getBeHolder(arg0: $BlockEntityType_<never>): $Holder<$BlockEntityType<never>>;
         constructor(arg0: $TagKey_<K>, arg1: $Function_<K, $Holder<K>>, arg2: V);
     }

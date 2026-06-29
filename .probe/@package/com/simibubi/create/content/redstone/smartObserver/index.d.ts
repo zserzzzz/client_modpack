@@ -23,9 +23,9 @@ import { $DirectedDirectionalBlock } from "@package/com/simibubi/create/content/
 declare module "@package/com/simibubi/create/content/redstone/smartObserver" {
     export class $SmartObserverBlockEntity extends $SmartBlockEntity implements $Clearable {
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
-        activate(): void;
-        activate(arg0: number): void;
         clearContent(): void;
+        activate(arg0: number): void;
+        activate(): void;
         worldPosition: $BlockPos;
         level: $Level;
         static ATTACHMENTS_NBT_KEY: string;
@@ -37,16 +37,16 @@ declare module "@package/com/simibubi/create/content/redstone/smartObserver" {
         constructor();
     }
     export class $SmartObserverBlock extends $DirectedDirectionalBlock implements $IBE<$SmartObserverBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$SmartObserverBlockEntity>;
         getBlockEntityClass(): $Class<$SmartObserverBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$SmartObserverBlockEntity>;
         onFunnelTransfer(arg0: $Level_, arg1: $BlockPos_, arg2: $ItemStack_): void;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$SmartObserverBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SmartObserverBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($SmartObserverBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SmartObserverBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $SmartObserverBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$SmartObserverBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($SmartObserverBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SmartObserverBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         static TARGET: $EnumProperty<$AttachFace>;
         explosionResistance: number;
@@ -79,7 +79,7 @@ declare module "@package/com/simibubi/create/content/redstone/smartObserver" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$SmartObserverBlockEntity>;
         get blockEntityClass(): $Class<$SmartObserverBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$SmartObserverBlockEntity>;
     }
 }

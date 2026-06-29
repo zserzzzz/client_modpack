@@ -43,12 +43,12 @@ export * as worldWrappers from "@package/com/simibubi/create/foundation/utility/
 declare module "@package/com/simibubi/create/foundation/utility" {
     export class $RaycastHelper$PredicateTraceResult {
         missed(): boolean;
-        getPos(): $BlockPos;
         getFacing(): $Direction;
+        getPos(): $BlockPos;
         constructor(arg0: $BlockPos_, arg1: $Direction_);
         constructor();
-        get pos(): $BlockPos;
         get facing(): $Direction;
+        get pos(): $BlockPos;
     }
     export class $DynamicComponent {
         get(): $MutableComponent;
@@ -56,12 +56,12 @@ declare module "@package/com/simibubi/create/foundation/utility" {
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider): void;
         read(arg0: $BlockPos_, arg1: $CompoundTag_, arg2: $HolderLookup$Provider): void;
         isValid(): boolean;
+        sameAs(arg0: string): boolean;
         displayCustomText(arg0: $Level_, arg1: $BlockPos_, arg2: string): void;
         static parseCustomText(arg0: $Level_, arg1: $BlockPos_, arg2: $Component_): $Component;
         static parseCustomText(arg0: $Level_, arg1: $BlockPos_, arg2: $JsonElement_): $Component;
-        sameAs(arg0: string): boolean;
-        static getJsonFromString(arg0: string): $JsonElement;
         static getCommandSource(arg0: $ServerLevel, arg1: $BlockPos_): $CommandSourceStack;
+        static getJsonFromString(arg0: string): $JsonElement;
         constructor();
         get valid(): boolean;
     }
@@ -99,36 +99,36 @@ declare module "@package/com/simibubi/create/foundation/utility" {
     }
     export class $CameraAngleAnimationService {
         static tick(): void;
-        static setAnimationMode(arg0: $CameraAngleAnimationService$Mode_): void;
-        static setPitchTarget(arg0: number): void;
-        static setYawTarget(arg0: number): void;
         static getPitch(arg0: number): number;
         static getYaw(arg0: number): number;
-        static setAnimationSpeed(arg0: number): void;
+        static setPitchTarget(arg0: number): void;
+        static setAnimationMode(arg0: $CameraAngleAnimationService$Mode_): void;
+        static setYawTarget(arg0: number): void;
         static isYawAnimating(): boolean;
         static isPitchAnimating(): boolean;
+        static setAnimationSpeed(arg0: number): void;
         constructor();
-        static set animationMode(value: $CameraAngleAnimationService$Mode_);
         static set pitchTarget(value: number);
+        static set animationMode(value: $CameraAngleAnimationService$Mode_);
         static set yawTarget(value: number);
-        static set animationSpeed(value: number);
         static get yawAnimating(): boolean;
         static get pitchAnimating(): boolean;
+        static set animationSpeed(value: number);
     }
     export class $CreateLang extends $Lang {
-        static itemName(arg0: $ItemStack_): $LangBuilder;
         static builder(): $LangBuilder;
         static number(arg0: number): $LangBuilder;
         static text(arg0: string): $LangBuilder;
-        static blockName(arg0: $BlockState_): $LangBuilder;
         static translate(arg0: string, ...arg1: $Object[]): $LangBuilder;
+        static blockName(arg0: $BlockState_): $LangBuilder;
+        static itemName(arg0: $ItemStack_): $LangBuilder;
+        static translateDirect(arg0: string, ...arg1: $Object[]): $MutableComponent;
+        static translatedOptions(arg0: string, ...arg1: string[]): $List<$Component>;
+        static fluidName(arg0: $FluidStack_): $LangBuilder;
         /**
          * @deprecated
          */
         static temporaryText(arg0: string): $LangBuilder;
-        static translatedOptions(arg0: string, ...arg1: string[]): $List<$Component>;
-        static translateDirect(arg0: string, ...arg1: $Object[]): $MutableComponent;
-        static fluidName(arg0: $FluidStack_): $LangBuilder;
         constructor();
     }
     export class $DataFixerHelper {
@@ -136,16 +136,16 @@ declare module "@package/com/simibubi/create/foundation/utility" {
         constructor();
     }
     export class $DataFixerHelper$BlockPosFixer extends $Record {
-        customFixer(): $Function<$Dynamic<never>, $Dynamic<never>>;
         id(): string;
         reference(): $DSL$TypeReference;
         renames(): $Map<string, string>;
+        customFixer(): $Function<$Dynamic<never>, $Dynamic<never>>;
         constructor(reference: $DSL$TypeReference_, id: string, renames: $Map_<string, string>, customFixer: $Function_<$Dynamic<never>, $Dynamic<never>>);
     }
     /**
      * Values that may be interpreted as {@link $DataFixerHelper$BlockPosFixer}.
      */
-    export type $DataFixerHelper$BlockPosFixer_ = { customFixer?: $Function_<$Dynamic<never>, $Dynamic<never>>, renames?: $Map_<string, string>, id?: string, reference?: $DSL$TypeReference_,  } | [customFixer?: $Function_<$Dynamic<never>, $Dynamic<never>>, renames?: $Map_<string, string>, id?: string, reference?: $DSL$TypeReference_, ];
+    export type $DataFixerHelper$BlockPosFixer_ = { id?: string, reference?: $DSL$TypeReference_, customFixer?: $Function_<$Dynamic<never>, $Dynamic<never>>, renames?: $Map_<string, string>,  } | [id?: string, reference?: $DSL$TypeReference_, customFixer?: $Function_<$Dynamic<never>, $Dynamic<never>>, renames?: $Map_<string, string>, ];
     export class $ControlsUtil {
         static getControls(): $List<$KeyMapping>;
         static isActuallyPressed(arg0: $KeyMapping): boolean;
@@ -153,8 +153,8 @@ declare module "@package/com/simibubi/create/foundation/utility" {
         static get controls(): $List<$KeyMapping>;
     }
     export class $GlobalRegistryAccess {
-        static get(): $RegistryAccess;
         static getOrThrow(): $RegistryAccess;
+        static get(): $RegistryAccess;
         constructor();
         static get orThrow(): $RegistryAccess;
     }
@@ -170,11 +170,7 @@ declare module "@package/com/simibubi/create/foundation/utility" {
         /**
          * @deprecated
          */
-        static debugStack(arg0: number): $Component;
-        /**
-         * @deprecated
-         */
-        static debugChat(arg0: string): void;
+        static debugChatAndShowStack(arg0: string, arg1: number): void;
         /**
          * @deprecated
          */
@@ -186,7 +182,11 @@ declare module "@package/com/simibubi/create/foundation/utility" {
         /**
          * @deprecated
          */
-        static debugChatAndShowStack(arg0: string, arg1: number): void;
+        static debugStack(arg0: number): $Component;
+        /**
+         * @deprecated
+         */
+        static debugChat(arg0: string): void;
         constructor();
         static get logicalSide(): string;
     }
@@ -213,21 +213,21 @@ declare module "@package/com/simibubi/create/foundation/utility" {
      */
     export type $ServerSpeedProvider$Packet_ = "instance";
     export class $BlockHelper {
-        static copyProperties(arg0: $BlockState_, arg1: $BlockState_): $BlockState;
-        static destroyBlockAs(arg0: $Level_, arg1: $BlockPos_, arg2: $Player, arg3: $ItemStack_, arg4: number, arg5: $Consumer_<$ItemStack>): void;
         static extinguishFire(arg0: $Level_, arg1: $Player, arg2: $BlockPos_, arg3: $Direction_): boolean;
+        static copyProperties(arg0: $BlockState_, arg1: $BlockState_): $BlockState;
+        static destroyBlock(arg0: $Level_, arg1: $BlockPos_, arg2: number, arg3: $Consumer_<$ItemStack>): void;
+        static destroyBlock(arg0: $Level_, arg1: $BlockPos_, arg2: number): void;
+        static copyProperty<T extends $Comparable<T>>(arg0: $Property<T>, arg1: $BlockState_, arg2: $BlockState_): $BlockState;
         static hasBlockSolidSide(arg0: $BlockState_, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $Direction_): boolean;
         static isNotUnheated(arg0: $BlockState_): boolean;
-        static noCollisionInSpace(arg0: $BlockGetter, arg1: $BlockPos_): boolean;
-        static destroyBlock(arg0: $Level_, arg1: $BlockPos_, arg2: number): void;
-        static destroyBlock(arg0: $Level_, arg1: $BlockPos_, arg2: number, arg3: $Consumer_<$ItemStack>): void;
-        static copyProperty<T extends $Comparable<T>>(arg0: $Property<T>, arg1: $BlockState_, arg2: $BlockState_): $BlockState;
+        static destroyBlockAs(arg0: $Level_, arg1: $BlockPos_, arg2: $Player, arg3: $ItemStack_, arg4: number, arg5: $Consumer_<$ItemStack>): void;
+        static getRequiredItem(arg0: $BlockState_): $ItemStack;
+        static invokeUse(arg0: $BlockState_, arg1: $Level_, arg2: $Player, arg3: $InteractionHand_, arg4: $BlockHitResult): $InteractionResult;
+        static findAndRemoveInInventory(arg0: $BlockState_, arg1: $Player, arg2: number): number;
         static placeSchematicBlock(arg0: $Level_, arg1: $BlockState_, arg2: $BlockPos_, arg3: $ItemStack_, arg4: $CompoundTag_): void;
         static prepareBlockEntityData(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntity): $CompoundTag;
-        static invokeUse(arg0: $BlockState_, arg1: $Level_, arg2: $Player, arg3: $InteractionHand_, arg4: $BlockHitResult): $InteractionResult;
         static setZeroAge(arg0: $BlockState_): $BlockState;
-        static findAndRemoveInInventory(arg0: $BlockState_, arg1: $Player, arg2: number): number;
-        static getRequiredItem(arg0: $BlockState_): $ItemStack;
+        static noCollisionInSpace(arg0: $BlockGetter, arg1: $BlockPos_): boolean;
         static isSolidWall(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Direction_): boolean;
         static getBounceMultiplier(arg0: $Block_): number;
         constructor();
@@ -273,21 +273,21 @@ declare module "@package/com/simibubi/create/foundation/utility" {
     export class $TickBasedCache<K, V> implements $Cache<K, V> {
         invalidateAll(arg0: $Iterable_<never>): void;
         invalidateAll(): void;
-        invalidate(arg0: $Object): void;
-        asMap(): $ConcurrentMap<K, V>;
+        cleanUp(): void;
         size(): number;
         get(arg0: K, arg1: $Callable_<V>): V;
         put(arg0: K, arg1: V): void;
         putAll(arg0: $Map_<K, V>): void;
         static tick(): void;
+        invalidate(arg0: $Object): void;
+        asMap(): $ConcurrentMap<K, V>;
         ticks(): number;
-        cleanUp(): void;
         stats(): $CacheStats;
         getAllPresent(arg0: $Iterable_<never>): $ImmutableMap<K, V>;
         getIfPresent(arg0: $Object): V;
         static clientTick(): void;
-        constructor(arg0: number, arg1: boolean);
         constructor(arg0: number, arg1: boolean, arg2: boolean);
+        constructor(arg0: number, arg1: boolean);
     }
     export class $AbstractBlockBreakQueue {
         destroyBlocks(arg0: $Level_, arg1: $ItemStack_, arg2: $Player, arg3: $BiConsumer_<$BlockPos, $ItemStack>): void;

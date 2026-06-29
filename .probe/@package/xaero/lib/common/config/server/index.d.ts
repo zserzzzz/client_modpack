@@ -11,30 +11,30 @@ export * as listener from "@package/xaero/lib/common/config/server/listener";
 
 declare module "@package/xaero/lib/common/config/server" {
     export class $ServerConfigManager {
-        setServer(arg0: $MinecraftServer): void;
         getChannel(): $ConfigChannel;
-        getProfileManager(): $ConfigProfileManager;
         getRaw<T>(arg0: $ServerPlayer, arg1: $ConfigOption<T>): T;
         getRaw<T>(arg0: $ServerPlayerData, arg1: $ConfigOption<T>): T;
         getRaw<T>(arg0: $ConfigProfile, arg1: $ConfigOption<T>): T;
-        usesDefaultEnforcedProfile(arg0: $ServerPlayer): boolean;
-        usesDefaultEnforcedProfile(arg0: $ServerPlayerData): boolean;
-        getPermissionBasedProfile(arg0: $ServerPlayerData): $ConfigProfile;
-        getChangeListener(): $ServerConfigChangeListener;
-        setChannel(arg0: $ConfigChannel): void;
-        hasServerProfileEditPermission(arg0: $ServerPlayerData): boolean;
-        getDefaultEnforcedProfile(): $ConfigProfile;
-        getPermissionBasedProfileId(arg0: $ServerPlayerData): string;
-        setChangeListener(arg0: $ServerConfigChangeListener): void;
         getServer(): $MinecraftServer;
-        setDefaultEnforcedProfileId(arg0: string): void;
+        setChannel(arg0: $ConfigChannel): void;
         postLoad(): void;
-        getEffective<T>(arg0: $ServerPlayerData, arg1: $ConfigOption<T>): T;
+        getChangeListener(): $ServerConfigChangeListener;
+        getDefaultEnforcedProfile(): $ConfigProfile;
+        getProfileManager(): $ConfigProfileManager;
+        setServer(arg0: $MinecraftServer): void;
         getEffective<T>(arg0: $ServerPlayer, arg1: $ConfigOption<T>): T;
+        getEffective<T>(arg0: $ServerPlayerData, arg1: $ConfigOption<T>): T;
+        setDefaultEnforcedProfileId(arg0: string): void;
+        usesDefaultEnforcedProfile(arg0: $ServerPlayerData): boolean;
+        usesDefaultEnforcedProfile(arg0: $ServerPlayer): boolean;
+        getPermissionBasedProfile(arg0: $ServerPlayerData): $ConfigProfile;
         getRedirectorManager(): $OptionValueRedirectorManager;
+        setChangeListener(arg0: $ServerConfigChangeListener): void;
+        getPermissionBasedProfileId(arg0: $ServerPlayerData): string;
+        hasServerProfileEditPermission(arg0: $ServerPlayerData): boolean;
         getEnforcedProfileForPlayer(arg0: $ServerPlayerData): $ConfigProfile;
-        get profileManager(): $ConfigProfileManager;
         get defaultEnforcedProfile(): $ConfigProfile;
+        get profileManager(): $ConfigProfileManager;
         set defaultEnforcedProfileId(value: string);
         get redirectorManager(): $OptionValueRedirectorManager;
     }

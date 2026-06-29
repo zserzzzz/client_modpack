@@ -1,5 +1,6 @@
 import { $MapCodec } from "@package/com/mojang/serialization";
 import { $MultiBufferSource_ } from "@package/net/minecraft/client/renderer";
+import { $CompoundTag } from "@package/net/minecraft/nbt";
 import { $SmartBlockEntity } from "@package/com/simibubi/create/foundation/blockEntity";
 import { $Entity$RemovalReason, $Pose, $PortalProcessor, $Entity } from "@package/net/minecraft/world/entity";
 import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
@@ -38,7 +39,7 @@ import { $PlayerInteractEvent$RightClickBlock, $PlayerInteractEvent$LeftClickBlo
 import { $Consumer_, $Predicate_, $Function_ } from "@package/java/util/function";
 import { $ServerLevel, $ServerPlayer } from "@package/net/minecraft/server/level";
 import { $Object2ByteLinkedOpenHashMap, $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos, $BlockPos_, $Direction_, $Direction, $IdMapper } from "@package/net/minecraft/core";
+import { $BlockPos, $BlockPos_, $HolderLookup$Provider, $Direction_, $Direction, $IdMapper } from "@package/net/minecraft/core";
 import { $KineticBlockEntity, $ShaftVisual, $HorizontalKineticBlock, $ShaftRenderer } from "@package/com/simibubi/create/content/kinetics/base";
 import { $BlockEntityRendererProvider$Context } from "@package/net/minecraft/client/renderer/blockentity";
 import { $IBE, $ProperWaterloggedBlock } from "@package/com/simibubi/create/foundation/block";
@@ -63,26 +64,26 @@ export * as storage from "@package/com/simibubi/create/content/logistics/depot/s
 
 declare module "@package/com/simibubi/create/content/logistics/depot" {
     export class $DepotBlock extends $Block implements $IBE<$DepotBlockEntity>, $IWrenchable, $ProperWaterloggedBlock {
-        getBlockEntityType(): $BlockEntityType<$DepotBlockEntity>;
         getBlockEntityClass(): $Class<$DepotBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$DepotBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$DepotBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$DepotBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($DepotBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$DepotBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $DepotBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$DepotBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($DepotBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$DepotBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
-        fluidState(arg0: $BlockState_): $FluidState;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         updateWater(arg0: $LevelAccessor, arg1: $BlockState_, arg2: $BlockPos_): void;
+        fluidState(arg0: $BlockState_): $FluidState;
+        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -113,26 +114,26 @@ declare module "@package/com/simibubi/create/content/logistics/depot" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$DepotBlockEntity>;
         get blockEntityClass(): $Class<$DepotBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$DepotBlockEntity>;
     }
     export class $EntityLauncher {
-        dy(arg0: number): number;
-        dx(arg0: number): number;
         clamp(arg0: number): void;
         x(arg0: number): number;
         set(arg0: number, arg1: number): void;
         y(arg0: number): number;
+        dy(arg0: number): number;
+        dx(arg0: number): number;
         getGlobalVelocity(arg0: number, arg1: $Direction_, arg2: $BlockPos_): $Vec3;
-        getHorizontalDistance(): number;
-        getTotalFlyingTicks(): number;
         getVerticalDistance(): number;
+        getTotalFlyingTicks(): number;
+        getHorizontalDistance(): number;
         getGlobalPos(arg0: number, arg1: $Direction_, arg2: $BlockPos_): $Vec3;
         applyMotion(arg0: $Entity, arg1: $Direction_): void;
         constructor(arg0: number, arg1: number);
-        get horizontalDistance(): number;
-        get totalFlyingTicks(): number;
         get verticalDistance(): number;
+        get totalFlyingTicks(): number;
+        get horizontalDistance(): number;
     }
     export class $EjectorBlockEntity$State extends $Enum<$EjectorBlockEntity$State> {
         static values(): $EjectorBlockEntity$State[];
@@ -150,20 +151,20 @@ declare module "@package/com/simibubi/create/content/logistics/depot" {
     export class $EjectorBlockEntity extends $KineticBlockEntity {
         getState(): $EjectorBlockEntity$State;
         setTarget(arg0: number, arg1: number): void;
-        activate(): void;
         static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
-        handler$gko000$sable$launchSubLevels(arg0: $CallbackInfo): void;
-        updateSignal(): void;
-        getTargetPosition(): $BlockPos;
-        handler$gko004$sable$tick(arg0: $CallbackInfo): void;
+        activate(): void;
         getLaunchedItemLocation(arg0: number): $Vec3;
+        handler$gko004$sable$tick(arg0: $CallbackInfo): void;
         getLaunchedItemMotion(arg0: number): $Vec3;
-        getLidProgress(arg0: number): number;
+        getTargetPosition(): $BlockPos;
+        updateSignal(): void;
+        handler$gko000$sable$launchSubLevels(arg0: $CallbackInfo): void;
+        deployElytra(arg0: $Player): void;
         getWindUpSpeed(): number;
         dropFlyingItems(): void;
-        getTargetOpenInv(): $DirectBeltInputBehaviour;
         activateDeferred(): void;
-        deployElytra(arg0: $Player): void;
+        getTargetOpenInv(): $DirectBeltInputBehaviour;
+        getLidProgress(arg0: number): number;
         sequenceContext: $SequencedGearshiftBlockEntity$SequenceContext;
         networkDirty: boolean;
         worldPosition: $BlockPos;
@@ -181,22 +182,22 @@ declare module "@package/com/simibubi/create/content/logistics/depot" {
         get targetOpenInv(): $DirectBeltInputBehaviour;
     }
     export class $EjectorBlock extends $HorizontalKineticBlock implements $IBE<$EjectorBlockEntity>, $ProperWaterloggedBlock {
-        getBlockEntityType(): $BlockEntityType<$EjectorBlockEntity>;
         getBlockEntityClass(): $Class<$EjectorBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$EjectorBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$EjectorBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$EjectorBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($EjectorBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$EjectorBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $EjectorBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
-        fluidState(arg0: $BlockState_): $FluidState;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$EjectorBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($EjectorBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$EjectorBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         updateWater(arg0: $LevelAccessor, arg1: $BlockState_, arg2: $BlockPos_): void;
+        fluidState(arg0: $BlockState_): $FluidState;
+        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -228,8 +229,8 @@ declare module "@package/com/simibubi/create/content/logistics/depot" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$EjectorBlockEntity>;
         get blockEntityClass(): $Class<$EjectorBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$EjectorBlockEntity>;
     }
     export class $EjectorTriggerPacket extends $BlockEntityConfigurationPacket<$EjectorBlockEntity> {
         static STREAM_CODEC: $StreamCodec<$ByteBuf, $EjectorTriggerPacket>;
@@ -238,31 +239,31 @@ declare module "@package/com/simibubi/create/content/logistics/depot" {
     export class $DepotBehaviour extends $BlockEntityBehaviour implements $Clearable {
         insert(arg0: $TransportedItemStack, arg1: boolean): $ItemStack;
         isEmpty(): boolean;
+        clearContent(): void;
+        canMergeItems(): boolean;
         withCallback(arg0: $Consumer_<$ItemStack>): $DepotBehaviour;
         isItemValid(arg0: $ItemStack_): boolean;
-        clearContent(): void;
-        setHeldItem(arg0: $TransportedItemStack): void;
-        canMergeItems(): boolean;
-        removeHeldItem(): void;
         getHeldItemStack(): $ItemStack;
+        setHeldItem(arg0: $TransportedItemStack): void;
         getPresentStackSize(): number;
+        removeHeldItem(): void;
         enableMerging(): void;
         addSubBehaviours(arg0: $List_<$BlockEntityBehaviour>): void;
         onlyAccepts(arg0: $Predicate_<$ItemStack>): $DepotBehaviour;
-        setCenteredHeldItem(arg0: $TransportedItemStack): void;
         isOutputEmpty(): boolean;
         getRemainingSpace(): number;
+        setCenteredHeldItem(arg0: $TransportedItemStack): void;
         blockEntity: $SmartBlockEntity;
         static TYPE: $BehaviourType<$DepotBehaviour>;
         itemHandler: $DepotItemHandler;
         constructor(arg0: $SmartBlockEntity);
         get empty(): boolean;
-        set heldItem(value: $TransportedItemStack);
         get heldItemStack(): $ItemStack;
+        set heldItem(value: $TransportedItemStack);
         get presentStackSize(): number;
-        set centeredHeldItem(value: $TransportedItemStack);
         get outputEmpty(): boolean;
         get remainingSpace(): number;
+        set centeredHeldItem(value: $TransportedItemStack);
     }
     export class $EjectorRenderer extends $ShaftRenderer<$EjectorBlockEntity> {
         shouldRenderOffScreen(arg0: $EjectorBlockEntity): boolean;
@@ -275,9 +276,9 @@ declare module "@package/com/simibubi/create/content/logistics/depot" {
         constructor(arg0: $BlockPos_);
     }
     export class $SharedDepotBlockMethods {
-        static getComparatorInputOverride(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): number;
-        static onUse(arg0: $ItemStack_, arg1: $BlockState_, arg2: $Level_, arg3: $BlockPos_, arg4: $Player, arg5: $InteractionHand_, arg6: $BlockHitResult): $ItemInteractionResult;
         static onLanded(arg0: $BlockGetter, arg1: $Entity): void;
+        static onUse(arg0: $ItemStack_, arg1: $BlockState_, arg2: $Level_, arg3: $BlockPos_, arg4: $Player, arg5: $InteractionHand_, arg6: $BlockHitResult): $ItemInteractionResult;
+        static getComparatorInputOverride(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): number;
         constructor();
     }
     export class $EjectorElytraPacket extends $Record implements $ServerboundPacketPayload {
@@ -296,11 +297,12 @@ declare module "@package/com/simibubi/create/content/logistics/depot" {
      */
     export type $EjectorElytraPacket_ = { pos?: $BlockPos_,  } | [pos?: $BlockPos_, ];
     export class $DepotRenderer extends $SafeBlockEntityRenderer<$DepotBlockEntity> {
-        static renderItem(arg0: $PoseStack, arg1: $MultiBufferSource_, arg2: number, arg3: number, arg4: $ItemStack_, arg5: number, arg6: $Random, arg7: $Vec3_, arg8: boolean): void;
         static renderItemsOf(arg0: $SmartBlockEntity, arg1: number, arg2: $PoseStack, arg3: $MultiBufferSource_, arg4: number, arg5: number, arg6: $DepotBehaviour): void;
+        static renderItem(arg0: $PoseStack, arg1: $MultiBufferSource_, arg2: number, arg3: number, arg4: $ItemStack_, arg5: number, arg6: $Random, arg7: $Vec3_, arg8: boolean): void;
         constructor(arg0: $BlockEntityRendererProvider$Context);
     }
     export class $EjectorBlockEntity$EntityHack extends $Entity {
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -398,9 +400,9 @@ declare module "@package/com/simibubi/create/content/logistics/depot" {
         constructor();
     }
     export class $DepotBlockEntity extends $SmartBlockEntity implements $Clearable {
-        getHeldItem(): $ItemStack;
-        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
         clearContent(): void;
+        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
+        getHeldItem(): $ItemStack;
         setHeldItem(arg0: $ItemStack_): void;
         worldPosition: $BlockPos;
         level: $Level;
@@ -409,42 +411,42 @@ declare module "@package/com/simibubi/create/content/logistics/depot" {
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
     }
     export class $DepotItemHandler implements $IItemHandler {
+        getStackInSlot(arg0: number): $ItemStack;
+        getSlots(): number;
+        insertItem(arg0: number, arg1: $ItemStack_, arg2: boolean): $ItemStack;
+        extractItem(arg0: number, arg1: number, arg2: boolean): $ItemStack;
         getSlotLimit(arg0: number): number;
         isItemValid(arg0: number, arg1: $ItemStack_): boolean;
-        extractItem(arg0: number, arg1: number, arg2: boolean): $ItemStack;
-        getSlots(): number;
-        getStackInSlot(arg0: number): $ItemStack;
-        insertItem(arg0: number, arg1: $ItemStack_, arg2: boolean): $ItemStack;
-        kjs$isMutable(): boolean;
         kjs$setStackInSlot(slot: number, stack: $ItemStack_): void;
-        kjs$self(): $IItemHandler;
+        kjs$isMutable(): boolean;
         kjs$getBlock(level: $Level_): $LevelBlock;
-        getHeight(): number;
-        insertItem(stack: $ItemStack_, simulate: boolean): $ItemStack;
+        kjs$self(): $IItemHandler;
         setChanged(): void;
+        insertItem(stack: $ItemStack_, simulate: boolean): $ItemStack;
         asContainer(): $Container;
-        countNonEmpty(): number;
         countNonEmpty(match: $ItemPredicate_): number;
-        getWidth(): number;
-        isEmpty(): boolean;
-        count(): number;
-        count(match: $ItemPredicate_): number;
-        find(match: $ItemPredicate_): number;
-        find(): number;
+        countNonEmpty(): number;
+        getHeight(): number;
+        getAllItems(): $List<$ItemStack>;
         clear(match: $ItemPredicate_): void;
         clear(): void;
-        getAllItems(): $List<$ItemStack>;
+        find(match: $ItemPredicate_): number;
+        find(): number;
+        count(): number;
+        count(match: $ItemPredicate_): number;
+        isEmpty(): boolean;
+        getWidth(): number;
         insertItem(slot: number, stack: $ItemStack_, simulate: boolean): $ItemStack;
-        extractItem(slot: number, amount: number, simulate: boolean): $ItemStack;
-        isItemValid(slot: number, stack: $ItemStack_): boolean;
         getStackInSlot(slot: number): $ItemStack;
+        isItemValid(slot: number, stack: $ItemStack_): boolean;
+        extractItem(slot: number, amount: number, simulate: boolean): $ItemStack;
         getSlotLimit(slot: number): number;
         getSlots(): number;
         constructor(arg0: $DepotBehaviour);
         get height(): number;
-        get width(): number;
-        get empty(): boolean;
         get allItems(): $List<$ItemStack>;
+        get empty(): boolean;
+        get width(): number;
     }
     export class $EjectorPlacementPacket extends $Record implements $ServerboundPacketPayload {
         h(): number;
@@ -463,14 +465,14 @@ declare module "@package/com/simibubi/create/content/logistics/depot" {
     /**
      * Values that may be interpreted as {@link $EjectorPlacementPacket}.
      */
-    export type $EjectorPlacementPacket_ = { h?: number, v?: number, pos?: $BlockPos_, facing?: $Direction_,  } | [h?: number, v?: number, pos?: $BlockPos_, facing?: $Direction_, ];
+    export type $EjectorPlacementPacket_ = { pos?: $BlockPos_, facing?: $Direction_, h?: number, v?: number,  } | [pos?: $BlockPos_, facing?: $Direction_, h?: number, v?: number, ];
     export class $EjectorTargetHandler {
         static tick(): void;
-        static flushSettings(arg0: $BlockPos_): void;
+        static getValidTargetDirection(arg0: $BlockPos_): $Direction;
         static drawOutline(arg0: $BlockPos_): void;
+        static flushSettings(arg0: $BlockPos_): void;
         static rightClickingBlocksSelectsThem(arg0: $PlayerInteractEvent$RightClickBlock): void;
         static leftClickingBlocksDeselectsThem(arg0: $PlayerInteractEvent$LeftClickBlock): void;
-        static getValidTargetDirection(arg0: $BlockPos_): $Direction;
         constructor();
     }
     export class $EjectorItem extends $BlockItem {

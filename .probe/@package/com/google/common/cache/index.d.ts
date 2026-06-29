@@ -11,14 +11,12 @@ declare module "@package/com/google/common/cache" {
         static from<V>(supplier: $Supplier_<V>): $CacheLoader<$Object, V>;
         static from<K, V>(arg0: $Function<K, V>): $CacheLoader<K, V>;
         reload(key: K, oldValue: V): $ListenableFuture<V>;
-        loadAll(keys: $Iterable_<K>): $Map<K, V>;
         static asyncReloading<K, V>(loader: $CacheLoader<K, V>, executor: $Executor_): $CacheLoader<K, V>;
+        loadAll(keys: $Iterable_<K>): $Map<K, V>;
     }
     export class $LoadingCache<K, V> {
     }
     export interface $LoadingCache<K, V> extends $Cache<K, V>, $Function<K, V> {
-        refresh(key: K): void;
-        asMap(): $ConcurrentMap<K, V>;
         get(key: K): V;
         /**
          * @deprecated
@@ -26,36 +24,38 @@ declare module "@package/com/google/common/cache" {
         apply(key: K): V;
         getAll(keys: $Iterable_<K>): $ImmutableMap<K, V>;
         getUnchecked(key: K): V;
+        asMap(): $ConcurrentMap<K, V>;
+        refresh(key: K): void;
     }
     export class $CacheStats {
-        hitCount(): number;
-        missCount(): number;
         minus(other: $CacheStats): $CacheStats;
         plus(other: $CacheStats): $CacheStats;
-        loadExceptionCount(): number;
-        loadSuccessCount(): number;
+        missCount(): number;
+        hitCount(): number;
+        hitRate(): number;
+        loadCount(): number;
+        missRate(): number;
         loadExceptionRate(): number;
         averageLoadPenalty(): number;
-        requestCount(): number;
+        loadExceptionCount(): number;
         totalLoadTime(): number;
+        loadSuccessCount(): number;
+        requestCount(): number;
         evictionCount(): number;
-        loadCount(): number;
-        hitRate(): number;
-        missRate(): number;
         constructor(hitCount: number, missCount: number, loadSuccessCount: number, loadExceptionCount: number, totalLoadTime: number, evictionCount: number);
     }
     export class $Cache<K, V> {
     }
     export interface $Cache<K, V> {
-        invalidateAll(): void;
         invalidateAll(keys: $Iterable_<never>): void;
-        invalidate(key: $Object): void;
-        asMap(): $ConcurrentMap<K, V>;
+        invalidateAll(): void;
+        cleanUp(): void;
         size(): number;
         get(key: K, loader: $Callable_<V>): V;
         put(key: K, value: V): void;
         putAll(m: $Map_<K, V>): void;
-        cleanUp(): void;
+        invalidate(key: $Object): void;
+        asMap(): $ConcurrentMap<K, V>;
         stats(): $CacheStats;
         getAllPresent(keys: $Iterable_<never>): $ImmutableMap<K, V>;
         getIfPresent(key: $Object): V;

@@ -43,9 +43,9 @@ declare module "@package/net/minecraft/client/gui/screens/inventory/tooltip" {
         static create(visualTooltipComponent: $TooltipComponent): $ClientTooltipComponent;
     }
     export interface $ClientTooltipComponent {
-        getHeight(): number;
-        getWidth(font: $Font): number;
         renderText(font: $Font, mouseX: number, mouseY: number, matrix: $Matrix4f, bufferSource: $MultiBufferSource$BufferSource): void;
+        getWidth(font: $Font): number;
+        getHeight(): number;
         renderImage(font: $Font, x: number, y: number, guiGraphics: $GuiGraphics): void;
         get height(): number;
     }
@@ -54,16 +54,16 @@ declare module "@package/net/minecraft/client/gui/screens/inventory/tooltip" {
         constructor(screenRectangle: $ScreenRectangle_);
     }
     export class $ClientBundleTooltip implements $ClientTooltipComponent {
-        getHeight(): number;
         getWidth(font: $Font): number;
+        getHeight(): number;
         renderImage(font: $Font, x: number, y: number, guiGraphics: $GuiGraphics): void;
         renderText(font: $Font, mouseX: number, mouseY: number, matrix: $Matrix4f, bufferSource: $MultiBufferSource$BufferSource): void;
         constructor(contents: $BundleContents);
         get height(): number;
     }
     export class $ClientActivePlayersTooltip implements $ClientTooltipComponent {
-        getHeight(): number;
         getWidth(font: $Font): number;
+        getHeight(): number;
         renderImage(font: $Font, x: number, y: number, guiGraphics: $GuiGraphics): void;
         renderText(font: $Font, mouseX: number, mouseY: number, matrix: $Matrix4f, bufferSource: $MultiBufferSource$BufferSource): void;
         constructor(tooltip: $ClientActivePlayersTooltip$ActivePlayersTooltip_);
@@ -86,9 +86,9 @@ declare module "@package/net/minecraft/client/gui/screens/inventory/tooltip" {
         constructor(screenRectangle: $ScreenRectangle_);
     }
     export class $ClientTextTooltip implements $ClientTooltipComponent, $OrderedTextTooltipComponentAccessor {
-        getHeight(): number;
-        getWidth(font: $Font): number;
         renderText(font: $Font, mouseX: number, mouseY: number, matrix: $Matrix4f, bufferSource: $MultiBufferSource$BufferSource): void;
+        getWidth(font: $Font): number;
+        getHeight(): number;
         renderImage(font: $Font, x: number, y: number, guiGraphics: $GuiGraphics): void;
         getText(): $FormattedCharSequence;
         constructor(text: $FormattedCharSequence_);

@@ -131,11 +131,11 @@ declare module "@package/com/simibubi/create/content/equipment/bell" {
     export class $AbstractBellBlock<BE extends $AbstractBellBlockEntity> extends $BellBlock implements $IBE<BE>, $AbstractBellBlockAccessor, $BlockWithSubLevelCollisionCallback {
         playSound(arg0: $Level_, arg1: $BlockPos_): void;
         canRingFrom(arg0: $BlockState_, arg1: $Direction_, arg2: number): boolean;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<BE>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<BE, $InteractionResult>): $InteractionResult;
+        getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): BE;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<BE>): void;
         getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): (BE) | undefined;
         onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<BE, $ItemInteractionResult>): $ItemInteractionResult;
-        getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): BE;
         invokeRing(arg0: $Level_, arg1: $BlockPos_, arg2: $Direction_, arg3: $Player): boolean;
         static ATTACHMENT: $EnumProperty<$BellAttachType>;
         explosionResistance: number;
@@ -171,22 +171,22 @@ declare module "@package/com/simibubi/create/content/equipment/bell" {
         constructor(arg0: $BlockBehaviour$Properties);
     }
     export class $SoulPulseEffectHandler {
-        refresh(): void;
         tick(arg0: $Level_): void;
+        refresh(): void;
         addPulse(arg0: $SoulPulseEffect): void;
         constructor();
     }
     export class $BasicParticleData<T extends $Particle> implements $ParticleOptions, $ICustomParticleDataWithSprite<$BasicParticleData<T>> {
         getCodec(arg0: $ParticleType_<$BasicParticleData<$BasicParticleData<T>>>): $MapCodec<$BasicParticleData<$BasicParticleData<T>>>;
-        getStreamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $BasicParticleData<$BasicParticleData<T>>>;
         getMetaFactory(): $ParticleEngine$SpriteParticleRegistration<$BasicParticleData<$BasicParticleData<T>>>;
+        getStreamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $BasicParticleData<$BasicParticleData<T>>>;
         getBasicFactory(): $BasicParticleData$IBasicParticleFactory<$BasicParticleData<T>>;
         getFactory(): $ParticleProvider<$BasicParticleData<T>>;
         register(arg0: $ParticleType_<$BasicParticleData<T>>, arg1: $RegisterParticleProvidersEvent): void;
         createType(): $ParticleType<$BasicParticleData<T>>;
         constructor();
-        get streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $BasicParticleData<$BasicParticleData<T>>>;
         get metaFactory(): $ParticleEngine$SpriteParticleRegistration<$BasicParticleData<$BasicParticleData<T>>>;
+        get streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $BasicParticleData<$BasicParticleData<T>>>;
         get basicFactory(): $BasicParticleData$IBasicParticleFactory<$BasicParticleData<T>>;
         get factory(): $ParticleProvider<$BasicParticleData<T>>;
     }
@@ -206,9 +206,9 @@ declare module "@package/com/simibubi/create/content/equipment/bell" {
         spawnParticles(arg0: $Level_, arg1: $BlockPos_): void;
         static isDark(arg0: $Level_, arg1: $BlockPos_): boolean;
         canOverlap(): boolean;
-        currentLayerIdx(): number;
-        static canSpawnSoulAt(arg0: $Level_, arg1: $BlockPos_, arg2: boolean): boolean;
         getPotentialSoulSpawns(arg0: $Level_): $List<$BlockPos>;
+        static canSpawnSoulAt(arg0: $Level_, arg1: $BlockPos_, arg2: boolean): boolean;
+        currentLayerIdx(): number;
         static TICKS_PER_LAYER: number;
         distance: number;
         pos: $BlockPos;
@@ -252,8 +252,8 @@ declare module "@package/com/simibubi/create/content/equipment/bell" {
         constructor(arg0: $BlockBehaviour$Properties);
     }
     export class $SoulParticle$AnimationStage {
-        getNext(): $SoulParticle$AnimationStage;
         tick(): void;
+        getNext(): $SoulParticle$AnimationStage;
         getAnimAge(): number;
         constructor(arg0: $SoulParticle);
         get next(): $SoulParticle$AnimationStage;
@@ -310,7 +310,7 @@ declare module "@package/com/simibubi/create/content/equipment/bell" {
     /**
      * Values that may be interpreted as {@link $SoulPulseEffectPacket}.
      */
-    export type $SoulPulseEffectPacket_ = { distance?: number, pos?: $BlockPos_, canOverlap?: boolean,  } | [distance?: number, pos?: $BlockPos_, canOverlap?: boolean, ];
+    export type $SoulPulseEffectPacket_ = { pos?: $BlockPos_, canOverlap?: boolean, distance?: number,  } | [pos?: $BlockPos_, canOverlap?: boolean, distance?: number, ];
     export class $HauntedBellMovementBehaviour extends $BellMovementBehaviour {
         static DISTANCE: number;
         constructor();
@@ -350,8 +350,8 @@ declare module "@package/com/simibubi/create/content/equipment/bell" {
         constructor();
     }
     export class $CustomRotationParticle extends $SimpleAnimatedParticle {
-        selectSpriteLoopingWithAge(arg0: $SpriteSet): void;
         getCustomRotation(arg0: $Camera, arg1: number): $Quaternionf;
+        selectSpriteLoopingWithAge(arg0: $SpriteSet): void;
         speedUpWhenYMotionIsBlocked: boolean;
         lifetime: number;
         roll: number;

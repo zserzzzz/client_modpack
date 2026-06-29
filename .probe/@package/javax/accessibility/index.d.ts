@@ -55,6 +55,7 @@ declare module "@package/javax/accessibility" {
     export class $AccessibleTable {
     }
     export interface $AccessibleTable {
+        getAccessibleAt(arg0: number, arg1: number): $Accessible;
         getAccessibleCaption(): $Accessible;
         setAccessibleCaption(arg0: $Accessible_): void;
         getAccessibleSummary(): $Accessible;
@@ -76,7 +77,6 @@ declare module "@package/javax/accessibility" {
         isAccessibleColumnSelected(arg0: number): boolean;
         getSelectedAccessibleRows(): number[];
         getSelectedAccessibleColumns(): number[];
-        getAccessibleAt(arg0: number, arg1: number): $Accessible;
         get accessibleRowCount(): number;
         get accessibleColumnCount(): number;
         get selectedAccessibleRows(): number[];
@@ -91,7 +91,6 @@ declare module "@package/javax/accessibility" {
         getAtIndex(arg0: number, arg1: number): string;
         getSelectionEnd(): number;
         getCharCount(): number;
-        getSelectedText(): string;
         getSelectionStart(): number;
         getCaretPosition(): number;
         getIndexAtPoint(arg0: $Point): number;
@@ -99,19 +98,20 @@ declare module "@package/javax/accessibility" {
         getAfterIndex(arg0: number, arg1: number): string;
         getBeforeIndex(arg0: number, arg1: number): string;
         getCharacterAttribute(arg0: number): $AttributeSet;
+        getSelectedText(): string;
         get selectionEnd(): number;
         get charCount(): number;
-        get selectedText(): string;
         get selectionStart(): number;
         get caretPosition(): number;
+        get selectedText(): string;
     }
     export class $AccessibleEditableText {
     }
     export interface $AccessibleEditableText extends $AccessibleText {
         "delete"(arg0: number, arg1: number): void;
         setAttributes(arg0: number, arg1: number, arg2: $AttributeSet): void;
-        paste(arg0: number): void;
         cut(arg0: number, arg1: number): void;
+        paste(arg0: number): void;
         setTextContents(arg0: string): void;
         insertTextAtIndex(arg0: number, arg1: string): void;
         getTextRange(arg0: number, arg1: number): string;
@@ -132,33 +132,33 @@ declare module "@package/javax/accessibility" {
     export class $AccessibleComponent {
     }
     export interface $AccessibleComponent {
-        setBounds(arg0: $Rectangle): void;
-        getFont(): $Font;
-        getFontMetrics(arg0: $Font): $FontMetrics;
         contains(arg0: $Point): boolean;
         getBounds(): $Rectangle;
         isEnabled(): boolean;
         getLocation(): $Point;
         getSize(): $Dimension;
         setSize(arg0: $Dimension): void;
+        getAccessibleAt(arg0: $Point): $Accessible;
         getCursor(): $Cursor;
+        getBackground(): $Color;
+        setLocation(arg0: $Point): void;
+        addFocusListener(arg0: $FocusListener): void;
+        removeFocusListener(arg0: $FocusListener): void;
         setVisible(arg0: boolean): void;
         setEnabled(arg0: boolean): void;
-        setLocation(arg0: $Point): void;
+        setBounds(arg0: $Rectangle): void;
+        isVisible(): boolean;
         getLocationOnScreen(): $Point;
         isShowing(): boolean;
         setForeground(arg0: $Color): void;
         isFocusTraversable(): boolean;
-        addFocusListener(arg0: $FocusListener): void;
-        getBackground(): $Color;
-        setCursor(arg0: $Cursor): void;
-        isVisible(): boolean;
-        setBackground(arg0: $Color): void;
-        setFont(arg0: $Font): void;
-        requestFocus(): void;
-        removeFocusListener(arg0: $FocusListener): void;
         getForeground(): $Color;
-        getAccessibleAt(arg0: $Point): $Accessible;
+        setCursor(arg0: $Cursor): void;
+        getFont(): $Font;
+        setBackground(arg0: $Color): void;
+        getFontMetrics(arg0: $Font): $FontMetrics;
+        requestFocus(): void;
+        setFont(arg0: $Font): void;
         get locationOnScreen(): $Point;
         get showing(): boolean;
         get focusTraversable(): boolean;
@@ -219,7 +219,6 @@ declare module "@package/javax/accessibility" {
         get accessibleSelectionCount(): number;
     }
     export class $AccessibleContext {
-        firePropertyChange(arg0: string, arg1: $Object, arg2: $Object): void;
         getLocale(): $Locale;
         removePropertyChangeListener(arg0: $PropertyChangeListener_): void;
         addPropertyChangeListener(arg0: $PropertyChangeListener_): void;
@@ -229,6 +228,8 @@ declare module "@package/javax/accessibility" {
         getAccessibleSelection(): $AccessibleSelection;
         getAccessibleIndexInParent(): number;
         getAccessibleStateSet(): $AccessibleStateSet;
+        firePropertyChange(arg0: string, arg1: $Object, arg2: $Object): void;
+        getAccessibleComponent(): $AccessibleComponent;
         getAccessibleName(): string;
         setAccessibleName(arg0: string): void;
         getAccessibleDescription(): string;
@@ -242,7 +243,6 @@ declare module "@package/javax/accessibility" {
         getAccessibleIcon(): $AccessibleIcon[];
         getAccessibleRelationSet(): $AccessibleRelationSet;
         getAccessibleTable(): $AccessibleTable;
-        getAccessibleComponent(): $AccessibleComponent;
         static ACCESSIBLE_COMPONENT_BOUNDS_CHANGED: string;
         static ACCESSIBLE_INVALIDATE_CHILDREN: string;
         static ACCESSIBLE_VISIBLE_DATA_PROPERTY: string;
@@ -270,6 +270,7 @@ declare module "@package/javax/accessibility" {
         get accessibleSelection(): $AccessibleSelection;
         get accessibleIndexInParent(): number;
         get accessibleStateSet(): $AccessibleStateSet;
+        get accessibleComponent(): $AccessibleComponent;
         get accessibleRole(): $AccessibleRole;
         get accessibleAction(): $AccessibleAction;
         get accessibleText(): $AccessibleText;
@@ -278,7 +279,6 @@ declare module "@package/javax/accessibility" {
         get accessibleIcon(): $AccessibleIcon[];
         get accessibleRelationSet(): $AccessibleRelationSet;
         get accessibleTable(): $AccessibleTable;
-        get accessibleComponent(): $AccessibleComponent;
     }
     export class $AccessibleBundle {
         toDisplayString(): string;

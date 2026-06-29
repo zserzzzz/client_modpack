@@ -43,5 +43,5 @@ declare module "@package/com/simibubi/create/content/redstone/displayLink/target
     /**
      * Values that may be interpreted as {@link $DisplayTargetStats}.
      */
-    export type $DisplayTargetStats_ = { type?: $DisplayTarget_, maxColumns?: number, maxRows?: number,  } | [type?: $DisplayTarget_, maxColumns?: number, maxRows?: number, ];
+    export type $DisplayTargetStats_ = { maxColumns?: number, maxRows?: number, type?: $DisplayTarget_,  } | [maxColumns?: number, maxRows?: number, type?: $DisplayTarget_, ];
 }

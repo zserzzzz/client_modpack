@@ -93,7 +93,7 @@ declare module "@package/com/simibubi/create/foundation/data/recipe" {
     /**
      * Values that may be interpreted as {@link $CreateStandardRecipeGen$ModdedCookingRecipeOutput}.
      */
-    export type $CreateStandardRecipeGen$ModdedCookingRecipeOutput_ = { wrapped?: $RecipeOutput, outputOverride?: $ResourceLocation_,  } | [wrapped?: $RecipeOutput, outputOverride?: $ResourceLocation_, ];
+    export type $CreateStandardRecipeGen$ModdedCookingRecipeOutput_ = { outputOverride?: $ResourceLocation_, wrapped?: $RecipeOutput,  } | [outputOverride?: $ResourceLocation_, wrapped?: $RecipeOutput, ];
     export class $LogStrippingFakeRecipes {
         static createRecipes(): $List<$RecipeHolder<$ManualApplicationRecipe>>;
         constructor();
@@ -101,8 +101,8 @@ declare module "@package/com/simibubi/create/foundation/data/recipe" {
     export class $CreateStandardRecipeGen$Marker {
     }
     export class $CommonMetal$ItemLikeTag extends $Record {
-        items(): $TagKey<$Item>;
         blocks(): $TagKey<$Block>;
+        items(): $TagKey<$Item>;
         constructor(items: $TagKey_<$Item>, blocks: $TagKey_<$Block>);
     }
     /**
@@ -160,18 +160,18 @@ declare module "@package/com/simibubi/create/foundation/data/recipe" {
         constructor(arg0: $PackOutput, arg1: $CompletableFuture<$HolderLookup$Provider>);
     }
     export class $CreateStandardRecipeGen$ModdedCookingRecipeOutputShim implements $Recipe<$RecipeInput> {
-        isSpecial(): boolean;
-        getRemainingItems(arg0: $RecipeInput): $NonNullList<$ItemStack>;
         getGroup(): string;
+        getRemainingItems(arg0: $RecipeInput): $NonNullList<$ItemStack>;
+        isSpecial(): boolean;
+        getToastSymbol(): $ItemStack;
+        getIngredients(): $NonNullList<$Ingredient>;
         isIncomplete(): boolean;
         showNotification(): boolean;
-        getIngredients(): $NonNullList<$Ingredient>;
-        getToastSymbol(): $ItemStack;
-        get special(): boolean;
         get group(): string;
-        get incomplete(): boolean;
-        get ingredients(): $NonNullList<$Ingredient>;
+        get special(): boolean;
         get toastSymbol(): $ItemStack;
+        get ingredients(): $NonNullList<$Ingredient>;
+        get incomplete(): boolean;
     }
     export class $CreateEmptyingRecipeGen extends $EmptyingRecipeGen {
         advancementPathProvider: $PackOutput$PathProvider;
@@ -199,11 +199,11 @@ declare module "@package/com/simibubi/create/foundation/data/recipe" {
         omitWoodSuffix(): boolean;
         reversedMetalPrefix(): boolean;
         asResource(arg0: string): $ResourceLocation;
-        deepslateOreOf(arg0: string): $ResourceLocation;
         ingotOf(arg0: string): $ResourceLocation;
-        oreOf(arg0: string): $ResourceLocation;
         nuggetOf(arg0: string): $ResourceLocation;
+        oreOf(arg0: string): $ResourceLocation;
         recipeId(arg0: string): string;
+        deepslateOreOf(arg0: string): $ResourceLocation;
         static HH: $Mods;
         static DD: $Mods;
         static JNE: $Mods;

@@ -11,26 +11,26 @@ export * as tasks from "@package/net/minecraft/commands/execution/tasks";
 
 declare module "@package/net/minecraft/commands/execution" {
     export class $ExecutionContext<T> implements $AutoCloseable {
-        profiler(): $ProfilerFiller;
         close(): void;
+        profiler(): $ProfilerFiller;
+        queueNext(entry: $CommandQueueEntry_<T>): void;
+        forkLimit(): number;
+        incrementCost(): void;
         tracer(): $TraceCallbacks;
         tracer(tracer: $TraceCallbacks | null): void;
-        static queueInitialFunctionCall<T extends $ExecutionCommandSource<T>>(executionContext: $ExecutionContext<T>, _function: $InstantiatedFunction<T>, source: T, returnValueConsumer: $CommandResultCallback_): void;
-        incrementCost(): void;
-        static queueInitialCommandExecution<T extends $ExecutionCommandSource<T>>(executionContext: $ExecutionContext<T>, commandInput: string, command: $ContextChain<T>, source: T, returnValueConsumer: $CommandResultCallback_): void;
         runCommandQueue(): void;
-        forkLimit(): number;
-        frameControlForDepth(depth: number): $Frame$FrameControl;
+        static queueInitialCommandExecution<T extends $ExecutionCommandSource<T>>(executionContext: $ExecutionContext<T>, commandInput: string, command: $ContextChain<T>, source: T, returnValueConsumer: $CommandResultCallback_): void;
         discardAtDepthOrHigher(depth: number): void;
-        queueNext(entry: $CommandQueueEntry_<T>): void;
+        frameControlForDepth(depth: number): $Frame$FrameControl;
+        static queueInitialFunctionCall<T extends $ExecutionCommandSource<T>>(executionContext: $ExecutionContext<T>, _function: $InstantiatedFunction<T>, source: T, returnValueConsumer: $CommandResultCallback_): void;
         constructor(commandLimit: number, forkLimit: number, profiler: $ProfilerFiller);
     }
     export class $ChainModifiers extends $Record {
-        isReturn(): boolean;
         flags(): number;
-        isForked(): boolean;
         setReturn(): $ChainModifiers;
         setForked(): $ChainModifiers;
+        isReturn(): boolean;
+        isForked(): boolean;
         static DEFAULT: $ChainModifiers;
         constructor(arg0: number);
     }
@@ -50,11 +50,11 @@ declare module "@package/net/minecraft/commands/execution" {
     export class $TraceCallbacks {
     }
     export interface $TraceCallbacks extends $AutoCloseable {
-        close(): void;
         onError(errorMessage: string): void;
+        close(): void;
         onReturn(depth: number, command: string, returnValue: number): void;
-        onCall(depth: number, _function: $ResourceLocation_, commands: number): void;
         onCommand(depth: number, command: string): void;
+        onCall(depth: number, _function: $ResourceLocation_, commands: number): void;
     }
     export class $UnboundEntryAction<T> {
     }
@@ -80,9 +80,9 @@ declare module "@package/net/minecraft/commands/execution" {
     }
     export interface $ExecutionControl<T> {
         currentFrame(): $Frame;
-        tracer(): $TraceCallbacks;
-        tracer(tracer: $TraceCallbacks | null): void;
         queueNext(entry: $EntryAction_<T>): void;
+        tracer(tracer: $TraceCallbacks | null): void;
+        tracer(): $TraceCallbacks;
     }
     export class $CustomCommandExecutor$CommandAdapter<T> {
     }
@@ -102,7 +102,7 @@ declare module "@package/net/minecraft/commands/execution" {
     /**
      * Values that may be interpreted as {@link $CommandQueueEntry}.
      */
-    export type $CommandQueueEntry_<T> = { action?: $EntryAction_<any>, frame?: $Frame_,  } | [action?: $EntryAction_<any>, frame?: $Frame_, ];
+    export type $CommandQueueEntry_<T> = { frame?: $Frame_, action?: $EntryAction_<any>,  } | [frame?: $Frame_, action?: $EntryAction_<any>, ];
     export class $CustomModifierExecutor<T> {
     }
     export interface $CustomModifierExecutor<T> {
@@ -133,19 +133,19 @@ declare module "@package/net/minecraft/commands/execution" {
     export class $Frame extends $Record {
         depth(): number;
         discard(): void;
-        returnSuccess(result: number): void;
-        returnFailure(): void;
         frameControl(): $Frame$FrameControl;
         returnValueConsumer(): $CommandResultCallback;
+        returnFailure(): void;
+        returnSuccess(result: number): void;
         constructor(arg0: number, arg1: $CommandResultCallback_, arg2: $Frame$FrameControl_);
     }
     /**
      * Values that may be interpreted as {@link $Frame}.
      */
-    export type $Frame_ = { depth?: number, returnValueConsumer?: $CommandResultCallback_, frameControl?: $Frame$FrameControl_,  } | [depth?: number, returnValueConsumer?: $CommandResultCallback_, frameControl?: $Frame$FrameControl_, ];
+    export type $Frame_ = { frameControl?: $Frame$FrameControl_, depth?: number, returnValueConsumer?: $CommandResultCallback_,  } | [frameControl?: $Frame$FrameControl_, depth?: number, returnValueConsumer?: $CommandResultCallback_, ];
     export class $CustomCommandExecutor$WithErrorHandling<T extends $ExecutionCommandSource<T>> implements $CustomCommandExecutor<T> {
-        run(source: T, contextChain: $ContextChain<T>, chainModifiers: $ChainModifiers_, executionControl: $ExecutionControl<T>): void;
         onError(error: $CommandSyntaxException, source: T, chainModifiers: $ChainModifiers_, traceCallbacks: $TraceCallbacks | null): void;
+        run(source: T, contextChain: $ContextChain<T>, chainModifiers: $ChainModifiers_, executionControl: $ExecutionControl<T>): void;
         runGuarded(source: T, contextChain: $ContextChain<T>, chainModifiers: $ChainModifiers_, executionControl: $ExecutionControl<T>): void;
         constructor();
     }

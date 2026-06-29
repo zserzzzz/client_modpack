@@ -1,6 +1,7 @@
 import { $GoalSelector } from "@package/net/minecraft/world/entity/ai/goal";
 import { $MoveControl, $LookControl, $JumpControl } from "@package/net/minecraft/world/entity/ai/control";
 import { $SensorType, $Sensor } from "@package/net/minecraft/world/entity/ai/sensing";
+import { $CompoundTag } from "@package/net/minecraft/nbt";
 import { $EntityType_, $Pose, $PortalProcessor, $AnimationState, $EntityDimensions, $Entity$RemovalReason, $WalkAnimationState } from "@package/net/minecraft/world/entity";
 import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
 import { $AttributeSupplier$Builder } from "@package/net/minecraft/world/entity/ai/attributes";
@@ -11,7 +12,7 @@ import { $InteractionHand } from "@package/net/minecraft/world";
 import { $Predicate, $IntFunction } from "@package/java/util/function";
 import { $ServerLevel } from "@package/net/minecraft/server/level";
 import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos } from "@package/net/minecraft/core";
+import { $HolderLookup$Provider, $BlockPos } from "@package/net/minecraft/core";
 import { $Brain } from "@package/net/minecraft/world/entity/ai";
 import { $PathNavigation } from "@package/net/minecraft/world/entity/ai/navigation";
 import { $Enum, $Object } from "@package/java/lang";
@@ -39,8 +40,8 @@ declare module "@package/net/minecraft/world/entity/animal/sniffer" {
     export class $SnifferAi$Sniffing extends $Behavior<$Sniffer> {
         start(level: $ServerLevel, entity: $Sniffer, gameTime: number): void;
         stop(level: $ServerLevel, entity: $Sniffer, gameTime: number): void;
-        checkExtraStartConditions(level: $ServerLevel, owner: $Sniffer): boolean;
         canStillUse(level: $ServerLevel, entity: $Sniffer, gameTime: number): boolean;
+        checkExtraStartConditions(level: $ServerLevel, owner: $Sniffer): boolean;
         static DEFAULT_DURATION: number;
         entryCondition: $Map<$MemoryModuleType<never>, $MemoryStatus>;
         constructor(minDuration: number, maxDuration: number);
@@ -52,8 +53,8 @@ declare module "@package/net/minecraft/world/entity/animal/sniffer" {
     export class $SnifferAi$Scenting extends $Behavior<$Sniffer> {
         start(level: $ServerLevel, entity: $Sniffer, gameTime: number): void;
         stop(level: $ServerLevel, entity: $Sniffer, gameTime: number): void;
-        checkExtraStartConditions(level: $ServerLevel, owner: $Sniffer): boolean;
         canStillUse(level: $ServerLevel, entity: $Sniffer, gameTime: number): boolean;
+        checkExtraStartConditions(level: $ServerLevel, owner: $Sniffer): boolean;
         static DEFAULT_DURATION: number;
         entryCondition: $Map<$MemoryModuleType<never>, $MemoryStatus>;
         constructor(minDuration: number, maxDuration: number);
@@ -77,18 +78,11 @@ declare module "@package/net/minecraft/world/entity/animal/sniffer" {
         static get temptations(): $Predicate<$ItemStack>;
     }
     export class $Sniffer extends $Animal {
-        static createAttributes(): $AttributeSupplier$Builder;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
          */
-        canPlayDiggingSound(): boolean;
-        calculateDigPosition(): ($BlockPos) | undefined;
-        /**
-         * If a rider of this entity can interact with this entity. Should return true on the
-         * ridden entity if so.
-         */
-        isTempted(): boolean;
+        canSniff(): boolean;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
@@ -98,14 +92,22 @@ declare module "@package/net/minecraft/world/entity/animal/sniffer" {
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
          */
-        canSniff(): boolean;
+        isTempted(): boolean;
+        /**
+         * If a rider of this entity can interact with this entity. Should return true on the
+         * ridden entity if so.
+         */
+        isSearching(): boolean;
         onDiggingComplete(storeExploredPosition: boolean): $Sniffer;
         transitionTo(state: $Sniffer$State_): $Sniffer;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
          */
-        isSearching(): boolean;
+        canPlayDiggingSound(): boolean;
+        calculateDigPosition(): ($BlockPos) | undefined;
+        static createAttributes(): $AttributeSupplier$Builder;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;

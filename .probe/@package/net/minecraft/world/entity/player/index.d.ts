@@ -43,7 +43,7 @@ import { $AbstractHorse } from "@package/net/minecraft/world/entity/animal/horse
 import { $Consumer_, $Predicate_ } from "@package/java/util/function";
 import { $ServerPlayer } from "@package/net/minecraft/server/level";
 import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos, $GlobalPos, $BlockPos_, $GlobalPos_, $Direction_, $NonNullList } from "@package/net/minecraft/core";
+import { $BlockPos, $GlobalPos, $BlockPos_, $GlobalPos_, $HolderLookup$Provider, $Direction_, $NonNullList } from "@package/net/minecraft/core";
 import { $Enum, $Record, $Object } from "@package/java/lang";
 import { $IntList, $Int2IntMap } from "@package/it/unimi/dsi/fastutil/ints";
 import { $GameType_, $BaseCommandBlock, $Level_ } from "@package/net/minecraft/world/level";
@@ -63,9 +63,9 @@ import { $DamageSource_ } from "@package/net/minecraft/world/damagesource";
 
 declare module "@package/net/minecraft/world/entity/player" {
     export class $ProfileKeyPair extends $Record {
+        refreshedAfter(): $Instant;
         privateKey(): $PrivateKey;
         publicKey(): $ProfilePublicKey;
-        refreshedAfter(): $Instant;
         dueRefresh(): boolean;
         static CODEC: $Codec<$ProfileKeyPair>;
         constructor(arg0: $PrivateKey, arg1: $ProfilePublicKey_, arg2: $Instant);
@@ -73,15 +73,15 @@ declare module "@package/net/minecraft/world/entity/player" {
     /**
      * Values that may be interpreted as {@link $ProfileKeyPair}.
      */
-    export type $ProfileKeyPair_ = { privateKey?: $PrivateKey, publicKey?: $ProfilePublicKey_, refreshedAfter?: $Instant,  } | [privateKey?: $PrivateKey, publicKey?: $ProfilePublicKey_, refreshedAfter?: $Instant, ];
+    export type $ProfileKeyPair_ = { refreshedAfter?: $Instant, privateKey?: $PrivateKey, publicKey?: $ProfilePublicKey_,  } | [refreshedAfter?: $Instant, privateKey?: $PrivateKey, publicKey?: $ProfilePublicKey_, ];
     export class $ProfilePublicKey$Data extends $Record {
-        expiresAt(): $Instant;
         write(buffer: $FriendlyByteBuf): void;
         key(): $PublicKey;
-        validateSignature(signatureValidator: $SignatureValidator_, profileId: $UUID_): boolean;
-        keySignature(): number[];
-        hasExpired(): boolean;
+        expiresAt(): $Instant;
         hasExpired(gracePeriod: $Duration_): boolean;
+        hasExpired(): boolean;
+        keySignature(): number[];
+        validateSignature(signatureValidator: $SignatureValidator_, profileId: $UUID_): boolean;
         static CODEC: $Codec<$ProfilePublicKey$Data>;
         constructor(buffer: $FriendlyByteBuf);
         constructor(arg0: $Instant, arg1: $PublicKey, arg2: number[]);
@@ -89,14 +89,14 @@ declare module "@package/net/minecraft/world/entity/player" {
     /**
      * Values that may be interpreted as {@link $ProfilePublicKey$Data}.
      */
-    export type $ProfilePublicKey$Data_ = { key?: $PublicKey, expiresAt?: $Instant, keySignature?: number[],  } | [key?: $PublicKey, expiresAt?: $Instant, keySignature?: number[], ];
+    export type $ProfilePublicKey$Data_ = { keySignature?: number[], key?: $PublicKey, expiresAt?: $Instant,  } | [keySignature?: number[], key?: $PublicKey, expiresAt?: $Instant, ];
     export class $Abilities {
-        getFlyingSpeed(): number;
         loadSaveData(compound: $CompoundTag_): void;
         getWalkingSpeed(): number;
         addSaveData(compound: $CompoundTag_): void;
-        setWalkingSpeed(flyingSpeed: number): void;
+        getFlyingSpeed(): number;
         setFlyingSpeed(flyingSpeed: number): void;
+        setWalkingSpeed(flyingSpeed: number): void;
         invulnerable: boolean;
         /**
          * @deprecated
@@ -108,18 +108,6 @@ declare module "@package/net/minecraft/world/entity/player" {
         constructor();
     }
     export class $Inventory implements $Container, $Nameable {
-        /**
-         * This function stores as many items of an ItemStack as possible in a matching slot and returns the quantity of left over items.
-         */
-        findSlotMatchingItem(stack: $ItemStack_): number;
-        /**
-         * @return a player armor item (as an `ItemStack`) contained in specified armor slot
-         */
-        removeItemNoUpdate(slot: number): $ItemStack;
-        /**
-         * Returns the number of slots in the inventory.
-         */
-        getContainerSize(): number;
         getName(): $Component;
         /**
          * Reads from the given tag list and fills the slots in the inventory with the correct items.
@@ -127,19 +115,19 @@ declare module "@package/net/minecraft/world/entity/player" {
         load(listTag: $ListTag_): void;
         isEmpty(): boolean;
         /**
+         * Adds the stack to the first empty slot in the player's inventory. Returns `false` if it's not possible to place the entire stack in the inventory.
+         */
+        add(stack: $ItemStack_): boolean;
+        /**
          * Adds the stack to the specified slot in the player's inventory. Returns `false` if it's not possible to place the entire stack in the inventory.
          */
         add(slot: number, stack: $ItemStack_): boolean;
         /**
          * Adds the stack to the first empty slot in the player's inventory. Returns `false` if it's not possible to place the entire stack in the inventory.
          */
-        add(stack: $ItemStack_): boolean;
-        contains(tag: $TagKey_<$Item>): boolean;
-        /**
-         * Adds the stack to the first empty slot in the player's inventory. Returns `false` if it's not possible to place the entire stack in the inventory.
-         */
         contains(stack: $ItemStack_): boolean;
         contains(predicate: $Predicate_<$ItemStack>): boolean;
+        contains(tag: $TagKey_<$Item>): boolean;
         /**
          * Writes the inventory out as a list of compound tags. This is where the slot indices are used (+100 for armor, +80 for crafting).
          */
@@ -156,37 +144,35 @@ declare module "@package/net/minecraft/world/entity/player" {
          * @return a player armor item (as an `ItemStack`) contained in specified armor slot
          */
         getItem(slot: number): $ItemStack;
-        /**
-         * Returns the item stack currently held by the player.
-         */
-        getSelected(): $ItemStack;
-        handler$heh000$moonlight$ml$fireDropEvent(arg0: $CallbackInfo, arg1: $List_<any>, arg2: number): void;
         removeItem(stack: $ItemStack_): void;
         /**
          * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
          */
         removeItem(index: number, count: number): $ItemStack;
-        addResource(slot: number, stack: $ItemStack_): number;
-        removeFromSelected(removeStack: boolean): $ItemStack;
-        static isHotbarSlot(index: number): boolean;
-        setPickedItem(stack: $ItemStack_): void;
         /**
-         * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
+         * This function stores as many items of an ItemStack as possible in a matching slot and returns the quantity of left over items.
          */
-        setItem(index: number, stack: $ItemStack_): void;
-        pickSlot(index: number): void;
-        /**
-         * @return a player armor item (as an `ItemStack`) contained in specified armor slot
-         */
-        getArmor(slot: number): $ItemStack;
-        /**
-         * Change the selected item in the hotbar after a mouse scroll. Select the slot to the left if `direction` is positive, or to the right if negative.
-         */
-        swapPaint(direction: number): void;
+        findSlotMatchingItem(stack: $ItemStack_): number;
         /**
          * Drop all armor and main inventory items.
          */
         clearContent(): void;
+        /**
+         * Returns the item stack currently held by the player.
+         */
+        getSelected(): $ItemStack;
+        getDestroySpeed(state: $BlockState_): number;
+        addResource(slot: number, stack: $ItemStack_): number;
+        setPickedItem(stack: $ItemStack_): void;
+        static isHotbarSlot(index: number): boolean;
+        /**
+         * @return a player armor item (as an `ItemStack`) contained in specified armor slot
+         */
+        removeItemNoUpdate(slot: number): $ItemStack;
+        /**
+         * Returns the number of slots in the inventory.
+         */
+        getContainerSize(): number;
         /**
          * Don't rename this method to canInteractWith due to conflicts with Container
          */
@@ -199,11 +185,13 @@ declare module "@package/net/minecraft/world/entity/player" {
          * Drop all armor and main inventory items.
          */
         setChanged(): void;
+        /**
+         * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
+         */
+        setItem(index: number, stack: $ItemStack_): void;
+        fillStackedContents(stackedContent: $StackedContents): void;
         placeItemBackInInventory(stack: $ItemStack_, sendPacket: boolean): void;
         placeItemBackInInventory(stack: $ItemStack_): void;
-        fillStackedContents(stackedContent: $StackedContents): void;
-        getDestroySpeed(state: $BlockState_): number;
-        hasRemainingSpaceForItem(destination: $ItemStack_, origin: $ItemStack_): boolean;
         /**
          * This function stores as many items of an ItemStack as possible in a matching slot and returns the quantity of left over items.
          */
@@ -212,11 +200,23 @@ declare module "@package/net/minecraft/world/entity/player" {
          * This function stores as many items of an ItemStack as possible in a matching slot and returns the quantity of left over items.
          */
         findSlotMatchingUnusedItem(stack: $ItemStack_): number;
+        hasRemainingSpaceForItem(destination: $ItemStack_, origin: $ItemStack_): boolean;
         clearOrCountMatchingItems(stackPredicate: $Predicate_<$ItemStack>, maxCount: number, inventory: $Container): number;
         /**
          * Returns the number of slots in the inventory.
          */
         getSuitableHotbarSlot(): number;
+        handler$heh000$moonlight$ml$fireDropEvent(arg0: $CallbackInfo, arg1: $List_<any>, arg2: number): void;
+        pickSlot(index: number): void;
+        /**
+         * Change the selected item in the hotbar after a mouse scroll. Select the slot to the left if `direction` is positive, or to the right if negative.
+         */
+        swapPaint(direction: number): void;
+        /**
+         * @return a player armor item (as an `ItemStack`) contained in specified armor slot
+         */
+        getArmor(slot: number): $ItemStack;
+        removeFromSelected(removeStack: boolean): $ItemStack;
         handler$heh000$moonlight$ml$restoreNotDropped(arg0: $CallbackInfo, arg1: $List_<any>, arg2: number): void;
         /**
          * Returns the number of slots in the inventory.
@@ -225,30 +225,18 @@ declare module "@package/net/minecraft/world/entity/player" {
         /**
          * Returns the number of slots in the inventory.
          */
-        getTimesChanged(): number;
+        static getSelectionSize(): number;
         /**
          * Returns the number of slots in the inventory.
          */
-        static getSelectionSize(): number;
-        /**
-         * @return `true` if the given stack can be extracted into the target inventory
-         */
-        canTakeItem(target: $Container, slot: number, stack: $ItemStack_): boolean;
+        getTimesChanged(): number;
         /**
          * Adds the stack to the specified slot in the player's inventory. Returns `false` if it's not possible to place the entire stack in the inventory.
          */
         canPlaceItem(slot: number, stack: $ItemStack_): boolean;
         hasAnyMatching(predicate: $Predicate_<$ItemStack>): boolean;
-        /**
-         * Returns the number of slots in the inventory.
-         */
-        getMaxStackSize(): number;
-        /**
-         * This function stores as many items of an ItemStack as possible in a matching slot and returns the quantity of left over items.
-         */
-        getMaxStackSize(stack: $ItemStack_): number;
-        stopOpen(player: $Player): void;
         startOpen(player: $Player): void;
+        stopOpen(player: $Player): void;
         /**
          * Returns `true` if any item from the passed set exists in this inventory.
          */
@@ -257,70 +245,82 @@ declare module "@package/net/minecraft/world/entity/player" {
          * Returns the total amount of the specified item in this inventory. This method does not check for nbt.
          */
         countItem(item: $Item_): number;
-        getCustomName(): $Component;
+        /**
+         * This function stores as many items of an ItemStack as possible in a matching slot and returns the quantity of left over items.
+         */
+        getMaxStackSize(stack: $ItemStack_): number;
+        /**
+         * Returns the number of slots in the inventory.
+         */
+        getMaxStackSize(): number;
+        /**
+         * @return `true` if the given stack can be extracted into the target inventory
+         */
+        canTakeItem(target: $Container, slot: number, stack: $ItemStack_): boolean;
         getDisplayName(): $Component;
         hasCustomName(): boolean;
+        getCustomName(): $Component;
         canReceiveTransferCooldown(): boolean;
         setTransferCooldown(arg0: number): void;
         lithium$itemInsertionTestRequiresStackSize1(): boolean;
         /**
-         * Returns the number of slots in the inventory.
+         * Drop all armor and main inventory items.
          */
-        getHeight(): number;
-        isMutable(): boolean;
+        setChanged(): void;
         insertItem(slot: number, stack: $ItemStack_, simulate: boolean): $ItemStack;
+        asContainer(): $Container;
+        /**
+         * @return a player armor item (as an `ItemStack`) contained in specified armor slot
+         */
+        getStackInSlot(slot: number): $ItemStack;
+        /**
+         * Adds the stack to the specified slot in the player's inventory. Returns `false` if it's not possible to place the entire stack in the inventory.
+         */
+        isItemValid(slot: number, stack: $ItemStack_): boolean;
         extractItem(slot: number, amount: number, simulate: boolean): $ItemStack;
         /**
          * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
          */
         setStackInSlot(index: number, stack: $ItemStack_): void;
-        /**
-         * Adds the stack to the specified slot in the player's inventory. Returns `false` if it's not possible to place the entire stack in the inventory.
-         */
-        isItemValid(slot: number, stack: $ItemStack_): boolean;
-        /**
-         * Drop all armor and main inventory items.
-         */
-        setChanged(): void;
-        /**
-         * @return a player armor item (as an `ItemStack`) contained in specified armor slot
-         */
-        getStackInSlot(slot: number): $ItemStack;
-        asContainer(): $Container;
+        isMutable(): boolean;
         getSlotLimit(slot: number): number;
         /**
          * Returns the number of slots in the inventory.
          */
-        getSlots(): number;
+        getHeight(): number;
+        /**
+         * Drop all armor and main inventory items.
+         */
+        clear(): void;
+        getBlock(level: $Level_): $LevelBlock;
+        self(): $Container;
         /**
          * Returns the number of slots in the inventory.
          */
         getWidth(): number;
         /**
-         * Drop all armor and main inventory items.
+         * Returns the number of slots in the inventory.
          */
-        clear(): void;
-        self(): $Container;
-        getBlock(level: $Level_): $LevelBlock;
+        getSlots(): number;
         insertItem(stack: $ItemStack_, simulate: boolean): $ItemStack;
+        countNonEmpty(match: $ItemPredicate_): number;
         /**
          * Returns the number of slots in the inventory.
          */
         countNonEmpty(): number;
-        countNonEmpty(match: $ItemPredicate_): number;
-        isEmpty(): boolean;
-        /**
-         * Returns the number of slots in the inventory.
-         */
-        count(): number;
-        count(match: $ItemPredicate_): number;
+        getAllItems(): $List<$ItemStack>;
+        clear(match: $ItemPredicate_): void;
         find(match: $ItemPredicate_): number;
         /**
          * Returns the number of slots in the inventory.
          */
         find(): number;
-        clear(match: $ItemPredicate_): void;
-        getAllItems(): $List<$ItemStack>;
+        /**
+         * Returns the number of slots in the inventory.
+         */
+        count(): number;
+        count(match: $ItemPredicate_): number;
+        isEmpty(): boolean;
         /**
          * Drop all armor and main inventory items.
          */
@@ -337,20 +337,20 @@ declare module "@package/net/minecraft/world/entity/player" {
         static HELMET_SLOT_ONLY: number[];
         player: $Player;
         constructor(player: $Player);
-        get containerSize(): number;
         get name(): $Component;
         set pickedItem(value: $ItemStack_);
+        get containerSize(): number;
         get suitableHotbarSlot(): number;
         get freeSlot(): number;
-        get timesChanged(): number;
         static get selectionSize(): number;
-        get customName(): $Component;
+        get timesChanged(): number;
         get displayName(): $Component;
+        get customName(): $Component;
         set transferCooldown(value: number);
-        get height(): number;
         get mutable(): boolean;
-        get slots(): number;
+        get height(): number;
         get width(): number;
+        get slots(): number;
         get allItems(): $List<$ItemStack>;
     }
     export class $PlayerModelPart extends $Enum<$PlayerModelPart> {
@@ -379,8 +379,8 @@ declare module "@package/net/minecraft/world/entity/player" {
     }
     export class $ProfilePublicKey extends $Record {
         data(): $ProfilePublicKey$Data;
-        createSignatureValidator(): $SignatureValidator;
         static createValidated(signatureValidator: $SignatureValidator_, profileId: $UUID_, data: $ProfilePublicKey$Data_): $ProfilePublicKey;
+        createSignatureValidator(): $SignatureValidator;
         static EXPIRED_PROFILE_PUBLIC_KEY: $Component;
         static EXPIRY_GRACE_PERIOD: $Duration;
         static TRUSTED_CODEC: $Codec<$ProfilePublicKey>;
@@ -429,15 +429,15 @@ declare module "@package/net/minecraft/world/entity/player" {
         clear(): void;
         take(stackingIndex: number, amount: number): number;
         has(stackingIndex: number): boolean;
-        static getStackingIndex(stack: $ItemStack_): number;
-        canCraft(recipe: $Recipe<never>, stackingIndexList: $IntList | null, amount: number): boolean;
-        canCraft(recipe: $Recipe<never>, stackingIndexList: $IntList | null): boolean;
         accountStack(stack: $ItemStack_): void;
         accountStack(stack: $ItemStack_, amount: number): void;
         accountSimpleStack(stack: $ItemStack_): void;
-        static fromStackingIndex(stackingIndex: number): $ItemStack;
-        getBiggestCraftableStack(recipe: $RecipeHolder_<never>, stackingIndexList: $IntList | null): number;
+        canCraft(recipe: $Recipe<never>, stackingIndexList: $IntList | null, amount: number): boolean;
+        canCraft(recipe: $Recipe<never>, stackingIndexList: $IntList | null): boolean;
+        static getStackingIndex(stack: $ItemStack_): number;
         getBiggestCraftableStack(recipe: $RecipeHolder_<never>, amount: number, stackingIndexList: $IntList | null): number;
+        getBiggestCraftableStack(recipe: $RecipeHolder_<never>, stackingIndexList: $IntList | null): number;
+        static fromStackingIndex(stackingIndex: number): $ItemStack;
         contents: $Int2IntMap;
         constructor();
     }
@@ -446,72 +446,88 @@ declare module "@package/net/minecraft/world/entity/player" {
     }
     export class $Player extends $LivingEntity implements $IPlayerExtension, $CameraHolder, $CameraOperator, $PlayerTypewriterExtension, $PlayerLaunchedPlungerExtension, $DynamicLightSource, $PlayerFreezeExtension, $EntityPlayerAccessor, $PlayerKJS {
         /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         * Drops an item into the world.
          */
-        destroyVanishingCursedItems(): void;
-        updateTutorialInventoryAction(carried: $ItemStack_, clicked: $ItemStack_, action: $ClickAction_): void;
+        drop(itemStack: $ItemStack_, includeThrowerName: boolean): $ItemEntity;
+        /**
+         * Creates and drops the provided item. Depending on the dropAround, it will drop the item around the player, instead of dropping the item from where the player is pointing at. Likewise, if includeThrowerName is true, the dropped item entity will have the thrower set as the player.
+         */
+        drop(droppedItem: $ItemStack_, dropAround: boolean, includeThrowerName: boolean): $ItemEntity;
+        canEat(canAlwaysEat: boolean): boolean;
+        displayClientMessage(chatComponent: $Component_, actionBar: boolean): void;
         /**
          * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
          */
-        tryResetCurrentImpulseContext(): void;
-        handler$hhf000$yawp$onGainHunger(arg0: number, arg1: $CallbackInfo): void;
-        getPlayerAwardedForExposure(): $Optional<any>;
-        simulated$getCurrentTypewriter(): $BlockPos;
-        sable$getFrozenToSubLevelAnchor(): $Vector3dc;
-        simulated$setLaunchedPlunger(arg0: $LaunchedPlungerEntity): void;
-        /**
-         * Returns the percentage of attack power available based on the cooldown (zero to one).
-         */
-        getExposureCameraActionAnim(adjustTicks: number): number;
-        simulated$setCurrentTypewriter(pos: $BlockPos_): void;
-        simulated$getLaunchedPlunger(): $LaunchedPlungerEntity;
-        getInventoryChangeListener(): $KubeJSInventoryListener;
-        /**
-         * Returns the amount of health added by the Absorption effect.
-         */
-        getCurrentItemAttackStrengthDelay(): number;
+        resetAttackStrengthTicker(): void;
         /**
          * Only use is to identify if class is an instance of player for experience dropping
          */
         isTextFilteringEnabled(): boolean;
         getActiveExposureCamera(): $Camera;
+        getPrefixes(): $Collection<$MutableComponent>;
+        addItem(stack: $ItemStack_): boolean;
+        handler$bln000$fabric_entity_events_v1$injectElytraCheck(arg0: $CallbackInfoReturnable<any>): void;
+        /**
+         * @deprecated
+         */
+        getDestroySpeed(state: $BlockState_): number;
+        getDigSpeed(arg0: $BlockState_, arg1: $BlockPos_ | null): number;
+        getCooldowns(): $ItemCooldowns;
+        getInventory(): $Inventory;
+        getAbilities(): $Abilities;
+        /**
+         * Returns the GameProfile for this player
+         */
+        getGameProfile(): $GameProfile;
+        /**
+         * Only use is to identify if class is an instance of player for experience dropping
+         */
+        isReducedDebugInfo(): boolean;
+        /**
+         * Only use is to identify if class is an instance of player for experience dropping
+         */
+        isLocalPlayer(): boolean;
+        playNotifySound(sound: $SoundEvent_, source: $SoundSource_, volume: number, pitch: number): void;
+        /**
+         * Only use is to identify if class is an instance of player for experience dropping
+         */
+        wantsToStopRiding(): boolean;
         /**
          * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
          */
-        resetAttackStrengthTicker(): void;
-        displayClientMessage(chatComponent: $Component_, actionBar: boolean): void;
+        doCloseContainer(): void;
+        /**
+         * Add experience levels to this player.
+         */
+        increaseScore(levels: number): void;
         /**
          * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
          */
-        stopFallFlying(): void;
-        awardRecipes(recipes: $Collection_<$RecipeHolder_<never>>): number;
+        sweepAttack(): void;
+        openStructureBlock(structureEntity: $StructureBlockEntity): void;
         /**
          * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
          */
-        startFallFlying(): void;
-        /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
-         */
-        onUpdateAbilities(): void;
-        isModelPartShown(part: $PlayerModelPart_): boolean;
+        disableShield(): void;
+        getEnchantedDamage(entity: $Entity, damage: number, damageSource: $DamageSource_): number;
+        openJigsawBlock(jigsawBlockEntity: $JigsawBlockEntity): void;
+        sendMerchantOffers(containerId: number, offers: $MerchantOffers, villagerLevel: number, villagerXp: number, showProgress: boolean, canRestock: boolean): void;
+        openItemGui(stack: $ItemStack_, hand: $InteractionHand_): void;
+        openHorseInventory(horse: $AbstractHorse, inventory: $Container): void;
+        openCommandBlock(commandBlockEntity: $CommandBlockEntity): void;
+        canHarmPlayer(other: $Player): boolean;
+        openTextEdit(signEntity: $SignBlockEntity, isFrontText: boolean): void;
+        startSleepInBed(bedPos: $BlockPos_): $Either<$Player$BedSleepingProblem, $Unit>;
         resetRecipes(recipes: $Collection_<$RecipeHolder_<never>>): number;
-        setForcedPose(pose: $Pose_ | null): void;
-        awardRecipesByKey(recipes: $List_<$ResourceLocation_>): void;
-        /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
-         */
-        refreshDisplayName(): void;
         /**
          * Return the amount of cooldown before this entity can use a portal again.
          */
         getEnchantmentSeed(): number;
-        getForcedPose(): $Pose;
+        awardRecipes(recipes: $Collection_<$RecipeHolder_<never>>): number;
         /**
-         * Return the amount of cooldown before this entity can use a portal again.
+         * Only use is to identify if class is an instance of player for experience dropping
          */
-        getSleepTimer(): number;
-        getSuffixes(): $Collection<$MutableComponent>;
-        getScoreboard(): $Scoreboard;
+        hasContainerOpen(): boolean;
         /**
          * Returns whether this player can modify the block at a certain location with the given stack.
          * 
@@ -523,213 +539,58 @@ declare module "@package/net/minecraft/world/entity/player" {
          * @see PlayerCapabilities#allowEdit
          */
         mayUseItemAt(pos: $BlockPos_, facing: $Direction_, stack: $ItemStack_): boolean;
-        getData(): $AttachedData<any>;
-        getStages(): $Stages;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        onUpdateAbilities(): void;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        stopFallFlying(): void;
+        getScoreboard(): $Scoreboard;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        startFallFlying(): void;
+        awardRecipesByKey(recipes: $List_<$ResourceLocation_>): void;
+        isModelPartShown(part: $PlayerModelPart_): boolean;
+        /**
+         * Return the amount of cooldown before this entity can use a portal again.
+         */
+        getSleepTimer(): number;
+        getForcedPose(): $Pose;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        refreshDisplayName(): void;
+        getSuffixes(): $Collection<$MutableComponent>;
         sable$freezeTo(arg0: $UUID_, arg1: $Vector3dc): void;
         /**
          * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
          */
         sable$teleport(): void;
+        setForcedPose(pose: $Pose_ | null): void;
         getInventory(): $InventoryKJS;
-        playNotifySound(sound: $SoundEvent_, source: $SoundSource_, volume: number, pitch: number): void;
+        getStages(): $Stages;
+        getData(): $AttachedData<any>;
+        awardStat(statKey: $ResourceLocation_): void;
         /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         * Adds a value to a statistic field.
          */
-        doCloseContainer(): void;
+        awardStat(stat: $Stat_<never>, increment: number): void;
         /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         * Add a stat once
          */
-        updatePlayerPose(): void;
-        /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
-         */
-        closeMenu(): void;
-        /**
-         * Only use is to identify if class is an instance of player for experience dropping
-         */
-        updateIsUnderwater(): boolean;
-        /**
-         * Add experience levels to this player.
-         */
-        increaseScore(levels: number): void;
-        static createAttributes(): $AttributeSupplier$Builder;
-        /**
-         * Only use is to identify if class is an instance of player for experience dropping
-         */
-        wantsToStopRiding(): boolean;
-        stopSleepInBed(wakeImmediately: boolean, updateLevelForSleepingPlayers: boolean): void;
-        openCommandBlock(commandBlockEntity: $CommandBlockEntity): void;
-        sendMerchantOffers(containerId: number, offers: $MerchantOffers, villagerLevel: number, villagerXp: number, showProgress: boolean, canRestock: boolean): void;
-        openTextEdit(signEntity: $SignBlockEntity, isFrontText: boolean): void;
-        openItemGui(stack: $ItemStack_, hand: $InteractionHand_): void;
-        /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
-         */
-        disableShield(): void;
-        openStructureBlock(structureEntity: $StructureBlockEntity): void;
-        getEnchantedDamage(entity: $Entity, damage: number, damageSource: $DamageSource_): number;
-        openHorseInventory(horse: $AbstractHorse, inventory: $Container): void;
-        canHarmPlayer(other: $Player): boolean;
-        openJigsawBlock(jigsawBlockEntity: $JigsawBlockEntity): void;
-        /**
-         * Only use is to identify if class is an instance of player for experience dropping
-         */
-        hasContainerOpen(): boolean;
-        startSleepInBed(bedPos: $BlockPos_): $Either<$Player$BedSleepingProblem, $Unit>;
-        /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
-         */
-        sweepAttack(): void;
-        /**
-         * Creates and drops the provided item. Depending on the dropAround, it will drop the item around the player, instead of dropping the item from where the player is pointing at. Likewise, if includeThrowerName is true, the dropped item entity will have the thrower set as the player.
-         */
-        drop(droppedItem: $ItemStack_, dropAround: boolean, includeThrowerName: boolean): $ItemEntity;
-        /**
-         * Drops an item into the world.
-         */
-        drop(itemStack: $ItemStack_, includeThrowerName: boolean): $ItemEntity;
-        addItem(stack: $ItemStack_): boolean;
-        getPrefixes(): $Collection<$MutableComponent>;
-        modifyReturnValue$bjf000$vista$modifyIsScoping(canAlwaysEat: boolean): boolean;
-        /**
-         * Only use is to identify if class is an instance of player for experience dropping
-         */
-        isReducedDebugInfo(): boolean;
-        getCooldowns(): $ItemCooldowns;
-        getInventory(): $Inventory;
-        getAbilities(): $Abilities;
-        /**
-         * Only use is to identify if class is an instance of player for experience dropping
-         */
-        isLocalPlayer(): boolean;
-        /**
-         * Returns the GameProfile for this player
-         */
-        getGameProfile(): $GameProfile;
-        getCraftingGrid(): $InventoryKJS;
-        createItemCooldowns(): $ItemCooldowns;
-        /**
-         * Returns a NBTTagCompound that can be used to store custom data for this entity.
-         * It will be written, and read from disc, so it persists over world saves.
-         */
-        getShoulderEntityLeft(): $CompoundTag;
-        setLastDeathLocation(lastDeathLocation: ($GlobalPos_) | undefined): void;
-        /**
-         * Returns a NBTTagCompound that can be used to store custom data for this entity.
-         * It will be written, and read from disc, so it persists over world saves.
-         */
-        getShoulderEntityRight(): $CompoundTag;
-        /**
-         * @deprecated
-         */
-        hasCorrectToolForDrops(state: $BlockState_): boolean;
-        hasCorrectToolForDrops(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): boolean;
-        getLastDeathLocation(): ($GlobalPos) | undefined;
-        /**
-         * Only use is to identify if class is an instance of player for experience dropping
-         */
-        isStayingOnGroundSurface(): boolean;
-        /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
-         */
-        removeEntitiesOnShoulder(): void;
-        blockActionRestricted(level: $Level_, pos: $BlockPos_, gameMode: $GameType_): boolean;
-        startAutoSpinAttack(ticks: number, damage: number, itemStack: $ItemStack_): void;
-        setShoulderEntityLeft(compound: $CompoundTag_): void;
-        setShoulderEntityRight(compound: $CompoundTag_): void;
-        setReducedDebugInfo(ignoreFallDamageFromCurrentImpulse: boolean): void;
-        /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
-         */
-        removeActiveExposureCamera(): void;
-        getPlayerExecutingExposure(): $Optional<any>;
-        /**
-         * Return the amount of cooldown before this entity can use a portal again.
-         */
-        getXpNeededForNextLevel(): number;
-        /**
-         * Only use is to identify if class is an instance of player for experience dropping
-         */
-        tryToStartFallFlying(): boolean;
-        /**
-         * Add experience levels to this player.
-         */
-        giveExperiencePoints(levels: number): void;
-        /**
-         * Add experience levels to this player.
-         */
-        giveExperienceLevels(levels: number): void;
-        onEnchantmentPerformed(enchantedItem: $ItemStack_, levelCost: number): void;
-        entityInteractionRange(): number;
-        /**
-         * Only use is to identify if class is an instance of player for experience dropping
-         */
-        canUseGameMasterBlocks(): boolean;
-        getWardenSpawnTracker(): ($WardenSpawnTracker) | undefined;
-        setEntityOnShoulder(entityCompound: $CompoundTag_): boolean;
-        /**
-         * Only use is to identify if class is an instance of player for experience dropping
-         */
-        isSleepingLongEnough(): boolean;
-        openMinecartCommandBlock(commandEntity: $BaseCommandBlock): void;
-        /**
-         * Returns the percentage of attack power available based on the cooldown (zero to one).
-         */
-        getAttackStrengthScale(adjustTicks: number): number;
-        triggerRecipeCrafted(recipe: $RecipeHolder_<never>, items: $List_<$ItemStack_>): void;
-        /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
-         */
-        resetCurrentImpulseContext(): void;
-        canInteractWithEntity(boundingBox: $AABB_, distance: number): boolean;
-        canInteractWithEntity(entity: $Entity, distance: number): boolean;
-        canInteractWithBlock(pos: $BlockPos_, distance: number): boolean;
-        /**
-         * Returns the InventoryEnderChest of this player.
-         */
-        getEnderChestInventory(): $PlayerEnderChestContainer;
-        getExposureAuthorEntity(): $Entity;
-        getExposureCameraOperator(): $Optional<any>;
-        setActiveExposureCamera(camera: $Camera): void;
-        sable$getFrozenToSubLevel(): $UUID;
-        /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
-         */
-        sable$tickStopFreezing(): void;
+        awardStat(stat: $Stat_<never>): void;
+        awardStat(stat: $ResourceLocation_, increment: number): void;
         causeFoodExhaustion(yaw: number): void;
-        blockInteractionRange(): number;
-        /**
-         * Only use is to identify if class is an instance of player for experience dropping
-         */
-        isSecondaryUseActive(): boolean;
-        handler$bln000$fabric_entity_events_v1$injectElytraCheck(arg0: $CallbackInfoReturnable<any>): void;
-        /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
-         */
-        respawn(): void;
-        /**
-         * Checks, whether the player is in Creative mode.
-         * Only use is to identify if class is an instance of player for experience dropping
-         */
-        isCreative(): boolean;
-        /**
-         * Attacks for the player the targeted entity with the currently equipped item.  The equipped item has hitEntity called on it. Args: targetEntity
-         */
-        attack(target: $Entity): void;
-        /**
-         * Returns the player's FoodStats object.
-         */
-        getFoodData(): $FoodData;
+        handler$hhf001$yawp$injectElytraCheck(arg0: $CallbackInfoReturnable<any>): void;
+        static getPlayerModelFlag$essential_$md$c99f8a$3(): $EntityDataAccessor<any>;
         /**
          * Only use is to identify if class is an instance of player for experience dropping
          */
         isIgnoringFallDamageFromCurrentImpulse(): boolean;
-        redirect$gcn000$sable$fixRidingBoundingBox(arg0: $AABB_, arg1: $AABB_): $AABB;
-        static getPlayerModelFlag$essential_$md$942995$3(): $EntityDataAccessor<any>;
         setIgnoreFallDamageFromCurrentImpulse(ignoreFallDamageFromCurrentImpulse: boolean): void;
-        handler$hhf001$yawp$injectElytraCheck(arg0: $CallbackInfoReturnable<any>): void;
-        handler$hhf000$yawp$onDropEquipment(arg0: $CallbackInfo): void;
-        canPlayerFitWithinBlocksAndEntitiesWhen(pose: $Pose_): boolean;
         /**
          * Add experience levels to this player.
          */
@@ -752,11 +613,12 @@ declare module "@package/net/minecraft/world/entity/player" {
          */
         crit(target: $Entity): void;
         openMenu(menu: $MenuProvider | null): $OptionalInt;
+        freeAt(pos: $BlockPos_): boolean;
+        setMainArm(hand: $HumanoidArm_): void;
         /**
          * Only use is to identify if class is an instance of player for experience dropping
          */
         isHurt(): boolean;
-        setMainArm(hand: $HumanoidArm_): void;
         /**
          * Only use is to identify if class is an instance of player for experience dropping
          */
@@ -765,27 +627,165 @@ declare module "@package/net/minecraft/world/entity/player" {
          * Returns the amount of health added by the Absorption effect.
          */
         getLuck(): number;
-        freeAt(pos: $BlockPos_): boolean;
         /**
          * Only use is to identify if class is an instance of player for experience dropping
          */
         isScoping(): boolean;
         /**
-         * Add a stat once
+         * Only use is to identify if class is an instance of player for experience dropping
          */
-        awardStat(stat: $Stat_<never>): void;
+        updateIsUnderwater(): boolean;
         /**
-         * Adds a value to a statistic field.
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
          */
-        awardStat(stat: $Stat_<never>, increment: number): void;
-        awardStat(stat: $ResourceLocation_, increment: number): void;
-        awardStat(statKey: $ResourceLocation_): void;
-        canEat(canAlwaysEat: boolean): boolean;
+        closeMenu(): void;
+        static createAttributes(): $AttributeSupplier$Builder;
+        stopSleepInBed(wakeImmediately: boolean, updateLevelForSleepingPlayers: boolean): void;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        updatePlayerPose(): void;
+        canPlayerFitWithinBlocksAndEntitiesWhen(pose: $Pose_): boolean;
+        handler$hhf000$yawp$onDropEquipment(arg0: $CallbackInfo): void;
+        redirect$gcn000$sable$fixRidingBoundingBox(arg0: $AABB_, arg1: $AABB_): $AABB;
+        modifyReturnValue$bjf000$vista$modifyIsScoping(canAlwaysEat: boolean): boolean;
+        blockInteractionRange(): number;
+        /**
+         * Only use is to identify if class is an instance of player for experience dropping
+         */
+        isSecondaryUseActive(): boolean;
+        /**
+         * Only use is to identify if class is an instance of player for experience dropping
+         */
+        isStayingOnGroundSurface(): boolean;
+        /**
+         * Returns a NBTTagCompound that can be used to store custom data for this entity.
+         * It will be written, and read from disc, so it persists over world saves.
+         */
+        getShoulderEntityLeft(): $CompoundTag;
+        setShoulderEntityRight(compound: $CompoundTag_): void;
+        openMinecartCommandBlock(commandEntity: $BaseCommandBlock): void;
+        createItemCooldowns(): $ItemCooldowns;
+        getLastDeathLocation(): ($GlobalPos) | undefined;
+        /**
+         * Returns the percentage of attack power available based on the cooldown (zero to one).
+         */
+        getAttackStrengthScale(adjustTicks: number): number;
+        entityInteractionRange(): number;
         /**
          * @deprecated
          */
-        getDestroySpeed(state: $BlockState_): number;
-        getDigSpeed(arg0: $BlockState_, arg1: $BlockPos_ | null): number;
+        hasCorrectToolForDrops(state: $BlockState_): boolean;
+        hasCorrectToolForDrops(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): boolean;
+        /**
+         * Returns a NBTTagCompound that can be used to store custom data for this entity.
+         * It will be written, and read from disc, so it persists over world saves.
+         */
+        getShoulderEntityRight(): $CompoundTag;
+        blockActionRestricted(level: $Level_, pos: $BlockPos_, gameMode: $GameType_): boolean;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        removeEntitiesOnShoulder(): void;
+        setLastDeathLocation(lastDeathLocation: ($GlobalPos_) | undefined): void;
+        startAutoSpinAttack(ticks: number, damage: number, itemStack: $ItemStack_): void;
+        setShoulderEntityLeft(compound: $CompoundTag_): void;
+        getPlayerExecutingExposure(): $Optional<any>;
+        sable$getFrozenToSubLevel(): $UUID;
+        setReducedDebugInfo(ignoreFallDamageFromCurrentImpulse: boolean): void;
+        canInteractWithEntity(boundingBox: $AABB_, distance: number): boolean;
+        canInteractWithEntity(entity: $Entity, distance: number): boolean;
+        getExposureAuthorEntity(): $Entity;
+        /**
+         * Only use is to identify if class is an instance of player for experience dropping
+         */
+        canUseGameMasterBlocks(): boolean;
+        getWardenSpawnTracker(): ($WardenSpawnTracker) | undefined;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        sable$tickStopFreezing(): void;
+        getExposureCameraOperator(): $Optional<any>;
+        /**
+         * Only use is to identify if class is an instance of player for experience dropping
+         */
+        tryToStartFallFlying(): boolean;
+        canInteractWithBlock(pos: $BlockPos_, distance: number): boolean;
+        setActiveExposureCamera(camera: $Camera): void;
+        getCraftingGrid(): $InventoryKJS;
+        /**
+         * Add experience levels to this player.
+         */
+        giveExperienceLevels(levels: number): void;
+        triggerRecipeCrafted(recipe: $RecipeHolder_<never>, items: $List_<$ItemStack_>): void;
+        /**
+         * Only use is to identify if class is an instance of player for experience dropping
+         */
+        isSleepingLongEnough(): boolean;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        resetCurrentImpulseContext(): void;
+        onEnchantmentPerformed(enchantedItem: $ItemStack_, levelCost: number): void;
+        /**
+         * Add experience levels to this player.
+         */
+        giveExperiencePoints(levels: number): void;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        removeActiveExposureCamera(): void;
+        setEntityOnShoulder(entityCompound: $CompoundTag_): boolean;
+        /**
+         * Return the amount of cooldown before this entity can use a portal again.
+         */
+        getXpNeededForNextLevel(): number;
+        /**
+         * Returns the InventoryEnderChest of this player.
+         */
+        getEnderChestInventory(): $PlayerEnderChestContainer;
+        /**
+         * Returns the player's FoodStats object.
+         */
+        getFoodData(): $FoodData;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        respawn(): void;
+        /**
+         * Checks, whether the player is in Creative mode.
+         * Only use is to identify if class is an instance of player for experience dropping
+         */
+        isCreative(): boolean;
+        /**
+         * Attacks for the player the targeted entity with the currently equipped item.  The equipped item has hitEntity called on it. Args: targetEntity
+         */
+        attack(target: $Entity): void;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        destroyVanishingCursedItems(): void;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        tryResetCurrentImpulseContext(): void;
+        handler$hhf000$yawp$onGainHunger(arg0: number, arg1: $CallbackInfo): void;
+        updateTutorialInventoryAction(carried: $ItemStack_, clicked: $ItemStack_, action: $ClickAction_): void;
+        /**
+         * Returns the percentage of attack power available based on the cooldown (zero to one).
+         */
+        getExposureCameraActionAnim(adjustTicks: number): number;
+        getInventoryChangeListener(): $KubeJSInventoryListener;
+        simulated$setLaunchedPlunger(arg0: $LaunchedPlungerEntity): void;
+        sable$getFrozenToSubLevelAnchor(): $Vector3dc;
+        simulated$getCurrentTypewriter(): $BlockPos;
+        getPlayerAwardedForExposure(): $Optional<any>;
+        /**
+         * Returns the amount of health added by the Absorption effect.
+         */
+        getCurrentItemAttackStrengthDelay(): number;
+        simulated$getLaunchedPlunger(): $LaunchedPlungerEntity;
+        simulated$setCurrentTypewriter(pos: $BlockPos_): void;
         /**
          * Only use is to identify if class is an instance of player for experience dropping
          */
@@ -797,80 +797,62 @@ declare module "@package/net/minecraft/world/entity/player" {
          * Refer to `MenuType#create(IContainerFactory)` for creating a `MenuType` that can consume the
          * extra data sent to the client by this method.
          * 
-         * Use `FriendlyByteBuf#readBlockPos()` to read the position you pass to this method.
+         * The maximum size for #extraDataWriter is 32600 bytes.
          */
-        openMenu(menuProvider: $MenuProvider, pos: $BlockPos_): $OptionalInt;
+        openMenu(menuProvider: $MenuProvider, extraDataWriter: $Consumer_<$RegistryFriendlyByteBuf>): $OptionalInt;
         /**
          * Request to open a GUI on the client, from the server
          * 
          * Refer to `MenuType#create(IContainerFactory)` for creating a `MenuType` that can consume the
          * extra data sent to the client by this method.
          * 
-         * The maximum size for #extraDataWriter is 32600 bytes.
+         * Use `FriendlyByteBuf#readBlockPos()` to read the position you pass to this method.
          */
-        openMenu(menuProvider: $MenuProvider, extraDataWriter: $Consumer_<$RegistryFriendlyByteBuf>): $OptionalInt;
+        openMenu(menuProvider: $MenuProvider, pos: $BlockPos_): $OptionalInt;
         /**
          * Only use is to identify if class is an instance of player for experience dropping
          */
         mayFly(): boolean;
-        getServerPlayerExecutingExposure(): ($ServerPlayer) | undefined;
-        getServerPlayerAwardedForExposure(): ($ServerPlayer) | undefined;
         asHolderEntity(): $Entity;
-        getActiveExposureCameraOptional(): ($Camera) | undefined;
+        getServerPlayerAwardedForExposure(): ($ServerPlayer) | undefined;
+        getServerPlayerExecutingExposure(): ($ServerPlayer) | undefined;
         asOperatorEntity(): $LivingEntity;
-        /**
-         * Only use is to identify if class is an instance of player for experience dropping
-         */
-        isMiningBlock(): boolean;
-        giveInHand(stack: $ItemStack_): void;
-        getStats(): $PlayerStatsJS;
+        getActiveExposureCameraOptional(): ($Camera) | undefined;
         getMouseItem(): $ItemStack;
-        setMouseItem(stack: $ItemStack_): void;
-        /**
-         * Add experience levels to this player.
-         */
-        addXPLevels(levels: number): void;
         /**
          * Add experience levels to this player.
          */
         setXpLevel(levels: number): void;
+        setMouseItem(stack: $ItemStack_): void;
         /**
-         * Add experience levels to this player.
+         * Returns the amount of health added by the Absorption effect.
          */
-        setFoodLevel(levels: number): void;
-        addExhaustion(yaw: number): void;
-        addFood(hunger: number, saturation: number): void;
+        getSaturation(): number;
+        getStats(): $PlayerStatsJS;
         /**
          * Return the amount of cooldown before this entity can use a portal again.
          */
         getFoodLevel(): number;
         /**
-         * Returns the amount of health added by the Absorption effect.
+         * Add experience levels to this player.
          */
-        getSaturation(): number;
+        addXPLevels(levels: number): void;
+        addFood(hunger: number, saturation: number): void;
+        giveInHand(stack: $ItemStack_): void;
+        /**
+         * Add experience levels to this player.
+         */
+        setFoodLevel(levels: number): void;
+        setSaturation(yaw: number): void;
         /**
          * Return the amount of cooldown before this entity can use a portal again.
          */
         getXpLevel(): number;
-        setSaturation(yaw: number): void;
+        addExhaustion(yaw: number): void;
         /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         * Only use is to identify if class is an instance of player for experience dropping
          */
-        boostElytraFlight(): void;
-        getOpenInventory(): $AbstractContainerMenu;
-        /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
-         */
-        sendInventoryUpdate(): void;
-        /**
-         * Return the amount of cooldown before this entity can use a portal again.
-         */
-        getSelectedSlot(): number;
-        addItemCooldown(item: $Item_, ticks: number): void;
-        /**
-         * Add experience levels to this player.
-         */
-        setSelectedSlot(levels: number): void;
+        isMiningBlock(): boolean;
         notify(builder: $NotificationToastData_): void;
         notify(title: $Component_, text: $Component_): void;
         /**
@@ -878,7 +860,10 @@ declare module "@package/net/minecraft/world/entity/player" {
          * Only use is to identify if class is an instance of player for experience dropping
          */
         isFake(): this is $FakePlayer;
-        give(stack: $ItemStack_): void;
+        /**
+         * Add experience levels to this player.
+         */
+        setXp(levels: number): void;
         /**
          * Return the amount of cooldown before this entity can use a portal again.
          */
@@ -886,13 +871,29 @@ declare module "@package/net/minecraft/world/entity/player" {
         /**
          * Add experience levels to this player.
          */
-        setXp(levels: number): void;
+        addXP(levels: number): void;
+        give(stack: $ItemStack_): void;
+        /**
+         * Return the amount of cooldown before this entity can use a portal again.
+         */
+        getSelectedSlot(): number;
         /**
          * Add experience levels to this player.
          */
-        addXP(levels: number): void;
+        setSelectedSlot(levels: number): void;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        boostElytraFlight(): void;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        sendInventoryUpdate(): void;
+        getOpenInventory(): $AbstractContainerMenu;
+        addItemCooldown(item: $Item_, ticks: number): void;
         sendData(channel: string, data: $CompoundTag_): void;
         sendData(channel: string): void;
+        serializeNBT(arg0: $HolderLookup$Provider): $Player;
         lastHurtByPlayerTime: number;
         autoSpinAttackItemStack: $ItemStack;
         lerpYRot: number;
@@ -1088,44 +1089,44 @@ declare module "@package/net/minecraft/world/entity/player" {
         static DATA_SHOULDER_RIGHT: $EntityDataAccessor<$CompoundTag>;
         currentExplosionCause: $Entity;
         constructor(level: $Level_, pos: $BlockPos_, yRot: number, gameProfile: $GameProfile);
-        get playerAwardedForExposure(): $Optional<any>;
-        get inventoryChangeListener(): $KubeJSInventoryListener;
-        get currentItemAttackStrengthDelay(): number;
         get textFilteringEnabled(): boolean;
-        get sleepTimer(): number;
-        get suffixes(): $Collection<$MutableComponent>;
-        get scoreboard(): $Scoreboard;
-        get data(): $AttachedData<any>;
-        get stages(): $Stages;
         get prefixes(): $Collection<$MutableComponent>;
         get cooldowns(): $ItemCooldowns;
-        get localPlayer(): boolean;
         get gameProfile(): $GameProfile;
-        get craftingGrid(): $InventoryKJS;
-        get stayingOnGroundSurface(): boolean;
-        get playerExecutingExposure(): $Optional<any>;
-        get xpNeededForNextLevel(): number;
-        get wardenSpawnTracker(): ($WardenSpawnTracker) | undefined;
-        set entityOnShoulder(value: $CompoundTag_);
-        get sleepingLongEnough(): boolean;
-        get exposureAuthorEntity(): $Entity;
-        get exposureCameraOperator(): $Optional<any>;
-        get secondaryUseActive(): boolean;
-        get creative(): boolean;
+        get localPlayer(): boolean;
+        get scoreboard(): $Scoreboard;
+        get sleepTimer(): number;
+        get suffixes(): $Collection<$MutableComponent>;
+        get stages(): $Stages;
+        get data(): $AttachedData<any>;
+        static get playerModelFlag$essential_$md$c99f8a$3(): $EntityDataAccessor<any>;
         get ignoringFallDamageFromCurrentImpulse(): boolean;
-        static get playerModelFlag$essential_$md$942995$3(): $EntityDataAccessor<any>;
         set ignoreFallDamageFromCurrentImpulse(value: boolean);
-        get hurt(): boolean;
         set mainArm(value: $HumanoidArm_);
+        get hurt(): boolean;
         get luck(): number;
         get scoping(): boolean;
+        get secondaryUseActive(): boolean;
+        get stayingOnGroundSurface(): boolean;
+        get playerExecutingExposure(): $Optional<any>;
+        get exposureAuthorEntity(): $Entity;
+        get wardenSpawnTracker(): ($WardenSpawnTracker) | undefined;
+        get exposureCameraOperator(): $Optional<any>;
+        get craftingGrid(): $InventoryKJS;
+        get sleepingLongEnough(): boolean;
+        set entityOnShoulder(value: $CompoundTag_);
+        get xpNeededForNextLevel(): number;
+        get creative(): boolean;
+        get inventoryChangeListener(): $KubeJSInventoryListener;
+        get playerAwardedForExposure(): $Optional<any>;
+        get currentItemAttackStrengthDelay(): number;
         get fakePlayer(): boolean;
-        get serverPlayerExecutingExposure(): ($ServerPlayer) | undefined;
         get serverPlayerAwardedForExposure(): ($ServerPlayer) | undefined;
+        get serverPlayerExecutingExposure(): ($ServerPlayer) | undefined;
         get activeExposureCameraOptional(): ($Camera) | undefined;
-        get miningBlock(): boolean;
         get stats(): $PlayerStatsJS;
-        get openInventory(): $AbstractContainerMenu;
+        get miningBlock(): boolean;
         get fake(): boolean;
+        get openInventory(): $AbstractContainerMenu;
     }
 }

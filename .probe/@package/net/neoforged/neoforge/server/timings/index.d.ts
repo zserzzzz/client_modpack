@@ -33,8 +33,8 @@ declare module "@package/net/neoforged/neoforge/server/timings" {
          * Starts recording tracking data for the given duration in seconds
          */
         enable(duration: number): void;
-        trackEnd(arg0: T): void;
         trackStart(arg0: T): void;
+        trackEnd(arg0: T): void;
         /**
          * Returns the timings data recorded by the tracker
          */

@@ -39,9 +39,9 @@ import { $BlockEntityTicker, $BlockEntityType, $BlockEntityType_, $BlockEntity }
 
 declare module "@package/com/simibubi/create/content/contraptions/piston" {
     export class $MechanicalPistonHeadBlock extends $WrenchableDirectionalBlock implements $SimpleWaterloggedBlock {
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -76,18 +76,18 @@ declare module "@package/com/simibubi/create/content/contraptions/piston" {
         constructor(arg0: $BlockBehaviour$Properties);
     }
     export class $LinearActuatorBlockEntity extends $KineticBlockEntity implements $IControlContraption, $IDisplayAssemblyExceptions, $IControlContraptionExtension {
-        disassemble(): void;
         attach(arg0: $ControlledContraptionEntity): void;
         isValid(): boolean;
-        isAttachedTo(arg0: $AbstractContraptionEntity): boolean;
-        sable$disassemble(): void;
-        onStall(): void;
-        getMovementSpeed(): number;
         getBlockPosition(): $BlockPos;
-        getInterpolatedOffset(arg0: number): number;
+        disassemble(): void;
         getLastAssemblyException(): $AssemblyException;
-        onLengthBroken(): void;
+        sable$disassemble(): void;
+        isAttachedTo(arg0: $AbstractContraptionEntity): boolean;
+        onStall(): void;
+        getInterpolatedOffset(arg0: number): number;
         getMotionVector(): $Vec3;
+        getMovementSpeed(): number;
+        onLengthBroken(): void;
         addExceptionToTooltip(arg0: $List_<$Component_>): boolean;
         offset: number;
         level: $Level;
@@ -106,10 +106,10 @@ declare module "@package/com/simibubi/create/content/contraptions/piston" {
         preventSpeedUpdate: number;
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
         get valid(): boolean;
-        get movementSpeed(): number;
         get blockPosition(): $BlockPos;
         get lastAssemblyException(): $AssemblyException;
         get motionVector(): $Vec3;
+        get movementSpeed(): number;
     }
     export class $MechanicalPistonBlockEntity extends $LinearActuatorBlockEntity {
         assemble(): void;
@@ -136,19 +136,19 @@ declare module "@package/com/simibubi/create/content/contraptions/piston" {
         constructor(arg0: $BlockEntityRendererProvider$Context);
     }
     export class $PistonContraption extends $TranslatingContraption implements $CanLoadBigCannon, $HasFragileContraption {
-        createbigcannons$setBrokenDisassembly(arg0: boolean): void;
-        createbigcannons$isBrokenDisassembly(): boolean;
-        toLocalPos(arg0: $BlockPos_): $BlockPos;
-        createbigcannons$getOriginalForcedDirection(arg0: $Level_): $Direction;
-        createbigcannons$getAssemblyMovementDirection(arg0: $Level_): $Direction;
         addBlock(arg0: $Level_, arg1: $BlockPos_, arg2: $Pair<$StructureTemplate$StructureBlockInfo_, $BlockEntity>): void;
-        createbigcannons$getEncounteredBlocks(): $Map<any, any>;
-        createbigcannons$fragileDisassemble(): void;
-        createbigcannons$shouldCheckFragility(): boolean;
         createbigcannons$blockBreaksDisassembly(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_): boolean;
         createbigcannons$getFragileBlockPositions(): $Set<any>;
+        createbigcannons$isBrokenDisassembly(): boolean;
+        createbigcannons$setBrokenDisassembly(arg0: boolean): void;
+        toLocalPos(arg0: $BlockPos_): $BlockPos;
         createbigcannons$toLocalPos(arg0: $BlockPos_): $BlockPos;
+        createbigcannons$getAssemblyMovementDirection(arg0: $Level_): $Direction;
+        createbigcannons$getOriginalForcedDirection(arg0: $Level_): $Direction;
+        createbigcannons$getEncounteredBlocks(): $Map<any, any>;
+        createbigcannons$fragileDisassemble(): void;
         createbigcannons$getCannonLoadingColliders(): $Set<any>;
+        createbigcannons$shouldCheckFragility(): boolean;
         hasUniversalCreativeCrate: boolean;
         isLegacy: $Object2BooleanMap<$BlockPos>;
         anchor: $BlockPos;
@@ -161,9 +161,9 @@ declare module "@package/com/simibubi/create/content/contraptions/piston" {
         constructor();
     }
     export class $PistonExtensionPoleBlock extends $WrenchableDirectionalBlock implements $IWrenchable, $SimpleWaterloggedBlock {
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -220,20 +220,20 @@ declare module "@package/com/simibubi/create/content/contraptions/piston" {
     export class $MechanicalPistonBlock extends $DirectionalAxisKineticBlock implements $IBE<$MechanicalPistonBlockEntity> {
         static sticky(arg0: $BlockBehaviour$Properties): $MechanicalPistonBlock;
         static normal(arg0: $BlockBehaviour$Properties): $MechanicalPistonBlock;
-        getBlockEntityType(): $BlockEntityType<$MechanicalPistonBlockEntity>;
-        static isExtensionPole(arg0: $BlockState_): boolean;
+        static maxAllowedPistonPoles(): number;
         getBlockEntityClass(): $Class<$MechanicalPistonBlockEntity>;
         static isPiston(arg0: $BlockState_): boolean;
-        static isStickyPiston(arg0: $BlockState_): boolean;
+        getBlockEntityType(): $BlockEntityType<$MechanicalPistonBlockEntity>;
+        static isExtensionPole(arg0: $BlockState_): boolean;
         static isPistonHead(arg0: $BlockState_): boolean;
-        static maxAllowedPistonPoles(): number;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$MechanicalPistonBlockEntity>): void;
+        static isStickyPiston(arg0: $BlockState_): boolean;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$MechanicalPistonBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($MechanicalPistonBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$MechanicalPistonBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $MechanicalPistonBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$MechanicalPistonBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($MechanicalPistonBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$MechanicalPistonBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static STATE: $EnumProperty<$MechanicalPistonBlock$PistonState>;
@@ -265,7 +265,7 @@ declare module "@package/com/simibubi/create/content/contraptions/piston" {
         static UPDATE_CLIENTS: number;
         static FACING: $DirectionProperty;
         hasCollision: boolean;
-        get blockEntityType(): $BlockEntityType<$MechanicalPistonBlockEntity>;
         get blockEntityClass(): $Class<$MechanicalPistonBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$MechanicalPistonBlockEntity>;
     }
 }

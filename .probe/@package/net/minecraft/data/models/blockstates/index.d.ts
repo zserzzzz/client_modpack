@@ -71,11 +71,11 @@ declare module "@package/net/minecraft/data/models/blockstates" {
         constructor();
     }
     export class $Selector {
+        extend(value: $Property$Value_<never>): $Selector;
+        extend(selector: $Selector): $Selector;
         static of(...values: $Property$Value_<never>[]): $Selector;
         getKey(): string;
         static empty(): $Selector;
-        extend(selector: $Selector): $Selector;
-        extend(value: $Property$Value_<never>): $Selector;
         get key(): string;
     }
     export class $Condition$CompositeCondition implements $Condition {
@@ -143,9 +143,9 @@ declare module "@package/net/minecraft/data/models/blockstates" {
     export class $MultiVariantGenerator implements $BlockStateGenerator {
         "with"(propertyDispatch: $PropertyDispatch): $MultiVariantGenerator;
         getBlock(): $Block;
-        static multiVariant(block: $Block_, ...variants: $Variant[]): $MultiVariantGenerator;
-        static multiVariant(block: $Block_, variant: $Variant): $MultiVariantGenerator;
         static multiVariant(block: $Block_): $MultiVariantGenerator;
+        static multiVariant(block: $Block_, variant: $Variant): $MultiVariantGenerator;
+        static multiVariant(block: $Block_, ...variants: $Variant[]): $MultiVariantGenerator;
         get(): $JsonElement;
         get block(): $Block;
     }
@@ -157,8 +157,8 @@ declare module "@package/net/minecraft/data/models/blockstates" {
         constructor(property1: $Property<T1>, property2: $Property<T2>, property3: $Property<T3>, property4: $Property<T4>);
     }
     export class $PropertyDispatch$C3<T1 extends $Comparable<T1>, T2 extends $Comparable<T2>, T3 extends $Comparable<T3>> extends $PropertyDispatch {
-        select(property1Value: T1, property2Value: T2, property3Value: T3, variant: $Variant): $PropertyDispatch$C3<T1, T2, T3>;
         select(property1Value: T1, property2Value: T2, property3Value: T3, variants: $List_<$Variant>): $PropertyDispatch$C3<T1, T2, T3>;
+        select(property1Value: T1, property2Value: T2, property3Value: T3, variant: $Variant): $PropertyDispatch$C3<T1, T2, T3>;
         generate(propertyValuesToVariantMapper: $PropertyDispatch$TriFunction_<T1, T2, T3, $Variant>): $PropertyDispatch;
         generateList(propertyValuesToVariantMapper: $PropertyDispatch$TriFunction_<T1, T2, T3, $List<$Variant>>): $PropertyDispatch;
         constructor(property1: $Property<T1>, property2: $Property<T2>, property3: $Property<T3>);
@@ -185,14 +185,14 @@ declare module "@package/net/minecraft/data/models/blockstates" {
         constructor(property1: $Property<T1>, property2: $Property<T2>, property3: $Property<T3>, property4: $Property<T4>, property5: $Property<T5>);
     }
     export class $MultiPartGenerator implements $BlockStateGenerator {
+        get(): $JsonElement;
         "with"(condition: $Condition, variants: $List_<$Variant>): $MultiPartGenerator;
-        "with"(condition: $Condition, variant: $Variant): $MultiPartGenerator;
-        "with"(variants: $List_<$Variant>): $MultiPartGenerator;
-        "with"(variant: $Variant): $MultiPartGenerator;
         "with"(condition: $Condition, ...variants: $Variant[]): $MultiPartGenerator;
+        "with"(condition: $Condition, variant: $Variant): $MultiPartGenerator;
+        "with"(variant: $Variant): $MultiPartGenerator;
+        "with"(variants: $List_<$Variant>): $MultiPartGenerator;
         getBlock(): $Block;
         static multiPart(block: $Block_): $MultiPartGenerator;
-        get(): $JsonElement;
         get block(): $Block;
     }
 }

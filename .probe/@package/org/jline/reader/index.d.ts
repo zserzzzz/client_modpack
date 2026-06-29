@@ -29,16 +29,16 @@ declare module "@package/org/jline/reader" {
         expandHistory(arg0: $History, arg1: string): string;
     }
     export class $Candidate implements $Comparable<$Candidate> {
-        descr(): string;
         group(): string;
         value(): string;
         compareTo(arg0: $Candidate): number;
         suffix(): string;
         key(): string;
         complete(): boolean;
+        descr(): string;
         displ(): string;
-        constructor(arg0: string, arg1: string, arg2: string, arg3: string, arg4: string, arg5: string, arg6: boolean);
         constructor(arg0: string);
+        constructor(arg0: string, arg1: string, arg2: string, arg3: string, arg4: string, arg5: string, arg6: boolean);
     }
     export class $LineReader {
         static ACCEPT_AND_HOLD: string;
@@ -266,71 +266,71 @@ declare module "@package/org/jline/reader" {
         static VI_SWAP_CASE: string;
     }
     export interface $LineReader {
-        addCommandsInBuffer(arg0: $Collection_<string>): void;
         getVariable(arg0: string): $Object;
         getVariables(): $Map<string, $Object>;
         isSet(arg0: $LineReader$Option_): boolean;
-        readLine(arg0: string, arg1: string, arg2: string, arg3: string): string;
+        readLine(arg0: string, arg1: string, arg2: string): string;
         readLine(arg0: string, arg1: string, arg2: $MaskingCallback, arg3: string): string;
+        readLine(arg0: string, arg1: string, arg2: string, arg3: string): string;
         readLine(): string;
         readLine(arg0: string): string;
         readLine(arg0: string): string;
         readLine(arg0: string, arg1: string): string;
-        readLine(arg0: string, arg1: string, arg2: string): string;
         option(arg0: $LineReader$Option_, arg1: boolean): $LineReader;
         getKeys(): $KeyMap<$Binding>;
         getBuffer(): $Buffer;
         variable(arg0: string, arg1: $Object): $LineReader;
-        printAbove(arg0: $AttributedString): void;
+        addCommandsInBuffer(arg0: $Collection_<string>): void;
         printAbove(arg0: string): void;
+        printAbove(arg0: $AttributedString): void;
         getTerminal(): $Terminal;
-        setVariable(arg0: string, arg1: $Object): void;
-        getSearchTerm(): string;
-        getRegionMark(): number;
-        getRegionActive(): $LineReader$RegionType;
-        getHighlighter(): $Highlighter;
-        setAutosuggestion(arg0: $LineReader$SuggestionType_): void;
-        getLastBinding(): string;
-        readMouseEvent(): $MouseEvent;
-        getAutosuggestion(): $LineReader$SuggestionType;
-        defaultKeyMaps(): $Map<string, $KeyMap<$Binding>>;
-        getBuiltinWidgets(): $Map<string, $Widget>;
-        editAndAddInBuffer(arg0: $File_): void;
-        getExpander(): $Expander;
-        getParsedLine(): $ParsedLine;
-        getParser(): $Parser;
         getWidgets(): $Map<string, $Widget>;
-        getAppName(): string;
-        setKeyMap(arg0: string): boolean;
-        isReading(): boolean;
+        setVariable(arg0: string, arg1: $Object): void;
+        getBuiltinWidgets(): $Map<string, $Widget>;
+        getHighlighter(): $Highlighter;
+        defaultKeyMaps(): $Map<string, $KeyMap<$Binding>>;
+        getParsedLine(): $ParsedLine;
+        getLastBinding(): string;
+        setAutosuggestion(arg0: $LineReader$SuggestionType_): void;
+        getSearchTerm(): string;
+        getAutosuggestion(): $LineReader$SuggestionType;
+        getRegionActive(): $LineReader$RegionType;
+        getRegionMark(): number;
+        editAndAddInBuffer(arg0: $File_): void;
+        readMouseEvent(): $MouseEvent;
+        getExpander(): $Expander;
+        getParser(): $Parser;
+        runMacro(arg0: string): void;
+        callWidget(arg0: string): void;
+        getTailTip(): string;
         getKeyMaps(): $Map<string, $KeyMap<$Binding>>;
         setOpt(arg0: $LineReader$Option_): void;
-        callWidget(arg0: string): void;
-        getKeyMap(): string;
-        setTailTip(arg0: string): void;
-        runMacro(arg0: string): void;
-        getTailTip(): string;
         unsetOpt(arg0: $LineReader$Option_): void;
+        getAppName(): string;
         getHistory(): $History;
+        getKeyMap(): string;
+        setKeyMap(arg0: string): boolean;
+        setTailTip(arg0: string): void;
+        isReading(): boolean;
         get variables(): $Map<string, $Object>;
         get keys(): $KeyMap<$Binding>;
         get buffer(): $Buffer;
         get terminal(): $Terminal;
-        get searchTerm(): string;
-        get regionMark(): number;
-        get regionActive(): $LineReader$RegionType;
-        get highlighter(): $Highlighter;
-        get lastBinding(): string;
-        get builtinWidgets(): $Map<string, $Widget>;
-        get expander(): $Expander;
-        get parsedLine(): $ParsedLine;
-        get parser(): $Parser;
         get widgets(): $Map<string, $Widget>;
-        get appName(): string;
-        get reading(): boolean;
+        get builtinWidgets(): $Map<string, $Widget>;
+        get highlighter(): $Highlighter;
+        get parsedLine(): $ParsedLine;
+        get lastBinding(): string;
+        get searchTerm(): string;
+        get regionActive(): $LineReader$RegionType;
+        get regionMark(): number;
+        get expander(): $Expander;
+        get parser(): $Parser;
         get keyMaps(): $Map<string, $KeyMap<$Binding>>;
         set opt(value: $LineReader$Option_);
+        get appName(): string;
         get history(): $History;
+        get reading(): boolean;
     }
     export class $Highlighter {
     }
@@ -440,7 +440,6 @@ declare module "@package/org/jline/reader" {
     export class $Buffer {
     }
     export interface $Buffer {
-        prevChar(): number;
         length(): number;
         toString(): string;
         clear(): boolean;
@@ -460,13 +459,14 @@ declare module "@package/org/jline/reader" {
         move(arg0: number): number;
         down(): boolean;
         copyFrom(arg0: $Buffer): void;
-        currChar(): number;
+        backspace(): boolean;
+        backspace(arg0: number): number;
+        prevChar(): number;
+        atChar(arg0: number): number;
         currChar(arg0: number): boolean;
+        currChar(): number;
         moveXY(arg0: number, arg1: number): boolean;
         upToCursor(): string;
-        atChar(arg0: number): number;
-        backspace(arg0: number): number;
-        backspace(): boolean;
     }
     export class $Parser {
         static REGEX_VARIABLE: string;
@@ -478,8 +478,8 @@ declare module "@package/org/jline/reader" {
         parse(arg0: string, arg1: number): $ParsedLine;
         getCommand(arg0: string): string;
         validVariableName(arg0: string): boolean;
-        isEscapeChar(arg0: string): boolean;
         validCommandName(arg0: string): boolean;
+        isEscapeChar(arg0: string): boolean;
     }
     /**
      * Values that may be interpreted as {@link $Parser}.
@@ -517,14 +517,14 @@ declare module "@package/org/jline/reader" {
         previous(): boolean;
         attach(arg0: $LineReader): void;
         purge(): void;
+        moveTo(arg0: number): boolean;
         moveToLast(): boolean;
         moveToEnd(): void;
         resetIndex(): void;
-        moveTo(arg0: number): boolean;
-        isPersistable(arg0: $History$Entry): boolean;
-        reverseIterator(arg0: number): $Iterator<$History$Entry>;
-        reverseIterator(): $Iterator<$History$Entry>;
         moveToFirst(): boolean;
+        isPersistable(arg0: $History$Entry): boolean;
+        reverseIterator(): $Iterator<$History$Entry>;
+        reverseIterator(arg0: number): $Iterator<$History$Entry>;
         iterator(): $Iterator<$History$Entry>;
         [Symbol.iterator](): Iterator<$History$Entry>
         get empty(): boolean;

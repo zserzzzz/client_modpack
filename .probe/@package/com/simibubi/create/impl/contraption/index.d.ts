@@ -7,16 +7,16 @@ export * as storage from "@package/com/simibubi/create/impl/contraption/storage"
 
 declare module "@package/com/simibubi/create/impl/contraption" {
     export class $BlockMovementChecksImpl {
+        static registerMovementNecessaryCheck(arg0: $BlockMovementChecks$MovementNecessaryCheck_): void;
         static isBrittle(arg0: $BlockState_): boolean;
-        static isNotSupportive(arg0: $BlockState_, arg1: $Direction_): boolean;
-        static isMovementAllowed(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): boolean;
-        static registerBrittleCheck(arg0: $BlockMovementChecks$BrittleCheck_): void;
-        static registerAttachedCheck(arg0: $BlockMovementChecks$AttachedCheck_): void;
+        static isMovementNecessary(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): boolean;
         static registerNotSupportiveCheck(arg0: $BlockMovementChecks$NotSupportiveCheck_): void;
         static isBlockAttachedTowards(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $Direction_): boolean;
-        static isMovementNecessary(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): boolean;
+        static registerAttachedCheck(arg0: $BlockMovementChecks$AttachedCheck_): void;
+        static isNotSupportive(arg0: $BlockState_, arg1: $Direction_): boolean;
+        static isMovementAllowed(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): boolean;
         static registerMovementAllowedCheck(arg0: $BlockMovementChecks$MovementAllowedCheck_): void;
-        static registerMovementNecessaryCheck(arg0: $BlockMovementChecks$MovementNecessaryCheck_): void;
+        static registerBrittleCheck(arg0: $BlockMovementChecks$BrittleCheck_): void;
         constructor();
     }
 }

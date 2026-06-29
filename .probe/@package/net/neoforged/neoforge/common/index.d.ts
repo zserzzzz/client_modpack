@@ -82,7 +82,7 @@ import { $MutableDataComponentHolderFunctions } from "@package/dev/latvian/mods/
 import { $BaseMapCodec } from "@package/com/mojang/serialization/codecs";
 import { $LivingKnockBackEvent, $LivingChangeTargetEvent$ILivingTargetType, $LivingSwapItemsEvent$Hands, $LivingChangeTargetEvent, $LivingShieldBlockEvent } from "@package/net/neoforged/neoforge/event/entity/living";
 import { $ByteBuf } from "@package/io/netty/buffer";
-import { $StructureModifiers$ClearSpawnsStructureModifier, $BiomeModifiers$AddCarversBiomeModifier, $StructureModifiers$AddSpawnsStructureModifier, $BiomeModifiers$AddSpawnsBiomeModifier, $BiomeModifiers$RemoveFeaturesBiomeModifier, $BiomeModifiers$RemoveCarversBiomeModifier, $BiomeModifiers$AddFeaturesBiomeModifier, $StructureModifier, $BiomeModifiers$RemoveSpawnsBiomeModifier, $NoneStructureModifier, $BiomeModifiers$RemoveSpawnCostsBiomeModifier, $NoneBiomeModifier, $StructureModifiers$RemoveSpawnsStructureModifier, $BiomeModifiers$AddSpawnCostsBiomeModifier, $BiomeModifier } from "@package/net/neoforged/neoforge/common/world";
+import { $StructureModifiers$ClearSpawnsStructureModifier, $BiomeModifiers$AddCarversBiomeModifier, $BiomeModifiers$AddSpawnsBiomeModifier, $StructureModifiers$AddSpawnsStructureModifier, $BiomeModifiers$RemoveFeaturesBiomeModifier, $BiomeModifiers$RemoveCarversBiomeModifier, $BiomeModifiers$AddFeaturesBiomeModifier, $StructureModifier, $BiomeModifiers$RemoveSpawnsBiomeModifier, $NoneStructureModifier, $BiomeModifiers$RemoveSpawnCostsBiomeModifier, $NoneBiomeModifier, $StructureModifiers$RemoveSpawnsStructureModifier, $BiomeModifiers$AddSpawnCostsBiomeModifier, $BiomeModifier } from "@package/net/neoforged/neoforge/common/world";
 import { $ModConfig, $IConfigSpec, $IConfigSpec$ILoadedConfig } from "@package/net/neoforged/fml/config";
 import { $ServerStoppingEvent } from "@package/net/neoforged/neoforge/event/server";
 import { $BlockEntity } from "@package/net/minecraft/world/level/block/entity";
@@ -133,39 +133,46 @@ declare module "@package/net/neoforged/neoforge/common" {
      */
     export type $IOUtilities$WriteCallback_ = ((arg0: $OutputStream) => void);
     export class $ModConfigSpec$Builder {
-        translation(arg0: string): $ModConfigSpec$Builder;
         comment(...arg0: string[]): $ModConfigSpec$Builder;
         comment(arg0: string): $ModConfigSpec$Builder;
         build(): $ModConfigSpec;
         push(arg0: string): $ModConfigSpec$Builder;
         push(arg0: $List_<string>): $ModConfigSpec$Builder;
-        pop(): $ModConfigSpec$Builder;
         pop(arg0: number): $ModConfigSpec$Builder;
+        pop(): $ModConfigSpec$Builder;
         configure<T>(consumer: $Function_<$ModConfigSpec$Builder, T>): $Pair<T, $ModConfigSpec>;
-        define(arg0: $List_<string>, arg1: boolean): $ModConfigSpec$BooleanValue;
-        define(arg0: string, arg1: boolean): $ModConfigSpec$BooleanValue;
-        define<T>(arg0: $List_<string>, arg1: T): $ModConfigSpec$ConfigValue<T>;
-        define(arg0: string, arg1: $Supplier_<boolean>): $ModConfigSpec$BooleanValue;
-        define(arg0: $List_<string>, arg1: $Supplier_<boolean>): $ModConfigSpec$BooleanValue;
-        define<T>(arg0: string, arg1: T): $ModConfigSpec$ConfigValue<T>;
-        define<T>(arg0: string, arg1: $Supplier_<T>, arg2: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<T>;
-        define<T>(arg0: $List_<string>, arg1: $Supplier_<T>, arg2: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<T>;
-        define<T>(arg0: $List_<string>, arg1: $Supplier_<T>, arg2: $Predicate_<$Object>, arg3: $Class<never>): $ModConfigSpec$ConfigValue<T>;
-        define<T>(arg0: $List_<string>, arg1: $ModConfigSpec$ValueSpec, arg2: $Supplier_<T>): $ModConfigSpec$ConfigValue<T>;
-        define<T>(arg0: string, arg1: T, arg2: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<T>;
-        define<T>(arg0: $List_<string>, arg1: T, arg2: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<T>;
-        defineList<T>(arg0: $List_<string>, arg1: $Supplier_<$List<T>>, arg2: $Supplier_<T>, arg3: $Predicate_<$Object>, arg4: $ModConfigSpec$Range<number>): $ModConfigSpec$ConfigValue<$List<T>>;
-        defineList<T>(arg0: $List_<string>, arg1: $Supplier_<$List<T>>, arg2: $Supplier_<T>, arg3: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<$List<T>>;
-        defineList<T>(arg0: string, arg1: $Supplier_<$List<T>>, arg2: $Supplier_<T>, arg3: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<$List<T>>;
+        translation(arg0: string): $ModConfigSpec$Builder;
+        defineInList<T>(arg0: $List_<string>, arg1: T, arg2: $Collection_<T>): $ModConfigSpec$ConfigValue<T>;
+        defineInList<T>(arg0: string, arg1: $Supplier_<T>, arg2: $Collection_<T>): $ModConfigSpec$ConfigValue<T>;
+        defineInList<T>(arg0: string, arg1: T, arg2: $Collection_<T>): $ModConfigSpec$ConfigValue<T>;
+        defineInList<T>(arg0: $List_<string>, arg1: $Supplier_<T>, arg2: $Collection_<T>): $ModConfigSpec$ConfigValue<T>;
+        defineInRange(arg0: $List_<string>, arg1: $Supplier_<number>, arg2: number, arg3: number): $ModConfigSpec$IntValue;
+        defineInRange(arg0: string, arg1: $Supplier_<number>, arg2: number, arg3: number): $ModConfigSpec$IntValue;
+        defineInRange(arg0: $List_<string>, arg1: number, arg2: number, arg3: number): $ModConfigSpec$IntValue;
+        defineInRange(arg0: string, arg1: number, arg2: number, arg3: number): $ModConfigSpec$LongValue;
+        defineInRange(arg0: string, arg1: $Supplier_<number>, arg2: number, arg3: number): $ModConfigSpec$LongValue;
+        defineInRange(arg0: $List_<string>, arg1: number, arg2: number, arg3: number): $ModConfigSpec$LongValue;
+        defineInRange<V extends $Comparable<V>>(arg0: $List_<string>, arg1: V, arg2: V, arg3: V, arg4: $Class<V>): $ModConfigSpec$ConfigValue<V>;
+        defineInRange(arg0: string, arg1: number, arg2: number, arg3: number): $ModConfigSpec$DoubleValue;
+        defineInRange(arg0: $List_<string>, arg1: number, arg2: number, arg3: number): $ModConfigSpec$DoubleValue;
+        defineInRange(arg0: string, arg1: $Supplier_<number>, arg2: number, arg3: number): $ModConfigSpec$DoubleValue;
+        defineInRange(arg0: $List_<string>, arg1: $Supplier_<number>, arg2: number, arg3: number): $ModConfigSpec$DoubleValue;
+        defineInRange(arg0: string, arg1: number, arg2: number, arg3: number): $ModConfigSpec$IntValue;
+        defineInRange<V extends $Comparable<V>>(arg0: $List_<string>, arg1: $Supplier_<V>, arg2: V, arg3: V, arg4: $Class<V>): $ModConfigSpec$ConfigValue<V>;
+        defineInRange<V extends $Comparable<V>>(arg0: string, arg1: $Supplier_<V>, arg2: V, arg3: V, arg4: $Class<V>): $ModConfigSpec$ConfigValue<V>;
+        defineInRange<V extends $Comparable<V>>(arg0: string, arg1: V, arg2: V, arg3: V, arg4: $Class<V>): $ModConfigSpec$ConfigValue<V>;
+        defineInRange(arg0: $List_<string>, arg1: $Supplier_<number>, arg2: number, arg3: number): $ModConfigSpec$LongValue;
         /**
          * @deprecated
          */
         defineList<T>(arg0: string, arg1: $Supplier_<$List<T>>, arg2: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<$List<T>>;
+        defineList<T>(arg0: string, arg1: $Supplier_<$List<T>>, arg2: $Supplier_<T>, arg3: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<$List<T>>;
         defineList<T>(arg0: string, arg1: $List_<T>, arg2: $Supplier_<T>, arg3: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<$List<T>>;
         /**
          * @deprecated
          */
         defineList<T>(arg0: string, arg1: $List_<T>, arg2: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<$List<T>>;
+        defineList<T>(arg0: $List_<string>, arg1: $Supplier_<$List<T>>, arg2: $Supplier_<T>, arg3: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<$List<T>>;
         /**
          * @deprecated
          */
@@ -175,53 +182,39 @@ declare module "@package/net/neoforged/neoforge/common" {
          * @deprecated
          */
         defineList<T>(arg0: $List_<string>, arg1: $List_<T>, arg2: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<$List<T>>;
-        defineEnum<V extends $Enum<V>>(arg0: string, arg1: V, arg2: $Predicate_<$Object>): $ModConfigSpec$EnumValue<V>;
-        defineEnum<V extends $Enum<V>>(arg0: $List_<string>, arg1: V, arg2: $EnumGetMethod_, arg3: $Collection_<V>): $ModConfigSpec$EnumValue<V>;
+        defineList<T>(arg0: $List_<string>, arg1: $Supplier_<$List<T>>, arg2: $Supplier_<T>, arg3: $Predicate_<$Object>, arg4: $ModConfigSpec$Range<number>): $ModConfigSpec$ConfigValue<$List<T>>;
+        defineEnum<V extends $Enum<V>>(arg0: $List_<string>, arg1: V, arg2: $EnumGetMethod_, arg3: $Predicate_<$Object>): $ModConfigSpec$EnumValue<V>;
         defineEnum<V extends $Enum<V>>(arg0: string, arg1: V, arg2: $EnumGetMethod_, arg3: $Predicate_<$Object>): $ModConfigSpec$EnumValue<V>;
-        defineEnum<V extends $Enum<V>>(arg0: $List_<string>, arg1: V, arg2: $Collection_<V>): $ModConfigSpec$EnumValue<V>;
-        defineEnum<V extends $Enum<V>>(arg0: string, arg1: V, arg2: $EnumGetMethod_, arg3: $Collection_<V>): $ModConfigSpec$EnumValue<V>;
-        defineEnum<V extends $Enum<V>>(arg0: string, arg1: V, arg2: $Collection_<V>): $ModConfigSpec$EnumValue<V>;
+        defineEnum<V extends $Enum<V>>(arg0: $List_<string>, arg1: V, arg2: $Predicate_<$Object>): $ModConfigSpec$EnumValue<V>;
+        defineEnum<V extends $Enum<V>>(arg0: string, arg1: $Supplier_<V>, arg2: $Predicate_<$Object>, arg3: $Class<V>): $ModConfigSpec$EnumValue<V>;
         defineEnum<V extends $Enum<V>>(arg0: $List_<string>, arg1: $Supplier_<V>, arg2: $EnumGetMethod_, arg3: $Predicate_<$Object>, arg4: $Class<V>): $ModConfigSpec$EnumValue<V>;
         defineEnum<V extends $Enum<V>>(arg0: $List_<string>, arg1: $Supplier_<V>, arg2: $Predicate_<$Object>, arg3: $Class<V>): $ModConfigSpec$EnumValue<V>;
         defineEnum<V extends $Enum<V>>(arg0: string, arg1: $Supplier_<V>, arg2: $EnumGetMethod_, arg3: $Predicate_<$Object>, arg4: $Class<V>): $ModConfigSpec$EnumValue<V>;
-        defineEnum<V extends $Enum<V>>(arg0: string, arg1: $Supplier_<V>, arg2: $Predicate_<$Object>, arg3: $Class<V>): $ModConfigSpec$EnumValue<V>;
-        defineEnum<V extends $Enum<V>>(arg0: $List_<string>, arg1: V, arg2: $EnumGetMethod_, arg3: $Predicate_<$Object>): $ModConfigSpec$EnumValue<V>;
-        defineEnum<V extends $Enum<V>>(arg0: $List_<string>, arg1: V, arg2: $Predicate_<$Object>): $ModConfigSpec$EnumValue<V>;
         defineEnum<V extends $Enum<V>>(arg0: $List_<string>, arg1: V, arg2: $EnumGetMethod_): $ModConfigSpec$EnumValue<V>;
+        defineEnum<V extends $Enum<V>>(arg0: string, arg1: V, ...arg2: V[]): $ModConfigSpec$EnumValue<V>;
+        defineEnum<V extends $Enum<V>>(arg0: string, arg1: V, arg2: $EnumGetMethod_, ...arg3: V[]): $ModConfigSpec$EnumValue<V>;
+        defineEnum<V extends $Enum<V>>(arg0: $List_<string>, arg1: V, ...arg2: V[]): $ModConfigSpec$EnumValue<V>;
         defineEnum<V extends $Enum<V>>(arg0: $List_<string>, arg1: V): $ModConfigSpec$EnumValue<V>;
         defineEnum<V extends $Enum<V>>(arg0: string, arg1: V, arg2: $EnumGetMethod_): $ModConfigSpec$EnumValue<V>;
         defineEnum<V extends $Enum<V>>(arg0: string, arg1: V): $ModConfigSpec$EnumValue<V>;
+        defineEnum<V extends $Enum<V>>(arg0: string, arg1: V, arg2: $Collection_<V>): $ModConfigSpec$EnumValue<V>;
+        defineEnum<V extends $Enum<V>>(arg0: string, arg1: V, arg2: $EnumGetMethod_, arg3: $Collection_<V>): $ModConfigSpec$EnumValue<V>;
+        defineEnum<V extends $Enum<V>>(arg0: $List_<string>, arg1: V, arg2: $Collection_<V>): $ModConfigSpec$EnumValue<V>;
+        defineEnum<V extends $Enum<V>>(arg0: string, arg1: V, arg2: $Predicate_<$Object>): $ModConfigSpec$EnumValue<V>;
+        defineEnum<V extends $Enum<V>>(arg0: $List_<string>, arg1: V, arg2: $EnumGetMethod_, arg3: $Collection_<V>): $ModConfigSpec$EnumValue<V>;
         defineEnum<V extends $Enum<V>>(arg0: $List_<string>, arg1: V, arg2: $EnumGetMethod_, ...arg3: V[]): $ModConfigSpec$EnumValue<V>;
-        defineEnum<V extends $Enum<V>>(arg0: $List_<string>, arg1: V, ...arg2: V[]): $ModConfigSpec$EnumValue<V>;
-        defineEnum<V extends $Enum<V>>(arg0: string, arg1: V, arg2: $EnumGetMethod_, ...arg3: V[]): $ModConfigSpec$EnumValue<V>;
-        defineEnum<V extends $Enum<V>>(arg0: string, arg1: V, ...arg2: V[]): $ModConfigSpec$EnumValue<V>;
-        defineInList<T>(arg0: $List_<string>, arg1: T, arg2: $Collection_<T>): $ModConfigSpec$ConfigValue<T>;
-        defineInList<T>(arg0: $List_<string>, arg1: $Supplier_<T>, arg2: $Collection_<T>): $ModConfigSpec$ConfigValue<T>;
-        defineInList<T>(arg0: string, arg1: $Supplier_<T>, arg2: $Collection_<T>): $ModConfigSpec$ConfigValue<T>;
-        defineInList<T>(arg0: string, arg1: T, arg2: $Collection_<T>): $ModConfigSpec$ConfigValue<T>;
-        defineInRange(arg0: string, arg1: number, arg2: number, arg3: number): $ModConfigSpec$LongValue;
-        defineInRange(arg0: $List_<string>, arg1: $Supplier_<number>, arg2: number, arg3: number): $ModConfigSpec$IntValue;
-        defineInRange(arg0: string, arg1: $Supplier_<number>, arg2: number, arg3: number): $ModConfigSpec$IntValue;
-        defineInRange(arg0: $List_<string>, arg1: number, arg2: number, arg3: number): $ModConfigSpec$IntValue;
-        defineInRange<V extends $Comparable<V>>(arg0: string, arg1: $Supplier_<V>, arg2: V, arg3: V, arg4: $Class<V>): $ModConfigSpec$ConfigValue<V>;
-        defineInRange(arg0: $List_<string>, arg1: $Supplier_<number>, arg2: number, arg3: number): $ModConfigSpec$LongValue;
-        defineInRange(arg0: string, arg1: $Supplier_<number>, arg2: number, arg3: number): $ModConfigSpec$LongValue;
-        defineInRange(arg0: $List_<string>, arg1: number, arg2: number, arg3: number): $ModConfigSpec$LongValue;
-        defineInRange(arg0: string, arg1: number, arg2: number, arg3: number): $ModConfigSpec$DoubleValue;
-        defineInRange<V extends $Comparable<V>>(arg0: $List_<string>, arg1: V, arg2: V, arg3: V, arg4: $Class<V>): $ModConfigSpec$ConfigValue<V>;
-        defineInRange<V extends $Comparable<V>>(arg0: string, arg1: V, arg2: V, arg3: V, arg4: $Class<V>): $ModConfigSpec$ConfigValue<V>;
-        defineInRange<V extends $Comparable<V>>(arg0: $List_<string>, arg1: $Supplier_<V>, arg2: V, arg3: V, arg4: $Class<V>): $ModConfigSpec$ConfigValue<V>;
-        defineInRange(arg0: string, arg1: number, arg2: number, arg3: number): $ModConfigSpec$IntValue;
-        defineInRange(arg0: $List_<string>, arg1: $Supplier_<number>, arg2: number, arg3: number): $ModConfigSpec$DoubleValue;
-        defineInRange(arg0: string, arg1: $Supplier_<number>, arg2: number, arg3: number): $ModConfigSpec$DoubleValue;
-        defineInRange(arg0: $List_<string>, arg1: number, arg2: number, arg3: number): $ModConfigSpec$DoubleValue;
-        defineListAllowEmpty<T>(arg0: string, arg1: $List_<T>, arg2: $Supplier_<T>, arg3: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<$List<T>>;
-        /**
-         * @deprecated
-         */
-        defineListAllowEmpty<T>(arg0: string, arg1: $Supplier_<$List<T>>, arg2: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<$List<T>>;
-        defineListAllowEmpty<T>(arg0: string, arg1: $Supplier_<$List<T>>, arg2: $Supplier_<T>, arg3: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<$List<T>>;
-        defineListAllowEmpty<T>(arg0: $List_<string>, arg1: $Supplier_<$List<T>>, arg2: $Supplier_<T>, arg3: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<$List<T>>;
+        define<T>(arg0: $List_<string>, arg1: $Supplier_<T>, arg2: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<T>;
+        define<T>(arg0: string, arg1: $Supplier_<T>, arg2: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<T>;
+        define(arg0: $List_<string>, arg1: boolean): $ModConfigSpec$BooleanValue;
+        define<T>(arg0: $List_<string>, arg1: $ModConfigSpec$ValueSpec, arg2: $Supplier_<T>): $ModConfigSpec$ConfigValue<T>;
+        define<T>(arg0: $List_<string>, arg1: $Supplier_<T>, arg2: $Predicate_<$Object>, arg3: $Class<never>): $ModConfigSpec$ConfigValue<T>;
+        define<T>(arg0: $List_<string>, arg1: T): $ModConfigSpec$ConfigValue<T>;
+        define<T>(arg0: string, arg1: T, arg2: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<T>;
+        define<T>(arg0: string, arg1: T): $ModConfigSpec$ConfigValue<T>;
+        define<T>(arg0: $List_<string>, arg1: T, arg2: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<T>;
+        define(arg0: $List_<string>, arg1: $Supplier_<boolean>): $ModConfigSpec$BooleanValue;
+        define(arg0: string, arg1: $Supplier_<boolean>): $ModConfigSpec$BooleanValue;
+        define(arg0: string, arg1: boolean): $ModConfigSpec$BooleanValue;
         /**
          * @deprecated
          */
@@ -230,13 +223,20 @@ declare module "@package/net/neoforged/neoforge/common" {
         /**
          * @deprecated
          */
-        defineListAllowEmpty<T>(arg0: string, arg1: $List_<T>, arg2: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<$List<T>>;
+        defineListAllowEmpty<T>(arg0: $List_<string>, arg1: $List_<T>, arg2: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<$List<T>>;
+        defineListAllowEmpty<T>(arg0: string, arg1: $Supplier_<$List<T>>, arg2: $Supplier_<T>, arg3: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<$List<T>>;
         /**
          * @deprecated
          */
-        defineListAllowEmpty<T>(arg0: $List_<string>, arg1: $List_<T>, arg2: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<$List<T>>;
-        gameRestart(): $ModConfigSpec$Builder;
+        defineListAllowEmpty<T>(arg0: string, arg1: $Supplier_<$List<T>>, arg2: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<$List<T>>;
+        /**
+         * @deprecated
+         */
+        defineListAllowEmpty<T>(arg0: string, arg1: $List_<T>, arg2: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<$List<T>>;
+        defineListAllowEmpty<T>(arg0: $List_<string>, arg1: $Supplier_<$List<T>>, arg2: $Supplier_<T>, arg3: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<$List<T>>;
+        defineListAllowEmpty<T>(arg0: string, arg1: $List_<T>, arg2: $Supplier_<T>, arg3: $Predicate_<$Object>): $ModConfigSpec$ConfigValue<$List<T>>;
         worldRestart(): $ModConfigSpec$Builder;
+        gameRestart(): $ModConfigSpec$Builder;
         constructor();
     }
     export class $Tags$Biomes {
@@ -351,20 +351,20 @@ declare module "@package/net/neoforged/neoforge/common" {
      * Helper class to define a custom tier
      */
     export class $SimpleTier implements $Tier {
-        getEnchantmentValue(): number;
-        getAttackDamageBonus(): number;
-        getIncorrectBlocksForDrops(): $TagKey<$Block>;
-        getRepairIngredient(): $Ingredient;
-        getUses(): number;
         getSpeed(): number;
+        getUses(): number;
+        getRepairIngredient(): $Ingredient;
+        getIncorrectBlocksForDrops(): $TagKey<$Block>;
+        getAttackDamageBonus(): number;
+        getEnchantmentValue(): number;
         createToolProperties(block: $TagKey_<$Block>): $Tool;
         constructor(incorrectBlocksForDrops: $TagKey_<$Block>, uses: number, speed: number, attackDamageBonus: number, enchantmentValue: number, repairIngredient: $Supplier_<$Ingredient>);
-        get enchantmentValue(): number;
-        get attackDamageBonus(): number;
-        get incorrectBlocksForDrops(): $TagKey<$Block>;
-        get repairIngredient(): $Ingredient;
-        get uses(): number;
         get speed(): number;
+        get uses(): number;
+        get repairIngredient(): $Ingredient;
+        get incorrectBlocksForDrops(): $TagKey<$Block>;
+        get attackDamageBonus(): number;
+        get enchantmentValue(): number;
     }
     /**
      * A utility holding common sound actions.
@@ -379,13 +379,13 @@ declare module "@package/net/neoforged/neoforge/common" {
      * Contains helpers for performing file I/O in a resilient manner.
      */
     export class $IOUtilities {
+        static waitUntilIOWorkerComplete(): void;
         /**
          * Behaves much the same as `NbtIo#writeCompressed(CompoundTag, Path)`,
          * but uses `#atomicWrite(Path, WriteCallback)` behind the scenes to
          * ensure the data is stored resiliently.
          */
         static writeNbt(tag: $CompoundTag_, path: $Path_): void;
-        static waitUntilIOWorkerComplete(): void;
         static withIOWorker(task: $Runnable_): void;
         /**
          * Behaves much the same as `NbtIo#writeCompressed(CompoundTag, Path)`,
@@ -428,27 +428,27 @@ declare module "@package/net/neoforged/neoforge/common" {
     }
     export class $NeoForgeMod {
         gatherData(event: $GatherDataEvent): void;
-        registerLootData(event: $RegisterEvent): void;
-        serverStopping(evt: $ServerStoppingEvent): void;
-        loadComplete(event: $FMLLoadCompleteEvent): void;
-        registerFluids(event: $RegisterEvent): void;
         registerPermissionNodes(event: $PermissionGatherEvent$Nodes): void;
+        loadComplete(event: $FMLLoadCompleteEvent): void;
+        serverStopping(evt: $ServerStoppingEvent): void;
+        registerLootData(event: $RegisterEvent): void;
+        registerFluids(event: $RegisterEvent): void;
+        /**
+         * Run this method during mod constructor to enable milk and add it to the Minecraft milk bucket
+         */
+        static enableMilkFluid(): void;
         static getProperFilenameValidation(): boolean;
-        /**
-         * Run this method during mod constructor to enable milk and add it to the Minecraft milk bucket
-         */
-        static enableProperFilenameValidation(): void;
-        /**
-         * Run this method during mod constructor to enable milk and add it to the Minecraft milk bucket
-         */
-        static enableMergedAttributeTooltips(): void;
-        static shouldMergeAttributeTooltips(): boolean;
         preInit(evt: $FMLCommonSetupEvent): void;
         static isPRBuild(): boolean;
         /**
          * Run this method during mod constructor to enable milk and add it to the Minecraft milk bucket
          */
-        static enableMilkFluid(): void;
+        static enableMergedAttributeTooltips(): void;
+        /**
+         * Run this method during mod constructor to enable milk and add it to the Minecraft milk bucket
+         */
+        static enableProperFilenameValidation(): void;
+        static shouldMergeAttributeTooltips(): boolean;
         static REMOVE_SPAWNS_BIOME_MODIFIER_TYPE: $DeferredHolder<$MapCodec<$BiomeModifier>, $MapCodec<$BiomeModifiers$RemoveSpawnsBiomeModifier>>;
         static NAMETAG_DISTANCE: $Holder<$Attribute>;
         static VERSION_CHECK_CAT: string;
@@ -536,57 +536,57 @@ declare module "@package/net/neoforged/neoforge/common" {
      * Key and value decoded independently, unknown set of keys
      */
     export class $LenientUnboundedMapCodec<K, V> implements $BaseMapCodec<K, V>, $Codec<$Map<K, V>> {
+        keyCodec(): $Codec<K>;
+        elementCodec(): $Codec<V>;
         decode<T>(arg0: $DynamicOps<T>, arg1: T): $DataResult<$Pair$1<$Map<K, V>, T>>;
         decode<T>(ops: $DynamicOps<T>, input: $MapLike<T>): $DataResult<$Map<K, V>>;
         encode<T>(arg0: $Map_<K, V>, arg1: $DynamicOps<T>, arg2: T): $DataResult<T>;
-        elementCodec(): $Codec<V>;
-        keyCodec(): $Codec<K>;
         encode<T>(arg0: $Map_<K, V>, arg1: $DynamicOps<T>, arg2: $RecordBuilder<T>): $RecordBuilder<T>;
-        stable(): $Codec<$Map<K, V>>;
-        dispatch<E>(arg0: string, arg1: $Function_<E, $Map<K, V>>, arg2: $Function_<$Map<K, V>, $MapCodec<E>>): $Codec<E>;
-        dispatch<E>(arg0: $Function_<E, $Map<K, V>>, arg1: $Function_<$Map<K, V>, $MapCodec<E>>): $Codec<E>;
-        validate(arg0: $Function_<$Map<K, V>, $DataResult<$Map<K, V>>>): $Codec<$Map<K, V>>;
-        orElse(arg0: $Map_<K, V>): $Codec<$Map<K, V>>;
-        orElse(arg0: $UnaryOperator_<string>, arg1: $Map_<K, V>): $Codec<$Map<K, V>>;
-        orElse(arg0: $Consumer_<string>, arg1: $Map_<K, V>): $Codec<$Map<K, V>>;
-        orElseGet(arg0: $UnaryOperator_<string>, arg1: $Supplier_<$Map<K, V>>): $Codec<$Map<K, V>>;
-        orElseGet(arg0: $Consumer_<string>, arg1: $Supplier_<$Map<K, V>>): $Codec<$Map<K, V>>;
-        orElseGet(arg0: $Supplier_<$Map<K, V>>): $Codec<$Map<K, V>>;
-        partialDispatch<E>(arg0: string, arg1: $Function_<E, $DataResult<$Map<K, V>>>, arg2: $Function_<$Map<K, V>, $DataResult<$MapCodec<E>>>): $Codec<E>;
-        withLifecycle(arg0: $Lifecycle): $Codec<$Map<K, V>>;
-        dispatchMap<E>(arg0: string, arg1: $Function_<E, $Map<K, V>>, arg2: $Function_<$Map<K, V>, $MapCodec<E>>): $MapCodec<E>;
-        dispatchMap<E>(arg0: $Function_<E, $Map<K, V>>, arg1: $Function_<$Map<K, V>, $MapCodec<E>>): $MapCodec<E>;
-        promotePartial(arg0: $Consumer_<string>): $Codec<$Map<K, V>>;
-        optionalFieldOf(arg0: string): $MapCodec<($Map<K, V>) | undefined>;
-        optionalFieldOf(arg0: string, arg1: $Lifecycle, arg2: $Map_<K, V>, arg3: $Lifecycle): $MapCodec<$Map<K, V>>;
-        optionalFieldOf(arg0: string, arg1: $Map_<K, V>, arg2: $Lifecycle): $MapCodec<$Map<K, V>>;
-        optionalFieldOf(arg0: string, arg1: $Map_<K, V>): $MapCodec<$Map<K, V>>;
-        flatComapMap<S>(arg0: $Function_<$Map<K, V>, S>, arg1: $Function_<S, $DataResult<$Map<K, V>>>): $Codec<S>;
-        sizeLimitedListOf(arg0: number): $Codec<$List<$Map<K, V>>>;
-        dispatchStable<E>(arg0: $Function_<E, $Map<K, V>>, arg1: $Function_<$Map<K, V>, $MapCodec<E>>): $Codec<E>;
-        comapFlatMap<S>(arg0: $Function_<$Map<K, V>, $DataResult<S>>, arg1: $Function_<S, $Map<K, V>>): $Codec<S>;
-        listOf(arg0: number, arg1: number): $Codec<$List<$Map<K, V>>>;
         listOf(): $Codec<$List<$Map<K, V>>>;
-        mapResult(arg0: $Codec$ResultFunction<$Map_<K, V>>): $Codec<$Map<K, V>>;
+        listOf(arg0: number, arg1: number): $Codec<$List<$Map<K, V>>>;
         flatXmap<S>(arg0: $Function_<$Map<K, V>, $DataResult<S>>, arg1: $Function_<S, $DataResult<$Map<K, V>>>): $Codec<S>;
         xmap<S>(arg0: $Function_<$Map<K, V>, S>, arg1: $Function_<S, $Map<K, V>>): $Codec<S>;
         deprecated(arg0: number): $Codec<$Map<K, V>>;
+        mapResult(arg0: $Codec$ResultFunction<$Map_<K, V>>): $Codec<$Map<K, V>>;
+        stable(): $Codec<$Map<K, V>>;
+        flatComapMap<S>(arg0: $Function_<$Map<K, V>, S>, arg1: $Function_<S, $DataResult<$Map<K, V>>>): $Codec<S>;
+        optionalFieldOf(arg0: string): $MapCodec<($Map<K, V>) | undefined>;
+        optionalFieldOf(arg0: string, arg1: $Map_<K, V>, arg2: $Lifecycle): $MapCodec<$Map<K, V>>;
+        optionalFieldOf(arg0: string, arg1: $Lifecycle, arg2: $Map_<K, V>, arg3: $Lifecycle): $MapCodec<$Map<K, V>>;
+        optionalFieldOf(arg0: string, arg1: $Map_<K, V>): $MapCodec<$Map<K, V>>;
+        dispatchMap<E>(arg0: string, arg1: $Function_<E, $Map<K, V>>, arg2: $Function_<$Map<K, V>, $MapCodec<E>>): $MapCodec<E>;
+        dispatchMap<E>(arg0: $Function_<E, $Map<K, V>>, arg1: $Function_<$Map<K, V>, $MapCodec<E>>): $MapCodec<E>;
+        dispatchStable<E>(arg0: $Function_<E, $Map<K, V>>, arg1: $Function_<$Map<K, V>, $MapCodec<E>>): $Codec<E>;
+        partialDispatch<E>(arg0: string, arg1: $Function_<E, $DataResult<$Map<K, V>>>, arg2: $Function_<$Map<K, V>, $DataResult<$MapCodec<E>>>): $Codec<E>;
+        promotePartial(arg0: $Consumer_<string>): $Codec<$Map<K, V>>;
+        sizeLimitedListOf(arg0: number): $Codec<$List<$Map<K, V>>>;
+        dispatch<E>(arg0: $Function_<E, $Map<K, V>>, arg1: $Function_<$Map<K, V>, $MapCodec<E>>): $Codec<E>;
+        dispatch<E>(arg0: string, arg1: $Function_<E, $Map<K, V>>, arg2: $Function_<$Map<K, V>, $MapCodec<E>>): $Codec<E>;
+        validate(arg0: $Function_<$Map<K, V>, $DataResult<$Map<K, V>>>): $Codec<$Map<K, V>>;
+        orElse(arg0: $Map_<K, V>): $Codec<$Map<K, V>>;
+        orElse(arg0: $Consumer_<string>, arg1: $Map_<K, V>): $Codec<$Map<K, V>>;
+        orElse(arg0: $UnaryOperator_<string>, arg1: $Map_<K, V>): $Codec<$Map<K, V>>;
+        orElseGet(arg0: $UnaryOperator_<string>, arg1: $Supplier_<$Map<K, V>>): $Codec<$Map<K, V>>;
+        orElseGet(arg0: $Consumer_<string>, arg1: $Supplier_<$Map<K, V>>): $Codec<$Map<K, V>>;
+        orElseGet(arg0: $Supplier_<$Map<K, V>>): $Codec<$Map<K, V>>;
+        lenientOptionalFieldOf(arg0: string, arg1: $Map_<K, V>, arg2: $Lifecycle): $MapCodec<$Map<K, V>>;
+        lenientOptionalFieldOf(arg0: string, arg1: $Map_<K, V>): $MapCodec<$Map<K, V>>;
         lenientOptionalFieldOf(arg0: string): $MapCodec<($Map<K, V>) | undefined>;
         lenientOptionalFieldOf(arg0: string, arg1: $Lifecycle, arg2: $Map_<K, V>, arg3: $Lifecycle): $MapCodec<$Map<K, V>>;
-        lenientOptionalFieldOf(arg0: string, arg1: $Map_<K, V>): $MapCodec<$Map<K, V>>;
-        lenientOptionalFieldOf(arg0: string, arg1: $Map_<K, V>, arg2: $Lifecycle): $MapCodec<$Map<K, V>>;
-        encodeStart<T>(arg0: $DynamicOps<T>, arg1: $Map_<K, V>): $DataResult<T>;
+        comapFlatMap<S>(arg0: $Function_<$Map<K, V>, $DataResult<S>>, arg1: $Function_<S, $Map<K, V>>): $Codec<S>;
         comap<B>(arg0: $Function_<B, $Map<K, V>>): $Encoder<B>;
         flatComap<B>(arg0: $Function_<B, $DataResult<$Map<K, V>>>): $Encoder<B>;
+        encodeStart<T>(arg0: $DynamicOps<T>, arg1: $Map_<K, V>): $DataResult<T>;
+        simple(): $Decoder$Simple<$Map<K, V>>;
         decode<T>(arg0: $Dynamic<T>): $DataResult<$Pair$1<$Map<K, V>, T>>;
         map<B>(arg0: $Function_<$Map<K, V>, B>): $Decoder<B>;
         flatMap<B>(arg0: $Function_<$Map<K, V>, $DataResult<B>>): $Decoder<B>;
-        parse<T>(arg0: $Dynamic<T>): $DataResult<$Map<K, V>>;
         parse<T>(arg0: $DynamicOps<T>, arg1: T): $DataResult<$Map<K, V>>;
+        parse<T>(arg0: $Dynamic<T>): $DataResult<$Map<K, V>>;
         boxed(): $Decoder$Boxed<$Map<K, V>>;
         terminal(): $Decoder$Terminal<$Map<K, V>>;
-        simple(): $Decoder$Simple<$Map<K, V>>;
         fieldOf(arg0: string): $MapEncoder<$Map<K, V>>;
+        withLifecycle(arg0: $Lifecycle): $Encoder<$Map<K, V>>;
         constructor(keyCodec: $Codec<K>, elementCodec: $Codec<V>);
     }
     /**
@@ -609,6 +609,11 @@ declare module "@package/net/neoforged/neoforge/common" {
     }
     export interface $IMinecartCollisionHandler {
         /**
+         * This function is used to define the box used for detecting minecart collisions.
+         * It is generally bigger that the normal collision box.
+         */
+        getMinecartCollisionBox(cart: $AbstractMinecart): $AABB;
+        /**
          * This basically replaces the function of the same name in EntityMinecart.
          * Code in IMinecartHooks.applyEntityCollisionHook is still run.
          */
@@ -618,11 +623,6 @@ declare module "@package/net/neoforged/neoforge/common" {
          * It is generally bigger that the normal collision box.
          */
         getBoundingBox(cart: $AbstractMinecart): $AABB;
-        /**
-         * This function is used to define the box used for detecting minecart collisions.
-         * It is generally bigger that the normal collision box.
-         */
-        getMinecartCollisionBox(cart: $AbstractMinecart): $AABB;
         /**
          * This function replaced the function of the same name in EntityMinecart.
          * It is used to define whether minecarts collide with specific entities,
@@ -675,19 +675,19 @@ declare module "@package/net/neoforged/neoforge/common" {
      */
     export type $ItemAbility_ = "shield_block" | "sword_sweep" | "till" | "knife_harvest" | "pickaxe_dig" | "axe_strip" | "axe_scrape" | "shears_dig" | "shears_trim" | "brush_brush" | "spyglass_scope" | "axe_wax_off" | "shovel_flatten" | "shovel_dig" | "shovel_douse" | "create:extinguish_flame" | "trident_throw" | "axe_dig" | "hoe_dig" | "shears_remove_armor" | "sword_dig" | "shears_disarm" | "fishing_rod_cast" | "shears_harvest" | "shears_carve" | "knife_dig" | "firestarter_light";
     export class $ModConfigSpec$ValueSpec {
-        getClazz(): $Class<never>;
         test(value: $Object): boolean;
         getDefault(): $Object;
         getComment(): string;
-        correct(value: $Object): $Object;
         getRange<V extends $Comparable<V>>(): $ModConfigSpec$Range<V>;
         getTranslationKey(): string;
+        correct(value: $Object): $Object;
+        getClazz(): $Class<never>;
         restartType(): $ModConfigSpec$RestartType;
-        get clazz(): $Class<never>;
         get default(): $Object;
         get comment(): string;
         get range(): $ModConfigSpec$Range<V>;
         get translationKey(): string;
+        get clazz(): $Class<never>;
     }
     export class $Tags$Blocks {
         static COBBLESTONES_MOSSY: $TagKey<$Block>;
@@ -817,9 +817,9 @@ declare module "@package/net/neoforged/neoforge/common" {
         constructor();
     }
     export class $MonsterRoomHooks$MobEntry extends $Record implements $WeightedEntry {
-        getWeight(): $Weight;
         type(): $EntityType<never>;
         weight(): $Weight;
+        getWeight(): $Weight;
         constructor(type: $EntityType_<never>, weight: $Weight);
     }
     /**
@@ -827,10 +827,10 @@ declare module "@package/net/neoforged/neoforge/common" {
      */
     export type $MonsterRoomHooks$MobEntry_ = { weight?: $Weight, type?: $EntityType_<never>,  } | [weight?: $Weight, type?: $EntityType_<never>, ];
     export class $DataMapHooks {
-        static getPreviousOxidizedStage(block: $Block_): $Block;
-        static getNextOxidizedStage(block: $Block_): $Block;
-        static getBlockUnwaxed(block: $Block_): $Block;
         static getBlockWaxed(block: $Block_): $Block;
+        static getBlockUnwaxed(block: $Block_): $Block;
+        static getNextOxidizedStage(block: $Block_): $Block;
+        static getPreviousOxidizedStage(block: $Block_): $Block;
         static INVERSE_WAXABLES_DATAMAP: $Map<$Block, $Block>;
         static didHaveToFallbackToVanillaMaps: boolean;
         static INVERSE_OXIDIZABLES_DATAMAP: $Map<$Block, $Block>;
@@ -874,21 +874,21 @@ declare module "@package/net/neoforged/neoforge/common" {
         get asDouble(): number;
     }
     export class $ModConfigSpec implements $IConfigSpec {
-        resetCaches(arg0: $ModConfigSpec$RestartType_): void;
-        validateSpec(config: $ModConfig): void;
-        acceptConfig(arg0: $IConfigSpec$ILoadedConfig): void;
         isEmpty(): boolean;
         save(): void;
         isLoaded(): boolean;
+        getValues(): $UnmodifiableConfig;
+        correct(arg0: $CommentedConfig, arg1: $ConfigSpec$CorrectionListener_, arg2: $ConfigSpec$CorrectionListener_): number;
         correct(config: $CommentedConfig): void;
         correct(arg0: $CommentedConfig, arg1: $ConfigSpec$CorrectionListener_): number;
-        correct(arg0: $CommentedConfig, arg1: $ConfigSpec$CorrectionListener_, arg2: $ConfigSpec$CorrectionListener_): number;
         isCorrect(config: $UnmodifiableCommentedConfig): boolean;
-        getValues(): $UnmodifiableConfig;
-        getLevelTranslationKey(path: $List_<string>): string;
-        getSpec(): $UnmodifiableConfig;
+        resetCaches(arg0: $ModConfigSpec$RestartType_): void;
         afterReload(): void;
         getLevelComment(path: $List_<string>): string;
+        validateSpec(config: $ModConfig): void;
+        acceptConfig(arg0: $IConfigSpec$ILoadedConfig): void;
+        getLevelTranslationKey(path: $List_<string>): string;
+        getSpec(): $UnmodifiableConfig;
         get empty(): boolean;
         get loaded(): boolean;
         get values(): $UnmodifiableConfig;
@@ -906,24 +906,154 @@ declare module "@package/net/neoforged/neoforge/common" {
      * Class for various common (i.e. client and server-side) hooks.
      */
     export class $CommonHooks {
-        static getEntityVisibilityMultiplier(entity: $LivingEntity, lookingEntity: $Entity, originalMultiplier: number): number;
-        static getFilteredRecipeBookTypeValues(): $RecipeBookType[];
         /**
-         * Attempts to modify target block using `ItemAbilities#SHEARS_HARVEST` in `ShearsDispenseItemBehavior`,
-         * consistent with vanilla beehive harvest behavior (also controlled by `ItemAbilities#SHEARS_HARVEST`).
+         * Fires the `ItemStackedOnOtherEvent`, allowing items to handle custom behavior relating to being stacked together (i.e. how the bundle operates).
          * 
-         * The beehive harvest behavior is not implemented by `IBlockExtension#getToolModifiedState(BlockState, UseOnContext, ItemAbility, boolean)`
-         * and thus will still be controlled by `ShearsDispenseItemBehavior#tryShearBeehive(ServerLevel, BlockPos)` by default.
-         * 
-         * Mods may subscribe to `BlockToolModificationEvent`
-         * to override vanilla beehive harvest behavior by setting a non-null `BlockState` result.
+         * Called from `AbstractContainerMenu#doClick` in the utility method `AbstractContainerMenu#tryItemClickBehaviourOverride` before either
+         * `ItemStack#overrideStackedOnOther` or `ItemStack#overrideOtherStackedOnMe` is called.
          */
-        static tryDispenseShearsHarvestBlock(source: $BlockSource_, stack: $ItemStack_, level: $ServerLevel, pos: $BlockPos_): boolean;
-        static buildRecipeBookTypeTagFields(vanillaMap: $Map_<$RecipeBookType_, $Pair$1<string, string>>): $Map<$RecipeBookType, $Pair$1<string, string>>;
+        static onItemStackedOn(carriedItem: $ItemStack_, stackedOnItem: $ItemStack_, slot: $Slot, action: $ClickAction_, player: $Player, carriedSlotAccess: $SlotAccess): boolean;
+        static onNoteChange(level: $Level_, pos: $BlockPos_, state: $BlockState_, old: number, _new: number): number;
         /**
-         * Hook to fire `LivingGetProjectileEvent`. Returns the ammo to be used.
+         * Checks if a crop can grow by firing `Pre`.
          */
-        static getProjectile(entity: $LivingEntity, projectileWeaponItem: $ItemStack_, projectile: $ItemStack_): $ItemStack;
+        static canCropGrow(level: $Level_, pos: $BlockPos_, state: $BlockState_, def: boolean): boolean;
+        static fireCropGrowPost(level: $Level_, pos: $BlockPos_, state: $BlockState_): void;
+        static onFarmlandTrample(level: $Level_, pos: $BlockPos_, state: $BlockState_, fallDistance: number, entity: $Entity): boolean;
+        /**
+         * Handles living entities being underwater. This fires the `LivingBreatheEvent` and if the entity's air supply is less than or equal to zero also the `LivingDrownEvent`. Additionally, when the entity is underwater it will
+         * dismount if `IEntityExtension#canBeRiddenUnderFluidType(FluidType, Entity)` returns false.
+         */
+        static onLivingBreathe(entity: $LivingEntity, consumeAirAmount: number, refillAirAmount: number): void;
+        /**
+         * Creates, posts, and returns a `LivingShieldBlockEvent`. This method is invoked in
+         * `LivingEntity#hurt(DamageSource, float)` and requires internal access to the top entry
+         * in the protected field `LivingEntity#damageContainers` as a parameter.
+         */
+        static onDamageBlock(blocker: $LivingEntity, container: $DamageContainer, originalBlocked: boolean): $LivingShieldBlockEvent;
+        static onLivingDrops(entity: $LivingEntity, source: $DamageSource_, drops: $Collection_<$ItemEntity>, recentlyHit: boolean): boolean;
+        static onLivingKnockBack(target: $LivingEntity, strength: number, ratioX: number, ratioZ: number): $LivingKnockBackEvent;
+        static onLivingUseTotem(entity: $LivingEntity, damageSource: $DamageSource_, totem: $ItemStack_, hand: $InteractionHand_): boolean;
+        static getCraftingPlayer(): $Player;
+        static getSerializer(id: number, vanilla: $CrudeIncrementalIntIdentityHashBiMap<$EntityDataSerializer_<never>>): $EntityDataSerializer<never>;
+        static newChatWithLinks(string: string, allowMissingHeader: boolean): $Component;
+        static newChatWithLinks(string: string): $Component;
+        static onItemRightClick(player: $Player, hand: $InteractionHand_): $InteractionResult;
+        static onInteractEntityAt(player: $Player, entity: $Entity, ray: $HitResult, hand: $InteractionHand_): $InteractionResult;
+        static onInteractEntityAt(player: $Player, entity: $Entity, vec3d: $Vec3_, hand: $InteractionHand_): $InteractionResult;
+        static onRightClickBlock(player: $Player, hand: $InteractionHand_, pos: $BlockPos_, hitVec: $BlockHitResult): $PlayerInteractEvent$RightClickBlock;
+        static onClientMineHold(player: $Player, pos: $BlockPos_, face: $Direction_): $PlayerInteractEvent$LeftClickBlock;
+        static getSerializerId(serializer: $EntityDataSerializer_<never>, vanilla: $CrudeIncrementalIntIdentityHashBiMap<$EntityDataSerializer_<never>>): number;
+        static onDifficultyChange(difficulty: $Difficulty_, oldDifficulty: $Difficulty_): void;
+        static onLeftClickBlock(player: $Player, pos: $BlockPos_, face: $Direction_, action: $ServerboundPlayerActionPacket$Action_): $PlayerInteractEvent$LeftClickBlock;
+        static lootPoolsCodec(nameSetter: $BiConsumer_<$LootPool, string>): $Codec<$List<$LootPool>>;
+        /**
+         * @deprecated
+         */
+        static onGrindstoneTake(inputSlots: $Container, access: $ContainerLevelAccess_, xpFunction: $Function_<$Level, number>): boolean;
+        static onGrindstoneTake(arg0: $Container, arg1: $ContainerLevelAccess_, arg2: $Player, arg3: $Function_<$Level, number>): boolean;
+        /**
+         * Fires `BreakEvent`, pre-emptively canceling the event based on the conditions that will cause the block to not be broken anyway.
+         * 
+         * Note that undoing the pre-cancel will not permit breaking the block, since the vanilla conditions will always be checked.
+         */
+        static fireBlockBreak(level: $Level_, gameType: $GameType_, player: $ServerPlayer, pos: $BlockPos_, state: $BlockState_): $BlockEvent$BreakEvent;
+        static setCraftingPlayer(player: $Player): void;
+        static wrapRegistryLookup<T>(lookup: $HolderLookup$RegistryLookup<T>): $HolderLookup$RegistryLookup<T>;
+        static resolveLookup<T>(arg0: $ResourceKey_<$Registry<T>>): $HolderLookup$RegistryLookup<T>;
+        /**
+         * @deprecated
+         * FOR INTERNAL USE ONLY, DO NOT CALL DIRECTLY
+         */
+        static getAttributesView(): $Map<$EntityType<$LivingEntity>, $AttributeSupplier>;
+        static parseLifecycle(lifecycle: string): $Lifecycle;
+        static encodeLifecycle(lifecycle: $Lifecycle): string;
+        static loadMobEffect(nbt: $CompoundTag_, key: string, fallback: $MobEffect_): $MobEffect;
+        static getModDataPacks(): $List<string>;
+        /**
+         * The goal here is to fix the POI memory leak that happens due to
+         * `SectionStorage#storage` field never
+         * actually removing POIs long after they become irrelevant. We do it here in chunk unload event
+         * so that chunk that are fully unloaded now gets the POI removed from the POI cached storage map.
+         */
+        static onChunkUnload(poiManager: $PoiManager, chunkAccess: $ChunkAccess): void;
+        static saveMobEffect(nbt: $CompoundTag_, key: string, effect: $MobEffect_): void;
+        /**
+         * Creates a `UseOnContext` for dispense behavior.
+         */
+        static dispenseUseOnContext(source: $BlockSource_, stack: $ItemStack_): $UseOnContext;
+        static onEntityEnterSection(entity: $Entity, packedOldPos: number, packedNewPos: number): void;
+        static canUseEntitySelectors(provider: $SharedSuggestionProvider): boolean;
+        /**
+         * Marks a class as being safe to use as a data component.
+         * Keep in mind that data components are compared with `Object#equals(Object)`
+         * and hashed with `Object#hashCode()`.
+         * **They must also be immutable.**
+         * 
+         * Only call this method if the default implementations of `Object#equals(Object)`
+         * and `Object#hashCode()` are suitable for this class,
+         * and if instances of this class are immutable.
+         * Typically, this is only the case for singletons such as `Block` instances.
+         */
+        static markComponentClassAsValid(clazz: $Class<never>): void;
+        /**
+         * Extracts a `Provider` from the given `ops`, if possible.
+         */
+        static extractLookupProvider(ops: $RegistryOps<never>): $HolderLookup$Provider;
+        /**
+         * Checks if a mob effect can be applied to an entity by firing `Applicable`.
+         */
+        static canMobEffectBeApplied(entity: $LivingEntity, effect: $MobEffectInstance, source: $Entity): boolean;
+        /**
+         * @deprecated
+         * Checks if a mob effect can be applied to an entity by firing `Applicable`.
+         */
+        static canMobEffectBeApplied(entity: $LivingEntity, effect: $MobEffectInstance): boolean;
+        /**
+         * Called after invulnerability checks in `LivingEntity#hurt(DamageSource, float)`,
+         * this method creates and posts the first event in the LivingEntity damage sequence,
+         * `LivingIncomingDamageEvent`.
+         */
+        static onEntityIncomingDamage(entity: $LivingEntity, container: $DamageContainer): boolean;
+        static onLivingSwapHandItems(livingEntity: $LivingEntity): $LivingSwapItemsEvent$Hands;
+        /**
+         * Creates and posts an `EntityInvulnerabilityCheckEvent`. This is invoked in
+         * `Entity#isInvulnerableTo(DamageSource)` and returns a post-listener result
+         * to the invulnerability status of the entity to the damage source.
+         */
+        static isEntityInvulnerableTo(entity: $Entity, source: $DamageSource_, isInvul: boolean): boolean;
+        static onTravelToDimension(entity: $Entity, dimension: $ResourceKey_<$Level>): boolean;
+        static onLivingFall(entity: $LivingEntity, distance: number, damageMultiplier: number): number[];
+        static onLivingJump(entity: $LivingEntity): void;
+        static isLivingOnLadder(state: $BlockState_, level: $Level_, pos: $BlockPos_, entity: $LivingEntity): ($BlockPos) | undefined;
+        /**
+         * This is invoked in `)`
+         * and replaces the existing item hurt and break logic with an event-sensitive version.
+         * 
+         * Each armor slot is collected and passed into a `ArmorHurtEvent` and posted. If not cancelled,
+         * the final durability loss values for each equipment item from the event will be applied.
+         */
+        static onArmorHurt(source: $DamageSource_, slots: $EquipmentSlot_[], damage: number, armoredEntity: $LivingEntity): void;
+        static onVanillaGameEvent(level: $Level_, vanillaEvent: $Holder_<$GameEvent>, pos: $Vec3_, context: $GameEvent$Context_): boolean;
+        /**
+         * This method is used to prefix the path, where elements of the associated registry are stored, with their namespace, if it is not minecraft
+         * 
+         * This rules conflicts with equal paths out. If for example the mod `fancy_cheese` adds a registry named `cheeses`, but the mod `awesome_cheese` also adds a registry called `cheeses`, they are going to have the
+         * same path `cheeses`, just with different namespaces. If `additional_cheese` wants to add additional cheese to `awesome_cheese`, but not `fancy_cheese`, it can not differentiate both. Both paths will look like
+         * `data/additional_cheese/cheeses`.
+         * 
+         * The fix, which is applied here prefixes the path of the registry with the namespace, so `fancy_cheese`'s registry stores its elements in `data//fancy_cheese/cheeses` and `awesome_cheese`'s registry stores
+         * its elements in `data/namespace/awesome_cheese/cheeses`
+         */
+        static prefixNamespace(registryKey: $ResourceLocation_): string;
+        static canEntityDestroy(level: $Level_, pos: $BlockPos_, entity: $LivingEntity): boolean;
+        /**
+         * Fires the `BlockDropsEvent` when block drops (items and experience) are determined.
+         * If the event is not cancelled, all drops will be added to the world, and then `BlockBehaviour#spawnAfterBreak` will be called.
+         */
+        static handleBlockDrops(level: $ServerLevel, pos: $BlockPos_, state: $BlockState_, blockEntity: $BlockEntity, drops: $List_<$ItemEntity>, breaker: $Entity, tool: $ItemStack_): void;
+        static onEmptyLeftClick(player: $Player): void;
+        static onEmptyClick(player: $Player, hand: $InteractionHand_): void;
         static onPlayerTossEvent(player: $Player, item: $ItemStack_, includeName: boolean): $ItemEntity;
         static onLivingDeath(entity: $LivingEntity, src: $DamageSource_): boolean;
         /**
@@ -938,172 +1068,74 @@ declare module "@package/net/neoforged/neoforge/common" {
          */
         static fireCriticalHit(player: $Player, target: $Entity, vanillaCritical: boolean, damageModifier: number): $CriticalHitEvent;
         /**
+         * Fires the `SweepAttackEvent` and returns the resulting event.
+         */
+        static fireSweepAttack(player: $Player, target: $Entity, isVanillaSweep: boolean): $SweepAttackEvent;
+        /**
          * Creates and posts an `Pre`. This is invoked in
          * `LivingEntity#actuallyHurt(DamageSource, float)` and `Player#actuallyHurt(DamageSource, float)`
          * and requires access to the internal field `LivingEntity#damageContainers` as a parameter.
          */
         static onLivingDamagePre(entity: $LivingEntity, container: $DamageContainer): number;
         /**
-         * Fires the `SweepAttackEvent` and returns the resulting event.
+         * Hook to fire `LivingGetProjectileEvent`. Returns the ammo to be used.
          */
-        static fireSweepAttack(player: $Player, target: $Entity, isVanillaSweep: boolean): $SweepAttackEvent;
-        /**
-         * Checks that all data components override equals and hashCode.
-         */
-        static validateComponent(dataComponent: $Object): void;
-        static writeAdditionalLevelSaveData(worldData: $WorldData, levelTag: $CompoundTag_): void;
-        static readAdditionalLevelSaveData(rootTag: $CompoundTag_, levelDirectory: $LevelStorageSource$LevelDirectory_): void;
-        static shouldSuppressEnderManAnger(enderMan: $EnderMan, player: $Player, mask: $ItemStack_): boolean;
-        /**
-         * Handles living entities being underwater. This fires the `LivingBreatheEvent` and if the entity's air supply is less than or equal to zero also the `LivingDrownEvent`. Additionally, when the entity is underwater it will
-         * dismount if `IEntityExtension#canBeRiddenUnderFluidType(FluidType, Entity)` returns false.
-         */
-        static onLivingBreathe(entity: $LivingEntity, consumeAirAmount: number, refillAirAmount: number): void;
-        /**
-         * Creates, posts, and returns a `LivingShieldBlockEvent`. This method is invoked in
-         * `LivingEntity#hurt(DamageSource, float)` and requires internal access to the top entry
-         * in the protected field `LivingEntity#damageContainers` as a parameter.
-         */
-        static onDamageBlock(blocker: $LivingEntity, container: $DamageContainer, originalBlocked: boolean): $LivingShieldBlockEvent;
-        static onLivingUseTotem(entity: $LivingEntity, damageSource: $DamageSource_, totem: $ItemStack_, hand: $InteractionHand_): boolean;
-        static isLivingOnLadder(state: $BlockState_, level: $Level_, pos: $BlockPos_, entity: $LivingEntity): ($BlockPos) | undefined;
-        static onLivingFall(entity: $LivingEntity, distance: number, damageMultiplier: number): number[];
-        /**
-         * This is invoked in `)`
-         * and replaces the existing item hurt and break logic with an event-sensitive version.
-         * 
-         * Each armor slot is collected and passed into a `ArmorHurtEvent` and posted. If not cancelled,
-         * the final durability loss values for each equipment item from the event will be applied.
-         */
-        static onArmorHurt(source: $DamageSource_, slots: $EquipmentSlot_[], damage: number, armoredEntity: $LivingEntity): void;
-        static onLivingDrops(entity: $LivingEntity, source: $DamageSource_, drops: $Collection_<$ItemEntity>, recentlyHit: boolean): boolean;
-        static onLivingKnockBack(target: $LivingEntity, strength: number, ratioX: number, ratioZ: number): $LivingKnockBackEvent;
-        static onLivingJump(entity: $LivingEntity): void;
-        static onChangeGameType(player: $Player, currentGameType: $GameType_, newGameType: $GameType_): $GameType;
-        static onVanillaGameEvent(level: $Level_, vanillaEvent: $Holder_<$GameEvent>, pos: $Vec3_, context: $GameEvent$Context_): boolean;
+        static getProjectile(entity: $LivingEntity, projectileWeaponItem: $ItemStack_, projectile: $ItemStack_): $ItemStack;
+        static onGrindstoneChange(top: $ItemStack_, bottom: $ItemStack_, outputSlot: $Container, xp: number): number;
+        static getModDataPacksWithVanilla(): $List<string>;
         /**
          * @deprecated
          * FOR INTERNAL USE ONLY, DO NOT CALL DIRECTLY
          */
         static modifyAttributes(): void;
-        static onEmptyLeftClick(player: $Player): void;
-        static onEmptyClick(player: $Player, hand: $InteractionHand_): void;
-        static onLivingSwapHandItems(livingEntity: $LivingEntity): $LivingSwapItemsEvent$Hands;
-        /**
-         * @deprecated
-         * Checks if a mob effect can be applied to an entity by firing `Applicable`.
-         */
-        static canMobEffectBeApplied(entity: $LivingEntity, effect: $MobEffectInstance): boolean;
-        /**
-         * Checks if a mob effect can be applied to an entity by firing `Applicable`.
-         */
-        static canMobEffectBeApplied(entity: $LivingEntity, effect: $MobEffectInstance, source: $Entity): boolean;
-        /**
-         * Called after invulnerability checks in `LivingEntity#hurt(DamageSource, float)`,
-         * this method creates and posts the first event in the LivingEntity damage sequence,
-         * `LivingIncomingDamageEvent`.
-         */
-        static onEntityIncomingDamage(entity: $LivingEntity, container: $DamageContainer): boolean;
-        static onPlayerAttackTarget(player: $Player, target: $Entity): boolean;
-        static getStructureConversion(originalBiome: string): $StructuresBecomeConfiguredFix$Conversion;
-        static checkStructureNamespace(biome: string): boolean;
-        static getCraftingRemainingItem(stack: $ItemStack_): $ItemStack;
-        /**
-         * Used as the default implementation of `Item#getCreatorModId`. Call that method instead.
-         */
-        static getDefaultCreatorModId(itemStack: $ItemStack_): string;
-        static getServerChatSubmittedDecorator(): $ChatDecorator;
-        static onNoteChange(level: $Level_, pos: $BlockPos_, state: $BlockState_, old: number, _new: number): number;
-        /**
-         * Checks if a crop can grow by firing `Pre`.
-         */
-        static canCropGrow(level: $Level_, pos: $BlockPos_, state: $BlockState_, def: boolean): boolean;
-        static fireCropGrowPost(level: $Level_, pos: $BlockPos_, state: $BlockState_): void;
-        static onFarmlandTrample(level: $Level_, pos: $BlockPos_, state: $BlockState_, fallDistance: number, entity: $Entity): boolean;
-        /**
-         * This method is used to prefix the path, where elements of the associated registry are stored, with their namespace, if it is not minecraft
-         * 
-         * This rules conflicts with equal paths out. If for example the mod `fancy_cheese` adds a registry named `cheeses`, but the mod `awesome_cheese` also adds a registry called `cheeses`, they are going to have the
-         * same path `cheeses`, just with different namespaces. If `additional_cheese` wants to add additional cheese to `awesome_cheese`, but not `fancy_cheese`, it can not differentiate both. Both paths will look like
-         * `data/additional_cheese/cheeses`.
-         * 
-         * The fix, which is applied here prefixes the path of the registry with the namespace, so `fancy_cheese`'s registry stores its elements in `data//fancy_cheese/cheeses` and `awesome_cheese`'s registry stores
-         * its elements in `data/namespace/awesome_cheese/cheeses`
-         */
-        static prefixNamespace(registryKey: $ResourceLocation_): string;
-        /**
-         * Creates and posts an `EntityInvulnerabilityCheckEvent`. This is invoked in
-         * `Entity#isInvulnerableTo(DamageSource)` and returns a post-listener result
-         * to the invulnerability status of the entity to the damage source.
-         */
-        static isEntityInvulnerableTo(entity: $Entity, source: $DamageSource_, isInvul: boolean): boolean;
-        static onTravelToDimension(entity: $Entity, dimension: $ResourceKey_<$Level>): boolean;
-        static onInteractEntityAt(player: $Player, entity: $Entity, vec3d: $Vec3_, hand: $InteractionHand_): $InteractionResult;
-        static onInteractEntityAt(player: $Player, entity: $Entity, ray: $HitResult, hand: $InteractionHand_): $InteractionResult;
-        static onLeftClickBlock(player: $Player, pos: $BlockPos_, face: $Direction_, action: $ServerboundPlayerActionPacket$Action_): $PlayerInteractEvent$LeftClickBlock;
-        static onClientMineHold(player: $Player, pos: $BlockPos_, face: $Direction_): $PlayerInteractEvent$LeftClickBlock;
-        static getCraftingPlayer(): $Player;
-        static onItemRightClick(player: $Player, hand: $InteractionHand_): $InteractionResult;
-        static newChatWithLinks(string: string): $Component;
-        static newChatWithLinks(string: string, allowMissingHeader: boolean): $Component;
-        static onRightClickBlock(player: $Player, hand: $InteractionHand_, pos: $BlockPos_, hitVec: $BlockHitResult): $PlayerInteractEvent$RightClickBlock;
-        static onGrindstoneTake(arg0: $Container, arg1: $ContainerLevelAccess_, arg2: $Player, arg3: $Function_<$Level, number>): boolean;
-        /**
-         * @deprecated
-         */
-        static onGrindstoneTake(inputSlots: $Container, access: $ContainerLevelAccess_, xpFunction: $Function_<$Level, number>): boolean;
-        static onDifficultyChange(difficulty: $Difficulty_, oldDifficulty: $Difficulty_): void;
-        static lootPoolsCodec(nameSetter: $BiConsumer_<$LootPool, string>): $Codec<$List<$LootPool>>;
-        static getSerializer(id: number, vanilla: $CrudeIncrementalIntIdentityHashBiMap<$EntityDataSerializer_<never>>): $EntityDataSerializer<never>;
-        static getSerializerId(serializer: $EntityDataSerializer_<never>, vanilla: $CrudeIncrementalIntIdentityHashBiMap<$EntityDataSerializer_<never>>): number;
-        static getModDataPacks(): $List<string>;
-        static setCraftingPlayer(player: $Player): void;
-        /**
-         * Fires `BreakEvent`, pre-emptively canceling the event based on the conditions that will cause the block to not be broken anyway.
-         * 
-         * Note that undoing the pre-cancel will not permit breaking the block, since the vanilla conditions will always be checked.
-         */
-        static fireBlockBreak(level: $Level_, gameType: $GameType_, player: $ServerPlayer, pos: $BlockPos_, state: $BlockState_): $BlockEvent$BreakEvent;
-        static wrapRegistryLookup<T>(lookup: $HolderLookup$RegistryLookup<T>): $HolderLookup$RegistryLookup<T>;
-        static resolveLookup<T>(arg0: $ResourceKey_<$Registry<T>>): $HolderLookup$RegistryLookup<T>;
-        /**
-         * The goal here is to fix the POI memory leak that happens due to
-         * `SectionStorage#storage` field never
-         * actually removing POIs long after they become irrelevant. We do it here in chunk unload event
-         * so that chunk that are fully unloaded now gets the POI removed from the POI cached storage map.
-         */
-        static onChunkUnload(poiManager: $PoiManager, chunkAccess: $ChunkAccess): void;
-        static loadMobEffect(nbt: $CompoundTag_, key: string, fallback: $MobEffect_): $MobEffect;
-        static parseLifecycle(lifecycle: string): $Lifecycle;
-        static encodeLifecycle(lifecycle: $Lifecycle): string;
-        /**
-         * @deprecated
-         * FOR INTERNAL USE ONLY, DO NOT CALL DIRECTLY
-         */
-        static getAttributesView(): $Map<$EntityType<$LivingEntity>, $AttributeSupplier>;
-        static saveMobEffect(nbt: $CompoundTag_, key: string, effect: $MobEffect_): void;
-        /**
-         * Returns a vanilla fluid type for the given fluid.
-         */
-        static getVanillaFluidType(fluid: $Fluid_): $FluidType;
+        static onAnvilRepair(player: $Player, output: $ItemStack_, left: $ItemStack_, right: $ItemStack_): number;
+        static onAnvilChange(container: $AnvilMenu, left: $ItemStack_, right: $ItemStack_, outputSlot: $Container, name: string, baseCost: number, player: $Player): boolean;
         /**
          * Fires `PlayerEnchantItemEvent` in `EnchantmentMenu#clickMenuButton(Player, int)` after the enchants are
          * applied to the item.
          */
         static onPlayerEnchantItem(player: $Player, stack: $ItemStack_, instances: $List_<$EnchantmentInstance>): void;
+        static onPlaceItemIntoWorld(context: $UseOnContext): $InteractionResult;
         /**
          * Hook to fire `ItemAttributeModifierEvent`. Modders should use `ItemStack#forEachModifier(EquipmentSlot, BiConsumer)` instead.
          */
         static computeModifiedAttributes(stack: $ItemStack_, defaultModifiers: $ItemAttributeModifiers_): $ItemAttributeModifiers;
-        static onPlaceItemIntoWorld(context: $UseOnContext): $InteractionResult;
         static onLivingChangeTarget(entity: $LivingEntity, originalTarget: $LivingEntity, targetType: $LivingChangeTargetEvent$ILivingTargetType): $LivingChangeTargetEvent;
         /**
-         * Fires the `BlockDropsEvent` when block drops (items and experience) are determined.
-         * If the event is not cancelled, all drops will be added to the world, and then `BlockBehaviour#spawnAfterBreak` will be called.
+         * Checks that all data components override equals and hashCode.
          */
-        static handleBlockDrops(level: $ServerLevel, pos: $BlockPos_, state: $BlockState_, blockEntity: $BlockEntity, drops: $List_<$ItemEntity>, breaker: $Entity, tool: $ItemStack_): void;
-        static canEntityDestroy(level: $Level_, pos: $BlockPos_, entity: $LivingEntity): boolean;
+        static validateComponent(dataComponent: $Object): void;
         static canContinueUsing(from: $ItemStack_, to: $ItemStack_): boolean;
+        /**
+         * Returns a vanilla fluid type for the given fluid.
+         */
+        static getVanillaFluidType(fluid: $Fluid_): $FluidType;
+        static getCraftingRemainingItem(stack: $ItemStack_): $ItemStack;
+        /**
+         * Used as the default implementation of `Item#getCreatorModId`. Call that method instead.
+         */
+        static getDefaultCreatorModId(itemStack: $ItemStack_): string;
+        static onPlayerAttackTarget(player: $Player, target: $Entity): boolean;
+        static getStructureConversion(originalBiome: string): $StructuresBecomeConfiguredFix$Conversion;
+        static checkStructureNamespace(biome: string): boolean;
+        static getEntityVisibilityMultiplier(entity: $LivingEntity, lookingEntity: $Entity, originalMultiplier: number): number;
+        static buildRecipeBookTypeTagFields(vanillaMap: $Map_<$RecipeBookType_, $Pair$1<string, string>>): $Map<$RecipeBookType, $Pair$1<string, string>>;
+        static getFilteredRecipeBookTypeValues(): $RecipeBookType[];
+        static writeAdditionalLevelSaveData(worldData: $WorldData, levelTag: $CompoundTag_): void;
+        static shouldSuppressEnderManAnger(enderMan: $EnderMan, player: $Player, mask: $ItemStack_): boolean;
+        static getServerChatSubmittedDecorator(): $ChatDecorator;
+        static readAdditionalLevelSaveData(rootTag: $CompoundTag_, levelDirectory: $LevelStorageSource$LevelDirectory_): void;
+        /**
+         * Attempts to modify target block using `ItemAbilities#SHEARS_HARVEST` in `ShearsDispenseItemBehavior`,
+         * consistent with vanilla beehive harvest behavior (also controlled by `ItemAbilities#SHEARS_HARVEST`).
+         * 
+         * The beehive harvest behavior is not implemented by `IBlockExtension#getToolModifiedState(BlockState, UseOnContext, ItemAbility, boolean)`
+         * and thus will still be controlled by `ShearsDispenseItemBehavior#tryShearBeehive(ServerLevel, BlockPos)` by default.
+         * 
+         * Mods may subscribe to `BlockToolModificationEvent`
+         * to override vanilla beehive harvest behavior by setting a non-null `BlockState` result.
+         */
+        static tryDispenseShearsHarvestBlock(source: $BlockSource_, stack: $ItemStack_, level: $ServerLevel, pos: $BlockPos_): boolean;
         /**
          * @deprecated
          * All loot table drops should be passed to this function so that mod added effects (e.g. smelting enchantments) can be processed.
@@ -1115,49 +1147,17 @@ declare module "@package/net/neoforged/neoforge/common" {
          * All loot-table generated loot should be passed to this function.
          */
         static modifyLoot(lootTableId: $ResourceLocation_, generatedLoot: $ObjectArrayList<$ItemStack_>, context: $LootContext): $ObjectArrayList<$ItemStack>;
-        /**
-         * Fires the `ItemStackedOnOtherEvent`, allowing items to handle custom behavior relating to being stacked together (i.e. how the bundle operates).
-         * 
-         * Called from `AbstractContainerMenu#doClick` in the utility method `AbstractContainerMenu#tryItemClickBehaviourOverride` before either
-         * `ItemStack#overrideStackedOnOther` or `ItemStack#overrideOtherStackedOnMe` is called.
-         */
-        static onItemStackedOn(carriedItem: $ItemStack_, stackedOnItem: $ItemStack_, slot: $Slot, action: $ClickAction_, player: $Player, carriedSlotAccess: $SlotAccess): boolean;
-        static onAnvilChange(container: $AnvilMenu, left: $ItemStack_, right: $ItemStack_, outputSlot: $Container, name: string, baseCost: number, player: $Player): boolean;
-        static onAnvilRepair(player: $Player, output: $ItemStack_, left: $ItemStack_, right: $ItemStack_): number;
-        static onGrindstoneChange(top: $ItemStack_, bottom: $ItemStack_, outputSlot: $Container, xp: number): number;
-        /**
-         * Extracts a `Provider` from the given `ops`, if possible.
-         */
-        static extractLookupProvider(ops: $RegistryOps<never>): $HolderLookup$Provider;
-        static onCheckCreativeTabs(...arg0: $CreativeModeTab_[]): $Collection<$CreativeModeTab>;
-        static getModDataPacksWithVanilla(): $List<string>;
+        static onChangeGameType(player: $Player, currentGameType: $GameType_, newGameType: $GameType_): $GameType;
         static getTagFromVanillaTier(tier: $Tiers_): $TagKey<$Block>;
-        /**
-         * Creates a `UseOnContext` for dispense behavior.
-         */
-        static dispenseUseOnContext(source: $BlockSource_, stack: $ItemStack_): $UseOnContext;
-        /**
-         * Marks a class as being safe to use as a data component.
-         * Keep in mind that data components are compared with `Object#equals(Object)`
-         * and hashed with `Object#hashCode()`.
-         * **They must also be immutable.**
-         * 
-         * Only call this method if the default implementations of `Object#equals(Object)`
-         * and `Object#hashCode()` are suitable for this class,
-         * and if instances of this class are immutable.
-         * Typically, this is only the case for singletons such as `Block` instances.
-         */
-        static markComponentClassAsValid(clazz: $Class<never>): void;
-        static canUseEntitySelectors(provider: $SharedSuggestionProvider): boolean;
+        static onCheckCreativeTabs(...arg0: $CreativeModeTab_[]): $Collection<$CreativeModeTab>;
         static onServerChatSubmittedEvent(player: $ServerPlayer, plain: string, decorated: $Component_): $Component;
-        static onEntityEnterSection(entity: $Entity, packedOldPos: number, packedNewPos: number): void;
         static VANILLA_SERIALIZER_LIMIT: number;
         constructor();
+        static get attributesView(): $Map<$EntityType<$LivingEntity>, $AttributeSupplier>;
+        static get modDataPacks(): $List<string>;
+        static get modDataPacksWithVanilla(): $List<string>;
         static get filteredRecipeBookTypeValues(): $RecipeBookType[];
         static get serverChatSubmittedDecorator(): $ChatDecorator;
-        static get modDataPacks(): $List<string>;
-        static get attributesView(): $Map<$EntityType<$LivingEntity>, $AttributeSupplier>;
-        static get modDataPacksWithVanilla(): $List<string>;
     }
     export class $Tags {
         /**
@@ -1167,18 +1167,18 @@ declare module "@package/net/neoforged/neoforge/common" {
         constructor();
     }
     export class $NeoForgeEventHandler {
-        onDpSync(event: $OnDatapackSyncEvent): void;
-        postServerTick(event: $ServerTickEvent$Post): void;
-        playerLogin(event: $PlayerEvent$PlayerLoggedInEvent): void;
-        onEntityJoinWorld(event: $EntityJoinLevelEvent): void;
-        preServerTick(event: $ServerTickEvent$Pre): void;
         onChunkUnload(event: $ChunkEvent$Unload): void;
+        postServerTick(event: $ServerTickEvent$Post): void;
+        onCommandsRegister(event: $RegisterCommandsEvent): void;
         onResourceReload(event: $AddReloadListenerEvent): void;
         tagsUpdated(event: $TagsUpdatedEvent): void;
-        resourceReloadListeners(event: $AddReloadListenerEvent): void;
+        playerLogin(event: $PlayerEvent$PlayerLoggedInEvent): void;
+        preServerTick(event: $ServerTickEvent$Pre): void;
+        onEntityJoinWorld(event: $EntityJoinLevelEvent): void;
         builtinMobSpawnBlocker(event: $EntityJoinLevelEvent): void;
-        onCommandsRegister(event: $RegisterCommandsEvent): void;
+        resourceReloadListeners(event: $AddReloadListenerEvent): void;
         onDimensionUnload(event: $LevelEvent$Unload): void;
+        onDpSync(event: $OnDatapackSyncEvent): void;
         constructor();
     }
     export class $ModConfigSpec$RestartType extends $Enum<$ModConfigSpec$RestartType> {
@@ -1246,11 +1246,11 @@ declare module "@package/net/neoforged/neoforge/common" {
         removeErroringBlockEntities: $ModConfigSpec$BooleanValue;
     }
     export class $MonsterRoomHooks {
+        static onDataMapsUpdated(event: $DataMapsUpdatedEvent): void;
         /**
          * Gets a random entity type from the weighted list.
          */
         static getRandomMonsterRoomMob(rand: $RandomSource): $EntityType<never>;
-        static onDataMapsUpdated(event: $DataMapsUpdatedEvent): void;
         constructor();
     }
     /**
@@ -1287,6 +1287,7 @@ declare module "@package/net/neoforged/neoforge/common" {
          * Tests if a block is in a region that is watered by blocks. This does not check vanilla water, see `net.minecraft.level.level.block.FarmBlock#isNearWater(LevelReader, BlockPos)`
          */
         static hasBlockWaterTicket(level: $LevelReader, pos: $BlockPos_): boolean;
+        static addCustomTicket<T extends $SimpleTicket<$Vec3>>(arg0: $Level_, arg1: T, arg2: $ChunkPos, ...arg3: $ChunkPos[]): T;
         /**
          * Convenience method to add a ticket that is backed by an AABB.
          * 
@@ -1296,7 +1297,6 @@ declare module "@package/net/neoforged/neoforge/common" {
          * The AABB in the ticket is immutable
          */
         static addAABBTicket(level: $Level_, aabb: $AABB_): $AABBTicket;
-        static addCustomTicket<T extends $SimpleTicket<$Vec3>>(arg0: $Level_, arg1: T, arg2: $ChunkPos, ...arg3: $ChunkPos[]): T;
         constructor();
     }
     /**
@@ -1346,14 +1346,6 @@ declare module "@package/net/neoforged/neoforge/common" {
         get asLong(): number;
     }
     export class $ModConfigSpec$ListValueSpec extends $ModConfigSpec$ValueSpec {
-        /**
-         * Creates a new empty element that can be added to the end of the list or null if the list doesn't support adding elements.
-         * 
-         * The element does not need to validate with either `#test(Object)` or `#testElement(Object)`, but it should give the user a good starting point for their edit.
-         * 
-         * Only used by the UI!
-         */
-        getNewElementSupplier(): $Supplier<never>;
         getSizeRange(): $ModConfigSpec$Range<number>;
         /**
          * Determines if a given object can be part of the list.
@@ -1363,8 +1355,16 @@ declare module "@package/net/neoforged/neoforge/common" {
          * Only used by the UI!
          */
         testElement(value: $Object): boolean;
-        get newElementSupplier(): $Supplier<never>;
+        /**
+         * Creates a new empty element that can be added to the end of the list or null if the list doesn't support adding elements.
+         * 
+         * The element does not need to validate with either `#test(Object)` or `#testElement(Object)`, but it should give the user a good starting point for their edit.
+         * 
+         * Only used by the UI!
+         */
+        getNewElementSupplier(): $Supplier<never>;
         get sizeRange(): $ModConfigSpec$Range<number>;
+        get newElementSupplier(): $Supplier<never>;
     }
     export class $Tags$Items {
         static SANDSTONE_STAIRS: $TagKey<$Item>;
@@ -1619,18 +1619,18 @@ declare module "@package/net/neoforged/neoforge/common" {
         constructor();
     }
     export class $ModConfigSpec$Range<V extends $Comparable<V>> implements $Predicate<$Object> {
-        getClazz(): $Class<V>;
         test(t: $Object): boolean;
         static of(arg0: number, arg1: number): $ModConfigSpec$Range<number>;
         getMin(): V;
         getMax(): V;
         correct(value: $Object, def: $Object): $Object;
+        getClazz(): $Class<V>;
         or(arg0: $Predicate_<$Object>): $Predicate<$Object>;
         negate(): $Predicate<$Object>;
         and(arg0: $Predicate_<$Object>): $Predicate<$Object>;
-        get clazz(): $Class<V>;
         get min(): V;
         get max(): V;
+        get clazz(): $Class<V>;
     }
     export class $DeferredSpawnEggItem extends $SpawnEggItem {
         static deferredOnlyById(type: $EntityType_<never>): $SpawnEggItem;
@@ -1677,11 +1677,11 @@ declare module "@package/net/neoforged/neoforge/common" {
         get translatedName(): $Component;
     }
     export class $ModConfigSpec$BooleanValue extends $ModConfigSpec$ConfigValue<boolean> implements $BooleanSupplier {
-        isTrue(): boolean;
         getAsBoolean(): boolean;
+        isTrue(): boolean;
         isFalse(): boolean;
-        get true(): boolean;
         get asBoolean(): boolean;
+        get true(): boolean;
         get false(): boolean;
     }
     export class $Tags$Structures {
@@ -1719,13 +1719,11 @@ declare module "@package/net/neoforged/neoforge/common" {
     }
     export interface $IShearable {
         /**
-         * Shears this object. This function is called on both sides, and is responsible for performing any and all actions that happen when sheared, except spawning drops.
-         * 
-         * Drops that are spawned as a result of being sheared should be returned from this method, and will be spawned on the server using `#spawnShearedDrop`.
+         * Performs the logic used to drop a shear result into the world at the correct position and with the proper movement.
          * 
          * Entities may respect their internal position values instead of relying on the `pos` parameter.
          */
-        onSheared(player: $Player, item: $ItemStack_, level: $Level_, pos: $BlockPos_): $List<$ItemStack>;
+        spawnShearedDrop(level: $Level_, pos: $BlockPos_, drop: $ItemStack_): void;
         /**
          * Checks if this object can be sheared.
          * 
@@ -1733,11 +1731,13 @@ declare module "@package/net/neoforged/neoforge/common" {
          */
         isShearable(player: $Player, item: $ItemStack_, level: $Level_, pos: $BlockPos_): boolean;
         /**
-         * Performs the logic used to drop a shear result into the world at the correct position and with the proper movement.
+         * Shears this object. This function is called on both sides, and is responsible for performing any and all actions that happen when sheared, except spawning drops.
+         * 
+         * Drops that are spawned as a result of being sheared should be returned from this method, and will be spawned on the server using `#spawnShearedDrop`.
          * 
          * Entities may respect their internal position values instead of relying on the `pos` parameter.
          */
-        spawnShearedDrop(level: $Level_, pos: $BlockPos_, drop: $ItemStack_): void;
+        onSheared(player: $Player, item: $ItemStack_, level: $Level_, pos: $BlockPos_): $List<$ItemStack>;
     }
     /**
      * Note, fluid tags should not be plural to match the vanilla standard.
@@ -1780,12 +1780,6 @@ declare module "@package/net/neoforged/neoforge/common" {
      */
     export class $UsernameCache {
         /**
-         * Get the player's last known username
-         * 
-         * **May be `null`**
-         */
-        static getLastKnownUsername(uuid: $UUID_): string;
-        /**
          * Get an immutable copy of the cache's underlying map
          */
         static getMap(): $Map<$UUID, string>;
@@ -1793,6 +1787,12 @@ declare module "@package/net/neoforged/neoforge/common" {
          * Check if the cache contains the given player's username
          */
         static containsUUID(uuid: $UUID_): boolean;
+        /**
+         * Get the player's last known username
+         * 
+         * **May be `null`**
+         */
+        static getLastKnownUsername(uuid: $UUID_): string;
         static get map(): $Map<$UUID, string>;
     }
     /**

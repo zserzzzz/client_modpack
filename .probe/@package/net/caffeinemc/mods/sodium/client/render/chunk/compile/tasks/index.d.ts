@@ -15,12 +15,12 @@ declare module "@package/net/caffeinemc/mods/sodium/client/render/chunk/compile/
     }
     export class $ChunkBuilderTask<OUTPUT extends $BuilderTaskOutput> implements $CombinedCameraPos {
         execute(arg0: $ChunkBuildContext, arg1: $CancellationToken): OUTPUT;
-        getEffort(): number;
         getAbsoluteCameraPos(): $Vector3dc;
         getRelativeCameraPos(): $Vector3fc;
+        getEffort(): number;
         constructor(arg0: $RenderSection, arg1: number, arg2: $Vector3dc);
-        get effort(): number;
         get absoluteCameraPos(): $Vector3dc;
         get relativeCameraPos(): $Vector3fc;
+        get effort(): number;
     }
 }

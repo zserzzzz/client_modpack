@@ -12,12 +12,12 @@ import { $SerializationConstructorMarker } from "@package/kotlinx/serialization/
 
 declare module "@package/gg/essential/mod/cosmetics/settings" {
     export class $CosmeticSetting$AnimationVariant extends $CosmeticSetting {
-        static copy$default(arg0: $CosmeticSetting$AnimationVariant, arg1: string, arg2: boolean, arg3: $CosmeticSetting$AnimationVariant$Data, arg4: number, arg5: $Object): $CosmeticSetting$AnimationVariant;
         copy(arg0: string, arg1: boolean, arg2: $CosmeticSetting$AnimationVariant$Data): $CosmeticSetting$AnimationVariant;
         getData(): $CosmeticSetting$AnimationVariant$Data;
-        component2(): boolean;
-        component3(): $CosmeticSetting$AnimationVariant$Data;
+        static copy$default(arg0: $CosmeticSetting$AnimationVariant, arg1: string, arg2: boolean, arg3: $CosmeticSetting$AnimationVariant$Data, arg4: number, arg5: $Object): $CosmeticSetting$AnimationVariant;
         static write$Self$cosmetics(arg0: $CosmeticSetting$AnimationVariant, arg1: $CompositeEncoder, arg2: $SerialDescriptor): void;
+        component3(): $CosmeticSetting$AnimationVariant$Data;
+        component2(): boolean;
         component1(): string;
         static getType$annotations(): void;
         static Companion: $CosmeticSetting$AnimationVariant$Companion;
@@ -30,24 +30,24 @@ declare module "@package/gg/essential/mod/cosmetics/settings" {
         getId(): string;
         getType(): $CosmeticPropertyType;
         getEnabled(): boolean;
-        static access$getJson$delegate$cp(): $Lazy<any>;
-        static getEnabled$annotations(): void;
         static getId$annotations(): void;
+        static getEnabled$annotations(): void;
+        static access$getJson$delegate$cp(): $Lazy<any>;
         static Companion: $CosmeticProperty$Companion;
         constructor(arg0: $DefaultConstructorMarker);
         get id(): string;
         get type(): $CosmeticPropertyType;
         get enabled(): boolean;
-        static get enabled$annotations(): void;
         static get id$annotations(): void;
+        static get enabled$annotations(): void;
     }
     export class $CosmeticSetting$Variant extends $CosmeticSetting {
-        static copy$default(arg0: $CosmeticSetting$Variant, arg1: string, arg2: boolean, arg3: $CosmeticSetting$Variant$Data, arg4: number, arg5: $Object): $CosmeticSetting$Variant;
         copy(arg0: string, arg1: boolean, arg2: $CosmeticSetting$Variant$Data): $CosmeticSetting$Variant;
         getData(): $CosmeticSetting$Variant$Data;
-        component2(): boolean;
-        component3(): $CosmeticSetting$Variant$Data;
+        static copy$default(arg0: $CosmeticSetting$Variant, arg1: string, arg2: boolean, arg3: $CosmeticSetting$Variant$Data, arg4: number, arg5: $Object): $CosmeticSetting$Variant;
         static write$Self$cosmetics(arg0: $CosmeticSetting$Variant, arg1: $CompositeEncoder, arg2: $SerialDescriptor): void;
+        component3(): $CosmeticSetting$Variant$Data;
+        component2(): boolean;
         component1(): string;
         static getType$annotations(): void;
         static Companion: $CosmeticSetting$Variant$Companion;
@@ -58,13 +58,13 @@ declare module "@package/gg/essential/mod/cosmetics/settings" {
     }
     export class $CosmeticProperty$Variants$Variant {
         getName(): string;
+        "copy-BS0M10c"(arg0: string, arg1: number): $CosmeticProperty$Variants$Variant;
+        "getColor-yaPNGYs"(): number;
+        "component2-yaPNGYs"(): number;
         static write$Self$cosmetics(arg0: $CosmeticProperty$Variants$Variant, arg1: $CompositeEncoder, arg2: $SerialDescriptor): void;
         component1(): string;
-        static "copy-BS0M10c$default"(arg0: $CosmeticProperty$Variants$Variant, arg1: string, arg2: number, arg3: number, arg4: $Object): $CosmeticProperty$Variants$Variant;
-        "getColor-yaPNGYs"(): number;
         static "getColor-yaPNGYs$annotations"(): void;
-        "component2-yaPNGYs"(): number;
-        "copy-BS0M10c"(arg0: string, arg1: number): $CosmeticProperty$Variants$Variant;
+        static "copy-BS0M10c$default"(arg0: $CosmeticProperty$Variants$Variant, arg1: string, arg2: number, arg3: number, arg4: $Object): $CosmeticProperty$Variants$Variant;
         static Companion: $CosmeticProperty$Variants$Variant$Companion;
         constructor(arg0: string, arg1: number, arg2: $DefaultConstructorMarker);
         constructor(arg0: number, arg1: string, arg2: $Color, arg3: $SerializationConstructorMarker, arg4: $DefaultConstructorMarker);
@@ -73,10 +73,10 @@ declare module "@package/gg/essential/mod/cosmetics/settings" {
         static get color-yaPNGYs$annotations(): void;
     }
     export class $CosmeticSetting$Companion {
-        fromJson(arg0: string): $CosmeticSetting;
         serializer(): $KSerializer<$CosmeticSetting>;
-        getJson(): $Json;
+        fromJson(arg0: string): $CosmeticSetting;
         fromJsonArray(arg0: string): $List<$CosmeticSetting>;
+        getJson(): $Json;
         constructor(arg0: $DefaultConstructorMarker);
         get json(): $Json;
     }
@@ -93,10 +93,10 @@ declare module "@package/gg/essential/mod/cosmetics/settings" {
         constructor(arg0: $DefaultConstructorMarker);
     }
     export class $CosmeticProperty$Companion {
-        fromJson(arg0: string): $CosmeticProperty;
         serializer(): $KSerializer<$CosmeticProperty>;
-        getJson(): $Json;
+        fromJson(arg0: string): $CosmeticProperty;
         fromJsonArray(arg0: string): $List<$CosmeticProperty>;
+        getJson(): $Json;
         constructor(arg0: $DefaultConstructorMarker);
         get json(): $Json;
     }
@@ -152,44 +152,44 @@ declare module "@package/gg/essential/mod/cosmetics/settings" {
      */
     export type $CosmeticSettingType_ = "player_position_adjustment" | "side" | "variant" | "animation_variant";
     export class $CosmeticProperty$InterruptsEmote$Data {
-        static copy$default(arg0: $CosmeticProperty$InterruptsEmote$Data, arg1: boolean, arg2: number, arg3: boolean, arg4: boolean, arg5: boolean, arg6: number, arg7: $Object): $CosmeticProperty$InterruptsEmote$Data;
         copy(arg0: boolean, arg1: number, arg2: boolean, arg3: boolean, arg4: boolean): $CosmeticProperty$InterruptsEmote$Data;
-        component2(): number;
-        component3(): boolean;
-        component4(): boolean;
-        component5(): boolean;
-        static write$Self$cosmetics(arg0: $CosmeticProperty$InterruptsEmote$Data, arg1: $CompositeEncoder, arg2: $SerialDescriptor): void;
-        component1(): boolean;
+        getArmSwing(): boolean;
+        static copy$default(arg0: $CosmeticProperty$InterruptsEmote$Data, arg1: boolean, arg2: number, arg3: boolean, arg4: boolean, arg5: boolean, arg6: number, arg7: $Object): $CosmeticProperty$InterruptsEmote$Data;
         getMovement(): boolean;
+        static write$Self$cosmetics(arg0: $CosmeticProperty$InterruptsEmote$Data, arg1: $CompositeEncoder, arg2: $SerialDescriptor): void;
+        component4(): boolean;
+        component3(): boolean;
+        component5(): boolean;
+        component2(): number;
+        component1(): boolean;
         getAttack(): boolean;
         getDamaged(): boolean;
         static getMovementGraceTime$annotations(): void;
-        static getMovement$annotations(): void;
         getMovementGraceTime(): number;
+        static getMovement$annotations(): void;
         static getAttack$annotations(): void;
         static getDamaged$annotations(): void;
         static getArmSwing$annotations(): void;
-        getArmSwing(): boolean;
         static Companion: $CosmeticProperty$InterruptsEmote$Data$Companion;
         constructor(arg0: number, arg1: boolean, arg2: number, arg3: boolean, arg4: boolean, arg5: boolean, arg6: $SerializationConstructorMarker);
         constructor();
         constructor(arg0: boolean, arg1: number, arg2: boolean, arg3: boolean, arg4: boolean, arg5: number, arg6: $DefaultConstructorMarker);
         constructor(arg0: boolean, arg1: number, arg2: boolean, arg3: boolean, arg4: boolean);
+        get armSwing(): boolean;
         get movement(): boolean;
         get attack(): boolean;
         get damaged(): boolean;
         static get movementGraceTime$annotations(): void;
-        static get movement$annotations(): void;
         get movementGraceTime(): number;
+        static get movement$annotations(): void;
         static get attack$annotations(): void;
         static get damaged$annotations(): void;
         static get armSwing$annotations(): void;
-        get armSwing(): boolean;
     }
     export class $CosmeticSetting$Variant$Data {
-        static copy$default(arg0: $CosmeticSetting$Variant$Data, arg1: string, arg2: number, arg3: $Object): $CosmeticSetting$Variant$Data;
         copy(arg0: string): $CosmeticSetting$Variant$Data;
         getVariant(): string;
+        static copy$default(arg0: $CosmeticSetting$Variant$Data, arg1: string, arg2: number, arg3: $Object): $CosmeticSetting$Variant$Data;
         static write$Self$cosmetics(arg0: $CosmeticSetting$Variant$Data, arg1: $CompositeEncoder, arg2: $SerialDescriptor): void;
         component1(): string;
         static Companion: $CosmeticSetting$Variant$Data$Companion;
@@ -205,8 +205,8 @@ declare module "@package/gg/essential/mod/cosmetics/settings" {
         getId(): string;
         getType(): $CosmeticSettingType;
         getEnabled(): boolean;
-        static access$getJson$delegate$cp(): $Lazy<any>;
         static getEnabled$annotations(): void;
+        static access$getJson$delegate$cp(): $Lazy<any>;
         static Companion: $CosmeticSetting$Companion;
         constructor(arg0: $DefaultConstructorMarker);
         get id(): string;
@@ -215,16 +215,16 @@ declare module "@package/gg/essential/mod/cosmetics/settings" {
         static get enabled$annotations(): void;
     }
     export class $CosmeticSetting$AnimationVariant$Data {
-        static copy$default(arg0: $CosmeticSetting$AnimationVariant$Data, arg1: string, arg2: number, arg3: $Object): $CosmeticSetting$AnimationVariant$Data;
         copy(arg0: string): $CosmeticSetting$AnimationVariant$Data;
+        static copy$default(arg0: $CosmeticSetting$AnimationVariant$Data, arg1: string, arg2: number, arg3: $Object): $CosmeticSetting$AnimationVariant$Data;
         static write$Self$cosmetics(arg0: $CosmeticSetting$AnimationVariant$Data, arg1: $CompositeEncoder, arg2: $SerialDescriptor): void;
         component1(): string;
         getAnimationVariant(): string;
         static Companion: $CosmeticSetting$AnimationVariant$Data$Companion;
-        constructor(arg0: string);
         constructor(arg0: number, arg1: string, arg2: $SerializationConstructorMarker);
         constructor();
         constructor(arg0: string, arg1: number, arg2: $DefaultConstructorMarker);
+        constructor(arg0: string);
         get animationVariant(): string;
     }
 }

@@ -34,9 +34,9 @@ declare module "@package/net/fabricmc/fabric/mixin/networking/accessor" {
         get server(): $MinecraftServer;
     }
     export class $NetworkRegistryAccessor {
-        static getPayloadRegistrations(): $Map<$ConnectionProtocol, $Map<$ResourceLocation, $PayloadRegistration<never>>>;
-        static setSetup(arg0: boolean): void;
         static getSetup(): boolean;
+        static setSetup(arg0: boolean): void;
+        static getPayloadRegistrations(): $Map<$ConnectionProtocol, $Map<$ResourceLocation, $PayloadRegistration<never>>>;
         static get payloadRegistrations(): $Map<$ConnectionProtocol, $Map<$ResourceLocation, $PayloadRegistration<never>>>;
     }
     export interface $NetworkRegistryAccessor {

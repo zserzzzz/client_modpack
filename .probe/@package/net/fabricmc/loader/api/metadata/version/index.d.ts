@@ -5,13 +5,14 @@ import { $Collection, $Collection_, $List } from "@package/java/util";
 declare module "@package/net/fabricmc/loader/api/metadata/version" {
     export class $VersionInterval {
         static or(a: $Collection_<$VersionInterval>, b: $VersionInterval): $List<$VersionInterval>;
-        static and(a: $VersionInterval, b: $VersionInterval): $VersionInterval;
         static and(a: $Collection_<$VersionInterval>, b: $Collection_<$VersionInterval>): $List<$VersionInterval>;
-        static not(interval: $VersionInterval): $List<$VersionInterval>;
+        static and(a: $VersionInterval, b: $VersionInterval): $VersionInterval;
         static not(intervals: $Collection_<$VersionInterval>): $List<$VersionInterval>;
+        static not(interval: $VersionInterval): $List<$VersionInterval>;
         static INFINITE: $VersionInterval;
     }
     export interface $VersionInterval {
+        isSemantic(): boolean;
         or(o: $Collection_<$VersionInterval>): $List<$VersionInterval>;
         and(o: $VersionInterval): $VersionInterval;
         not(): $List<$VersionInterval>;
@@ -19,12 +20,11 @@ declare module "@package/net/fabricmc/loader/api/metadata/version" {
         getMax(): $Version;
         isMaxInclusive(): boolean;
         isMinInclusive(): boolean;
-        isSemantic(): boolean;
+        get semantic(): boolean;
         get min(): $Version;
         get max(): $Version;
         get maxInclusive(): boolean;
         get minInclusive(): boolean;
-        get semantic(): boolean;
     }
     export class $VersionPredicate$PredicateTerm {
     }
@@ -39,9 +39,9 @@ declare module "@package/net/fabricmc/loader/api/metadata/version" {
         static parse(predicate: string): $VersionPredicate;
     }
     export interface $VersionPredicate extends $Predicate<$Version> {
-        getInterval(): $VersionInterval;
         getTerms(): $Collection<$VersionPredicate$PredicateTerm>;
-        get interval(): $VersionInterval;
+        getInterval(): $VersionInterval;
         get terms(): $Collection<$VersionPredicate$PredicateTerm>;
+        get interval(): $VersionInterval;
     }
 }

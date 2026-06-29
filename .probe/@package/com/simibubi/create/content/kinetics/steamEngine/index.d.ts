@@ -22,7 +22,7 @@ import { $PlacementOffset, $IPlacementHelper } from "@package/net/createmod/catn
 import { $IHaveGoggleInformation } from "@package/com/simibubi/create/api/equipment/goggles";
 import { $DynamicVisual$Context } from "@package/dev/engine_room/flywheel/api/visual";
 import { $SimpleDynamicVisual, $AbstractBlockEntityVisual } from "@package/dev/engine_room/flywheel/lib/visual";
-import { $Block$BlockStatePairKey, $SimpleWaterloggedBlock, $SoundType, $FaceAttachedHorizontalDirectionalBlock, $Block } from "@package/net/minecraft/world/level/block";
+import { $Block$BlockStatePairKey, $SoundType, $SimpleWaterloggedBlock, $FaceAttachedHorizontalDirectionalBlock, $Block } from "@package/net/minecraft/world/level/block";
 import { $AABB, $BlockHitResult } from "@package/net/minecraft/world/phys";
 import { $SequencedGearshiftBlockEntity$SequenceContext } from "@package/com/simibubi/create/content/kinetics/transmission/sequencer";
 import { $GameEventListener } from "@package/net/minecraft/world/level/gameevent";
@@ -55,9 +55,9 @@ declare module "@package/com/simibubi/create/content/kinetics/steamEngine" {
     export class $PoweredShaftBlockEntity extends $GeneratingKineticBlockEntity {
         remove(arg0: $BlockPos_): void;
         update(arg0: $BlockPos_, arg1: number, arg2: number): void;
-        canBePoweredBy(arg0: $BlockPos_): boolean;
         isPoweredBy(arg0: $BlockPos_): boolean;
         addToEngineTooltip(arg0: $List_<$Component_>, arg1: boolean): boolean;
+        canBePoweredBy(arg0: $BlockPos_): boolean;
         movementDirection: number;
         initialTicks: number;
         level: $Level;
@@ -79,8 +79,8 @@ declare module "@package/com/simibubi/create/content/kinetics/steamEngine" {
     export class $SteamJetParticleData implements $ParticleOptions, $ICustomParticleDataWithSprite<$SteamJetParticleData> {
         getCodec(arg0: $ParticleType_<$SteamJetParticleData>): $MapCodec<$SteamJetParticleData>;
         getType(): $ParticleType<never>;
-        getStreamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $SteamJetParticleData>;
         getMetaFactory(): $ParticleEngine$SpriteParticleRegistration<$SteamJetParticleData>;
+        getStreamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $SteamJetParticleData>;
         getFactory(): $ParticleProvider<$SteamJetParticleData>;
         register(arg0: $ParticleType_<$SteamJetParticleData>, arg1: $RegisterParticleProvidersEvent): void;
         createType(): $ParticleType<$SteamJetParticleData>;
@@ -89,8 +89,8 @@ declare module "@package/com/simibubi/create/content/kinetics/steamEngine" {
         constructor(arg0: number);
         constructor();
         get type(): $ParticleType<never>;
-        get streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $SteamJetParticleData>;
         get metaFactory(): $ParticleEngine$SpriteParticleRegistration<$SteamJetParticleData>;
+        get streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, $SteamJetParticleData>;
         get factory(): $ParticleProvider<$SteamJetParticleData>;
     }
     export class $SteamJetParticle extends $SimpleAnimatedParticle {
@@ -136,33 +136,33 @@ declare module "@package/com/simibubi/create/content/kinetics/steamEngine" {
     }
     export class $SteamEngineBlock$PlacementHelper implements $IPlacementHelper {
         getOffset(arg0: $Player, arg1: $Level_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockHitResult, arg5: $ItemStack_): $PlacementOffset;
-        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
-        matchesState(arg0: $BlockState_): boolean;
-        displayGhost(arg0: $PlacementOffset): void;
         matchesItem(arg0: $ItemStack_): boolean;
+        matchesState(arg0: $BlockState_): boolean;
+        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
+        displayGhost(arg0: $PlacementOffset): void;
     }
     export class $SteamEngineBlock extends $FaceAttachedHorizontalDirectionalBlock implements $SimpleWaterloggedBlock, $IWrenchable, $IBE<$SteamEngineBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$SteamEngineBlockEntity>;
-        getBlockEntityClass(): $Class<$SteamEngineBlockEntity>;
-        static isShaftValid(arg0: $BlockState_, arg1: $BlockState_): boolean;
         static getShaftPos(arg0: $BlockState_, arg1: $BlockPos_): $BlockPos;
+        static isShaftValid(arg0: $BlockState_, arg1: $BlockState_): boolean;
         static getFacing(arg0: $BlockState_): $Direction;
+        getBlockEntityClass(): $Class<$SteamEngineBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$SteamEngineBlockEntity>;
         static getSpeedRange(): $Couple<number>;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$SteamEngineBlockEntity>): void;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SteamEngineBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($SteamEngineBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SteamEngineBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $SteamEngineBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$SteamEngineBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($SteamEngineBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SteamEngineBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -195,16 +195,16 @@ declare module "@package/com/simibubi/create/content/kinetics/steamEngine" {
         static FACE: $EnumProperty<$AttachFace>;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$SteamEngineBlockEntity>;
         get blockEntityClass(): $Class<$SteamEngineBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$SteamEngineBlockEntity>;
         static get speedRange(): $Couple<number>;
     }
     export class $SteamEngineBlockEntity extends $SmartBlockEntity implements $IHaveGoggleInformation {
         isValid(): boolean;
-        getTank(): $FluidTankBlockEntity;
-        getTargetAngle(): number;
         addToGoggleTooltip(arg0: $List_<$Component_>, arg1: boolean): boolean;
+        getTank(): $FluidTankBlockEntity;
         getShaft(): $PoweredShaftBlockEntity;
+        getTargetAngle(): number;
         containedFluidTooltip(arg0: $List_<$Component_>, arg1: boolean, arg2: $IFluidHandler): boolean;
         getIcon(arg0: boolean): $ItemStack;
         worldPosition: $BlockPos;
@@ -216,8 +216,8 @@ declare module "@package/com/simibubi/create/content/kinetics/steamEngine" {
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
         get valid(): boolean;
         get tank(): $FluidTankBlockEntity;
-        get targetAngle(): number;
         get shaft(): $PoweredShaftBlockEntity;
+        get targetAngle(): number;
     }
     export class $SteamEngineVisual extends $AbstractBlockEntityVisual<$SteamEngineBlockEntity> implements $SimpleDynamicVisual {
         beginFrame(arg0: $DynamicVisual$Context): void;
@@ -231,8 +231,8 @@ declare module "@package/com/simibubi/create/content/kinetics/steamEngine" {
         constructor(arg0: $BlockEntityRendererProvider$Context);
     }
     export class $PoweredShaftBlock extends $AbstractShaftBlock {
-        static stillValid(arg0: $BlockState_, arg1: $LevelReader, arg2: $BlockPos_): boolean;
         static getEquivalent(arg0: $BlockState_): $BlockState;
+        static stillValid(arg0: $BlockState_, arg1: $LevelReader, arg2: $BlockPos_): boolean;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;

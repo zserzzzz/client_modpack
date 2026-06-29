@@ -43,16 +43,16 @@ declare module "@package/gg/essential/mod/cosmetics" {
         constructor(arg0: $DefaultConstructorMarker);
     }
     export class $CosmeticAssets$SkinMask {
-        static copy$default(arg0: $CosmeticAssets$SkinMask, arg1: $EssentialAsset, arg2: $EssentialAsset, arg3: number, arg4: $Object): $CosmeticAssets$SkinMask;
         copy(arg0: $EssentialAsset, arg1: $EssentialAsset): $CosmeticAssets$SkinMask;
-        component2(): $EssentialAsset;
+        static copy$default(arg0: $CosmeticAssets$SkinMask, arg1: $EssentialAsset, arg2: $EssentialAsset, arg3: number, arg4: $Object): $CosmeticAssets$SkinMask;
         static write$Self$cosmetics(arg0: $CosmeticAssets$SkinMask, arg1: $CompositeEncoder, arg2: $SerialDescriptor): void;
+        component2(): $EssentialAsset;
         component1(): $EssentialAsset;
         getSteve(): $EssentialAsset;
         getAlex(): $EssentialAsset;
         static Companion: $CosmeticAssets$SkinMask$Companion;
-        constructor(arg0: number, arg1: $EssentialAsset, arg2: $EssentialAsset, arg3: $SerializationConstructorMarker);
         constructor(arg0: $EssentialAsset, arg1: $EssentialAsset);
+        constructor(arg0: number, arg1: $EssentialAsset, arg2: $EssentialAsset, arg3: $SerializationConstructorMarker);
         get steve(): $EssentialAsset;
         get alex(): $EssentialAsset;
     }
@@ -61,10 +61,10 @@ declare module "@package/gg/essential/mod/cosmetics" {
         constructor(arg0: $DefaultConstructorMarker);
     }
     export class $CosmeticSlot {
-        static copy$default(arg0: $CosmeticSlot, arg1: string, arg2: number, arg3: $Object): $CosmeticSlot;
         static values(): $List<$CosmeticSlot>;
         getId(): string;
         copy(arg0: string): $CosmeticSlot;
+        static copy$default(arg0: $CosmeticSlot, arg1: string, arg2: number, arg3: $Object): $CosmeticSlot;
         static access$getValues$cp(): $List<any>;
         static access$getEntries$cp(): $ConcurrentHashMap<any, any>;
         component1(): string;
@@ -94,80 +94,80 @@ declare module "@package/gg/essential/mod/cosmetics" {
         get id(): string;
     }
     export class $CosmeticCategory {
-        component7(): number;
-        component6(): $Set<string>;
-        getOrder(): number;
-        static copy$default(arg0: $CosmeticCategory, arg1: string, arg2: $Map_<any, any>, arg3: $Map_<any, any>, arg4: $Map_<any, any>, arg5: $Set_<any>, arg6: $Set_<any>, arg7: number, arg8: $Instant, arg9: $Instant, arg10: number, arg11: $Object): $CosmeticCategory;
         isHidden(): boolean;
         getId(): string;
         copy(arg0: string, arg1: $Map_<string, string>, arg2: $Map_<string, string>, arg3: $Map_<string, string>, arg4: $Set_<$CosmeticSlot>, arg5: $Set_<string>, arg6: number, arg7: $Instant, arg8: $Instant): $CosmeticCategory;
         getDisplayNames(): $Map<string, string>;
-        component8(): $Instant;
-        component9(): $Instant;
-        static access$get$childSerializers$cp(): $Lazy<any>[];
-        getSlots(): $Set<$CosmeticSlot>;
+        getOrder(): number;
+        static copy$default(arg0: $CosmeticCategory, arg1: string, arg2: $Map_<any, any>, arg3: $Map_<any, any>, arg4: $Map_<any, any>, arg5: $Set_<any>, arg6: $Set_<any>, arg7: number, arg8: $Instant, arg9: $Instant, arg10: number, arg11: $Object): $CosmeticCategory;
+        component6(): $Set<string>;
+        component7(): number;
         isEmoteCategory(): boolean;
         getCompactNames(): $Map<string, string>;
-        getAvailableAfter(): $Instant;
-        getDescriptions(): $Map<string, string>;
         getAvailableUntil(): $Instant;
+        getDescriptions(): $Map<string, string>;
+        getAvailableAfter(): $Instant;
+        getSlots(): $Set<$CosmeticSlot>;
         getTags(): $Set<string>;
-        component2(): $Map<string, string>;
-        component3(): $Map<string, string>;
-        component4(): $Map<string, string>;
-        component5(): $Set<$CosmeticSlot>;
+        component9(): $Instant;
+        component8(): $Instant;
         static write$Self$cosmetics(arg0: $CosmeticCategory, arg1: $CompositeEncoder, arg2: $SerialDescriptor): void;
+        component4(): $Map<string, string>;
+        component3(): $Map<string, string>;
+        component5(): $Set<$CosmeticSlot>;
+        component2(): $Map<string, string>;
         component1(): string;
+        static access$get$childSerializers$cp(): $Lazy<any>[];
         static Companion: $CosmeticCategory$Companion;
         static EMOTE_CATEGORY_TAG: string;
         static HIDDEN_CATEGORY_TAG: string;
         constructor(arg0: number, arg1: string, arg2: $Map_<any, any>, arg3: $Map_<any, any>, arg4: $Map_<any, any>, arg5: $Set_<any>, arg6: $Set_<any>, arg7: number, arg8: $Instant, arg9: $Instant, arg10: $SerializationConstructorMarker);
-        constructor(arg0: string, arg1: $Map_<string, string>, arg2: $Map_<string, string>, arg3: $Map_<string, string>, arg4: $Set_<$CosmeticSlot>, arg5: $Set_<string>, arg6: number, arg7: $Instant, arg8: $Instant);
         constructor(arg0: string, arg1: $Map_<any, any>, arg2: $Map_<any, any>, arg3: $Map_<any, any>, arg4: $Set_<any>, arg5: $Set_<any>, arg6: number, arg7: $Instant, arg8: $Instant, arg9: number, arg10: $DefaultConstructorMarker);
-        get order(): number;
+        constructor(arg0: string, arg1: $Map_<string, string>, arg2: $Map_<string, string>, arg3: $Map_<string, string>, arg4: $Set_<$CosmeticSlot>, arg5: $Set_<string>, arg6: number, arg7: $Instant, arg8: $Instant);
         get hidden(): boolean;
         get id(): string;
         get displayNames(): $Map<string, string>;
-        get slots(): $Set<$CosmeticSlot>;
+        get order(): number;
         get emoteCategory(): boolean;
         get compactNames(): $Map<string, string>;
-        get availableAfter(): $Instant;
-        get descriptions(): $Map<string, string>;
         get availableUntil(): $Instant;
+        get descriptions(): $Map<string, string>;
+        get availableAfter(): $Instant;
+        get slots(): $Set<$CosmeticSlot>;
         get tags(): $Set<string>;
     }
     export class $CosmeticBundle {
-        component7(): $Map<$CosmeticSlot, string>;
-        component6(): $CosmeticBundle$Skin;
-        static copy$default(arg0: $CosmeticBundle, arg1: string, arg2: string, arg3: $CosmeticTier_, arg4: number, arg5: boolean, arg6: $CosmeticBundle$Skin, arg7: $Map_<any, any>, arg8: $Map_<any, any>, arg9: number, arg10: $Object): $CosmeticBundle;
         getName(): string;
         getId(): string;
         copy(arg0: string, arg1: string, arg2: $CosmeticTier_, arg3: number, arg4: boolean, arg5: $CosmeticBundle$Skin, arg6: $Map_<$CosmeticSlot, string>, arg7: $Map_<string, $List_<$CosmeticSetting>>): $CosmeticBundle;
+        static copy$default(arg0: $CosmeticBundle, arg1: string, arg2: string, arg3: $CosmeticTier_, arg4: number, arg5: boolean, arg6: $CosmeticBundle$Skin, arg7: $Map_<any, any>, arg8: $Map_<any, any>, arg9: number, arg10: $Object): $CosmeticBundle;
         getSettings(): $Map<string, $List<$CosmeticSetting>>;
-        component8(): $Map<string, $List<$CosmeticSetting>>;
-        setSkin(arg0: $CosmeticBundle$Skin): void;
-        static access$get$childSerializers$cp(): $Lazy<any>[];
+        component6(): $CosmeticBundle$Skin;
+        component7(): $Map<$CosmeticSlot, string>;
+        getRotateOnPreview(): boolean;
         getDiscountPercent(): number;
         getCosmetics(): $Map<$CosmeticSlot, string>;
-        getRotateOnPreview(): boolean;
-        component2(): string;
-        component3(): $CosmeticTier;
-        component4(): number;
-        component5(): boolean;
-        getSkin(): $CosmeticBundle$Skin;
+        setSkin(arg0: $CosmeticBundle$Skin): void;
+        component8(): $Map<string, $List<$CosmeticSetting>>;
         static write$Self$cosmetics(arg0: $CosmeticBundle, arg1: $CompositeEncoder, arg2: $SerialDescriptor): void;
+        component4(): number;
+        component3(): $CosmeticTier;
+        component5(): boolean;
+        component2(): string;
         getTier(): $CosmeticTier;
+        getSkin(): $CosmeticBundle$Skin;
         component1(): string;
+        static access$get$childSerializers$cp(): $Lazy<any>[];
         static Companion: $CosmeticBundle$Companion;
-        constructor(arg0: string, arg1: string, arg2: $CosmeticTier_, arg3: number, arg4: boolean, arg5: $CosmeticBundle$Skin, arg6: $Map_<$CosmeticSlot, string>, arg7: $Map_<string, $List_<$CosmeticSetting>>);
         constructor(arg0: number, arg1: string, arg2: string, arg3: $CosmeticTier_, arg4: number, arg5: boolean, arg6: $CosmeticBundle$Skin, arg7: $Map_<any, any>, arg8: $Map_<any, any>, arg9: $SerializationConstructorMarker);
         constructor(arg0: string, arg1: string, arg2: $CosmeticTier_, arg3: number, arg4: boolean, arg5: $CosmeticBundle$Skin, arg6: $Map_<any, any>, arg7: $Map_<any, any>, arg8: number, arg9: $DefaultConstructorMarker);
+        constructor(arg0: string, arg1: string, arg2: $CosmeticTier_, arg3: number, arg4: boolean, arg5: $CosmeticBundle$Skin, arg6: $Map_<$CosmeticSlot, string>, arg7: $Map_<string, $List_<$CosmeticSetting>>);
         get name(): string;
         get id(): string;
         get settings(): $Map<string, $List<$CosmeticSetting>>;
+        get rotateOnPreview(): boolean;
         get discountPercent(): number;
         get cosmetics(): $Map<$CosmeticSlot, string>;
-        get rotateOnPreview(): boolean;
         get tier(): $CosmeticTier;
     }
     export class $CosmeticAssets$Geometry$Companion {
@@ -175,38 +175,38 @@ declare module "@package/gg/essential/mod/cosmetics" {
         constructor(arg0: $DefaultConstructorMarker);
     }
     export class $CosmeticBundle$Skin {
-        static copy$default(arg0: $CosmeticBundle$Skin, arg1: string, arg2: $Model_, arg3: string, arg4: number, arg5: $Object): $CosmeticBundle$Skin;
+        getModel(): $Model;
         getName(): string;
         copy(arg0: string, arg1: $Model_, arg2: string): $CosmeticBundle$Skin;
-        getModel(): $Model;
-        getHash(): string;
+        static copy$default(arg0: $CosmeticBundle$Skin, arg1: string, arg2: $Model_, arg3: string, arg4: number, arg5: $Object): $CosmeticBundle$Skin;
         toMod(): $Skin;
-        static access$get$childSerializers$cp(): $Lazy<any>[];
-        component2(): $Model;
-        component3(): string;
         static write$Self$cosmetics(arg0: $CosmeticBundle$Skin, arg1: $CompositeEncoder, arg2: $SerialDescriptor): void;
+        component3(): string;
+        component2(): $Model;
         component1(): string;
+        getHash(): string;
+        static access$get$childSerializers$cp(): $Lazy<any>[];
         static Companion: $CosmeticBundle$Skin$Companion;
         constructor(arg0: string, arg1: $Model_, arg2: string);
         constructor(arg0: $Skin, arg1: string);
         constructor(arg0: $Skin, arg1: string, arg2: number, arg3: $DefaultConstructorMarker);
         constructor(arg0: number, arg1: string, arg2: $Model_, arg3: string, arg4: $SerializationConstructorMarker);
         constructor(arg0: string, arg1: $Model_, arg2: string, arg3: number, arg4: $DefaultConstructorMarker);
-        get name(): string;
         get model(): $Model;
+        get name(): string;
         get hash(): string;
     }
     export class $CosmeticAssets$Geometry {
-        static copy$default(arg0: $CosmeticAssets$Geometry, arg1: $EssentialAsset, arg2: $EssentialAsset, arg3: number, arg4: $Object): $CosmeticAssets$Geometry;
         copy(arg0: $EssentialAsset, arg1: $EssentialAsset): $CosmeticAssets$Geometry;
-        component2(): $EssentialAsset;
+        static copy$default(arg0: $CosmeticAssets$Geometry, arg1: $EssentialAsset, arg2: $EssentialAsset, arg3: number, arg4: $Object): $CosmeticAssets$Geometry;
         static write$Self$cosmetics(arg0: $CosmeticAssets$Geometry, arg1: $CompositeEncoder, arg2: $SerialDescriptor): void;
+        component2(): $EssentialAsset;
         component1(): $EssentialAsset;
         getSteve(): $EssentialAsset;
         getAlex(): $EssentialAsset;
         static Companion: $CosmeticAssets$Geometry$Companion;
-        constructor(arg0: number, arg1: $EssentialAsset, arg2: $EssentialAsset, arg3: $SerializationConstructorMarker);
         constructor(arg0: $EssentialAsset, arg1: $EssentialAsset);
+        constructor(arg0: number, arg1: $EssentialAsset, arg2: $EssentialAsset, arg3: $SerializationConstructorMarker);
         get steve(): $EssentialAsset;
         get alex(): $EssentialAsset;
     }
@@ -219,47 +219,47 @@ declare module "@package/gg/essential/mod/cosmetics" {
         constructor(arg0: $DefaultConstructorMarker);
     }
     export class $CosmeticAssets {
-        static copy$default(arg0: $CosmeticAssets, arg1: $Map_<any, any>, arg2: number, arg3: $Object): $CosmeticAssets;
         copy(arg0: $Map_<string, $EssentialAsset>): $CosmeticAssets;
+        static copy$default(arg0: $CosmeticAssets, arg1: $Map_<any, any>, arg2: number, arg3: $Object): $CosmeticAssets;
         getSettings(): $EssentialAsset;
         getTexture(): $EssentialAsset;
-        static access$get$childSerializers$cp(): $Lazy<any>[];
         static write$Self$cosmetics(arg0: $CosmeticAssets, arg1: $CompositeEncoder, arg2: $SerialDescriptor): void;
         component1(): $Map<string, $EssentialAsset>;
         getThumbnail(): $EssentialAsset;
-        getEmissiveTexture(): $EssentialAsset;
-        getAllFiles(): $Map<string, $EssentialAsset>;
+        static access$get$childSerializers$cp(): $Lazy<any>[];
         getAnimations(): $EssentialAsset;
+        getAllFiles(): $Map<string, $EssentialAsset>;
         getGeometry(): $CosmeticAssets$Geometry;
         getParticles(): $Map<string, $EssentialAsset>;
-        getSoundDefinitions(): $EssentialAsset;
-        getOtherFiles(): $Map<string, $EssentialAsset>;
+        getEmissiveTexture(): $EssentialAsset;
         getSidedSkinMasks(): $Map<$Side, $CosmeticAssets$SkinMask>;
         getDefaultSkinMask(): $CosmeticAssets$SkinMask;
+        getOtherFiles(): $Map<string, $EssentialAsset>;
+        getSoundDefinitions(): $EssentialAsset;
         static Companion: $CosmeticAssets$Companion;
         constructor(arg0: $Map_<string, $EssentialAsset>);
         constructor(arg0: number, arg1: $Map_<any, any>, arg2: $EssentialAsset, arg3: $EssentialAsset, arg4: $EssentialAsset, arg5: $CosmeticAssets$Geometry, arg6: $EssentialAsset, arg7: $CosmeticAssets$SkinMask, arg8: $Map_<any, any>, arg9: $EssentialAsset, arg10: $Map_<any, any>, arg11: $EssentialAsset, arg12: $SerializationConstructorMarker);
         get settings(): $EssentialAsset;
         get texture(): $EssentialAsset;
         get thumbnail(): $EssentialAsset;
-        get emissiveTexture(): $EssentialAsset;
-        get allFiles(): $Map<string, $EssentialAsset>;
         get animations(): $EssentialAsset;
+        get allFiles(): $Map<string, $EssentialAsset>;
         get geometry(): $CosmeticAssets$Geometry;
         get particles(): $Map<string, $EssentialAsset>;
-        get soundDefinitions(): $EssentialAsset;
-        get otherFiles(): $Map<string, $EssentialAsset>;
+        get emissiveTexture(): $EssentialAsset;
         get sidedSkinMasks(): $Map<$Side, $CosmeticAssets$SkinMask>;
         get defaultSkinMask(): $CosmeticAssets$SkinMask;
+        get otherFiles(): $Map<string, $EssentialAsset>;
+        get soundDefinitions(): $EssentialAsset;
     }
     export class $CosmeticBundle$Skin$Companion {
         serializer(): $KSerializer<$CosmeticBundle$Skin>;
         constructor(arg0: $DefaultConstructorMarker);
     }
     export class $CosmeticSlot$Companion {
-        serializer(): $KSerializer<$CosmeticSlot>;
         values(): $List<$CosmeticSlot>;
         of(arg0: string): $CosmeticSlot;
+        serializer(): $KSerializer<$CosmeticSlot>;
         static access$make(arg0: $CosmeticSlot$Companion, arg1: string): $CosmeticSlot;
         constructor(arg0: $DefaultConstructorMarker);
     }

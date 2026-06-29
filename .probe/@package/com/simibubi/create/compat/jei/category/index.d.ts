@@ -56,8 +56,8 @@ declare module "@package/com/simibubi/create/compat/jei/category" {
     }
     export class $SequencedAssemblyCategory extends $CreateRecipeCategory<$SequencedAssemblyRecipe> {
         draw(arg0: $SequencedAssemblyRecipe, arg1: $IRecipeSlotsView_, arg2: $GuiGraphics, arg3: number, arg4: number): void;
-        setRecipe(arg0: $IRecipeLayoutBuilder, arg1: $SequencedAssemblyRecipe, arg2: $IFocusGroup): void;
         getTooltipStrings(arg0: $SequencedAssemblyRecipe, arg1: $IRecipeSlotsView_, arg2: number, arg3: number): $List<$Component>;
+        setRecipe(arg0: $IRecipeLayoutBuilder, arg1: $SequencedAssemblyRecipe, arg2: $IFocusGroup): void;
         constructor(arg0: $CreateRecipeCategory$Info_<$SequencedAssemblyRecipe>);
     }
     export class $PolishingCategory extends $CreateRecipeCategory<$SandPaperPolishingRecipe> {
@@ -71,8 +71,8 @@ declare module "@package/com/simibubi/create/compat/jei/category" {
         constructor(arg0: $CreateRecipeCategory$Info_<$PressingRecipe>);
     }
     export class $SpoutCategory extends $CreateRecipeCategory<$FillingRecipe> {
-        static consumeRecipes(arg0: $Consumer_<$RecipeHolder<$FillingRecipe>>, arg1: $IIngredientManager): void;
         draw(arg0: $FillingRecipe, arg1: $IRecipeSlotsView_, arg2: $GuiGraphics, arg3: number, arg4: number): void;
+        static consumeRecipes(arg0: $Consumer_<$RecipeHolder<$FillingRecipe>>, arg1: $IIngredientManager): void;
         setRecipe(arg0: $IRecipeLayoutBuilder, arg1: $FillingRecipe, arg2: $IFocusGroup): void;
         constructor(arg0: $CreateRecipeCategory$Info_<$FillingRecipe>);
     }
@@ -87,11 +87,11 @@ declare module "@package/com/simibubi/create/compat/jei/category" {
         static autoSquare(arg0: $CreateRecipeCategory$Info_<$BasinRecipe>): $PackingCategory;
     }
     export class $MechanicalCraftingCategory extends $CreateRecipeCategory<$CraftingRecipe> {
-        static getYPadding(arg0: $CraftingRecipe): number;
-        static getXPadding(arg0: $CraftingRecipe): number;
         static getScale(arg0: $CraftingRecipe): number;
         draw(arg0: $CraftingRecipe, arg1: $IRecipeSlotsView_, arg2: $GuiGraphics, arg3: number, arg4: number): void;
         setRecipe(arg0: $IRecipeLayoutBuilder, arg1: $CraftingRecipe, arg2: $IFocusGroup): void;
+        static getXPadding(arg0: $CraftingRecipe): number;
+        static getYPadding(arg0: $CraftingRecipe): number;
         constructor(arg0: $CreateRecipeCategory$Info_<$CraftingRecipe>);
     }
     export class $FanWashingCategory extends $ProcessingViaFanCategory$MultiOutput<$SplashingRecipe> {
@@ -114,8 +114,8 @@ declare module "@package/com/simibubi/create/compat/jei/category" {
     }
     export class $MixingCategory extends $BasinCategory {
         static standard(arg0: $CreateRecipeCategory$Info_<$BasinRecipe>): $MixingCategory;
-        static autoShapeless(arg0: $CreateRecipeCategory$Info_<$BasinRecipe>): $MixingCategory;
         static autoBrewing(arg0: $CreateRecipeCategory$Info_<$BasinRecipe>): $MixingCategory;
+        static autoShapeless(arg0: $CreateRecipeCategory$Info_<$BasinRecipe>): $MixingCategory;
     }
     export class $ItemApplicationCategory extends $CreateRecipeCategory<$ItemApplicationRecipe> {
         draw(arg0: $ItemApplicationRecipe, arg1: $IRecipeSlotsView_, arg2: $GuiGraphics, arg3: number, arg4: number): void;
@@ -123,8 +123,8 @@ declare module "@package/com/simibubi/create/compat/jei/category" {
         constructor(arg0: $CreateRecipeCategory$Info_<$ItemApplicationRecipe>);
     }
     export class $BlockCuttingCategory extends $CreateRecipeCategory<$BlockCuttingCategory$CondensedBlockCuttingRecipe> {
-        static condenseRecipes(arg0: $List_<$RecipeHolder_<never>>): $List<$RecipeHolder<$BlockCuttingCategory$CondensedBlockCuttingRecipe>>;
         draw(arg0: $BlockCuttingCategory$CondensedBlockCuttingRecipe, arg1: $IRecipeSlotsView_, arg2: $GuiGraphics, arg3: number, arg4: number): void;
+        static condenseRecipes(arg0: $List_<$RecipeHolder_<never>>): $List<$RecipeHolder<$BlockCuttingCategory$CondensedBlockCuttingRecipe>>;
         setRecipe(arg0: $IRecipeLayoutBuilder, arg1: $BlockCuttingCategory$CondensedBlockCuttingRecipe, arg2: $IFocusGroup): void;
         constructor(arg0: $CreateRecipeCategory$Info_<$BlockCuttingCategory$CondensedBlockCuttingRecipe>);
     }
@@ -140,49 +140,49 @@ declare module "@package/com/simibubi/create/compat/jei/category" {
      */
     export type $MixingCategory$MixingType_ = "mixing" | "auto_shapeless" | "auto_brewing";
     export class $CreateRecipeCategory$Info<T extends $Recipe<never>> extends $Record {
-        background(): $IDrawable;
-        recipes(): $Supplier<$List<$RecipeHolder<T>>>;
-        title(): $Component;
         icon(): $IDrawable;
+        title(): $Component;
+        background(): $IDrawable;
         catalysts(): $List<$Supplier<$ItemStack>>;
+        recipes(): $Supplier<$List<$RecipeHolder<T>>>;
         recipeType(): $RecipeType$1<$RecipeHolder<T>>;
         constructor(recipeType: $RecipeType$1<$RecipeHolder_<T>>, title: $Component_, background: $IDrawable, icon: $IDrawable, recipes: $Supplier_<$List<$RecipeHolder<T>>>, catalysts: $List_<$Supplier_<$ItemStack>>);
     }
     /**
      * Values that may be interpreted as {@link $CreateRecipeCategory$Info}.
      */
-    export type $CreateRecipeCategory$Info_<T> = { background?: $IDrawable, title?: $Component_, recipes?: $Supplier_<$List<$RecipeHolder<$Recipe<never>>>>, icon?: $IDrawable, recipeType?: $RecipeType$1<$RecipeHolder_<$Recipe<never>>>, catalysts?: $List_<$Supplier_<$ItemStack>>,  } | [background?: $IDrawable, title?: $Component_, recipes?: $Supplier_<$List<$RecipeHolder<$Recipe<never>>>>, icon?: $IDrawable, recipeType?: $RecipeType$1<$RecipeHolder_<$Recipe<never>>>, catalysts?: $List_<$Supplier_<$ItemStack>>, ];
+    export type $CreateRecipeCategory$Info_<T> = { icon?: $IDrawable, recipeType?: $RecipeType$1<$RecipeHolder_<$Recipe<never>>>, catalysts?: $List_<$Supplier_<$ItemStack>>, background?: $IDrawable, title?: $Component_, recipes?: $Supplier_<$List<$RecipeHolder<$Recipe<never>>>>,  } | [icon?: $IDrawable, recipeType?: $RecipeType$1<$RecipeHolder_<$Recipe<never>>>, catalysts?: $List_<$Supplier_<$ItemStack>>, background?: $IDrawable, title?: $Component_, recipes?: $Supplier_<$List<$RecipeHolder<$Recipe<never>>>>, ];
     export class $FanSmokingCategory extends $ProcessingViaFanCategory<$SmokingRecipe> {
         constructor(arg0: $CreateRecipeCategory$Info_<$SmokingRecipe>);
     }
     export class $CreateRecipeCategory$Builder<T extends $Recipe<$RecipeInput>> {
-        build(arg0: $ResourceLocation_, arg1: $CreateRecipeCategory$Factory_<T>): $CreateRecipeCategory<T>;
+        icon(arg0: $IDrawable): $CreateRecipeCategory$Builder<T>;
         build(arg0: string, arg1: $CreateRecipeCategory$Factory_<T>): $CreateRecipeCategory<T>;
+        build(arg0: $ResourceLocation_, arg1: $CreateRecipeCategory$Factory_<T>): $CreateRecipeCategory<T>;
+        background(arg0: $IDrawable): $CreateRecipeCategory$Builder<T>;
+        addRecipes(arg0: $Supplier_<$Collection<$RecipeHolder<T>>>): $CreateRecipeCategory$Builder<T>;
+        enableWhen(arg0: $Supplier_<boolean>): $CreateRecipeCategory$Builder<T>;
+        enableWhen(arg0: $ConfigBase$ConfigBool): $CreateRecipeCategory$Builder<T>;
+        removeRecipes(arg0: $Supplier_<$RecipeType<T>>): $CreateRecipeCategory$Builder<T>;
+        addRecipeListConsumer(arg0: $Consumer_<$List<$RecipeHolder<T>>>): $CreateRecipeCategory$Builder<T>;
+        removeNonAutomation(): $CreateRecipeCategory$Builder<T>;
+        addTypedRecipesExcluding(arg0: $Supplier_<$RecipeType<T>>, arg1: $Supplier_<$RecipeType<T>>): $CreateRecipeCategory$Builder<T>;
+        itemIcon(arg0: $ItemLike_): $CreateRecipeCategory$Builder<T>;
+        catalyst(arg0: $Supplier_<$ItemLike>): $CreateRecipeCategory$Builder<T>;
+        addTypedRecipes<I extends $RecipeInput, R extends $Recipe<I>>(arg0: $Supplier_<$RecipeType<R>>): $CreateRecipeCategory$Builder<T>;
+        addTypedRecipes(arg0: $IRecipeTypeInfo): $CreateRecipeCategory$Builder<T>;
+        addTypedRecipes(arg0: $Supplier_<$RecipeType<T>>, arg1: $Function_<$RecipeHolder<never>, $RecipeHolder<T>>): $CreateRecipeCategory$Builder<T>;
+        emptyBackground(arg0: number, arg1: number): $CreateRecipeCategory$Builder<T>;
+        doubleItemIcon(arg0: $ItemLike_, arg1: $ItemLike_): $CreateRecipeCategory$Builder<T>;
         catalystStack(arg0: $Supplier_<$ItemStack>): $CreateRecipeCategory$Builder<T>;
         addAllRecipesIf(arg0: $Predicate_<$RecipeHolder<T>>): $CreateRecipeCategory$Builder<T>;
         addAllRecipesIf(arg0: $Predicate_<$RecipeHolder<never>>, arg1: $Function_<$RecipeHolder<never>, $RecipeHolder<T>>): $CreateRecipeCategory$Builder<T>;
         addTypedRecipesIf(arg0: $Supplier_<$RecipeType<T>>, arg1: $Predicate_<$RecipeHolder<never>>): $CreateRecipeCategory$Builder<T>;
-        background(arg0: $IDrawable): $CreateRecipeCategory$Builder<T>;
-        icon(arg0: $IDrawable): $CreateRecipeCategory$Builder<T>;
-        addTypedRecipes(arg0: $IRecipeTypeInfo): $CreateRecipeCategory$Builder<T>;
-        addTypedRecipes<I extends $RecipeInput, R extends $Recipe<I>>(arg0: $Supplier_<$RecipeType<R>>): $CreateRecipeCategory$Builder<T>;
-        addTypedRecipes(arg0: $Supplier_<$RecipeType<T>>, arg1: $Function_<$RecipeHolder<never>, $RecipeHolder<T>>): $CreateRecipeCategory$Builder<T>;
-        emptyBackground(arg0: number, arg1: number): $CreateRecipeCategory$Builder<T>;
-        doubleItemIcon(arg0: $ItemLike_, arg1: $ItemLike_): $CreateRecipeCategory$Builder<T>;
-        removeRecipes(arg0: $Supplier_<$RecipeType<T>>): $CreateRecipeCategory$Builder<T>;
-        addRecipes(arg0: $Supplier_<$Collection<$RecipeHolder<T>>>): $CreateRecipeCategory$Builder<T>;
-        catalyst(arg0: $Supplier_<$ItemLike>): $CreateRecipeCategory$Builder<T>;
-        itemIcon(arg0: $ItemLike_): $CreateRecipeCategory$Builder<T>;
-        enableWhen(arg0: $Supplier_<boolean>): $CreateRecipeCategory$Builder<T>;
-        enableWhen(arg0: $ConfigBase$ConfigBool): $CreateRecipeCategory$Builder<T>;
-        addRecipeListConsumer(arg0: $Consumer_<$List<$RecipeHolder<T>>>): $CreateRecipeCategory$Builder<T>;
-        removeNonAutomation(): $CreateRecipeCategory$Builder<T>;
-        addTypedRecipesExcluding(arg0: $Supplier_<$RecipeType<T>>, arg1: $Supplier_<$RecipeType<T>>): $CreateRecipeCategory$Builder<T>;
         constructor(arg0: $Class<T>);
     }
     export class $ItemDrainCategory extends $CreateRecipeCategory<$EmptyingRecipe> {
-        static consumeRecipes(arg0: $Consumer_<$RecipeHolder<$EmptyingRecipe>>, arg1: $IIngredientManager): void;
         draw(arg0: $EmptyingRecipe, arg1: $IRecipeSlotsView_, arg2: $GuiGraphics, arg3: number, arg4: number): void;
+        static consumeRecipes(arg0: $Consumer_<$RecipeHolder<$EmptyingRecipe>>, arg1: $IIngredientManager): void;
         setRecipe(arg0: $IRecipeLayoutBuilder, arg1: $EmptyingRecipe, arg2: $IFocusGroup): void;
         constructor(arg0: $CreateRecipeCategory$Info_<$EmptyingRecipe>);
     }
@@ -201,8 +201,8 @@ declare module "@package/com/simibubi/create/compat/jei/category" {
     }
     export class $BlockCuttingCategory$CondensedBlockCuttingRecipe extends $StonecutterRecipe {
         getOutputs(): $List<$ItemStack>;
-        getCondensedOutputs(): $List<$List<$ItemStack>>;
         addOutput(arg0: $ItemStack_): void;
+        getCondensedOutputs(): $List<$List<$ItemStack>>;
         result: $ItemStack;
         ingredient: $Ingredient;
         group: string;
@@ -215,28 +215,27 @@ declare module "@package/com/simibubi/create/compat/jei/category" {
         constructor(arg0: $CreateRecipeCategory$Info_<T>);
     }
     export class $CreateRecipeCategory<T extends $Recipe<never>> implements $IRecipeCategory<$RecipeHolder<T>> {
-        static addFluidSlot(arg0: $IRecipeLayoutBuilder, arg1: number, arg2: number, arg3: $FluidStack_): $IRecipeSlotBuilder;
-        static addFluidSlot(arg0: $IRecipeLayoutBuilder, arg1: number, arg2: number, arg3: $SizedFluidIngredient): $IRecipeSlotBuilder;
-        static getRenderedSlot(): $IDrawable;
+        static addStochasticTooltip(arg0: $ProcessingOutput): $IRecipeSlotRichTooltipCallback;
+        getBackground(): $IDrawable;
+        getIcon(): $IDrawable;
+        getTitle(): $Component;
+        draw(arg0: $RecipeHolder_<$RecipeHolder_<T>>, arg1: $IRecipeSlotsView_, arg2: $GuiGraphics, arg3: number, arg4: number): void;
+        getTooltipStrings(arg0: $RecipeHolder_<$RecipeHolder_<T>>, arg1: $IRecipeSlotsView_, arg2: number, arg3: number): $List<$Component>;
+        static getResultItem(arg0: $Recipe<never>): $ItemStack;
+        getRecipeType(): $RecipeType$1<$RecipeHolder<$RecipeHolder<T>>>;
         static getRenderedSlot(arg0: $ProcessingOutput): $IDrawable;
         static getRenderedSlot(arg0: number): $IDrawable;
-        getRecipeType(): $RecipeType$1<$RecipeHolder<$RecipeHolder<T>>>;
-        draw(arg0: $RecipeHolder_<$RecipeHolder_<T>>, arg1: $IRecipeSlotsView_, arg2: $GuiGraphics, arg3: number, arg4: number): void;
-        setRecipe(arg0: $IRecipeLayoutBuilder, arg1: $RecipeHolder_<$RecipeHolder_<T>>, arg2: $IFocusGroup): void;
-        getTitle(): $Component;
-        registerCatalysts(arg0: $IRecipeCatalystRegistration): void;
-        getBackground(): $IDrawable;
+        static getRenderedSlot(): $IDrawable;
+        static addFluidSlot(arg0: $IRecipeLayoutBuilder, arg1: number, arg2: number, arg3: $SizedFluidIngredient): $IRecipeSlotBuilder;
+        static addFluidSlot(arg0: $IRecipeLayoutBuilder, arg1: number, arg2: number, arg3: $FluidStack_): $IRecipeSlotBuilder;
         registerRecipes(arg0: $IRecipeRegistration): void;
-        getIcon(): $IDrawable;
-        getTooltipStrings(arg0: $RecipeHolder_<$RecipeHolder_<T>>, arg1: $IRecipeSlotsView_, arg2: number, arg3: number): $List<$Component>;
-        static addStochasticTooltip(arg0: $ProcessingOutput): $IRecipeSlotRichTooltipCallback;
-        static getResultItem(arg0: $Recipe<never>): $ItemStack;
-        getHeight(): number;
-        onDisplayedIngredientsUpdate(arg0: $RecipeHolder_<T>, arg1: $List_<$IRecipeSlotDrawable>, arg2: $IFocusGroup): void;
+        registerCatalysts(arg0: $IRecipeCatalystRegistration): void;
+        setRecipe(arg0: $IRecipeLayoutBuilder, arg1: $RecipeHolder_<$RecipeHolder_<T>>, arg2: $IFocusGroup): void;
         getCodec(arg0: $ICodecHelper, arg1: $IRecipeManager): $Codec<$RecipeHolder<T>>;
         getWidth(): number;
-        needsRecipeBorder(): boolean;
-        isHandled(arg0: $RecipeHolder_<T>): boolean;
+        getHeight(): number;
+        getTooltip(arg0: $ITooltipBuilder, arg1: $RecipeHolder_<T>, arg2: $IRecipeSlotsView_, arg3: number, arg4: number): void;
+        onDisplayedIngredientsUpdate(arg0: $RecipeHolder_<T>, arg1: $List_<$IRecipeSlotDrawable>, arg2: $IFocusGroup): void;
         /**
          * @deprecated
          */
@@ -246,15 +245,16 @@ declare module "@package/com/simibubi/create/compat/jei/category" {
          */
         createRecipeExtras(arg0: $IRecipeExtrasBuilder, arg1: $RecipeHolder_<T>, arg2: $IRecipeSlotsView_, arg3: $IFocusGroup): void;
         createRecipeExtras(arg0: $IRecipeExtrasBuilder, arg1: $RecipeHolder_<T>, arg2: $IFocusGroup): void;
-        getTooltip(arg0: $ITooltipBuilder, arg1: $RecipeHolder_<T>, arg2: $IRecipeSlotsView_, arg3: number, arg4: number): void;
+        isHandled(arg0: $RecipeHolder_<T>): boolean;
         getRegistryName(arg0: $RecipeHolder_<T>): $ResourceLocation;
+        needsRecipeBorder(): boolean;
         constructor(arg0: $CreateRecipeCategory$Info_<$RecipeHolder_<T>>);
-        get recipeType(): $RecipeType$1<$RecipeHolder<$RecipeHolder<T>>>;
-        get title(): $Component;
         get background(): $IDrawable;
         get icon(): $IDrawable;
-        get height(): number;
+        get title(): $Component;
+        get recipeType(): $RecipeType$1<$RecipeHolder<$RecipeHolder<T>>>;
         get width(): number;
+        get height(): number;
     }
     export class $SawingCategory extends $CreateRecipeCategory<$CuttingRecipe> {
         draw(arg0: $CuttingRecipe, arg1: $IRecipeSlotsView_, arg2: $GuiGraphics, arg3: number, arg4: number): void;
@@ -262,19 +262,19 @@ declare module "@package/com/simibubi/create/compat/jei/category" {
         constructor(arg0: $CreateRecipeCategory$Info_<$CuttingRecipe>);
     }
     export class $MechanicalCraftingCategory$CrafterIngredientRenderer implements $IIngredientRenderer<$ItemStack> {
-        getHeight(): number;
-        getFontRenderer(arg0: $Minecraft, arg1: $ItemStack_): $Font;
         getWidth(): number;
         render(arg0: $GuiGraphics, arg1: $ItemStack_, arg2: number, arg3: number): void;
-        renderBatch(arg0: $GuiGraphics, arg1: $List_<$BatchRenderElement_<$ItemStack_>>): void;
+        getHeight(): number;
         getTooltip(arg0: $ITooltipBuilder, arg1: $ItemStack_, arg2: $TooltipFlag): void;
-        get height(): number;
+        renderBatch(arg0: $GuiGraphics, arg1: $List_<$BatchRenderElement_<$ItemStack_>>): void;
+        getFontRenderer(arg0: $Minecraft, arg1: $ItemStack_): $Font;
         get width(): number;
+        get height(): number;
     }
     export class $CrushingCategory$LayoutEntry extends $Record {
     }
     /**
      * Values that may be interpreted as {@link $CrushingCategory$LayoutEntry}.
      */
-    export type $CrushingCategory$LayoutEntry_ = { posX?: number, posY?: number, output?: $ProcessingOutput,  } | [posX?: number, posY?: number, output?: $ProcessingOutput, ];
+    export type $CrushingCategory$LayoutEntry_ = { posY?: number, output?: $ProcessingOutput, posX?: number,  } | [posY?: number, output?: $ProcessingOutput, posX?: number, ];
 }

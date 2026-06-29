@@ -17,18 +17,18 @@ import { $Enum } from "@package/java/lang";
 
 declare module "@package/com/simibubi/create/foundation/advancement" {
     export class $AdvancementBehaviour extends $BlockEntityBehaviour {
-        awardPlayer(arg0: $CreateAdvancement): void;
-        awardPlayerIfNear(arg0: $CreateAdvancement, arg1: number): void;
         add(...arg0: $CreateAdvancement[]): void;
-        isOwnerPresent(): boolean;
         static setPlacedBy(arg0: $Level_, arg1: $BlockPos_, arg2: $LivingEntity): void;
-        setPlayer(arg0: $UUID_): void;
         static tryAward(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $CreateAdvancement): void;
+        setPlayer(arg0: $UUID_): void;
+        awardPlayerIfNear(arg0: $CreateAdvancement, arg1: number): void;
+        awardPlayer(arg0: $CreateAdvancement): void;
+        isOwnerPresent(): boolean;
         blockEntity: $SmartBlockEntity;
         static TYPE: $BehaviourType<$AdvancementBehaviour>;
         constructor(arg0: $SmartBlockEntity, ...arg1: $CreateAdvancement[]);
-        get ownerPresent(): boolean;
         set player(value: $UUID_);
+        get ownerPresent(): boolean;
     }
     export class $CriterionTriggerBase$Instance implements $SimpleCriterionTrigger$SimpleInstance {
         validate(arg0: $CriterionValidator): void;
@@ -47,8 +47,8 @@ declare module "@package/com/simibubi/create/foundation/advancement" {
     }
     export class $CriterionTriggerBase<T extends $CriterionTriggerBase$Instance> implements $CriterionTrigger<T> {
         getId(): $ResourceLocation;
-        removePlayerListener(arg0: $PlayerAdvancements, arg1: $CriterionTrigger$Listener_<T>): void;
         removePlayerListeners(arg0: $PlayerAdvancements): void;
+        removePlayerListener(arg0: $PlayerAdvancements, arg1: $CriterionTrigger$Listener_<T>): void;
         addPlayerListener(arg0: $PlayerAdvancements, arg1: $CriterionTrigger$Listener_<T>): void;
         createCriterion(arg0: T): $Criterion<T>;
         constructor(arg0: string);

@@ -38,24 +38,24 @@ declare module "@package/com/simibubi/create/content/kinetics/simpleRelays/encas
         constructor(arg0: $VisualizationContext, arg1: $KineticBlockEntity, arg2: boolean, arg3: number, arg4: $Model);
     }
     export class $EncasedCogwheelBlock extends $RotatedPillarKineticBlock implements $ICogWheel, $IBE<$SimpleKineticBlockEntity>, $SpecialBlockItemRequirement, $TransformableBlock, $EncasedBlock {
-        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
         transform(arg0: $BlockState_, arg1: $StructureTransform): $BlockState;
-        handleEncasing(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $ItemStack_, arg4: $Player, arg5: $InteractionHand_, arg6: $BlockHitResult): void;
-        getBlockEntityType(): $BlockEntityType<$SimpleKineticBlockEntity>;
-        getBlockEntityClass(): $Class<$SimpleKineticBlockEntity>;
         swapShafts(arg0: $BlockState_): $BlockState;
-        getCasing(): $Block;
-        swapShaftsForRotation(arg0: $BlockState_, arg1: $Rotation_, arg2: $Direction$Axis_): $BlockState;
         isSmallCog(): boolean;
         isLargeCog(): boolean;
+        getBlockEntityClass(): $Class<$SimpleKineticBlockEntity>;
+        handleEncasing(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $ItemStack_, arg4: $Player, arg5: $InteractionHand_, arg6: $BlockHitResult): void;
+        getBlockEntityType(): $BlockEntityType<$SimpleKineticBlockEntity>;
+        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
+        getCasing(): $Block;
+        swapShaftsForRotation(arg0: $BlockState_, arg1: $Rotation_, arg2: $Direction$Axis_): $BlockState;
         isDedicatedCogWheel(): boolean;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$SimpleKineticBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SimpleKineticBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($SimpleKineticBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SimpleKineticBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $SimpleKineticBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$SimpleKineticBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($SimpleKineticBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$SimpleKineticBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -88,26 +88,26 @@ declare module "@package/com/simibubi/create/content/kinetics/simpleRelays/encas
         static BOTTOM_SHAFT: $BooleanProperty;
         static AXIS: $EnumProperty<$Direction$Axis>;
         constructor(arg0: $BlockBehaviour$Properties, arg1: boolean, arg2: $Supplier_<$Block>);
-        get blockEntityType(): $BlockEntityType<$SimpleKineticBlockEntity>;
-        get blockEntityClass(): $Class<$SimpleKineticBlockEntity>;
-        get casing(): $Block;
         get smallCog(): boolean;
         get largeCog(): boolean;
+        get blockEntityClass(): $Class<$SimpleKineticBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$SimpleKineticBlockEntity>;
+        get casing(): $Block;
         get dedicatedCogWheel(): boolean;
     }
     export class $EncasedShaftBlock extends $AbstractEncasedShaftBlock implements $IBE<$KineticBlockEntity>, $SpecialBlockItemRequirement, $EncasedBlock {
-        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
+        getBlockEntityClass(): $Class<$KineticBlockEntity>;
         handleEncasing(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $ItemStack_, arg4: $Player, arg5: $InteractionHand_, arg6: $BlockHitResult): void;
         getBlockEntityType(): $BlockEntityType<$KineticBlockEntity>;
-        getBlockEntityClass(): $Class<$KineticBlockEntity>;
+        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
         getCasing(): $Block;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$KineticBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$KineticBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($KineticBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$KineticBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $KineticBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$KineticBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($KineticBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$KineticBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -138,8 +138,8 @@ declare module "@package/com/simibubi/create/content/kinetics/simpleRelays/encas
         hasCollision: boolean;
         static AXIS: $EnumProperty<$Direction$Axis>;
         constructor(arg0: $BlockBehaviour$Properties, arg1: $Supplier_<$Block>);
-        get blockEntityType(): $BlockEntityType<$KineticBlockEntity>;
         get blockEntityClass(): $Class<$KineticBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$KineticBlockEntity>;
         get casing(): $Block;
     }
     export class $EncasedCogCTBehaviour extends $EncasedCTBehaviour {

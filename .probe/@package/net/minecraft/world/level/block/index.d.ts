@@ -114,10 +114,10 @@ declare module "@package/net/minecraft/world/level/block" {
     export class $BambooStalkBlock extends $Block implements $BonemealableBlock {
         performBonemeal(level: $ServerLevel, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): void;
         isBonemealSuccess(level: $Level_, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): boolean;
-        growBamboo(state: $BlockState_, level: $Level_, pos: $BlockPos_, random: $RandomSource, age: number): void;
+        isValidBonemealTarget(level: $LevelReader, pos: $BlockPos_, state: $BlockState_): boolean;
         getHeightBelowUpToMax(level: $BlockGetter, pos: $BlockPos_): number;
         getHeightAboveUpToMax(level: $BlockGetter, pos: $BlockPos_): number;
-        isValidBonemealTarget(level: $LevelReader, pos: $BlockPos_, state: $BlockState_): boolean;
+        growBamboo(state: $BlockState_, level: $Level_, pos: $BlockPos_, random: $RandomSource, age: number): void;
         getType(): $BonemealableBlock$Type;
         getParticlePos(pos: $BlockPos_): $BlockPos;
         static LARGE_LEAVES_AABB_OFFSET: number;
@@ -196,14 +196,14 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $DispenserBlock extends $BaseEntityBlock implements $DispenserBlockAccessor, $DispenserBlockAccessor$1 {
-        static registerBehavior(item: $ItemLike_, behavior: $DispenseItemBehavior_): void;
-        dispenseFrom(level: $ServerLevel, state: $BlockState_, pos: $BlockPos_): void;
         getDispenseMethod(level: $Level_, item: $ItemStack_): $DispenseItemBehavior;
-        static getDispenserRegistry$moonlight_$md$942995$0(): $Map<any, any>;
+        dispenseFrom(level: $ServerLevel, state: $BlockState_, pos: $BlockPos_): void;
+        static registerBehavior(item: $ItemLike_, behavior: $DispenseItemBehavior_): void;
         static registerProjectileBehavior(item: $ItemLike_): void;
         static getDispensePosition(blockSource: $BlockSource_): $Position;
         static getDispensePosition(blockSource: $BlockSource_, multiplier: number, arg2: $Vec3_): $Position;
         handler$faj000$farmersdelight$onCuttingBoardDispenseFromInject(arg0: $ServerLevel, arg1: $BlockState_, arg2: $BlockPos_, arg3: $CallbackInfo, arg4: $DispenserBlockEntity, arg5: $BlockSource_, arg6: number, arg7: $ItemStack_): void;
+        static getDispenserRegistry$moonlight_$md$c99f8a$0(): $Map<any, any>;
         create$callGetDispenseMethod(level: $Level_, item: $ItemStack_): $DispenseItemBehavior;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -236,7 +236,7 @@ declare module "@package/net/minecraft/world/level/block" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(properties: $BlockBehaviour$Properties);
-        static get dispenserRegistry$moonlight_$md$942995$0(): $Map<any, any>;
+        static get dispenserRegistry$moonlight_$md$c99f8a$0(): $Map<any, any>;
     }
     export class $BaseTorchBlock extends $Block implements $MoreBlockCulling {
         explosionResistance: number;
@@ -379,8 +379,8 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(first: S, second: S);
     }
     export class $KelpBlock extends $GrowingPlantHeadBlock implements $LiquidBlockContainer {
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         growthDirection: $Direction;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -417,16 +417,16 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $SeagrassBlock extends $BushBlock implements $BonemealableBlock, $LiquidBlockContainer, $IShearable {
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         performBonemeal(arg0: $ServerLevel, arg1: $RandomSource, arg2: $BlockPos_, arg3: $BlockState_): void;
         isBonemealSuccess(arg0: $Level_, arg1: $RandomSource, arg2: $BlockPos_, arg3: $BlockState_): boolean;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         isValidBonemealTarget(arg0: $LevelReader, arg1: $BlockPos_, arg2: $BlockState_): boolean;
         getType(): $BonemealableBlock$Type;
         getParticlePos(arg0: $BlockPos_): $BlockPos;
-        onSheared(arg0: $Player, arg1: $ItemStack_, arg2: $Level_, arg3: $BlockPos_): $List<$ItemStack>;
-        isShearable(arg0: $Player, arg1: $ItemStack_, arg2: $Level_, arg3: $BlockPos_): boolean;
         spawnShearedDrop(arg0: $Level_, arg1: $BlockPos_, arg2: $ItemStack_): void;
+        isShearable(arg0: $Player, arg1: $ItemStack_, arg2: $Level_, arg3: $BlockPos_): boolean;
+        onSheared(arg0: $Player, arg1: $ItemStack_, arg2: $Level_, arg3: $BlockPos_): $List<$ItemStack>;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -467,11 +467,11 @@ declare module "@package/net/minecraft/world/level/block" {
     /**
      * Values that may be interpreted as {@link $MultifaceSpreader$SpreadPos}.
      */
-    export type $MultifaceSpreader$SpreadPos_ = { pos?: $BlockPos_, face?: $Direction_,  } | [pos?: $BlockPos_, face?: $Direction_, ];
+    export type $MultifaceSpreader$SpreadPos_ = { face?: $Direction_, pos?: $BlockPos_,  } | [face?: $Direction_, pos?: $BlockPos_, ];
     export class $BubbleColumnBlock extends $Block implements $BucketPickup {
-        static updateColumn(level: $LevelAccessor, pos: $BlockPos_, fluid: $BlockState_, state: $BlockState_): void;
-        static updateColumn(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): void;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        static updateColumn(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): void;
+        static updateColumn(level: $LevelAccessor, pos: $BlockPos_, fluid: $BlockState_, state: $BlockState_): void;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -522,8 +522,8 @@ declare module "@package/net/minecraft/world/level/block" {
      */
     export type $SupportType_ = "full" | "center" | "rigid";
     export class $WoolCarpetBlock extends $CarpetBlock implements $Equipable {
-        getColor(): $DyeColor;
         getEquipSound(): $Holder<$SoundEvent>;
+        getColor(): $DyeColor;
         getEquipmentSlot(): $EquipmentSlot;
         swapWithEquipmentSlot(item: $Item_, level: $Level_, player: $Player, hand: $InteractionHand_): $InteractionResultHolder<$ItemStack>;
         explosionResistance: number;
@@ -555,8 +555,8 @@ declare module "@package/net/minecraft/world/level/block" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(color: $DyeColor_, properties: $BlockBehaviour$Properties);
-        get color(): $DyeColor;
         get equipSound(): $Holder<$SoundEvent>;
+        get color(): $DyeColor;
         get equipmentSlot(): $EquipmentSlot;
     }
     export class $ConcretePowderBlock extends $FallingBlock implements $ConcretePowderBlockAccessor {
@@ -659,12 +659,22 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(flameParticle: $SimpleParticleType, properties: $BlockBehaviour$Properties);
     }
     export class $LeavesBlock extends $Block implements $SimpleWaterloggedBlock, $IShearable, $LeavesCulling, $MoreBlockCulling {
-        decaying(state: $BlockState_): boolean;
         static getOptionalDistanceAt(state: $BlockState_): $OptionalInt;
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
+        decaying(state: $BlockState_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
+        /**
+         * Spawns the given stack into the Level at the given position, respecting the doTileDrops gamerule
+         */
+        spawnShearedDrop(level: $Level_, pos: $BlockPos_, stack: $ItemStack_): void;
+        /**
+         * Checks if this object can be sheared.
+         * 
+         * For example, Sheep return false when they have no wool.
+         */
+        isShearable(player: $Player, item: $ItemStack_, level: $Level_, pos: $BlockPos_): boolean;
         /**
          * Shears this object. This function is called on both sides, and is responsible for performing any and all actions that happen when sheared, except spawning drops.
          * 
@@ -673,16 +683,6 @@ declare module "@package/net/minecraft/world/level/block" {
          * Entities may respect their internal position values instead of relying on the `pos` parameter.
          */
         onSheared(player: $Player, item: $ItemStack_, level: $Level_, pos: $BlockPos_): $List<$ItemStack>;
-        /**
-         * Checks if this object can be sheared.
-         * 
-         * For example, Sheep return false when they have no wool.
-         */
-        isShearable(player: $Player, item: $ItemStack_, level: $Level_, pos: $BlockPos_): boolean;
-        /**
-         * Spawns the given stack into the Level at the given position, respecting the doTileDrops gamerule
-         */
-        spawnShearedDrop(level: $Level_, pos: $BlockPos_, stack: $ItemStack_): void;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
          * 
@@ -1012,11 +1012,11 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $TntBlock extends $Block implements $BlockWithSubLevelCollisionCallback {
+        sable$getCallback(): $BlockSubLevelCollisionCallback;
         /**
          * @deprecated
          */
         static explode(level: $Level_, pos: $BlockPos_): void;
-        sable$getCallback(): $BlockSubLevelCollisionCallback;
         handler$hhi000$yawp$onPlayerIgniteExplosive(arg0: $ItemStack_, arg1: $BlockState_, arg2: $Level_, arg3: $BlockPos_, arg4: $Player, arg5: $InteractionHand_, arg6: $BlockHitResult, arg7: $CallbackInfoReturnable<any>): void;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -1053,17 +1053,17 @@ declare module "@package/net/minecraft/world/level/block" {
     /**
      * Values that may be interpreted as {@link $PointedDripstoneBlock$FluidInfo}.
      */
-    export type $PointedDripstoneBlock$FluidInfo_ = { sourceState?: $BlockState_, fluid?: $Fluid_, pos?: $BlockPos_,  } | [sourceState?: $BlockState_, fluid?: $Fluid_, pos?: $BlockPos_, ];
+    export type $PointedDripstoneBlock$FluidInfo_ = { pos?: $BlockPos_, sourceState?: $BlockState_, fluid?: $Fluid_,  } | [pos?: $BlockPos_, sourceState?: $BlockState_, fluid?: $Fluid_, ];
     export class $SeaPickleBlock extends $BushBlock implements $BonemealableBlock, $SimpleWaterloggedBlock {
-        static isDead(state: $BlockState_): boolean;
         performBonemeal(level: $ServerLevel, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): void;
         isBonemealSuccess(level: $Level_, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): boolean;
         isValidBonemealTarget(level: $LevelReader, pos: $BlockPos_, state: $BlockState_): boolean;
+        static isDead(state: $BlockState_): boolean;
         getType(): $BonemealableBlock$Type;
         getParticlePos(pos: $BlockPos_): $BlockPos;
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -1194,11 +1194,11 @@ declare module "@package/net/minecraft/world/level/block" {
         static DEFAULT: $SculkBehaviour;
     }
     export interface $SculkBehaviour {
+        onDischarged(level: $LevelAccessor, state: $BlockState_, pos: $BlockPos_, random: $RandomSource): void;
+        depositCharge(level: $LevelAccessor, pos: $BlockPos_, random: $RandomSource): boolean;
         attemptUseCharge(cursor: $SculkSpreader$ChargeCursor, level: $LevelAccessor, pos: $BlockPos_, random: $RandomSource, spreader: $SculkSpreader, shouldConvertBlocks: boolean): number;
         attemptSpreadVein(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, directions: $Collection_<$Direction_> | null, markForPostprocessing: boolean): boolean;
         updateDecayDelay(currentDecayDelay: number): number;
-        depositCharge(level: $LevelAccessor, pos: $BlockPos_, random: $RandomSource): boolean;
-        onDischarged(level: $LevelAccessor, state: $BlockState_, pos: $BlockPos_, random: $RandomSource): void;
         canChangeBlockStateOnSpread(): boolean;
         getSculkSpreadDelay(): number;
         get sculkSpreadDelay(): number;
@@ -1276,8 +1276,8 @@ declare module "@package/net/minecraft/world/level/block" {
     }
     export class $RailState {
         getState(): $BlockState;
-        place(powered: boolean, alwaysPlace: boolean, shape: $RailShape_): $RailState;
         getConnections(): $List<$BlockPos>;
+        place(powered: boolean, alwaysPlace: boolean, shape: $RailShape_): $RailState;
         countPotentialConnections(): number;
         constructor(level: $Level_, pos: $BlockPos_, state: $BlockState_);
         get state(): $BlockState;
@@ -1348,8 +1348,8 @@ declare module "@package/net/minecraft/world/level/block" {
     export class $FenceBlock extends $CrossCollisionBlock {
         handler$fap000$farmersdelight$denyConnectionToRopeFence(arg0: $BlockState_, arg1: $CallbackInfoReturnable<any>): void;
         connectsTo(state: $BlockState_, isSideSolid: boolean, direction: $Direction_): boolean;
-        handler$eof000$create_connected$hasProperties(arg0: $CallbackInfoReturnable<any>): void;
         handler$fap000$farmersdelight$denyConnectionToRopeFenceGate(arg0: $BlockState_, arg1: boolean, arg2: $Direction_, arg3: $CallbackInfoReturnable<any>): void;
+        handler$eof000$create_connected$hasProperties(arg0: $CallbackInfoReturnable<any>): void;
         explosionResistance: number;
         shapeByIndex: $VoxelShape[];
         static WEST: $BooleanProperty;
@@ -1388,15 +1388,15 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $BigDripleafStemBlock extends $HorizontalDirectionalBlock implements $BonemealableBlock, $SimpleWaterloggedBlock {
-        static place(level: $LevelAccessor, pos: $BlockPos_, fluidState: $FluidState, direction: $Direction_): boolean;
         performBonemeal(level: $ServerLevel, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): void;
         isBonemealSuccess(level: $Level_, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): boolean;
+        static place(level: $LevelAccessor, pos: $BlockPos_, fluidState: $FluidState, direction: $Direction_): boolean;
         isValidBonemealTarget(level: $LevelReader, pos: $BlockPos_, state: $BlockState_): boolean;
         getType(): $BonemealableBlock$Type;
         getParticlePos(pos: $BlockPos_): $BlockPos;
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -1540,20 +1540,20 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $SculkSpreader {
-        static createWorldGenSpreader(): $SculkSpreader;
         load(tag: $CompoundTag_): void;
         clear(): void;
         save(tag: $CompoundTag_): void;
         chargeDecayRate(): number;
-        noGrowthRadius(): number;
         growthSpawnCost(): number;
         isWorldGeneration(): boolean;
+        noGrowthRadius(): number;
         replaceableBlocks(): $TagKey<$Block>;
         additionalDecayRate(): number;
-        addCursors(pos: $BlockPos_, charge: number): void;
         updateCursors(level: $LevelAccessor, pos: $BlockPos_, random: $RandomSource, shouldConvertBlocks: boolean): void;
-        static createLevelSpreader(): $SculkSpreader;
+        static createWorldGenSpreader(): $SculkSpreader;
+        addCursors(pos: $BlockPos_, charge: number): void;
         getCursors(): $List<$SculkSpreader$ChargeCursor>;
+        static createLevelSpreader(): $SculkSpreader;
         static MAX_DECAY_FACTOR: number;
         static SHRIEKER_PLACEMENT_RATE: number;
         static MAX_CHARGE: number;
@@ -1563,8 +1563,8 @@ declare module "@package/net/minecraft/world/level/block" {
         get cursors(): $List<$SculkSpreader$ChargeCursor>;
     }
     export class $SoundType {
-        getBreakSound(): $SoundEvent;
         getHitSound(): $SoundEvent;
+        getBreakSound(): $SoundEvent;
         getPlaceSound(): $SoundEvent;
         getFallSound(): $SoundEvent;
         getStepSound(): $SoundEvent;
@@ -1689,8 +1689,8 @@ declare module "@package/net/minecraft/world/level/block" {
          * @deprecated
          */
         constructor(volume: number, pitch: number, breakSound: $SoundEvent_, stepSound: $SoundEvent_, placeSound: $SoundEvent_, hitSound: $SoundEvent_, fallSound: $SoundEvent_);
-        get breakSound(): $SoundEvent;
         get hitSound(): $SoundEvent;
+        get breakSound(): $SoundEvent;
         get placeSound(): $SoundEvent;
         get fallSound(): $SoundEvent;
         get stepSound(): $SoundEvent;
@@ -1700,17 +1700,17 @@ declare module "@package/net/minecraft/world/level/block" {
      */
     export type $SoundType_ = "empty" | "wood" | "gravel" | "grass" | "lily_pad" | "stone" | "metal" | "glass" | "wool" | "sand" | "snow" | "powder_snow" | "ladder" | "anvil" | "slime_block" | "honey_block" | "wet_grass" | "coral_block" | "bamboo" | "bamboo_sapling" | "scaffolding" | "sweet_berry_bush" | "crop" | "hard_crop" | "vine" | "nether_wart" | "lantern" | "stem" | "nylium" | "fungus" | "roots" | "shroomlight" | "weeping_vines" | "twisting_vines" | "soul_sand" | "soul_soil" | "basalt" | "wart_block" | "netherrack" | "nether_bricks" | "nether_sprouts" | "nether_ore" | "bone_block" | "netherite_block" | "ancient_debris" | "lodestone" | "chain" | "nether_gold_ore" | "gilded_blackstone" | "candle" | "amethyst" | "amethyst_cluster" | "small_amethyst_bud" | "medium_amethyst_bud" | "large_amethyst_bud" | "tuff" | "tuff_bricks" | "polished_tuff" | "calcite" | "dripstone_block" | "pointed_dripstone" | "copper" | "copper_bulb" | "copper_grate" | "cave_vines" | "spore_blossom" | "azalea" | "flowering_azalea" | "moss_carpet" | "pink_petals" | "moss" | "big_dripleaf" | "small_dripleaf" | "rooted_dirt" | "hanging_roots" | "azalea_leaves" | "sculk_sensor" | "sculk_catalyst" | "sculk" | "sculk_vein" | "sculk_shrieker" | "glow_lichen" | "deepslate" | "deepslate_bricks" | "deepslate_tiles" | "polished_deepslate" | "froglight" | "frogspawn" | "mangrove_roots" | "muddy_mangrove_roots" | "mud" | "mud_bricks" | "packed_mud" | "hanging_sign" | "nether_wood_hanging_sign" | "bamboo_wood_hanging_sign" | "bamboo_wood" | "nether_wood" | "cherry_wood" | "cherry_sapling" | "cherry_leaves" | "cherry_wood_hanging_sign" | "chiseled_bookshelf" | "suspicious_sand" | "suspicious_gravel" | "decorated_pot" | "decorated_pot_cracked" | "trial_spawner" | "sponge" | "wet_sponge" | "vault" | "heavy_core" | "cobweb";
     export class $WeatheringCopperFullBlock extends $Block implements $WeatheringCopper {
+        getAge(): $WeatheringCopper$WeatherState;
         getNext(state: $BlockState_): ($BlockState) | undefined;
         /**
          * @return how much this block resists an explosion
          */
         getChanceModifier(): number;
-        getNextState(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): ($BlockState) | undefined;
         /**
          * Performs a random tick on a block.
          */
         changeOverTime(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): void;
-        getAge(): $WeatheringCopper$WeatherState;
+        getNextState(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): ($BlockState) | undefined;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -1739,8 +1739,8 @@ declare module "@package/net/minecraft/world/level/block" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(weatherState: $WeatheringCopper$WeatherState_, properties: $BlockBehaviour$Properties);
-        get chanceModifier(): number;
         get age(): $WeatheringCopper$WeatherState;
+        get chanceModifier(): number;
     }
     export class $BaseCoralWallFanBlock extends $BaseCoralFanBlock {
         explosionResistance: number;
@@ -1845,8 +1845,8 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $FlowerBlock extends $BushBlock implements $SuspiciousEffectHolder {
-        getSuspiciousEffects(): $SuspiciousStewEffects;
         static makeEffectList(effect: $Holder_<$MobEffect>, seconds: number): $SuspiciousStewEffects;
+        getSuspiciousEffects(): $SuspiciousStewEffects;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -2005,9 +2005,9 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties, blockEntityType: $Supplier_<$BlockEntityType<E>>);
     }
     export class $RedStoneWireBlock extends $Block {
+        static getColorForPower(power: number): number;
         static shouldConnectTo(state: $BlockState_): boolean;
         static shouldConnectTo(state: $BlockState_, direction: $Direction_ | null): boolean;
-        static getColorForPower(power: number): number;
         explosionResistance: number;
         static E: number;
         static WEST: $EnumProperty<$RedstoneSide>;
@@ -2050,6 +2050,7 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $ComposterBlock$OutputContainer extends $SimpleContainer implements $WorldlyContainer, $BlockStateOnlyInventory {
+        getSlotsForFace(side: $Direction_): number[];
         /**
          * Returns `true` if automation can insert the given item in the given slot from the given side.
          */
@@ -2058,26 +2059,25 @@ declare module "@package/net/minecraft/world/level/block" {
          * Returns `true` if automation can insert the given item in the given slot from the given side.
          */
         canTakeItemThroughFace(index: number, itemStack: $ItemStack_, direction: $Direction_): boolean;
-        getSlotsForFace(side: $Direction_): number[];
         items: $NonNullList<$ItemStack>;
         constructor(state: $BlockState_, level: $LevelAccessor, pos: $BlockPos_, stack: $ItemStack_);
     }
     export class $MultifaceSpreader$SpreadConfig {
     }
     export interface $MultifaceSpreader$SpreadConfig {
-        hasFace(state: $BlockState_, direction: $Direction_): boolean;
+        canSpreadInto(level: $BlockGetter, pos: $BlockPos_, spreadPos: $MultifaceSpreader$SpreadPos_): boolean;
+        getSpreadTypes(): $MultifaceSpreader$SpreadType[];
         getStateForPlacement(currentState: $BlockState_, level: $BlockGetter, pos: $BlockPos_, lookingDirection: $Direction_): $BlockState;
+        canSpreadFrom(state: $BlockState_, direction: $Direction_): boolean;
         isOtherBlockValidAsSource(otherBlock: $BlockState_): boolean;
         placeBlock(level: $LevelAccessor, pos: $MultifaceSpreader$SpreadPos_, state: $BlockState_, markForPostprocessing: boolean): boolean;
-        canSpreadInto(level: $BlockGetter, pos: $BlockPos_, spreadPos: $MultifaceSpreader$SpreadPos_): boolean;
-        canSpreadFrom(state: $BlockState_, direction: $Direction_): boolean;
-        getSpreadTypes(): $MultifaceSpreader$SpreadType[];
+        hasFace(state: $BlockState_, direction: $Direction_): boolean;
         get spreadTypes(): $MultifaceSpreader$SpreadType[];
     }
     export class $DoublePlantBlock extends $BushBlock {
-        static placeAt(level: $LevelAccessor, state: $BlockState_, pos: $BlockPos_, flags: number): void;
         static preventDropFromBottomPart(level: $Level_, pos: $BlockPos_, state: $BlockState_, player: $Player): void;
         static copyWaterloggedFrom(level: $LevelReader, pos: $BlockPos_, state: $BlockState_): $BlockState;
+        static placeAt(level: $LevelAccessor, state: $BlockState_, pos: $BlockPos_, flags: number): void;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -2173,9 +2173,9 @@ declare module "@package/net/minecraft/world/level/block" {
     }
     export class $LanternBlock extends $Block implements $SimpleWaterloggedBlock {
         static getConnectedDirection(state: $BlockState_): $Direction;
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -2286,8 +2286,8 @@ declare module "@package/net/minecraft/world/level/block" {
     export class $DoorBlock extends $Block implements $MoreBlockCulling {
         type(): $BlockSetType;
         isOpen(state: $BlockState_): boolean;
-        static isWoodenDoor(level: $Level_, pos: $BlockPos_): boolean;
         static isWoodenDoor(state: $BlockState_): boolean;
+        static isWoodenDoor(level: $Level_, pos: $BlockPos_): boolean;
         setOpen(entity: $Entity | null, level: $Level_, state: $BlockState_, pos: $BlockPos_, open: boolean): void;
         static SOUTH_AABB: $VoxelShape;
         explosionResistance: number;
@@ -2442,8 +2442,8 @@ declare module "@package/net/minecraft/world/level/block" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         static EFFECTS_FIELD: $MapCodec<$SuspiciousStewEffects>;
-        constructor(effect: $Holder_<$MobEffect>, seconds: number, properties: $BlockBehaviour$Properties);
         constructor(suspiciousStewEffects: $SuspiciousStewEffects_, properties: $BlockBehaviour$Properties);
+        constructor(effect: $Holder_<$MobEffect>, seconds: number, properties: $BlockBehaviour$Properties);
     }
     export class $MossBlock extends $Block implements $BonemealableBlock {
         getType(): $BonemealableBlock$Type;
@@ -2549,17 +2549,17 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(arg0: $BlockBehaviour$Properties);
     }
     export class $WeatheringCopperGrateBlock extends $WaterloggedTransparentBlock implements $WeatheringCopper {
+        getAge(): $WeatheringCopper$WeatherState;
         getNext(state: $BlockState_): ($BlockState) | undefined;
         /**
          * @return how much this block resists an explosion
          */
         getChanceModifier(): number;
-        getNextState(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): ($BlockState) | undefined;
         /**
          * Performs a random tick on a block.
          */
         changeOverTime(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): void;
-        getAge(): $WeatheringCopper$WeatherState;
+        getNextState(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): ($BlockState) | undefined;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -2589,8 +2589,8 @@ declare module "@package/net/minecraft/world/level/block" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(weatherState: $WeatheringCopper$WeatherState_, properties: $BlockBehaviour$Properties);
-        get chanceModifier(): number;
         get age(): $WeatheringCopper$WeatherState;
+        get chanceModifier(): number;
     }
     export class $SkullBlock$Types extends $Enum<$SkullBlock$Types> implements $SkullBlock$Type {
         static values(): $SkullBlock$Types[];
@@ -2644,15 +2644,15 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $GlowLichenBlock extends $MultifaceBlock implements $BonemealableBlock, $SimpleWaterloggedBlock {
-        static emission(light: number): $ToIntFunction<$BlockState>;
         performBonemeal(level: $ServerLevel, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): void;
         isBonemealSuccess(level: $Level_, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): boolean;
         isValidBonemealTarget(level: $LevelReader, pos: $BlockPos_, state: $BlockState_): boolean;
+        static emission(light: number): $ToIntFunction<$BlockState>;
         getType(): $BonemealableBlock$Type;
         getParticlePos(pos: $BlockPos_): $BlockPos;
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -2692,9 +2692,9 @@ declare module "@package/net/minecraft/world/level/block" {
         get type(): $BonemealableBlock$Type;
     }
     export class $BellBlock extends $BaseEntityBlock implements $BlockWithSubLevelCollisionCallback {
-        attemptToRing(entity: $Entity | null, level: $Level_, pos: $BlockPos_, direction: $Direction_ | null): boolean;
-        attemptToRing(level: $Level_, pos: $BlockPos_, direction: $Direction_ | null): boolean;
         sable$getCallback(): $BlockSubLevelCollisionCallback;
+        attemptToRing(level: $Level_, pos: $BlockPos_, direction: $Direction_ | null): boolean;
+        attemptToRing(entity: $Entity | null, level: $Level_, pos: $BlockPos_, direction: $Direction_ | null): boolean;
         onHit(level: $Level_, state: $BlockState_, result: $BlockHitResult, player: $Player | null, canRingBell: boolean): boolean;
         static ATTACHMENT: $EnumProperty<$BellAttachType>;
         explosionResistance: number;
@@ -2732,12 +2732,12 @@ declare module "@package/net/minecraft/world/level/block" {
     export class $ComposterBlock extends $Block implements $WorldlyContainerHolder {
         static getValue(arg0: $ItemStack_): number;
         static empty(entity: $Entity | null, state: $BlockState_, level: $LevelAccessor, pos: $BlockPos_): $BlockState;
+        static extractProduce(entity: $Entity, state: $BlockState_, level: $Level_, pos: $BlockPos_): $BlockState;
         getContainer(state: $BlockState_, level: $LevelAccessor, pos: $BlockPos_): $WorldlyContainer;
         static addItem(entity: $Entity | null, state: $BlockState_, level: $LevelAccessor, pos: $BlockPos_, stack: $ItemStack_): $BlockState;
-        static extractProduce(entity: $Entity, state: $BlockState_, level: $Level_, pos: $BlockPos_): $BlockState;
         static bootStrap(): void;
-        static insertItem(entity: $Entity, state: $BlockState_, level: $ServerLevel, stack: $ItemStack_, pos: $BlockPos_): $BlockState;
         static handleFill(level: $Level_, pos: $BlockPos_, success: boolean): void;
+        static insertItem(entity: $Entity, state: $BlockState_, level: $ServerLevel, stack: $ItemStack_, pos: $BlockPos_): $BlockState;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static MIN_LEVEL: number;
@@ -2813,8 +2813,8 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(precipitationType: $Biome$Precipitation_, interactions: $CauldronInteraction$InteractionMap_, properties: $BlockBehaviour$Properties);
     }
     export class $CandleCakeBlock extends $AbstractCandleBlock {
-        static byCandle(candle: $CandleBlock): $BlockState;
         static canLight(state: $BlockState_): boolean;
+        static byCandle(candle: $CandleBlock): $BlockState;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -2851,9 +2851,9 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(candleBlock: $Block_, properties: $BlockBehaviour$Properties);
     }
     export class $PowderSnowBlock extends $Block implements $BucketPickup, $MoreBlockCulling {
-        static canEntityWalkOnPowderSnow(entity: $Entity): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
         getPickupSound(): ($SoundEvent) | undefined;
+        static canEntityWalkOnPowderSnow(entity: $Entity): boolean;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
          * 
@@ -2891,9 +2891,9 @@ declare module "@package/net/minecraft/world/level/block" {
     }
     export class $LightningRodBlock extends $RodBlock implements $SimpleWaterloggedBlock {
         onLightningStrike(state: $BlockState_, level: $Level_, pos: $BlockPos_): void;
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -2972,6 +2972,7 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $ComposterBlock$EmptyContainer extends $SimpleContainer implements $WorldlyContainer, $BlockStateOnlyInventory {
+        getSlotsForFace(side: $Direction_): number[];
         /**
          * Returns `true` if automation can insert the given item in the given slot from the given side.
          */
@@ -2980,14 +2981,13 @@ declare module "@package/net/minecraft/world/level/block" {
          * Returns `true` if automation can insert the given item in the given slot from the given side.
          */
         canTakeItemThroughFace(index: number, itemStack: $ItemStack_, direction: $Direction_): boolean;
-        getSlotsForFace(side: $Direction_): number[];
         items: $NonNullList<$ItemStack>;
         constructor();
     }
     export class $BaseFireBlock extends $Block {
         static getState(reader: $BlockGetter, pos: $BlockPos_): $BlockState;
-        static canBePlacedAt(level: $Level_, pos: $BlockPos_, direction: $Direction_): boolean;
         canBurn(state: $BlockState_): boolean;
+        static canBePlacedAt(level: $Level_, pos: $BlockPos_, direction: $Direction_): boolean;
         explosionResistance: number;
         static DOWN_AABB: $VoxelShape;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -3020,10 +3020,8 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties, fireDamage: number);
     }
     export class $BaseRailBlock extends $Block implements $SimpleWaterloggedBlock, $IBaseRailBlockExtension, $MoreBlockCulling {
-        static isRail(level: $Level_, pos: $BlockPos_): boolean;
-        static isRail(state: $BlockState_): boolean;
-        isStraight(): boolean;
-        updateDir(level: $Level_, pos: $BlockPos_, state: $BlockState_, alwaysPlace: boolean): $BlockState;
+        updateState(state: $BlockState_, level: $Level_, pos: $BlockPos_, movedByPiston: boolean): $BlockState;
+        updateState(state: $BlockState_, level: $Level_, pos: $BlockPos_, neighborBlock: $Block_): void;
         /**
          * Return the rail's direction.
          * Can be used to make the cart think the rail is a different shape,
@@ -3031,24 +3029,23 @@ declare module "@package/net/minecraft/world/level/block" {
          * The cart parameter will often be null unless it it called from EntityMinecart.
          */
         getRailDirection(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, cart: $AbstractMinecart): $RailShape;
-        isFlexibleRail(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_): boolean;
-        updateState(state: $BlockState_, level: $Level_, pos: $BlockPos_, neighborBlock: $Block_): void;
-        updateState(state: $BlockState_, level: $Level_, pos: $BlockPos_, movedByPiston: boolean): $BlockState;
         /**
          * @deprecated
          */
         getShapeProperty(): $Property<$RailShape>;
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
+        isFlexibleRail(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_): boolean;
+        updateDir(level: $Level_, pos: $BlockPos_, state: $BlockState_, alwaysPlace: boolean): $BlockState;
+        isStraight(): boolean;
+        static isRail(state: $BlockState_): boolean;
+        static isRail(level: $Level_, pos: $BlockPos_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
-         * Returns true if the given `RailShape` is valid for this rail block.
-         * This is called when the RailShape for the initial placement of this block is calculated or
-         * when another rail block tries to connect to this block and this block's RailState calculates
-         * the new RailShape for its current neigbors.
+         * Returns the max speed of the rail at the specified position.
          */
-        isValidRailShape(shape: $RailShape_): boolean;
+        getRailMaxSpeed(state: $BlockState_, level: $Level_, pos: $BlockPos_, cart: $AbstractMinecart): number;
         /**
          * This function is called by any minecart that passes over this rail.
          * It is called once per update tick that the minecart is on the rail.
@@ -3056,9 +3053,12 @@ declare module "@package/net/minecraft/world/level/block" {
         onMinecartPass(state: $BlockState_, level: $Level_, pos: $BlockPos_, cart: $AbstractMinecart): void;
         canMakeSlopes(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_): boolean;
         /**
-         * Returns the max speed of the rail at the specified position.
+         * Returns true if the given `RailShape` is valid for this rail block.
+         * This is called when the RailShape for the initial placement of this block is calculated or
+         * when another rail block tries to connect to this block and this block's RailState calculates
+         * the new RailShape for its current neigbors.
          */
-        getRailMaxSpeed(state: $BlockState_, level: $Level_, pos: $BlockPos_, cart: $AbstractMinecart): number;
+        isValidRailShape(shape: $RailShape_): boolean;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
          * 
@@ -3096,13 +3096,13 @@ declare module "@package/net/minecraft/world/level/block" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(isStraight: boolean, properties: $BlockBehaviour$Properties);
-        get straight(): boolean;
         get shapeProperty(): $Property<$RailShape>;
+        get straight(): boolean;
     }
     export class $DecoratedPotBlock extends $BaseEntityBlock implements $SimpleWaterloggedBlock {
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -3172,9 +3172,9 @@ declare module "@package/net/minecraft/world/level/block" {
     export class $DoubleBlockCombiner$Combiner<S, T> {
     }
     export interface $DoubleBlockCombiner$Combiner<S, T> {
-        acceptNone(): T;
         acceptDouble(first: S, second: S): T;
         acceptSingle(single: S): T;
+        acceptNone(): T;
     }
     export class $HayBlock extends $RotatedPillarBlock {
         explosionResistance: number;
@@ -3212,10 +3212,10 @@ declare module "@package/net/minecraft/world/level/block" {
     /**
      * Values that may be interpreted as {@link $PitcherCropBlock$PosAndState}.
      */
-    export type $PitcherCropBlock$PosAndState_ = { pos?: $BlockPos_, state?: $BlockState_,  } | [pos?: $BlockPos_, state?: $BlockState_, ];
+    export type $PitcherCropBlock$PosAndState_ = { state?: $BlockState_, pos?: $BlockPos_,  } | [state?: $BlockState_, pos?: $BlockPos_, ];
     export class $FlowerPotBlock extends $Block {
-        getEmptyPot(): $FlowerPotBlock;
         getFullPotsView(): $Map<$ResourceLocation, $Supplier<$Block>>;
+        getEmptyPot(): $FlowerPotBlock;
         getPotted(): $Block;
         addPlant(arg0: $ResourceLocation_, arg1: $Supplier_<$Block>): void;
         explosionResistance: number;
@@ -3252,8 +3252,8 @@ declare module "@package/net/minecraft/world/level/block" {
          * @deprecated
          */
         constructor(potted: $Block_, properties: $BlockBehaviour$Properties);
-        get emptyPot(): $FlowerPotBlock;
         get fullPotsView(): $Map<$ResourceLocation, $Supplier<$Block>>;
+        get emptyPot(): $FlowerPotBlock;
         get potted(): $Block;
     }
     export class $AttachedStemBlock extends $BushBlock {
@@ -3289,9 +3289,9 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(stem: $ResourceKey_<$Block>, fruit: $ResourceKey_<$Block>, seed: $ResourceKey_<$Item>, properties: $BlockBehaviour$Properties);
     }
     export class $GrowingPlantBlock extends $Block {
+        canAttachTo(state: $BlockState_): boolean;
         getHeadBlock(): $GrowingPlantHeadBlock;
         getBodyBlock(): $Block;
-        canAttachTo(state: $BlockState_): boolean;
         getStateForPlacement(level: $LevelAccessor): $BlockState;
         growthDirection: $Direction;
         explosionResistance: number;
@@ -3436,8 +3436,8 @@ declare module "@package/net/minecraft/world/level/block" {
     export class $BambooSaplingBlock extends $Block implements $BonemealableBlock {
         performBonemeal(level: $ServerLevel, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): void;
         isBonemealSuccess(level: $Level_, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): boolean;
-        growBamboo(level: $Level_, state: $BlockPos_): void;
         isValidBonemealTarget(level: $LevelReader, pos: $BlockPos_, state: $BlockState_): boolean;
+        growBamboo(level: $Level_, state: $BlockPos_): void;
         getType(): $BonemealableBlock$Type;
         getParticlePos(pos: $BlockPos_): $BlockPos;
         explosionResistance: number;
@@ -3571,8 +3571,8 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $SaplingBlock extends $BushBlock implements $BonemealableBlock {
-        performBonemeal(level: $ServerLevel, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): void;
         advanceTree(level: $ServerLevel, pos: $BlockPos_, state: $BlockState_, random: $RandomSource): void;
+        performBonemeal(level: $ServerLevel, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): void;
         isBonemealSuccess(level: $Level_, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): boolean;
         isValidBonemealTarget(level: $LevelReader, pos: $BlockPos_, state: $BlockState_): boolean;
         getType(): $BonemealableBlock$Type;
@@ -3644,8 +3644,8 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(arg0: $BlockBehaviour$Properties);
     }
     export class $MangroveLeavesBlock extends $LeavesBlock implements $BonemealableBlock {
-        performBonemeal(arg0: $ServerLevel, arg1: $RandomSource, arg2: $BlockPos_, arg3: $BlockState_): void;
         getParticlePos(arg0: $BlockPos_): $BlockPos;
+        performBonemeal(arg0: $ServerLevel, arg1: $RandomSource, arg2: $BlockPos_, arg3: $BlockState_): void;
         isBonemealSuccess(arg0: $Level_, arg1: $RandomSource, arg2: $BlockPos_, arg3: $BlockState_): boolean;
         isValidBonemealTarget(arg0: $LevelReader, arg1: $BlockPos_, arg2: $BlockState_): boolean;
         getType(): $BonemealableBlock$Type;
@@ -3827,8 +3827,8 @@ declare module "@package/net/minecraft/world/level/block" {
         getBrushSound(): $SoundEvent;
         onBrokenAfterFall(level: $Level_, pos: $BlockPos_, fallingBlock: $FallingBlockEntity): void;
         getBrushCompletedSound(): $SoundEvent;
-        onLand(level: $Level_, pos: $BlockPos_, state: $BlockState_, replaceableState: $BlockState_, fallingBlock: $FallingBlockEntity): void;
         getFallDamageSource(entity: $Entity): $DamageSource;
+        onLand(level: $Level_, pos: $BlockPos_, state: $BlockState_, replaceableState: $BlockState_, fallingBlock: $FallingBlockEntity): void;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -3863,9 +3863,9 @@ declare module "@package/net/minecraft/world/level/block" {
         get brushCompletedSound(): $SoundEvent;
     }
     export class $WallBlock extends $Block implements $SimpleWaterloggedBlock {
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -3909,8 +3909,8 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $FaceAttachedHorizontalDirectionalBlock extends $HorizontalDirectionalBlock {
-        static canAttach(reader: $LevelReader, pos: $BlockPos_, direction: $Direction_): boolean;
         static getConnectedDirection(state: $BlockState_): $Direction;
+        static canAttach(reader: $LevelReader, pos: $BlockPos_, direction: $Direction_): boolean;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -3986,10 +3986,10 @@ declare module "@package/net/minecraft/world/level/block" {
      */
     export type $SkullBlock$Type_ = (() => void);
     export class $BeehiveBlock extends $BaseEntityBlock implements $BlockWithSubLevelCollisionCallback {
+        sable$getCallback(): $BlockSubLevelCollisionCallback;
         static dropHoneycomb(level: $Level_, pos: $BlockPos_): void;
         resetHoneyLevel(level: $Level_, state: $BlockState_, pos: $BlockPos_): void;
         releaseBeesAndResetHoneyLevel(level: $Level_, state: $BlockState_, pos: $BlockPos_, player: $Player | null, beeReleaseStatus: $BeehiveBlockEntity$BeeReleaseStatus_): void;
-        sable$getCallback(): $BlockSubLevelCollisionCallback;
         explosionResistance: number;
         static MAX_HONEY_LEVELS: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -4023,17 +4023,17 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $WeatheringCopperDoorBlock extends $DoorBlock implements $WeatheringCopper {
+        getAge(): $WeatheringCopper$WeatherState;
         getNext(state: $BlockState_): ($BlockState) | undefined;
         /**
          * @return how much this block resists an explosion
          */
         getChanceModifier(): number;
-        getNextState(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): ($BlockState) | undefined;
         /**
          * Performs a random tick on a block.
          */
         changeOverTime(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): void;
-        getAge(): $WeatheringCopper$WeatherState;
+        getNextState(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): ($BlockState) | undefined;
         static SOUTH_AABB: $VoxelShape;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -4072,8 +4072,8 @@ declare module "@package/net/minecraft/world/level/block" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(type: $BlockSetType_, weatherState: $WeatheringCopper$WeatherState_, properties: $BlockBehaviour$Properties);
-        get chanceModifier(): number;
         get age(): $WeatheringCopper$WeatherState;
+        get chanceModifier(): number;
     }
     export class $VaultBlock extends $BaseEntityBlock {
         explosionResistance: number;
@@ -4109,13 +4109,13 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(arg0: $BlockBehaviour$Properties);
     }
     export class $MultifaceSpreader {
-        spreadFromRandomFaceTowardRandomDirection(state: $BlockState_, level: $LevelAccessor, pos: $BlockPos_, random: $RandomSource): ($MultifaceSpreader$SpreadPos) | undefined;
-        spreadFromFaceTowardRandomDirection(state: $BlockState_, level: $LevelAccessor, pos: $BlockPos_, spreadDirection: $Direction_, random: $RandomSource, markForPostprocessing: boolean): ($MultifaceSpreader$SpreadPos) | undefined;
-        spreadAll(state: $BlockState_, level: $LevelAccessor, pos: $BlockPos_, markForPostprocessing: boolean): number;
-        canSpreadInAnyDirection(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, spreadDirection: $Direction_): boolean;
-        spreadFromFaceTowardDirection(state: $BlockState_, level: $LevelAccessor, pos: $BlockPos_, spreadDirection: $Direction_, face: $Direction_, markForPostprocessing: boolean): ($MultifaceSpreader$SpreadPos) | undefined;
-        getSpreadFromFaceTowardDirection(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, spreadDirection: $Direction_, face: $Direction_, predicate: $MultifaceSpreader$SpreadPredicate_): ($MultifaceSpreader$SpreadPos) | undefined;
         spreadToFace(level: $LevelAccessor, pos: $MultifaceSpreader$SpreadPos_, markForPostprocessing: boolean): ($MultifaceSpreader$SpreadPos) | undefined;
+        spreadFromRandomFaceTowardRandomDirection(state: $BlockState_, level: $LevelAccessor, pos: $BlockPos_, random: $RandomSource): ($MultifaceSpreader$SpreadPos) | undefined;
+        getSpreadFromFaceTowardDirection(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, spreadDirection: $Direction_, face: $Direction_, predicate: $MultifaceSpreader$SpreadPredicate_): ($MultifaceSpreader$SpreadPos) | undefined;
+        spreadFromFaceTowardDirection(state: $BlockState_, level: $LevelAccessor, pos: $BlockPos_, spreadDirection: $Direction_, face: $Direction_, markForPostprocessing: boolean): ($MultifaceSpreader$SpreadPos) | undefined;
+        canSpreadInAnyDirection(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, spreadDirection: $Direction_): boolean;
+        spreadAll(state: $BlockState_, level: $LevelAccessor, pos: $BlockPos_, markForPostprocessing: boolean): number;
+        spreadFromFaceTowardRandomDirection(state: $BlockState_, level: $LevelAccessor, pos: $BlockPos_, spreadDirection: $Direction_, random: $RandomSource, markForPostprocessing: boolean): ($MultifaceSpreader$SpreadPos) | undefined;
         static DEFAULT_SPREAD_ORDER: $MultifaceSpreader$SpreadType[];
         constructor(block: $MultifaceBlock);
         constructor(config: $MultifaceSpreader$SpreadConfig);
@@ -4187,13 +4187,13 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $FallingBlock extends $Block implements $Fallable {
-        falling(entity: $FallingBlockEntity): void;
-        getDustColor(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_): number;
         getDelayAfterPlace(): number;
+        getDustColor(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_): number;
+        falling(entity: $FallingBlockEntity): void;
         static isFree(state: $BlockState_): boolean;
-        onLand(level: $Level_, pos: $BlockPos_, state: $BlockState_, replaceableState: $BlockState_, fallingBlock: $FallingBlockEntity): void;
         onBrokenAfterFall(level: $Level_, pos: $BlockPos_, fallingBlock: $FallingBlockEntity): void;
         getFallDamageSource(entity: $Entity): $DamageSource;
+        onLand(level: $Level_, pos: $BlockPos_, state: $BlockState_, replaceableState: $BlockState_, fallingBlock: $FallingBlockEntity): void;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -4272,9 +4272,9 @@ declare module "@package/net/minecraft/world/level/block" {
     }
     export interface $ChangeOverTimeBlock<T extends $Enum<T>> {
         getNext(state: $BlockState_): ($BlockState) | undefined;
+        changeOverTime(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): void;
         getChanceModifier(): number;
         getNextState(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): ($BlockState) | undefined;
-        changeOverTime(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): void;
         getAge(): T;
         get chanceModifier(): number;
         get age(): T;
@@ -4417,20 +4417,20 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $Blocks {
-        static never(state: $BlockState_, blockGetter: $BlockGetter, pos: $BlockPos_): boolean;
-        static never(state: $BlockState_, blockGetter: $BlockGetter, pos: $BlockPos_, entity: $EntityType_<never>): boolean;
         static log(topMapColor: $MapColor, sideMapColor: $MapColor, soundType: $SoundType_): $Block;
         static log(topMapColor: $MapColor, sideMapColor: $MapColor): $Block;
         static register(resourceKey: $ResourceKey_<$Block>, block: $Block_): $Block;
         static register(key: string, block: $Block_): $Block;
-        static always(state: $BlockState_, blockGetter: $BlockGetter, pos: $BlockPos_, entity: $EntityType_<never>): boolean;
+        static never(state: $BlockState_, blockGetter: $BlockGetter, pos: $BlockPos_, entity: $EntityType_<never>): boolean;
+        static never(state: $BlockState_, blockGetter: $BlockGetter, pos: $BlockPos_): boolean;
         static always(state: $BlockState_, blockGetter: $BlockGetter, pos: $BlockPos_): boolean;
+        static always(state: $BlockState_, blockGetter: $BlockGetter, pos: $BlockPos_, entity: $EntityType_<never>): boolean;
+        static leaves(soundType: $SoundType_): $Block;
         static netherStem(mapColor: $MapColor): $Block;
         static flowerPot(potted: $Block_): $Block;
-        static leaves(soundType: $SoundType_): $Block;
+        static litBlockEmission(lightValue: number): $ToIntFunction<$BlockState>;
         static stoneButton(): $Block;
         static rebuildCache(): void;
-        static litBlockEmission(lightValue: number): $ToIntFunction<$BlockState>;
         static woodenButton(type: $BlockSetType_): $Block;
         static ocelotOrParrot(state: $BlockState_, blockGetter: $BlockGetter, pos: $BlockPos_, entity: $EntityType_<never>): boolean;
         static GREEN_CONCRETE_POWDER: $Block;
@@ -5622,15 +5622,15 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $CampfireBlock extends $BaseEntityBlock implements $SimpleWaterloggedBlock {
+        placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         static makeParticles(level: $Level_, pos: $BlockPos_, isSignalFire: boolean, spawnExtraSmoke: boolean): void;
         static isLitCampfire(state: $BlockState_): boolean;
         static isSmokeyPos(level: $Level_, pos: $BlockPos_): boolean;
-        handler$fai000$farmersdelight$isFDSmokeSource(arg0: $BlockState_, arg1: $CallbackInfoReturnable<any>): void;
-        placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         static dowse(entity: $Entity | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): void;
         static canLight(state: $BlockState_): boolean;
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
+        handler$fai000$farmersdelight$isFDSmokeSource(arg0: $BlockState_, arg1: $CallbackInfoReturnable<any>): void;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -5675,9 +5675,9 @@ declare module "@package/net/minecraft/world/level/block" {
     export class $CrossCollisionBlock extends $Block implements $SimpleWaterloggedBlock {
         makeShapes(nodeWidth: number, extensionWidth: number, nodeHeight: number, extensionBottom: number, extensionHeight: number): $VoxelShape[];
         getAABBIndex(state: $BlockState_): number;
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -5793,8 +5793,8 @@ declare module "@package/net/minecraft/world/level/block" {
     }
     export interface $BonemealableBlock {
         getType(): $BonemealableBlock$Type;
-        performBonemeal(level: $ServerLevel, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): void;
         getParticlePos(pos: $BlockPos_): $BlockPos;
+        performBonemeal(level: $ServerLevel, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): void;
         isBonemealSuccess(level: $Level_, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): boolean;
         isValidBonemealTarget(level: $LevelReader, pos: $BlockPos_, state: $BlockState_): boolean;
         get type(): $BonemealableBlock$Type;
@@ -5802,14 +5802,14 @@ declare module "@package/net/minecraft/world/level/block" {
     export class $Rotation extends $Enum<$Rotation> implements $StringRepresentable {
         static values(): $Rotation[];
         static valueOf(arg0: string): $Rotation;
-        rotate(facing: $Direction_): $Direction;
         rotate(rotation: number, positionCount: number): number;
+        rotate(facing: $Direction_): $Direction;
+        rotation(): $OctahedralGroup;
         /**
          * Chooses a random rotation.
          */
         static getRandom(random: $RandomSource): $Rotation;
         getSerializedName(): string;
-        rotation(): $OctahedralGroup;
         /**
          * Get a list of all rotations in random order.
          */
@@ -5986,9 +5986,9 @@ declare module "@package/net/minecraft/world/level/block" {
         get pickupSound(): ($SoundEvent) | undefined;
     }
     export class $ConduitBlock extends $BaseEntityBlock implements $SimpleWaterloggedBlock {
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -6028,9 +6028,9 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $MangroveRootsBlock extends $Block implements $SimpleWaterloggedBlock, $LeavesCulling, $MoreBlockCulling {
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -6133,10 +6133,10 @@ declare module "@package/net/minecraft/world/level/block" {
     export class $SculkBlock extends $DropExperienceBlock implements $SculkBehaviour {
         attemptUseCharge(cursor: $SculkSpreader$ChargeCursor, level: $LevelAccessor, pos: $BlockPos_, random: $RandomSource, spreader: $SculkSpreader, shouldConvertBlocks: boolean): number;
         canChangeBlockStateOnSpread(): boolean;
+        onDischarged(level: $LevelAccessor, state: $BlockState_, pos: $BlockPos_, random: $RandomSource): void;
+        depositCharge(level: $LevelAccessor, pos: $BlockPos_, random: $RandomSource): boolean;
         attemptSpreadVein(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, directions: $Collection_<$Direction_> | null, markForPostprocessing: boolean): boolean;
         updateDecayDelay(currentDecayDelay: number): number;
-        depositCharge(level: $LevelAccessor, pos: $BlockPos_, random: $RandomSource): boolean;
-        onDischarged(level: $LevelAccessor, state: $BlockState_, pos: $BlockPos_, random: $RandomSource): void;
         getSculkSpreadDelay(): number;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -6169,8 +6169,8 @@ declare module "@package/net/minecraft/world/level/block" {
         get sculkSpreadDelay(): number;
     }
     export class $KelpPlantBlock extends $GrowingPlantBodyBlock implements $LiquidBlockContainer {
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         growthDirection: $Direction;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -6278,9 +6278,9 @@ declare module "@package/net/minecraft/world/level/block" {
     export class $SimpleWaterloggedBlock {
     }
     export interface $SimpleWaterloggedBlock extends $BucketPickup, $LiquidBlockContainer {
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         get pickupSound(): ($SoundEvent) | undefined;
     }
@@ -6317,8 +6317,8 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $TallSeagrassBlock extends $DoublePlantBlock implements $LiquidBlockContainer {
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -6384,18 +6384,18 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $CropBlock extends $BushBlock implements $BonemealableBlock, $CropBlockAccessor {
-        getMaxAge(): number;
-        getAge(state: $BlockState_): number;
         performBonemeal(level: $ServerLevel, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): void;
         isBonemealSuccess(level: $Level_, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): boolean;
+        getAgeProperty(): $IntegerProperty;
         getStateForAge(age: number): $BlockState;
         static hasSufficientLight(level: $LevelReader, pos: $BlockPos_): boolean;
-        static getGrowthSpeed(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_): number;
-        getAgeProperty(): $IntegerProperty;
         getBaseSeedId(): $ItemLike;
+        static getGrowthSpeed(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_): number;
+        getAge(state: $BlockState_): number;
+        getMaxAge(): number;
+        isMaxAge(state: $BlockState_): boolean;
         isValidBonemealTarget(level: $LevelReader, pos: $BlockPos_, state: $BlockState_): boolean;
         getBonemealAgeIncrease(level: $Level_): number;
-        isMaxAge(state: $BlockState_): boolean;
         growCrops(level: $Level_, pos: $BlockPos_, state: $BlockState_): void;
         getType(): $BonemealableBlock$Type;
         getParticlePos(pos: $BlockPos_): $BlockPos;
@@ -6467,20 +6467,20 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $FireBlock extends $BaseFireBlock implements $FireBlockHooks {
-        canCatchFire(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Direction_): boolean;
-        setFlammable(block: $Block_, encouragement: number, flammability: number): void;
-        static bootStrap(): void;
-        isNearRain(level: $Level_, pos: $BlockPos_): boolean;
         fabric_getVanillaEntry(arg0: $BlockState_): $FlammableBlockRegistry$Entry;
-        getStateForPlacement(level: $BlockGetter, pos: $BlockPos_): $BlockState;
-        /**
-         * @deprecated
-         */
-        getBurnOdds(state: $BlockState_): number;
+        static bootStrap(): void;
         /**
          * @deprecated
          */
         getIgniteOdds(state: $BlockState_): number;
+        /**
+         * @deprecated
+         */
+        getBurnOdds(state: $BlockState_): number;
+        getStateForPlacement(level: $BlockGetter, pos: $BlockPos_): $BlockState;
+        isNearRain(level: $Level_, pos: $BlockPos_): boolean;
+        canCatchFire(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Direction_): boolean;
+        setFlammable(block: $Block_, encouragement: number, flammability: number): void;
         explosionResistance: number;
         static DOWN_AABB: $VoxelShape;
         static WEST: $BooleanProperty;
@@ -6602,9 +6602,9 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(apothem: number, properties: $BlockBehaviour$Properties);
     }
     export class $ChainBlock extends $RotatedPillarBlock implements $SimpleWaterloggedBlock {
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -6650,8 +6650,8 @@ declare module "@package/net/minecraft/world/level/block" {
     }
     export class $InfestedBlock extends $Block {
         getHostBlock(): $Block;
-        hostStateByInfested(infested: $BlockState_): $BlockState;
         static infestedStateByHost(infested: $BlockState_): $BlockState;
+        hostStateByInfested(infested: $BlockState_): $BlockState;
         static isCompatibleHostBlock(state: $BlockState_): boolean;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -6868,13 +6868,9 @@ declare module "@package/net/minecraft/world/level/block" {
     }
     export class $DeadBushBlock extends $BushBlock implements $IShearable {
         /**
-         * Shears this object. This function is called on both sides, and is responsible for performing any and all actions that happen when sheared, except spawning drops.
-         * 
-         * Drops that are spawned as a result of being sheared should be returned from this method, and will be spawned on the server using `#spawnShearedDrop`.
-         * 
-         * Entities may respect their internal position values instead of relying on the `pos` parameter.
+         * Spawns the given stack into the Level at the given position, respecting the doTileDrops gamerule
          */
-        onSheared(player: $Player, item: $ItemStack_, level: $Level_, pos: $BlockPos_): $List<$ItemStack>;
+        spawnShearedDrop(level: $Level_, pos: $BlockPos_, stack: $ItemStack_): void;
         /**
          * Checks if this object can be sheared.
          * 
@@ -6882,9 +6878,13 @@ declare module "@package/net/minecraft/world/level/block" {
          */
         isShearable(player: $Player, item: $ItemStack_, level: $Level_, pos: $BlockPos_): boolean;
         /**
-         * Spawns the given stack into the Level at the given position, respecting the doTileDrops gamerule
+         * Shears this object. This function is called on both sides, and is responsible for performing any and all actions that happen when sheared, except spawning drops.
+         * 
+         * Drops that are spawned as a result of being sheared should be returned from this method, and will be spawned on the server using `#spawnShearedDrop`.
+         * 
+         * Entities may respect their internal position values instead of relying on the `pos` parameter.
          */
-        spawnShearedDrop(level: $Level_, pos: $BlockPos_, stack: $ItemStack_): void;
+        onSheared(player: $Player, item: $ItemStack_, level: $Level_, pos: $BlockPos_): $List<$ItemStack>;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -6947,10 +6947,8 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(arg0: $Block_, arg1: $BlockBehaviour$Properties);
     }
     export class $DiodeBlock extends $HorizontalDirectionalBlock {
-        getDelay(state: $BlockState_): number;
         isLocked(level: $LevelReader, pos: $BlockPos_, state: $BlockState_): boolean;
-        static isDiode(state: $BlockState_): boolean;
-        getAlternateSignal(level: $SignalGetter, pos: $BlockPos_, state: $BlockState_): number;
+        canSurviveOn(level: $LevelReader, pos: $BlockPos_, state: $BlockState_): boolean;
         /**
          * Check if this diode should have a higher tick priority than default.
          * 
@@ -6959,19 +6957,21 @@ declare module "@package/net/minecraft/world/level/block" {
          * mechanic more reliable.
          */
         shouldPrioritize(level: $BlockGetter, pos: $BlockPos_, state: $BlockState_): boolean;
-        getInputSignal(level: $Level_, pos: $BlockPos_, state: $BlockState_): number;
-        shouldTurnOn(level: $Level_, pos: $BlockPos_, state: $BlockState_): boolean;
         getOutputSignal(level: $BlockGetter, pos: $BlockPos_, state: $BlockState_): number;
-        canSurviveOn(level: $LevelReader, pos: $BlockPos_, state: $BlockState_): boolean;
-        /**
-         * Check the output signal of this diode and schedule a new block tick if it should change.
-         */
-        checkTickOnNeighbor(level: $Level_, pos: $BlockPos_, state: $BlockState_): void;
+        shouldTurnOn(level: $Level_, pos: $BlockPos_, state: $BlockState_): boolean;
+        getAlternateSignal(level: $SignalGetter, pos: $BlockPos_, state: $BlockState_): number;
+        getInputSignal(level: $Level_, pos: $BlockPos_, state: $BlockState_): number;
+        getDelay(state: $BlockState_): number;
         /**
          * Check the output signal of this diode and schedule a new block tick if it should change.
          */
         updateNeighborsInFront(level: $Level_, pos: $BlockPos_, state: $BlockState_): void;
         sideInputDiodesOnly(): boolean;
+        /**
+         * Check the output signal of this diode and schedule a new block tick if it should change.
+         */
+        checkTickOnNeighbor(level: $Level_, pos: $BlockPos_, state: $BlockState_): void;
+        static isDiode(state: $BlockState_): boolean;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -7005,6 +7005,7 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $ComposterBlock$InputContainer extends $SimpleContainer implements $WorldlyContainer, $BlockStateOnlyInventory {
+        getSlotsForFace(side: $Direction_): number[];
         /**
          * Returns `true` if automation can insert the given item in the given slot from the given side.
          */
@@ -7013,7 +7014,6 @@ declare module "@package/net/minecraft/world/level/block" {
          * Returns `true` if automation can insert the given item in the given slot from the given side.
          */
         canTakeItemThroughFace(index: number, itemStack: $ItemStack_, direction: $Direction_): boolean;
-        getSlotsForFace(side: $Direction_): number[];
         items: $NonNullList<$ItemStack>;
         constructor(state: $BlockState_, level: $LevelAccessor, pos: $BlockPos_);
     }
@@ -7057,17 +7057,17 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $MultifaceBlock extends $Block {
-        static pack(directions: $Collection_<$Direction_>): number;
-        static unpack(packedDirections: number): $Set<$Direction>;
-        static hasAnyFace(state: $BlockState_): boolean;
-        static hasFace(state: $BlockState_, direction: $Direction_): boolean;
+        static canAttachTo(level: $BlockGetter, direction: $Direction_, pos: $BlockPos_, state: $BlockState_): boolean;
         static getFaceProperty(direction: $Direction_): $BooleanProperty;
-        getSpreader(): $MultifaceSpreader;
         static availableFaces(state: $BlockState_): $Set<$Direction>;
         isFaceSupported(face: $Direction_): boolean;
-        static canAttachTo(level: $BlockGetter, direction: $Direction_, pos: $BlockPos_, state: $BlockState_): boolean;
+        getSpreader(): $MultifaceSpreader;
+        static pack(directions: $Collection_<$Direction_>): number;
+        static unpack(packedDirections: number): $Set<$Direction>;
         getStateForPlacement(currentState: $BlockState_, level: $BlockGetter, pos: $BlockPos_, lookingDirection: $Direction_): $BlockState;
         isValidStateForPlacement(level: $BlockGetter, state: $BlockState_, pos: $BlockPos_, direction: $Direction_): boolean;
+        static hasFace(state: $BlockState_, direction: $Direction_): boolean;
+        static hasAnyFace(state: $BlockState_): boolean;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -7100,15 +7100,15 @@ declare module "@package/net/minecraft/world/level/block" {
         get spreader(): $MultifaceSpreader;
     }
     export class $JigsawBlock extends $Block implements $EntityBlock, $GameMasterBlock {
-        /**
-         * This represents the face that the puzzle piece is on. To connect: 2 jigsaws must have their puzzle piece face facing each other.
-         */
-        static getFrontFacing(state: $BlockState_): $Direction;
+        newBlockEntity(pos: $BlockPos_, state: $BlockState_): $BlockEntity;
         /**
          * This represents the face that the puzzle piece is on. To connect: 2 jigsaws must have their puzzle piece face facing each other.
          */
         static getTopFacing(state: $BlockState_): $Direction;
-        newBlockEntity(pos: $BlockPos_, state: $BlockState_): $BlockEntity;
+        /**
+         * This represents the face that the puzzle piece is on. To connect: 2 jigsaws must have their puzzle piece face facing each other.
+         */
+        static getFrontFacing(state: $BlockState_): $Direction;
         static canAttach(info: $StructureTemplate$StructureBlockInfo_, info2: $StructureTemplate$StructureBlockInfo_): boolean;
         getListener<T extends $BlockEntity>(level: $ServerLevel, blockEntity: T): $GameEventListener;
         getTicker<T extends $BlockEntity>(level: $Level_, state: $BlockState_, blockEntityType: $BlockEntityType_<T>): $BlockEntityTicker<T>;
@@ -7208,10 +7208,10 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $ShulkerBoxBlock extends $BaseEntityBlock implements $MoreBlockCulling {
-        getColor(): $DyeColor;
+        static getColorFromItem(item: $Item_): $DyeColor;
         static getBlockByColor(color: $DyeColor_ | null): $Block;
         static getColorFromBlock(block: $Block_): $DyeColor;
-        static getColorFromItem(item: $Item_): $DyeColor;
+        getColor(): $DyeColor;
         static getColoredItemStack(color: $DyeColor_ | null): $ItemStack;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -7290,9 +7290,9 @@ declare module "@package/net/minecraft/world/level/block" {
     export type $BeaconBeamBlock_ = (() => $DyeColor_);
     export class $StairBlock extends $Block implements $SimpleWaterloggedBlock {
         static isStairs(state: $BlockState_): boolean;
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -7379,8 +7379,8 @@ declare module "@package/net/minecraft/world/level/block" {
         get color(): $DyeColor;
     }
     export class $SlabBlock extends $Block implements $SimpleWaterloggedBlock {
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
@@ -7423,17 +7423,17 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $WeatheringCopperBulbBlock extends $CopperBulbBlock implements $WeatheringCopper {
+        getAge(): $WeatheringCopper$WeatherState;
         getNext(state: $BlockState_): ($BlockState) | undefined;
         /**
          * @return how much this block resists an explosion
          */
         getChanceModifier(): number;
-        getNextState(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): ($BlockState) | undefined;
         /**
          * Performs a random tick on a block.
          */
         changeOverTime(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): void;
-        getAge(): $WeatheringCopper$WeatherState;
+        getNextState(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): ($BlockState) | undefined;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -7464,8 +7464,8 @@ declare module "@package/net/minecraft/world/level/block" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(weatherState: $WeatheringCopper$WeatherState_, properties: $BlockBehaviour$Properties);
-        get chanceModifier(): number;
         get age(): $WeatheringCopper$WeatherState;
+        get chanceModifier(): number;
     }
     export class $SmallDripleafBlock extends $DoublePlantBlock implements $BonemealableBlock, $SimpleWaterloggedBlock {
         performBonemeal(arg0: $ServerLevel, arg1: $RandomSource, arg2: $BlockPos_, arg3: $BlockState_): void;
@@ -7473,9 +7473,9 @@ declare module "@package/net/minecraft/world/level/block" {
         isValidBonemealTarget(arg0: $LevelReader, arg1: $BlockPos_, arg2: $BlockState_): boolean;
         getType(): $BonemealableBlock$Type;
         getParticlePos(arg0: $BlockPos_): $BlockPos;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -7513,17 +7513,17 @@ declare module "@package/net/minecraft/world/level/block" {
         get type(): $BonemealableBlock$Type;
     }
     export class $WeatheringCopperStairBlock extends $StairBlock implements $WeatheringCopper {
+        getAge(): $WeatheringCopper$WeatherState;
         getNext(state: $BlockState_): ($BlockState) | undefined;
         /**
          * @return how much this block resists an explosion
          */
         getChanceModifier(): number;
-        getNextState(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): ($BlockState) | undefined;
         /**
          * Performs a random tick on a block.
          */
         changeOverTime(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): void;
-        getAge(): $WeatheringCopper$WeatherState;
+        getNextState(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): ($BlockState) | undefined;
         static TOP_SHAPES: $VoxelShape[];
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -7569,8 +7569,8 @@ declare module "@package/net/minecraft/world/level/block" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(weatherState: $WeatheringCopper$WeatherState_, baseState: $BlockState_, properties: $BlockBehaviour$Properties);
-        get chanceModifier(): number;
         get age(): $WeatheringCopper$WeatherState;
+        get chanceModifier(): number;
     }
     export class $CoralFanBlock extends $BaseCoralFanBlock {
         explosionResistance: number;
@@ -7706,10 +7706,20 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(type: $WoodType_, properties: $BlockBehaviour$Properties);
     }
     export class $VineBlock extends $Block implements $IShearable {
-        wrapOperation$gfd000$sable$stopSpreadBeyondSubLevel(arg0: $ServerLevel, arg1: $BlockPos_, arg2: $BlockState_, arg3: number, arg4: $Operation_<any>, arg5: $BlockPos_): boolean;
         static getPropertyForFace(face: $Direction_): $BooleanProperty;
         static isAcceptableNeighbour(level: $BlockGetter, pos: $BlockPos_, direction: $Direction_): boolean;
+        wrapOperation$gfd000$sable$stopSpreadBeyondSubLevel(arg0: $ServerLevel, arg1: $BlockPos_, arg2: $BlockState_, arg3: number, arg4: $Operation_<any>, arg5: $BlockPos_): boolean;
         wrapOperation$gfd000$sable$stopSpreadBeyondSubLevel$mixinextras$bridge$25(arg0: $ServerLevel, arg1: $BlockPos_, arg2: $BlockState_, arg3: number, arg4: $Operation_<any>, arg5: $LocalRef<any>): boolean;
+        /**
+         * Spawns the given stack into the Level at the given position, respecting the doTileDrops gamerule
+         */
+        spawnShearedDrop(level: $Level_, pos: $BlockPos_, stack: $ItemStack_): void;
+        /**
+         * Checks if this object can be sheared.
+         * 
+         * For example, Sheep return false when they have no wool.
+         */
+        isShearable(player: $Player, item: $ItemStack_, level: $Level_, pos: $BlockPos_): boolean;
         /**
          * Shears this object. This function is called on both sides, and is responsible for performing any and all actions that happen when sheared, except spawning drops.
          * 
@@ -7718,16 +7728,6 @@ declare module "@package/net/minecraft/world/level/block" {
          * Entities may respect their internal position values instead of relying on the `pos` parameter.
          */
         onSheared(player: $Player, item: $ItemStack_, level: $Level_, pos: $BlockPos_): $List<$ItemStack>;
-        /**
-         * Checks if this object can be sheared.
-         * 
-         * For example, Sheep return false when they have no wool.
-         */
-        isShearable(player: $Player, item: $ItemStack_, level: $Level_, pos: $BlockPos_): boolean;
-        /**
-         * Spawns the given stack into the Level at the given position, respecting the doTileDrops gamerule
-         */
-        spawnShearedDrop(level: $Level_, pos: $BlockPos_, stack: $ItemStack_): void;
         explosionResistance: number;
         static WEST: $BooleanProperty;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -7797,9 +7797,9 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(deadBlock: $Block_, properties: $BlockBehaviour$Properties);
     }
     export class $EnderChestBlock extends $AbstractChestBlock<$EnderChestBlockEntity> implements $SimpleWaterloggedBlock {
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -7872,8 +7872,8 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $CrafterBlock extends $BaseEntityBlock {
-        static getPotentialResults(level: $Level_, input: $CraftingInput): ($RecipeHolder<$CraftingRecipe>) | undefined;
         dispenseFrom(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_): void;
+        static getPotentialResults(level: $Level_, input: $CraftingInput): ($RecipeHolder<$CraftingRecipe>) | undefined;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -7960,9 +7960,9 @@ declare module "@package/net/minecraft/world/level/block" {
     export class $EntityBlock {
     }
     export interface $EntityBlock {
+        newBlockEntity(pos: $BlockPos_, state: $BlockState_): $BlockEntity;
         getListener<T extends $BlockEntity>(level: $ServerLevel, blockEntity: T): $GameEventListener;
         getTicker<T extends $BlockEntity>(level: $Level_, state: $BlockState_, blockEntityType: $BlockEntityType_<T>): $BlockEntityTicker<T>;
-        newBlockEntity(pos: $BlockPos_, state: $BlockState_): $BlockEntity;
     }
     /**
      * Values that may be interpreted as {@link $EntityBlock}.
@@ -7971,9 +7971,9 @@ declare module "@package/net/minecraft/world/level/block" {
     export class $Fallable {
     }
     export interface $Fallable {
-        onLand(level: $Level_, pos: $BlockPos_, state: $BlockState_, replaceableState: $BlockState_, fallingBlock: $FallingBlockEntity): void;
         onBrokenAfterFall(level: $Level_, pos: $BlockPos_, fallingBlock: $FallingBlockEntity): void;
         getFallDamageSource(entity: $Entity): $DamageSource;
+        onLand(level: $Level_, pos: $BlockPos_, state: $BlockState_, replaceableState: $BlockState_, fallingBlock: $FallingBlockEntity): void;
     }
     export class $CherryLeavesBlock extends $LeavesBlock {
         explosionResistance: number;
@@ -8126,9 +8126,9 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $HeavyCoreBlock extends $Block implements $SimpleWaterloggedBlock {
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -8160,50 +8160,20 @@ declare module "@package/net/minecraft/world/level/block" {
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
     }
-    export class $SlimeBlock extends $HalfTransparentBlock {
-        explosionResistance: number;
-        static UPDATE_SHAPE_ORDER: $Direction[];
-        static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
-        static UPDATE_NONE: number;
-        static UPDATE_INVISIBLE: number;
-        stateDefinition: $StateDefinition<$Block, $BlockState>;
-        static UPDATE_MOVE_BY_PISTON: number;
-        static UPDATE_LIMIT: number;
-        static UPDATE_ALL: number;
-        drops: $ResourceKey<$LootTable>;
-        static UPDATE_KNOWN_SHAPE: number;
-        static UPDATE_SUPPRESS_DROPS: number;
-        dynamicShape: boolean;
-        soundType: $SoundType;
-        jumpFactor: number;
-        static UPDATE_IMMEDIATE: number;
-        item: $Item;
-        static CODEC: $MapCodec<$SlimeBlock>;
-        static UPDATE_NEIGHBORS: number;
-        static INDESTRUCTIBLE: number;
-        speedFactor: number;
-        friction: number;
-        static BLOCK_STATE_REGISTRY: $IdMapper<$BlockState>;
-        static UPDATE_ALL_IMMEDIATE: number;
-        static INSTANT: number;
-        static UPDATE_CLIENTS: number;
-        hasCollision: boolean;
-        constructor(properties: $BlockBehaviour$Properties);
-    }
     export class $SculkVeinBlock extends $MultifaceBlock implements $SculkBehaviour, $SimpleWaterloggedBlock {
+        onDischarged(level: $LevelAccessor, state: $BlockState_, pos: $BlockPos_, random: $RandomSource): void;
         attemptUseCharge(cursor: $SculkSpreader$ChargeCursor, level: $LevelAccessor, pos: $BlockPos_, random: $RandomSource, spreader: $SculkSpreader, shouldConvertBlocks: boolean): number;
         static hasSubstrateAccess(level: $LevelAccessor, state: $BlockState_, pos: $BlockPos_): boolean;
-        onDischarged(level: $LevelAccessor, state: $BlockState_, pos: $BlockPos_, random: $RandomSource): void;
         getSameSpaceSpreader(): $MultifaceSpreader;
         static regrow(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, directions: $Collection_<$Direction_>): boolean;
+        depositCharge(level: $LevelAccessor, pos: $BlockPos_, random: $RandomSource): boolean;
         attemptSpreadVein(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, directions: $Collection_<$Direction_> | null, markForPostprocessing: boolean): boolean;
         updateDecayDelay(currentDecayDelay: number): number;
-        depositCharge(level: $LevelAccessor, pos: $BlockPos_, random: $RandomSource): boolean;
         canChangeBlockStateOnSpread(): boolean;
         getSculkSpreadDelay(): number;
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -8243,15 +8213,45 @@ declare module "@package/net/minecraft/world/level/block" {
         get sameSpaceSpreader(): $MultifaceSpreader;
         get sculkSpreadDelay(): number;
     }
+    export class $SlimeBlock extends $HalfTransparentBlock {
+        explosionResistance: number;
+        static UPDATE_SHAPE_ORDER: $Direction[];
+        static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
+        static UPDATE_NONE: number;
+        static UPDATE_INVISIBLE: number;
+        stateDefinition: $StateDefinition<$Block, $BlockState>;
+        static UPDATE_MOVE_BY_PISTON: number;
+        static UPDATE_LIMIT: number;
+        static UPDATE_ALL: number;
+        drops: $ResourceKey<$LootTable>;
+        static UPDATE_KNOWN_SHAPE: number;
+        static UPDATE_SUPPRESS_DROPS: number;
+        dynamicShape: boolean;
+        soundType: $SoundType;
+        jumpFactor: number;
+        static UPDATE_IMMEDIATE: number;
+        item: $Item;
+        static CODEC: $MapCodec<$SlimeBlock>;
+        static UPDATE_NEIGHBORS: number;
+        static INDESTRUCTIBLE: number;
+        speedFactor: number;
+        friction: number;
+        static BLOCK_STATE_REGISTRY: $IdMapper<$BlockState>;
+        static UPDATE_ALL_IMMEDIATE: number;
+        static INSTANT: number;
+        static UPDATE_CLIENTS: number;
+        hasCollision: boolean;
+        constructor(properties: $BlockBehaviour$Properties);
+    }
     export class $MangrovePropaguleBlock extends $SaplingBlock implements $SimpleWaterloggedBlock {
         /**
          * Gets the default state for this block
          */
         static createNewHangingPropagule(): $BlockState;
         static createNewHangingPropagule(age: number): $BlockState;
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -8401,8 +8401,8 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(arg0: $BlockBehaviour$Properties);
     }
     export class $LecternBlock extends $BaseEntityBlock {
-        static resetBookState(entity: $Entity | null, level: $Level_, pos: $BlockPos_, state: $BlockState_, hasBook: boolean): void;
         static tryPlaceBook(entity: $LivingEntity | null, level: $Level_, pos: $BlockPos_, state: $BlockState_, stack: $ItemStack_): boolean;
+        static resetBookState(entity: $Entity | null, level: $Level_, pos: $BlockPos_, state: $BlockState_, hasBook: boolean): void;
         static signalPageChange(level: $Level_, pos: $BlockPos_, state: $BlockState_): void;
         static SHAPE_NORTH: $VoxelShape;
         static SHAPE_SOUTH: $VoxelShape;
@@ -8446,8 +8446,8 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $CakeBlock extends $Block {
-        static eat(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, player: $Player): $InteractionResult;
         static getOutputSignal(eaten: number): number;
+        static eat(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, player: $Player): $InteractionResult;
         static FULL_CAKE_SIGNAL: number;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -8549,9 +8549,9 @@ declare module "@package/net/minecraft/world/level/block" {
     }
     export class $ScaffoldingBlock extends $Block implements $SimpleWaterloggedBlock {
         static getDistance(level: $BlockGetter, pos: $BlockPos_): number;
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -8727,8 +8727,8 @@ declare module "@package/net/minecraft/world/level/block" {
     export class $CandleBlock extends $AbstractCandleBlock implements $SimpleWaterloggedBlock {
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         static canLight(state: $BlockState_): boolean;
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -8773,11 +8773,11 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $WeatheringCopper {
-        static getNext(block: $Block_): ($Block) | undefined;
-        static getPrevious(block: $Block_): ($Block) | undefined;
-        static getPrevious(state: $BlockState_): ($BlockState) | undefined;
         static getFirst(state: $BlockState_): $BlockState;
         static getFirst(block: $Block_): $Block;
+        static getPrevious(block: $Block_): ($Block) | undefined;
+        static getPrevious(state: $BlockState_): ($BlockState) | undefined;
+        static getNext(block: $Block_): ($Block) | undefined;
         /**
          * @deprecated
          */
@@ -8797,10 +8797,10 @@ declare module "@package/net/minecraft/world/level/block" {
      */
     export type $WeatheringCopper_ = (() => void);
     export class $ButtonBlock extends $FaceAttachedHorizontalDirectionalBlock {
-        playSound(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, hitByArrow: boolean): void;
-        press(state: $BlockState_, level: $Level_, pos: $BlockPos_, player: $Player | null): void;
         checkPressed(state: $BlockState_, level: $Level_, pos: $BlockPos_): void;
+        playSound(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, hitByArrow: boolean): void;
         getSound(isOn: boolean): $SoundEvent;
+        press(state: $BlockState_, level: $Level_, pos: $BlockPos_, player: $Player | null): void;
         static FLOOR_AABB_Z: $VoxelShape;
         static FLOOR_AABB_X: $VoxelShape;
         explosionResistance: number;
@@ -8953,8 +8953,23 @@ declare module "@package/net/minecraft/world/level/block" {
         get type(): $BonemealableBlock$Type;
     }
     export class $Block extends $BlockBehaviour implements $ItemLike, $IBlockExtension, $InjectedBlockExtension, $BlockKJS, $MoreBlockCulling {
-        moreculling$canCull(): boolean;
-        moreculling$setCanCull(arg0: boolean): void;
+        static popResourceFromFace(level: $Level_, pos: $BlockPos_, direction: $Direction_, stack: $ItemStack_): void;
+        /**
+         * @deprecated
+         * @return how much this block resists an explosion
+         */
+        getExplosionResistance(): number;
+        spawnDestroyParticles(level: $Level_, player: $Player, pos: $BlockPos_, state: $BlockState_): void;
+        getBlockBuilder(): $BlockBuilder;
+        setBlockBuilder(b: $BlockBuilder): void;
+        isPossibleToRespawnInThis(state: $BlockState_): boolean;
+        getShapeForEachState(shapeGetter: $Function_<$BlockState, $VoxelShape>): $ImmutableMap<$BlockState, $VoxelShape>;
+        handlePrecipitation(state: $BlockState_, level: $Level_, pos: $BlockPos_, precipitation: $Biome$Precipitation_): void;
+        /**
+         * Called when an Entity lands on this Block.
+         * This method is responsible for doing any modification on the motion of the entity that should result from the landing.
+         */
+        updateEntityAfterFallOn(level: $BlockGetter, entity: $Entity): void;
         getName(): $MutableComponent;
         static getId(state: $BlockState_ | null): number;
         /**
@@ -8962,11 +8977,75 @@ declare module "@package/net/minecraft/world/level/block" {
          */
         destroy(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): void;
         static box(x1: number, arg1: number, y1: number, arg3: number, z1: number, arg5: number): $VoxelShape;
-        getStateDefinition(): $StateDefinition<$Block, $BlockState>;
+        moreculling$setCanCull(arg0: boolean): void;
+        moreculling$canCull(): boolean;
+        /**
+         * @deprecated
+         */
+        builtInRegistryHolder(): $Holder$Reference<$Block>;
+        static shouldRenderFace(state: $BlockState_, level: $BlockGetter, offset: $BlockPos_, face: $Direction_, pos: $BlockPos_): boolean;
+        /**
+         * @return whether the provided `VoxelShape` is a full block (1x1x1)
+         */
+        static isShapeFullBlock(shape: $VoxelShape): boolean;
+        static dropResources(state: $BlockState_, level: $LevelAccessor, pos: $BlockPos_, blockEntity: $BlockEntity | null): void;
+        static dropResources(state: $BlockState_, level: $Level_, pos: $BlockPos_, blockEntity: $BlockEntity | null, entity: $Entity | null, tool: $ItemStack_): void;
+        static dropResources(state: $BlockState_, level: $Level_, pos: $BlockPos_): void;
+        static pushEntitiesUp(oldState: $BlockState_, newState: $BlockState_, level: $LevelAccessor, pos: $BlockPos_): $BlockState;
+        static popResource(itemStack: $Level_, arg1: $BlockPos_, arg2: $ItemStack_): void;
+        /**
+         * @return whether the given position has a solid center in the given direction
+         */
+        static canSupportCenter(level: $LevelReader, pos: $BlockPos_, direction: $Direction_): boolean;
+        /**
+         * Replaces oldState with newState, possibly playing effects and creating drops. Flags are as in `BlockState, int)`.
+         */
+        static updateOrDestroy(oldState: $BlockState_, newState: $BlockState_, level: $LevelAccessor, pos: $BlockPos_, flags: number): void;
+        static updateOrDestroy(oldState: $BlockState_, newState: $BlockState_, level: $LevelAccessor, pos: $BlockPos_, flags: number, recursionLeft: number): void;
+        /**
+         * @return how much this block resists an explosion
+         */
+        getFriction(): number;
+        hasDynamicShape(): boolean;
+        /**
+         * Spawns the given amount of experience into the Level as experience orb entities.
+         */
+        popExperience(level: $ServerLevel, pos: $BlockPos_, amount: number): void;
+        /**
+         * @return how much this block resists an explosion
+         */
+        getSpeedFactor(): number;
+        appendHoverText(stack: $ItemStack_, context: $Item$TooltipContext, tooltipComponents: $List_<$Component_>, tooltipFlag: $TooltipFlag): void;
+        /**
+         * Called after a player has successfully harvested this block. This method will only be called if the player has used the correct tool and drops should be spawned.
+         */
+        playerDestroy(level: $Level_, player: $Player, pos: $BlockPos_, state: $BlockState_, blockEntity: $BlockEntity | null, tool: $ItemStack_): void;
+        /**
+         * @return how much this block resists an explosion
+         */
+        getJumpFactor(): number;
+        withPropertiesOf(state: $BlockState_): $BlockState;
+        setNameKey(arg0: string): void;
+        /**
+         * Called by BlockItem after this block has been placed.
+         */
+        setPlacedBy(level: $Level_, pos: $BlockPos_, state: $BlockState_, placer: $LivingEntity | null, stack: $ItemStack_): void;
+        tryDropExperience(level: $ServerLevel, pos: $BlockPos_, heldItem: $ItemStack_, amount: $IntProvider_): void;
+        /**
+         * @deprecated
+         * @return whether this block should drop its drops when destroyed by the given explosion
+         */
+        dropFromExplosion(explosion: $Explosion): boolean;
+        /**
+         * Called when this Block is destroyed by an Explosion
+         */
+        wasExploded(level: $Level_, pos: $BlockPos_, explosion: $Explosion): void;
+        playerWillDestroy(level: $Level_, pos: $BlockPos_, state: $BlockState_, player: $Player): $BlockState;
         /**
          * @return the description ID of this block, for use with language files.
          */
         getDescriptionId(): string;
+        getStateDefinition(): $StateDefinition<$Block, $BlockState>;
         /**
          * Called periodically clientside on blocks near the player to show effects (like furnace fire particles).
          */
@@ -8975,157 +9054,41 @@ declare module "@package/net/minecraft/world/level/block" {
          * @deprecated
          */
         getCloneItemStack(level: $LevelReader, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        moreculling$shouldAttemptToCullAgainst(arg0: $BlockState_, arg1: $Direction_, arg2: $BlockGetter, arg3: $BlockPos_): boolean;
         moreculling$cantCullAgainst(arg0: $BlockState_, arg1: $Direction_): boolean;
         moreculling$shouldAttemptToCull(arg0: $BlockState_, arg1: $Direction_, arg2: $BlockGetter, arg3: $BlockPos_): boolean;
+        static byItem(item: $Item_ | null): $Block;
+        static stateById(id: number): $BlockState;
+        static isFaceFull(shape: $VoxelShape, face: $Direction_): boolean;
+        static getDrops(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, blockEntity: $BlockEntity | null, entity: $Entity | null, tool: $ItemStack_): $List<$ItemStack>;
+        static getDrops(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, blockEntity: $BlockEntity | null): $List<$ItemStack>;
+        stepOn(level: $Level_, pos: $BlockPos_, state: $BlockState_, entity: $Entity): void;
+        fallOn(level: $Level_, state: $BlockState_, pos: $BlockPos_, entity: $Entity, fallDistance: number): void;
+        getStateForPlacement(context: $BlockPlaceContext): $BlockState;
+        /**
+         * @return whether the given position has a rigid top face
+         */
+        static canSupportRigidBlock(level: $BlockGetter, pos: $BlockPos_): boolean;
+        /**
+         * With the provided block state, performs neighbor checks for all neighboring blocks to get an "adjusted" blockstate for placement in the world, if the current state is not valid.
+         */
+        static updateFromNeighbourShapes(currentState: $BlockState_, level: $LevelAccessor, pos: $BlockPos_): $BlockState;
+        registerDefaultState(state: $BlockState_): void;
+        static isExceptionForConnection(state: $BlockState_): boolean;
+        createBlockStateDefinition(builder: $StateDefinition$Builder<$Block_, $BlockState_>): void;
+        /**
+         * Gets the default state for this block
+         */
+        defaultBlockState(): $BlockState;
         /**
          * @deprecated
          */
         initializeClient(arg0: $Consumer_<$IClientBlockExtensions>): void;
         /**
-         * Gets the default state for this block
-         */
-        defaultBlockState(): $BlockState;
-        moreculling$shouldAttemptToCullAgainst(arg0: $BlockState_, arg1: $Direction_, arg2: $BlockGetter, arg3: $BlockPos_): boolean;
-        static isFaceFull(shape: $VoxelShape, face: $Direction_): boolean;
-        static byItem(item: $Item_ | null): $Block;
-        static getDrops(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, blockEntity: $BlockEntity | null, entity: $Entity | null, tool: $ItemStack_): $List<$ItemStack>;
-        static getDrops(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, blockEntity: $BlockEntity | null): $List<$ItemStack>;
-        static stateById(id: number): $BlockState;
-        getStateForPlacement(context: $BlockPlaceContext): $BlockState;
-        /**
-         * @deprecated
-         */
-        builtInRegistryHolder(): $Holder$Reference<$Block>;
-        spawnDestroyParticles(level: $Level_, player: $Player, pos: $BlockPos_, state: $BlockState_): void;
-        static popResourceFromFace(level: $Level_, pos: $BlockPos_, direction: $Direction_, stack: $ItemStack_): void;
-        static isExceptionForConnection(state: $BlockState_): boolean;
-        createBlockStateDefinition(builder: $StateDefinition$Builder<$Block_, $BlockState_>): void;
-        getShapeForEachState(shapeGetter: $Function_<$BlockState, $VoxelShape>): $ImmutableMap<$BlockState, $VoxelShape>;
-        /**
-         * @deprecated
-         * @return how much this block resists an explosion
-         */
-        getExplosionResistance(): number;
-        /**
-         * Called when an Entity lands on this Block.
-         * This method is responsible for doing any modification on the motion of the entity that should result from the landing.
-         */
-        updateEntityAfterFallOn(level: $BlockGetter, entity: $Entity): void;
-        /**
-         * @return whether the given position has a rigid top face
-         */
-        static canSupportRigidBlock(level: $BlockGetter, pos: $BlockPos_): boolean;
-        handlePrecipitation(state: $BlockState_, level: $Level_, pos: $BlockPos_, precipitation: $Biome$Precipitation_): void;
-        isPossibleToRespawnInThis(state: $BlockState_): boolean;
-        registerDefaultState(state: $BlockState_): void;
-        setBlockBuilder(b: $BlockBuilder): void;
-        /**
-         * With the provided block state, performs neighbor checks for all neighboring blocks to get an "adjusted" blockstate for placement in the world, if the current state is not valid.
-         */
-        static updateFromNeighbourShapes(currentState: $BlockState_, level: $LevelAccessor, pos: $BlockPos_): $BlockState;
-        getBlockBuilder(): $BlockBuilder;
-        fallOn(level: $Level_, state: $BlockState_, pos: $BlockPos_, entity: $Entity, fallDistance: number): void;
-        stepOn(level: $Level_, pos: $BlockPos_, state: $BlockState_, entity: $Entity): void;
-        static dropResources(state: $BlockState_, level: $Level_, pos: $BlockPos_, blockEntity: $BlockEntity | null, entity: $Entity | null, tool: $ItemStack_): void;
-        static dropResources(state: $BlockState_, level: $LevelAccessor, pos: $BlockPos_, blockEntity: $BlockEntity | null): void;
-        static dropResources(state: $BlockState_, level: $Level_, pos: $BlockPos_): void;
-        static shouldRenderFace(state: $BlockState_, level: $BlockGetter, offset: $BlockPos_, face: $Direction_, pos: $BlockPos_): boolean;
-        /**
-         * @return whether the given position has a solid center in the given direction
-         */
-        static canSupportCenter(level: $LevelReader, pos: $BlockPos_, direction: $Direction_): boolean;
-        tryDropExperience(level: $ServerLevel, pos: $BlockPos_, heldItem: $ItemStack_, amount: $IntProvider_): void;
-        /**
-         * Called by BlockItem after this block has been placed.
-         */
-        setPlacedBy(level: $Level_, pos: $BlockPos_, state: $BlockState_, placer: $LivingEntity | null, stack: $ItemStack_): void;
-        hasDynamicShape(): boolean;
-        appendHoverText(stack: $ItemStack_, context: $Item$TooltipContext, tooltipComponents: $List_<$Component_>, tooltipFlag: $TooltipFlag): void;
-        /**
-         * @return how much this block resists an explosion
-         */
-        getFriction(): number;
-        playerWillDestroy(level: $Level_, pos: $BlockPos_, state: $BlockState_, player: $Player): $BlockState;
-        /**
-         * Spawns the given amount of experience into the Level as experience orb entities.
-         */
-        popExperience(level: $ServerLevel, pos: $BlockPos_, amount: number): void;
-        /**
-         * Called when this Block is destroyed by an Explosion
-         */
-        wasExploded(level: $Level_, pos: $BlockPos_, explosion: $Explosion): void;
-        /**
-         * @return how much this block resists an explosion
-         */
-        getJumpFactor(): number;
-        /**
-         * @deprecated
-         * @return whether this block should drop its drops when destroyed by the given explosion
-         */
-        dropFromExplosion(explosion: $Explosion): boolean;
-        static pushEntitiesUp(oldState: $BlockState_, newState: $BlockState_, level: $LevelAccessor, pos: $BlockPos_): $BlockState;
-        /**
-         * @return how much this block resists an explosion
-         */
-        getSpeedFactor(): number;
-        static popResource(itemStack: $Level_, arg1: $BlockPos_, arg2: $ItemStack_): void;
-        withPropertiesOf(state: $BlockState_): $BlockState;
-        /**
-         * Called after a player has successfully harvested this block. This method will only be called if the player has used the correct tool and drops should be spawned.
-         */
-        playerDestroy(level: $Level_, player: $Player, pos: $BlockPos_, state: $BlockState_, blockEntity: $BlockEntity | null, tool: $ItemStack_): void;
-        /**
-         * Replaces oldState with newState, possibly playing effects and creating drops. Flags are as in `BlockState, int)`.
-         */
-        static updateOrDestroy(oldState: $BlockState_, newState: $BlockState_, level: $LevelAccessor, pos: $BlockPos_, flags: number): void;
-        static updateOrDestroy(oldState: $BlockState_, newState: $BlockState_, level: $LevelAccessor, pos: $BlockPos_, flags: number, recursionLeft: number): void;
-        setNameKey(arg0: string): void;
-        /**
-         * @return whether the provided `VoxelShape` is a full block (1x1x1)
-         */
-        static isShapeFullBlock(shape: $VoxelShape): boolean;
-        isEmpty(state: $BlockState_): boolean;
-        rotate(state: $BlockState_, level: $LevelAccessor, pos: $BlockPos_, direction: $Rotation_): $BlockState;
-        /**
-         * Called when A user uses the creative pick block button on this block
-         */
-        getCloneItemStack(state: $BlockState_, target: $HitResult, level: $LevelReader, pos: $BlockPos_, player: $Player): $ItemStack;
-        /**
-         * Determines if a fluid adjacent to the block on the given side should not be rendered.
-         */
-        shouldHideAdjacentFluidFace(state: $BlockState_, selfFace: $Direction_, adjacentFluid: $FluidState): boolean;
-        /**
-         * Checks if this block makes an open trapdoor above it climbable.
-         */
-        makesOpenTrapdoorAboveClimbable(state: $BlockState_, level: $LevelReader, pos: $BlockPos_, trapdoorState: $BlockState_): boolean;
-        /**
-         * Gets the path type of this block when an entity is pathfinding. When
-         * `null`, uses vanilla behavior.
-         */
-        getBlockPathType(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, mob: $Mob): $PathType;
-        /**
-         * Gets the path type of the adjacent block to a pathfinding entity.
-         * Path types with a negative malus are not traversable for the entity.
-         * Pathfinding entities will favor paths consisting of a lower malus.
-         * When `null`, uses vanilla behavior.
-         */
-        getAdjacentBlockPathType(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, mob: $Mob, originalType: $PathType_): $PathType;
-        hasDynamicLightEmission(state: $BlockState_): boolean;
-        /**
-         * Called to determine whether to allow the block to handle its own indirect power rather than using the default rules.
-         */
-        shouldCheckWeakPower(state: $BlockState_, level: $SignalGetter, pos: $BlockPos_, side: $Direction_): boolean;
-        /**
-         * Used to determine the state 'viewed' by an entity (see
-         * `Camera#getBlockAtCamera()`).
-         * Can be used by fluid blocks to determine if the viewpoint is within the fluid or not.
-         */
-        getStateAtViewpoint(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, viewpoint: $Vec3_): $BlockState;
-        getBeaconColorMultiplier(state: $BlockState_, level: $LevelReader, pos: $BlockPos_, beaconPos: $BlockPos_): number;
-        /**
          * Location sensitive version of getExplosionResistance
          */
         getExplosionResistance(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, explosion: $Explosion): number;
+        hasDynamicLightEmission(state: $BlockState_): boolean;
         /**
          * Called when a player removes a block. This is responsible for
          * actually destroying the block, and the block is intact at time of call.
@@ -9137,11 +9100,6 @@ declare module "@package/net/minecraft/world/level/block" {
          * This function is called on both the logical client and logical server.
          */
         onDestroyedByPlayer(state: $BlockState_, level: $Level_, pos: $BlockPos_, player: $Player, willHarvest: boolean, fluid: $FluidState): boolean;
-        /**
-         * Determines if this block should drop loot when exploded.
-         */
-        canDropFromExplosion(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, explosion: $Explosion): boolean;
-        supportsExternalFaceHiding(state: $BlockState_): boolean;
         /**
          * Called when a block is removed by `PushReaction#DESTROY`. This is responsible for
          * actually destroying the block, and the block is intact at time of call.
@@ -9156,181 +9114,29 @@ declare module "@package/net/minecraft/world/level/block" {
          * Determines the amount of enchanting power this block can provide to an enchanting table.
          */
         getEnchantPowerBonus(state: $BlockState_, level: $LevelReader, pos: $BlockPos_): number;
+        getBeaconColorMultiplier(state: $BlockState_, level: $LevelReader, pos: $BlockPos_, beaconPos: $BlockPos_): number;
         /**
-         * Determines if this block can spawn Bubble Columns and if so, what direction the column flows.
-         * 
-         * NOTE: The block itself will still need to call `BubbleColumnBlock#updateColumn(LevelAccessor, BlockPos, BlockState)` in their tick method and schedule a block tick in the block's onPlace.
-         * Also, schedule a fluid tick in updateShape method if update direction is up. Both are needed in order to get the Bubble Columns to function properly. See `SoulSandBlock` and `MagmaBlock` for example.
+         * Called to determine whether to allow the block to handle its own indirect power rather than using the default rules.
          */
-        getBubbleColumnDirection(state: $BlockState_): $BubbleColumnDirection;
+        shouldCheckWeakPower(state: $BlockState_, level: $SignalGetter, pos: $BlockPos_, side: $Direction_): boolean;
+        isEmpty(state: $BlockState_): boolean;
+        rotate(state: $BlockState_, level: $LevelAccessor, pos: $BlockPos_, direction: $Rotation_): $BlockState;
         /**
-         * Called to determine whether this block should use the fluid overlay texture or flowing texture when it is placed under the fluid.
+         * Used to determine the state 'viewed' by an entity (see
+         * `Camera#getBlockAtCamera()`).
+         * Can be used by fluid blocks to determine if the viewpoint is within the fluid or not.
          */
-        shouldDisplayFluidOverlay(state: $BlockState_, level: $BlockAndTintGetter, pos: $BlockPos_, fluidState: $FluidState): boolean;
+        getStateAtViewpoint(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, viewpoint: $Vec3_): $BlockState;
         /**
-         * Returns the reaction of the block when pushed or pulled by a piston. This method should be not called directly, instead via `BlockState#getPistonPushReaction()`.
-         * 
-         * - NORMAL: is pushable and pullable by sticky pistons
-         * - DESTROY: is being destroyed on pushing and pulling
-         * - BLOCK: is not being able to be moved
-         * - IGNORE: only usable by entities
-         * - PUSH_ONLY: can only be pushed, blocks on trying to be pulled
-         * - `null`: use the PistonPushReaction from the BlockBehaviour.Properties passed into the Block Constructor
+         * Called when fire is updating, checks if a block face can catch fire.
          */
-        getPistonPushReaction(state: $BlockState_): $PushReaction;
-        /**
-         * Returns the state that this block should transform into when right-clicked by a tool.
-         * For example: Used to determine if an axe can strip,
-         * a shovel can path, or a hoe can till.
-         * Returns `null` if nothing should happen.
-         */
-        getToolModifiedState(state: $BlockState_, context: $UseOnContext, itemAbility: $ItemAbility_, simulate: boolean): $BlockState;
-        /**
-         * Determines if this block's collision box should be treated as though it can extend above its block space.
-         * Use this to replicate fence and wall behavior.
-         */
-        collisionExtendsVertically(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, collidingEntity: $Entity): boolean;
-        /**
-         * Determines if this block is classified as a bed, replacing `instanceof BedBlock` checks.
-         * 
-         * If true, players may sleep in it, though the block must manually put the player to sleep
-         * by calling `Player#startSleepInBed` from `BlockBehaviour#useWithoutItem` or similar.
-         * 
-         * If you want players to be able to respawn at your bed, you also need to override `#getRespawnPosition`.
-         */
-        isBed(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, sleeper: $LivingEntity): boolean;
-        /**
-         * Called when a tree grows on top of this block and tries to set it to dirt by the trunk placer.
-         * An override that returns true is responsible for using the place function to
-         * set blocks in the world properly during generation. A modded grass block might override this method
-         * to ensure it turns into the corresponding modded dirt instead of regular dirt when a tree grows on it.
-         * For modded grass blocks, returning true from this method is NOT a substitute for adding your block
-         * to the #minecraft:dirt tag, rather for changing the behaviour to something other than setting to dirt.
-         * 
-         * NOTE: This happens DURING world generation, the generation may be incomplete when this is called.
-         * Use the placeFunction when modifying the level.
-         */
-        onTreeGrow(state: $BlockState_, level: $LevelReader, placeFunction: $BiConsumer_<$BlockPos, $BlockState>, randomSource: $RandomSource, pos: $BlockPos_, config: $TreeConfiguration): boolean;
-        isFertile(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_): boolean;
-        /**
-         * Returns how many experience points this block drops when broken, before application of enchantments.
-         */
-        getExpDrop(state: $BlockState_, level: $LevelAccessor, pos: $BlockPos_, blockEntity: $BlockEntity, breaker: $Entity, tool: $ItemStack_): number;
-        isBurning(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_): boolean;
-        /**
-         * Checks if a player or entity handles movement on this block like scaffolding.
-         */
-        isLadder(state: $BlockState_, level: $LevelReader, pos: $BlockPos_, entity: $LivingEntity): boolean;
-        /**
-         * Determines if this block can stick to another block when pushed by a piston.
-         */
-        canStickTo(state: $BlockState_, other: $BlockState_): boolean;
-        getLightEmission(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_): number;
-        /**
-         * Gets the slipperiness at the given location at the given state. Normally
-         * between 0 and 1.
-         * 
-         * Note that entities may reduce slipperiness by a certain factor of their own;
-         * for `LivingEntity`, this is `.91`.
-         * `ItemEntity` uses `.98`, and
-         * `FishingHook` uses `.92`.
-         */
-        getFriction(state: $BlockState_, level: $LevelReader, pos: $BlockPos_, entity: $Entity): number;
-        /**
-         * Whether this block hides the neighbors face pointed towards by the given direction.
-         * 
-         * This method should only be used for blocks you don't control, for your own blocks override
-         * `Block#skipRendering(BlockState, BlockState, Direction)` on the respective block instead
-         * 
-         * **Note that this method may be called on any of the client's meshing threads.**
-         * 
-         * As such, if you need any data from your `BlockEntity`, you should put it in `ModelData` to guarantee
-         * safe concurrent access to it on the client.
-         * 
-         * `IBlockGetterExtension#getModelData(BlockPos)` will return the `ModelData` for the queried block,
-         * or `ModelData#EMPTY` if none is present.
-         */
-        hidesNeighborFace(level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, neighborState: $BlockState_, dir: $Direction_): boolean;
+        isFlammable(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, direction: $Direction_): boolean;
         /**
          * Currently only called by fire when it is on top of this block.
          * Returning true will prevent the fire from naturally dying during updating.
          * Also prevents firing from dying from rain.
          */
         isFireSource(state: $BlockState_, level: $LevelReader, pos: $BlockPos_, direction: $Direction_): boolean;
-        /**
-         * Checks if a player or entity handles movement on this block like scaffolding.
-         */
-        isScaffolding(state: $BlockState_, level: $LevelReader, pos: $BlockPos_, entity: $LivingEntity): boolean;
-        /**
-         * Returns the `MapColor` shown on the map.
-         */
-        getMapColor(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, defaultColor: $MapColor): $MapColor;
-        /**
-         * Sensitive version of getSoundType
-         */
-        getSoundType(state: $BlockState_, level: $LevelReader, pos: $BlockPos_, entity: $Entity): $SoundType;
-        /**
-         * Returns the direct signal this block emits in the given direction.
-         * 
-         * NOTE: directions in redstone signal related methods are backwards, so this method
-         * checks for the signal emitted in the *opposite* direction of the one given.
-         */
-        getFireSpreadSpeed(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, direction: $Direction_): number;
-        /**
-         * Returns the direction of the block. Same values that
-         * are returned by BlockDirectional. Called every frame tick for every living entity. Be VERY fast.
-         */
-        getBedDirection(state: $BlockState_, level: $LevelReader, pos: $BlockPos_): $Direction;
-        /**
-         * Called when a block entity on a side of this block changes, is created, or is destroyed.
-         * 
-         * This method is not suitable for listening to capability invalidations.
-         * For capability invalidations specifically, use `BlockCapabilityCache` instead.
-         */
-        onNeighborChange(state: $BlockState_, level: $LevelReader, pos: $BlockPos_, neighbor: $BlockPos_): void;
-        getWeakChanges(state: $BlockState_, level: $LevelReader, pos: $BlockPos_): boolean;
-        isStickyBlock(state: $BlockState_): boolean;
-        /**
-         * Determines if this block's collision box should be treated as though it can extend above its block space.
-         * Use this to replicate fence and wall behavior.
-         */
-        canEntityDestroy(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, collidingEntity: $Entity): boolean;
-        /**
-         * Called when fire is updating, checks if a block face can catch fire.
-         */
-        isFlammable(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, direction: $Direction_): boolean;
-        isPortalFrame(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_): boolean;
-        /**
-         * Returns the direct signal this block emits in the given direction.
-         * 
-         * NOTE: directions in redstone signal related methods are backwards, so this method
-         * checks for the signal emitted in the *opposite* direction of the one given.
-         */
-        getFlammability(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, direction: $Direction_): number;
-        /**
-         * If the block is flammable, this is called when it gets lit on fire.
-         */
-        onCaughtFire(state: $BlockState_, level: $Level_, pos: $BlockPos_, direction: $Direction_, igniter: $LivingEntity): void;
-        /**
-         * Called when fire is updating, checks if a block face can catch fire.
-         */
-        ignitedByLava(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, direction: $Direction_): boolean;
-        /**
-         * Determines if this block can be used as the frame of a conduit.
-         */
-        isConduitFrame(state: $BlockState_, level: $LevelReader, pos: $BlockPos_, conduit: $BlockPos_): boolean;
-        /**
-         * Returns the position that the entity is moved to upon respawning at this block.
-         */
-        getRespawnPosition(state: $BlockState_, type: $EntityType_<never>, levelReader: $LevelReader, pos: $BlockPos_, orientation: number): ($ServerPlayer$RespawnPosAngle) | undefined;
-        isSlimeBlock(state: $BlockState_): boolean;
-        /**
-         * Called after the `BlockState` at the given `BlockPos` was changed and neighbors were updated.
-         * This method is called on the server and client side.
-         * Modifying the level is disallowed in this method.
-         * Useful for calculating additional data based on the new state and the neighbor's reactions to the state change.
-         */
-        onBlockStateChange(level: $LevelReader, pos: $BlockPos_, oldState: $BlockState_, newState: $BlockState_): void;
         /**
          * Returns whether the block can be hydrated by a fluid.
          * 
@@ -9359,20 +9165,32 @@ declare module "@package/net/minecraft/world/level/block" {
          */
         getAppearance(state: $BlockState_, level: $BlockAndTintGetter, pos: $BlockPos_, side: $Direction_, queryState: $BlockState_, queryPos: $BlockPos_): $BlockState;
         /**
+         * If the block is flammable, this is called when it gets lit on fire.
+         */
+        onCaughtFire(state: $BlockState_, level: $Level_, pos: $BlockPos_, direction: $Direction_, igniter: $LivingEntity): void;
+        /**
+         * Determines if this block's collision box should be treated as though it can extend above its block space.
+         * Use this to replicate fence and wall behavior.
+         */
+        canEntityDestroy(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, collidingEntity: $Entity): boolean;
+        /**
+         * Returns the direct signal this block emits in the given direction.
+         * 
+         * NOTE: directions in redstone signal related methods are backwards, so this method
+         * checks for the signal emitted in the *opposite* direction of the one given.
+         */
+        getFlammability(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, direction: $Direction_): number;
+        /**
+         * Returns the direct signal this block emits in the given direction.
+         * 
+         * NOTE: directions in redstone signal related methods are backwards, so this method
+         * checks for the signal emitted in the *opposite* direction of the one given.
+         */
+        getFireSpreadSpeed(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, direction: $Direction_): number;
+        /**
          * Called when fire is updating, checks if a block face can catch fire.
          */
         canConnectRedstone(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, direction: $Direction_): boolean;
-        /**
-         * Determines if the player can harvest this block, obtaining it's drops when the block is destroyed.
-         */
-        canHarvestBlock(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, player: $Player): boolean;
-        /**
-         * Allows a block to override the standard vanilla running particles.
-         * This is called from Entity.spawnSprintParticle and is called both,
-         * Client and server side, it's up to the implementor to client check / server check.
-         * By default vanilla spawns particles only on the client and the server methods no-op.
-         */
-        addRunningEffects(state: $BlockState_, level: $Level_, pos: $BlockPos_, entity: $Entity): boolean;
         /**
          * Called when the block is destroyed by an explosion.
          * Useful for allowing the block to take into account tile entities,
@@ -9380,9 +9198,75 @@ declare module "@package/net/minecraft/world/level/block" {
          */
         onBlockExploded(state: $BlockState_, level: $Level_, pos: $BlockPos_, explosion: $Explosion): void;
         /**
+         * Called after the `BlockState` at the given `BlockPos` was changed and neighbors were updated.
+         * This method is called on the server and client side.
+         * Modifying the level is disallowed in this method.
+         * Useful for calculating additional data based on the new state and the neighbor's reactions to the state change.
+         */
+        onBlockStateChange(level: $LevelReader, pos: $BlockPos_, oldState: $BlockState_, newState: $BlockState_): void;
+        /**
+         * Returns the `MapColor` shown on the map.
+         */
+        getMapColor(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, defaultColor: $MapColor): $MapColor;
+        /**
+         * Checks if a player or entity handles movement on this block like scaffolding.
+         */
+        isScaffolding(state: $BlockState_, level: $LevelReader, pos: $BlockPos_, entity: $LivingEntity): boolean;
+        /**
+         * Whether this block hides the neighbors face pointed towards by the given direction.
+         * 
+         * This method should only be used for blocks you don't control, for your own blocks override
+         * `Block#skipRendering(BlockState, BlockState, Direction)` on the respective block instead
+         * 
+         * **Note that this method may be called on any of the client's meshing threads.**
+         * 
+         * As such, if you need any data from your `BlockEntity`, you should put it in `ModelData` to guarantee
+         * safe concurrent access to it on the client.
+         * 
+         * `IBlockGetterExtension#getModelData(BlockPos)` will return the `ModelData` for the queried block,
+         * or `ModelData#EMPTY` if none is present.
+         */
+        hidesNeighborFace(level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, neighborState: $BlockState_, dir: $Direction_): boolean;
+        /**
+         * Gets the slipperiness at the given location at the given state. Normally
+         * between 0 and 1.
+         * 
+         * Note that entities may reduce slipperiness by a certain factor of their own;
+         * for `LivingEntity`, this is `.91`.
+         * `ItemEntity` uses `.98`, and
+         * `FishingHook` uses `.92`.
+         */
+        getFriction(state: $BlockState_, level: $LevelReader, pos: $BlockPos_, entity: $Entity): number;
+        /**
          * Called when a user either starts or stops sleeping in the bed.
          */
         setBedOccupied(state: $BlockState_, level: $Level_, pos: $BlockPos_, sleeper: $LivingEntity, occupied: boolean): void;
+        /**
+         * Determines if the player can harvest this block, obtaining it's drops when the block is destroyed.
+         */
+        canHarvestBlock(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, player: $Player): boolean;
+        /**
+         * Determines if this block either force allow or force disallow a plant from being placed on it. (Or pass and let the plant's decision win)
+         * This will be called in plant's canSurvive method and/or mayPlace method.
+         */
+        canSustainPlant(state: $BlockState_, level: $BlockGetter, soilPosition: $BlockPos_, facing: $Direction_, plant: $BlockState_): $TriState;
+        isPortalFrame(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_): boolean;
+        /**
+         * Returns the direction of the block. Same values that
+         * are returned by BlockDirectional. Called every frame tick for every living entity. Be VERY fast.
+         */
+        getBedDirection(state: $BlockState_, level: $LevelReader, pos: $BlockPos_): $Direction;
+        /**
+         * Determines if this block can be used as the frame of a conduit.
+         */
+        isConduitFrame(state: $BlockState_, level: $LevelReader, pos: $BlockPos_, conduit: $BlockPos_): boolean;
+        /**
+         * Sensitive version of getSoundType
+         */
+        getSoundType(state: $BlockState_, level: $LevelReader, pos: $BlockPos_, entity: $Entity): $SoundType;
+        isSlimeBlock(state: $BlockState_): boolean;
+        isStickyBlock(state: $BlockState_): boolean;
+        getLightEmission(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_): number;
         /**
          * Allows a block to override the standard EntityLivingBase.updateFallState
          * particles, this is a server side method that spawns particles with
@@ -9390,18 +9274,134 @@ declare module "@package/net/minecraft/world/level/block" {
          */
         addLandingEffects(state1: $BlockState_, level: $ServerLevel, pos: $BlockPos_, state2: $BlockState_, entity: $LivingEntity, numberOfParticles: number): boolean;
         /**
-         * Determines if this block either force allow or force disallow a plant from being placed on it. (Or pass and let the plant's decision win)
-         * This will be called in plant's canSurvive method and/or mayPlace method.
+         * Called when fire is updating, checks if a block face can catch fire.
          */
-        canSustainPlant(state: $BlockState_, level: $BlockGetter, soilPosition: $BlockPos_, facing: $Direction_, plant: $BlockState_): $TriState;
+        ignitedByLava(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, direction: $Direction_): boolean;
+        /**
+         * Called when a block entity on a side of this block changes, is created, or is destroyed.
+         * 
+         * This method is not suitable for listening to capability invalidations.
+         * For capability invalidations specifically, use `BlockCapabilityCache` instead.
+         */
+        onNeighborChange(state: $BlockState_, level: $LevelReader, pos: $BlockPos_, neighbor: $BlockPos_): void;
+        /**
+         * Allows a block to override the standard vanilla running particles.
+         * This is called from Entity.spawnSprintParticle and is called both,
+         * Client and server side, it's up to the implementor to client check / server check.
+         * By default vanilla spawns particles only on the client and the server methods no-op.
+         */
+        addRunningEffects(state: $BlockState_, level: $Level_, pos: $BlockPos_, entity: $Entity): boolean;
+        getWeakChanges(state: $BlockState_, level: $LevelReader, pos: $BlockPos_): boolean;
+        /**
+         * Returns the position that the entity is moved to upon respawning at this block.
+         */
+        getRespawnPosition(state: $BlockState_, type: $EntityType_<never>, levelReader: $LevelReader, pos: $BlockPos_, orientation: number): ($ServerPlayer$RespawnPosAngle) | undefined;
+        /**
+         * Called when A user uses the creative pick block button on this block
+         */
+        getCloneItemStack(state: $BlockState_, target: $HitResult, level: $LevelReader, pos: $BlockPos_, player: $Player): $ItemStack;
+        /**
+         * Determines if a fluid adjacent to the block on the given side should not be rendered.
+         */
+        shouldHideAdjacentFluidFace(state: $BlockState_, selfFace: $Direction_, adjacentFluid: $FluidState): boolean;
+        /**
+         * Checks if this block makes an open trapdoor above it climbable.
+         */
+        makesOpenTrapdoorAboveClimbable(state: $BlockState_, level: $LevelReader, pos: $BlockPos_, trapdoorState: $BlockState_): boolean;
+        isBurning(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_): boolean;
+        /**
+         * Determines if this block is classified as a bed, replacing `instanceof BedBlock` checks.
+         * 
+         * If true, players may sleep in it, though the block must manually put the player to sleep
+         * by calling `Player#startSleepInBed` from `BlockBehaviour#useWithoutItem` or similar.
+         * 
+         * If you want players to be able to respawn at your bed, you also need to override `#getRespawnPosition`.
+         */
+        isBed(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, sleeper: $LivingEntity): boolean;
+        /**
+         * Returns how many experience points this block drops when broken, before application of enchantments.
+         */
+        getExpDrop(state: $BlockState_, level: $LevelAccessor, pos: $BlockPos_, blockEntity: $BlockEntity, breaker: $Entity, tool: $ItemStack_): number;
+        isFertile(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_): boolean;
+        /**
+         * Checks if a player or entity handles movement on this block like scaffolding.
+         */
+        isLadder(state: $BlockState_, level: $LevelReader, pos: $BlockPos_, entity: $LivingEntity): boolean;
+        /**
+         * Called when a tree grows on top of this block and tries to set it to dirt by the trunk placer.
+         * An override that returns true is responsible for using the place function to
+         * set blocks in the world properly during generation. A modded grass block might override this method
+         * to ensure it turns into the corresponding modded dirt instead of regular dirt when a tree grows on it.
+         * For modded grass blocks, returning true from this method is NOT a substitute for adding your block
+         * to the #minecraft:dirt tag, rather for changing the behaviour to something other than setting to dirt.
+         * 
+         * NOTE: This happens DURING world generation, the generation may be incomplete when this is called.
+         * Use the placeFunction when modifying the level.
+         */
+        onTreeGrow(state: $BlockState_, level: $LevelReader, placeFunction: $BiConsumer_<$BlockPos, $BlockState>, randomSource: $RandomSource, pos: $BlockPos_, config: $TreeConfiguration): boolean;
+        /**
+         * Determines if this block can stick to another block when pushed by a piston.
+         */
+        canStickTo(state: $BlockState_, other: $BlockState_): boolean;
+        /**
+         * Gets the path type of the adjacent block to a pathfinding entity.
+         * Path types with a negative malus are not traversable for the entity.
+         * Pathfinding entities will favor paths consisting of a lower malus.
+         * When `null`, uses vanilla behavior.
+         */
+        getAdjacentBlockPathType(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, mob: $Mob, originalType: $PathType_): $PathType;
+        supportsExternalFaceHiding(state: $BlockState_): boolean;
+        /**
+         * Returns the state that this block should transform into when right-clicked by a tool.
+         * For example: Used to determine if an axe can strip,
+         * a shovel can path, or a hoe can till.
+         * Returns `null` if nothing should happen.
+         */
+        getToolModifiedState(state: $BlockState_, context: $UseOnContext, itemAbility: $ItemAbility_, simulate: boolean): $BlockState;
+        /**
+         * Returns the reaction of the block when pushed or pulled by a piston. This method should be not called directly, instead via `BlockState#getPistonPushReaction()`.
+         * 
+         * - NORMAL: is pushable and pullable by sticky pistons
+         * - DESTROY: is being destroyed on pushing and pulling
+         * - BLOCK: is not being able to be moved
+         * - IGNORE: only usable by entities
+         * - PUSH_ONLY: can only be pushed, blocks on trying to be pulled
+         * - `null`: use the PistonPushReaction from the BlockBehaviour.Properties passed into the Block Constructor
+         */
+        getPistonPushReaction(state: $BlockState_): $PushReaction;
+        /**
+         * Determines if this block can spawn Bubble Columns and if so, what direction the column flows.
+         * 
+         * NOTE: The block itself will still need to call `BubbleColumnBlock#updateColumn(LevelAccessor, BlockPos, BlockState)` in their tick method and schedule a block tick in the block's onPlace.
+         * Also, schedule a fluid tick in updateShape method if update direction is up. Both are needed in order to get the Bubble Columns to function properly. See `SoulSandBlock` and `MagmaBlock` for example.
+         */
+        getBubbleColumnDirection(state: $BlockState_): $BubbleColumnDirection;
+        /**
+         * Determines if this block's collision box should be treated as though it can extend above its block space.
+         * Use this to replicate fence and wall behavior.
+         */
+        collisionExtendsVertically(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, collidingEntity: $Entity): boolean;
+        /**
+         * Called to determine whether this block should use the fluid overlay texture or flowing texture when it is placed under the fluid.
+         */
+        shouldDisplayFluidOverlay(state: $BlockState_, level: $BlockAndTintGetter, pos: $BlockPos_, fluidState: $FluidState): boolean;
+        /**
+         * Determines if this block should drop loot when exploded.
+         */
+        canDropFromExplosion(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, explosion: $Explosion): boolean;
+        /**
+         * Gets the path type of this block when an entity is pathfinding. When
+         * `null`, uses vanilla behavior.
+         */
+        getBlockPathType(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_, mob: $Mob): $PathType;
         arch$holder(): $Holder<$Block>;
+        getBlockStates(): $List<$BlockState>;
+        replaceThisWith(cx: $RecipeScriptContext, arg1: $Object): $Object;
+        setLightEmission(v: number): void;
         setDestroySpeed(v: number): void;
         setRequiresTool(v: boolean): void;
-        setLightEmission(v: number): void;
-        replaceThisWith(cx: $RecipeScriptContext, arg1: $Object): $Object;
-        getBlockStates(): $List<$BlockState>;
-        moreculling$customShouldDrawFace(arg0: $BlockGetter, arg1: $BlockState_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockPos_, arg5: $Direction_): (boolean) | undefined;
         moreculling$usesCustomShouldDrawFace(state: $BlockState_): boolean;
+        moreculling$customShouldDrawFace(arg0: $BlockGetter, arg1: $BlockState_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockPos_, arg5: $Direction_): (boolean) | undefined;
         arch$registryName(): $ResourceLocation;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -9432,11 +9432,11 @@ declare module "@package/net/minecraft/world/level/block" {
         hasCollision: boolean;
         constructor(properties: $BlockBehaviour$Properties);
         get name(): $MutableComponent;
-        get descriptionId(): string;
         set nameKey(value: string);
+        get descriptionId(): string;
+        get blockStates(): $List<$BlockState>;
         set destroySpeed(value: number);
         set requiresTool(value: boolean);
-        get blockStates(): $List<$BlockState>;
     }
     /**
      * Values that may be interpreted as {@link $Block}.
@@ -9481,14 +9481,14 @@ declare module "@package/net/minecraft/world/level/block" {
         get equipSound(): $Holder<$SoundEvent>;
     }
     export class $MultifaceSpreader$DefaultSpreaderConfig implements $MultifaceSpreader$SpreadConfig {
-        getStateForPlacement(currentState: $BlockState_, level: $BlockGetter, pos: $BlockPos_, lookingDirection: $Direction_): $BlockState;
         canSpreadInto(level: $BlockGetter, pos: $BlockPos_, spreadPos: $MultifaceSpreader$SpreadPos_): boolean;
+        getStateForPlacement(currentState: $BlockState_, level: $BlockGetter, pos: $BlockPos_, lookingDirection: $Direction_): $BlockState;
         stateCanBeReplaced(level: $BlockGetter, pos: $BlockPos_, spreadPos: $BlockPos_, direction: $Direction_, state: $BlockState_): boolean;
-        hasFace(state: $BlockState_, direction: $Direction_): boolean;
+        getSpreadTypes(): $MultifaceSpreader$SpreadType[];
+        canSpreadFrom(state: $BlockState_, direction: $Direction_): boolean;
         isOtherBlockValidAsSource(otherBlock: $BlockState_): boolean;
         placeBlock(level: $LevelAccessor, pos: $MultifaceSpreader$SpreadPos_, state: $BlockState_, markForPostprocessing: boolean): boolean;
-        canSpreadFrom(state: $BlockState_, direction: $Direction_): boolean;
-        getSpreadTypes(): $MultifaceSpreader$SpreadType[];
+        hasFace(state: $BlockState_, direction: $Direction_): boolean;
         block: $MultifaceBlock;
         constructor(block: $MultifaceBlock);
         get spreadTypes(): $MultifaceSpreader$SpreadType[];
@@ -9634,15 +9634,15 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $SignBlock extends $BaseEntityBlock implements $SimpleWaterloggedBlock {
-        openTextEdit(player: $Player, signEntity: $SignBlockEntity, isFrontText: boolean): void;
         type(): $WoodType;
-        getSignHitboxCenterPosition(state: $BlockState_): $Vec3;
         static getWoodType(block: $Block_): $WoodType;
+        openTextEdit(player: $Player, signEntity: $SignBlockEntity, isFrontText: boolean): void;
+        getSignHitboxCenterPosition(state: $BlockState_): $Vec3;
         getYRotationDegrees(state: $BlockState_): number;
         handler$hhd001$yawp$use(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $Player, arg4: $BlockHitResult, arg5: $CallbackInfoReturnable<any>): void;
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -9917,9 +9917,9 @@ declare module "@package/net/minecraft/world/level/block" {
         static X_SUPPORT_SHAPE: $VoxelShape;
         static FACING: $DirectionProperty;
         hasCollision: boolean;
-        constructor(arg0: $BlockBehaviour$Properties, arg1: $SoundEvent_, arg2: $SoundEvent_);
-        constructor(type: $WoodType_, properties: $BlockBehaviour$Properties);
         constructor(arg0: ($WoodType_) | undefined, arg1: $BlockBehaviour$Properties, arg2: ($SoundEvent_) | undefined, arg3: ($SoundEvent_) | undefined);
+        constructor(type: $WoodType_, properties: $BlockBehaviour$Properties);
+        constructor(arg0: $BlockBehaviour$Properties, arg1: $SoundEvent_, arg2: $SoundEvent_);
     }
     export class $LoomBlock extends $HorizontalDirectionalBlock {
         explosionResistance: number;
@@ -9993,19 +9993,19 @@ declare module "@package/net/minecraft/world/level/block" {
         get type(): $BonemealableBlock$Type;
     }
     export class $ChestBlock extends $AbstractChestBlock<$ChestBlockEntity> implements $SimpleWaterloggedBlock {
-        static getContainer(chest: $ChestBlock, state: $BlockState_, level: $Level_, pos: $BlockPos_, override: boolean): $Container;
-        blockEntityType(): $BlockEntityType<$ChestBlockEntity>;
-        getOpenChestStat(): $Stat<$ResourceLocation>;
-        static getBlockType(state: $BlockState_): $DoubleBlockCombiner$BlockType;
         static isChestBlockedAt(level: $LevelAccessor, pos: $BlockPos_): boolean;
+        getOpenChestStat(): $Stat<$ResourceLocation>;
         static opennessCombiner(lid: $LidBlockEntity_): $DoubleBlockCombiner$Combiner<$ChestBlockEntity, $Float2FloatFunction>;
+        static getBlockType(state: $BlockState_): $DoubleBlockCombiner$BlockType;
+        static getContainer(chest: $ChestBlock, state: $BlockState_, level: $Level_, pos: $BlockPos_, override: boolean): $Container;
         /**
          * @return the Direction pointing from the given state to its attached double chest
          */
         static getConnectedDirection(state: $BlockState_): $Direction;
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
+        blockEntityType(): $BlockEntityType<$ChestBlockEntity>;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -10085,9 +10085,9 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $WaterloggedTransparentBlock extends $TransparentBlock implements $SimpleWaterloggedBlock {
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -10152,15 +10152,15 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(arg0: $BlockBehaviour$Properties);
     }
     export class $GrowingPlantHeadBlock extends $GrowingPlantBlock implements $BonemealableBlock {
-        canGrowInto(state: $BlockState_): boolean;
-        getGrowIntoState(state: $BlockState_, random: $RandomSource): $BlockState;
-        getBlocksToGrowWhenBonemealed(random: $RandomSource): number;
-        updateBodyAfterConvertedFromHead(head: $BlockState_, body: $BlockState_): $BlockState;
         performBonemeal(level: $ServerLevel, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): void;
         isBonemealSuccess(level: $Level_, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): boolean;
-        isValidBonemealTarget(level: $LevelReader, pos: $BlockPos_, state: $BlockState_): boolean;
-        isMaxAge(state: $BlockState_): boolean;
+        canGrowInto(state: $BlockState_): boolean;
+        getGrowIntoState(state: $BlockState_, random: $RandomSource): $BlockState;
         getMaxAgeState(state: $BlockState_): $BlockState;
+        isMaxAge(state: $BlockState_): boolean;
+        updateBodyAfterConvertedFromHead(head: $BlockState_, body: $BlockState_): $BlockState;
+        getBlocksToGrowWhenBonemealed(random: $RandomSource): number;
+        isValidBonemealTarget(level: $LevelReader, pos: $BlockPos_, state: $BlockState_): boolean;
         getType(): $BonemealableBlock$Type;
         getParticlePos(pos: $BlockPos_): $BlockPos;
         growthDirection: $Direction;
@@ -10230,9 +10230,9 @@ declare module "@package/net/minecraft/world/level/block" {
     }
     export class $LightBlock extends $Block implements $SimpleWaterloggedBlock {
         static setLightOnStack(stack: $ItemStack_, light: number): $ItemStack;
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -10490,8 +10490,8 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $CarvedPumpkinBlock extends $HorizontalDirectionalBlock {
-        canSpawnGolem(level: $LevelReader, pos: $BlockPos_): boolean;
         static clearPatternBlocks(level: $Level_, patternMatch: $BlockPattern$BlockPatternMatch): void;
+        canSpawnGolem(level: $LevelReader, pos: $BlockPos_): boolean;
         static updatePatternBlocks(level: $Level_, patternMatch: $BlockPattern$BlockPatternMatch): void;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -10555,9 +10555,9 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(arg0: $BlockBehaviour$Properties);
     }
     export class $LadderBlock extends $Block implements $SimpleWaterloggedBlock, $MoreBlockCulling {
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -10747,18 +10747,18 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $PointedDripstoneBlock extends $Block implements $Fallable, $SimpleWaterloggedBlock {
+        static growStalactiteOrStalagmiteIfPossible(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): void;
+        onBrokenAfterFall(level: $Level_, pos: $BlockPos_, fallingBlock: $FallingBlockEntity): void;
         static maybeTransferFluid(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, randChance: number): void;
         static spawnDripParticle(level: $Level_, pos: $BlockPos_, state: $BlockState_): void;
         static findStalactiteTipAboveCauldron(level: $Level_, pos: $BlockPos_): $BlockPos;
-        static growStalactiteOrStalagmiteIfPossible(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): void;
-        onBrokenAfterFall(level: $Level_, pos: $BlockPos_, fallingBlock: $FallingBlockEntity): void;
-        static canDrip(state: $BlockState_): boolean;
-        static getCauldronFillFluidType(level: $ServerLevel, pos: $BlockPos_): $Fluid;
         getFallDamageSource(entity: $Entity): $DamageSource;
+        static getCauldronFillFluidType(level: $ServerLevel, pos: $BlockPos_): $Fluid;
+        static canDrip(state: $BlockState_): boolean;
         onLand(level: $Level_, pos: $BlockPos_, state: $BlockState_, replaceableState: $BlockState_, fallingBlock: $FallingBlockEntity): void;
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -10863,9 +10863,9 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $CaveVines {
-        static emission(berries: number): $ToIntFunction<$BlockState>;
         static use(entity: $Entity | null, state: $BlockState_, level: $Level_, pos: $BlockPos_): $InteractionResult;
         static hasGlowBerries(state: $BlockState_): boolean;
+        static emission(berries: number): $ToIntFunction<$BlockState>;
         static SHAPE: $VoxelShape;
         static BERRIES: $BooleanProperty;
     }
@@ -10873,9 +10873,9 @@ declare module "@package/net/minecraft/world/level/block" {
     }
     export class $AbstractCandleBlock extends $Block {
         getParticleOffsets(state: $BlockState_): $Iterable<$Vec3>;
-        canBeLit(state: $BlockState_): boolean;
-        static isLit(state: $BlockState_): boolean;
         static extinguish(player: $Player | null, state: $BlockState_, level: $LevelAccessor, pos: $BlockPos_): void;
+        static isLit(state: $BlockState_): boolean;
+        canBeLit(state: $BlockState_): boolean;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -10947,13 +10947,9 @@ declare module "@package/net/minecraft/world/level/block" {
     }
     export class $WebBlock extends $Block implements $IShearable {
         /**
-         * Shears this object. This function is called on both sides, and is responsible for performing any and all actions that happen when sheared, except spawning drops.
-         * 
-         * Drops that are spawned as a result of being sheared should be returned from this method, and will be spawned on the server using `#spawnShearedDrop`.
-         * 
-         * Entities may respect their internal position values instead of relying on the `pos` parameter.
+         * Spawns the given stack into the Level at the given position, respecting the doTileDrops gamerule
          */
-        onSheared(player: $Player, item: $ItemStack_, level: $Level_, pos: $BlockPos_): $List<$ItemStack>;
+        spawnShearedDrop(level: $Level_, pos: $BlockPos_, stack: $ItemStack_): void;
         /**
          * Checks if this object can be sheared.
          * 
@@ -10961,9 +10957,13 @@ declare module "@package/net/minecraft/world/level/block" {
          */
         isShearable(player: $Player, item: $ItemStack_, level: $Level_, pos: $BlockPos_): boolean;
         /**
-         * Spawns the given stack into the Level at the given position, respecting the doTileDrops gamerule
+         * Shears this object. This function is called on both sides, and is responsible for performing any and all actions that happen when sheared, except spawning drops.
+         * 
+         * Drops that are spawned as a result of being sheared should be returned from this method, and will be spawned on the server using `#spawnShearedDrop`.
+         * 
+         * Entities may respect their internal position values instead of relying on the `pos` parameter.
          */
-        spawnShearedDrop(level: $Level_, pos: $BlockPos_, stack: $ItemStack_): void;
+        onSheared(player: $Player, item: $ItemStack_, level: $Level_, pos: $BlockPos_): $List<$ItemStack>;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -11131,8 +11131,8 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $RootedDirtBlock extends $Block implements $BonemealableBlock {
-        performBonemeal(arg0: $ServerLevel, arg1: $RandomSource, arg2: $BlockPos_, arg3: $BlockState_): void;
         getParticlePos(arg0: $BlockPos_): $BlockPos;
+        performBonemeal(arg0: $ServerLevel, arg1: $RandomSource, arg2: $BlockPos_, arg3: $BlockState_): void;
         isBonemealSuccess(arg0: $Level_, arg1: $RandomSource, arg2: $BlockPos_, arg3: $BlockState_): boolean;
         isValidBonemealTarget(arg0: $LevelReader, arg1: $BlockPos_, arg2: $BlockState_): boolean;
         getType(): $BonemealableBlock$Type;
@@ -11204,8 +11204,8 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $BarrierBlock extends $Block implements $SimpleWaterloggedBlock {
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
@@ -11245,9 +11245,9 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $GrowingPlantBodyBlock extends $GrowingPlantBlock implements $BonemealableBlock {
-        updateHeadAfterConvertedFromBody(head: $BlockState_, body: $BlockState_): $BlockState;
         performBonemeal(level: $ServerLevel, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): void;
         isBonemealSuccess(level: $Level_, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): boolean;
+        updateHeadAfterConvertedFromBody(head: $BlockState_, body: $BlockState_): $BlockState;
         isValidBonemealTarget(level: $LevelReader, pos: $BlockPos_, state: $BlockState_): boolean;
         getType(): $BonemealableBlock$Type;
         getParticlePos(pos: $BlockPos_): $BlockPos;
@@ -11285,24 +11285,24 @@ declare module "@package/net/minecraft/world/level/block" {
         get type(): $BonemealableBlock$Type;
     }
     export class $BasePressurePlateBlock extends $Block {
+        static getEntityCount(level: $Level_, box: $AABB_, entityClass: $Class<$Entity>): number;
+        /**
+         * Calculates what the signal strength of a pressure plate at the given location should be.
+         */
+        getSignalStrength(level: $Level_, pos: $BlockPos_): number;
+        getPressedTime(): number;
         /**
          * Returns the signal encoded in the given block state.
          */
         getSignalForState(state: $BlockState_): number;
         /**
-         * Returns the block state that encodes the given signal.
-         */
-        setSignalForState(state: $BlockState_, signal: number): $BlockState;
-        getPressedTime(): number;
-        /**
-         * Calculates what the signal strength of a pressure plate at the given location should be.
-         */
-        getSignalStrength(level: $Level_, pos: $BlockPos_): number;
-        /**
          * Notify block and block below of changes
          */
         updateNeighbours(level: $Level_, pos: $BlockPos_): void;
-        static getEntityCount(level: $Level_, box: $AABB_, entityClass: $Class<$Entity>): number;
+        /**
+         * Returns the block state that encodes the given signal.
+         */
+        setSignalForState(state: $BlockState_, signal: number): $BlockState;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -11338,9 +11338,9 @@ declare module "@package/net/minecraft/world/level/block" {
         get pressedTime(): number;
     }
     export class $AmethystClusterBlock extends $AmethystBlock implements $SimpleWaterloggedBlock {
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -11386,8 +11386,8 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(height: number, aabbOffset: number, properties: $BlockBehaviour$Properties);
     }
     export class $HoneyBlock extends $HalfTransparentBlock {
-        static showJumpParticles(entity: $Entity): void;
         static showSlideParticles(entity: $Entity): void;
+        static showJumpParticles(entity: $Entity): void;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -11419,23 +11419,23 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $Mirror extends $Enum<$Mirror> implements $StringRepresentable {
-        static values(): $Mirror[];
-        static valueOf(arg0: string): $Mirror;
-        symbol(): $Component;
-        getSerializedName(): string;
-        rotation(): $OctahedralGroup;
-        /**
-         * Determines the rotation that is equivalent to this mirror if the rotating object faces in the given direction
-         */
-        getRotation(facing: $Direction_): $Rotation;
-        /**
-         * Mirror the given facing according to this mirror
-         */
-        mirror(facing: $Direction_): $Direction;
         /**
          * Mirrors the given rotation like specified by this mirror. Rotations start at 0 and go up to rotationCount-1. 0 is front, rotationCount/2 is back.
          */
         mirror(rotation: number, rotationCount: number): number;
+        /**
+         * Mirror the given facing according to this mirror
+         */
+        mirror(facing: $Direction_): $Direction;
+        static values(): $Mirror[];
+        static valueOf(arg0: string): $Mirror;
+        symbol(): $Component;
+        rotation(): $OctahedralGroup;
+        getSerializedName(): string;
+        /**
+         * Determines the rotation that is equivalent to this mirror if the rotating object faces in the given direction
+         */
+        getRotation(facing: $Direction_): $Rotation;
         getRemappedEnumConstantName(): string;
         static CODEC: $Codec<$Mirror>;
         static FRONT_BACK: $Mirror;
@@ -11488,16 +11488,16 @@ declare module "@package/net/minecraft/world/level/block" {
     export class $SculkSpreader$ChargeCursor {
         update(level: $LevelAccessor, pos: $BlockPos_, random: $RandomSource, spreader: $SculkSpreader, shouldConvertBlocks: boolean): void;
         mergeWith(cursor: $SculkSpreader$ChargeCursor): void;
+        getDecayDelay(): number;
         getPos(): $BlockPos;
         getCharge(): number;
-        getDecayDelay(): number;
         getFacingData(): $Set<$Direction>;
         charge: number;
         static CODEC: $Codec<$SculkSpreader$ChargeCursor>;
         static MAX_CURSOR_DECAY_DELAY: number;
         constructor(pos: $BlockPos_, charge: number);
-        get pos(): $BlockPos;
         get decayDelay(): number;
+        get pos(): $BlockPos;
         get facingData(): $Set<$Direction>;
     }
     export class $RootsBlock extends $BushBlock {
@@ -11533,17 +11533,17 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $BigDripleafBlock extends $HorizontalDirectionalBlock implements $BonemealableBlock, $SimpleWaterloggedBlock {
-        static place(level: $LevelAccessor, pos: $BlockPos_, fluidState: $FluidState, direction: $Direction_): boolean;
-        static placeWithRandomHeight(level: $LevelAccessor, random: $RandomSource, pos: $BlockPos_, direction: $Direction_): void;
         performBonemeal(level: $ServerLevel, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): void;
         isBonemealSuccess(level: $Level_, random: $RandomSource, pos: $BlockPos_, state: $BlockState_): boolean;
-        static canPlaceAt(level: $LevelHeightAccessor, pos: $BlockPos_, state: $BlockState_): boolean;
+        static place(level: $LevelAccessor, pos: $BlockPos_, fluidState: $FluidState, direction: $Direction_): boolean;
         isValidBonemealTarget(level: $LevelReader, pos: $BlockPos_, state: $BlockState_): boolean;
+        static placeWithRandomHeight(level: $LevelAccessor, random: $RandomSource, pos: $BlockPos_, direction: $Direction_): void;
+        static canPlaceAt(level: $LevelHeightAccessor, pos: $BlockPos_, state: $BlockState_): boolean;
         getType(): $BonemealableBlock$Type;
         getParticlePos(pos: $BlockPos_): $BlockPos;
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -11583,15 +11583,15 @@ declare module "@package/net/minecraft/world/level/block" {
         get type(): $BonemealableBlock$Type;
     }
     export class $SculkSensorBlock extends $BaseEntityBlock implements $SimpleWaterloggedBlock {
+        static canActivate(state: $BlockState_): boolean;
+        getActiveTicks(): number;
         static getPhase(state: $BlockState_): $SculkSensorPhase;
         activate(entity: $Entity | null, level: $Level_, pos: $BlockPos_, state: $BlockState_, power: number, frequency: number): void;
         static deactivate(level: $Level_, pos: $BlockPos_, state: $BlockState_): void;
-        static canActivate(state: $BlockState_): boolean;
-        getActiveTicks(): number;
         static tryResonateVibration(entity: $Entity | null, level: $Level_, pos: $BlockPos_, frequency: number): void;
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -11668,8 +11668,8 @@ declare module "@package/net/minecraft/world/level/block" {
     export class $AbstractCauldronBlock extends $Block {
         isFull(state: $BlockState_): boolean;
         getContentHeight(state: $BlockState_): number;
-        canReceiveStalactiteDrip(fluid: $Fluid_): boolean;
         receiveStalactiteDrip(state: $BlockState_, level: $Level_, pos: $BlockPos_, fluid: $Fluid_): void;
+        canReceiveStalactiteDrip(fluid: $Fluid_): boolean;
         isEntityInsideContent(state: $BlockState_, pos: $BlockPos_, entity: $Entity): boolean;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -11745,9 +11745,9 @@ declare module "@package/net/minecraft/world/level/block" {
     export class $TrapDoorBlock extends $HorizontalDirectionalBlock implements $SimpleWaterloggedBlock {
         getType(): $BlockSetType;
         playSound(player: $Player | null, level: $Level_, pos: $BlockPos_, isOpened: boolean): void;
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -11798,9 +11798,9 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(type: $BlockSetType_, properties: $BlockBehaviour$Properties);
     }
     export class $SculkShriekerBlock extends $BaseEntityBlock implements $SimpleWaterloggedBlock {
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -11843,17 +11843,17 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $WeatheringCopperSlabBlock extends $SlabBlock implements $WeatheringCopper {
+        getAge(): $WeatheringCopper$WeatherState;
         getNext(state: $BlockState_): ($BlockState) | undefined;
         /**
          * @return how much this block resists an explosion
          */
         getChanceModifier(): number;
-        getNextState(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): ($BlockState) | undefined;
         /**
          * Performs a random tick on a block.
          */
         changeOverTime(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): void;
-        getAge(): $WeatheringCopper$WeatherState;
+        getNextState(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): ($BlockState) | undefined;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -11886,14 +11886,14 @@ declare module "@package/net/minecraft/world/level/block" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(weatherState: $WeatheringCopper$WeatherState_, properties: $BlockBehaviour$Properties);
-        get chanceModifier(): number;
         get age(): $WeatheringCopper$WeatherState;
+        get chanceModifier(): number;
     }
     export class $RespawnAnchorBlock extends $Block {
-        static getScaledChargeLevel(state: $BlockState_, scale: number): number;
-        static canSetSpawn(level: $Level_): boolean;
         static findStandUpPosition(entityType: $EntityType_<never>, level: $CollisionGetter, pos: $BlockPos_): ($Vec3) | undefined;
+        static getScaledChargeLevel(state: $BlockState_, scale: number): number;
         static charge(entity: $Entity | null, level: $Level_, pos: $BlockPos_, state: $BlockState_): void;
+        static canSetSpawn(level: $Level_): boolean;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -11929,9 +11929,9 @@ declare module "@package/net/minecraft/world/level/block" {
     export class $BaseCoralPlantTypeBlock extends $Block implements $SimpleWaterloggedBlock {
         static scanForWater(state: $BlockState_, level: $BlockGetter, pos: $BlockPos_): boolean;
         tryScheduleDieTick(state: $BlockState_, level: $LevelAccessor, pos: $BlockPos_): void;
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
         pickupBlock(player: $Player | null, level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_): $ItemStack;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         /**
          * State sensitive variant of `BucketPickup#getPickupSound()`.
@@ -12007,13 +12007,9 @@ declare module "@package/net/minecraft/world/level/block" {
         getType(): $BonemealableBlock$Type;
         getParticlePos(pos: $BlockPos_): $BlockPos;
         /**
-         * Shears this object. This function is called on both sides, and is responsible for performing any and all actions that happen when sheared, except spawning drops.
-         * 
-         * Drops that are spawned as a result of being sheared should be returned from this method, and will be spawned on the server using `#spawnShearedDrop`.
-         * 
-         * Entities may respect their internal position values instead of relying on the `pos` parameter.
+         * Spawns the given stack into the Level at the given position, respecting the doTileDrops gamerule
          */
-        onSheared(player: $Player, item: $ItemStack_, level: $Level_, pos: $BlockPos_): $List<$ItemStack>;
+        spawnShearedDrop(level: $Level_, pos: $BlockPos_, stack: $ItemStack_): void;
         /**
          * Checks if this object can be sheared.
          * 
@@ -12021,9 +12017,13 @@ declare module "@package/net/minecraft/world/level/block" {
          */
         isShearable(player: $Player, item: $ItemStack_, level: $Level_, pos: $BlockPos_): boolean;
         /**
-         * Spawns the given stack into the Level at the given position, respecting the doTileDrops gamerule
+         * Shears this object. This function is called on both sides, and is responsible for performing any and all actions that happen when sheared, except spawning drops.
+         * 
+         * Drops that are spawned as a result of being sheared should be returned from this method, and will be spawned on the server using `#spawnShearedDrop`.
+         * 
+         * Entities may respect their internal position values instead of relying on the `pos` parameter.
          */
-        spawnShearedDrop(level: $Level_, pos: $BlockPos_, stack: $ItemStack_): void;
+        onSheared(player: $Player, item: $ItemStack_, level: $Level_, pos: $BlockPos_): $List<$ItemStack>;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -12096,50 +12096,14 @@ declare module "@package/net/minecraft/world/level/block" {
         hasCollision: boolean;
         constructor(type: $WoodType_, properties: $BlockBehaviour$Properties);
     }
-    export class $HangingRootsBlock extends $Block implements $SimpleWaterloggedBlock {
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
-        placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
-        pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
-        getPickupSound(): ($SoundEvent) | undefined;
-        getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
-        explosionResistance: number;
-        static UPDATE_SHAPE_ORDER: $Direction[];
-        static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
-        static UPDATE_NONE: number;
-        static UPDATE_INVISIBLE: number;
-        stateDefinition: $StateDefinition<$Block, $BlockState>;
-        static UPDATE_MOVE_BY_PISTON: number;
-        static UPDATE_LIMIT: number;
-        static UPDATE_ALL: number;
-        drops: $ResourceKey<$LootTable>;
-        static UPDATE_KNOWN_SHAPE: number;
-        static UPDATE_SUPPRESS_DROPS: number;
-        dynamicShape: boolean;
-        soundType: $SoundType;
-        jumpFactor: number;
-        static UPDATE_IMMEDIATE: number;
-        item: $Item;
-        static CODEC: $MapCodec<$HangingRootsBlock>;
-        static UPDATE_NEIGHBORS: number;
-        static INDESTRUCTIBLE: number;
-        speedFactor: number;
-        friction: number;
-        static SHAPE: $VoxelShape;
-        static BLOCK_STATE_REGISTRY: $IdMapper<$BlockState>;
-        static UPDATE_ALL_IMMEDIATE: number;
-        static INSTANT: number;
-        static UPDATE_CLIENTS: number;
-        hasCollision: boolean;
-        constructor(arg0: $BlockBehaviour$Properties);
-    }
     export class $BedBlock extends $HorizontalDirectionalBlock implements $EntityBlock {
-        getColor(): $DyeColor;
-        static getBedOrientation(level: $BlockGetter, pos: $BlockPos_): $Direction;
-        static canSetSpawn(level: $Level_): boolean;
-        static findStandUpPosition(entityType: $EntityType_<never>, collisionGetter: $CollisionGetter, pos: $BlockPos_, direction: $Direction_, yRot: number): ($Vec3) | undefined;
         newBlockEntity(pos: $BlockPos_, state: $BlockState_): $BlockEntity;
         static getBlockType(state: $BlockState_): $DoubleBlockCombiner$BlockType;
+        static findStandUpPosition(entityType: $EntityType_<never>, collisionGetter: $CollisionGetter, pos: $BlockPos_, direction: $Direction_, yRot: number): ($Vec3) | undefined;
+        static getBedOrientation(level: $BlockGetter, pos: $BlockPos_): $Direction;
+        getColor(): $DyeColor;
         static getConnectedDirection(state: $BlockState_): $Direction;
+        static canSetSpawn(level: $Level_): boolean;
         getListener<T extends $BlockEntity>(level: $ServerLevel, blockEntity: T): $GameEventListener;
         getTicker<T extends $BlockEntity>(level: $Level_, state: $BlockState_, blockEntityType: $BlockEntityType_<T>): $BlockEntityTicker<T>;
         static LEG_SOUTH_EAST: $VoxelShape;
@@ -12184,6 +12148,42 @@ declare module "@package/net/minecraft/world/level/block" {
         hasCollision: boolean;
         constructor(color: $DyeColor_, properties: $BlockBehaviour$Properties);
         get color(): $DyeColor;
+    }
+    export class $HangingRootsBlock extends $Block implements $SimpleWaterloggedBlock {
+        placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
+        pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
+        getPickupSound(): ($SoundEvent) | undefined;
+        getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
+        explosionResistance: number;
+        static UPDATE_SHAPE_ORDER: $Direction[];
+        static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
+        static UPDATE_NONE: number;
+        static UPDATE_INVISIBLE: number;
+        stateDefinition: $StateDefinition<$Block, $BlockState>;
+        static UPDATE_MOVE_BY_PISTON: number;
+        static UPDATE_LIMIT: number;
+        static UPDATE_ALL: number;
+        drops: $ResourceKey<$LootTable>;
+        static UPDATE_KNOWN_SHAPE: number;
+        static UPDATE_SUPPRESS_DROPS: number;
+        dynamicShape: boolean;
+        soundType: $SoundType;
+        jumpFactor: number;
+        static UPDATE_IMMEDIATE: number;
+        item: $Item;
+        static CODEC: $MapCodec<$HangingRootsBlock>;
+        static UPDATE_NEIGHBORS: number;
+        static INDESTRUCTIBLE: number;
+        speedFactor: number;
+        friction: number;
+        static SHAPE: $VoxelShape;
+        static BLOCK_STATE_REGISTRY: $IdMapper<$BlockState>;
+        static UPDATE_ALL_IMMEDIATE: number;
+        static INSTANT: number;
+        static UPDATE_CLIENTS: number;
+        hasCollision: boolean;
+        constructor(arg0: $BlockBehaviour$Properties);
     }
     export class $CaveVinesPlantBlock extends $GrowingPlantBodyBlock implements $BonemealableBlock, $CaveVines {
         growthDirection: $Direction;
@@ -12230,8 +12230,8 @@ declare module "@package/net/minecraft/world/level/block" {
     export class $LiquidBlockContainer {
     }
     export interface $LiquidBlockContainer {
-        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
         placeLiquid(level: $LevelAccessor, pos: $BlockPos_, state: $BlockState_, fluidState: $FluidState): boolean;
+        canPlaceLiquid(player: $Player | null, level: $BlockGetter, pos: $BlockPos_, state: $BlockState_, fluid: $Fluid_): boolean;
     }
     export class $DaylightDetectorBlock extends $BaseEntityBlock {
         explosionResistance: number;
@@ -12368,17 +12368,17 @@ declare module "@package/net/minecraft/world/level/block" {
         constructor(properties: $BlockBehaviour$Properties);
     }
     export class $WeatheringCopperTrapDoorBlock extends $TrapDoorBlock implements $WeatheringCopper {
+        getAge(): $WeatheringCopper$WeatherState;
         getNext(state: $BlockState_): ($BlockState) | undefined;
         /**
          * @return how much this block resists an explosion
          */
         getChanceModifier(): number;
-        getNextState(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): ($BlockState) | undefined;
         /**
          * Performs a random tick on a block.
          */
         changeOverTime(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): void;
-        getAge(): $WeatheringCopper$WeatherState;
+        getNextState(state: $BlockState_, level: $ServerLevel, pos: $BlockPos_, random: $RandomSource): ($BlockState) | undefined;
         explosionResistance: number;
         static NORTH_OPEN_AABB: $VoxelShape;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -12420,8 +12420,8 @@ declare module "@package/net/minecraft/world/level/block" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(type: $BlockSetType_, weatherState: $WeatheringCopper$WeatherState_, properties: $BlockBehaviour$Properties);
-        get chanceModifier(): number;
         get age(): $WeatheringCopper$WeatherState;
+        get chanceModifier(): number;
     }
     export class $EndPortalFrameBlock extends $Block {
         static getOrCreatePortalShape(): $BlockPattern;

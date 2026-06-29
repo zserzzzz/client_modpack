@@ -57,10 +57,10 @@ declare module "@package/fzzyhmstrs/emi_loot/mixins" {
     export class $SetDamageLootFunctionAccessor {
     }
     export interface $SetDamageLootFunctionAccessor {
-        getAdd(): boolean;
         getDurabilityRange(): $NumberProvider;
-        get add(): boolean;
+        getAdd(): boolean;
         get durabilityRange(): $NumberProvider;
+        get add(): boolean;
     }
     export class $AlternativeLootConditionAccessor {
     }
@@ -75,10 +75,10 @@ declare module "@package/fzzyhmstrs/emi_loot/mixins" {
     export class $ExplorationMapLootFunctionAccessor {
     }
     export interface $ExplorationMapLootFunctionAccessor {
-        getDestination(): $TagKey<$Structure>;
         getDecoration(): $Holder<$MapDecorationType>;
-        get destination(): $TagKey<$Structure>;
+        getDestination(): $TagKey<$Structure>;
         get decoration(): $Holder<$MapDecorationType>;
+        get destination(): $TagKey<$Structure>;
     }
     export class $SetEnchantmentsLootFunctionAccessor {
     }
@@ -113,14 +113,14 @@ declare module "@package/fzzyhmstrs/emi_loot/mixins" {
         getShape(): ($FireworkExplosion$Shape) | undefined;
         getFadeColors(): ($IntList) | undefined;
         callApply(arg0: $FireworkExplosion_): $FireworkExplosion;
+        getTrail(): (boolean) | undefined;
         getTwinkle(): (boolean) | undefined;
         getColors(): ($IntList) | undefined;
-        getTrail(): (boolean) | undefined;
         get shape(): ($FireworkExplosion$Shape) | undefined;
         get fadeColors(): ($IntList) | undefined;
+        get trail(): (boolean) | undefined;
         get twinkle(): (boolean) | undefined;
         get colors(): ($IntList) | undefined;
-        get trail(): (boolean) | undefined;
     }
     export class $ConditionalLootFunctionAccessor {
     }
@@ -161,13 +161,13 @@ declare module "@package/fzzyhmstrs/emi_loot/mixins" {
     export class $LootPoolAccessor {
     }
     export interface $LootPoolAccessor {
-        getFunctions(): $List<$LootItemFunction>;
         getEntries(): $List<$LootPoolEntryContainer>;
         getConditions(): $List<$LootItemCondition>;
+        getFunctions(): $List<$LootItemFunction>;
         getRolls(): $NumberProvider;
-        get functions(): $List<$LootItemFunction>;
         get entries(): $List<$LootPoolEntryContainer>;
         get conditions(): $List<$LootItemCondition>;
+        get functions(): $List<$LootItemFunction>;
         get rolls(): $NumberProvider;
     }
     export class $SetLootTableLootFunctionAccessor {
@@ -281,10 +281,10 @@ declare module "@package/fzzyhmstrs/emi_loot/mixins" {
     export class $LeafEntryAccessor {
     }
     export interface $LeafEntryAccessor {
-        getFunctions(): $List<$LootItemFunction>;
         getWeight(): number;
-        get functions(): $List<$LootItemFunction>;
+        getFunctions(): $List<$LootItemFunction>;
         get weight(): number;
+        get functions(): $List<$LootItemFunction>;
     }
     export class $ApplyBonusLootFunctionAccessor {
     }
@@ -350,10 +350,10 @@ declare module "@package/fzzyhmstrs/emi_loot/mixins" {
     export class $SetCountLootFunctionAccessor {
     }
     export interface $SetCountLootFunctionAccessor {
-        getAdd(): boolean;
         getCountRange(): $NumberProvider;
-        get add(): boolean;
+        getAdd(): boolean;
         get countRange(): $NumberProvider;
+        get add(): boolean;
     }
     export class $BoundedIntUnaryOperatorAccessor {
     }

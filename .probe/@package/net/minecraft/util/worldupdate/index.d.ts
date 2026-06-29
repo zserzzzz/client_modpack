@@ -27,10 +27,10 @@ declare module "@package/net/minecraft/util/worldupdate" {
     export class $WorldUpgrader {
         cancel(): void;
         levels(): $Set<$ResourceKey<$Level>>;
+        getTotalChunks(): number;
+        dimensionProgress(level: $ResourceKey_<$Level>): number;
         getProgress(): number;
         getStatus(): $Component;
-        dimensionProgress(level: $ResourceKey_<$Level>): number;
-        getTotalChunks(): number;
         getConverted(): number;
         isFinished(): boolean;
         getSkipped(): number;
@@ -71,5 +71,5 @@ declare module "@package/net/minecraft/util/worldupdate" {
     /**
      * Values that may be interpreted as {@link $WorldUpgrader$DimensionToUpgrade}.
      */
-    export type $WorldUpgrader$DimensionToUpgrade_<T> = { storage?: any, files?: $ListIterator<$WorldUpgrader$FileToUpgrade_>, dimensionKey?: $ResourceKey_<$Level>,  } | [storage?: any, files?: $ListIterator<$WorldUpgrader$FileToUpgrade_>, dimensionKey?: $ResourceKey_<$Level>, ];
+    export type $WorldUpgrader$DimensionToUpgrade_<T> = { dimensionKey?: $ResourceKey_<$Level>, storage?: any, files?: $ListIterator<$WorldUpgrader$FileToUpgrade_>,  } | [dimensionKey?: $ResourceKey_<$Level>, storage?: any, files?: $ListIterator<$WorldUpgrader$FileToUpgrade_>, ];
 }

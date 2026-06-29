@@ -17,13 +17,13 @@ declare module "@package/com/simibubi/create/content/trains/schedule/hat" {
         scale(): number;
         offset(): $Vec3;
         part(): string;
-        static getAdjustedPart(arg0: $TrainHatInfo_, arg1: $ModelPart, arg2: string): $List<$ModelPart>;
         cubeIndex(): number;
+        static getAdjustedPart(arg0: $TrainHatInfo_, arg1: $ModelPart, arg2: string): $List<$ModelPart>;
         static CODEC: $Codec<$TrainHatInfo>;
         constructor(part: string, cubeIndex: number, offset: $Vec3_, scale: number);
     }
     /**
      * Values that may be interpreted as {@link $TrainHatInfo}.
      */
-    export type $TrainHatInfo_ = { cubeIndex?: number, part?: string, offset?: $Vec3_, scale?: number,  } | [cubeIndex?: number, part?: string, offset?: $Vec3_, scale?: number, ];
+    export type $TrainHatInfo_ = { part?: string, offset?: $Vec3_, scale?: number, cubeIndex?: number,  } | [part?: string, offset?: $Vec3_, scale?: number, cubeIndex?: number, ];
 }

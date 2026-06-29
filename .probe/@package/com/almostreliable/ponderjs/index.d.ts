@@ -1,5 +1,5 @@
-import { $PonderScene, $PonderTag } from "@package/net/createmod/ponder/foundation";
 import { $TextWindowElement } from "@package/net/createmod/ponder/foundation/element";
+import { $PonderScene, $PonderTag } from "@package/net/createmod/ponder/foundation";
 import { $Item_ } from "@package/net/minecraft/world/item";
 import { $Ingredient_ } from "@package/net/minecraft/world/item/crafting";
 import { $PonderPalette_ } from "@package/net/createmod/ponder/api";
@@ -26,23 +26,17 @@ declare module "@package/com/almostreliable/ponderjs" {
         create(arg0: $Ingredient_): $PonderBuilderJS;
         printParticleNames(): void;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
-        /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `exit` denotes a `default` outcome.
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -50,17 +44,23 @@ declare module "@package/com/almostreliable/ponderjs" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(arg0: $PonderSceneRegistry);
     }
     export class $PonderBuilderJS {
@@ -73,37 +73,31 @@ declare module "@package/com/almostreliable/ponderjs" {
     export class $TextElementBuilderJS implements $TextElementBuilder {
         text(arg0: $Component_, ...arg1: $Object[]): $TextElementBuilderJS;
         text(arg0: $Component_): $TextElementBuilderJS;
-        colored(arg0: $PonderPalette_): $TextElementBuilderJS;
+        attachKeyFrame(): $TextElementBuilderJS;
         independent(arg0: number): $TextElementBuilderJS;
         pointAt(arg0: $Vec3_): $TextElementBuilderJS;
         independent(): $TextElementBuilder;
-        attachKeyFrame(): $TextElementBuilder;
-        placeNearTarget(): $TextElementBuilder;
         sharedText(arg0: $ResourceLocation_): $TextElementBuilder;
-        sharedText(arg0: string, ...arg1: $Object[]): $TextElementBuilder;
+        sharedText(arg0: $ResourceLocation_, ...arg1: $Object[]): $TextElementBuilder;
+        colored(arg0: $PonderPalette_): $TextElementBuilder;
+        placeNearTarget(): $TextElementBuilder;
         constructor(arg0: $TextWindowElement, arg1: $PonderScene);
     }
     export class $PonderItemTagEventJS$Builder {
+        icon(arg0: $Item_): $PonderItemTagEventJS$Builder;
         description(arg0: string): $PonderItemTagEventJS$Builder;
         items(arg0: $Ingredient_): $PonderItemTagEventJS$Builder;
         title(arg0: string): $PonderItemTagEventJS$Builder;
-        icon(arg0: $Item_): $PonderItemTagEventJS$Builder;
-        noIndex(): $PonderItemTagEventJS$Builder;
         addIconToItems(): $PonderItemTagEventJS$Builder;
+        noIndex(): $PonderItemTagEventJS$Builder;
     }
     export class $PonderItemTagEventJS implements $KubeEvent {
-        createTag(arg0: string, arg1: $Item_, arg2: string, arg3: string, arg4: $Ingredient_ | null): void;
-        createTag(arg0: string, arg1: $Consumer_<$PonderItemTagEventJS$Builder>): void;
-        createTag(arg0: string, arg1: $Item_, arg2: string, arg3: string): void;
         remove(arg0: $PonderTag, arg1: $Ingredient_): void;
         add(arg0: $PonderTag, arg1: $Ingredient_): void;
         removeTag(...arg0: $PonderTag[]): void;
-        /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
+        createTag(arg0: string, arg1: $Consumer_<$PonderItemTagEventJS$Builder>): void;
+        createTag(arg0: string, arg1: $Item_, arg2: string, arg3: string, arg4: $Ingredient_ | null): void;
+        createTag(arg0: string, arg1: $Item_, arg2: string, arg3: string): void;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -111,11 +105,11 @@ declare module "@package/com/almostreliable/ponderjs" {
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -123,17 +117,23 @@ declare module "@package/com/almostreliable/ponderjs" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         constructor(arg0: $PonderTagRegistrationHelper<$ResourceLocation_>);
     }
 }

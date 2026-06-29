@@ -82,20 +82,20 @@ declare module "@package/com/simibubi/create/content/contraptions/chassis" {
     }
     export class $AbstractChassisBlock extends $RotatedPillarBlock implements $IWrenchable, $IBE<$ChassisBlockEntity>, $TransformableBlock {
         transform(arg0: $BlockState_, arg1: $StructureTransform): $BlockState;
-        getBlockEntityType(): $BlockEntityType<$ChassisBlockEntity>;
-        getBlockEntityClass(): $Class<$ChassisBlockEntity>;
         getGlueableSide(arg0: $BlockState_, arg1: $Direction_): $BooleanProperty;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        getBlockEntityClass(): $Class<$ChassisBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$ChassisBlockEntity>;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ChassisBlockEntity>): void;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ChassisBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ChassisBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ChassisBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $ChassisBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ChassisBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ChassisBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ChassisBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -126,8 +126,8 @@ declare module "@package/com/simibubi/create/content/contraptions/chassis" {
         hasCollision: boolean;
         static AXIS: $EnumProperty<$Direction$Axis>;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$ChassisBlockEntity>;
         get blockEntityClass(): $Class<$ChassisBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$ChassisBlockEntity>;
     }
     export class $ChassisBlockEntity$ChassisScrollValueBehaviour extends $BulkScrollValueBehaviour {
         blockEntity: $SmartBlockEntity;
@@ -138,12 +138,12 @@ declare module "@package/com/simibubi/create/content/contraptions/chassis" {
     export class $StickerBlockEntity extends $SmartBlockEntity implements $StickerBlockEntityExtension {
         static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
         playSound(arg0: boolean): void;
-        sable$tickConstraint(): void;
-        handler$gnc003$sable$read(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean, arg3: $CallbackInfo): void;
-        isBlockStateExtended(): boolean;
-        handler$gnc006$sable$tick(arg0: $CallbackInfo): void;
-        handler$gnc003$sable$write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean, arg3: $CallbackInfo): void;
         sable$removeConstraint(): void;
+        sable$tickConstraint(): void;
+        handler$gnc006$sable$tick(arg0: $CallbackInfo): void;
+        isBlockStateExtended(): boolean;
+        handler$gnc003$sable$write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean, arg3: $CallbackInfo): void;
+        handler$gnc003$sable$read(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean, arg3: $CallbackInfo): void;
         isAttachedToBlock(): boolean;
         worldPosition: $BlockPos;
         level: $Level;
@@ -169,8 +169,8 @@ declare module "@package/com/simibubi/create/content/contraptions/chassis" {
     }
     export class $ChassisBlockEntity extends $SmartBlockEntity {
         getRange(): number;
-        addAttachedChasses(arg0: $Queue<$BlockPos_>, arg1: $Set_<$BlockPos_>): boolean;
         getIncludedBlockPositions(arg0: $Direction_, arg1: boolean): $List<$BlockPos>;
+        addAttachedChasses(arg0: $Queue<$BlockPos_>, arg1: $Set_<$BlockPos_>): boolean;
         collectChassisGroup(): $List<$ChassisBlockEntity>;
         worldPosition: $BlockPos;
         level: $Level;
@@ -183,16 +183,16 @@ declare module "@package/com/simibubi/create/content/contraptions/chassis" {
     export class $ChassisRangeDisplay$GroupEntry extends $ChassisRangeDisplay$Entry {
     }
     export class $StickerBlock extends $WrenchableDirectionalBlock implements $IBE<$StickerBlockEntity>, $BlockSubLevelAssemblyListener {
-        getBlockEntityType(): $BlockEntityType<$StickerBlockEntity>;
         getBlockEntityClass(): $Class<$StickerBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$StickerBlockEntity>;
         afterMove(arg0: $ServerLevel, arg1: $ServerLevel, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockPos_): void;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$StickerBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$StickerBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($StickerBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$StickerBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $StickerBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$StickerBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($StickerBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$StickerBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         beforeMove(arg0: $ServerLevel, arg1: $ServerLevel, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockPos_): void;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
@@ -226,8 +226,8 @@ declare module "@package/com/simibubi/create/content/contraptions/chassis" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$StickerBlockEntity>;
         get blockEntityClass(): $Class<$StickerBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$StickerBlockEntity>;
     }
     export class $RadialChassisBlock extends $AbstractChassisBlock {
         static STICKY_NORTH: $BooleanProperty;

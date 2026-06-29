@@ -21,16 +21,16 @@ declare module "@package/net/caffeinemc/mods/lithium/common/block/entity" {
         static SLEEPING_BLOCK_ENTITY_TICKER: $TickingBlockEntity;
     }
     export interface $SleepingBlockEntity {
-        isSleeping(): boolean;
-        lithium$getSleepingTicker(): $TickingBlockEntity;
         lithium$getTickWrapper(): $WrappedBlockEntityTickInvokerAccessor;
         lithium$startSleeping(): boolean;
-        lithium$setTickWrapper(arg0: $WrappedBlockEntityTickInvokerAccessor): void;
-        sleepOnlyCurrentTick(): void;
+        lithium$getSleepingTicker(): $TickingBlockEntity;
         lithium$setSleepingTicker(arg0: $TickingBlockEntity): void;
+        sleepOnlyCurrentTick(): void;
+        lithium$setTickWrapper(arg0: $WrappedBlockEntityTickInvokerAccessor): void;
         wakeUpNow(): void;
         setTicker(arg0: $TickingBlockEntity): void;
-        get sleeping(): boolean;
+        isSleeping(): boolean;
         set ticker(value: $TickingBlockEntity);
+        get sleeping(): boolean;
     }
 }

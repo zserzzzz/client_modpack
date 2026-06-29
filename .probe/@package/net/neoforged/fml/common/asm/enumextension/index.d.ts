@@ -17,8 +17,8 @@ declare module "@package/net/neoforged/fml/common/asm/enumextension" {
     export interface $IExtensibleEnum {
     }
     export class $ExtensionInfo extends $Record {
-        extended(): boolean;
         totalCount(): number;
+        extended(): boolean;
         netCheck(): $NetworkedEnum$NetworkCheck;
         vanillaCount(): number;
         static nonExtended<T extends $Enum<T>>(arg0: $Class<T>): $ExtensionInfo;
@@ -27,5 +27,5 @@ declare module "@package/net/neoforged/fml/common/asm/enumextension" {
     /**
      * Values that may be interpreted as {@link $ExtensionInfo}.
      */
-    export type $ExtensionInfo_ = { extended?: boolean, totalCount?: number, vanillaCount?: number, netCheck?: $NetworkedEnum$NetworkCheck_,  } | [extended?: boolean, totalCount?: number, vanillaCount?: number, netCheck?: $NetworkedEnum$NetworkCheck_, ];
+    export type $ExtensionInfo_ = { vanillaCount?: number, netCheck?: $NetworkedEnum$NetworkCheck_, extended?: boolean, totalCount?: number,  } | [vanillaCount?: number, netCheck?: $NetworkedEnum$NetworkCheck_, extended?: boolean, totalCount?: number, ];
 }

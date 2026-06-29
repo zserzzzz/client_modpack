@@ -9,21 +9,21 @@ import { $StreamCodec } from "@package/net/minecraft/network/codec";
 
 declare module "@package/net/fabricmc/fabric/api/transfer/v1/item" {
     export class $ItemVariant {
+        static of(arg0: $ItemStack_): $ItemVariant;
         static of(arg0: $ItemLike_, arg1: $DataComponentPatch_): $ItemVariant;
         static of(arg0: $ItemLike_): $ItemVariant;
-        static of(arg0: $ItemStack_): $ItemVariant;
         static blank(): $ItemVariant;
         static CODEC: $Codec<$ItemVariant>;
         static PACKET_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $ItemVariant>;
     }
     export interface $ItemVariant extends $TransferVariant<$Item> {
-        matches(arg0: $ItemStack_): boolean;
-        getItem(): $Item;
+        withComponentChanges(arg0: $DataComponentPatch_): $ItemVariant;
         getRegistryEntry(): $Holder<$Item>;
         toStack(): $ItemStack;
         toStack(arg0: number): $ItemStack;
-        withComponentChanges(arg0: $DataComponentPatch_): $TransferVariant<$Item>;
-        get item(): $Item;
+        matches(arg0: $ItemStack_): boolean;
+        getItem(): $Item;
         get registryEntry(): $Holder<$Item>;
+        get item(): $Item;
     }
 }

@@ -47,8 +47,8 @@ declare module "@package/com/mojang/realmsclient/util/task" {
         tick(): void;
         getTitle(): $Component;
         static setScreen(screen: $Screen): void;
-        aborted(): boolean;
         abortTask(): void;
+        aborted(): boolean;
         constructor();
         get title(): $Component;
         static set screen(value: $Screen);

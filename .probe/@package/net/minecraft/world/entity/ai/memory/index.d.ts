@@ -166,12 +166,12 @@ declare module "@package/net/minecraft/world/entity/ai/memory" {
     }
     export interface $MemoryModuleType<U> extends RegistryMarked<RegistryTypes.MemoryModuleTypeTag, RegistryTypes.MemoryModuleType> {}
     export class $ExpirableValue<T> {
+        static codec<T>(valueCodec: $Codec<T>): $Codec<$ExpirableValue<T>>;
         getValue(): T;
-        static of<T>(value: T, timeToLive: number): $ExpirableValue<T>;
         static of<T>(value: T): $ExpirableValue<T>;
+        static of<T>(value: T, timeToLive: number): $ExpirableValue<T>;
         tick(): void;
         getTimeToLive(): number;
-        static codec<T>(valueCodec: $Codec<T>): $Codec<$ExpirableValue<T>>;
         hasExpired(): boolean;
         canExpire(): boolean;
         constructor(value: T, timeToLive: number);

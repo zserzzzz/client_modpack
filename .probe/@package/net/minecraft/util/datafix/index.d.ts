@@ -19,8 +19,8 @@ declare module "@package/net/minecraft/util/datafix" {
         static valueOf(arg0: string): $DataFixTypes;
         updateToCurrentVersion(fixer: $DataFixer, tag: $CompoundTag_, version: number): $CompoundTag;
         updateToCurrentVersion<T>(fixer: $DataFixer, input: $Dynamic<T>, version: number): $Dynamic<T>;
-        static currentVersion(): number;
         wrapCodec<A>(codec: $Codec<A>, dataFixer: $DataFixer, dataVersion: number): $Codec<A>;
+        static currentVersion(): number;
         static SAVED_DATA_MAP_DATA: $DataFixTypes;
         static WORLD_GEN_SETTINGS: $DataFixTypes;
         static SAVED_DATA_MAP_INDEX: $DataFixTypes;
@@ -54,18 +54,18 @@ declare module "@package/net/minecraft/util/datafix" {
         static get dataFixer(): $DataFixer;
     }
     export class $ComponentDataFixUtils {
-        static rewriteFromLenient(dynamic: $Dynamic<never>): $Dynamic<never>;
-        static createPlainTextComponent<T>(ops: $DynamicOps<T>, text: string): $Dynamic<T>;
-        static createEmptyComponent<T>(ops: $DynamicOps<T>): $Dynamic<T>;
         static extractTranslationString(data: string): (string) | undefined;
-        static createTranslatableComponent<T>(ops: $DynamicOps<T>, text: string): $Dynamic<T>;
+        static createPlainTextComponent<T>(ops: $DynamicOps<T>, text: string): $Dynamic<T>;
         static wrapLiteralStringAsComponent<T>(dynamic: $Dynamic<T>): $Dynamic<T>;
+        static createTranslatableComponent<T>(ops: $DynamicOps<T>, text: string): $Dynamic<T>;
+        static rewriteFromLenient(dynamic: $Dynamic<never>): $Dynamic<never>;
+        static createEmptyComponent<T>(ops: $DynamicOps<T>): $Dynamic<T>;
         constructor();
     }
     export class $ExtraDataFixUtils {
+        static cast<T, R>(type: $Type<R>, data: $Typed<T>): $Typed<R>;
         static fixBlockPos(data: $Dynamic<never>): $Dynamic<never>;
         static chainAllFilters<T>(...filters: $Function_<$Typed<never>, $Typed<never>>[]): $Function<$Typed<never>, $Typed<never>>;
-        static cast<T, R>(type: $Type<R>, data: $Typed<T>): $Typed<R>;
         constructor();
     }
     export class $FixWolfHealth extends $NamedEntityFix {

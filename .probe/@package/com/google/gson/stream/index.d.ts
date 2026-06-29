@@ -21,42 +21,33 @@ declare module "@package/com/google/gson/stream" {
      */
     export type $JsonToken_ = "begin_array" | "end_array" | "begin_object" | "end_object" | "name" | "string" | "number" | "boolean" | "null" | "end_document";
     export class $JsonWriter implements $Closeable, $Flushable {
-        nullValue(): $JsonWriter;
-        endArray(): $JsonWriter;
-        isHtmlSafe(): boolean;
-        beginArray(): $JsonWriter;
-        setIndent(arg0: string): void;
-        endObject(): $JsonWriter;
-        jsonValue(arg0: string): $JsonWriter;
-        getSerializeNulls(): boolean;
-        setHtmlSafe(arg0: boolean): void;
-        setSerializeNulls(arg0: boolean): void;
-        beginObject(): $JsonWriter;
         name(arg0: string): $JsonWriter;
+        value(arg0: number): $JsonWriter;
+        value(arg0: number): $JsonWriter;
+        value(arg0: number): $JsonWriter;
         value(arg0: boolean): $JsonWriter;
-        value(arg0: number): $JsonWriter;
-        value(arg0: number): $JsonWriter;
-        value(arg0: number): $JsonWriter;
-        value(arg0: $Number): $JsonWriter;
+        value(arg0: boolean): $JsonWriter;
         value(arg0: string): $JsonWriter;
-        value(arg0: boolean): $JsonWriter;
+        value(arg0: $Number): $JsonWriter;
         flush(): void;
         close(): void;
         setLenient(arg0: boolean): void;
         isLenient(): boolean;
+        getSerializeNulls(): boolean;
+        setHtmlSafe(arg0: boolean): void;
+        setSerializeNulls(arg0: boolean): void;
+        jsonValue(arg0: string): $JsonWriter;
+        endObject(): $JsonWriter;
+        endArray(): $JsonWriter;
+        nullValue(): $JsonWriter;
+        setIndent(arg0: string): void;
+        isHtmlSafe(): boolean;
+        beginArray(): $JsonWriter;
+        beginObject(): $JsonWriter;
         constructor(arg0: $Writer);
         set indent(value: string);
     }
     export class $JsonReader implements $Closeable {
-        skipValue(): void;
-        endArray(): void;
-        nextName(): string;
-        nextString(): string;
-        beginArray(): void;
-        endObject(): void;
-        nextNull(): void;
-        getPreviousPath(): string;
-        beginObject(): void;
         hasNext(): boolean;
         close(): void;
         getPath(): string;
@@ -67,8 +58,17 @@ declare module "@package/com/google/gson/stream" {
         isLenient(): boolean;
         nextLong(): number;
         nextBoolean(): boolean;
+        nextString(): string;
+        endObject(): void;
+        endArray(): void;
+        nextName(): string;
+        skipValue(): void;
+        nextNull(): void;
+        beginArray(): void;
+        getPreviousPath(): string;
+        beginObject(): void;
         constructor(arg0: $Reader);
-        get previousPath(): string;
         get path(): string;
+        get previousPath(): string;
     }
 }

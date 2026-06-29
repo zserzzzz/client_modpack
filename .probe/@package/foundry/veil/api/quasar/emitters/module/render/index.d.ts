@@ -15,25 +15,25 @@ declare module "@package/foundry/veil/api/quasar/emitters/module/render" {
      */
     export type $TrailSettings$TrailWidthModifier_ = ((arg0: number, arg1: number) => number);
     export class $TrailSettings {
-        setTrailTexture(arg0: $ResourceLocation_): void;
-        getTilingMode(): $Trail$TilingMode;
-        getParentRotation(): boolean;
-        setBillboard(arg0: boolean): void;
-        setTilingMode(arg0: $Trail$TilingMode_): void;
-        setTrailLength(arg0: number): void;
+        getTrailWidthModifier(): $TrailSettings$TrailWidthModifier;
+        setTrailWidthModifier(arg0: $TrailSettings$TrailWidthModifier_): void;
+        setTrailPointModifier(arg0: $TrailSettings$TrailPointModifier_): void;
+        renderImGuiSettings(): void;
+        getTrailPointModifier(): $TrailSettings$TrailPointModifier;
+        setTrailFrequency(arg0: number): void;
         getTrailFrequency(): number;
-        getTrailLength(): number;
+        setTrailLength(arg0: number): void;
+        getParentRotation(): boolean;
         getTrailTexture(): $ResourceLocation;
+        setTrailColor(arg0: $Vector4f): void;
+        getTrailLength(): number;
+        getTilingMode(): $Trail$TilingMode;
+        setTrailTexture(arg0: $ResourceLocation_): void;
+        setTilingMode(arg0: $Trail$TilingMode_): void;
+        getTrailColor(): $Vector4f;
         setParentRotation(arg0: boolean): void;
         getBillboard(): boolean;
-        setTrailFrequency(arg0: number): void;
-        setTrailColor(arg0: $Vector4f): void;
-        getTrailColor(): $Vector4f;
-        setTrailPointModifier(arg0: $TrailSettings$TrailPointModifier_): void;
-        getTrailPointModifier(): $TrailSettings$TrailPointModifier;
-        renderImGuiSettings(): void;
-        setTrailWidthModifier(arg0: $TrailSettings$TrailWidthModifier_): void;
-        getTrailWidthModifier(): $TrailSettings$TrailWidthModifier;
+        setBillboard(arg0: boolean): void;
         static CODEC: $Codec<$TrailSettings>;
         constructor(arg0: number, arg1: number, arg2: $Vector4fc, arg3: $TrailSettings$TrailWidthModifier_, arg4: $ResourceLocation_, arg5: $TrailSettings$TrailPointModifier_, arg6: $Trail$TilingMode_, arg7: boolean, arg8: boolean);
     }

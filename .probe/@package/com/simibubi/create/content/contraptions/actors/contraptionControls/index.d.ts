@@ -58,7 +58,7 @@ declare module "@package/com/simibubi/create/content/contraptions/actors/contrap
     /**
      * Values that may be interpreted as {@link $ContraptionDisableActorPacket}.
      */
-    export type $ContraptionDisableActorPacket_ = { filter?: $ItemStack_, enable?: boolean, entityId?: number,  } | [filter?: $ItemStack_, enable?: boolean, entityId?: number, ];
+    export type $ContraptionDisableActorPacket_ = { entityId?: number, filter?: $ItemStack_, enable?: boolean,  } | [entityId?: number, filter?: $ItemStack_, enable?: boolean, ];
     export class $ContraptionControlsMovement$ElevatorFloorSelection {
         currentTargetY: number;
         currentShortName: string;
@@ -70,40 +70,40 @@ declare module "@package/com/simibubi/create/content/contraptions/actors/contrap
     export class $ContraptionControlsMovement implements $MovementBehaviour {
         static getFilter(arg0: $MovementContext): $ItemStack;
         tick(arg0: $MovementContext): void;
-        stopMoving(arg0: $MovementContext): void;
         renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
-        static isSameFilter(arg0: $ItemStack_, arg1: $ItemStack_): boolean;
-        static tickFloorSelection(arg0: $ContraptionControlsMovement$ElevatorFloorSelection, arg1: $ElevatorContraption): void;
+        static isDisabledInitially(arg0: $MovementContext): boolean;
         startMoving(arg0: $MovementContext): void;
         canBeDisabledVia(arg0: $MovementContext): $ItemStack;
-        static isDisabledInitially(arg0: $MovementContext): boolean;
+        static tickFloorSelection(arg0: $ContraptionControlsMovement$ElevatorFloorSelection, arg1: $ElevatorContraption): void;
+        stopMoving(arg0: $MovementContext): void;
+        static isSameFilter(arg0: $ItemStack_, arg1: $ItemStack_): boolean;
         isActive(arg0: $MovementContext): boolean;
         /**
          * @deprecated
          */
         dropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
+        onDisabledByControls(arg0: $MovementContext): void;
         getActiveAreaOffset(arg0: $MovementContext): $Vec3;
         mustTickWhileDisabled(): boolean;
-        onDisabledByControls(arg0: $MovementContext): void;
+        disableBlockEntityRendering(): boolean;
+        visitNewPosition(arg0: $MovementContext, arg1: $BlockPos_): void;
         collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
         onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
-        cancelStall(arg0: $MovementContext): void;
-        visitNewPosition(arg0: $MovementContext, arg1: $BlockPos_): void;
-        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
         writeExtraData(arg0: $MovementContext): void;
-        disableBlockEntityRendering(): boolean;
+        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
+        cancelStall(arg0: $MovementContext): void;
         constructor();
     }
     export class $ContraptionControlsBlock extends $ControlsBlock implements $IBE<$ContraptionControlsBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$ContraptionControlsBlockEntity>;
         getBlockEntityClass(): $Class<$ContraptionControlsBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ContraptionControlsBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$ContraptionControlsBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ContraptionControlsBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ContraptionControlsBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ContraptionControlsBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $ContraptionControlsBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ContraptionControlsBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ContraptionControlsBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ContraptionControlsBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -136,15 +136,15 @@ declare module "@package/com/simibubi/create/content/contraptions/actors/contrap
         hasCollision: boolean;
         static VIRTUAL: $BooleanProperty;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$ContraptionControlsBlockEntity>;
         get blockEntityClass(): $Class<$ContraptionControlsBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$ContraptionControlsBlockEntity>;
     }
     export class $ContraptionControlsBlockEntity extends $SmartBlockEntity implements $Clearable {
         clearContent(): void;
-        pressButton(): void;
-        tickAnimations(): void;
-        updatePoweredState(): void;
         static sendStatus(arg0: $Player, arg1: $ItemStack_, arg2: boolean): void;
+        tickAnimations(): void;
+        pressButton(): void;
+        updatePoweredState(): void;
         indicator: $LerpedFloat;
         button: $LerpedFloat;
         worldPosition: $BlockPos;

@@ -32,10 +32,10 @@ export * as mirror from "@package/com/simibubi/create/content/equipment/symmetry
 
 declare module "@package/com/simibubi/create/content/equipment/symmetryWand" {
     export class $SymmetryEffectPacket extends $Record implements $ClientboundPacketPayload {
+        mirror(): $BlockPos;
         handle(arg0: $LocalPlayer): void;
         positions(): $List<$BlockPos>;
         getTypeProvider(): $BasePacketPayload$PacketTypeProvider;
-        mirror(): $BlockPos;
         handleInternal(arg0: $Player): void;
         type(): $CustomPacketPayload$Type<$CustomPacketPayload>;
         toVanillaClientbound(): $ClientboundCustomPayloadPacket;
@@ -52,9 +52,9 @@ declare module "@package/com/simibubi/create/content/equipment/symmetryWand" {
         constructor();
     }
     export class $ConfigureSymmetryWandPacket extends $Record implements $ServerboundPacketPayload {
+        mirror(): $SymmetryMirror;
         handle(arg0: $ServerPlayer): void;
         getTypeProvider(): $BasePacketPayload$PacketTypeProvider;
-        mirror(): $SymmetryMirror;
         hand(): $InteractionHand;
         type(): $CustomPacketPayload$Type<$CustomPacketPayload>;
         toVanillaClientbound(): $ClientboundCustomPayloadPacket;
@@ -87,8 +87,8 @@ declare module "@package/com/simibubi/create/content/equipment/symmetryWand" {
     export class $SymmetryHandler {
         static onClientTick(arg0: $ClientTickEvent$Post): void;
         static drawEffect(arg0: $BlockPos_, arg1: $BlockPos_): void;
-        static onBlockPlaced(arg0: $BlockEvent$EntityPlaceEvent): void;
         static onRenderWorld(arg0: $RenderLevelStageEvent): void;
+        static onBlockPlaced(arg0: $BlockEvent$EntityPlaceEvent): void;
         static onBlockDestroyed(arg0: $BlockEvent$BreakEvent): void;
         constructor();
     }

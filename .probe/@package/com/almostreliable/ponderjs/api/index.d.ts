@@ -36,9 +36,9 @@ declare module "@package/com/almostreliable/ponderjs/api" {
     export type $OnRenderWorld_ = ((arg0: $OnRenderWorld$RenderContext) => void);
     export class $CustomPonderSceneElement extends $AnimatedSceneElementBase {
         onRender(arg0: $OnRenderWorld$Layer_): $CustomPonderSceneElement;
+        onRenderLast(arg0: $OnRenderWorld_): $CustomPonderSceneElement;
         onTick(arg0: $OnElementAction_): $CustomPonderSceneElement;
         onReset(arg0: $OnElementAction_): $CustomPonderSceneElement;
-        onRenderLast(arg0: $OnRenderWorld_): $CustomPonderSceneElement;
         getCurrentTick(): number;
         onSkipping(arg0: $OnElementAction_): $CustomPonderSceneElement;
         onRenderFirst(arg0: $OnRenderWorld_): $CustomPonderSceneElement;
@@ -50,41 +50,41 @@ declare module "@package/com/almostreliable/ponderjs/api" {
         getBuffer(): $MultiBufferSource;
         getElement(): $PonderElement;
         getGraphics(): $GuiGraphics;
+        getFade(): number;
         getWorld(): $PonderLevel;
         getPartialTicks(): number;
-        getFade(): number;
         constructor(getElement: $PonderElement, getWorld: $PonderLevel, getBuffer: $MultiBufferSource_, getType: $RenderType, getGraphics: $GuiGraphics, getPartialTicks: number, getFade: number);
         get type(): $RenderType;
         get buffer(): $MultiBufferSource;
         get element(): $PonderElement;
         get graphics(): $GuiGraphics;
+        get fade(): number;
         get world(): $PonderLevel;
         get partialTicks(): number;
-        get fade(): number;
     }
     /**
      * Values that may be interpreted as {@link $OnRenderWorld$Layer$RenderContext}.
      */
-    export type $OnRenderWorld$Layer$RenderContext_ = { getWorld?: $PonderLevel, getBuffer?: $MultiBufferSource_, getGraphics?: $GuiGraphics, getFade?: number, getPartialTicks?: number, getElement?: $PonderElement, getType?: $RenderType,  } | [getWorld?: $PonderLevel, getBuffer?: $MultiBufferSource_, getGraphics?: $GuiGraphics, getFade?: number, getPartialTicks?: number, getElement?: $PonderElement, getType?: $RenderType, ];
+    export type $OnRenderWorld$Layer$RenderContext_ = { getFade?: number, getPartialTicks?: number, getElement?: $PonderElement, getType?: $RenderType, getWorld?: $PonderLevel, getBuffer?: $MultiBufferSource_, getGraphics?: $GuiGraphics,  } | [getFade?: number, getPartialTicks?: number, getElement?: $PonderElement, getType?: $RenderType, getWorld?: $PonderLevel, getBuffer?: $MultiBufferSource_, getGraphics?: $GuiGraphics, ];
     export class $OnRenderWorld$RenderContext extends $Record {
         getBuffer(): $MultiBufferSource;
         getElement(): $PonderElement;
         getGraphics(): $GuiGraphics;
+        getFade(): number;
         getWorld(): $PonderLevel;
         getPartialTicks(): number;
-        getFade(): number;
         constructor(getElement: $PonderElement, getWorld: $PonderLevel, getBuffer: $MultiBufferSource_, getGraphics: $GuiGraphics, getPartialTicks: number, getFade: number);
         get buffer(): $MultiBufferSource;
         get element(): $PonderElement;
         get graphics(): $GuiGraphics;
+        get fade(): number;
         get world(): $PonderLevel;
         get partialTicks(): number;
-        get fade(): number;
     }
     /**
      * Values that may be interpreted as {@link $OnRenderWorld$RenderContext}.
      */
-    export type $OnRenderWorld$RenderContext_ = { getBuffer?: $MultiBufferSource_, getWorld?: $PonderLevel, getPartialTicks?: number, getGraphics?: $GuiGraphics, getFade?: number, getElement?: $PonderElement,  } | [getBuffer?: $MultiBufferSource_, getWorld?: $PonderLevel, getPartialTicks?: number, getGraphics?: $GuiGraphics, getFade?: number, getElement?: $PonderElement, ];
+    export type $OnRenderWorld$RenderContext_ = { getElement?: $PonderElement, getBuffer?: $MultiBufferSource_, getWorld?: $PonderLevel, getPartialTicks?: number, getGraphics?: $GuiGraphics, getFade?: number,  } | [getElement?: $PonderElement, getBuffer?: $MultiBufferSource_, getWorld?: $PonderLevel, getPartialTicks?: number, getGraphics?: $GuiGraphics, getFade?: number, ];
     export class $OnElementAction$Context extends $Record {
         getElement(): $PonderElement;
         getScene(): $PonderScene;

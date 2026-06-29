@@ -25,8 +25,8 @@ export * as bundle from "@package/net/neoforged/neoforge/network/bundle";
 
 declare module "@package/net/neoforged/neoforge/network" {
     export class $ConfigSync {
-        static syncConfigs(): $List<$ConfigFilePayload>;
         static receiveSyncedConfig(contents: number[], fileName: string): void;
+        static syncConfigs(): $List<$ConfigFilePayload>;
     }
     export class $DualStackUtils {
         /**
@@ -35,13 +35,22 @@ declare module "@package/net/neoforged/neoforge/network" {
          */
         static getLocalAddress(): $InetAddress;
         /**
+         * Used for the "Open to LAN" feature.
+         */
+        static getMulticastGroup(): string;
+        /**
          * `SocketAddress#toString()` but with IPv6 address compression support
          */
         static getAddressString(address: $SocketAddress): string;
         /**
-         * Used for the "Open to LAN" feature.
+         * Checks if an address is an IPv6 one or an IPv4 one, lets Netty know accordingly and returns the result.
          */
-        static getMulticastGroup(): string;
+        static checkIPv6(inetAddress: $InetAddress): boolean;
+        /**
+         * Resolve the address and see if Java and the OS return an IPv6 or IPv4 one, then let Netty know
+         * accordingly (it doesn't understand the `java.net.preferIPv6Addresses=system` property).
+         */
+        static checkIPv6(hostAddress: string): boolean;
         /**
          * Called by `NeoForge` to load this class so that the initial network
          * property constants are set before any of the other methods in this class are called. This is so we can
@@ -54,15 +63,6 @@ declare module "@package/net/neoforged/neoforge/network" {
          * distinguish what Java's read once on JVM start vs what we've set for Netty.
          */
         static initialise(): void;
-        /**
-         * Resolve the address and see if Java and the OS return an IPv6 or IPv4 one, then let Netty know
-         * accordingly (it doesn't understand the `java.net.preferIPv6Addresses=system` property).
-         */
-        static checkIPv6(hostAddress: string): boolean;
-        /**
-         * Checks if an address is an IPv6 one or an IPv4 one, lets Netty know accordingly and returns the result.
-         */
-        static checkIPv6(inetAddress: $InetAddress): boolean;
         constructor();
         static get localAddress(): $InetAddress;
         static get multicastGroup(): string;
@@ -99,8 +99,8 @@ declare module "@package/net/neoforged/neoforge/network" {
         static sendToPlayer(arg0: $ServerPlayer, arg1: $CustomPacketPayload_, ...arg2: $CustomPacketPayload_[]): void;
         static sendToServer(arg0: $CustomPacketPayload_, ...arg1: $CustomPacketPayload_[]): void;
         static sendToAllPlayers(arg0: $CustomPacketPayload_, ...arg1: $CustomPacketPayload_[]): void;
-        static sendToPlayersNear(arg0: $ServerLevel, arg1: $ServerPlayer, arg2: number, arg3: number, arg4: number, arg5: number, arg6: $CustomPacketPayload_, ...arg7: $CustomPacketPayload_[]): void;
         static sendToPlayersTrackingChunk(arg0: $ServerLevel, arg1: $ChunkPos, arg2: $CustomPacketPayload_, ...arg3: $CustomPacketPayload_[]): void;
+        static sendToPlayersNear(arg0: $ServerLevel, arg1: $ServerPlayer, arg2: number, arg3: number, arg4: number, arg5: number, arg6: $CustomPacketPayload_, ...arg7: $CustomPacketPayload_[]): void;
         static sendToPlayersTrackingEntity(arg0: $Entity, arg1: $CustomPacketPayload_, ...arg2: $CustomPacketPayload_[]): void;
         static sendToPlayersTrackingEntityAndSelf(arg0: $Entity, arg1: $CustomPacketPayload_, ...arg2: $CustomPacketPayload_[]): void;
         static sendToPlayersInDimension(arg0: $ServerLevel, arg1: $CustomPacketPayload_, ...arg2: $CustomPacketPayload_[]): void;

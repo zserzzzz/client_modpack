@@ -18,7 +18,7 @@ declare module "@package/com/github/argon4w/acceleratedrendering/core/programs" 
     /**
      * Values that may be interpreted as {@link $ComputeShaderDefinition}.
      */
-    export type $ComputeShaderDefinition_ = { barrierFlags?: number, location?: $ResourceLocation_,  } | [barrierFlags?: number, location?: $ResourceLocation_, ];
+    export type $ComputeShaderDefinition_ = { location?: $ResourceLocation_, barrierFlags?: number,  } | [location?: $ResourceLocation_, barrierFlags?: number, ];
     export class $LoadComputeShaderEvent extends $Event implements $IModBusEvent {
         build(): $Map<$ResourceLocation, $ComputeShaderDefinition>;
         loadComputeShader(arg0: $ResourceLocation_, arg1: $ResourceLocation_, ...arg2: $BarrierFlags_[]): void;

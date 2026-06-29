@@ -19,12 +19,12 @@ export * as serializer from "@package/dev/emi/emi/api/stack/serializer";
 
 declare module "@package/dev/emi/emi/api/stack" {
     export class $EmiIngredient {
-        static of(list: $List_<$EmiIngredient>): $EmiIngredient;
         static of<T>(key: $TagKey_<T>, amount: number): $EmiIngredient;
-        static of(ingredient: $Ingredient_): $EmiIngredient;
         static of<T>(key: $TagKey_<T>): $EmiIngredient;
-        static of(ingredient: $Ingredient_, amount: number): $EmiIngredient;
         static of(list: $List_<$EmiIngredient>, amount: number): $EmiIngredient;
+        static of(list: $List_<$EmiIngredient>): $EmiIngredient;
+        static of(ingredient: $Ingredient_, amount: number): $EmiIngredient;
+        static of(ingredient: $Ingredient_): $EmiIngredient;
         static areEqual(a: $EmiIngredient, b: $EmiIngredient): boolean;
         static RENDER_AMOUNT: number;
         static RENDER_INGREDIENT: number;
@@ -37,27 +37,27 @@ declare module "@package/dev/emi/emi/api/stack" {
         render(draw: $GuiGraphics, x: number, y: number, delta: number): void;
         render(arg0: $GuiGraphics, arg1: number, arg2: number, arg3: number, arg4: number): void;
         getChance(): number;
-        getEmiStacks(): $List<$EmiStack>;
         getAmount(): number;
-        setAmount(arg0: number): $EmiIngredient;
         getTooltip(): $List<$ClientTooltipComponent>;
+        setAmount(arg0: number): $EmiIngredient;
         setChance(arg0: number): $EmiIngredient;
+        getEmiStacks(): $List<$EmiStack>;
         get empty(): boolean;
-        get emiStacks(): $List<$EmiStack>;
         get tooltip(): $List<$ClientTooltipComponent>;
+        get emiStacks(): $List<$EmiStack>;
     }
     export class $EmiStackInteraction implements $GlobalMixin {
         isEmpty(): boolean;
         getStack(): $EmiIngredient;
-        getRecipeContext(): $EmiRecipe;
         isClickable(): boolean;
+        getRecipeContext(): $EmiRecipe;
         static EMPTY: $EmiStackInteraction;
         constructor(stack: $EmiIngredient);
         constructor(stack: $EmiIngredient, recipe: $EmiRecipe, clickable: boolean);
         get empty(): boolean;
         get stack(): $EmiIngredient;
-        get recipeContext(): $EmiRecipe;
         get clickable(): boolean;
+        get recipeContext(): $EmiRecipe;
     }
     export class $EmiRegistryAdapter$StackConstructor<T> {
     }
@@ -73,8 +73,8 @@ declare module "@package/dev/emi/emi/api/stack" {
         static of(comparator: $Comparison$Predicate_): $Comparison;
         static of(comparator: $Comparison$Predicate_, hashFunction: $Comparison$HashFunction_): $Comparison;
         getHash(stack: $EmiStack): number;
-        static compareData<T>(arg0: $Function_<$EmiStack, T>): $Comparison;
         static compareComponents(): $Comparison;
+        static compareData<T>(arg0: $Function_<$EmiStack, T>): $Comparison;
         static DEFAULT_COMPARISON: $Comparison;
     }
     export class $Comparison$Predicate {
@@ -87,38 +87,38 @@ declare module "@package/dev/emi/emi/api/stack" {
      */
     export type $Comparison$Predicate_ = ((arg0: $EmiStack, arg1: $EmiStack) => boolean);
     export class $EmiStack implements $EmiIngredient, $GlobalMixin {
+        comparison(comparison: $Function_<$Comparison, $Comparison>): $EmiStack;
+        comparison(comparison: $Comparison): $EmiStack;
         getName(): $Component;
         get<T>(type: $DataComponentType_<T>): T;
         isEmpty(): boolean;
-        static of(fluid: $Fluid_): $EmiStack;
-        static of(item: $ItemLike_, componentChanges: $DataComponentPatch_, amount: number): $EmiStack;
         static of(fluid: $Fluid_, amount: number): $EmiStack;
-        static of(item: $ItemLike_, componentChanges: $DataComponentPatch_): $EmiStack;
         static of(item: $ItemLike_): $EmiStack;
-        static of(stack: $ItemStack_, amount: number): $EmiStack;
-        static of(item: $ItemLike_, amount: number): $EmiStack;
         static of(fluid: $Fluid_, componentChanges: $DataComponentPatch_): $EmiStack;
-        static of(fluid: $Fluid_, componentChanges: $DataComponentPatch_, amount: number): $EmiStack;
+        static of(stack: $ItemStack_, amount: number): $EmiStack;
         static of(stack: $ItemStack_): $EmiStack;
+        static of(fluid: $Fluid_, componentChanges: $DataComponentPatch_, amount: number): $EmiStack;
+        static of(item: $ItemLike_, amount: number): $EmiStack;
+        static of(item: $ItemLike_, componentChanges: $DataComponentPatch_, amount: number): $EmiStack;
+        static of(fluid: $Fluid_): $EmiStack;
+        static of(item: $ItemLike_, componentChanges: $DataComponentPatch_): $EmiStack;
         getKey(): $Object;
         getId(): $ResourceLocation;
         getOrDefault<T>(type: $DataComponentType_<T>, fallback: T): T;
-        copy(): $EmiStack;
-        isEqual(stack: $EmiStack, comparison: $Comparison): boolean;
         isEqual(stack: $EmiStack): boolean;
-        comparison(comparison: $Comparison): $EmiStack;
-        comparison(comparison: $Function_<$Comparison, $Comparison>): $EmiStack;
+        isEqual(stack: $EmiStack, comparison: $Comparison): boolean;
         getItemStack(): $ItemStack;
         getChance(): number;
-        getComponentChanges(): $DataComponentPatch;
-        getEmiStacks(): $List<$EmiStack>;
-        setRemainder(stack: $EmiStack): $EmiStack;
-        getRemainder(): $EmiStack;
-        getKeyOfType<T>(clazz: $Class<T>): T;
-        getTooltipText(): $List<$Component>;
         getAmount(): number;
         getTooltip(): $List<$ClientTooltipComponent>;
+        getEmiStacks(): $List<$EmiStack>;
+        getComponentChanges(): $DataComponentPatch;
+        getKeyOfType<T>(clazz: $Class<T>): T;
+        setRemainder(stack: $EmiStack): $EmiStack;
+        getRemainder(): $EmiStack;
+        getTooltipText(): $List<$Component>;
         render(draw: $GuiGraphics, x: number, y: number, delta: number): void;
+        copy(): $EmiIngredient;
         setAmount(arg0: number): $EmiIngredient;
         setChance(arg0: number): $EmiIngredient;
         static EMPTY: $EmiStack;
@@ -128,10 +128,10 @@ declare module "@package/dev/emi/emi/api/stack" {
         get key(): $Object;
         get id(): $ResourceLocation;
         get itemStack(): $ItemStack;
-        get componentChanges(): $DataComponentPatch;
-        get emiStacks(): $List<$EmiStack>;
-        get tooltipText(): $List<$Component>;
         get tooltip(): $List<$ClientTooltipComponent>;
+        get emiStacks(): $List<$EmiStack>;
+        get componentChanges(): $DataComponentPatch;
+        get tooltipText(): $List<$Component>;
     }
     export class $Comparison$HashFunction {
     }
@@ -147,9 +147,9 @@ declare module "@package/dev/emi/emi/api/stack" {
     }
     export interface $EmiRegistryAdapter<T> extends $GlobalMixin {
         of(arg0: T, arg1: $DataComponentPatch_, arg2: number): $EmiStack;
-        getRegistry(): $Registry<T>;
         getBaseClass(): $Class<T>;
-        get registry(): $Registry<T>;
+        getRegistry(): $Registry<T>;
         get baseClass(): $Class<T>;
+        get registry(): $Registry<T>;
     }
 }

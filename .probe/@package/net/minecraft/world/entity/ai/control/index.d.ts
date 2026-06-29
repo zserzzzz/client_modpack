@@ -30,25 +30,26 @@ declare module "@package/net/minecraft/world/entity/ai/control" {
          * Updates look
          */
         tick(): void;
-        resetXRotOnTick(): boolean;
-        isLookingAtTarget(): boolean;
-        /**
-         * Sets the controlling mob's look vector to the provided entity's location
-         */
-        setLookAt(entity: $Entity): void;
-        /**
-         * Sets the mob's look vector
-         */
-        setLookAt(lookVector: $Vec3_): void;
-        /**
-         * Sets position to look at using entity
-         */
-        setLookAt(entity: $Entity, deltaYaw: number, deltaPitch: number): void;
         /**
          * Sets position to look at
          */
         setLookAt(x: number, arg1: number, y: number, arg3: number, z: number): void;
         setLookAt(x: number, arg1: number, y: number): void;
+        /**
+         * Sets the mob's look vector
+         */
+        setLookAt(lookVector: $Vec3_): void;
+        /**
+         * Sets the controlling mob's look vector to the provided entity's location
+         */
+        setLookAt(entity: $Entity): void;
+        /**
+         * Sets position to look at using entity
+         */
+        setLookAt(entity: $Entity, deltaYaw: number, deltaPitch: number): void;
+        getWantedX(): number;
+        getWantedY(): number;
+        getWantedZ(): number;
         /**
          * Rotate as much as possible from `from` to `to` within the bounds of `maxDelta`
          */
@@ -59,9 +60,8 @@ declare module "@package/net/minecraft/world/entity/ai/control" {
          * Updates look
          */
         clampHeadRotationToBody(): void;
-        getWantedX(): number;
-        getWantedZ(): number;
-        getWantedY(): number;
+        isLookingAtTarget(): boolean;
+        resetXRotOnTick(): boolean;
         mob: $Mob;
         wantedZ: number;
         wantedY: number;
@@ -70,9 +70,9 @@ declare module "@package/net/minecraft/world/entity/ai/control" {
         yMaxRotSpeed: number;
         lookAtCooldown: number;
         constructor(mob: $Mob);
-        get lookingAtTarget(): boolean;
         get XRotD(): (number) | undefined;
         get YRotD(): (number) | undefined;
+        get lookingAtTarget(): boolean;
     }
     export class $SmoothSwimmingMoveControl extends $MoveControl {
         speedModifier: number;
@@ -112,26 +112,26 @@ declare module "@package/net/minecraft/world/entity/ai/control" {
     export class $MoveControl implements $Control {
         tick(): void;
         /**
-         * Sets the speed and location to move to
+         * @return true if the mob can walk successfully to a given X and Z
          */
-        setWantedPosition(x: number, arg1: number, y: number, arg3: number): void;
-        /**
-         * Attempt to rotate the first angle to become the second angle, but only allow overall direction change to at max be third parameter
-         */
-        rotlerp(sourceAngle: number, targetAngle: number, maximumChange: number): number;
+        isWalkable(relativeX: number, relativeZ: number): boolean;
+        getWantedX(): number;
+        getWantedY(): number;
+        strafe(forward: number, strafe: number): void;
         /**
          * @return If the mob is currently trying to go somewhere
          */
         hasWanted(): boolean;
-        strafe(forward: number, strafe: number): void;
-        getWantedX(): number;
         getWantedZ(): number;
-        getWantedY(): number;
         /**
-         * @return true if the mob can walk successfully to a given X and Z
+         * Attempt to rotate the first angle to become the second angle, but only allow overall direction change to at max be third parameter
          */
-        isWalkable(relativeX: number, relativeZ: number): boolean;
+        rotlerp(sourceAngle: number, targetAngle: number, maximumChange: number): number;
         getSpeedModifier(): number;
+        /**
+         * Sets the speed and location to move to
+         */
+        setWantedPosition(x: number, arg1: number, y: number, arg3: number): void;
         speedModifier: number;
         mob: $Mob;
         strafeForwards: number;

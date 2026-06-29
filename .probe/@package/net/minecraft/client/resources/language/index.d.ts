@@ -24,20 +24,20 @@ declare module "@package/net/minecraft/client/resources/language" {
         static set language(value: $Language);
     }
     export class $LanguageManager implements $ResourceManagerReloadListener, $IdentifiableResourceReloadListener {
-        onResourceManagerReload(resourceManager: $ResourceManager): void;
         getLanguage(code: string): $LanguageInfo;
+        onResourceManagerReload(resourceManager: $ResourceManager): void;
         getSelected(): string;
-        getJavaLocale(): $Locale;
-        setSelected(selected: string): void;
         getFabricId(): $ResourceLocation;
         getFabricDependencies(): $Collection<any>;
+        setSelected(selected: string): void;
+        getJavaLocale(): $Locale;
         getLanguages(): $SortedMap<string, $LanguageInfo>;
         reload(preparationBarrier: $PreparableReloadListener$PreparationBarrier_, resourceManager: $ResourceManager, preparationsProfiler: $ProfilerFiller, reloadProfiler: $ProfilerFiller, backgroundExecutor: $Executor_, gameExecutor: $Executor_): $CompletableFuture<void>;
         getName(): string;
         constructor(currentCode: string, reloadFallback: $Consumer_<$ClientLanguage>);
-        get javaLocale(): $Locale;
         get fabricId(): $ResourceLocation;
         get fabricDependencies(): $Collection<any>;
+        get javaLocale(): $Locale;
         get languages(): $SortedMap<string, $LanguageInfo>;
         get name(): string;
     }
@@ -65,5 +65,5 @@ declare module "@package/net/minecraft/client/resources/language" {
     /**
      * Values that may be interpreted as {@link $LanguageInfo}.
      */
-    export type $LanguageInfo_ = { region?: string, name?: string, bidirectional?: boolean,  } | [region?: string, name?: string, bidirectional?: boolean, ];
+    export type $LanguageInfo_ = { bidirectional?: boolean, region?: string, name?: string,  } | [bidirectional?: boolean, region?: string, name?: string, ];
 }

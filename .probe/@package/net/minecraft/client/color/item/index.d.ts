@@ -9,13 +9,13 @@ import { $ItemColorsAccessor as $ItemColorsAccessor$1 } from "@package/com/githu
 
 declare module "@package/net/minecraft/client/color/item" {
     export class $ItemColors implements $ItemColorsAccessor$1, $ColorProviderRegistryImpl$ColorMapperHolder<any, any>, $ItemColorsExtension, $ItemColorsAccessor {
+        static createDefault(colors: $BlockColors): $ItemColors;
         get(arg0: $ItemLike_): $ItemColor;
         /**
          * @deprecated
          */
         register(itemColor: $ItemColor_, ...items: $ItemLike_[]): void;
         getColor(stack: $ItemStack_, tintIndex: number): number;
-        static createDefault(colors: $BlockColors): $ItemColors;
         sodium$getColorProvider(arg0: $ItemStack_): $ItemColor;
         getItemColors(): $Map<$Item, $ItemColor>;
         constructor();

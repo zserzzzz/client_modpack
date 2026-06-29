@@ -87,10 +87,10 @@ declare module "@package/com/simibubi/create/content/redstone/diodes" {
         constructor();
     }
     export class $AbstractDiodeBlock extends $DiodeBlock implements $IWrenchable {
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -181,16 +181,16 @@ declare module "@package/com/simibubi/create/content/redstone/diodes" {
         constructor();
     }
     export class $BrassDiodeBlock extends $AbstractDiodeBlock implements $IBE<$BrassDiodeBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$BrassDiodeBlockEntity>;
-        getBlockEntityClass(): $Class<$BrassDiodeBlockEntity>;
         toggle(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_, arg3: $Player, arg4: $InteractionHand_): $ItemInteractionResult;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$BrassDiodeBlockEntity>): void;
+        getBlockEntityClass(): $Class<$BrassDiodeBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$BrassDiodeBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$BrassDiodeBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($BrassDiodeBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$BrassDiodeBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $BrassDiodeBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$BrassDiodeBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($BrassDiodeBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$BrassDiodeBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -225,8 +225,8 @@ declare module "@package/com/simibubi/create/content/redstone/diodes" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$BrassDiodeBlockEntity>;
         get blockEntityClass(): $Class<$BrassDiodeBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$BrassDiodeBlockEntity>;
     }
     export class $PulseRepeaterBlockEntity extends $BrassDiodeBlockEntity {
         worldPosition: $BlockPos;
@@ -245,17 +245,17 @@ declare module "@package/com/simibubi/create/content/redstone/diodes" {
     export class $BrassDiodeBlockEntity extends $SmartBlockEntity implements $ClipboardCloneable {
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
         getProgress(): number;
+        isIdle(): boolean;
         readFromClipboard(arg0: $HolderLookup$Provider, arg1: $CompoundTag_, arg2: $Player, arg3: $Direction_, arg4: boolean): boolean;
         getClipboardKey(): string;
         writeToClipboard(arg0: $HolderLookup$Provider, arg1: $CompoundTag_, arg2: $Direction_): boolean;
-        isIdle(): boolean;
         worldPosition: $BlockPos;
         level: $Level;
         static ATTACHMENTS_NBT_KEY: string;
         hasComparators: number;
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
         get progress(): number;
-        get clipboardKey(): string;
         get idle(): boolean;
+        get clipboardKey(): string;
     }
 }

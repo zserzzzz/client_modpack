@@ -48,8 +48,8 @@ declare module "@package/net/minecraft/world/inventory" {
         constructor(furnaceMenu: $AbstractFurnaceMenu, furnaceContainer: $Container, slot: number, xPosition: number, yPosition: number);
     }
     export class $InventoryMenu extends $RecipeBookMenu<$CraftingInput, $CraftingRecipe> {
-        getCraftSlots(): $CraftingContainer;
         static isHotbarSlot(index: number): boolean;
+        getCraftSlots(): $CraftingContainer;
         quickcraftSlots: $Set<$Slot>;
         static CRAFT_SLOT_END: number;
         static BLOCK_ATLAS: $ResourceLocation;
@@ -195,18 +195,18 @@ declare module "@package/net/minecraft/world/inventory" {
     export class $MenuType<T extends $AbstractContainerMenu> implements $FeatureElement, $IMenuTypeExtension<T>, $MenuTypeKJS {
         create(containerId: number, playerInventory: $Inventory): T;
         requiredFeatures(): $FeatureFlagSet;
-        kjs$getKey(): $ResourceKey<any>;
         kjs$getId(): string;
+        kjs$getKey(): $ResourceKey<any>;
         isEnabled(enabledFeatures: $FeatureFlagSet): boolean;
         kjs$getRegistry(): $Registry<$MenuType<never>>;
         kjs$getRegistryId(): $ResourceKey<$Registry<$MenuType<never>>>;
-        specialEquals(o: $Object, shallow: boolean): boolean;
-        hasTag(tag: $ResourceLocation_): boolean;
-        getMod(): string;
+        asHolder(): $Holder<T>;
+        getTags(): $List<$ResourceLocation>;
         getIdLocation(): $ResourceLocation;
         getTagKeys(): $List<$TagKey<T>>;
-        getTags(): $List<$ResourceLocation>;
-        asHolder(): $Holder<T>;
+        hasTag(tag: $ResourceLocation_): boolean;
+        getMod(): string;
+        specialEquals(o: $Object, shallow: boolean): boolean;
         create(arg0: number, arg1: $Inventory, arg2: $RegistryFriendlyByteBuf): T;
         static ENCHANTMENT: $MenuType<$EnchantmentMenu>;
         static LOOM: $MenuType<$LoomMenu>;
@@ -234,24 +234,16 @@ declare module "@package/net/minecraft/world/inventory" {
         static GRINDSTONE: $MenuType<$GrindstoneMenu>;
         static SHULKER_BOX: $MenuType<$ShulkerBoxMenu>;
         constructor(_constructor: $MenuType$MenuSupplier_<T>, requiredFeatures: $FeatureFlagSet);
-        get mod(): string;
+        get tags(): $List<$ResourceLocation>;
         get idLocation(): $ResourceLocation;
         get tagKeys(): $List<$TagKey<T>>;
-        get tags(): $List<$ResourceLocation>;
+        get mod(): string;
     }
     /**
      * Values that may be interpreted as {@link $MenuType}.
      */
     export type $MenuType_<T> = RegistryTypes.Menu;
     export class $MerchantContainer implements $Container {
-        /**
-         * Returns the stack in the given slot.
-         */
-        removeItemNoUpdate(index: number): $ItemStack;
-        /**
-         * Returns the number of slots in the inventory.
-         */
-        getContainerSize(): number;
         isEmpty(): boolean;
         /**
          * Returns the stack in the given slot.
@@ -264,6 +256,10 @@ declare module "@package/net/minecraft/world/inventory" {
         /**
          * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
+        clearContent(): void;
+        /**
+         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
+         */
         updateSellItem(): void;
         setSelectionHint(currentRecipeIndex: number): void;
         /**
@@ -271,13 +267,13 @@ declare module "@package/net/minecraft/world/inventory" {
          */
         getFutureXp(): number;
         /**
-         * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
+         * Returns the stack in the given slot.
          */
-        setItem(index: number, stack: $ItemStack_): void;
+        removeItemNoUpdate(index: number): $ItemStack;
         /**
-         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
+         * Returns the number of slots in the inventory.
          */
-        clearContent(): void;
+        getContainerSize(): number;
         /**
          * Don't rename this method to canInteractWith due to conflicts with Container
          */
@@ -286,23 +282,18 @@ declare module "@package/net/minecraft/world/inventory" {
          * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
         setChanged(): void;
-        getActiveOffer(): $MerchantOffer;
         /**
-         * @return `true` if the given stack can be extracted into the target inventory
+         * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
          */
-        canTakeItem(target: $Container, slot: number, stack: $ItemStack_): boolean;
+        setItem(index: number, stack: $ItemStack_): void;
+        getActiveOffer(): $MerchantOffer;
         /**
          * Returns `true` if automation is allowed to insert the given stack (ignoring stack size) into the given slot. For guis use Slot.isItemValid
          */
         canPlaceItem(slot: number, stack: $ItemStack_): boolean;
         hasAnyMatching(predicate: $Predicate_<$ItemStack>): boolean;
-        /**
-         * Returns the number of slots in the inventory.
-         */
-        getMaxStackSize(): number;
-        getMaxStackSize(stack: $ItemStack_): number;
-        stopOpen(player: $Player): void;
         startOpen(player: $Player): void;
+        stopOpen(player: $Player): void;
         /**
          * Returns `true` if any item from the passed set exists in this inventory.
          */
@@ -311,91 +302,100 @@ declare module "@package/net/minecraft/world/inventory" {
          * Returns the total amount of the specified item in this inventory. This method does not check for nbt.
          */
         countItem(item: $Item_): number;
+        getMaxStackSize(stack: $ItemStack_): number;
+        /**
+         * Returns the number of slots in the inventory.
+         */
+        getMaxStackSize(): number;
+        /**
+         * @return `true` if the given stack can be extracted into the target inventory
+         */
+        canTakeItem(target: $Container, slot: number, stack: $ItemStack_): boolean;
         canReceiveTransferCooldown(): boolean;
         setTransferCooldown(arg0: number): void;
         lithium$itemInsertionTestRequiresStackSize1(): boolean;
         /**
-         * Returns the number of slots in the inventory.
+         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
-        getHeight(): number;
-        isMutable(): boolean;
+        setChanged(): void;
         insertItem(slot: number, stack: $ItemStack_, simulate: boolean): $ItemStack;
+        asContainer(): $Container;
+        /**
+         * Returns the stack in the given slot.
+         */
+        getStackInSlot(index: number): $ItemStack;
+        /**
+         * Returns `true` if automation is allowed to insert the given stack (ignoring stack size) into the given slot. For guis use Slot.isItemValid
+         */
+        isItemValid(slot: number, stack: $ItemStack_): boolean;
         extractItem(slot: number, amount: number, simulate: boolean): $ItemStack;
         /**
          * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
          */
         setStackInSlot(index: number, stack: $ItemStack_): void;
-        /**
-         * Returns `true` if automation is allowed to insert the given stack (ignoring stack size) into the given slot. For guis use Slot.isItemValid
-         */
-        isItemValid(slot: number, stack: $ItemStack_): boolean;
-        /**
-         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
-         */
-        setChanged(): void;
-        /**
-         * Returns the stack in the given slot.
-         */
-        getStackInSlot(index: number): $ItemStack;
-        asContainer(): $Container;
+        isMutable(): boolean;
         getSlotLimit(slot: number): number;
         /**
          * Returns the number of slots in the inventory.
          */
-        getSlots(): number;
+        getHeight(): number;
+        /**
+         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
+         */
+        clear(): void;
+        getBlock(level: $Level_): $LevelBlock;
+        self(): $Container;
         /**
          * Returns the number of slots in the inventory.
          */
         getWidth(): number;
         /**
-         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
+         * Returns the number of slots in the inventory.
          */
-        clear(): void;
-        self(): $Container;
-        getBlock(level: $Level_): $LevelBlock;
+        getSlots(): number;
         insertItem(stack: $ItemStack_, simulate: boolean): $ItemStack;
+        countNonEmpty(match: $ItemPredicate_): number;
         /**
          * Returns the number of slots in the inventory.
          */
         countNonEmpty(): number;
-        countNonEmpty(match: $ItemPredicate_): number;
-        isEmpty(): boolean;
-        /**
-         * Returns the number of slots in the inventory.
-         */
-        count(): number;
-        count(match: $ItemPredicate_): number;
+        getAllItems(): $List<$ItemStack>;
+        clear(match: $ItemPredicate_): void;
         find(match: $ItemPredicate_): number;
         /**
          * Returns the number of slots in the inventory.
          */
         find(): number;
-        clear(match: $ItemPredicate_): void;
-        getAllItems(): $List<$ItemStack>;
+        /**
+         * Returns the number of slots in the inventory.
+         */
+        count(): number;
+        count(match: $ItemPredicate_): number;
+        isEmpty(): boolean;
         /**
          * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
         clientsort$setChanged(): void;
         constructor(merchant: $Merchant);
-        get containerSize(): number;
         set selectionHint(value: number);
         get futureXp(): number;
+        get containerSize(): number;
         get activeOffer(): $MerchantOffer;
         set transferCooldown(value: number);
-        get height(): number;
         get mutable(): boolean;
-        get slots(): number;
+        get height(): number;
         get width(): number;
+        get slots(): number;
         get allItems(): $List<$ItemStack>;
     }
     export class $BeaconMenu extends $AbstractContainerMenu {
         getLevels(): number;
         hasPayment(): boolean;
-        static decodeEffect(effectId: number): $Holder<$MobEffect>;
         static encodeEffect(effect: $Holder_<$MobEffect> | null): number;
         getPrimaryEffect(): $Holder<$MobEffect>;
-        updateEffects(primaryEffect: ($Holder_<$MobEffect>) | undefined, secondaryEffect: ($Holder_<$MobEffect>) | undefined): void;
+        static decodeEffect(effectId: number): $Holder<$MobEffect>;
         getSecondaryEffect(): $Holder<$MobEffect>;
+        updateEffects(primaryEffect: ($Holder_<$MobEffect>) | undefined, secondaryEffect: ($Holder_<$MobEffect>) | undefined): void;
         quickcraftSlots: $Set<$Slot>;
         remoteCarried: $ItemStack;
         static QUICKCRAFT_HEADER_START: number;
@@ -461,15 +461,15 @@ declare module "@package/net/minecraft/world/inventory" {
          * @see #field_75155_e
          */
         getContainer(): $Container;
-        static threeRows(containerId: number, playerInventory: $Inventory, container: $Container): $ChestMenu;
-        static threeRows(containerId: number, playerInventory: $Inventory): $ChestMenu;
-        static sixRows(containerId: number, playerInventory: $Inventory, container: $Container): $ChestMenu;
-        static sixRows(containerId: number, playerInventory: $Inventory): $ChestMenu;
-        static fourRows(containerId: number, playerInventory: $Inventory): $ChestMenu;
-        static fiveRows(containerId: number, playerInventory: $Inventory): $ChestMenu;
         static oneRow(containerId: number, playerInventory: $Inventory): $ChestMenu;
         static twoRows(containerId: number, playerInventory: $Inventory): $ChestMenu;
+        static fourRows(containerId: number, playerInventory: $Inventory): $ChestMenu;
+        static fiveRows(containerId: number, playerInventory: $Inventory): $ChestMenu;
+        static sixRows(containerId: number, playerInventory: $Inventory): $ChestMenu;
+        static sixRows(containerId: number, playerInventory: $Inventory, container: $Container): $ChestMenu;
         getRowCount(): number;
+        static threeRows(containerId: number, playerInventory: $Inventory): $ChestMenu;
+        static threeRows(containerId: number, playerInventory: $Inventory, container: $Container): $ChestMenu;
         quickcraftSlots: $Set<$Slot>;
         remoteCarried: $ItemStack;
         static QUICKCRAFT_HEADER_START: number;
@@ -608,22 +608,22 @@ declare module "@package/net/minecraft/world/inventory" {
     export class $CraftingContainer {
     }
     export interface $CraftingContainer extends $Container, $StackedContentsCompatible {
-        getHeight(): number;
-        getWidth(): number;
         asCraftInput(): $CraftingInput;
+        getWidth(): number;
+        getHeight(): number;
         asPositionedCraftInput(): $CraftingInput$Positioned;
         getItems(): $List<$ItemStack>;
-        get height(): number;
         get width(): number;
+        get height(): number;
         get items(): $List<$ItemStack>;
     }
     export class $LoomMenu extends $AbstractContainerMenu {
-        registerUpdateListener(listener: $Runnable_): void;
-        getSelectablePatterns(): $List<$Holder<$BannerPattern>>;
         getDyeSlot(): $Slot;
         getResultSlot(): $Slot;
-        getPatternSlot(): $Slot;
         getBannerSlot(): $Slot;
+        getPatternSlot(): $Slot;
+        registerUpdateListener(listener: $Runnable_): void;
+        getSelectablePatterns(): $List<$Holder<$BannerPattern>>;
         getSelectedBannerPatternIndex(): number;
         quickcraftSlots: $Set<$Slot>;
         slotUpdateListener: $Runnable;
@@ -651,9 +651,9 @@ declare module "@package/net/minecraft/world/inventory" {
         quickcraftStatus: number;
         constructor(containerId: number, playerInventory: $Inventory);
         constructor(containerId: number, playerInventory: $Inventory, access: $ContainerLevelAccess_);
-        get selectablePatterns(): $List<$Holder<$BannerPattern>>;
         get resultSlot(): $Slot;
         get patternSlot(): $Slot;
+        get selectablePatterns(): $List<$Holder<$BannerPattern>>;
     }
     export class $DispenserMenu extends $AbstractContainerMenu {
         quickcraftSlots: $Set<$Slot>;
@@ -701,20 +701,20 @@ declare module "@package/net/minecraft/world/inventory" {
         constructor();
     }
     export class $ItemCombinerMenuSlotDefinition {
-        hasSlot(slot: number): boolean;
         getSlot(slot: number): $ItemCombinerMenuSlotDefinition$SlotDefinition;
         static create(): $ItemCombinerMenuSlotDefinition$Builder;
-        getSlots(): $List<$ItemCombinerMenuSlotDefinition$SlotDefinition>;
-        getInputSlotIndexes(): $List<number>;
         getResultSlotIndex(): number;
+        getSlots(): $List<$ItemCombinerMenuSlotDefinition$SlotDefinition>;
+        hasSlot(slot: number): boolean;
         getResultSlot(): $ItemCombinerMenuSlotDefinition$SlotDefinition;
         getNumOfInputSlots(): number;
+        getInputSlotIndexes(): $List<number>;
         constructor(slots: $List_<$ItemCombinerMenuSlotDefinition$SlotDefinition_>, resultSlot: $ItemCombinerMenuSlotDefinition$SlotDefinition_);
-        get slots(): $List<$ItemCombinerMenuSlotDefinition$SlotDefinition>;
-        get inputSlotIndexes(): $List<number>;
         get resultSlotIndex(): number;
+        get slots(): $List<$ItemCombinerMenuSlotDefinition$SlotDefinition>;
         get resultSlot(): $ItemCombinerMenuSlotDefinition$SlotDefinition;
         get numOfInputSlots(): number;
+        get inputSlotIndexes(): $List<number>;
     }
     export class $SlotRange {
         static of(name: string, values: $IntList): $SlotRange;
@@ -813,20 +813,20 @@ declare module "@package/net/minecraft/world/inventory" {
         constructor(containerId: number, playerInventory: $Inventory, access: $ContainerLevelAccess_);
     }
     export class $ItemCombinerMenu extends $AbstractContainerMenu {
-        getSlotToQuickMoveTo(stack: $ItemStack_): number;
-        canMoveIntoInputSlots(stack: $ItemStack_): boolean;
-        createInputSlotDefinitions(): $ItemCombinerMenuSlotDefinition;
         mayPickup(player: $Player, hasStack: boolean): boolean;
         onTake(player: $Player, stack: $ItemStack_): void;
+        getResultSlot(): number;
+        createContainer(size: number): $SimpleContainer;
+        createResultSlot(slotDefinition: $ItemCombinerMenuSlotDefinition): void;
+        createInputSlots(slotDefinition: $ItemCombinerMenuSlotDefinition): void;
+        isValidBlock(state: $BlockState_): boolean;
         /**
          * Called when the Anvil Input Slot changes, calculates the new result and puts it in the output slot.
          */
         createResult(): void;
-        getResultSlot(): number;
-        createInputSlots(slotDefinition: $ItemCombinerMenuSlotDefinition): void;
-        createResultSlot(slotDefinition: $ItemCombinerMenuSlotDefinition): void;
-        isValidBlock(state: $BlockState_): boolean;
-        createContainer(size: number): $SimpleContainer;
+        canMoveIntoInputSlots(stack: $ItemStack_): boolean;
+        getSlotToQuickMoveTo(stack: $ItemStack_): number;
+        createInputSlotDefinitions(): $ItemCombinerMenuSlotDefinition;
         quickcraftSlots: $Set<$Slot>;
         access: $ContainerLevelAccess;
         remoteCarried: $ItemStack;
@@ -854,6 +854,21 @@ declare module "@package/net/minecraft/world/inventory" {
         get resultSlot(): number;
     }
     export class $ResultContainer implements $Container, $RecipeCraftingHolder {
+        isEmpty(): boolean;
+        /**
+         * Returns the stack in the given slot.
+         */
+        getItem(index: number): $ItemStack;
+        setRecipeUsed(recipe: $RecipeHolder_<never> | null): void;
+        getRecipeUsed(): $RecipeHolder<never>;
+        /**
+         * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
+         */
+        removeItem(index: number, count: number): $ItemStack;
+        /**
+         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
+         */
+        clearContent(): void;
         /**
          * Returns the stack in the given slot.
          */
@@ -862,23 +877,6 @@ declare module "@package/net/minecraft/world/inventory" {
          * Returns the number of slots in the inventory.
          */
         getContainerSize(): number;
-        isEmpty(): boolean;
-        /**
-         * Returns the stack in the given slot.
-         */
-        getItem(index: number): $ItemStack;
-        /**
-         * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
-         */
-        removeItem(index: number, count: number): $ItemStack;
-        /**
-         * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
-         */
-        setItem(index: number, stack: $ItemStack_): void;
-        /**
-         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
-         */
-        clearContent(): void;
         /**
          * Don't rename this method to canInteractWith due to conflicts with Container
          */
@@ -887,24 +885,17 @@ declare module "@package/net/minecraft/world/inventory" {
          * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
         setChanged(): void;
-        setRecipeUsed(recipe: $RecipeHolder_<never> | null): void;
-        getRecipeUsed(): $RecipeHolder<never>;
         /**
-         * @return `true` if the given stack can be extracted into the target inventory
+         * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
          */
-        canTakeItem(target: $Container, slot: number, stack: $ItemStack_): boolean;
+        setItem(index: number, stack: $ItemStack_): void;
         /**
          * Returns `true` if automation is allowed to insert the given stack (ignoring stack size) into the given slot. For guis use Slot.isItemValid
          */
         canPlaceItem(slot: number, stack: $ItemStack_): boolean;
         hasAnyMatching(predicate: $Predicate_<$ItemStack>): boolean;
-        /**
-         * Returns the number of slots in the inventory.
-         */
-        getMaxStackSize(): number;
-        getMaxStackSize(stack: $ItemStack_): number;
-        stopOpen(player: $Player): void;
         startOpen(player: $Player): void;
+        stopOpen(player: $Player): void;
         /**
          * Returns `true` if any item from the passed set exists in this inventory.
          */
@@ -913,69 +904,78 @@ declare module "@package/net/minecraft/world/inventory" {
          * Returns the total amount of the specified item in this inventory. This method does not check for nbt.
          */
         countItem(item: $Item_): number;
+        getMaxStackSize(stack: $ItemStack_): number;
+        /**
+         * Returns the number of slots in the inventory.
+         */
+        getMaxStackSize(): number;
+        /**
+         * @return `true` if the given stack can be extracted into the target inventory
+         */
+        canTakeItem(target: $Container, slot: number, stack: $ItemStack_): boolean;
         setRecipeUsed(level: $Level_, players: $ServerPlayer, recipe: $RecipeHolder_<never>): boolean;
         awardUsedRecipes(player: $Player, items: $List_<$ItemStack_>): void;
         canReceiveTransferCooldown(): boolean;
         setTransferCooldown(arg0: number): void;
         lithium$itemInsertionTestRequiresStackSize1(): boolean;
         /**
-         * Returns the number of slots in the inventory.
+         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
-        getHeight(): number;
-        isMutable(): boolean;
+        setChanged(): void;
         insertItem(slot: number, stack: $ItemStack_, simulate: boolean): $ItemStack;
+        asContainer(): $Container;
+        /**
+         * Returns the stack in the given slot.
+         */
+        getStackInSlot(index: number): $ItemStack;
+        /**
+         * Returns `true` if automation is allowed to insert the given stack (ignoring stack size) into the given slot. For guis use Slot.isItemValid
+         */
+        isItemValid(slot: number, stack: $ItemStack_): boolean;
         extractItem(slot: number, amount: number, simulate: boolean): $ItemStack;
         /**
          * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
          */
         setStackInSlot(index: number, stack: $ItemStack_): void;
-        /**
-         * Returns `true` if automation is allowed to insert the given stack (ignoring stack size) into the given slot. For guis use Slot.isItemValid
-         */
-        isItemValid(slot: number, stack: $ItemStack_): boolean;
-        /**
-         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
-         */
-        setChanged(): void;
-        /**
-         * Returns the stack in the given slot.
-         */
-        getStackInSlot(index: number): $ItemStack;
-        asContainer(): $Container;
+        isMutable(): boolean;
         getSlotLimit(slot: number): number;
         /**
          * Returns the number of slots in the inventory.
          */
-        getSlots(): number;
+        getHeight(): number;
+        /**
+         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
+         */
+        clear(): void;
+        getBlock(level: $Level_): $LevelBlock;
+        self(): $Container;
         /**
          * Returns the number of slots in the inventory.
          */
         getWidth(): number;
         /**
-         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
+         * Returns the number of slots in the inventory.
          */
-        clear(): void;
-        self(): $Container;
-        getBlock(level: $Level_): $LevelBlock;
+        getSlots(): number;
         insertItem(stack: $ItemStack_, simulate: boolean): $ItemStack;
+        countNonEmpty(match: $ItemPredicate_): number;
         /**
          * Returns the number of slots in the inventory.
          */
         countNonEmpty(): number;
-        countNonEmpty(match: $ItemPredicate_): number;
-        isEmpty(): boolean;
-        /**
-         * Returns the number of slots in the inventory.
-         */
-        count(): number;
-        count(match: $ItemPredicate_): number;
+        getAllItems(): $List<$ItemStack>;
+        clear(match: $ItemPredicate_): void;
         find(match: $ItemPredicate_): number;
         /**
          * Returns the number of slots in the inventory.
          */
         find(): number;
-        clear(match: $ItemPredicate_): void;
-        getAllItems(): $List<$ItemStack>;
+        /**
+         * Returns the number of slots in the inventory.
+         */
+        count(): number;
+        count(match: $ItemPredicate_): number;
+        isEmpty(): boolean;
         /**
          * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
@@ -983,10 +983,10 @@ declare module "@package/net/minecraft/world/inventory" {
         constructor();
         get containerSize(): number;
         set transferCooldown(value: number);
-        get height(): number;
         get mutable(): boolean;
-        get slots(): number;
+        get height(): number;
         get width(): number;
+        get slots(): number;
         get allItems(): $List<$ItemStack>;
     }
     export class $FurnaceMenu extends $AbstractFurnaceMenu {
@@ -1019,9 +1019,9 @@ declare module "@package/net/minecraft/world/inventory" {
         constructor(containerId: number, playerInventory: $Inventory, furnaceContainer: $Container, furnaceData: $ContainerData);
     }
     export class $AbstractFurnaceMenu extends $RecipeBookMenu<$SingleRecipeInput, $AbstractCookingRecipe> {
-        isLit(): boolean;
         canSmelt(stack: $ItemStack_): boolean;
         isFuel(stack: $ItemStack_): boolean;
+        isLit(): boolean;
         getLitProgress(): number;
         getBurnProgress(): number;
         quickcraftSlots: $Set<$Slot>;
@@ -1087,21 +1087,21 @@ declare module "@package/net/minecraft/world/inventory" {
         get count(): number;
     }
     export class $StonecutterMenu extends $AbstractContainerMenu {
+        getRecipes(): $List<$RecipeHolder<$StonecutterRecipe>>;
+        /**
+         * Reset the drag fields
+         */
+        setupResultSlot(): void;
+        /**
+         * Returns the index of the selected recipe.
+         */
+        getNumRecipes(): number;
+        hasInputItem(): boolean;
         registerUpdateListener(listener: $Runnable_): void;
         /**
          * Returns the index of the selected recipe.
          */
         getSelectedRecipeIndex(): number;
-        getRecipes(): $List<$RecipeHolder<$StonecutterRecipe>>;
-        hasInputItem(): boolean;
-        /**
-         * Returns the index of the selected recipe.
-         */
-        getNumRecipes(): number;
-        /**
-         * Reset the drag fields
-         */
-        setupResultSlot(): void;
         container: $Container;
         quickcraftSlots: $Set<$Slot>;
         lastSoundTime: number;
@@ -1131,9 +1131,9 @@ declare module "@package/net/minecraft/world/inventory" {
         quickcraftStatus: number;
         constructor(containerId: number, playerInventory: $Inventory);
         constructor(containerId: number, playerInventory: $Inventory, access: $ContainerLevelAccess_);
-        get selectedRecipeIndex(): number;
         get recipes(): $List<$RecipeHolder<$StonecutterRecipe>>;
         get numRecipes(): number;
+        get selectedRecipeIndex(): number;
     }
     export class $ShulkerBoxMenu extends $AbstractContainerMenu {
         quickcraftSlots: $Set<$Slot>;
@@ -1159,54 +1159,86 @@ declare module "@package/net/minecraft/world/inventory" {
         constructor(containerId: number, playerInventory: $Inventory, container: $Container);
     }
     export class $AbstractContainerMenu {
-        /**
-         * Looks for changes made in the container, sends them to every listener.
-         */
-        broadcastChanges(): void;
         getType(): $MenuType<never>;
         getSlot(slotId: number): $Slot;
         /**
          * Called when the container is closed.
          */
         removed(player: $Player): void;
+        /**
+         * Handle when the stack in slot `index` is shift-clicked. Normally this moves the stack between the player inventory and the other inventory(s).
+         */
+        quickMoveStack(player: $Player, index: number): $ItemStack;
+        incrementStateId(): number;
+        /**
+         * Callback for when the crafting matrix is changed.
+         */
+        slotsChanged(container: $Container): void;
+        initializeContents(stateId: number, items: $List_<$ItemStack_>, carried: $ItemStack_): void;
+        /**
+         * Args : clickedButton, Returns (0 : start drag, 1 : add slot, 2 : end drag)
+         */
+        static getQuickcraftType(clickedButton: number): number;
+        /**
+         * Looks for changes made in the container, sends them to every listener.
+         */
+        resetQuickCraft(): void;
+        static getQuickcraftMask(quickCraftingHeader: number, quickCraftingType: number): number;
+        /**
+         * Merges provided ItemStack with the first available one in the container/player inventor between minIndex (included) and maxIndex (excluded). Args : stack, minIndex, maxIndex, negativDirection. [!] the Container implementation do not check if the item is valid for the slot
+         */
+        moveItemStackTo(stack: $ItemStack_, startIndex: number, endIndex: number, reverseDirection: boolean): boolean;
+        clearContainer(player: $Player, container: $Container): void;
+        setRemoteCarried(stack: $ItemStack_): void;
+        /**
+         * Looks for changes made in the container, sends them to every listener.
+         */
+        broadcastFullState(): void;
+        isValidSlotIndex(slotIndex: number): boolean;
+        addDataSlot(intValue: $DataSlot): $DataSlot;
+        static checkContainerSize(container: $Container, minSize: number): void;
+        removeSlotListener(listener: $ContainerListener): void;
+        addDataSlots(array: $ContainerData): void;
+        /**
+         * Handles the given Button-click on the server, currently only used by enchanting. Name is for legacy.
+         */
+        clickMenuButton(player: $Player, id: number): boolean;
+        wrapOperation$edg000$geckolib$removeGeckolibIdOnCopy(arg0: $ItemStack_, arg1: number, arg2: $Operation_<any>): $ItemStack;
+        wrapOperation$edg000$geckolib$forceGeckolibSlotChange(arg0: $ItemStack_, arg1: $ItemStack_, arg2: $Operation_<any>): boolean;
+        /**
+         * Looks for changes made in the container, sends them to every listener.
+         */
+        broadcastChanges(): void;
+        handler$dgk000$polytone$interact(slot: $Slot, cir: $CallbackInfoReturnable<any>, mutableSlot: $LocalRef<any>): void;
         setData(id: number, data: number): void;
+        /**
+         * Adds an item slot to this container
+         */
+        addSlot(slot: $Slot): $Slot;
+        /**
+         * Returns `true` if the player can "drag-spilt" items into this slot. Returns `true` by default. Called to check if the slot can be added to a list of Slots to split the held ItemStack across.
+         */
+        canDragTo(slot: $Slot): boolean;
+        doClick(slotId: number, button: number, clickType: $ClickType_, player: $Player): void;
+        clicked(slotId: number, button: number, clickType: $ClickType_, player: $Player): void;
+        getStateId(): number;
         /**
          * Like the version that takes an inventory. If the given BlockEntity is not an Inventory, 0 is returned instead.
          */
         static getRedstoneSignalFromBlockEntity(blockEntity: $BlockEntity | null): number;
         static getRedstoneSignalFromContainer(container: $Container | null): number;
-        wrapOperation$edg000$geckolib$forceGeckolibIdSync(arg0: $ItemStack_, arg1: $ItemStack_, arg2: $Operation_<any>): boolean;
-        transferState(menu: $AbstractContainerMenu): void;
-        addSlotListener(listener: $ContainerListener): void;
-        setRemoteSlot(slot: number, stack: $ItemStack_): void;
-        setSynchronizer(synchronizer: $ContainerSynchronizer): void;
+        static stillValid(access: $ContainerLevelAccess_, player: $Player, targetBlock: $Block_): boolean;
+        /**
+         * Determines whether supplied player can use this container
+         */
+        stillValid(player: $Player): boolean;
+        getCarried(): $ItemStack;
+        setCarried(stack: $ItemStack_): void;
         findSlot(container: $Container, slotIndex: number): $OptionalInt;
         /**
          * Puts an ItemStack in a slot.
          */
         setItem(slotId: number, stateId: number, stack: $ItemStack_): void;
-        wrapOperation$edg000$geckolib$forceGeckolibSlotChange(arg0: $ItemStack_, arg1: $ItemStack_, arg2: $Operation_<any>): boolean;
-        wrapOperation$edg000$geckolib$removeGeckolibIdOnCopy(arg0: $ItemStack_, arg1: number, arg2: $Operation_<any>): $ItemStack;
-        /**
-         * Determines whether supplied player can use this container
-         */
-        stillValid(player: $Player): boolean;
-        static stillValid(access: $ContainerLevelAccess_, player: $Player, targetBlock: $Block_): boolean;
-        getCarried(): $ItemStack;
-        setCarried(stack: $ItemStack_): void;
-        /**
-         * Returns a list if `ItemStacks`, for each slot.
-         */
-        getItems(): $NonNullList<$ItemStack>;
-        /**
-         * Checks if it's possible to add the given itemstack to the given slot.
-         */
-        static canItemQuickReplace(slot: $Slot | null, stack: $ItemStack_, stackSizeMatters: boolean): boolean;
-        /**
-         * Called to determine if the current slot is valid for the stack merging (double-click) code. The stack passed in is null for the initial slot that was double-clicked.
-         */
-        canTakeItemForPickAll(stack: $ItemStack_, slot: $Slot): boolean;
-        createCarriedSlotAccess(): $SlotAccess;
         /**
          * Looks for changes made in the container, sends them to every listener.
          */
@@ -1217,70 +1249,38 @@ declare module "@package/net/minecraft/world/inventory" {
          */
         sendAllDataToRemote(): void;
         /**
-         * Args : clickedButton, Returns (0 : start drag, 1 : add slot, 2 : end drag)
-         */
-        static getQuickcraftHeader(clickedButton: number): number;
-        static getQuickCraftPlaceCount(slots: $Set_<$Slot>, type: number, stack: $ItemStack_): number;
-        static isValidQuickcraftType(dragMode: number, player: $Player): boolean;
-        /**
          * Looks for changes made in the container, sends them to every listener.
          */
         synchronizeCarriedToRemote(): void;
-        setRemoteSlotNoCopy(slot: number, stack: $ItemStack_): void;
         /**
          * Looks for changes made in the container, sends them to every listener.
          */
         resumeRemoteUpdates(): void;
         /**
-         * Adds an item slot to this container
-         */
-        addSlot(slot: $Slot): $Slot;
-        clicked(slotId: number, button: number, clickType: $ClickType_, player: $Player): void;
-        /**
-         * Returns `true` if the player can "drag-spilt" items into this slot. Returns `true` by default. Called to check if the slot can be added to a list of Slots to split the held ItemStack across.
-         */
-        canDragTo(slot: $Slot): boolean;
-        doClick(slotId: number, button: number, clickType: $ClickType_, player: $Player): void;
-        getStateId(): number;
-        handler$dgk000$polytone$interact(slot: $Slot, cir: $CallbackInfoReturnable<any>, mutableSlot: $LocalRef<any>): void;
-        static checkContainerSize(container: $Container, minSize: number): void;
-        isValidSlotIndex(slotIndex: number): boolean;
-        addDataSlots(array: $ContainerData): void;
-        setRemoteCarried(stack: $ItemStack_): void;
-        removeSlotListener(listener: $ContainerListener): void;
-        /**
-         * Callback for when the crafting matrix is changed.
-         */
-        slotsChanged(container: $Container): void;
-        static getQuickcraftMask(quickCraftingHeader: number, quickCraftingType: number): number;
-        /**
-         * Looks for changes made in the container, sends them to every listener.
-         */
-        broadcastFullState(): void;
-        /**
          * Args : clickedButton, Returns (0 : start drag, 1 : add slot, 2 : end drag)
          */
-        static getQuickcraftType(clickedButton: number): number;
-        incrementStateId(): number;
+        static getQuickcraftHeader(clickedButton: number): number;
+        static isValidQuickcraftType(dragMode: number, player: $Player): boolean;
         /**
-         * Looks for changes made in the container, sends them to every listener.
+         * Checks if it's possible to add the given itemstack to the given slot.
          */
-        resetQuickCraft(): void;
-        clearContainer(player: $Player, container: $Container): void;
-        initializeContents(stateId: number, items: $List_<$ItemStack_>, carried: $ItemStack_): void;
+        static canItemQuickReplace(slot: $Slot | null, stack: $ItemStack_, stackSizeMatters: boolean): boolean;
+        setRemoteSlotNoCopy(slot: number, stack: $ItemStack_): void;
         /**
-         * Handle when the stack in slot `index` is shift-clicked. Normally this moves the stack between the player inventory and the other inventory(s).
+         * Called to determine if the current slot is valid for the stack merging (double-click) code. The stack passed in is null for the initial slot that was double-clicked.
          */
-        quickMoveStack(player: $Player, index: number): $ItemStack;
-        addDataSlot(intValue: $DataSlot): $DataSlot;
+        canTakeItemForPickAll(stack: $ItemStack_, slot: $Slot): boolean;
+        static getQuickCraftPlaceCount(slots: $Set_<$Slot>, type: number, stack: $ItemStack_): number;
+        createCarriedSlotAccess(): $SlotAccess;
+        wrapOperation$edg000$geckolib$forceGeckolibIdSync(arg0: $ItemStack_, arg1: $ItemStack_, arg2: $Operation_<any>): boolean;
         /**
-         * Merges provided ItemStack with the first available one in the container/player inventor between minIndex (included) and maxIndex (excluded). Args : stack, minIndex, maxIndex, negativDirection. [!] the Container implementation do not check if the item is valid for the slot
+         * Returns a list if `ItemStacks`, for each slot.
          */
-        moveItemStackTo(stack: $ItemStack_, startIndex: number, endIndex: number, reverseDirection: boolean): boolean;
-        /**
-         * Handles the given Button-click on the server, currently only used by enchanting. Name is for legacy.
-         */
-        clickMenuButton(player: $Player, id: number): boolean;
+        getItems(): $NonNullList<$ItemStack>;
+        addSlotListener(listener: $ContainerListener): void;
+        transferState(menu: $AbstractContainerMenu): void;
+        setSynchronizer(synchronizer: $ContainerSynchronizer): void;
+        setRemoteSlot(slot: number, stack: $ItemStack_): void;
         quickcraftSlots: $Set<$Slot>;
         remoteCarried: $ItemStack;
         static QUICKCRAFT_HEADER_START: number;
@@ -1302,8 +1302,8 @@ declare module "@package/net/minecraft/world/inventory" {
         static QUICKCRAFT_TYPE_CHARITABLE: number;
         constructor(menuType: $MenuType_<never> | null, containerId: number);
         get type(): $MenuType<never>;
-        get items(): $NonNullList<$ItemStack>;
         get stateId(): number;
+        get items(): $NonNullList<$ItemStack>;
     }
     export class $Slot implements $ISlot {
         /**
@@ -1319,33 +1319,6 @@ declare module "@package/net/minecraft/world/inventory" {
          * Helper function to get the stack in the slot.
          */
         getItem(): $ItemStack;
-        /**
-         * Returns if this slot contains a stack.
-         */
-        hasItem(): boolean;
-        /**
-         * Returns the maximum stack size for a given slot (usually the same as getInventoryStackLimit(), but 1 in the case of armor slots)
-         */
-        getMaxStackSize(): number;
-        getMaxStackSize(stack: $ItemStack_): number;
-        /**
-         * Returns if this slot contains a stack.
-         */
-        isFake(): boolean;
-        /**
-         * Called when the stack in a Slot changes
-         */
-        setChanged(): void;
-        /**
-         * Check if the stack is allowed to be placed in this slot, used for armor slots as well as furnace fuel.
-         */
-        mayPlace(stack: $ItemStack_): boolean;
-        safeTake(count: number, decrement: number, player: $Player): $ItemStack;
-        tryRemove(count: number, decrement: number, player: $Player): ($ItemStack) | undefined;
-        mayPickup(player: $Player): boolean;
-        safeInsert(stack: $ItemStack_): $ItemStack;
-        safeInsert(stack: $ItemStack_, increment: number): $ItemStack;
-        onTake(stack: $Player, arg1: $ItemStack_): void;
         onSwapCraft(numItemsCrafted: number): void;
         /**
          * if par2 has more items than par1, onCrafting(item,countIncrease) is called
@@ -1359,28 +1332,55 @@ declare module "@package/net/minecraft/world/inventory" {
          * Returns the maximum stack size for a given slot (usually the same as getInventoryStackLimit(), but 1 in the case of armor slots)
          */
         getContainerSlot(): number;
-        setByPlayer(stack: $ItemStack_): void;
         /**
          * if par2 has more items than par1, onCrafting(item,countIncrease) is called
          */
         setByPlayer(oldStack: $ItemStack_, newStack: $ItemStack_): void;
+        setByPlayer(stack: $ItemStack_): void;
+        /**
+         * Returns if this slot contains a stack.
+         */
+        hasItem(): boolean;
+        /**
+         * Returns the maximum stack size for a given slot (usually the same as getInventoryStackLimit(), but 1 in the case of armor slots)
+         */
+        getMaxStackSize(): number;
+        getMaxStackSize(stack: $ItemStack_): number;
+        safeInsert(stack: $ItemStack_): $ItemStack;
+        safeInsert(stack: $ItemStack_, increment: number): $ItemStack;
+        safeTake(count: number, decrement: number, player: $Player): $ItemStack;
+        tryRemove(count: number, decrement: number, player: $Player): ($ItemStack) | undefined;
+        /**
+         * Check if the stack is allowed to be placed in this slot, used for armor slots as well as furnace fuel.
+         */
+        mayPlace(stack: $ItemStack_): boolean;
+        mayPickup(player: $Player): boolean;
+        onTake(stack: $Player, arg1: $ItemStack_): void;
         allowModification(player: $Player): boolean;
+        /**
+         * Called when the stack in a Slot changes
+         */
+        setChanged(): void;
         checkTakeAchievements(stack: $ItemStack_): void;
         /**
          * Returns the maximum stack size for a given slot (usually the same as getInventoryStackLimit(), but 1 in the case of armor slots)
          */
         clientsort$getIndexInMenu(): number;
         /**
+         * Returns if this slot contains a stack.
+         */
+        isFake(): boolean;
+        /**
          * Returns the maximum stack size for a given slot (usually the same as getInventoryStackLimit(), but 1 in the case of armor slots)
          */
         getSlotIndex(): number;
-        isSameInventory(arg0: $Slot): boolean;
         setBackground(arg0: $ResourceLocation_, arg1: $ResourceLocation_): $Slot;
         /**
          * Returns if this slot contains a stack.
          */
         isHighlightable(): boolean;
         getNoItemIcon(): $Pair<$ResourceLocation, $ResourceLocation>;
+        isSameInventory(arg0: $Slot): boolean;
         /**
          * Returns the maximum stack size for a given slot (usually the same as getInventoryStackLimit(), but 1 in the case of armor slots)
          */
@@ -1392,18 +1392,18 @@ declare module "@package/net/minecraft/world/inventory" {
         constructor(container: $Container, slot: number, x: number, y: number);
         get active(): boolean;
         get item(): $ItemStack;
-        get fake(): boolean;
         get containerSlot(): number;
+        get fake(): boolean;
         get slotIndex(): number;
         get highlightable(): boolean;
         get noItemIcon(): $Pair<$ResourceLocation, $ResourceLocation>;
     }
     export class $DataSlot {
-        static forContainer(data: $ContainerData, idx: number): $DataSlot;
         get(): number;
         set(value: number): void;
         static shared(data: number[], idx: number): $DataSlot;
         static standalone(): $DataSlot;
+        static forContainer(data: $ContainerData, idx: number): $DataSlot;
         checkAndClearUpdateFlag(): boolean;
         constructor();
     }
@@ -1439,7 +1439,7 @@ declare module "@package/net/minecraft/world/inventory" {
     /**
      * Values that may be interpreted as {@link $ItemCombinerMenuSlotDefinition$SlotDefinition}.
      */
-    export type $ItemCombinerMenuSlotDefinition$SlotDefinition_ = { y?: number, x?: number, slotIndex?: number, mayPlace?: $Predicate_<$ItemStack>,  } | [y?: number, x?: number, slotIndex?: number, mayPlace?: $Predicate_<$ItemStack>, ];
+    export type $ItemCombinerMenuSlotDefinition$SlotDefinition_ = { slotIndex?: number, mayPlace?: $Predicate_<$ItemStack>, y?: number, x?: number,  } | [slotIndex?: number, mayPlace?: $Predicate_<$ItemStack>, y?: number, x?: number, ];
     export class $ClickType extends $Enum<$ClickType> {
         static values(): $ClickType[];
         static valueOf(arg0: string): $ClickType;
@@ -1456,6 +1456,23 @@ declare module "@package/net/minecraft/world/inventory" {
      */
     export type $ClickType_ = "pickup" | "quick_move" | "swap" | "clone" | "throw" | "quick_craft" | "pickup_all";
     export class $TransientCraftingContainer implements $CraftingContainer {
+        isEmpty(): boolean;
+        /**
+         * Returns the stack in the given slot.
+         */
+        getItem(slot: number): $ItemStack;
+        /**
+         * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
+         */
+        removeItem(slot: number, amount: number): $ItemStack;
+        /**
+         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
+         */
+        clearContent(): void;
+        /**
+         * Returns the number of slots in the inventory.
+         */
+        getWidth(): number;
         /**
          * Returns the number of slots in the inventory.
          */
@@ -1468,27 +1485,6 @@ declare module "@package/net/minecraft/world/inventory" {
          * Returns the number of slots in the inventory.
          */
         getContainerSize(): number;
-        isEmpty(): boolean;
-        /**
-         * Returns the stack in the given slot.
-         */
-        getItem(slot: number): $ItemStack;
-        /**
-         * Returns the number of slots in the inventory.
-         */
-        getWidth(): number;
-        /**
-         * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
-         */
-        removeItem(slot: number, amount: number): $ItemStack;
-        /**
-         * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
-         */
-        setItem(slot: number, stack: $ItemStack_): void;
-        /**
-         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
-         */
-        clearContent(): void;
         /**
          * Don't rename this method to canInteractWith due to conflicts with Container
          */
@@ -1497,26 +1493,21 @@ declare module "@package/net/minecraft/world/inventory" {
          * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
         setChanged(): void;
-        getItems(): $List<$ItemStack>;
+        /**
+         * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
+         */
+        setItem(slot: number, stack: $ItemStack_): void;
         fillStackedContents(contents: $StackedContents): void;
+        getItems(): $List<$ItemStack>;
         asCraftInput(): $CraftingInput;
         asPositionedCraftInput(): $CraftingInput$Positioned;
-        /**
-         * @return `true` if the given stack can be extracted into the target inventory
-         */
-        canTakeItem(target: $Container, slot: number, stack: $ItemStack_): boolean;
         /**
          * Returns `true` if automation is allowed to insert the given stack (ignoring stack size) into the given slot. For guis use Slot.isItemValid
          */
         canPlaceItem(slot: number, stack: $ItemStack_): boolean;
         hasAnyMatching(predicate: $Predicate_<$ItemStack>): boolean;
-        /**
-         * Returns the number of slots in the inventory.
-         */
-        getMaxStackSize(): number;
-        getMaxStackSize(stack: $ItemStack_): number;
-        stopOpen(player: $Player): void;
         startOpen(player: $Player): void;
+        stopOpen(player: $Player): void;
         /**
          * Returns `true` if any item from the passed set exists in this inventory.
          */
@@ -1525,67 +1516,76 @@ declare module "@package/net/minecraft/world/inventory" {
          * Returns the total amount of the specified item in this inventory. This method does not check for nbt.
          */
         countItem(item: $Item_): number;
+        getMaxStackSize(stack: $ItemStack_): number;
+        /**
+         * Returns the number of slots in the inventory.
+         */
+        getMaxStackSize(): number;
+        /**
+         * @return `true` if the given stack can be extracted into the target inventory
+         */
+        canTakeItem(target: $Container, slot: number, stack: $ItemStack_): boolean;
         canReceiveTransferCooldown(): boolean;
         setTransferCooldown(arg0: number): void;
         lithium$itemInsertionTestRequiresStackSize1(): boolean;
         /**
-         * Returns the number of slots in the inventory.
+         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
-        getHeight(): number;
-        isMutable(): boolean;
+        setChanged(): void;
         insertItem(slot: number, stack: $ItemStack_, simulate: boolean): $ItemStack;
+        asContainer(): $Container;
+        /**
+         * Returns the stack in the given slot.
+         */
+        getStackInSlot(slot: number): $ItemStack;
+        /**
+         * Returns `true` if automation is allowed to insert the given stack (ignoring stack size) into the given slot. For guis use Slot.isItemValid
+         */
+        isItemValid(slot: number, stack: $ItemStack_): boolean;
         extractItem(slot: number, amount: number, simulate: boolean): $ItemStack;
         /**
          * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
          */
         setStackInSlot(slot: number, stack: $ItemStack_): void;
-        /**
-         * Returns `true` if automation is allowed to insert the given stack (ignoring stack size) into the given slot. For guis use Slot.isItemValid
-         */
-        isItemValid(slot: number, stack: $ItemStack_): boolean;
-        /**
-         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
-         */
-        setChanged(): void;
-        /**
-         * Returns the stack in the given slot.
-         */
-        getStackInSlot(slot: number): $ItemStack;
-        asContainer(): $Container;
+        isMutable(): boolean;
         getSlotLimit(slot: number): number;
         /**
          * Returns the number of slots in the inventory.
          */
-        getSlots(): number;
+        getHeight(): number;
+        /**
+         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
+         */
+        clear(): void;
+        getBlock(level: $Level_): $LevelBlock;
+        self(): $Container;
         /**
          * Returns the number of slots in the inventory.
          */
         getWidth(): number;
         /**
-         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
+         * Returns the number of slots in the inventory.
          */
-        clear(): void;
-        self(): $Container;
-        getBlock(level: $Level_): $LevelBlock;
+        getSlots(): number;
         insertItem(stack: $ItemStack_, simulate: boolean): $ItemStack;
+        countNonEmpty(match: $ItemPredicate_): number;
         /**
          * Returns the number of slots in the inventory.
          */
         countNonEmpty(): number;
-        countNonEmpty(match: $ItemPredicate_): number;
-        isEmpty(): boolean;
-        /**
-         * Returns the number of slots in the inventory.
-         */
-        count(): number;
-        count(match: $ItemPredicate_): number;
+        getAllItems(): $List<$ItemStack>;
+        clear(match: $ItemPredicate_): void;
         find(match: $ItemPredicate_): number;
         /**
          * Returns the number of slots in the inventory.
          */
         find(): number;
-        clear(match: $ItemPredicate_): void;
-        getAllItems(): $List<$ItemStack>;
+        /**
+         * Returns the number of slots in the inventory.
+         */
+        count(): number;
+        count(match: $ItemPredicate_): number;
+        isEmpty(): boolean;
         /**
          * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think it hasn't changed and skip it.
          */
@@ -1603,28 +1603,28 @@ declare module "@package/net/minecraft/world/inventory" {
     export class $ContainerSynchronizer {
     }
     export interface $ContainerSynchronizer {
+        sendInitialData(container: $AbstractContainerMenu, items: $NonNullList<$ItemStack_>, carriedItem: $ItemStack_, initialData: number[]): void;
+        sendSlotChange(container: $AbstractContainerMenu, slot: number, itemStack: $ItemStack_): void;
         sendDataChange(container: $AbstractContainerMenu, id: number, value: number): void;
         sendCarriedChange(containerMenu: $AbstractContainerMenu, stack: $ItemStack_): void;
-        sendSlotChange(container: $AbstractContainerMenu, slot: number, itemStack: $ItemStack_): void;
-        sendInitialData(container: $AbstractContainerMenu, items: $NonNullList<$ItemStack_>, carriedItem: $ItemStack_, initialData: number[]): void;
     }
     export class $MerchantMenu extends $AbstractContainerMenu {
-        showProgressBar(): boolean;
-        setShowProgressBar(canRestock: boolean): void;
-        setSelectionHint(level: number): void;
-        getTraderXp(): number;
-        getFutureTraderXp(): number;
-        getTraderLevel(): number;
-        setCanRestock(canRestock: boolean): void;
-        setMerchantLevel(level: number): void;
-        canRestock(): boolean;
         getOffers(): $MerchantOffers;
         /**
          * `ClientPacketListener` uses this to set offers for the client side MerchantContainer.
          */
         setOffers(offers: $MerchantOffers): void;
-        setXp(level: number): void;
+        showProgressBar(): boolean;
+        setSelectionHint(level: number): void;
+        getTraderXp(): number;
+        getFutureTraderXp(): number;
+        setShowProgressBar(canRestock: boolean): void;
+        getTraderLevel(): number;
+        setCanRestock(canRestock: boolean): void;
+        setMerchantLevel(level: number): void;
+        canRestock(): boolean;
         tryMoveItems(level: number): void;
+        setXp(level: number): void;
         quickcraftSlots: $Set<$Slot>;
         static PAYMENT2_SLOT: number;
         remoteCarried: $ItemStack;
@@ -1690,29 +1690,29 @@ declare module "@package/net/minecraft/world/inventory" {
     export interface $RecipeCraftingHolder {
         setRecipeUsed(level: $Level_, players: $ServerPlayer, recipe: $RecipeHolder_<never>): boolean;
         setRecipeUsed(recipe: $RecipeHolder_<never> | null): void;
-        awardUsedRecipes(player: $Player, items: $List_<$ItemStack_>): void;
         getRecipeUsed(): $RecipeHolder<never>;
+        awardUsedRecipes(player: $Player, items: $List_<$ItemStack_>): void;
     }
     export class $RecipeBookMenu<I extends $RecipeInput, R extends $Recipe<I>> extends $AbstractContainerMenu {
         getSize(): number;
-        shouldMoveToInventory(slotIndex: number): boolean;
-        getRecipeBookCategories(): $List<$RecipeBookCategories>;
-        finishPlacingRecipe(recipe: $RecipeHolder_<R>): void;
-        /**
-         * Reset the drag fields
-         */
-        clearCraftingContent(): void;
-        fillCraftSlotsStackedContents(itemHelper: $StackedContents): void;
+        getGridHeight(): number;
+        getRecipeBookType(): $RecipeBookType;
         /**
          * Reset the drag fields
          */
         beginPlacingRecipe(): void;
         getResultSlotIndex(): number;
         getGridWidth(): number;
-        getGridHeight(): number;
-        handlePlacement(placeAll: boolean, recipe: $RecipeHolder_<never>, player: $ServerPlayer): void;
         recipeMatches(recipe: $RecipeHolder_<R>): boolean;
-        getRecipeBookType(): $RecipeBookType;
+        handlePlacement(placeAll: boolean, recipe: $RecipeHolder_<never>, player: $ServerPlayer): void;
+        fillCraftSlotsStackedContents(itemHelper: $StackedContents): void;
+        getRecipeBookCategories(): $List<$RecipeBookCategories>;
+        finishPlacingRecipe(recipe: $RecipeHolder_<R>): void;
+        /**
+         * Reset the drag fields
+         */
+        clearCraftingContent(): void;
+        shouldMoveToInventory(slotIndex: number): boolean;
         quickcraftSlots: $Set<$Slot>;
         remoteCarried: $ItemStack;
         static QUICKCRAFT_HEADER_START: number;
@@ -1734,22 +1734,22 @@ declare module "@package/net/minecraft/world/inventory" {
         static QUICKCRAFT_TYPE_CHARITABLE: number;
         constructor(menuType: $MenuType_<never>, containerId: number);
         get size(): number;
-        get recipeBookCategories(): $List<$RecipeBookCategories>;
-        get resultSlotIndex(): number;
-        get gridWidth(): number;
         get gridHeight(): number;
         get recipeBookType(): $RecipeBookType;
+        get resultSlotIndex(): number;
+        get gridWidth(): number;
+        get recipeBookCategories(): $List<$RecipeBookCategories>;
     }
     export class $CrafterMenu extends $AbstractContainerMenu implements $ContainerListener {
+        dataChanged(containerMenu: $AbstractContainerMenu, dataSlotIndex: number, value: number): void;
         getContainer(): $Container;
-        isPowered(): boolean;
+        setSlotState(slot: number, enabled: boolean): void;
+        isSlotDisabled(slot: number): boolean;
         /**
          * Sends the contents of an inventory slot to the client-side Container. This doesn't have to match the actual contents of that slot.
          */
         slotChanged(containerToSend: $AbstractContainerMenu, dataSlotIndex: number, stack: $ItemStack_): void;
-        dataChanged(containerMenu: $AbstractContainerMenu, dataSlotIndex: number, value: number): void;
-        setSlotState(slot: number, enabled: boolean): void;
-        isSlotDisabled(slot: number): boolean;
+        isPowered(): boolean;
         quickcraftSlots: $Set<$Slot>;
         remoteCarried: $ItemStack;
         static QUICKCRAFT_HEADER_START: number;
@@ -1864,11 +1864,11 @@ declare module "@package/net/minecraft/world/inventory" {
     export class $ContainerListener {
     }
     export interface $ContainerListener {
+        dataChanged(containerMenu: $AbstractContainerMenu, dataSlotIndex: number, value: number): void;
         /**
          * Sends the contents of an inventory slot to the client-side Container. This doesn't have to match the actual contents of that slot.
          */
         slotChanged(containerToSend: $AbstractContainerMenu, dataSlotIndex: number, stack: $ItemStack_): void;
-        dataChanged(containerMenu: $AbstractContainerMenu, dataSlotIndex: number, value: number): void;
     }
     export class $ItemCombinerMenuSlotDefinition$Builder {
         build(): $ItemCombinerMenuSlotDefinition;

@@ -1,6 +1,7 @@
 import { $MeleeAttackGoal, $GoalSelector, $RandomStrollGoal, $RangedBowAttackGoal } from "@package/net/minecraft/world/entity/ai/goal";
 import { $SensorType, $Sensor } from "@package/net/minecraft/world/entity/ai/sensing";
 import { $JumpControl, $MoveControl, $LookControl } from "@package/net/minecraft/world/entity/ai/control";
+import { $CompoundTag } from "@package/net/minecraft/nbt";
 import { $SerializableDataTicket } from "@package/software/bernie/geckolib/constant/dataticket";
 import { $EntityType_, $EntityType, $EntityDimensions, $Entity$RemovalReason, $LivingEntity, $WalkAnimationState, $Pose, $PortalProcessor, $AnimationState } from "@package/net/minecraft/world/entity";
 import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
@@ -9,13 +10,13 @@ import { $PartEntityJS } from "@package/net/liopyu/entityjs/entities/nonliving/e
 import { $Stack, $Map, $UUID } from "@package/java/util";
 import { $AnimatableManager$ControllerRegistrar_ } from "@package/software/bernie/geckolib/animation";
 import { $RandomSource } from "@package/net/minecraft/util";
-import { $Cat, $Panda, $Bee$BeePollinateGoal, $Wolf, $Cow, $Bee, $Chicken, $Panda$PandaLookAtPlayerGoal, $Dolphin, $Parrot, $Bee$BeeGoToHiveGoal, $IronGolem, $Bee$BeeGoToKnownFlowerGoal } from "@package/net/minecraft/world/entity/animal";
-import { $Donkey, $Horse } from "@package/net/minecraft/world/entity/animal/horse";
+import { $Cat, $Panda, $CatVariant, $Bee$BeePollinateGoal, $Wolf, $Cow, $Bee, $WolfVariant, $Chicken, $Panda$PandaLookAtPlayerGoal, $Dolphin, $Parrot, $Bee$BeeGoToHiveGoal, $Parrot$Variant, $IronGolem, $Bee$BeeGoToKnownFlowerGoal } from "@package/net/minecraft/world/entity/animal";
+import { $Donkey, $Variant, $Horse } from "@package/net/minecraft/world/entity/animal/horse";
 import { $InteractionHand, $SimpleContainer } from "@package/net/minecraft/world";
 import { $Predicate } from "@package/java/util/function";
 import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
 import { $SoundEvent } from "@package/net/minecraft/sounds";
-import { $BlockPos } from "@package/net/minecraft/core";
+import { $BlockPos, $HolderLookup$Provider, $Holder } from "@package/net/minecraft/core";
 import { $Brain } from "@package/net/minecraft/world/entity/ai";
 import { $Bat } from "@package/net/minecraft/world/entity/ambient";
 import { $PathNavigation } from "@package/net/minecraft/world/entity/ai/navigation";
@@ -24,7 +25,7 @@ import { $TargetingConditions } from "@package/net/minecraft/world/entity/ai/tar
 import { $Object } from "@package/java/lang";
 import { $EntityInLevelCallback } from "@package/net/minecraft/world/level/entity";
 import { $Level_ } from "@package/net/minecraft/world/level";
-import { $Axolotl } from "@package/net/minecraft/world/entity/animal/axolotl";
+import { $Axolotl, $Axolotl$Variant } from "@package/net/minecraft/world/entity/animal/axolotl";
 import { $TagKey } from "@package/net/minecraft/tags";
 import { $IAnimatableJS } from "@package/net/liopyu/entityjs/entities/living/entityjs";
 import { $ProjectileWeaponItem, $ItemStack_, $ItemStack } from "@package/net/minecraft/world/item";
@@ -49,35 +50,36 @@ import { $Vec3 } from "@package/net/minecraft/world/phys";
 
 declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
     export class $ParrotEntityJS extends $Parrot implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
+        entityName(): string;
+        canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
         tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        tamableFoodPredicate(arg0: $ItemStack_): boolean;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
         isFoodPredicate(arg0: $ItemStack_): boolean;
         tamableFood(arg0: $ItemStack_): boolean;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
-        canJump(): boolean;
-        tamableFoodPredicate(arg0: $ItemStack_): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $Parrot$Variant;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -258,39 +260,40 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         static BASE_SAFE_FALL_DISTANCE: number;
         age: number;
         constructor(arg0: $ParrotJSBuilder, arg1: $EntityType_<$Parrot>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $IllusionerEntityJS extends $Illusioner implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -460,40 +463,41 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(arg0: $IllusionerJSBuilder, arg1: $EntityType_<$Illusioner>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $GoatEntityJS extends $Goat implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        isFoodPredicate(arg0: $ItemStack_): boolean;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        isFoodPredicate(arg0: $ItemStack_): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -670,39 +674,40 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         static BASE_SAFE_FALL_DISTANCE: number;
         age: number;
         constructor(arg0: $GoatJSBuilder, arg1: $EntityType_<$Goat>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $SlimeEntityJS extends $Slime implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -873,40 +878,41 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(arg0: $SlimeJSBuilder, arg1: $EntityType_<$Slime>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $BeeEntityJS extends $Bee implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        isFoodPredicate(arg0: $ItemStack_): boolean;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        isFoodPredicate(arg0: $ItemStack_): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -1094,39 +1100,40 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         static BASE_SAFE_FALL_DISTANCE: number;
         age: number;
         constructor(arg0: $BeeJSBuilder, arg1: $EntityType_<$Bee>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $ZombieEntityJS extends $Zombie implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -1297,39 +1304,40 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         static BASE_SAFE_FALL_DISTANCE: number;
         conversionTime: number;
         constructor(arg0: $ZombieJSBuilder, arg1: $EntityType_<$Zombie>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $DolphinEntityJS extends $Dolphin implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -1497,42 +1505,43 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(arg0: $DolphinJSBuilder, arg1: $EntityType_<$Dolphin>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $CatEntityJS extends $Cat implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
+        entityName(): string;
+        canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
         tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        tamableFoodPredicate(arg0: $ItemStack_): boolean;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
         isFoodPredicate(arg0: $ItemStack_): boolean;
         tamableFood(arg0: $ItemStack_): boolean;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
-        canJump(): boolean;
-        tamableFoodPredicate(arg0: $ItemStack_): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $Holder<$CatVariant>;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -1708,39 +1717,40 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         static BASE_SAFE_FALL_DISTANCE: number;
         age: number;
         constructor(arg0: $CatJSBuilder, arg1: $EntityType_<$Cat>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $BlazeEntityJS extends $Blaze implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -1906,39 +1916,40 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(arg0: $BlazeJSBuilder, arg1: $EntityType_<$Blaze>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $PiglinEntityJS extends $Piglin implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -2109,39 +2120,40 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(arg0: $PiglinJSBuilder, arg1: $EntityType_<$Piglin>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $EnderManEntityJS extends $EnderMan implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -2307,39 +2319,40 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(arg0: $EnderManJSBuilder, arg1: $EntityType_<$EnderMan>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $AllayEntityJS extends $Allay implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -2509,39 +2522,40 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(arg0: $AllayJSBuilder, arg1: $EntityType_<$Allay>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $EvokerEntityJS extends $Evoker implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -2711,39 +2725,40 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(arg0: $EvokerJSBuilder, arg1: $EntityType_<$Evoker>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $GhastEntityJS extends $Ghast implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -2908,40 +2923,41 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(arg0: $GhastJSBuilder, arg1: $EntityType_<$Ghast>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $CowEntityJS extends $Cow implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        isFoodPredicate(arg0: $ItemStack_): boolean;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        isFoodPredicate(arg0: $ItemStack_): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -3112,39 +3128,40 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         static BASE_SAFE_FALL_DISTANCE: number;
         age: number;
         constructor(arg0: $CowJSBuilder, arg1: $EntityType_<$Cow>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $BatEntityJS extends $Bat implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -3313,39 +3330,40 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(arg0: $BatJSBuilder, arg1: $EntityType_<$Bat>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $CamelEntityJS extends $Camel implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        isFoodPredicate(arg0: $ItemStack_): boolean;
+        entityName(): string;
         getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        isFoodPredicate(arg0: $ItemStack_): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         sitAnimationState: $AnimationState;
@@ -3541,39 +3559,40 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         static BASE_SAFE_FALL_DISTANCE: number;
         age: number;
         constructor(arg0: $CamelJSBuilder, arg1: $EntityType_<$Camel>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $CreeperEntityJS extends $Creeper implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -3739,42 +3758,43 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(arg0: $CreeperJSBuilder, arg1: $EntityType_<$Creeper>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $WolfEntityJS extends $Wolf implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
+        entityName(): string;
+        canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
         tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        tamableFoodPredicate(arg0: $ItemStack_): boolean;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
         isFoodPredicate(arg0: $ItemStack_): boolean;
         tamableFood(arg0: $ItemStack_): boolean;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
-        canJump(): boolean;
-        tamableFoodPredicate(arg0: $ItemStack_): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $Holder<$WolfVariant>;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -3948,40 +3968,41 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         static BASE_SAFE_FALL_DISTANCE: number;
         age: number;
         constructor(arg0: $WolfJSBuilder, arg1: $EntityType_<$Wolf>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $PandaEntityJS extends $Panda implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        isFoodPredicate(arg0: $ItemStack_): boolean;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        isFoodPredicate(arg0: $ItemStack_): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -4159,39 +4180,40 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         static BASE_SAFE_FALL_DISTANCE: number;
         age: number;
         constructor(arg0: $PandaJSBuilder, arg1: $EntityType_<$Panda>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $SkeletonEntityJS extends $Skeleton implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -4360,40 +4382,41 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(arg0: $SkeletonJSBuilder, arg1: $EntityType_<$Skeleton>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $ChickenEntityJS extends $Chicken implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        isFoodPredicate(arg0: $ItemStack_): boolean;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        isFoodPredicate(arg0: $ItemStack_): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -4570,39 +4593,40 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         static BASE_SAFE_FALL_DISTANCE: number;
         age: number;
         constructor(arg0: $ChickenJSBuilder, arg1: $EntityType_<$Chicken>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $GuardianEntityJS extends $Guardian implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -4770,39 +4794,40 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(arg0: $GuardianJSBuilder, arg1: $EntityType_<$Guardian>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $IronGolemEntityJS extends $IronGolem implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -4969,39 +4994,40 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(arg0: $IronGolemJSBuilder, arg1: $EntityType_<$IronGolem>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $WitherEntityJS extends $WitherBoss implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -5167,39 +5193,40 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(arg0: $WitherJSBuilder, arg1: $EntityType_<$WitherBoss>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $DonkeyEntityJS extends $Donkey implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        isFoodPredicate(arg0: $ItemStack_): boolean;
+        entityName(): string;
         getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        isFoodPredicate(arg0: $ItemStack_): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -5385,40 +5412,41 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         static BASE_SAFE_FALL_DISTANCE: number;
         age: number;
         constructor(arg0: $DonkeyJSBuilder, arg1: $EntityType_<$Donkey>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $AxolotlEntityJS extends $Axolotl implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        isFoodPredicate(arg0: $ItemStack_): boolean;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        isFoodPredicate(arg0: $ItemStack_): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $Axolotl$Variant;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -5595,39 +5623,40 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         static BASE_SAFE_FALL_DISTANCE: number;
         age: number;
         constructor(arg0: $AxolotlJSBuilder, arg1: $EntityType_<$Axolotl>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $HorseEntityJS extends $Horse implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        isFoodPredicate(arg0: $ItemStack_): boolean;
+        entityName(): string;
         getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        isFoodPredicate(arg0: $ItemStack_): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $Variant;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -5812,39 +5841,40 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         static BASE_SAFE_FALL_DISTANCE: number;
         age: number;
         constructor(arg0: $HorseJSBuilder, arg1: $EntityType_<$Horse>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;
     }
     export class $CaveSpiderEntityJS extends $CaveSpider implements $IAnimatableJS {
-        entityName(): string;
         jump(): void;
-        getBuilder(): $BaseLivingEntityBuilder<never>;
-        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
-        onJump(): void;
-        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
-        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        entityName(): string;
         canJump(): boolean;
+        getAnimatableInstanceCache(): $AnimatableInstanceCache;
+        tickPart(arg0: string, arg1: number, arg2: number, arg3: number): void;
+        getBuilder(): $BaseLivingEntityBuilder<never>;
+        onJump(): void;
+        ableToJump(): boolean;
+        shouldJump(): boolean;
+        canFireProjectileWeaponPredicate(arg0: $ProjectileWeaponItem): boolean;
+        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
+        setThisJumping(arg0: boolean): void;
         /**
          * Calls a triggerable animation to be played anywhere.
          */
         triggerAnimation(arg0: string, arg1: string): void;
-        setThisJumping(arg0: boolean): void;
-        ableToJump(): boolean;
-        shouldJump(): boolean;
-        canFireProjectileWeapons(arg0: $ProjectileWeaponItem): boolean;
-        getTick(arg0: $Object): number;
-        getTypeId(): $ResourceKey<$EntityType<never>>;
         registerControllers(arg0: $AnimatableManager$ControllerRegistrar_): void;
-        getBoneResetTime(): number;
+        getTypeId(): $ResourceKey<$EntityType<never>>;
+        getTick(arg0: $Object): number;
         animatableCacheOverride(): $AnimatableInstanceCache;
+        getBoneResetTime(): number;
         shouldPlayAnimsWhileGamePaused(): boolean;
-        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        triggerAnim(arg0: string, arg1: string): void;
         setAnimData<D>(arg0: $SerializableDataTicket<D>, arg1: D): void;
         stopTriggeredAnim(arg0: string, arg1: string): void;
-        triggerAnim(arg0: string, arg1: string): void;
+        getAnimData<D>(arg0: $SerializableDataTicket<D>): D;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -6010,8 +6040,8 @@ declare module "@package/net/liopyu/entityjs/entities/living/vanilla" {
         removeStingerTime: number;
         static BASE_SAFE_FALL_DISTANCE: number;
         constructor(arg0: $CaveSpiderJSBuilder, arg1: $EntityType_<$CaveSpider>, arg2: $Level_);
-        get builder(): $BaseLivingEntityBuilder<never>;
         get animatableInstanceCache(): $AnimatableInstanceCache;
+        get builder(): $BaseLivingEntityBuilder<never>;
         set thisJumping(value: boolean);
         get typeId(): $ResourceKey<$EntityType<never>>;
         get boneResetTime(): number;

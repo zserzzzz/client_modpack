@@ -54,8 +54,8 @@ declare module "@package/com/simibubi/create/foundation/gui/menu" {
     export class $IClearableMenu {
     }
     export interface $IClearableMenu {
-        sendClearPacket(): void;
         clearContents(): void;
+        sendClearPacket(): void;
     }
     /**
      * Values that may be interpreted as {@link $IClearableMenu}.
@@ -127,9 +127,9 @@ declare module "@package/com/simibubi/create/foundation/gui/menu" {
      */
     export type $ClearMenuPacket_ = "instance";
     export class $AbstractSimiContainerScreen<T extends $AbstractContainerMenu> extends $AbstractContainerScreen<T> {
-        renderPlayerInventory(arg0: $GuiGraphics, arg1: number, arg2: number): void;
-        getLeftOfCentered(arg0: number): number;
         getExtraAreas(): $List<$Rect2i>;
+        getLeftOfCentered(arg0: number): number;
+        renderPlayerInventory(arg0: $GuiGraphics, arg1: number, arg2: number): void;
         leftPos: number;
         static MENU_BACKGROUND: $ResourceLocation;
         minecraft: $Minecraft;

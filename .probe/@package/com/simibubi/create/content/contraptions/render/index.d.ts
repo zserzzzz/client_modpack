@@ -34,19 +34,19 @@ declare module "@package/com/simibubi/create/content/contraptions/render" {
     export class $ContraptionEntityRenderer$ThreadLocalObjects {
     }
     export class $ContraptionMatrices {
-        static transform(arg0: $PoseStack, arg1: $PoseStack): void;
         getModel(): $PoseStack;
+        static transform(arg0: $PoseStack, arg1: $PoseStack): void;
         static clearStack(arg0: $PoseStack): void;
+        getLight(): $Matrix4f;
         getWorld(): $Matrix4f;
         getViewProjection(): $PoseStack;
-        getLight(): $Matrix4f;
         getModelViewProjection(): $PoseStack;
         static translateToEntity(arg0: $Matrix4f, arg1: $Entity, arg2: number): void;
         constructor();
         get model(): $PoseStack;
+        get light(): $Matrix4f;
         get world(): $Matrix4f;
         get viewProjection(): $PoseStack;
-        get light(): $Matrix4f;
         get modelViewProjection(): $PoseStack;
     }
     export class $OrientedContraptionEntityRenderer extends $ContraptionEntityRenderer<$OrientedContraptionEntity> {
@@ -70,9 +70,9 @@ declare module "@package/com/simibubi/create/content/contraptions/render" {
     export type $ClientContraption$RenderedBlocks_ = { positions?: $Iterable_<$BlockPos>, lookup?: $Function_<$BlockPos, $BlockState>,  } | [positions?: $Iterable_<$BlockPos>, lookup?: $Function_<$BlockPos, $BlockState>, ];
     export class $ContraptionEntityRenderer<C extends $AbstractContraptionEntity> extends $EntityRenderer<C> {
         static getBuffer(arg0: $Contraption, arg1: $VirtualRenderWorld, arg2: $RenderType): $SuperByteBuffer;
+        shouldRender(arg0: C, arg1: $Frustum, arg2: number, arg3: number, arg4: number): boolean;
         render(arg0: C, arg1: number, arg2: number, arg3: $PoseStack, arg4: $MultiBufferSource_, arg5: number): void;
         getTextureLocation(arg0: C): $ResourceLocation;
-        shouldRender(arg0: C, arg1: $Frustum, arg2: number, arg3: number, arg4: number): boolean;
         shadowRadius: number;
         static LEASH_RENDER_STEPS: number;
         entityRenderDispatcher: $EntityRenderDispatcher;
@@ -82,31 +82,31 @@ declare module "@package/com/simibubi/create/content/contraptions/render" {
         constructor(arg0: $EntityRendererProvider$Context);
     }
     export class $ContraptionVisual<E extends $AbstractContraptionEntity> extends $AbstractEntityVisual<E> implements $DynamicVisual, $TickableVisual, $ShaderLightVisual {
-        planTick(): $Plan<$TickableVisual$Context>;
         planFrame(): $Plan<$DynamicVisual$Context>;
+        planTick(): $Plan<$TickableVisual$Context>;
         setSectionCollector(arg0: $SectionTrackedVisual$SectionCollector_): void;
         constructor(arg0: $VisualizationContext, arg1: E, arg2: number);
         set sectionCollector(value: $SectionTrackedVisual$SectionCollector_);
     }
     export class $ClientContraption {
         getBlockEntity(arg0: $BlockPos_): $BlockEntity;
-        invalidateChildren(): void;
+        invalidateStructure(): void;
         resetRenderLevel(): void;
-        getRenderLevel(): $VirtualRenderWorld;
+        invalidateChildren(): void;
+        getAndAdjustShouldRenderBlockEntities(): $BitSet;
         readBlockEntity(arg0: $Level_, arg1: $StructureTemplate$StructureBlockInfo_, arg2: boolean): $BlockEntity;
+        getRenderLevel(): $VirtualRenderWorld;
         structureVersion(): number;
-        getRenderedBlocks(): $ClientContraption$RenderedBlocks;
         childrenVersion(): number;
         getMatrices(): $ContraptionMatrices;
-        getAndAdjustShouldRenderBlockEntities(): $BitSet;
-        invalidateStructure(): void;
+        getRenderedBlocks(): $ClientContraption$RenderedBlocks;
         shouldRenderBlockEntities: $BitSet;
         renderedBlockEntityView: $List<$BlockEntity>;
         scratchErroredBlockEntities: $BitSet;
         constructor(arg0: $Contraption);
-        get renderLevel(): $VirtualRenderWorld;
-        get renderedBlocks(): $ClientContraption$RenderedBlocks;
-        get matrices(): $ContraptionMatrices;
         get andAdjustShouldRenderBlockEntities(): $BitSet;
+        get renderLevel(): $VirtualRenderWorld;
+        get matrices(): $ContraptionMatrices;
+        get renderedBlocks(): $ClientContraption$RenderedBlocks;
     }
 }

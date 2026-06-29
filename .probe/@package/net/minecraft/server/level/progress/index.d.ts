@@ -29,26 +29,26 @@ declare module "@package/net/minecraft/server/level/progress" {
         updateSpawnPos(center: $ChunkPos): void;
     }
     export class $StoringChunkProgressListener implements $ChunkProgressListener {
-        static createFromGameruleRadius(radius: number): $StoringChunkProgressListener;
         start(): void;
         stop(): void;
         static create(radius: number): $StoringChunkProgressListener;
+        static createFromGameruleRadius(radius: number): $StoringChunkProgressListener;
         getProgress(): number;
         getStatus(x: number, z: number): $ChunkStatus;
-        onStatusChange(chunkPos: $ChunkPos, chunkStatus: $ChunkStatus_ | null): void;
-        updateSpawnPos(center: $ChunkPos): void;
         getDiameter(): number;
         getFullDiameter(): number;
+        onStatusChange(chunkPos: $ChunkPos, chunkStatus: $ChunkStatus_ | null): void;
+        updateSpawnPos(center: $ChunkPos): void;
         static createCompleted(): $StoringChunkProgressListener;
         get progress(): number;
         get diameter(): number;
         get fullDiameter(): number;
     }
     export class $LoggerChunkProgressListener implements $ChunkProgressListener {
-        static createFromGameruleRadius(radius: number): $LoggerChunkProgressListener;
         start(): void;
         stop(): void;
         static create(radius: number): $LoggerChunkProgressListener;
+        static createFromGameruleRadius(radius: number): $LoggerChunkProgressListener;
         getProgress(): number;
         onStatusChange(chunkPos: $ChunkPos, chunkStatus: $ChunkStatus_ | null): void;
         updateSpawnPos(center: $ChunkPos): void;

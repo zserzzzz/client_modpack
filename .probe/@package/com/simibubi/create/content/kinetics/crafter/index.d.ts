@@ -38,10 +38,10 @@ import { $RegisterCapabilitiesEvent } from "@package/net/neoforged/neoforge/capa
 
 declare module "@package/com/simibubi/create/content/kinetics/crafter" {
     export class $RecipeGridHandler {
-        static getTargetingCrafter(arg0: $MechanicalCrafterBlockEntity): $MechanicalCrafterBlockEntity;
         static getAllCraftersOfChain(arg0: $MechanicalCrafterBlockEntity): $List<$MechanicalCrafterBlockEntity>;
-        static getAllCraftersOfChainIf(arg0: $MechanicalCrafterBlockEntity, arg1: $Predicate_<$MechanicalCrafterBlockEntity>): $List<$MechanicalCrafterBlockEntity>;
+        static getTargetingCrafter(arg0: $MechanicalCrafterBlockEntity): $MechanicalCrafterBlockEntity;
         static getAllCraftersOfChainIf(arg0: $MechanicalCrafterBlockEntity, arg1: $Predicate_<$MechanicalCrafterBlockEntity>, arg2: boolean): $List<$MechanicalCrafterBlockEntity>;
+        static getAllCraftersOfChainIf(arg0: $MechanicalCrafterBlockEntity, arg1: $Predicate_<$MechanicalCrafterBlockEntity>): $List<$MechanicalCrafterBlockEntity>;
         static getPrecedingCrafters(arg0: $MechanicalCrafterBlockEntity): $List<$MechanicalCrafterBlockEntity>;
         static tryToApplyRecipe(arg0: $Level_, arg1: $RecipeGridHandler$GroupedItems): $ItemStack;
         static isRecipeAllowed(arg0: $RecipeHolder_<$CraftingRecipe>, arg1: $CraftingInput): boolean;
@@ -51,18 +51,18 @@ declare module "@package/com/simibubi/create/content/kinetics/crafter" {
         getInput(): $ConnectedInputHandler$ConnectedInput;
         transform(arg0: $BlockEntity, arg1: $StructureTransform): void;
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
+        dropItem(arg0: $Vec3_, arg1: $ItemStack_): void;
         blockChanged(): void;
         static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
         getInventory(): $MechanicalCrafterBlockEntity$Inventory;
-        dropItem(arg0: $Vec3_, arg1: $ItemStack_): void;
-        getTargetDirection(): $Direction;
-        ejectWholeGrid(): void;
-        eject(): void;
         tryInsert(): void;
-        connectivityChanged(): void;
-        checkCompletedRecipe(arg0: boolean): void;
+        ejectWholeGrid(): void;
         craftingItemPresent(): boolean;
         craftingItemOrCoverPresent(): boolean;
+        checkCompletedRecipe(arg0: boolean): void;
+        connectivityChanged(): void;
+        eject(): void;
+        getTargetDirection(): $Direction;
         getTargetFace(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_): $BlockFace;
         getCountDownSpeed(): number;
         setScriptedResult(arg0: $ItemStack_): void;
@@ -89,9 +89,9 @@ declare module "@package/com/simibubi/create/content/kinetics/crafter" {
     export class $ConnectedInputHandler$ConnectedInput {
         write(arg0: $CompoundTag_): void;
         read(arg0: $CompoundTag_): void;
-        getInventories(arg0: $Level_, arg1: $BlockPos_): $List<$MechanicalCrafterBlockEntity$Inventory>;
-        getItemHandler(arg0: $Level_, arg1: $BlockPos_): $IItemHandler;
         attachTo(arg0: $BlockPos_, arg1: $BlockPos_): void;
+        getItemHandler(arg0: $Level_, arg1: $BlockPos_): $IItemHandler;
+        getInventories(arg0: $Level_, arg1: $BlockPos_): $List<$MechanicalCrafterBlockEntity$Inventory>;
         constructor();
     }
     export class $MechanicalCrafterBlockEntity$Phase extends $Enum<$MechanicalCrafterBlockEntity$Phase> {
@@ -109,8 +109,8 @@ declare module "@package/com/simibubi/create/content/kinetics/crafter" {
     export class $ConnectedInputHandler {
         static shouldConnect(arg0: $Level_, arg1: $BlockPos_, arg2: $Direction_, arg3: $Direction_): boolean;
         static toggleConnection(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockPos_): void;
-        static connectControllers(arg0: $Level_, arg1: $MechanicalCrafterBlockEntity, arg2: $MechanicalCrafterBlockEntity): void;
         static initAndAddAll(arg0: $Level_, arg1: $MechanicalCrafterBlockEntity, arg2: $Collection_<$BlockPos_>): void;
+        static connectControllers(arg0: $Level_, arg1: $MechanicalCrafterBlockEntity, arg2: $MechanicalCrafterBlockEntity): void;
         constructor();
     }
     export class $MechanicalCrafterRenderer extends $SafeBlockEntityRenderer<$MechanicalCrafterBlockEntity> {
@@ -121,8 +121,8 @@ declare module "@package/com/simibubi/create/content/kinetics/crafter" {
     export class $RecipeGridHandler$GroupedItems {
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider): void;
         static read(arg0: $CompoundTag_, arg1: $HolderLookup$Provider): $RecipeGridHandler$GroupedItems;
-        mergeOnto(arg0: $RecipeGridHandler$GroupedItems, arg1: $Pointing_): void;
         calcStats(): void;
+        mergeOnto(arg0: $RecipeGridHandler$GroupedItems, arg1: $Pointing_): void;
         onlyEmptyItems(): boolean;
         constructor();
         constructor(arg0: $ItemStack_);
@@ -151,20 +151,20 @@ declare module "@package/com/simibubi/create/content/kinetics/crafter" {
     }
     export class $MechanicalCrafterBlock extends $HorizontalKineticBlock implements $IBE<$MechanicalCrafterBlockEntity>, $ICogWheel {
         static isValidTarget(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_): boolean;
-        getBlockEntityType(): $BlockEntityType<$MechanicalCrafterBlockEntity>;
         getBlockEntityClass(): $Class<$MechanicalCrafterBlockEntity>;
-        static getTargetDirection(arg0: $BlockState_): $Direction;
         static pointingFromFacing(arg0: $Direction_, arg1: $Direction_): $Pointing;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$MechanicalCrafterBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$MechanicalCrafterBlockEntity>;
+        static getTargetDirection(arg0: $BlockState_): $Direction;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$MechanicalCrafterBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($MechanicalCrafterBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$MechanicalCrafterBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $MechanicalCrafterBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        isDedicatedCogWheel(): boolean;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$MechanicalCrafterBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($MechanicalCrafterBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$MechanicalCrafterBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         isSmallCog(): boolean;
         isLargeCog(): boolean;
+        isDedicatedCogWheel(): boolean;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -196,10 +196,10 @@ declare module "@package/com/simibubi/create/content/kinetics/crafter" {
         static POINTING: $EnumProperty<$Pointing>;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$MechanicalCrafterBlockEntity>;
         get blockEntityClass(): $Class<$MechanicalCrafterBlockEntity>;
-        get dedicatedCogWheel(): boolean;
+        get blockEntityType(): $BlockEntityType<$MechanicalCrafterBlockEntity>;
         get smallCog(): boolean;
         get largeCog(): boolean;
+        get dedicatedCogWheel(): boolean;
     }
 }

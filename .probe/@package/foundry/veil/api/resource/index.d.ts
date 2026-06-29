@@ -20,16 +20,16 @@ declare module "@package/foundry/veil/api/resource" {
         get resourceManager(): $VeilResourceManager;
     }
     export class $VeilResourceInfo extends $Record {
-        hidden(): boolean;
-        getResourceOrThrow(arg0: $VeilResourceManager): $Resource;
         fileName(): string;
         getResource(arg0: $VeilResourceManager): ($Resource) | undefined;
         isStatic(): boolean;
         location(): $ResourceLocation;
         open(arg0: $VeilResourceManager): $InputStream;
         filePath(): $Path;
-        packType(): $PackType;
+        getResourceOrThrow(arg0: $VeilResourceManager): $Resource;
+        hidden(): boolean;
         openAsReader(arg0: $VeilResourceManager): $BufferedReader;
+        packType(): $PackType;
         modResourcePath(): $Path;
         constructor(packType: $PackType_, location: $ResourceLocation_, filePath: $Path_, modResourcePath: $Path_, hidden: boolean);
         get static(): boolean;
@@ -37,16 +37,16 @@ declare module "@package/foundry/veil/api/resource" {
     /**
      * Values that may be interpreted as {@link $VeilResourceInfo}.
      */
-    export type $VeilResourceInfo_ = { location?: $ResourceLocation_, filePath?: $Path_, packType?: $PackType_, modResourcePath?: $Path_, hidden?: boolean,  } | [location?: $ResourceLocation_, filePath?: $Path_, packType?: $PackType_, modResourcePath?: $Path_, hidden?: boolean, ];
+    export type $VeilResourceInfo_ = { modResourcePath?: $Path_, hidden?: boolean, location?: $ResourceLocation_, filePath?: $Path_, packType?: $PackType_,  } | [modResourcePath?: $Path_, hidden?: boolean, location?: $ResourceLocation_, filePath?: $Path_, packType?: $PackType_, ];
     export class $VeilResourceAction<T extends $VeilResource<never>> {
     }
     export interface $VeilResourceAction<T extends $VeilResource<never>> {
-        getDescription(): $Component;
         getName(): $Component;
+        getDescription(): $Component;
         getIcon(): $OptionalInt;
         perform(arg0: $VeilEditorEnvironment, arg1: T): void;
-        get description(): $Component;
         get name(): $Component;
+        get description(): $Component;
         get icon(): $OptionalInt;
     }
     export class $VeilResource<T extends $VeilResource<never>> {
@@ -54,12 +54,12 @@ declare module "@package/foundry/veil/api/resource" {
     export interface $VeilResource<T extends $VeilResource<never>> {
         getActions(): $List<$VeilResourceAction<T>>;
         render(arg0: boolean, arg1: boolean): void;
-        canHotReload(): boolean;
+        resourceInfo(): $VeilResourceInfo;
+        hotReload(arg0: $VeilResourceManager): void;
         onFileSystemChange(arg0: $VeilResourceManager, arg1: $WatchEvent<$Path_>): $CompletableFuture<never>;
         copyToResources(): void;
         getIconCode(): number;
-        resourceInfo(): $VeilResourceInfo;
-        hotReload(arg0: $VeilResourceManager): void;
+        canHotReload(): boolean;
         get actions(): $List<$VeilResourceAction<T>>;
         get iconCode(): number;
     }
@@ -67,12 +67,12 @@ declare module "@package/foundry/veil/api/resource" {
         static get(): $VeilResourceManager;
     }
     export interface $VeilResourceManager {
-        clientResources(): $ResourceManager;
         resources(arg0: $VeilResourceInfo_): $ResourceManager;
-        getResourceMetadata(arg0: string, arg1: string): $ResourceMetadata;
-        getResourceMetadata(arg0: $ResourceLocation_): $ResourceMetadata;
+        clientResources(): $ResourceManager;
         getVeilResource(arg0: $ResourceLocation_): $VeilResource<never>;
         getVeilResource(arg0: string, arg1: string): $VeilResource<never>;
         serverResources(): $ResourceManager;
+        getResourceMetadata(arg0: string, arg1: string): $ResourceMetadata;
+        getResourceMetadata(arg0: $ResourceLocation_): $ResourceMetadata;
     }
 }

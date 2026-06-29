@@ -92,6 +92,7 @@ declare module "@package/net/minecraft/network/codec" {
      */
     export type $StreamCodec$CodecOperation_<B, S, T> = ((arg0: $StreamCodec<B, S>) => $StreamCodec<B, T>);
     export class $ByteBufCodecs {
+        static either<B extends $ByteBuf, L, R>(leftCodec: $StreamCodec<B, L>, rightCodec: $StreamCodec<B, R>): $StreamCodec<B, $Either<L, R>>;
         static map<B extends $ByteBuf, K, V, M extends $Map<K, V>>(factory: $IntFunction_<M>, keyCodec: $StreamCodec<B, K>, valueCodec: $StreamCodec<B, V>): $StreamCodec<B, M>;
         static map<B extends $ByteBuf, K, V, M extends $Map<K, V>>(factory: $IntFunction_<M>, keyCodec: $StreamCodec<B, K>, valueCodec: $StreamCodec<B, V>, maxSize: number): $StreamCodec<B, M>;
         static list<B extends $ByteBuf, V>(maxSize: number): $StreamCodec$CodecOperation<B, V, $List<V>>;
@@ -99,26 +100,25 @@ declare module "@package/net/minecraft/network/codec" {
         static holder<T>(registryKey: $ResourceKey_<$Registry<T>>, codec: $StreamCodec<$RegistryFriendlyByteBuf, T>): $StreamCodec<$RegistryFriendlyByteBuf, $Holder<T>>;
         static optional<B extends $ByteBuf, V>(codec: $StreamCodec<B, V>): $StreamCodec<B, (V) | undefined>;
         static byteArray(maxSize: number): $StreamCodec<$ByteBuf, number[]>;
-        static collection<B extends $ByteBuf, V, C extends $Collection<V>>(factory: $IntFunction_<C>): $StreamCodec$CodecOperation<B, V, C>;
-        static collection<B extends $ByteBuf, V, C extends $Collection<V>>(factory: $IntFunction_<C>, codec: $StreamCodec<B, V>): $StreamCodec<B, C>;
         static collection<B extends $ByteBuf, V, C extends $Collection<V>>(factory: $IntFunction_<C>, codec: $StreamCodec<B, V>, maxSize: number): $StreamCodec<B, C>;
+        static collection<B extends $ByteBuf, V, C extends $Collection<V>>(factory: $IntFunction_<C>, codec: $StreamCodec<B, V>): $StreamCodec<B, C>;
+        static collection<B extends $ByteBuf, V, C extends $Collection<V>>(factory: $IntFunction_<C>): $StreamCodec$CodecOperation<B, V, C>;
         static readCount(buffer: $ByteBuf, maxSize: number): number;
-        static registry<T>(registryKey: $ResourceKey_<$Registry<T>>): $StreamCodec<$RegistryFriendlyByteBuf, T>;
         static fromCodecWithRegistriesTrusted<T>(codec: $Codec<T>): $StreamCodec<$RegistryFriendlyByteBuf, T>;
-        static idMapper<T>(idMap: $IdMap<T>): $StreamCodec<$ByteBuf, T>;
-        static idMapper<T>(idLookup: $IntFunction_<T>, idGetter: $ToIntFunction_<T>): $StreamCodec<$ByteBuf, T>;
-        static writeCount(buffer: $ByteBuf, count: number, maxSize: number): void;
-        static stringUtf8(maxSize: number): $StreamCodec<$ByteBuf, string>;
-        static holderSet<T>(registryKey: $ResourceKey_<$Registry<T>>): $StreamCodec<$RegistryFriendlyByteBuf, $HolderSet<T>>;
-        static fromCodec<T>(codec: $Codec<T>): $StreamCodec<$ByteBuf, T>;
-        static fromCodec<T>(codec: $Codec<T>, accounterSupplier: $Supplier_<$NbtAccounter>): $StreamCodec<$ByteBuf, T>;
-        static tagCodec(accounterSupplier: $Supplier_<$NbtAccounter>): $StreamCodec<$ByteBuf, $Tag>;
+        static registry<T>(registryKey: $ResourceKey_<$Registry<T>>): $StreamCodec<$RegistryFriendlyByteBuf, T>;
         static fromCodecWithRegistries<T>(codec: $Codec<T>): $StreamCodec<$RegistryFriendlyByteBuf, T>;
         static fromCodecWithRegistries<T>(codec: $Codec<T>, accounterSupplier: $Supplier_<$NbtAccounter>): $StreamCodec<$RegistryFriendlyByteBuf, T>;
-        static either<B extends $ByteBuf, L, R>(leftCodec: $StreamCodec<B, L>, rightCodec: $StreamCodec<B, R>): $StreamCodec<B, $Either<L, R>>;
         static holderRegistry<T>(registryKey: $ResourceKey_<$Registry<T>>): $StreamCodec<$RegistryFriendlyByteBuf, $Holder<T>>;
         static compoundTagCodec(accounterSupplier: $Supplier_<$NbtAccounter>): $StreamCodec<$ByteBuf, $CompoundTag>;
         static fromCodecTrusted<T>(codec: $Codec<T>): $StreamCodec<$ByteBuf, T>;
+        static tagCodec(accounterSupplier: $Supplier_<$NbtAccounter>): $StreamCodec<$ByteBuf, $Tag>;
+        static writeCount(buffer: $ByteBuf, count: number, maxSize: number): void;
+        static holderSet<T>(registryKey: $ResourceKey_<$Registry<T>>): $StreamCodec<$RegistryFriendlyByteBuf, $HolderSet<T>>;
+        static fromCodec<T>(codec: $Codec<T>): $StreamCodec<$ByteBuf, T>;
+        static fromCodec<T>(codec: $Codec<T>, accounterSupplier: $Supplier_<$NbtAccounter>): $StreamCodec<$ByteBuf, T>;
+        static idMapper<T>(idLookup: $IntFunction_<T>, idGetter: $ToIntFunction_<T>): $StreamCodec<$ByteBuf, T>;
+        static idMapper<T>(idMap: $IdMap<T>): $StreamCodec<$ByteBuf, T>;
+        static stringUtf8(maxSize: number): $StreamCodec<$ByteBuf, string>;
         static FLOAT: $StreamCodec<$ByteBuf, number>;
         static QUATERNIONF: $StreamCodec<$ByteBuf, $Quaternionf>;
         static BYTE_ARRAY: $StreamCodec<$ByteBuf, number[]>;

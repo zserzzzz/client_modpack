@@ -59,35 +59,35 @@ declare module "@package/com/simibubi/create/content/fluids/tank" {
         tick(arg0: $MovementContext): void;
         mustTickWhileDisabled(): boolean;
         isActive(arg0: $MovementContext): boolean;
-        stopMoving(arg0: $MovementContext): void;
         /**
          * @deprecated
          */
         dropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
-        getActiveAreaOffset(arg0: $MovementContext): $Vec3;
-        renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
         onDisabledByControls(arg0: $MovementContext): void;
-        collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
-        onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
-        cancelStall(arg0: $MovementContext): void;
+        renderInContraption(arg0: $MovementContext, arg1: $VirtualRenderWorld, arg2: $ContraptionMatrices, arg3: $MultiBufferSource_): void;
+        getActiveAreaOffset(arg0: $MovementContext): $Vec3;
+        disableBlockEntityRendering(): boolean;
         startMoving(arg0: $MovementContext): void;
         visitNewPosition(arg0: $MovementContext, arg1: $BlockPos_): void;
-        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
         canBeDisabledVia(arg0: $MovementContext): $ItemStack;
+        collectOrDropItem(arg0: $MovementContext, arg1: $ItemStack_): void;
+        onSpeedChanged(arg0: $MovementContext, arg1: $Vec3_, arg2: $Vec3_): void;
         writeExtraData(arg0: $MovementContext): void;
-        disableBlockEntityRendering(): boolean;
+        createVisual(arg0: $VisualizationContext, arg1: $VirtualRenderWorld, arg2: $MovementContext): $ActorVisual;
+        cancelStall(arg0: $MovementContext): void;
+        stopMoving(arg0: $MovementContext): void;
         constructor();
     }
     export class $FluidTankModel$CullData {
     }
     export class $BoilerData$BoilerFluidHandler implements $IFluidHandler {
-        getTanks(): number;
-        drain(arg0: $FluidStack_, arg1: $IFluidHandler$FluidAction_): $FluidStack;
         drain(arg0: number, arg1: $IFluidHandler$FluidAction_): $FluidStack;
+        drain(arg0: $FluidStack_, arg1: $IFluidHandler$FluidAction_): $FluidStack;
         fill(arg0: $FluidStack_, arg1: $IFluidHandler$FluidAction_): number;
-        getFluidInTank(arg0: number): $FluidStack;
         getTankCapacity(arg0: number): number;
         isFluidValid(arg0: number, arg1: $FluidStack_): boolean;
+        getFluidInTank(arg0: number): $FluidStack;
+        getTanks(): number;
         constructor(arg0: $BoilerData);
         get tanks(): number;
     }
@@ -96,31 +96,31 @@ declare module "@package/com/simibubi/create/content/fluids/tank" {
         static creative(arg0: $BakedModel): $FluidTankModel;
     }
     export class $BoilerData {
-        createHandler(): $BoilerData$BoilerFluidHandler;
-        getHeatLevelTextComponent(): $MutableComponent;
         clear(): void;
         write(): $CompoundTag;
         read(arg0: $CompoundTag_, arg1: number): void;
         isActive(): boolean;
         tick(arg0: $FluidTankBlockEntity): void;
         evaluate(arg0: $FluidTankBlockEntity): boolean;
+        createHandler(): $BoilerData$BoilerFluidHandler;
         isPassive(): boolean;
         isPassive(arg0: number): boolean;
-        checkPipeOrganAdvancement(arg0: $FluidTankBlockEntity): void;
-        updateTemperature(arg0: $FluidTankBlockEntity): boolean;
-        queueSoundOnSide(arg0: $BlockPos_, arg1: $Direction_): void;
         addToGoggleTooltip(arg0: $List_<$Component_>, arg1: boolean, arg2: number): boolean;
-        updateOcclusion(arg0: $FluidTankBlockEntity): void;
+        updateTemperature(arg0: $FluidTankBlockEntity): boolean;
+        getHeatLevelTextComponent(): $MutableComponent;
+        checkPipeOrganAdvancement(arg0: $FluidTankBlockEntity): void;
         getTheoreticalHeatLevel(): number;
         getEngineEfficiency(arg0: number): number;
-        getWaterComponent(arg0: boolean, arg1: boolean, ...arg2: $ChatFormatting_[]): $MutableComponent;
-        getSizeComponent(arg0: boolean, arg1: boolean, ...arg2: $ChatFormatting_[]): $MutableComponent;
         getHeatComponent(arg0: boolean, arg1: boolean, ...arg2: $ChatFormatting_[]): $MutableComponent;
+        getSizeComponent(arg0: boolean, arg1: boolean, ...arg2: $ChatFormatting_[]): $MutableComponent;
         calcMinMaxForSize(arg0: number): void;
-        getMaxHeatLevelForBoilerSize(arg0: number): number;
-        getMaxHeatLevelForWaterSupply(): number;
-        handler$glf000$sable$forceUpdateHeatIfDisconnected(arg0: $FluidTankBlockEntity, arg1: $CallbackInfo): void;
+        getWaterComponent(arg0: boolean, arg1: boolean, ...arg2: $ChatFormatting_[]): $MutableComponent;
+        updateOcclusion(arg0: $FluidTankBlockEntity): void;
         wrapOperation$glf000$sable$subLevelHeating(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_, arg3: $Operation_<any>): number;
+        handler$glf000$sable$forceUpdateHeatIfDisconnected(arg0: $FluidTankBlockEntity, arg1: $CallbackInfo): void;
+        getMaxHeatLevelForWaterSupply(): number;
+        getMaxHeatLevelForBoilerSize(arg0: number): number;
+        queueSoundOnSide(arg0: $BlockPos_, arg1: $Direction_): void;
         attachedEngines: number;
         gauge: $LerpedFloat;
         needsHeatLevelUpdate: boolean;
@@ -130,8 +130,8 @@ declare module "@package/com/simibubi/create/content/fluids/tank" {
         occludedDirections: boolean[];
         waterSupply: number;
         constructor();
-        get heatLevelTextComponent(): $MutableComponent;
         get active(): boolean;
+        get heatLevelTextComponent(): $MutableComponent;
         get theoreticalHeatLevel(): number;
         get maxHeatLevelForWaterSupply(): number;
     }
@@ -177,47 +177,47 @@ declare module "@package/com/simibubi/create/content/fluids/tank" {
         set containedFluid(value: $FluidStack_);
     }
     export class $FluidTankBlockEntity extends $SmartBlockEntity implements $IHaveGoggleInformation, $IMultiBlockEntityContainer$Fluid {
-        getHeight(): number;
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
+        setController(arg0: $BlockPos_): void;
         static getMaxSize(): number;
         getWidth(): number;
         getMaxLength(arg0: $Direction$Axis_, arg1: number): number;
-        getTank(arg0: number): $IFluidTank;
-        hasTank(): boolean;
-        updateBoilerTemperature(): void;
         getController(): $BlockPos;
         static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
-        getTankInventory(): $FluidTank;
-        setFluidLevel(arg0: $LerpedFloat): void;
-        static getCapacityMultiplier(): number;
-        setWidth(arg0: number): void;
-        setHeight(arg0: number): void;
-        toggleWindows(): void;
-        getControllerBE(): $FluidTankBlockEntity;
+        getHeight(): number;
         getFluid(arg0: number): $FluidStack;
-        isController(): boolean;
-        addToGoggleTooltip(arg0: $List_<$Component_>, arg1: boolean): boolean;
+        setHeight(arg0: number): void;
+        setWidth(arg0: number): void;
         getTankSize(arg0: number): number;
+        setTankSize(arg0: number, arg1: number): void;
+        getLastKnownPos(): $BlockPos;
+        addToGoggleTooltip(arg0: $List_<$Component_>, arg1: boolean): boolean;
+        removeController(arg0: boolean): void;
+        notifyMultiUpdated(): void;
+        isController(): boolean;
         setExtraData(arg0: $Object): void;
         modifyExtraData(arg0: $Object): $Object;
-        notifyMultiUpdated(): void;
-        removeController(arg0: boolean): void;
-        getLastKnownPos(): $BlockPos;
-        setTankSize(arg0: number, arg1: number): void;
-        setController(arg0: $BlockPos_): void;
-        getOtherFluidTankBlockEntity(arg0: $Direction_): $FluidTankBlockEntity;
+        toggleWindows(): void;
+        getTank(arg0: number): $IFluidTank;
+        getMaxWidth(): number;
+        static getMaxHeight(): number;
+        static getCapacityMultiplier(): number;
+        sendDataImmediately(): void;
+        preventConnectivityUpdate(): void;
+        getMainConnectionAxis(): $Direction$Axis;
+        getTankInventory(): $FluidTank;
+        setFluidLevel(arg0: $LerpedFloat): void;
+        hasTank(): boolean;
         getExtraData(): $Object;
         updateBoilerState(): void;
-        setWindows(arg0: boolean): void;
-        sendDataImmediately(): void;
-        getMainConnectionAxis(): $Direction$Axis;
-        preventConnectivityUpdate(): void;
         applyFluidTankSize(arg0: number): void;
-        getFillState(): number;
         getTotalTankSize(): number;
         getFluidLevel(): $LerpedFloat;
-        static getMaxHeight(): number;
-        getMaxWidth(): number;
+        getFillState(): number;
+        getControllerBE(): $FluidTankBlockEntity;
+        setWindows(arg0: boolean): void;
+        updateBoilerTemperature(): void;
+        getOtherFluidTankBlockEntity(arg0: $Direction_): $FluidTankBlockEntity;
         containedFluidTooltip(arg0: $List_<$Component_>, arg1: boolean, arg2: $IFluidHandler): boolean;
         getIcon(arg0: boolean): $ItemStack;
         getMainAxisOf(arg0: $BlockEntity): $Direction$Axis;
@@ -228,16 +228,16 @@ declare module "@package/com/simibubi/create/content/fluids/tank" {
         hasComparators: number;
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
         static get maxSize(): number;
-        get tankInventory(): $FluidTank;
-        static get capacityMultiplier(): number;
-        get controllerBE(): $FluidTankBlockEntity;
         get lastKnownPos(): $BlockPos;
-        set windows(value: boolean);
-        get mainConnectionAxis(): $Direction$Axis;
-        get fillState(): number;
-        get totalTankSize(): number;
-        static get maxHeight(): number;
         get maxWidth(): number;
+        static get maxHeight(): number;
+        static get capacityMultiplier(): number;
+        get mainConnectionAxis(): $Direction$Axis;
+        get tankInventory(): $FluidTank;
+        get totalTankSize(): number;
+        get fillState(): number;
+        get controllerBE(): $FluidTankBlockEntity;
+        set windows(value: boolean);
     }
     export class $SoundPool$Sound {
     }
@@ -266,23 +266,23 @@ declare module "@package/com/simibubi/create/content/fluids/tank" {
         constructor(arg0: number, arg1: number, arg2: $SoundPool$Sound_);
     }
     export class $FluidTankBlock extends $Block implements $IWrenchable, $IBE<$FluidTankBlockEntity> {
-        static isTank(arg0: $BlockState_): boolean;
-        getBlockEntityType(): $BlockEntityType<$FluidTankBlockEntity>;
         static regular(arg0: $BlockBehaviour$Properties): $FluidTankBlock;
         static creative(arg0: $BlockBehaviour$Properties): $FluidTankBlock;
-        getBlockEntityClass(): $Class<$FluidTankBlockEntity>;
-        static updateBoilerState(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): void;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        static isTank(arg0: $BlockState_): boolean;
+        getBlockEntityClass(): $Class<$FluidTankBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$FluidTankBlockEntity>;
+        static updateBoilerState(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): void;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$FluidTankBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FluidTankBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($FluidTankBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FluidTankBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $FluidTankBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$FluidTankBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($FluidTankBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$FluidTankBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static SILENCED_METAL: $SoundType;
@@ -315,7 +315,7 @@ declare module "@package/com/simibubi/create/content/fluids/tank" {
         static INSTANT: number;
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
-        get blockEntityType(): $BlockEntityType<$FluidTankBlockEntity>;
         get blockEntityClass(): $Class<$FluidTankBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$FluidTankBlockEntity>;
     }
 }

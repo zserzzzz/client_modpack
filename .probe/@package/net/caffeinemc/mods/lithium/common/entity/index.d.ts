@@ -24,9 +24,9 @@ declare module "@package/net/caffeinemc/mods/lithium/common/entity" {
     export class $TypeFilterableListInternalAccess<T> {
     }
     export interface $TypeFilterableListInternalAccess<T> {
-        lithium$getOrCreateAllOfTypeRaw<S extends T>(arg0: $Class<S>): $List<S>;
         lithium$replaceCollectionAndGet<S extends T>(arg0: $Class<S>, arg1: $Function_<$ArrayList<S>, $List<S>>): $List<S>;
         lithium$replaceCollectionAndGet<S extends T>(arg0: $Class<S>, arg1: $ArrayList<S>): $List<S>;
+        lithium$getOrCreateAllOfTypeRaw<S extends T>(arg0: $Class<S>): $List<S>;
     }
     export class $EntityClassGroup {
         clear(): void;
@@ -38,16 +38,16 @@ declare module "@package/net/caffeinemc/mods/lithium/common/entity" {
     export class $NavigatingEntity {
     }
     export interface $NavigatingEntity {
-        lithium$getRegisteredNavigation(): $PathNavigation;
-        lithium$isRegisteredToWorld(): boolean;
-        lithium$updateNavigationRegistration(): void;
         lithium$setRegisteredToWorld(arg0: $PathNavigation): void;
+        lithium$updateNavigationRegistration(): void;
+        lithium$isRegisteredToWorld(): boolean;
+        lithium$getRegisteredNavigation(): $PathNavigation;
     }
     export class $PositionedEntityTrackingSection {
     }
     export interface $PositionedEntityTrackingSection {
-        lithium$setPos(arg0: number): void;
         lithium$getPos(): number;
+        lithium$setPos(arg0: number): void;
     }
     export class $EquipmentEntity {
     }

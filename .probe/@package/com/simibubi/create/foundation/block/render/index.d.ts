@@ -16,9 +16,9 @@ import { $Vector3d } from "@package/org/joml";
 declare module "@package/com/simibubi/create/foundation/block/render" {
     export class $ReducedDestroyEffects implements $IClientBlockExtensions {
         addDestroyEffects(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $ParticleEngine): boolean;
+        getFogColor(arg0: $BlockState_, arg1: $LevelReader, arg2: $BlockPos_, arg3: $Entity, arg4: $Vector3d, arg5: number): $Vector3d;
         playBreakSound(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_): boolean;
         addHitEffects(arg0: $BlockState_, arg1: $Level_, arg2: $HitResult, arg3: $ParticleEngine): boolean;
-        getFogColor(arg0: $BlockState_, arg1: $LevelReader, arg2: $BlockPos_, arg3: $Entity, arg4: $Vector3d, arg5: number): $Vector3d;
         areBreakingParticlesTinted(arg0: $BlockState_, arg1: $ClientLevel, arg2: $BlockPos_): boolean;
         constructor();
     }

@@ -11,19 +11,19 @@ declare module "@package/gg/essential/util/image/mask" {
         static Companion: $Mask$Companion;
     }
     export interface $Mask {
-        getHeight(): number;
         get(arg0: number, arg1: number): boolean;
         count(): number;
         getWidth(): number;
+        getHeight(): number;
         mutableCopy(): $MutableMask;
-        get height(): number;
         get width(): number;
+        get height(): number;
     }
     export class $MutableMask {
-        static access$clear$jd(arg0: $MutableMask, arg1: number, arg2: number, arg3: number, arg4: number): void;
         static access$set$jd(arg0: $MutableMask, arg1: number, arg2: number, arg3: number, arg4: number, arg5: boolean): void;
-        static access$set$jd(arg0: $MutableMask, arg1: number, arg2: number, arg3: number, arg4: number): void;
         static access$set$jd(arg0: $MutableMask, arg1: number, arg2: number, arg3: boolean): void;
+        static access$set$jd(arg0: $MutableMask, arg1: number, arg2: number, arg3: number, arg4: number): void;
+        static access$clear$jd(arg0: $MutableMask, arg1: number, arg2: number, arg3: number, arg4: number): void;
     }
     export interface $MutableMask extends $Mask {
         clear(arg0: number, arg1: number, arg2: number, arg3: number): void;
@@ -33,9 +33,9 @@ declare module "@package/gg/essential/util/image/mask" {
         set(arg0: number, arg1: number, arg2: boolean): void;
         set(arg0: number, arg1: number): void;
         inv(): void;
-        setAnd(arg0: $Mask): void;
         setOr(arg0: $Mask): void;
-        set and(value: $Mask);
+        setAnd(arg0: $Mask): void;
         set or(value: $Mask);
+        set and(value: $Mask);
     }
 }

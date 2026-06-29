@@ -58,32 +58,32 @@ declare module "@package/com/simibubi/create/content/kinetics/belt" {
     export class $BeltShapes$VerticalBeltShaper extends $VoxelShaper {
     }
     export class $BeltBlock extends $HorizontalKineticBlock implements $IBE<$BeltBlockEntity>, $SpecialBlockItemRequirement, $TransformableBlock, $ProperWaterloggedBlock, $BlockWithSubLevelCollisionCallback {
-        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
         transform(arg0: $BlockState_, arg1: $StructureTransform): $BlockState;
+        sable$getCallback(): $BlockSubLevelCollisionCallback;
+        static nextSegmentPosition(arg0: $BlockState_, arg1: $BlockPos_, arg2: boolean): $BlockPos;
+        static canTransportObjects(arg0: $BlockState_): boolean;
+        getBlockEntityClass(): $Class<$BeltBlockEntity>;
         getBlockEntityType(): $BlockEntityType<$BeltBlockEntity>;
+        getRequiredItems(arg0: $BlockState_, arg1: $BlockEntity): $ItemRequirement;
         updateCoverProperty(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_): void;
         static isBlockCoveringBelt(arg0: $LevelAccessor, arg1: $BlockPos_): boolean;
-        getBlockEntityClass(): $Class<$BeltBlockEntity>;
-        wrapOperation$glb000$sable$checkForSubLevels(arg0: $Entity, arg1: $Operation_<any>): $BlockPos;
-        sable$getCallback(): $BlockSubLevelCollisionCallback;
-        static canTransportObjects(arg0: $BlockState_): boolean;
         static getBeltChain(arg0: $LevelAccessor, arg1: $BlockPos_): $List<$BlockPos>;
         static initBelt(arg0: $Level_, arg1: $BlockPos_): void;
-        static nextSegmentPosition(arg0: $BlockState_, arg1: $BlockPos_, arg2: boolean): $BlockPos;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$BeltBlockEntity>): void;
+        wrapOperation$glb000$sable$checkForSubLevels(arg0: $Entity, arg1: $Operation_<any>): $BlockPos;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$BeltBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($BeltBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$BeltBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $BeltBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
-        fluidState(arg0: $BlockState_): $FluidState;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$BeltBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($BeltBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$BeltBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         updateWater(arg0: $LevelAccessor, arg1: $BlockState_, arg2: $BlockPos_): void;
+        fluidState(arg0: $BlockState_): $FluidState;
+        withWater(arg0: $BlockState_, arg1: $BlockPlaceContext): $BlockState;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
-        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         placeLiquid(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_, arg3: $FluidState): boolean;
         pickupBlock(arg0: $Player | null, arg1: $LevelAccessor, arg2: $BlockPos_, arg3: $BlockState_): $ItemStack;
+        canPlaceLiquid(arg0: $Player | null, arg1: $BlockGetter, arg2: $BlockPos_, arg3: $BlockState_, arg4: $Fluid_): boolean;
         getPickupSound(): ($SoundEvent) | undefined;
         getPickupSound(arg0: $BlockState_): ($SoundEvent) | undefined;
         explosionResistance: number;
@@ -118,8 +118,8 @@ declare module "@package/com/simibubi/create/content/kinetics/belt" {
         static SLOPE: $Property<$BeltSlope>;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$BeltBlockEntity>;
         get blockEntityClass(): $Class<$BeltBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$BeltBlockEntity>;
     }
     export class $BeltVisual extends $KineticBlockEntityVisual<$BeltBlockEntity> {
         static SCROLL_OFFSET_BOTTOM: number;
@@ -135,26 +135,26 @@ declare module "@package/com/simibubi/create/content/kinetics/belt" {
         constructor();
     }
     export class $BeltBlockEntity extends $KineticBlockEntity implements $Clearable {
-        createRenderBoundingBox(): $AABB;
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
+        clearContent(): void;
+        setController(arg0: $BlockPos_): void;
         getController(): $BlockPos;
         static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
-        getInventory(): $BeltInventory;
-        clearContent(): void;
         getMovementDirection(arg0: boolean): $Vec3i;
-        getMovementFacing(): $Direction;
-        getControllerBE(): $BeltBlockEntity;
+        getInventory(): $BeltInventory;
+        createRenderBoundingBox(): $AABB;
         isController(): boolean;
-        setController(arg0: $BlockPos_): void;
-        setCasingType(arg0: $BeltBlockEntity$CasingType_): void;
-        getDirectionAwareBeltMovementSpeed(): number;
-        getBeltChainDirection(): $Vec3i;
-        shouldRenderNormally(): boolean;
         invalidateItemHandler(): void;
         getBeltMovementSpeed(): number;
+        getBeltChainDirection(): $Vec3i;
+        shouldRenderNormally(): boolean;
+        getDirectionAwareBeltMovementSpeed(): number;
+        getMovementFacing(): $Direction;
+        getControllerBE(): $BeltBlockEntity;
+        setCasingType(arg0: $BeltBlockEntity$CasingType_): void;
         setCovered(arg0: boolean): void;
-        hasPulley(): boolean;
         applyColor(arg0: $DyeColor_): boolean;
+        hasPulley(): boolean;
         passengers: $Map<$Entity, $BeltMovementHandler$TransportedEntityInfo>;
         color: ($DyeColor) | undefined;
         level: $Level;
@@ -176,12 +176,12 @@ declare module "@package/com/simibubi/create/content/kinetics/belt" {
         preventSpeedUpdate: number;
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
         get inventory(): $BeltInventory;
+        get beltMovementSpeed(): number;
+        get beltChainDirection(): $Vec3i;
+        get directionAwareBeltMovementSpeed(): number;
         get movementFacing(): $Direction;
         get controllerBE(): $BeltBlockEntity;
         set casingType(value: $BeltBlockEntity$CasingType_);
-        get directionAwareBeltMovementSpeed(): number;
-        get beltChainDirection(): $Vec3i;
-        get beltMovementSpeed(): number;
     }
     export class $BeltModel extends $BakedModelWrapper<$BakedModel> {
         static CASING_PROPERTY: $ModelProperty<$BeltBlockEntity$CasingType>;
@@ -193,9 +193,9 @@ declare module "@package/com/simibubi/create/content/kinetics/belt" {
     }
     export class $BeltRenderer extends $SafeBlockEntityRenderer<$BeltBlockEntity> {
         shouldRenderOffScreen(arg0: $BeltBlockEntity): boolean;
-        static getSpriteShiftEntry(arg0: $DyeColor_, arg1: boolean, arg2: boolean): $SpriteShiftEntry;
         redirect$gph000$sable$projectDistanceTo(arg0: $Vec3_, arg1: $Vec3_): number;
         static getBeltPartial(arg0: boolean, arg1: boolean, arg2: boolean, arg3: boolean): $PartialModel;
+        static getSpriteShiftEntry(arg0: $DyeColor_, arg1: boolean, arg2: boolean): $SpriteShiftEntry;
         constructor(arg0: $BlockEntityRendererProvider$Context);
     }
     export class $BeltPart extends $Enum<$BeltPart> implements $StringRepresentable {
@@ -228,12 +228,12 @@ declare module "@package/com/simibubi/create/content/kinetics/belt" {
     export class $BeltHelper {
         static getVectorForOffset(arg0: $BeltBlockEntity, arg1: number): $Vec3;
         static getControllerBE(arg0: $LevelAccessor, arg1: $BlockPos_): $BeltBlockEntity;
-        static getBeltAtSegment(arg0: $BeltBlockEntity, arg1: number): $BeltBlockEntity;
-        static getBeltForOffset(arg0: $BeltBlockEntity, arg1: number): $BeltBlockEntity;
-        static getBeltVector(arg0: $BlockState_): $Vec3;
-        static getPositionForOffset(arg0: $BeltBlockEntity, arg1: number): $BlockPos;
         static getSegmentBE(arg0: $LevelAccessor, arg1: $BlockPos_): $BeltBlockEntity;
         static isItemUpright(arg0: $ItemStack_): boolean;
+        static getBeltForOffset(arg0: $BeltBlockEntity, arg1: number): $BeltBlockEntity;
+        static getBeltAtSegment(arg0: $BeltBlockEntity, arg1: number): $BeltBlockEntity;
+        static getBeltVector(arg0: $BlockState_): $Vec3;
+        static getPositionForOffset(arg0: $BeltBlockEntity, arg1: number): $BlockPos;
         static uprightCache: $Map<$Item, boolean>;
         static LISTENER: $ResourceManagerReloadListener;
         constructor();

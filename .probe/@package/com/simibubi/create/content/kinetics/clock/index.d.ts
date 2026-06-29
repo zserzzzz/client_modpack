@@ -25,8 +25,8 @@ import { $BlockEntityType, $BlockEntityTicker, $BlockEntityType_, $BlockEntity }
 declare module "@package/com/simibubi/create/content/kinetics/clock" {
     export class $CuckooClockBlockEntity extends $KineticBlockEntity {
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
-        startAnimation(arg0: $CuckooClockBlockEntity$Animation_): void;
         moveHands(arg0: number, arg1: number): void;
+        startAnimation(arg0: $CuckooClockBlockEntity$Animation_): void;
         level: $Level;
         animationProgress: $LerpedFloat;
         static ATTACHMENTS_NBT_KEY: string;
@@ -44,18 +44,18 @@ declare module "@package/com/simibubi/create/content/kinetics/clock" {
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
     }
     export class $CuckooClockBlock extends $HorizontalKineticBlock implements $IBE<$CuckooClockBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$CuckooClockBlockEntity>;
         static regular(arg0: $BlockBehaviour$Properties): $CuckooClockBlock;
-        getBlockEntityClass(): $Class<$CuckooClockBlockEntity>;
         static containsSurprise(arg0: $BlockState_): boolean;
+        getBlockEntityClass(): $Class<$CuckooClockBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$CuckooClockBlockEntity>;
         static mysterious(arg0: $BlockBehaviour$Properties): $CuckooClockBlock;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$CuckooClockBlockEntity>): void;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$CuckooClockBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($CuckooClockBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$CuckooClockBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $CuckooClockBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$CuckooClockBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($CuckooClockBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$CuckooClockBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -85,8 +85,8 @@ declare module "@package/com/simibubi/create/content/kinetics/clock" {
         static INSTANT: number;
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
-        get blockEntityType(): $BlockEntityType<$CuckooClockBlockEntity>;
         get blockEntityClass(): $Class<$CuckooClockBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$CuckooClockBlockEntity>;
     }
     export class $CuckooClockBlockEntity$Animation extends $Enum<$CuckooClockBlockEntity$Animation> {
     }

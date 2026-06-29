@@ -9,17 +9,17 @@ export * as storage from "@package/net/minecraft/util/profiling/metrics/storage"
 declare module "@package/net/minecraft/util/profiling/metrics" {
     export class $MetricSampler$MetricSamplerBuilder<T> {
         build(): $MetricSampler;
-        withBeforeTick(beforeTick: $Consumer_<T>): $MetricSampler$MetricSamplerBuilder<T>;
         withThresholdAlert(thresholdTest: $MetricSampler$ThresholdTest_): $MetricSampler$MetricSamplerBuilder<T>;
+        withBeforeTick(beforeTick: $Consumer_<T>): $MetricSampler$MetricSamplerBuilder<T>;
         constructor(name: string, category: $MetricCategory_, sampler: $ToDoubleFunction_<T>, context: T);
     }
     export class $MetricSampler$SamplerResult {
+        getLastTick(): number;
         getFirstTick(): number;
         valueAtTick(tick: number): number;
-        getLastTick(): number;
         constructor(firstTick: number, lastTick: number, recording: $Int2DoubleMap);
-        get firstTick(): number;
         get lastTick(): number;
+        get firstTick(): number;
     }
     export class $MetricSampler$ThresholdTest {
     }
@@ -31,6 +31,7 @@ declare module "@package/net/minecraft/util/profiling/metrics" {
      */
     export type $MetricSampler$ThresholdTest_ = ((arg0: number) => boolean);
     export class $MetricSampler {
+        onFinished(): void;
         getName(): string;
         static builder<T>(name: string, category: $MetricCategory_, sampler: $ToDoubleFunction_<T>, context: T): $MetricSampler$MetricSamplerBuilder<T>;
         result(): $MetricSampler$SamplerResult;
@@ -39,7 +40,6 @@ declare module "@package/net/minecraft/util/profiling/metrics" {
         getCategory(): $MetricCategory;
         onStartTick(): void;
         triggersThreshold(): boolean;
-        onFinished(): void;
         onEndTick(tickTime: number): void;
         getSampler(): $DoubleSupplier;
         thresholdTest: $MetricSampler$ThresholdTest;
@@ -76,9 +76,9 @@ declare module "@package/net/minecraft/util/profiling/metrics" {
         thresholdTest: $MetricSampler$ThresholdTest;
     }
     export class $MetricCategory extends $Enum<$MetricCategory> {
-        getDescription(): string;
         static values(): $MetricCategory[];
         static valueOf(arg0: string): $MetricCategory;
+        getDescription(): string;
         static JVM: $MetricCategory;
         static PATH_FINDING: $MetricCategory;
         static EVENT_LOOPS: $MetricCategory;

@@ -9,8 +9,8 @@ export * as level from "@package/xaero/map/server/level";
 declare module "@package/xaero/map/server" {
     export class $MinecraftServerData {
         static get(arg0: $MinecraftServer): $MinecraftServerData;
-        getSyncedPlayerTracker(): $SyncedPlayerTracker;
         getLevelProperties(arg0: $Path_): $LevelMapProperties;
+        getSyncedPlayerTracker(): $SyncedPlayerTracker;
         getSyncedPlayerTrackerSystemManager(): $SyncedPlayerTrackerSystemManager;
         constructor(arg0: $SyncedPlayerTrackerSystemManager, arg1: $SyncedPlayerTracker);
         get syncedPlayerTracker(): $SyncedPlayerTracker;

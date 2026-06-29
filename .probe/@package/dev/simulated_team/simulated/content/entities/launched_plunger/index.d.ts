@@ -1,16 +1,17 @@
 import { $Level_ } from "@package/net/minecraft/world/level";
 import { $TagKey } from "@package/net/minecraft/tags";
+import { $CompoundTag } from "@package/net/minecraft/nbt";
 import { $Fluid } from "@package/net/minecraft/world/level/material";
 import { $RigidBodyHandle } from "@package/dev/ryanhcode/sable/api/physics/handle";
 import { $EntityType_, $Entity$RemovalReason, $Pose, $PortalProcessor } from "@package/net/minecraft/world/entity";
 import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
+import { $ThrowableProjectile } from "@package/net/minecraft/world/entity/projectile";
 import { $ServerSubLevel } from "@package/dev/ryanhcode/sable/sublevel";
 import { $UUID } from "@package/java/util";
-import { $ThrowableProjectile } from "@package/net/minecraft/world/entity/projectile";
 import { $RandomSource } from "@package/net/minecraft/util";
-import { $EntityDataAccessor, $SynchedEntityData, $EntityDataAccessor_ } from "@package/net/minecraft/network/syncher";
+import { $SynchedEntityData, $EntityDataAccessor_, $EntityDataAccessor } from "@package/net/minecraft/network/syncher";
 import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos, $Direction } from "@package/net/minecraft/core";
+import { $HolderLookup$Provider, $BlockPos, $Direction } from "@package/net/minecraft/core";
 import { $AtomicInteger } from "@package/java/util/concurrent/atomic";
 import { $Vec3 } from "@package/net/minecraft/world/phys";
 import { $EntityInLevelCallback } from "@package/net/minecraft/world/level/entity";
@@ -21,17 +22,18 @@ declare module "@package/dev/simulated_team/simulated/content/entities/launched_
         getTarget(): $Vec3;
         getData<T>(arg0: $EntityDataAccessor_<T>): T;
         setData<T>(arg0: $EntityDataAccessor_<T>, arg1: T): void;
+        isPlunged(): boolean;
+        setOther(arg0: $LaunchedPlungerEntity): void;
+        getOther(): $LaunchedPlungerEntity;
         physicsTick(arg0: $ServerSubLevel, arg1: $RigidBodyHandle, arg2: number): void;
+        getClientSmoothedVelocity(arg0: number): $Vec3;
         resetPlunged(): void;
-        getAttachmentPos(arg0: number): $Vec3;
         getAttachmentPos(): $Vec3;
+        getAttachmentPos(arg0: number): $Vec3;
         getClientTarget(arg0: number): $Vec3;
         getPlungedTime(): number;
         getAnimationOffset(): number;
-        setOther(arg0: $LaunchedPlungerEntity): void;
-        getClientSmoothedVelocity(arg0: number): $Vec3;
-        isPlunged(): boolean;
-        getOther(): $LaunchedPlungerEntity;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         firstTick: boolean;
         wasEyeInWater: boolean;
         hasImpulse: boolean;
@@ -113,8 +115,8 @@ declare module "@package/dev/simulated_team/simulated/content/entities/launched_
         horizontalCollision: boolean;
         constructor(arg0: $EntityType_<$LaunchedPlungerEntity>, arg1: $Level_);
         get target(): $Vec3;
+        get plunged(): boolean;
         get plungedTime(): number;
         get animationOffset(): number;
-        get plunged(): boolean;
     }
 }

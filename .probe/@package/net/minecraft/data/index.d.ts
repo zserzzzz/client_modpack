@@ -33,9 +33,9 @@ declare module "@package/net/minecraft/data" {
         get(variant: $BlockFamily$Variant_): $Block;
         getVariants(): $Map<$BlockFamily$Variant, $Block>;
         getBaseBlock(): $Block;
+        getRecipeUnlockedBy(): (string) | undefined;
         getRecipeGroupPrefix(): (string) | undefined;
         shouldGenerateRecipe(): boolean;
-        getRecipeUnlockedBy(): (string) | undefined;
         shouldGenerateModel(): boolean;
         generateModel: boolean;
         recipeUnlockedBy: string;
@@ -61,8 +61,8 @@ declare module "@package/net/minecraft/data" {
      */
     export type $HashCache$UpdateFunction_ = ((arg0: $CachedOutput) => $CompletableFuture<never>);
     export class $PackOutput$PathProvider {
-        json(location: $ResourceLocation_): $Path;
         file(location: $ResourceLocation_, extension: string): $Path;
+        json(location: $ResourceLocation_): $Path;
         kind: string;
         root: $Path;
         constructor(output: $PackOutput, target: $PackOutput$Target_, kind: string);
@@ -124,14 +124,14 @@ declare module "@package/net/minecraft/data" {
         merge(arg0: $DataGenerator): void;
         addProvider<T extends $DataProvider>(arg0: boolean, arg1: $DataProvider$Factory_<T>): T;
         addProvider<T extends $DataProvider>(arg0: boolean, arg1: T): T;
-        getBuiltinDatapack(arg0: boolean, arg1: string, arg2: string): $DataGenerator$PackGenerator;
-        getBuiltinDatapack(toRun: boolean, providerPrefix: string): $DataGenerator$PackGenerator;
-        getPackGenerator(arg0: boolean, arg1: string, arg2: string): $DataGenerator$PackGenerator;
-        getProvidersView(): $Map<string, $DataProvider>;
         getVanillaPack(toRun: boolean): $DataGenerator$PackGenerator;
-        createPack(arg0: string, arg1: $PackOutput): $DataGenerator$PackGenerator;
-        getPackOutput(): $PackOutput;
         getPackOutput(arg0: string): $PackOutput;
+        getPackOutput(): $PackOutput;
+        getBuiltinDatapack(toRun: boolean, providerPrefix: string): $DataGenerator$PackGenerator;
+        getBuiltinDatapack(arg0: boolean, arg1: string, arg2: string): $DataGenerator$PackGenerator;
+        getProvidersView(): $Map<string, $DataProvider>;
+        getPackGenerator(arg0: boolean, arg1: string, arg2: string): $DataGenerator$PackGenerator;
+        createPack(arg0: string, arg1: $PackOutput): $DataGenerator$PackGenerator;
         createBuiltinResourcePack(arg0: boolean, arg1: $ResourceLocation_, arg2: $ModContainer, arg3: boolean): $Pair<any, any>;
         vanillaPackOutput: $PackOutput;
         providersToRun: $Map<string, $DataProvider>;
@@ -154,7 +154,7 @@ declare module "@package/net/minecraft/data" {
     /**
      * Values that may be interpreted as {@link $HashCache$UpdateResult}.
      */
-    export type $HashCache$UpdateResult_ = { writes?: number, providerId?: string, cache?: $HashCache$ProviderCache_,  } | [writes?: number, providerId?: string, cache?: $HashCache$ProviderCache_, ];
+    export type $HashCache$UpdateResult_ = { cache?: $HashCache$ProviderCache_, writes?: number, providerId?: string,  } | [cache?: $HashCache$ProviderCache_, writes?: number, providerId?: string, ];
     export class $DataGenerator$PackGenerator {
         addProvider<T extends $DataProvider>(factory: $DataProvider$Factory_<T>): T;
         this$0: $DataGenerator;
@@ -192,23 +192,23 @@ declare module "@package/net/minecraft/data" {
         sign(signBlock: $Block_, wallSignBlock: $Block_): $BlockFamily$Builder;
         getFamily(): $BlockFamily;
         wall(buttonBlock: $Block_): $BlockFamily$Builder;
-        button(buttonBlock: $Block_): $BlockFamily$Builder;
         cracked(buttonBlock: $Block_): $BlockFamily$Builder;
+        button(buttonBlock: $Block_): $BlockFamily$Builder;
         door(buttonBlock: $Block_): $BlockFamily$Builder;
         slab(buttonBlock: $Block_): $BlockFamily$Builder;
         trapdoor(buttonBlock: $Block_): $BlockFamily$Builder;
         pressurePlate(buttonBlock: $Block_): $BlockFamily$Builder;
         chiseled(buttonBlock: $Block_): $BlockFamily$Builder;
-        polished(buttonBlock: $Block_): $BlockFamily$Builder;
-        fenceGate(buttonBlock: $Block_): $BlockFamily$Builder;
-        cut(buttonBlock: $Block_): $BlockFamily$Builder;
         stairs(buttonBlock: $Block_): $BlockFamily$Builder;
-        recipeGroupPrefix(recipeGroupPrefix: string): $BlockFamily$Builder;
-        recipeUnlockedBy(recipeGroupPrefix: string): $BlockFamily$Builder;
-        dontGenerateModel(): $BlockFamily$Builder;
-        customFenceGate(buttonBlock: $Block_): $BlockFamily$Builder;
+        polished(buttonBlock: $Block_): $BlockFamily$Builder;
+        cut(buttonBlock: $Block_): $BlockFamily$Builder;
+        fenceGate(buttonBlock: $Block_): $BlockFamily$Builder;
         dontGenerateRecipe(): $BlockFamily$Builder;
         customFence(buttonBlock: $Block_): $BlockFamily$Builder;
+        customFenceGate(buttonBlock: $Block_): $BlockFamily$Builder;
+        dontGenerateModel(): $BlockFamily$Builder;
+        recipeUnlockedBy(recipeGroupPrefix: string): $BlockFamily$Builder;
+        recipeGroupPrefix(recipeGroupPrefix: string): $BlockFamily$Builder;
         mosaic(buttonBlock: $Block_): $BlockFamily$Builder;
         constructor(baseBlock: $Block_);
         get family(): $BlockFamily;
@@ -230,8 +230,8 @@ declare module "@package/net/minecraft/data" {
         get name(): string;
     }
     export class $PackOutput {
-        createRegistryTagsPathProvider(registryKey: $ResourceKey_<$Registry<never>>): $PackOutput$PathProvider;
         createRegistryElementsPathProvider(registryKey: $ResourceKey_<$Registry<never>>): $PackOutput$PathProvider;
+        createRegistryTagsPathProvider(registryKey: $ResourceKey_<$Registry<never>>): $PackOutput$PathProvider;
         getOutputFolder(target: $PackOutput$Target_): $Path;
         getOutputFolder(): $Path;
         createPathProvider(target: $PackOutput$Target_, kind: string): $PackOutput$PathProvider;

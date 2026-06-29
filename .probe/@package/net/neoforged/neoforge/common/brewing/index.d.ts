@@ -1,4 +1,4 @@
-import { $Ingredient, $Ingredient_ } from "@package/net/minecraft/world/item/crafting";
+import { $Ingredient_, $Ingredient } from "@package/net/minecraft/world/item/crafting";
 import { $ItemStack_, $ItemStack } from "@package/net/minecraft/world/item";
 import { $Record } from "@package/java/lang";
 import { $List_, $List } from "@package/java/util";
@@ -46,9 +46,9 @@ declare module "@package/net/neoforged/neoforge/common/brewing" {
         getInput(): $Ingredient;
         getOutput(input: $ItemStack_, ingredient: $ItemStack_): $ItemStack;
         getOutput(): $ItemStack;
-        getIngredient(): $Ingredient;
         isInput(stack: $ItemStack_): boolean;
         isIngredient(stack: $ItemStack_): boolean;
+        getIngredient(): $Ingredient;
         constructor(input: $Ingredient_, ingredient: $Ingredient_, output: $ItemStack_);
     }
 }

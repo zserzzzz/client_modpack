@@ -16,8 +16,8 @@ declare module "@package/net/mehvahdjukaar/vista/common/cassette" {
     export class $IBroadcastSource {
     }
     export interface $IBroadcastSource {
-        removeLink(arg0: $Level_): void;
         getBroadcastUUID(): $UUID;
+        removeLink(arg0: $Level_): void;
         getBroadcastVideo(): $IVideoSource;
         ensureLinked(arg0: $Level_, arg1: $IBroadcastLocation): void;
         get broadcastUUID(): $UUID;
@@ -25,11 +25,11 @@ declare module "@package/net/mehvahdjukaar/vista/common/cassette" {
     }
     export class $CassetteTape extends $Record {
         color(): number;
-        soundDuration(): (number) | undefined;
-        getRedstoneOutput(): number;
+        comparatorOutput(): number;
         soundEvent(): ($Holder<$SoundEvent>) | undefined;
         assetId(): $ResourceLocation;
-        comparatorOutput(): number;
+        getRedstoneOutput(): number;
+        soundDuration(): (number) | undefined;
         static DIRECT_CODEC: $Codec<$CassetteTape>;
         static DIRECT_STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $CassetteTape>;
         constructor(assetId: $ResourceLocation_, color: number, soundEvent: ($Holder_<$SoundEvent>) | undefined, soundDuration: (number) | undefined, comparatorOutput: number);
@@ -38,5 +38,5 @@ declare module "@package/net/mehvahdjukaar/vista/common/cassette" {
     /**
      * Values that may be interpreted as {@link $CassetteTape}.
      */
-    export type $CassetteTape_ = RegistryTypes.VistaCassetteTape | { assetId?: $ResourceLocation_, comparatorOutput?: number, soundDuration?: (number) | undefined, soundEvent?: ($Holder_<$SoundEvent>) | undefined, color?: number,  } | [assetId?: $ResourceLocation_, comparatorOutput?: number, soundDuration?: (number) | undefined, soundEvent?: ($Holder_<$SoundEvent>) | undefined, color?: number, ];
+    export type $CassetteTape_ = RegistryTypes.VistaCassetteTape | { color?: number, assetId?: $ResourceLocation_, comparatorOutput?: number, soundDuration?: (number) | undefined, soundEvent?: ($Holder_<$SoundEvent>) | undefined,  } | [color?: number, assetId?: $ResourceLocation_, comparatorOutput?: number, soundDuration?: (number) | undefined, soundEvent?: ($Holder_<$SoundEvent>) | undefined, ];
 }

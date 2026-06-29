@@ -80,7 +80,7 @@ declare module "@package/net/minecraft/server/commands" {
     /**
      * Values that may be interpreted as {@link $CloneCommands$CloneBlockInfo}.
      */
-    export type $CloneCommands$CloneBlockInfo_ = { blockEntityInfo?: $CloneCommands$CloneBlockEntityInfo_, state?: $BlockState_, pos?: $BlockPos_,  } | [blockEntityInfo?: $CloneCommands$CloneBlockEntityInfo_, state?: $BlockState_, pos?: $BlockPos_, ];
+    export type $CloneCommands$CloneBlockInfo_ = { pos?: $BlockPos_, blockEntityInfo?: $CloneCommands$CloneBlockEntityInfo_, state?: $BlockState_,  } | [pos?: $BlockPos_, blockEntityInfo?: $CloneCommands$CloneBlockEntityInfo_, state?: $BlockState_, ];
     export class $WhitelistCommand {
         static register(dispatcher: $CommandDispatcher<$CommandSourceStack>): void;
         constructor();
@@ -136,8 +136,8 @@ declare module "@package/net/minecraft/server/commands" {
     }
     export class $LocateCommand {
         static register(dispatcher: $CommandDispatcher<$CommandSourceStack>, context: $CommandBuildContext): void;
-        static showLocateResult(source: $CommandSourceStack, result: $ResourceOrTagKeyArgument$Result<never>, sourcePosition: $BlockPos_, resultWithPosition: $Pair<$BlockPos_, $Holder_<never>>, translationKey: string, absoluteY: boolean, duration: $Duration_): number;
         static showLocateResult(source: $CommandSourceStack, result: $ResourceOrTagArgument$Result<never>, sourcePosition: $BlockPos_, resultWithPosition: $Pair<$BlockPos_, $Holder_<never>>, translationKey: string, absoluteY: boolean, duration: $Duration_): number;
+        static showLocateResult(source: $CommandSourceStack, result: $ResourceOrTagKeyArgument$Result<never>, sourcePosition: $BlockPos_, resultWithPosition: $Pair<$BlockPos_, $Holder_<never>>, translationKey: string, absoluteY: boolean, duration: $Duration_): number;
         constructor();
     }
     export class $SpectateCommand {
@@ -153,7 +153,7 @@ declare module "@package/net/minecraft/server/commands" {
     /**
      * Values that may be interpreted as {@link $CloneCommands$DimensionAndPosition}.
      */
-    export type $CloneCommands$DimensionAndPosition_ = { dimension?: $ServerLevel, position?: $BlockPos_,  } | [dimension?: $ServerLevel, position?: $BlockPos_, ];
+    export type $CloneCommands$DimensionAndPosition_ = { position?: $BlockPos_, dimension?: $ServerLevel,  } | [position?: $BlockPos_, dimension?: $ServerLevel, ];
     export class $PlaySoundCommand {
         static register(dispatcher: $CommandDispatcher<$CommandSourceStack>): void;
         constructor();
@@ -549,10 +549,10 @@ declare module "@package/net/minecraft/server/commands" {
         constructor();
     }
     export class $GameRuleCommand implements $GameRuleCommandAccessor {
-        static setRule<T extends $GameRules$Value<T>>(source: $CommandContext<$CommandSourceStack>, gameRule: $GameRules$Key<T>): number;
         static register(dispatcher: $CommandDispatcher<$CommandSourceStack>): void;
-        static invokeQueryRule$fabric_game_rule_api_v1_$md$942995$0(source: $CommandSourceStack, gameRule: $GameRules$Key<any>): number;
+        static setRule<T extends $GameRules$Value<T>>(source: $CommandContext<$CommandSourceStack>, gameRule: $GameRules$Key<T>): number;
         static queryRule<T extends $GameRules$Value<T>>(source: $CommandSourceStack, gameRule: $GameRules$Key<T>): number;
+        static invokeQueryRule$fabric_game_rule_api_v1_$md$c99f8a$0(source: $CommandSourceStack, gameRule: $GameRules$Key<any>): number;
         constructor();
     }
     export class $ParticleCommand {
@@ -571,7 +571,7 @@ declare module "@package/net/minecraft/server/commands" {
     /**
      * Values that may be interpreted as {@link $TeleportCommand$LookAtEntity}.
      */
-    export type $TeleportCommand$LookAtEntity_ = { entity?: $Entity, anchor?: $EntityAnchorArgument$Anchor_,  } | [entity?: $Entity, anchor?: $EntityAnchorArgument$Anchor_, ];
+    export type $TeleportCommand$LookAtEntity_ = { anchor?: $EntityAnchorArgument$Anchor_, entity?: $Entity,  } | [anchor?: $EntityAnchorArgument$Anchor_, entity?: $Entity, ];
     export class $AttributeCommand {
         static register(dispatcher: $CommandDispatcher<$CommandSourceStack>, context: $CommandBuildContext): void;
         constructor();

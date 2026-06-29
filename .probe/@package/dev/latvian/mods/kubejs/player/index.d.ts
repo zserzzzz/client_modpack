@@ -38,14 +38,8 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
         getItem(): $ItemStack;
         getPlayer(): $Player;
         getLevel(): $Level;
-        getRegistries(): $RegistryAccess;
         getServer(): $MinecraftServer;
-        /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
+        getRegistries(): $RegistryAccess;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -53,11 +47,11 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -65,40 +59,34 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         getEntity(): $LivingEntity;
         constructor(p: $Player, is: $ItemStack_, s: number);
         get slot(): number;
         get item(): $ItemStack;
         get player(): $Player;
         get level(): $Level;
-        get registries(): $RegistryAccess;
         get server(): $MinecraftServer;
+        get registries(): $RegistryAccess;
         get entity(): $LivingEntity;
     }
     export class $EntityArrayList extends $ArrayList<$Entity> implements $MessageSenderKJS, $DataSenderKJS {
-        /**
-         * Each entity in the list runs the specified console command with their permission level. The command won't output any logs in chat nor console
-         * 
-         * @param command The console command. Slash at the beginning is optional.
-         */
-        runCommandSilent(command: string): void;
-        setActivePostShader(id: $ResourceLocation_): void;
-        setStatusMessage(message: $Component_): void;
-        /**
-         * Kills every entity in the list.
-         */
-        kill(): void;
         /**
          * Filters the entity list by passing each entity through a given predicate.
          * Entities that pass the predicate will end up in the resulting entity list.
@@ -107,22 +95,23 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
          */
         filter(filter: $Predicate_<$Entity>): $EntityArrayList;
         /**
-         * Gets the first entity on the list, or `null` if the list is empty.
-         */
-        getFirst(): $Entity;
-        /**
          * Filters the entity list based on the type of the entity. Only entities whose type is equal to the provided one will end up in the resulting list.
          * 
          * @param type The entity type. It may be a string representing an entity ID, like `'minecraft:creeper'`.
          */
         filterType(type: $EntityType_<never>): $EntityArrayList;
         /**
-         * Filters the entity list by passing each entity through all predicates in provided list.
-         * Entities that pass at least one of the predicates will end up in the resulting entity list.
-         * 
-         * @param filterList The list of predicates - functions that take one argument of `Entity` and return boolean values.
+         * Kills every entity in the list.
          */
-        filterList(filterList: $List_<$Predicate_<$Entity>>): $EntityArrayList;
+        kill(): void;
+        setActivePostShader(id: $ResourceLocation_): void;
+        /**
+         * Each entity in the list runs the specified console command with their permission level. The command won't output any logs in chat nor console
+         * 
+         * @param command The console command. Slash at the beginning is optional.
+         */
+        runCommandSilent(command: string): void;
+        setStatusMessage(message: $Component_): void;
         /**
          * Sends NBT data to every player in the list.
          * 
@@ -131,14 +120,13 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
          * It may be a JS object containing data or string representing stringified NBT.
          */
         sendData(channel: string, data: $CompoundTag_): void;
-        getName(): $Component;
         /**
-         * Each entity in the list runs the specified console command with their permission level.
+         * Filters the entity list by passing each entity through all predicates in provided list.
+         * Entities that pass at least one of the predicates will end up in the resulting entity list.
          * 
-         * @param command The console command. Slash at the beginning is optional.
+         * @param filterList The list of predicates - functions that take one argument of `Entity` and return boolean values.
          */
-        runCommand(command: string): void;
-        getDisplayName(): $Component;
+        filterList(filterList: $List_<$Predicate_<$Entity>>): $EntityArrayList;
         /**
          * Plays a sound from each entity in the list, unless the entity is silent.
          */
@@ -147,6 +135,14 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
          * Plays a sound from each entity in the list, unless the entity is silent.
          */
         playSound(id: $SoundEvent_): void;
+        /**
+         * Each entity in the list runs the specified console command with their permission level.
+         * 
+         * @param command The console command. Slash at the beginning is optional.
+         */
+        runCommand(command: string): void;
+        getDisplayName(): $Component;
+        getName(): $Component;
         /**
          * Sends a message in chat to every entity in the list.
          * 
@@ -157,14 +153,11 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
          * Results in an entity list containing only item entities.
          */
         filterItems(): $EntityArrayList;
+        addAllIterable(entities: $Iterable_<$Entity>): void;
         /**
-         * Filters the entity list based on distance to the given block position.
-         * Entities that are closer than `distance` away from the center of the block will end up in the resulting list.
-         * 
-         * @param pos The `BlockPos` - that is the center of the block at specified position. It can be a 3-element array of integers, such as `[64, 25, 39]`.
-         * @param distance The maximum distance of entities from the point.
+         * Results in an entity list containing only players.
          */
-        filterDistance(pos: $BlockPos_, distance: number): $EntityArrayList;
+        filterPlayers(): $EntityArrayList;
         /**
          * Filters the entity list based on distance to the given point.
          * Entities that are closer than `distance` away from the point specified by `x`, `y` and `z` coordinates will end up in the resulting list.
@@ -175,31 +168,33 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
          * @param distance The maximum distance of entities from the point.
          */
         filterDistance(x: number, y: number, z: number, distance: number): $EntityArrayList;
-        addAllIterable(entities: $Iterable_<$Entity>): void;
+        /**
+         * Filters the entity list based on distance to the given block position.
+         * Entities that are closer than `distance` away from the center of the block will end up in the resulting list.
+         * 
+         * @param pos The `BlockPos` - that is the center of the block at specified position. It can be a 3-element array of integers, such as `[64, 25, 39]`.
+         * @param distance The maximum distance of entities from the point.
+         */
+        filterDistance(pos: $BlockPos_, distance: number): $EntityArrayList;
         /**
          * Filters the entity list based on the provided `EntitySelector`.
          * 
          * @param selector The entity selector. It may be a string representing the entity selector as seen in commands, such as `'@e[distance=..25]'`
          */
         filterSelector(selector: $EntitySelector): $EntityArrayList;
-        /**
-         * Results in an entity list containing only players.
-         */
-        filterPlayers(): $EntityArrayList;
         sendData(channel: string): void;
         reversed(): $SequencedCollection<$Entity>;
         static ALWAYS_TRUE_PREDICATE: $Predicate<$Entity>;
-        constructor(entities: $Iterable_<$Entity>);
         /**
          * @deprecated
          */
         constructor(level: $Level_, entities: $Iterable_<$Entity>);
+        constructor(entities: $Iterable_<$Entity>);
         constructor(size: number);
         set activePostShader(value: $ResourceLocation_);
         set statusMessage(value: $Component_);
-        get first(): $Entity;
-        get name(): $Component;
         get displayName(): $Component;
+        get name(): $Component;
     }
     export class $KubePlayerEvent {
     }
@@ -214,32 +209,26 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
      */
     export type $KubePlayerEvent_ = (() => $LivingEntity);
     export class $KubeJSPlayerEventHandler {
-        static cloned(event: $PlayerEvent$Clone): void;
         static tick(event: $PlayerTickEvent$Post): void;
-        static respawn(event: $PlayerEvent$PlayerRespawnEvent): void;
+        static cloned(event: $PlayerEvent$Clone): void;
         static advancement(event: $AdvancementEvent$AdvancementEarnEvent): void;
-        static inventoryClosed(event: $PlayerContainerEvent$Close): void;
-        static inventoryOpened(event: $PlayerContainerEvent$Open): void;
-        static datapackSync(event: $OnDatapackSyncEvent): void;
-        static dimensionChanged(event: $PlayerEvent$PlayerChangedDimensionEvent): void;
-        static chatDecorate(event: $ServerChatEvent): void;
-        static chatReceived(event: $ServerChatEvent): void;
+        static respawn(event: $PlayerEvent$PlayerRespawnEvent): void;
         static loggedOut(event: $PlayerEvent$PlayerLoggedOutEvent): void;
         static loggedIn(event: $PlayerEvent$PlayerLoggedInEvent): void;
+        static inventoryOpened(event: $PlayerContainerEvent$Open): void;
+        static inventoryClosed(event: $PlayerContainerEvent$Close): void;
+        static chatReceived(event: $ServerChatEvent): void;
+        static datapackSync(event: $OnDatapackSyncEvent): void;
+        static chatDecorate(event: $ServerChatEvent): void;
+        static dimensionChanged(event: $PlayerEvent$PlayerChangedDimensionEvent): void;
         constructor();
     }
     export class $PlayerRespawnedKubeEvent implements $KubePlayerEvent {
         isEndConquered(): boolean;
         getPlayer(): $Player;
         getLevel(): $Level;
-        getRegistries(): $RegistryAccess;
         getServer(): $MinecraftServer;
-        /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
+        getRegistries(): $RegistryAccess;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -247,11 +236,11 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -259,24 +248,30 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         getEntity(): $LivingEntity;
         constructor(player: $ServerPlayer, endConquered: boolean);
         get endConquered(): boolean;
         get player(): $Player;
         get level(): $Level;
-        get registries(): $RegistryAccess;
         get server(): $MinecraftServer;
+        get registries(): $RegistryAccess;
         get entity(): $LivingEntity;
     }
     export class $PlayerChatReceivedKubeEvent implements $KubePlayerEvent {
@@ -286,14 +281,8 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
         getUsername(): string;
         getPlayer(): $Player;
         getLevel(): $Level;
-        getRegistries(): $RegistryAccess;
         getServer(): $MinecraftServer;
-        /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
+        getRegistries(): $RegistryAccess;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -301,11 +290,11 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -313,40 +302,40 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         getEntity(): $LivingEntity;
         constructor(event: $ServerChatEvent);
         get message(): string;
         get username(): string;
         get player(): $Player;
         get level(): $Level;
-        get registries(): $RegistryAccess;
         get server(): $MinecraftServer;
+        get registries(): $RegistryAccess;
         get entity(): $LivingEntity;
     }
     export class $StageChangedEvent implements $KubePlayerEvent {
         getPlayer(): $Player;
-        getStage(): string;
         getPlayerStages(): $Stages;
+        getStage(): string;
         getLevel(): $Level;
-        getRegistries(): $RegistryAccess;
         getServer(): $MinecraftServer;
-        /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
+        getRegistries(): $RegistryAccess;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -354,11 +343,11 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -366,44 +355,44 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         getEntity(): $LivingEntity;
         constructor(player: $Player, stages: $Stages, stage: string);
         get player(): $Player;
-        get stage(): string;
         get playerStages(): $Stages;
+        get stage(): string;
         get level(): $Level;
-        get registries(): $RegistryAccess;
         get server(): $MinecraftServer;
+        get registries(): $RegistryAccess;
         get entity(): $LivingEntity;
     }
     export class $KubeJSInventoryListener implements $ContainerListener {
-        slotChanged(container: $AbstractContainerMenu, index: number, stack: $ItemStack_): void;
         dataChanged(container: $AbstractContainerMenu, id: number, value: number): void;
+        slotChanged(container: $AbstractContainerMenu, index: number, stack: $ItemStack_): void;
         player: $Player;
         constructor(p: $Player);
     }
     export class $SimplePlayerKubeEvent implements $KubePlayerEvent {
         getPlayer(): $Player;
         getLevel(): $Level;
-        getRegistries(): $RegistryAccess;
         getServer(): $MinecraftServer;
-        /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
+        getRegistries(): $RegistryAccess;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -411,11 +400,11 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -423,23 +412,29 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         getEntity(): $LivingEntity;
         constructor(p: $Player);
         get player(): $Player;
         get level(): $Level;
-        get registries(): $RegistryAccess;
         get server(): $MinecraftServer;
+        get registries(): $RegistryAccess;
         get entity(): $LivingEntity;
     }
     export class $PlayerClonedKubeEvent implements $KubePlayerEvent {
@@ -453,14 +448,8 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
         getKeepData(): boolean;
         getPlayer(): $Player;
         getLevel(): $Level;
-        getRegistries(): $RegistryAccess;
         getServer(): $MinecraftServer;
-        /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
+        getRegistries(): $RegistryAccess;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -468,11 +457,11 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -480,25 +469,31 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         getEntity(): $LivingEntity;
         constructor(player: $ServerPlayer, oldPlayer: $ServerPlayer, keepData: boolean);
         get oldPlayer(): $ServerPlayer;
         get keepData(): boolean;
         get player(): $Player;
         get level(): $Level;
-        get registries(): $RegistryAccess;
         get server(): $MinecraftServer;
+        get registries(): $RegistryAccess;
         get entity(): $LivingEntity;
     }
     export class $ChestKubeEvent extends $InventoryKubeEvent {
@@ -521,14 +516,8 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
         getAdvancement(): $AdvancementNode;
         getPlayer(): $Player;
         getLevel(): $Level;
-        getRegistries(): $RegistryAccess;
         getServer(): $MinecraftServer;
-        /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
+        getRegistries(): $RegistryAccess;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -536,11 +525,11 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -548,24 +537,30 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         getEntity(): $LivingEntity;
         constructor(player: $ServerPlayer, advancementNode: $AdvancementNode);
         get advancement(): $AdvancementNode;
         get player(): $Player;
         get level(): $Level;
-        get registries(): $RegistryAccess;
         get server(): $MinecraftServer;
+        get registries(): $RegistryAccess;
         get entity(): $LivingEntity;
     }
     export class $InventoryKubeEvent implements $KubePlayerEvent {
@@ -575,14 +570,8 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
         getInventoryContainer(): $AbstractContainerMenu;
         getPlayer(): $Player;
         getLevel(): $Level;
-        getRegistries(): $RegistryAccess;
         getServer(): $MinecraftServer;
-        /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
-         * 
-         * `exit` denotes a `default` outcome.
-         */
-        exit(): $Object;
+        getRegistries(): $RegistryAccess;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -590,11 +579,11 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
          */
         exit(value: $Object): $Object;
         /**
-         * Cancels the event with default exit value. Execution will be stopped **immediately**.
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `cancel` denotes a `false` outcome.
+         * `exit` denotes a `default` outcome.
          */
-        cancel(): $Object;
+        exit(): $Object;
         /**
          * Cancels the event with the given exit value. Execution will be stopped **immediately**.
          * 
@@ -602,82 +591,88 @@ declare module "@package/dev/latvian/mods/kubejs/player" {
          */
         cancel(value: $Object): $Object;
         /**
-         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * Cancels the event with default exit value. Execution will be stopped **immediately**.
          * 
-         * `success` denotes a `true` outcome.
+         * `cancel` denotes a `false` outcome.
          */
-        success(): $Object;
+        cancel(): $Object;
         /**
          * Stops the event with the given exit value. Execution will be stopped **immediately**.
          * 
          * `success` denotes a `true` outcome.
          */
         success(value: $Object): $Object;
+        /**
+         * Stops the event with default exit value. Execution will be stopped **immediately**.
+         * 
+         * `success` denotes a `true` outcome.
+         */
+        success(): $Object;
         getEntity(): $LivingEntity;
         constructor(player: $Player, menu: $AbstractContainerMenu);
         get inventoryContainer(): $AbstractContainerMenu;
         get player(): $Player;
         get level(): $Level;
-        get registries(): $RegistryAccess;
         get server(): $MinecraftServer;
+        get registries(): $RegistryAccess;
         get entity(): $LivingEntity;
     }
     export class $PlayerStatsJS {
         get(stat: $Stat_<never>): number;
         add(stat: $Stat_<never>, value: number): void;
         set(stat: $Stat_<never>, value: number): void;
-        getJumps(): number;
-        getDeaths(): number;
-        getKilled(entity: $EntityType_<never>): number;
-        getPlayTime(): number;
-        getTimeSinceDeath(): number;
-        getTimeSinceRest(): number;
-        getTimeCrouchTime(): number;
-        getWalkDistance(): number;
-        getSprintDistance(): number;
-        getSwimDistance(): number;
-        getItemsDropped(item: $Item_): number;
-        getItemsPickedUp(item: $Item_): number;
-        getMobKills(): number;
-        getFishCaught(): number;
-        getPlayerKills(): number;
-        getItemsCrafted(item: $Item_): number;
-        getDamageAbsorbed(): number;
-        getItemsBroken(item: $Item_): number;
-        getBlocksMined(block: $Block_): number;
-        getAnimalsBred(): number;
-        getDamageDealt(): number;
-        getDamageResisted(): number;
-        getCrouchDistance(): number;
-        getDamageTaken(): number;
-        getItemsUsed(item: $Item_): number;
-        getKilledBy(entity: $EntityType_<never>): number;
         static wrapStat(o: $Object): $Stat<never>;
+        getDamageDealt_resisted(): number;
         getDamageBlocked_by_shield(): number;
         getDamageDealt_absorbed(): number;
-        getDamageDealt_resisted(): number;
+        getJumps(): number;
+        getKilled(entity: $EntityType_<never>): number;
+        getDeaths(): number;
+        getSprintDistance(): number;
+        getDamageDealt(): number;
+        getDamageAbsorbed(): number;
+        getCrouchDistance(): number;
+        getDamageTaken(): number;
+        getDamageResisted(): number;
+        getAnimalsBred(): number;
+        getMobKills(): number;
+        getPlayerKills(): number;
+        getPlayTime(): number;
+        getTimeSinceDeath(): number;
+        getSwimDistance(): number;
+        getTimeSinceRest(): number;
+        getWalkDistance(): number;
+        getTimeCrouchTime(): number;
+        getKilledBy(entity: $EntityType_<never>): number;
+        getItemsCrafted(item: $Item_): number;
+        getItemsUsed(item: $Item_): number;
+        getItemsPickedUp(item: $Item_): number;
+        getBlocksMined(block: $Block_): number;
+        getItemsBroken(item: $Item_): number;
+        getFishCaught(): number;
+        getItemsDropped(item: $Item_): number;
         player: $Player;
         constructor(p: $Player, s: $StatsCounter);
-        get jumps(): number;
-        get deaths(): number;
-        get playTime(): number;
-        get timeSinceDeath(): number;
-        get timeSinceRest(): number;
-        get timeCrouchTime(): number;
-        get walkDistance(): number;
-        get sprintDistance(): number;
-        get swimDistance(): number;
-        get mobKills(): number;
-        get fishCaught(): number;
-        get playerKills(): number;
-        get damageAbsorbed(): number;
-        get animalsBred(): number;
-        get damageDealt(): number;
-        get damageResisted(): number;
-        get crouchDistance(): number;
-        get damageTaken(): number;
+        get damageDealt_resisted(): number;
         get damageBlocked_by_shield(): number;
         get damageDealt_absorbed(): number;
-        get damageDealt_resisted(): number;
+        get jumps(): number;
+        get deaths(): number;
+        get sprintDistance(): number;
+        get damageDealt(): number;
+        get damageAbsorbed(): number;
+        get crouchDistance(): number;
+        get damageTaken(): number;
+        get damageResisted(): number;
+        get animalsBred(): number;
+        get mobKills(): number;
+        get playerKills(): number;
+        get playTime(): number;
+        get timeSinceDeath(): number;
+        get swimDistance(): number;
+        get timeSinceRest(): number;
+        get walkDistance(): number;
+        get timeCrouchTime(): number;
+        get fishCaught(): number;
     }
 }

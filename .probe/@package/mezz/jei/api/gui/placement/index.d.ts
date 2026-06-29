@@ -4,12 +4,12 @@ declare module "@package/mezz/jei/api/gui/placement" {
     export class $IPlaceable<THIS extends $IPlaceable<THIS>> {
     }
     export interface $IPlaceable<THIS extends $IPlaceable<THIS>> {
-        getHeight(): number;
         getWidth(): number;
+        getHeight(): number;
         setPosition(arg0: number, arg1: number, arg2: number, arg3: number, arg4: $HorizontalAlignment_, arg5: $VerticalAlignment_): THIS;
         setPosition(arg0: number, arg1: number): THIS;
-        get height(): number;
         get width(): number;
+        get height(): number;
     }
     export class $VerticalAlignment extends $Enum<$VerticalAlignment> {
         static values(): $VerticalAlignment[];

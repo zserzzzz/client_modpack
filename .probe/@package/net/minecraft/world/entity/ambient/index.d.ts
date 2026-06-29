@@ -1,37 +1,39 @@
-import { $LevelAccessor, $Level_ } from "@package/net/minecraft/world/level";
-import { $TagKey } from "@package/net/minecraft/tags";
 import { $GoalSelector } from "@package/net/minecraft/world/entity/ai/goal";
 import { $JumpControl, $MoveControl, $LookControl } from "@package/net/minecraft/world/entity/ai/control";
-import { $ItemStack } from "@package/net/minecraft/world/item";
-import { $Fluid } from "@package/net/minecraft/world/level/material";
+import { $CompoundTag } from "@package/net/minecraft/nbt";
 import { $AnimationState, $EntityDimensions, $EntityType_, $Entity$RemovalReason, $Pose, $PortalProcessor, $WalkAnimationState, $Mob, $MobSpawnType_ } from "@package/net/minecraft/world/entity";
 import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
-import { $Player } from "@package/net/minecraft/world/entity/player";
 import { $AttributeSupplier$Builder } from "@package/net/minecraft/world/entity/ai/attributes";
 import { $UUID, $Stack } from "@package/java/util";
 import { $RandomSource } from "@package/net/minecraft/util";
-import { $SynchedEntityData, $EntityDataAccessor } from "@package/net/minecraft/network/syncher";
-import { $DamageContainer } from "@package/net/neoforged/neoforge/common/damagesource";
 import { $InteractionHand } from "@package/net/minecraft/world";
 import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos, $BlockPos_ } from "@package/net/minecraft/core";
+import { $HolderLookup$Provider, $BlockPos, $BlockPos_ } from "@package/net/minecraft/core";
 import { $Brain } from "@package/net/minecraft/world/entity/ai";
-import { $AtomicInteger } from "@package/java/util/concurrent/atomic";
-import { $ResourceLocation } from "@package/net/minecraft/resources";
 import { $PathNavigation } from "@package/net/minecraft/world/entity/ai/navigation";
 import { $Object } from "@package/java/lang";
-import { $Vec3 } from "@package/net/minecraft/world/phys";
 import { $EntityInLevelCallback } from "@package/net/minecraft/world/level/entity";
+import { $LevelAccessor, $Level_ } from "@package/net/minecraft/world/level";
+import { $TagKey } from "@package/net/minecraft/tags";
+import { $ItemStack } from "@package/net/minecraft/world/item";
+import { $Fluid } from "@package/net/minecraft/world/level/material";
+import { $Player } from "@package/net/minecraft/world/entity/player";
+import { $SynchedEntityData, $EntityDataAccessor } from "@package/net/minecraft/network/syncher";
+import { $DamageContainer } from "@package/net/neoforged/neoforge/common/damagesource";
+import { $AtomicInteger } from "@package/java/util/concurrent/atomic";
+import { $ResourceLocation } from "@package/net/minecraft/resources";
+import { $Vec3 } from "@package/net/minecraft/world/phys";
 
 declare module "@package/net/minecraft/world/entity/ambient" {
     export class $Bat extends $AmbientCreature {
-        static createAttributes(): $AttributeSupplier$Builder;
-        static checkBatSpawnRules(bat: $EntityType_<$Bat>, level: $LevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
         setResting(isResting: boolean): void;
         /**
          * Return whether this entity should NOT trigger a pressure plate or a tripwire.
          */
         isResting(): boolean;
+        static createAttributes(): $AttributeSupplier$Builder;
+        static checkBatSpawnRules(bat: $EntityType_<$Bat>, level: $LevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;
@@ -201,6 +203,7 @@ declare module "@package/net/minecraft/world/entity/ambient" {
         constructor(entityType: $EntityType_<$Bat>, level: $Level_);
     }
     export class $AmbientCreature extends $Mob {
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;

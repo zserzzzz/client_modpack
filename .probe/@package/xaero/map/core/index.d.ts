@@ -6,14 +6,14 @@ declare module "@package/xaero/map/core" {
     export class $IWorldMapClientPlayNetHandler {
     }
     export interface $IWorldMapClientPlayNetHandler {
-        getXaero_worldmapSession(): $WorldMapSession;
         setXaero_worldmapSession(arg0: $WorldMapSession): void;
+        getXaero_worldmapSession(): $WorldMapSession;
     }
     export class $IWorldMapServerLevel {
     }
     export interface $IWorldMapServerLevel {
-        setXaero_wm_capabilities(arg0: $ServerWorldCapabilities): void;
         getXaero_wm_capabilities(): $ServerWorldCapabilities;
+        setXaero_wm_capabilities(arg0: $ServerWorldCapabilities): void;
     }
     export class $IWorldMapSMultiBlockChangePacket {
     }

@@ -18,11 +18,11 @@ declare module "@package/com/simibubi/create/content/kinetics/fan/processing" {
     export class $AllFanProcessingTypes$SmokingType implements $FanProcessingType {
         getPriority(): number;
         process(arg0: $ItemStack_, arg1: $Level_): $List<$ItemStack>;
+        spawnProcessingParticles(arg0: $Level_, arg1: $Vec3_): void;
+        canProcess(arg0: $ItemStack_, arg1: $Level_): boolean;
         morphAirFlow(arg0: $FanProcessingType$AirFlowParticleAccess, arg1: $RandomSource): void;
         affectEntity(arg0: $Entity, arg1: $Level_): void;
-        canProcess(arg0: $ItemStack_, arg1: $Level_): boolean;
         isValidAt(arg0: $Level_, arg1: $BlockPos_): boolean;
-        spawnProcessingParticles(arg0: $Level_, arg1: $Vec3_): void;
         constructor();
         get priority(): number;
     }
@@ -44,11 +44,11 @@ declare module "@package/com/simibubi/create/content/kinetics/fan/processing" {
     export class $AllFanProcessingTypes$BlastingType implements $FanProcessingType {
         getPriority(): number;
         process(arg0: $ItemStack_, arg1: $Level_): $List<$ItemStack>;
+        spawnProcessingParticles(arg0: $Level_, arg1: $Vec3_): void;
+        canProcess(arg0: $ItemStack_, arg1: $Level_): boolean;
         morphAirFlow(arg0: $FanProcessingType$AirFlowParticleAccess, arg1: $RandomSource): void;
         affectEntity(arg0: $Entity, arg1: $Level_): void;
-        canProcess(arg0: $ItemStack_, arg1: $Level_): boolean;
         isValidAt(arg0: $Level_, arg1: $BlockPos_): boolean;
-        spawnProcessingParticles(arg0: $Level_, arg1: $Vec3_): void;
         constructor();
         get priority(): number;
     }
@@ -57,17 +57,17 @@ declare module "@package/com/simibubi/create/content/kinetics/fan/processing" {
         constructor(arg0: $ProcessingRecipeParams);
     }
     export class $FanProcessingType {
-        static getAt(arg0: $Level_, arg1: $BlockPos_): $FanProcessingType;
         static parse(arg0: string): $FanProcessingType;
+        static getAt(arg0: $Level_, arg1: $BlockPos_): $FanProcessingType;
     }
     export interface $FanProcessingType {
         getPriority(): number;
         process(arg0: $ItemStack_, arg1: $Level_): $List<$ItemStack>;
+        spawnProcessingParticles(arg0: $Level_, arg1: $Vec3_): void;
+        canProcess(arg0: $ItemStack_, arg1: $Level_): boolean;
         morphAirFlow(arg0: $FanProcessingType$AirFlowParticleAccess, arg1: $RandomSource): void;
         affectEntity(arg0: $Entity, arg1: $Level_): void;
-        canProcess(arg0: $ItemStack_, arg1: $Level_): boolean;
         isValidAt(arg0: $Level_, arg1: $BlockPos_): boolean;
-        spawnProcessingParticles(arg0: $Level_, arg1: $Vec3_): void;
         get priority(): number;
     }
     /**
@@ -77,22 +77,22 @@ declare module "@package/com/simibubi/create/content/kinetics/fan/processing" {
     export class $AllFanProcessingTypes$HauntingType implements $FanProcessingType {
         getPriority(): number;
         process(arg0: $ItemStack_, arg1: $Level_): $List<$ItemStack>;
+        spawnProcessingParticles(arg0: $Level_, arg1: $Vec3_): void;
+        canProcess(arg0: $ItemStack_, arg1: $Level_): boolean;
         morphAirFlow(arg0: $FanProcessingType$AirFlowParticleAccess, arg1: $RandomSource): void;
         affectEntity(arg0: $Entity, arg1: $Level_): void;
-        canProcess(arg0: $ItemStack_, arg1: $Level_): boolean;
         isValidAt(arg0: $Level_, arg1: $BlockPos_): boolean;
-        spawnProcessingParticles(arg0: $Level_, arg1: $Vec3_): void;
         constructor();
         get priority(): number;
     }
     export class $AllFanProcessingTypes$SplashingType implements $FanProcessingType {
         getPriority(): number;
         process(arg0: $ItemStack_, arg1: $Level_): $List<$ItemStack>;
+        spawnProcessingParticles(arg0: $Level_, arg1: $Vec3_): void;
+        canProcess(arg0: $ItemStack_, arg1: $Level_): boolean;
         morphAirFlow(arg0: $FanProcessingType$AirFlowParticleAccess, arg1: $RandomSource): void;
         affectEntity(arg0: $Entity, arg1: $Level_): void;
-        canProcess(arg0: $ItemStack_, arg1: $Level_): boolean;
         isValidAt(arg0: $Level_, arg1: $BlockPos_): boolean;
-        spawnProcessingParticles(arg0: $Level_, arg1: $Vec3_): void;
         constructor();
         get priority(): number;
     }

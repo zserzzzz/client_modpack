@@ -52,8 +52,8 @@ declare module "@package/com/simibubi/create/foundation" {
     }
     export class $ICapabilityProvider<T> {
         static of<T>(arg0: T): $ICapabilityProvider<T>;
-        static of<T>(arg0: $Supplier_<T>): $ICapabilityProvider<T>;
         static of<T, C>(arg0: $Function_<$Runnable, $BlockCapabilityCache<T, C>>): $ICapabilityProvider<T>;
+        static of<T>(arg0: $Supplier_<T>): $ICapabilityProvider<T>;
     }
     export interface $ICapabilityProvider<T> {
         getCapability(): T;

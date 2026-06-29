@@ -21,20 +21,20 @@ declare module "@package/com/simibubi/create/content/equipment/tool" {
     export class $AllToolMaterials extends $Enum<$AllToolMaterials> implements $Tier {
         static values(): $AllToolMaterials[];
         static valueOf(arg0: string): $AllToolMaterials;
-        getEnchantmentValue(): number;
-        getAttackDamageBonus(): number;
-        getIncorrectBlocksForDrops(): $TagKey<$Block>;
-        getRepairIngredient(): $Ingredient;
-        getUses(): number;
         getSpeed(): number;
+        getUses(): number;
+        getRepairIngredient(): $Ingredient;
+        getIncorrectBlocksForDrops(): $TagKey<$Block>;
+        getAttackDamageBonus(): number;
+        getEnchantmentValue(): number;
         createToolProperties(arg0: $TagKey_<$Block>): $Tool;
         static CARDBOARD: $AllToolMaterials;
-        get enchantmentValue(): number;
-        get attackDamageBonus(): number;
-        get incorrectBlocksForDrops(): $TagKey<$Block>;
-        get repairIngredient(): $Ingredient;
-        get uses(): number;
         get speed(): number;
+        get uses(): number;
+        get repairIngredient(): $Ingredient;
+        get incorrectBlocksForDrops(): $TagKey<$Block>;
+        get attackDamageBonus(): number;
+        get enchantmentValue(): number;
     }
     /**
      * Values that may be interpreted as {@link $AllToolMaterials}.
@@ -45,8 +45,8 @@ declare module "@package/com/simibubi/create/content/equipment/tool" {
     }
     export class $CardboardSwordItem extends $SwordItem {
         static knockback(arg0: $LivingEntity, arg1: number, arg2: number): void;
-        static cardboardSwordsMakeNoiseOnClick(arg0: $PlayerInteractEvent$LeftClickBlock): void;
         static cardboardSwordsCannotHurtYou(arg0: $AttackEntityEvent): void;
+        static cardboardSwordsMakeNoiseOnClick(arg0: $PlayerInteractEvent$LeftClickBlock): void;
         static BASE_ATTACK_DAMAGE_ID: $ResourceLocation;
         static DEFAULT_MAX_STACK_SIZE: number;
         tier: $Tier;
@@ -59,10 +59,10 @@ declare module "@package/com/simibubi/create/content/equipment/tool" {
         constructor(arg0: $Item$Properties);
     }
     export class $KnockbackPacket extends $Record implements $ClientboundPacketPayload {
-        strength(): number;
         handle(arg0: $LocalPlayer): void;
-        getTypeProvider(): $BasePacketPayload$PacketTypeProvider;
         yRot(): number;
+        strength(): number;
+        getTypeProvider(): $BasePacketPayload$PacketTypeProvider;
         handleInternal(arg0: $Player): void;
         type(): $CustomPacketPayload$Type<$CustomPacketPayload>;
         toVanillaClientbound(): $ClientboundCustomPayloadPacket;
@@ -74,5 +74,5 @@ declare module "@package/com/simibubi/create/content/equipment/tool" {
     /**
      * Values that may be interpreted as {@link $KnockbackPacket}.
      */
-    export type $KnockbackPacket_ = { yRot?: number, strength?: number,  } | [yRot?: number, strength?: number, ];
+    export type $KnockbackPacket_ = { strength?: number, yRot?: number,  } | [strength?: number, yRot?: number, ];
 }

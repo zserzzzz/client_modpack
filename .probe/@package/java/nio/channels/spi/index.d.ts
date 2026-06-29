@@ -1,5 +1,5 @@
 import { $ProtocolFamily_ } from "@package/java/net";
-import { $Selector, $Pipe, $DatagramChannel, $ServerSocketChannel, $Channel, $SocketChannel, $SelectableChannel, $InterruptibleChannel } from "@package/java/nio/channels";
+import { $Selector, $Pipe, $ServerSocketChannel, $DatagramChannel, $Channel, $SocketChannel, $SelectableChannel, $InterruptibleChannel } from "@package/java/nio/channels";
 
 declare module "@package/java/nio/channels/spi" {
     export class $AbstractSelector extends $Selector {
@@ -12,15 +12,15 @@ declare module "@package/java/nio/channels/spi" {
         get open(): boolean;
     }
     export class $SelectorProvider {
-        openSocketChannel(arg0: $ProtocolFamily_): $SocketChannel;
-        openSocketChannel(): $SocketChannel;
         static provider(): $SelectorProvider;
         inheritedChannel(): $Channel;
-        openPipe(): $Pipe;
         openSelector(): $AbstractSelector;
-        openDatagramChannel(): $DatagramChannel;
         openDatagramChannel(arg0: $ProtocolFamily_): $DatagramChannel;
+        openDatagramChannel(): $DatagramChannel;
         openServerSocketChannel(): $ServerSocketChannel;
         openServerSocketChannel(arg0: $ProtocolFamily_): $ServerSocketChannel;
+        openSocketChannel(arg0: $ProtocolFamily_): $SocketChannel;
+        openSocketChannel(): $SocketChannel;
+        openPipe(): $Pipe;
     }
 }

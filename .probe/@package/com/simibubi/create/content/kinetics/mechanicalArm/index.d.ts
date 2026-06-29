@@ -74,11 +74,11 @@ declare module "@package/com/simibubi/create/content/kinetics/mechanicalArm" {
     export type $ArmBlockEntity$Phase_ = "search_inputs" | "move_to_input" | "search_outputs" | "move_to_output" | "dancing";
     export class $ArmRenderer extends $KineticBlockEntityRenderer<$ArmBlockEntity> {
         shouldRenderOffScreen(arg0: $ArmBlockEntity): boolean;
-        static transformBase(arg0: $TransformStack<any>, arg1: number): void;
-        static transformHead(arg0: $TransformStack<any>, arg1: number): void;
-        static transformClawHalf(arg0: $TransformStack<any>, arg1: boolean, arg2: boolean, arg3: number): void;
         static transformUpperArm(arg0: $TransformStack<any>, arg1: number): void;
         static transformLowerArm(arg0: $TransformStack<any>, arg1: number): void;
+        static transformBase(arg0: $TransformStack<any>, arg1: number): void;
+        static transformClawHalf(arg0: $TransformStack<any>, arg1: boolean, arg2: boolean, arg3: number): void;
+        static transformHead(arg0: $TransformStack<any>, arg1: number): void;
         static KINETIC_BLOCK: $SuperByteBufferCache$Compartment<$BlockState>;
         static rainbowMode: boolean;
         constructor(arg0: $BlockEntityRendererProvider$Context);
@@ -92,10 +92,8 @@ declare module "@package/com/simibubi/create/content/kinetics/mechanicalArm" {
     export class $ArmBlockEntity$SelectionModeValueBox extends $CenteredSideValueBoxTransform {
     }
     export class $ArmInteractionPoint {
-        serialize(arg0: $BlockPos_): $CompoundTag;
-        static deserialize(arg0: $CompoundTag_, arg1: $Level_, arg2: $BlockPos_): $ArmInteractionPoint;
-        extract(arg0: $ArmBlockEntity, arg1: number, arg2: boolean): $ItemStack;
         extract(arg0: $ArmBlockEntity, arg1: number, arg2: number, arg3: boolean): $ItemStack;
+        extract(arg0: $ArmBlockEntity, arg1: number, arg2: boolean): $ItemStack;
         insert(arg0: $ArmBlockEntity, arg1: $ItemStack_, arg2: boolean): $ItemStack;
         getType(): $ArmInteractionPointType;
         static create(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_): $ArmInteractionPoint;
@@ -103,14 +101,16 @@ declare module "@package/com/simibubi/create/content/kinetics/mechanicalArm" {
         keepAlive(): void;
         getLevel(): $Level;
         setLevel(arg0: $Level_): void;
+        static deserialize(arg0: $CompoundTag_, arg1: $Level_, arg2: $BlockPos_): $ArmInteractionPoint;
+        serialize(arg0: $BlockPos_): $CompoundTag;
         getMode(): $ArmInteractionPoint$Mode;
-        cycleMode(): void;
         getPos(): $BlockPos;
-        getSlotCount(arg0: $ArmBlockEntity): number;
-        static isInteractable(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_): boolean;
+        updateCachedState(): void;
         getTargetAngles(arg0: $BlockPos_, arg1: boolean): $ArmAngleTarget;
         static transformPos(arg0: $CompoundTag_, arg1: $StructureTransform): void;
-        updateCachedState(): void;
+        getSlotCount(arg0: $ArmBlockEntity): number;
+        cycleMode(): void;
+        static isInteractable(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_): boolean;
         constructor(arg0: $ArmInteractionPointType_, arg1: $Level_, arg2: $BlockPos_, arg3: $BlockState_);
         get type(): $ArmInteractionPointType;
         get valid(): boolean;
@@ -162,18 +162,18 @@ declare module "@package/com/simibubi/create/content/kinetics/mechanicalArm" {
         constructor();
     }
     export class $ArmBlock extends $KineticBlock implements $IBE<$ArmBlockEntity>, $ICogWheel {
-        getBlockEntityType(): $BlockEntityType<$ArmBlockEntity>;
         getBlockEntityClass(): $Class<$ArmBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ArmBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$ArmBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ArmBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ArmBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ArmBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $ArmBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
-        isDedicatedCogWheel(): boolean;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$ArmBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($ArmBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$ArmBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         isSmallCog(): boolean;
         isLargeCog(): boolean;
+        isDedicatedCogWheel(): boolean;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -204,11 +204,11 @@ declare module "@package/com/simibubi/create/content/kinetics/mechanicalArm" {
         static UPDATE_CLIENTS: number;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$ArmBlockEntity>;
         get blockEntityClass(): $Class<$ArmBlockEntity>;
-        get dedicatedCogWheel(): boolean;
+        get blockEntityType(): $BlockEntityType<$ArmBlockEntity>;
         get smallCog(): boolean;
         get largeCog(): boolean;
+        get dedicatedCogWheel(): boolean;
     }
     export class $AllArmInteractionPointTypes$BlazeBurnerType extends $ArmInteractionPointType {
         static SORTED_TYPES_VIEW: $List<$ArmInteractionPointType>;
@@ -262,8 +262,8 @@ declare module "@package/com/simibubi/create/content/kinetics/mechanicalArm" {
         transform(arg0: $BlockEntity, arg1: $StructureTransform): void;
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
         static getRange(): number;
-        redstoneUpdate(): void;
         writeInteractionPoints(arg0: $CompoundTag_): void;
+        redstoneUpdate(): void;
         sequenceContext: $SequencedGearshiftBlockEntity$SequenceContext;
         networkDirty: boolean;
         worldPosition: $BlockPos;
@@ -283,12 +283,12 @@ declare module "@package/com/simibubi/create/content/kinetics/mechanicalArm" {
     export class $ArmInteractionPoint$Mode extends $Enum<$ArmInteractionPoint$Mode> {
         static values(): $ArmInteractionPoint$Mode[];
         static valueOf(arg0: string): $ArmInteractionPoint$Mode;
-        getColor(): number;
         getTranslationKey(): string;
+        getColor(): number;
         static TAKE: $ArmInteractionPoint$Mode;
         static DEPOSIT: $ArmInteractionPoint$Mode;
-        get color(): number;
         get translationKey(): string;
+        get color(): number;
     }
     /**
      * Values that may be interpreted as {@link $ArmInteractionPoint$Mode}.
@@ -334,13 +334,13 @@ declare module "@package/com/simibubi/create/content/kinetics/mechanicalArm" {
     export class $ArmBlockEntity$SelectionMode extends $Enum<$ArmBlockEntity$SelectionMode> implements $INamedIconOptions {
         static values(): $ArmBlockEntity$SelectionMode[];
         static valueOf(arg0: string): $ArmBlockEntity$SelectionMode;
-        getIcon(): $AllIcons;
         getTranslationKey(): string;
+        getIcon(): $AllIcons;
         static FORCED_ROUND_ROBIN: $ArmBlockEntity$SelectionMode;
         static PREFER_FIRST: $ArmBlockEntity$SelectionMode;
         static ROUND_ROBIN: $ArmBlockEntity$SelectionMode;
-        get icon(): $AllIcons;
         get translationKey(): string;
+        get icon(): $AllIcons;
     }
     /**
      * Values that may be interpreted as {@link $ArmBlockEntity$SelectionMode}.
@@ -360,9 +360,9 @@ declare module "@package/com/simibubi/create/content/kinetics/mechanicalArm" {
     export class $ArmInteractionPointType {
         static init(): void;
         getPriority(): number;
+        createPoint(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_): $ArmInteractionPoint;
         static getPrimaryType(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_): $ArmInteractionPointType;
         canCreatePoint(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_): boolean;
-        createPoint(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockState_): $ArmInteractionPoint;
         static SORTED_TYPES_VIEW: $List<$ArmInteractionPointType>;
         constructor();
         get priority(): number;

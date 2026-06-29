@@ -36,47 +36,47 @@ export * as terrain from "@package/net/caffeinemc/mods/sodium/client/render/chun
 
 declare module "@package/net/caffeinemc/mods/sodium/client/render/chunk" {
     export class $RenderSectionManager implements $RenderSectionManagerAccessor, $RenderSectionManagerAccessor$1 {
-        processGFNIMovement(arg0: $CameraMovement_): void;
         update(arg0: $Camera, arg1: $Viewport, arg2: boolean): void;
         destroy(): void;
+        getTotalSections(): number;
+        renderLayer(arg0: $ChunkRenderMatrices_, arg1: $TerrainRenderPass, arg2: number, arg3: number, arg4: number): void;
+        getVisibleChunkCount(): number;
+        getSectionsWithGlobalEntities(): $Collection<$RenderSection>;
         getBuilder(): $ChunkBuilder;
         scheduleRebuild(arg0: number, arg1: number, arg2: number, arg3: boolean): void;
         needsUpdate(): boolean;
-        getTotalSections(): number;
-        getVisibleChunkCount(): number;
-        renderLayer(arg0: $ChunkRenderMatrices_, arg1: $TerrainRenderPass, arg2: number, arg3: number, arg4: number): void;
-        updateCameraState(arg0: $Vector3dc, arg1: $Camera): void;
+        handler$bed000$veil$isSectionVisible(arg0: number, arg1: number, arg2: number, arg3: $CallbackInfoReturnable<any>): void;
         markGraphDirty(): void;
-        getRenderLists(): $SortedRenderLists;
+        updateCameraState(arg0: $Vector3dc, arg1: $Camera): void;
         cleanupAndFlip(): void;
-        onChunkAdded(arg0: number, arg1: number): void;
-        getDebugStrings(): $Collection<string>;
         updateChunks(arg0: boolean): void;
         uploadChunks(): void;
-        isSectionBuilt(arg0: number, arg1: number, arg2: number): boolean;
-        isSectionVisible(arg0: number, arg1: number, arg2: number): boolean;
-        onChunkRemoved(arg0: number, arg1: number): void;
         tickVisibleRenders(): void;
-        getSectionsWithGlobalEntities(): $Collection<$RenderSection>;
-        handler$bed000$veil$isSectionVisible(arg0: number, arg1: number, arg2: number, arg3: $CallbackInfoReturnable<any>): void;
-        scheduleSort(arg0: number, arg1: boolean): void;
-        createRebuildTask(arg0: $RenderSection, arg1: number): $ChunkBuilderMeshingTask;
-        createSortTask(arg0: $RenderSection, arg1: number): $ChunkBuilderSortingTask;
+        onChunkRemoved(arg0: number, arg1: number): void;
+        getRenderLists(): $SortedRenderLists;
+        getDebugStrings(): $Collection<string>;
+        onChunkAdded(arg0: number, arg1: number): void;
+        isSectionVisible(arg0: number, arg1: number, arg2: number): boolean;
+        isSectionBuilt(arg0: number, arg1: number, arg2: number): boolean;
+        processGFNIMovement(arg0: $CameraMovement_): void;
         onSectionRemoved(arg0: number, arg1: number, arg2: number): void;
+        scheduleSort(arg0: number, arg1: boolean): void;
         onSectionAdded(arg0: number, arg1: number, arg2: number): void;
-        getChunkRenderer(): $ChunkRenderer;
-        getTaskLists(): $Map<$ChunkUpdateType, $ArrayDeque<$RenderSection>>;
+        createSortTask(arg0: $RenderSection, arg1: number): $ChunkBuilderSortingTask;
+        createRebuildTask(arg0: $RenderSection, arg1: number): $ChunkBuilderMeshingTask;
         getSectionByPosition(): $Long2ReferenceMap<$RenderSection>;
-        setTaskLists(arg0: $Map_<$ChunkUpdateType_, $ArrayDeque<$RenderSection>>): void;
+        getTaskLists(): $Map<$ChunkUpdateType, $ArrayDeque<$RenderSection>>;
+        getChunkRenderer(): $ChunkRenderer;
         setRenderLists(arg0: $SortedRenderLists): void;
+        setTaskLists(arg0: $Map_<$ChunkUpdateType_, $ArrayDeque<$RenderSection>>): void;
         constructor(arg0: $ClientLevel, arg1: number, arg2: $CommandList);
-        get builder(): $ChunkBuilder;
         get totalSections(): number;
         get visibleChunkCount(): number;
-        get debugStrings(): $Collection<string>;
         get sectionsWithGlobalEntities(): $Collection<$RenderSection>;
-        get chunkRenderer(): $ChunkRenderer;
+        get builder(): $ChunkBuilder;
+        get debugStrings(): $Collection<string>;
         get sectionByPosition(): $Long2ReferenceMap<$RenderSection>;
+        get chunkRenderer(): $ChunkRenderer;
     }
     export class $ChunkUpdateType extends $Enum<$ChunkUpdateType> {
         static values(): $ChunkUpdateType[];
@@ -99,52 +99,52 @@ declare module "@package/net/caffeinemc/mods/sodium/client/render/chunk" {
      */
     export type $ChunkUpdateType_ = "sort" | "initial_build" | "rebuild" | "important_rebuild" | "important_sort";
     export class $RenderSection implements $RenderSectionExtension {
-        getVisibilityData(): number;
-        getAdjacentMask(): number;
-        veil$markRendered(): void;
-        getCulledBlockEntities(): $BlockEntity[];
-        getGlobalBlockEntities(): $BlockEntity[];
         getPosition(): $SectionPos;
         "delete"(): void;
         getRegion(): $RenderRegion;
         getFlags(): number;
         setInfo(arg0: $BuiltSectionInfo): boolean;
-        isDisposed(): boolean;
-        getSectionIndex(): number;
-        getCenterZ(): number;
-        getCenterX(): number;
+        getChunkY(): number;
+        getChunkX(): number;
+        isBuilt(): boolean;
+        getChunkZ(): number;
         getCenterY(): number;
-        getAdjacent(arg0: number): $RenderSection;
+        isDisposed(): boolean;
+        getCenterX(): number;
+        getCenterZ(): number;
+        getSectionIndex(): number;
+        getGlobalBlockEntities(): $BlockEntity[];
+        getCulledBlockEntities(): $BlockEntity[];
+        setLastVisibleFrame(arg0: number): void;
         setTaskCancellationToken(arg0: $CancellationToken): void;
         getTaskCancellationToken(): $CancellationToken;
-        getLastVisibleFrame(): number;
         setLastSubmittedFrame(arg0: number): void;
+        getLastVisibleFrame(): number;
         getLastSubmittedFrame(): number;
         veil$hasNotRendered(): boolean;
-        setLastVisibleFrame(arg0: number): void;
-        prepareTrigger(arg0: boolean): void;
+        setPendingUpdate(arg0: $ChunkUpdateType_): void;
+        getTranslucentData(): $TranslucentData;
+        getLastUploadFrame(): number;
+        setTranslucentData(arg0: $TranslucentData): void;
+        getAnimatedSprites(): $TextureAtlasSprite[];
+        setLastUploadFrame(arg0: number): void;
+        setAdjacentNode(arg0: number, arg1: $RenderSection): void;
         getSquaredDistance(arg0: $BlockPos_): number;
         getSquaredDistance(arg0: number, arg1: number, arg2: number): number;
         getPendingUpdate(): $ChunkUpdateType;
-        setTranslucentData(arg0: $TranslucentData): void;
-        setPendingUpdate(arg0: $ChunkUpdateType_): void;
-        getTranslucentData(): $TranslucentData;
-        setLastUploadFrame(arg0: number): void;
-        getAnimatedSprites(): $TextureAtlasSprite[];
-        getLastUploadFrame(): number;
-        setAdjacentNode(arg0: number, arg1: $RenderSection): void;
-        isBuilt(): boolean;
-        getChunkX(): number;
-        getChunkY(): number;
-        getChunkZ(): number;
-        getOriginY(): number;
+        prepareTrigger(arg0: boolean): void;
+        getAdjacent(arg0: number): $RenderSection;
+        handler$bee000$veil$getIncomingDirections(arg0: $CallbackInfoReturnable<any>): void;
         getOriginX(): number;
+        getOriginY(): number;
         getOriginZ(): number;
+        addIncomingDirections(arg0: number): void;
         getIncomingDirections(): number;
         setIncomingDirections(arg0: number): void;
         veil$addIncomingDirections(arg0: number): void;
-        addIncomingDirections(arg0: number): void;
-        handler$bee000$veil$getIncomingDirections(arg0: $CallbackInfoReturnable<any>): void;
+        getVisibilityData(): number;
+        getAdjacentMask(): number;
+        veil$markRendered(): void;
         adjacentEast: $RenderSection;
         adjacentUp: $RenderSection;
         adjacentWest: $RenderSection;
@@ -152,27 +152,27 @@ declare module "@package/net/caffeinemc/mods/sodium/client/render/chunk" {
         adjacentDown: $RenderSection;
         adjacentNorth: $RenderSection;
         constructor(arg0: $RenderRegion, arg1: number, arg2: number, arg3: number);
-        get visibilityData(): number;
-        get adjacentMask(): number;
-        get culledBlockEntities(): $BlockEntity[];
-        get globalBlockEntities(): $BlockEntity[];
         get position(): $SectionPos;
         get region(): $RenderRegion;
         get flags(): number;
         set info(value: $BuiltSectionInfo);
-        get disposed(): boolean;
-        get sectionIndex(): number;
-        get centerZ(): number;
-        get centerX(): number;
-        get centerY(): number;
-        get animatedSprites(): $TextureAtlasSprite[];
-        get built(): boolean;
-        get chunkX(): number;
         get chunkY(): number;
+        get chunkX(): number;
+        get built(): boolean;
         get chunkZ(): number;
-        get originY(): number;
+        get centerY(): number;
+        get disposed(): boolean;
+        get centerX(): number;
+        get centerZ(): number;
+        get sectionIndex(): number;
+        get globalBlockEntities(): $BlockEntity[];
+        get culledBlockEntities(): $BlockEntity[];
+        get animatedSprites(): $TextureAtlasSprite[];
         get originX(): number;
+        get originY(): number;
         get originZ(): number;
+        get visibilityData(): number;
+        get adjacentMask(): number;
     }
     export class $ChunkRenderer {
     }
@@ -191,13 +191,13 @@ declare module "@package/net/caffeinemc/mods/sodium/client/render/chunk" {
      */
     export type $ChunkRenderMatrices_ = { projection?: $Matrix4fc, modelView?: $Matrix4fc,  } | [projection?: $Matrix4fc, modelView?: $Matrix4fc, ];
     export class $ExtendedBlockEntityType<T extends $BlockEntity> {
+        static addRenderPredicate<T extends $BlockEntity>(arg0: $BlockEntityType_<T>, arg1: $BlockEntityRenderPredicate_<T>): void;
         static shouldRender<T extends $BlockEntity>(arg0: $BlockEntityType_<T>, arg1: $BlockGetter, arg2: $BlockPos_, arg3: T): boolean;
         static removeRenderPredicate<T extends $BlockEntity>(arg0: $BlockEntityType_<T>, arg1: $BlockEntityRenderPredicate_<T>): boolean;
-        static addRenderPredicate<T extends $BlockEntity>(arg0: $BlockEntityType_<T>, arg1: $BlockEntityRenderPredicate_<T>): void;
     }
     export interface $ExtendedBlockEntityType<T extends $BlockEntity> {
-        sodium$addRenderPredicate(arg0: $BlockEntityRenderPredicate_<T>): void;
-        sodium$getRenderPredicates(): $BlockEntityRenderPredicate<T>[];
         sodium$removeRenderPredicate(arg0: $BlockEntityRenderPredicate_<T>): boolean;
+        sodium$getRenderPredicates(): $BlockEntityRenderPredicate<T>[];
+        sodium$addRenderPredicate(arg0: $BlockEntityRenderPredicate_<T>): void;
     }
 }

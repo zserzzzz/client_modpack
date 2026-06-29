@@ -10,20 +10,20 @@ import { $Matrix4f } from "@package/org/joml";
 
 declare module "@package/net/createmod/catnip/render" {
     export class $SpriteShiftEntry {
-        getTargetResourceLocation(): $ResourceLocation;
         set(arg0: $ResourceLocation_, arg1: $ResourceLocation_): void;
         getTarget(): $TextureAtlasSprite;
-        getTargetU(arg0: number): number;
-        getTargetV(arg0: number): number;
+        getTargetResourceLocation(): $ResourceLocation;
+        getOriginalResourceLocation(): $ResourceLocation;
         getOriginal(): $TextureAtlasSprite;
+        getTargetV(arg0: number): number;
+        getTargetU(arg0: number): number;
         static getUnInterpolatedU(arg0: $TextureAtlasSprite, arg1: number): number;
         static getUnInterpolatedV(arg0: $TextureAtlasSprite, arg1: number): number;
-        getOriginalResourceLocation(): $ResourceLocation;
         constructor();
-        get targetResourceLocation(): $ResourceLocation;
         get target(): $TextureAtlasSprite;
-        get original(): $TextureAtlasSprite;
+        get targetResourceLocation(): $ResourceLocation;
         get originalResourceLocation(): $ResourceLocation;
+        get original(): $TextureAtlasSprite;
     }
     export class $StitchedSprite {
         get(): $TextureAtlasSprite;
@@ -42,8 +42,7 @@ declare module "@package/net/createmod/catnip/render" {
         static maxLight(arg0: number, arg1: number): number;
     }
     export interface $SuperByteBuffer extends $TransformStack<$SuperByteBuffer> {
-        getTransforms(): $PoseStack;
-        light<Self extends $SuperByteBuffer>(arg0: number): Self;
+        overlay<Self extends $SuperByteBuffer>(arg0: number): Self;
         reset<Self extends $SuperByteBuffer>(): Self;
         isEmpty(): boolean;
         "delete"(): void;
@@ -51,17 +50,18 @@ declare module "@package/net/createmod/catnip/render" {
         color<Self extends $SuperByteBuffer>(arg0: number, arg1: number, arg2: number, arg3: number): Self;
         color<Self extends $SuperByteBuffer>(arg0: number): Self;
         rotate<Self extends $SuperByteBuffer>(arg0: $Direction$Axis_, arg1: number): Self;
-        renderInto(arg0: $PoseStack, arg1: $VertexConsumer): void;
-        overlay<Self extends $SuperByteBuffer>(arg0: number): Self;
+        getTransforms(): $PoseStack;
+        light<Self extends $SuperByteBuffer>(arg0: number): Self;
+        shiftUV<Self extends $SuperByteBuffer>(arg0: $SpriteShiftEntry): Self;
         disableDiffuse<Self extends $SuperByteBuffer>(): Self;
+        shiftUVtoSheet<Self extends $SuperByteBuffer>(arg0: $SpriteShiftEntry, arg1: number, arg2: number, arg3: number): Self;
         useLevelLight<Self extends $SuperByteBuffer>(arg0: $BlockAndTintGetter, arg1: $Matrix4f): Self;
         useLevelLight<Self extends $SuperByteBuffer>(arg0: $BlockAndTintGetter): Self;
+        renderInto(arg0: $PoseStack, arg1: $VertexConsumer): void;
         shiftUVScrolling<Self extends $SuperByteBuffer>(arg0: $SpriteShiftEntry, arg1: number): Self;
         shiftUVScrolling<Self extends $SuperByteBuffer>(arg0: $SpriteShiftEntry, arg1: number, arg2: number): Self;
-        shiftUV<Self extends $SuperByteBuffer>(arg0: $SpriteShiftEntry): Self;
-        shiftUVtoSheet<Self extends $SuperByteBuffer>(arg0: $SpriteShiftEntry, arg1: number, arg2: number, arg3: number): Self;
-        get transforms(): $PoseStack;
         get empty(): boolean;
+        get transforms(): $PoseStack;
     }
     export class $BindableTexture {
     }

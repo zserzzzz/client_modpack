@@ -23,18 +23,18 @@ declare module "@package/net/neoforged/neoforge/event/entity/item" {
          */
         setExtraLife(extraLife: number): void;
         /**
+         * Sets the amount of extra life time (in ticks) to give this `ItemEntity`.
+         * 
+         * *Consider using `#addExtraLife(int)` in case another mod also adds extra time.*
+         */
+        addExtraLife(extraLife: number): void;
+        /**
          * Query the amount of extra time that will be added.
          * 
          * Note that this is the event result. If you need data from the entity, query it directly.
          * `ItemEntity#lifespan` is the entities maximum lifespan and also its current age.
          */
         getExtraLife(): number;
-        /**
-         * Sets the amount of extra life time (in ticks) to give this `ItemEntity`.
-         * 
-         * *Consider using `#addExtraLife(int)` in case another mod also adds extra time.*
-         */
-        addExtraLife(extraLife: number): void;
         /**
          * Creates a new event for an expiring `ItemEntity`.
          */
@@ -51,8 +51,8 @@ declare module "@package/net/neoforged/neoforge/event/entity/item" {
          * The player tossing the item.
          */
         getPlayer(): $Player;
-        setCanceled(arg0: boolean): void;
         isCanceled(): boolean;
+        setCanceled(arg0: boolean): void;
         /**
          * Creates a new event for EntityItems tossed by a player.
          */

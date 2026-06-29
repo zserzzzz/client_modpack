@@ -70,8 +70,8 @@ declare module "@package/net/neoforged/neoforge/client/model/obj" {
      */
     export class $ObjLoader implements $IGeometryLoader<$ObjModel>, $ResourceManagerReloadListener {
         onResourceManagerReload(resourceManager: $ResourceManager): void;
-        loadMaterialLibrary(materialLocation: $ResourceLocation_): $ObjMaterialLibrary;
         loadModel(settings: $ObjModel$ModelSettings_): $ObjModel;
+        loadMaterialLibrary(materialLocation: $ResourceLocation_): $ObjMaterialLibrary;
         reload(preparationBarrier: $PreparableReloadListener$PreparationBarrier_, resourceManager: $ResourceManager, preparationsProfiler: $ProfilerFiller, reloadProfiler: $ProfilerFiller, backgroundExecutor: $Executor_, gameExecutor: $Executor_): $CompletableFuture<void>;
         getName(): string;
         read(arg0: $JsonObject_, arg1: $JsonDeserializationContext_): $ObjModel;
@@ -81,17 +81,17 @@ declare module "@package/net/neoforged/neoforge/client/model/obj" {
     }
     export class $ObjModel$ModelSettings extends $Record {
         modelLocation(): $ResourceLocation;
-        flipV(): boolean;
-        mtlOverride(): string;
-        automaticCulling(): boolean;
-        emissiveAmbient(): boolean;
         shadeQuads(): boolean;
+        emissiveAmbient(): boolean;
+        automaticCulling(): boolean;
+        mtlOverride(): string;
+        flipV(): boolean;
         constructor(modelLocation: $ResourceLocation_, automaticCulling: boolean, shadeQuads: boolean, flipV: boolean, emissiveAmbient: boolean, mtlOverride: string);
     }
     /**
      * Values that may be interpreted as {@link $ObjModel$ModelSettings}.
      */
-    export type $ObjModel$ModelSettings_ = { automaticCulling?: boolean, emissiveAmbient?: boolean, shadeQuads?: boolean, flipV?: boolean, modelLocation?: $ResourceLocation_, mtlOverride?: string,  } | [automaticCulling?: boolean, emissiveAmbient?: boolean, shadeQuads?: boolean, flipV?: boolean, modelLocation?: $ResourceLocation_, mtlOverride?: string, ];
+    export type $ObjModel$ModelSettings_ = { modelLocation?: $ResourceLocation_, mtlOverride?: string, automaticCulling?: boolean, emissiveAmbient?: boolean, shadeQuads?: boolean, flipV?: boolean,  } | [modelLocation?: $ResourceLocation_, mtlOverride?: string, automaticCulling?: boolean, emissiveAmbient?: boolean, shadeQuads?: boolean, flipV?: boolean, ];
     export class $ObjMaterialLibrary$Material {
         ambientColorMap: string;
         ambientColor: $Vector4f;

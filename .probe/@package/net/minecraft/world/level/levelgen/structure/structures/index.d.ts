@@ -37,8 +37,8 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         boundingBox: $BoundingBox;
         genDepth: number;
         static CAVE_AIR: $BlockState;
-        constructor(tag: $CompoundTag_);
         constructor(direction: $Direction_, room: $OceanMonumentPieces$RoomDefinition);
+        constructor(tag: $CompoundTag_);
     }
     export class $JigsawStructure extends $Structure implements $ISpawnBoxStructure {
         ml$getSpawnBoxSettings(): $SpawnBoxSettings;
@@ -51,8 +51,8 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         static MIN_DEPTH: number;
         static DIRECT_CODEC: $Codec<$Structure>;
         static MAX_TOTAL_STRUCTURE_RANGE: number;
-        constructor(settings: $Structure$StructureSettings_, startPool: $Holder_<$StructureTemplatePool>, startJigsawName: ($ResourceLocation_) | undefined, maxDepth: number, startHeight: $HeightProvider, useExpansionHack: boolean, projectStartToHeightmap: ($Heightmap$Types_) | undefined, maxDistanceFromCenter: number, poolAliases: $List_<$PoolAliasBinding>, dimensionPadding: $DimensionPadding_, liquidSettings: $LiquidSettings_);
         constructor(settings: $Structure$StructureSettings_, startPool: $Holder_<$StructureTemplatePool>, maxDepth: number, startHeight: $HeightProvider, useExpansionHack: boolean, projectStartToHeightmap: $Heightmap$Types_);
+        constructor(settings: $Structure$StructureSettings_, startPool: $Holder_<$StructureTemplatePool>, startJigsawName: ($ResourceLocation_) | undefined, maxDepth: number, startHeight: $HeightProvider, useExpansionHack: boolean, projectStartToHeightmap: ($Heightmap$Types_) | undefined, maxDistanceFromCenter: number, poolAliases: $List_<$PoolAliasBinding>, dimensionPadding: $DimensionPadding_, liquidSettings: $LiquidSettings_);
         constructor(settings: $Structure$StructureSettings_, startPool: $Holder_<$StructureTemplatePool>, maxDepth: number, startHeight: $HeightProvider, useExpansionHack: boolean);
     }
     export class $OceanMonumentPieces$MonumentBuilding extends $OceanMonumentPieces$OceanMonumentPiece {
@@ -64,11 +64,11 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         constructor(tag: $CompoundTag_);
     }
     export class $OceanMonumentPieces$RoomDefinition {
-        isSpecial(): boolean;
-        findSource(index: number): boolean;
-        setConnection(direction: $Direction_, connectingRoom: $OceanMonumentPieces$RoomDefinition): void;
-        updateOpenings(): void;
         countOpenings(): number;
+        updateOpenings(): void;
+        setConnection(direction: $Direction_, connectingRoom: $OceanMonumentPieces$RoomDefinition): void;
+        findSource(index: number): boolean;
+        isSpecial(): boolean;
         hasOpening: boolean[];
         claimed: boolean;
         isSource: boolean;
@@ -122,8 +122,8 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         boundingBox: $BoundingBox;
         genDepth: number;
         static CAVE_AIR: $BlockState;
-        constructor(tag: $CompoundTag_);
         constructor(direction: $Direction_, room: $OceanMonumentPieces$RoomDefinition);
+        constructor(tag: $CompoundTag_);
     }
     export class $MineshaftStructure extends $Structure {
         static CODEC: $MapCodec<$MineshaftStructure>;
@@ -136,12 +136,12 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         static CAVE_AIR: $BlockState;
     }
     export class $RuinedPortalStructure$Setup extends $Record {
+        weight(): number;
+        canBeCold(): boolean;
+        overgrown(): boolean;
+        vines(): boolean;
         replaceWithBlackstone(): boolean;
         airPocketProbability(): number;
-        weight(): number;
-        overgrown(): boolean;
-        canBeCold(): boolean;
-        vines(): boolean;
         placement(): $RuinedPortalPiece$VerticalPlacement;
         mossiness(): number;
         static CODEC: $Codec<$RuinedPortalStructure$Setup>;
@@ -150,7 +150,7 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
     /**
      * Values that may be interpreted as {@link $RuinedPortalStructure$Setup}.
      */
-    export type $RuinedPortalStructure$Setup_ = { replaceWithBlackstone?: boolean, mossiness?: number, weight?: number, vines?: boolean, canBeCold?: boolean, overgrown?: boolean, airPocketProbability?: number, placement?: $RuinedPortalPiece$VerticalPlacement_,  } | [replaceWithBlackstone?: boolean, mossiness?: number, weight?: number, vines?: boolean, canBeCold?: boolean, overgrown?: boolean, airPocketProbability?: number, placement?: $RuinedPortalPiece$VerticalPlacement_, ];
+    export type $RuinedPortalStructure$Setup_ = { vines?: boolean, canBeCold?: boolean, overgrown?: boolean, airPocketProbability?: number, placement?: $RuinedPortalPiece$VerticalPlacement_, replaceWithBlackstone?: boolean, mossiness?: number, weight?: number,  } | [vines?: boolean, canBeCold?: boolean, overgrown?: boolean, airPocketProbability?: number, placement?: $RuinedPortalPiece$VerticalPlacement_, replaceWithBlackstone?: boolean, mossiness?: number, weight?: number, ];
     export class $WoodlandMansionPieces {
         static generateMansion(structureTemplateManager: $StructureTemplateManager, pos: $BlockPos_, rotation: $Rotation_, pieces: $List_<$WoodlandMansionPieces$WoodlandMansionPiece>, random: $RandomSource): void;
         constructor();
@@ -176,19 +176,19 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         getName(): string;
         static values(): $MineshaftStructure$Type[];
         static valueOf(arg0: string): $MineshaftStructure$Type;
+        getPlanksState(): $BlockState;
+        getWoodState(): $BlockState;
+        getFenceState(): $BlockState;
         getSerializedName(): string;
         static byId(id: number): $MineshaftStructure$Type;
-        getPlanksState(): $BlockState;
-        getFenceState(): $BlockState;
-        getWoodState(): $BlockState;
         getRemappedEnumConstantName(): string;
         static MESA: $MineshaftStructure$Type;
         static CODEC: $Codec<$MineshaftStructure$Type>;
         static NORMAL: $MineshaftStructure$Type;
-        get serializedName(): string;
         get planksState(): $BlockState;
-        get fenceState(): $BlockState;
         get woodState(): $BlockState;
+        get fenceState(): $BlockState;
+        get serializedName(): string;
         get remappedEnumConstantName(): string;
     }
     /**
@@ -208,16 +208,16 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         boundingBox: $BoundingBox;
         genDepth: number;
         static CAVE_AIR: $BlockState;
-        constructor(genDepth: number, box: $BoundingBox, orientation: $Direction_);
         constructor(tag: $CompoundTag_);
-        constructor(x: number, z: number, orientation: $Direction_);
         constructor(type: $StructurePieceType_, tag: $CompoundTag_);
+        constructor(x: number, z: number, orientation: $Direction_);
+        constructor(genDepth: number, box: $BoundingBox, orientation: $Direction_);
     }
     export class $EndCityPieces {
         static startHouseTower(structureTemplateManager: $StructureTemplateManager, startPos: $BlockPos_, rotation: $Rotation_, pieces: $List_<$StructurePiece>, random: $RandomSource): void;
         static addPiece(structureTemplateManager: $StructureTemplateManager, piece: $EndCityPieces$EndCityPiece, startPos: $BlockPos_, name: string, rotation: $Rotation_, overwrite: boolean): $EndCityPieces$EndCityPiece;
-        static recursiveChildren(structureTemplateManager: $StructureTemplateManager, sectionGenerator: $EndCityPieces$SectionGenerator, counter: number, piece: $EndCityPieces$EndCityPiece, startPos: $BlockPos_, pieces: $List_<$StructurePiece>, random: $RandomSource): boolean;
         static addHelper(pieces: $List_<$StructurePiece>, piece: $EndCityPieces$EndCityPiece): $EndCityPieces$EndCityPiece;
+        static recursiveChildren(structureTemplateManager: $StructureTemplateManager, sectionGenerator: $EndCityPieces$SectionGenerator, counter: number, piece: $EndCityPieces$EndCityPiece, startPos: $BlockPos_, pieces: $List_<$StructurePiece>, random: $RandomSource): boolean;
         static TOWER_GENERATOR: $EndCityPieces$SectionGenerator;
         static HOUSE_TOWER_GENERATOR: $EndCityPieces$SectionGenerator;
         static TOWER_BRIDGE_GENERATOR: $EndCityPieces$SectionGenerator;
@@ -262,10 +262,10 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         constructor();
     }
     export class $NetherFortressPieces$NetherBridgePiece extends $StructurePiece {
-        generateChildForward(startPiece: $NetherFortressPieces$StartPiece, pieces: $StructurePieceAccessor, random: $RandomSource, offsetX: number, offsetY: number, castlePiece: boolean): $StructurePiece;
         generateChildLeft(startPiece: $NetherFortressPieces$StartPiece, pieces: $StructurePieceAccessor, random: $RandomSource, offsetX: number, offsetY: number, castlePiece: boolean): $StructurePiece;
         generateChildRight(startPiece: $NetherFortressPieces$StartPiece, pieces: $StructurePieceAccessor, random: $RandomSource, offsetX: number, offsetY: number, castlePiece: boolean): $StructurePiece;
         static isOkBox(box: $BoundingBox): boolean;
+        generateChildForward(startPiece: $NetherFortressPieces$StartPiece, pieces: $StructurePieceAccessor, random: $RandomSource, offsetX: number, offsetY: number, castlePiece: boolean): $StructurePiece;
         boundingBox: $BoundingBox;
         genDepth: number;
         static CAVE_AIR: $BlockState;
@@ -284,8 +284,8 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         boundingBox: $BoundingBox;
         genDepth: number;
         static CAVE_AIR: $BlockState;
-        constructor(tag: $CompoundTag_);
         constructor(direction: $Direction_, room: $OceanMonumentPieces$RoomDefinition);
+        constructor(tag: $CompoundTag_);
     }
     export class $NetherFortressStructure extends $Structure {
         static FORTRESS_ENEMIES: $WeightedRandomList<$MobSpawnSettings$SpawnerData>;
@@ -294,8 +294,8 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         constructor(settings: $Structure$StructureSettings_);
     }
     export class $MineshaftPieces$MineShaftCorridor extends $MineshaftPieces$MineShaftPiece {
-        fillPillarDownOrChainUp(level: $WorldGenLevel, state: $BlockState_, x: number, y: number, z: number, box: $BoundingBox): void;
         static findCorridorSize(pieces: $StructurePieceAccessor, random: $RandomSource, x: number, y: number, z: number, direction: $Direction_): $BoundingBox;
+        fillPillarDownOrChainUp(level: $WorldGenLevel, state: $BlockState_, x: number, y: number, z: number, box: $BoundingBox): void;
         boundingBox: $BoundingBox;
         genDepth: number;
         static CAVE_AIR: $BlockState;
@@ -389,8 +389,8 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         boundingBox: $BoundingBox;
         genDepth: number;
         static CAVE_AIR: $BlockState;
-        constructor(tag: $CompoundTag_);
         constructor(direction: $Direction_, room: $OceanMonumentPieces$RoomDefinition);
+        constructor(tag: $CompoundTag_);
     }
     export class $OceanMonumentPieces$OceanMonumentPiece extends $StructurePiece {
         boundingBox: $BoundingBox;
@@ -401,8 +401,8 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         boundingBox: $BoundingBox;
         genDepth: number;
         static CAVE_AIR: $BlockState;
-        constructor(tag: $CompoundTag_);
         constructor(direction: $Direction_, box: $BoundingBox, flag: number);
+        constructor(tag: $CompoundTag_);
     }
     export class $MineshaftPieces$MineShaftCrossing extends $MineshaftPieces$MineShaftPiece {
         static findCrossing(pieces: $StructurePieceAccessor, random: $RandomSource, x: number, y: number, z: number, direction: $Direction_): $BoundingBox;
@@ -416,8 +416,8 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         boundingBox: $BoundingBox;
         genDepth: number;
         static CAVE_AIR: $BlockState;
-        constructor(tag: $CompoundTag_);
         constructor(pos: $BlockPos_);
+        constructor(tag: $CompoundTag_);
     }
     export class $NetherFortressPieces$CastleSmallCorridorRightTurnPiece extends $NetherFortressPieces$NetherBridgePiece {
         static createPiece(pieces: $StructurePieceAccessor, random: $RandomSource, x: number, y: number, z: number, orientation: $Direction_, genDepth: number): $NetherFortressPieces$CastleSmallCorridorRightTurnPiece;
@@ -453,8 +453,8 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         boundingBox: $BoundingBox;
         genDepth: number;
         static CAVE_AIR: $BlockState;
-        constructor(tag: $CompoundTag_);
         constructor(direction: $Direction_, room: $OceanMonumentPieces$RoomDefinition);
+        constructor(tag: $CompoundTag_);
     }
     export class $StrongholdPieces$StairsDown extends $StrongholdPieces$StrongholdPiece {
         static createPiece(pieces: $StructurePieceAccessor, random: $RandomSource, x: number, y: number, z: number, orientation: $Direction_, genDepth: number): $StrongholdPieces$StairsDown;
@@ -462,10 +462,10 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         genDepth: number;
         static CAVE_AIR: $BlockState;
         entryDoor: $StrongholdPieces$StrongholdPiece$SmallDoorType;
-        constructor(type: $StructurePieceType_, genDepth: number, x: number, z: number, orientation: $Direction_);
         constructor(tag: $CompoundTag_);
         constructor(type: $StructurePieceType_, tag: $CompoundTag_);
         constructor(genDepth: number, random: $RandomSource, box: $BoundingBox, orientation: $Direction_);
+        constructor(type: $StructurePieceType_, genDepth: number, x: number, z: number, orientation: $Direction_);
     }
     export class $OceanMonumentPieces$FitDoubleXRoom implements $OceanMonumentPieces$MonumentRoomFitter {
     }
@@ -503,9 +503,9 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         constructor(tag: $CompoundTag_);
     }
     export class $WoodlandMansionPieces$MansionGrid {
-        static isHouse(layout: $WoodlandMansionPieces$SimpleGrid, x: number, y: number): boolean;
-        isRoomId(layout: $WoodlandMansionPieces$SimpleGrid, x: number, y: number, floor: number, roomId: number): boolean;
         get1x2RoomDirection(layout: $WoodlandMansionPieces$SimpleGrid, x: number, y: number, floor: number, roomId: number): $Direction;
+        isRoomId(layout: $WoodlandMansionPieces$SimpleGrid, x: number, y: number, floor: number, roomId: number): boolean;
+        static isHouse(layout: $WoodlandMansionPieces$SimpleGrid, x: number, y: number): boolean;
         thirdFloorGrid: $WoodlandMansionPieces$SimpleGrid;
         floorRooms: $WoodlandMansionPieces$SimpleGrid[];
         entranceX: number;
@@ -582,8 +582,8 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         getName(): string;
         static values(): $RuinedPortalPiece$VerticalPlacement[];
         static valueOf(name: string): $RuinedPortalPiece$VerticalPlacement;
-        getSerializedName(): string;
         static byName(name: string): $RuinedPortalPiece$VerticalPlacement;
+        getSerializedName(): string;
         getRemappedEnumConstantName(): string;
         static UNDERGROUND: $RuinedPortalPiece$VerticalPlacement;
         static ON_LAND_SURFACE: $RuinedPortalPiece$VerticalPlacement;
@@ -607,8 +607,8 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         static CAVE_AIR: $BlockState;
         width: number;
         height: number;
-        constructor(tag: $CompoundTag_);
         constructor(random: $RandomSource, x: number, z: number);
+        constructor(tag: $CompoundTag_);
     }
     export class $StrongholdPieces$RoomCrossing extends $StrongholdPieces$StrongholdPiece {
         static createPiece(pieces: $StructurePieceAccessor, random: $RandomSource, x: number, y: number, z: number, orientation: $Direction_, genDepth: number): $StrongholdPieces$RoomCrossing;
@@ -662,8 +662,8 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         boundingBox: $BoundingBox;
         genDepth: number;
         static CAVE_AIR: $BlockState;
-        constructor(tag: $CompoundTag_);
         constructor(direction: $Direction_, room: $OceanMonumentPieces$RoomDefinition);
+        constructor(tag: $CompoundTag_);
     }
     export class $JungleTempleStructure extends $SinglePieceStructure {
         static CODEC: $MapCodec<$JungleTempleStructure>;
@@ -688,8 +688,8 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         boundingBox: $BoundingBox;
         genDepth: number;
         static CAVE_AIR: $BlockState;
-        constructor(tag: $CompoundTag_);
         constructor(direction: $Direction_, room: $OceanMonumentPieces$RoomDefinition);
+        constructor(tag: $CompoundTag_);
     }
     export class $SwampHutStructure extends $Structure {
         static CODEC: $MapCodec<$SwampHutStructure>;
@@ -697,9 +697,9 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         constructor(settings: $Structure$StructureSettings_);
     }
     export class $NetherFortressPieces$PieceWeight implements $XPieceDataExtension {
-        c2me$getGeneratedCountThreadLocal(): $ThreadLocal<any>;
         isValid(): boolean;
         doPlace(genDepth: number): boolean;
+        c2me$getGeneratedCountThreadLocal(): $ThreadLocal<any>;
         placeCount: number;
         allowInRow: boolean;
         pieceClass: $Class<$NetherFortressPieces$NetherBridgePiece>;
@@ -743,9 +743,9 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         constructor(settings: $Structure$StructureSettings_);
     }
     export class $StrongholdPieces implements $IStrongholdGenerator {
-        getActivePieceTypeThreadLocal(): $ThreadLocal<any>;
         static resetPieces(): void;
         static generateAndAddPiece(piece: $StrongholdPieces$StartPiece, pieces: $StructurePieceAccessor, random: $RandomSource, x: number, y: number, z: number, direction: $Direction_ | null, genDepth: number): $StructurePiece;
+        getActivePieceTypeThreadLocal(): $ThreadLocal<any>;
         static MAGIC_START_Y: number;
         static imposedPiece: $Class<$StrongholdPieces$StrongholdPiece>;
         static SMOOTH_STONE_SELECTOR: $StrongholdPieces$SmoothStoneSelector;
@@ -761,9 +761,9 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         constructor(tag: $CompoundTag_);
     }
     export class $ShipwreckPieces$ShipwreckPiece extends $TemplateStructurePiece {
-        isTooBigToFitInWorldGenRegion(): boolean;
         calculateBeachedPosition(maxHeight: number, random: $RandomSource): number;
         adjustPositionHeight(height: number): void;
+        isTooBigToFitInWorldGenRegion(): boolean;
         boundingBox: $BoundingBox;
         genDepth: number;
         templateName: string;
@@ -809,8 +809,8 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         boundingBox: $BoundingBox;
         genDepth: number;
         static CAVE_AIR: $BlockState;
-        constructor(tag: $CompoundTag_);
         constructor(direction: $Direction_, box: $BoundingBox);
+        constructor(tag: $CompoundTag_);
     }
     export class $StrongholdPieces$PortalRoom extends $StrongholdPieces$StrongholdPiece {
         static createPiece(pieces: $StructurePieceAccessor, x: number, y: number, z: number, orientation: $Direction_, genDepth: number): $StrongholdPieces$PortalRoom;
@@ -833,9 +833,9 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         constructor(tag: $CompoundTag_);
     }
     export class $StrongholdPieces$PieceWeight implements $XPieceDataExtension {
-        c2me$getGeneratedCountThreadLocal(): $ThreadLocal<any>;
         isValid(): boolean;
         doPlace(genDepth: number): boolean;
+        c2me$getGeneratedCountThreadLocal(): $ThreadLocal<any>;
         placeCount: number;
         pieceClass: $Class<$StrongholdPieces$StrongholdPiece>;
         maxPlaceCount: number;
@@ -847,16 +847,16 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         boundingBox: $BoundingBox;
         genDepth: number;
         static CAVE_AIR: $BlockState;
-        constructor(tag: $CompoundTag_);
         constructor(direction: $Direction_, room: $OceanMonumentPieces$RoomDefinition, random: $RandomSource);
+        constructor(tag: $CompoundTag_);
     }
     export class $StrongholdPieces$StrongholdPiece extends $StructurePiece {
-        generateSmallDoorChildRight(startPiece: $StrongholdPieces$StartPiece, pieces: $StructurePieceAccessor, random: $RandomSource, offsetX: number, offsetY: number): $StructurePiece;
-        generateSmallDoorChildForward(startPiece: $StrongholdPieces$StartPiece, pieces: $StructurePieceAccessor, random: $RandomSource, offsetX: number, offsetY: number): $StructurePiece;
-        generateSmallDoorChildLeft(startPiece: $StrongholdPieces$StartPiece, pieces: $StructurePieceAccessor, random: $RandomSource, offsetX: number, offsetY: number): $StructurePiece;
         randomSmallDoor(random: $RandomSource): $StrongholdPieces$StrongholdPiece$SmallDoorType;
         generateSmallDoor(level: $WorldGenLevel, random: $RandomSource, box: $BoundingBox, type: $StrongholdPieces$StrongholdPiece$SmallDoorType_, x: number, y: number, z: number): void;
         static isOkBox(box: $BoundingBox): boolean;
+        generateSmallDoorChildLeft(startPiece: $StrongholdPieces$StartPiece, pieces: $StructurePieceAccessor, random: $RandomSource, offsetX: number, offsetY: number): $StructurePiece;
+        generateSmallDoorChildForward(startPiece: $StrongholdPieces$StartPiece, pieces: $StructurePieceAccessor, random: $RandomSource, offsetX: number, offsetY: number): $StructurePiece;
+        generateSmallDoorChildRight(startPiece: $StrongholdPieces$StartPiece, pieces: $StructurePieceAccessor, random: $RandomSource, offsetX: number, offsetY: number): $StructurePiece;
         boundingBox: $BoundingBox;
         genDepth: number;
         static CAVE_AIR: $BlockState;
@@ -868,8 +868,8 @@ declare module "@package/net/minecraft/world/level/levelgen/structure/structures
         boundingBox: $BoundingBox;
         genDepth: number;
         static CAVE_AIR: $BlockState;
-        constructor(tag: $CompoundTag_);
         constructor(direction: $Direction_, room: $OceanMonumentPieces$RoomDefinition);
+        constructor(tag: $CompoundTag_);
     }
     export class $StrongholdPieces$FiveCrossing extends $StrongholdPieces$StrongholdPiece {
         static createPiece(pieces: $StructurePieceAccessor, random: $RandomSource, x: number, y: number, z: number, orientation: $Direction_, genDepth: number): $StrongholdPieces$FiveCrossing;

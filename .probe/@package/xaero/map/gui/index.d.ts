@@ -50,63 +50,63 @@ declare module "@package/xaero/map/gui" {
         font: $Font;
     }
     export class $MapTileSelection {
-        getRight(): number;
         getLeft(): number;
-        getBottom(): number;
-        getTop(): number;
+        getRight(): number;
         getStartX(): number;
+        getTop(): number;
+        getBottom(): number;
         setEnd(arg0: number, arg1: number): void;
-        getStartZ(): number;
         getEndX(): number;
+        getStartZ(): number;
         getEndZ(): number;
         constructor(arg0: number, arg1: number);
-        get right(): number;
         get left(): number;
-        get bottom(): number;
-        get top(): number;
+        get right(): number;
         get startX(): number;
-        get startZ(): number;
+        get top(): number;
+        get bottom(): number;
         get endX(): number;
+        get startZ(): number;
         get endZ(): number;
     }
     export class $IRightClickableElement {
     }
     export interface $IRightClickableElement {
         isRightClickValid(): boolean;
-        getRightClickOptions(): $ArrayList<$RightClickOption>;
         getRightClickTitleBackgroundColor(): number;
+        getRightClickOptions(): $ArrayList<$RightClickOption>;
         get rightClickValid(): boolean;
-        get rightClickOptions(): $ArrayList<$RightClickOption>;
         get rightClickTitleBackgroundColor(): number;
+        get rightClickOptions(): $ArrayList<$RightClickOption>;
     }
     export class $GuiMap extends $ScreenBase implements $IRightClickableElement, $XaeroFullscreenMapAccessor {
-        closeRightClick(): void;
-        drawFarArrowOnMap(arg0: $PoseStack, arg1: $VertexConsumer, arg2: number, arg3: number, arg4: number, arg5: number): void;
-        drawArrowOnMap(arg0: $PoseStack, arg1: $VertexConsumer, arg2: number, arg3: number, arg4: number, arg5: number): void;
         addButton<T extends $GuiEventListener>(arg0: T): T;
-        drawObjectOnMap(arg0: $PoseStack, arg1: $VertexConsumer, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number, arg10: number, arg11: number, arg12: number): void;
-        getUserScale(): number;
-        onCaveModeStartSet(): void;
-        getMapProcessor(): $MapProcessor;
+        mapClicked(arg0: number, arg1: number, arg2: number): void;
+        isRightClickValid(): boolean;
         getFutureDimension(): $MapDimension;
         onRadarButton(arg0: $Button): void;
-        getRadarButton(): $Button;
         onClaimsButton(arg0: $Button): void;
+        getRadarButton(): $Button;
+        onCaveModeStartSet(): void;
+        drawArrowOnMap(arg0: $PoseStack, arg1: $VertexConsumer, arg2: number, arg3: number, arg4: number, arg5: number): void;
+        drawObjectOnMap(arg0: $PoseStack, arg1: $VertexConsumer, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number, arg10: number, arg11: number, arg12: number): void;
+        closeRightClick(): void;
         drawDotOnMap(arg0: $PoseStack, arg1: $VertexConsumer, arg2: number, arg3: number, arg4: number, arg5: number): void;
-        isRightClickValid(): boolean;
-        enableCaveModeOptions(): void;
-        static renderTexturedModalRect(arg0: $Matrix4f, arg1: $VertexConsumer, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number, arg10: number, arg11: number, arg12: number, arg13: number): void;
         onRightClickClosed(): void;
-        getTrackedPlayerKeyBinding(): $KeyMapping;
-        getRightClickOptions(): $ArrayList<$RightClickOption>;
-        mapClicked(arg0: number, arg1: number, arg2: number): void;
-        static buildTexturedModalSubRectWithLighting(arg0: $Matrix4f, arg1: $BufferBuilder, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number): void;
+        getUserScale(): number;
+        drawFarArrowOnMap(arg0: $PoseStack, arg1: $VertexConsumer, arg2: number, arg3: number, arg4: number, arg5: number): void;
         static renderTexturedModalSubRectWithLighting(arg0: $Matrix4f, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number, arg10: boolean, arg11: $MultiTextureRenderTypeRenderer): void;
         static renderTexturedModalRectWithLighting3(arg0: $Matrix4f, arg1: number, arg2: number, arg3: number, arg4: number, arg5: number, arg6: boolean, arg7: $MultiTextureRenderTypeRenderer): void;
+        static buildTexturedModalSubRectWithLighting(arg0: $Matrix4f, arg1: $BufferBuilder, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number): void;
         getRightClickTitleBackgroundColor(): number;
+        getMapProcessor(): $MapProcessor;
+        getRightClickOptions(): $ArrayList<$RightClickOption>;
+        getTrackedPlayerKeyBinding(): $KeyMapping;
+        static renderTexturedModalRect(arg0: $Matrix4f, arg1: $VertexConsumer, arg2: number, arg3: number, arg4: number, arg5: number, arg6: number, arg7: number, arg8: number, arg9: number, arg10: number, arg11: number, arg12: number, arg13: number): void;
+        enableCaveModeOptions(): void;
         static buildTexturedModalRectWithLighting(arg0: $Matrix4f, arg1: $BufferBuilder, arg2: number, arg3: number, arg4: number, arg5: number): void;
-        create$getCameraZ(): number;
         create$getCameraX(): number;
+        create$getCameraZ(): number;
         create$getScale(): number;
         create$getMapProcessor(): $MapProcessor;
         static MENU_BACKGROUND: $ResourceLocation;
@@ -132,14 +132,14 @@ declare module "@package/xaero/map/gui" {
         height: number;
         font: $Font;
         constructor(arg0: $Screen, arg1: $Screen, arg2: $MapProcessor, arg3: $Entity);
-        get userScale(): number;
-        get mapProcessor(): $MapProcessor;
+        get rightClickValid(): boolean;
         get futureDimension(): $MapDimension;
         get radarButton(): $Button;
-        get rightClickValid(): boolean;
-        get trackedPlayerKeyBinding(): $KeyMapping;
-        get rightClickOptions(): $ArrayList<$RightClickOption>;
+        get userScale(): number;
         get rightClickTitleBackgroundColor(): number;
+        get mapProcessor(): $MapProcessor;
+        get rightClickOptions(): $ArrayList<$RightClickOption>;
+        get trackedPlayerKeyBinding(): $KeyMapping;
     }
     export class $ExportScreen extends $GuiSettings {
         primaryOptionEntry<T>(arg0: $ConfigOption<T>): $ConfigOptionScreenEntry<T>;

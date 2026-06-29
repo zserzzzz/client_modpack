@@ -46,9 +46,9 @@ export * as drain from "@package/com/simibubi/create/content/fluids/drain";
 
 declare module "@package/com/simibubi/create/content/fluids" {
     export class $FluidMesh$FluidSurfaceMesh extends $Record implements $QuadMesh {
+        texture(): $TextureAtlasSprite;
         write(arg0: $MutableVertexList): void;
         width(): number;
-        texture(): $TextureAtlasSprite;
         vertexCount(): number;
         boundingSphere(): $Vector4fc;
         indexCount(): number;
@@ -60,8 +60,8 @@ declare module "@package/com/simibubi/create/content/fluids" {
      */
     export type $FluidMesh$FluidSurfaceMesh_ = { texture?: $TextureAtlasSprite, width?: number,  } | [texture?: $TextureAtlasSprite, width?: number, ];
     export class $FluidMesh$FluidStreamMesh extends $Record implements $QuadMesh {
-        write(arg0: $MutableVertexList): void;
         texture(): $TextureAtlasSprite;
+        write(arg0: $MutableVertexList): void;
         vertexCount(): number;
         boundingSphere(): $Vector4fc;
         indexCount(): number;
@@ -100,8 +100,8 @@ declare module "@package/com/simibubi/create/content/fluids" {
     export class $FluidFX {
         static splash(arg0: $BlockPos_, arg1: $FluidStack_): void;
         static getFluidParticle(arg0: $FluidStack_): $ParticleOptions;
-        static getDrippingParticle(arg0: $FluidStack_): $ParticleOptions;
         static spawnPouringLiquid(arg0: $Level_, arg1: $BlockPos_, arg2: number, arg3: $ParticleOptions_, arg4: number, arg5: $Vec3_, arg6: boolean): void;
+        static getDrippingParticle(arg0: $FluidStack_): $ParticleOptions;
         static spawnRimParticles(arg0: $Level_, arg1: $BlockPos_, arg2: $Direction_, arg3: number, arg4: $ParticleOptions_, arg5: number): void;
         constructor();
     }
@@ -110,16 +110,16 @@ declare module "@package/com/simibubi/create/content/fluids" {
     }
     export class $FluidTransportBehaviour extends $BlockEntityBehaviour {
         getConnection(arg0: $Direction_): $PipeConnection;
-        static cacheFlows(arg0: $LevelAccessor, arg1: $BlockPos_): void;
-        static loadFlows(arg0: $LevelAccessor, arg1: $BlockPos_): void;
         getFlow(arg0: $Direction_): $PipeConnection$Flow;
-        getProvidedOutwardFluid(arg0: $Direction_): $FluidStack;
+        static loadFlows(arg0: $LevelAccessor, arg1: $BlockPos_): void;
+        static cacheFlows(arg0: $LevelAccessor, arg1: $BlockPos_): void;
         canHaveFlowToward(arg0: $BlockState_, arg1: $Direction_): boolean;
-        getRenderedRimAttachment(arg0: $BlockAndTintGetter, arg1: $BlockPos_, arg2: $BlockState_, arg3: $Direction_): $FluidTransportBehaviour$AttachmentTypes;
-        wipePressure(): void;
-        addPressure(arg0: $Direction_, arg1: boolean, arg2: number): void;
         canPullFluidFrom(arg0: $FluidStack_, arg1: $BlockState_, arg2: $Direction_): boolean;
         hasAnyPressure(): boolean;
+        wipePressure(): void;
+        addPressure(arg0: $Direction_, arg1: boolean, arg2: number): void;
+        getRenderedRimAttachment(arg0: $BlockAndTintGetter, arg1: $BlockPos_, arg2: $BlockState_, arg3: $Direction_): $FluidTransportBehaviour$AttachmentTypes;
+        getProvidedOutwardFluid(arg0: $Direction_): $FluidStack;
         phase: $FluidTransportBehaviour$UpdatePhase;
         interfaces: $Map<$Direction, $PipeConnection>;
         blockEntity: $SmartBlockEntity;
@@ -143,13 +143,13 @@ declare module "@package/com/simibubi/create/content/fluids" {
     }
     export class $FluidPropagator {
         static getSharedTriggers(): $CreateAdvancement[];
-        static hasFluidCapability(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Direction_): boolean;
-        static getStraightPipeAxis(arg0: $BlockState_): $Direction$Axis;
-        static propagateChangedPipe(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_): void;
         static validateNeighbourChange(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $Block_, arg4: $BlockPos_, arg5: boolean): $Direction;
+        static propagateChangedPipe(arg0: $LevelAccessor, arg1: $BlockPos_, arg2: $BlockState_): void;
+        static getStraightPipeAxis(arg0: $BlockState_): $Direction$Axis;
+        static resetAffectedFluidNetworks(arg0: $Level_, arg1: $BlockPos_, arg2: $Direction_): void;
         static getPipe(arg0: $BlockGetter, arg1: $BlockPos_): $FluidTransportBehaviour;
         static isOpenEnd(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Direction_): boolean;
-        static resetAffectedFluidNetworks(arg0: $Level_, arg1: $BlockPos_, arg2: $Direction_): void;
+        static hasFluidCapability(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Direction_): boolean;
         static getPipeConnections(arg0: $BlockState_, arg1: $FluidTransportBehaviour): $List<$Direction>;
         static getPumpRange(): number;
         constructor();
@@ -172,19 +172,19 @@ declare module "@package/com/simibubi/create/content/fluids" {
     }
     export class $FlowSource {
         keepAlive(): void;
-        provideFluid(arg0: $Predicate_<$FluidStack>): $FluidStack;
-        manageSource(arg0: $Level_, arg1: $BlockEntity): void;
-        provideHandler(): $ICapabilityProvider<$IFluidHandler>;
         whileFlowPresent(arg0: $Level_, arg1: boolean): void;
+        manageSource(arg0: $Level_, arg1: $BlockEntity): void;
+        provideFluid(arg0: $Predicate_<$FluidStack>): $FluidStack;
+        provideHandler(): $ICapabilityProvider<$IFluidHandler>;
         isEndpoint(): boolean;
         constructor(arg0: $BlockFace);
         get endpoint(): boolean;
     }
     export class $FluidReactions {
-        static handlePipeFlowCollisionFallback(arg0: $PipeCollisionEvent$Flow): void;
-        static handlePipeSpillCollisionFallback(arg0: $PipeCollisionEvent$Spill): void;
-        static handlePipeSpillCollision(arg0: $Level_, arg1: $BlockPos_, arg2: $Fluid_, arg3: $FluidState): void;
         static handlePipeFlowCollision(arg0: $Level_, arg1: $BlockPos_, arg2: $FluidStack_, arg3: $FluidStack_): void;
+        static handlePipeSpillCollision(arg0: $Level_, arg1: $BlockPos_, arg2: $Fluid_, arg3: $FluidState): void;
+        static handlePipeSpillCollisionFallback(arg0: $PipeCollisionEvent$Spill): void;
+        static handlePipeFlowCollisionFallback(arg0: $PipeCollisionEvent$Flow): void;
         constructor();
     }
     export class $FluidMesh {
@@ -239,9 +239,9 @@ declare module "@package/com/simibubi/create/content/fluids" {
      */
     export type $FluidTransportBehaviour$AttachmentTypes_ = "none" | "connection" | "detailed_connection" | "rim" | "partial_rim" | "drain" | "partial_drain";
     export class $OpenEndedPipe extends $FlowSource {
+        static fromNBT(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: $BlockPos_): $OpenEndedPipe;
         serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         getPos(): $BlockPos;
-        static fromNBT(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: $BlockPos_): $OpenEndedPipe;
         getWorld(): $Level;
         getOutputPos(): $BlockPos;
         getAOE(): $AABB;
@@ -258,33 +258,33 @@ declare module "@package/com/simibubi/create/content/fluids" {
         constructor(arg0: $BlockFace);
     }
     export class $PipeConnection {
+        spawnParticles(arg0: $Level_, arg1: $BlockPos_, arg2: $FluidStack_): void;
         deserializeNBT(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: $BlockPos_, arg3: boolean): void;
         serializeNBT(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
-        spawnParticles(arg0: $Level_, arg1: $BlockPos_, arg2: $FluidStack_): void;
-        provideOutboundFlow(): $FluidStack;
         hasFlow(): boolean;
-        hasNetwork(): boolean;
         determineSource(arg0: $Level_, arg1: $BlockPos_): boolean;
-        wipePressure(): void;
-        addPressure(arg0: boolean, arg1: number): void;
-        getPressure(): $Couple<number>;
+        hasNetwork(): boolean;
+        manageFlows(arg0: $Level_, arg1: $BlockPos_, arg2: $FluidStack_, arg3: $Predicate_<$FluidStack>): boolean;
+        tickFlowProgress(arg0: $Level_, arg1: $BlockPos_): void;
         comparePressure(): number;
         manageSource(arg0: $Level_, arg1: $BlockPos_, arg2: $BlockEntity): void;
         hasPressure(): boolean;
-        spawnSplashOnRim(arg0: $Level_, arg1: $BlockPos_, arg2: $FluidStack_): void;
-        getProvidedFluid(): $FluidStack;
-        manageFlows(arg0: $Level_, arg1: $BlockPos_, arg2: $FluidStack_, arg3: $Predicate_<$FluidStack>): boolean;
-        tickFlowProgress(arg0: $Level_, arg1: $BlockPos_): void;
         resetNetwork(): void;
-        static isRenderEntityWithinDistance(arg0: $BlockPos_): boolean;
+        getProvidedFluid(): $FluidStack;
+        wipePressure(): void;
+        addPressure(arg0: boolean, arg1: number): void;
+        provideOutboundFlow(): $FluidStack;
         flipFlowsIfPressureReversed(): boolean;
+        getPressure(): $Couple<number>;
+        spawnSplashOnRim(arg0: $Level_, arg1: $BlockPos_, arg2: $FluidStack_): void;
+        static isRenderEntityWithinDistance(arg0: $BlockPos_): boolean;
         side: $Direction;
         static SPLASH_PARTICLE_AMOUNT: number;
         static MAX_PARTICLE_RENDER_DISTANCE: number;
         static IDLE_PARTICLE_SPAWN_CHANCE: number;
         static RIM_RADIUS: number;
         constructor(arg0: $Direction_);
-        get pressure(): $Couple<number>;
         get providedFluid(): $FluidStack;
+        get pressure(): $Couple<number>;
     }
 }

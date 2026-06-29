@@ -8,7 +8,7 @@ declare module "@package/com/copycatsplus/copycats/mixin/copycat" {
     }
     export interface $VoxelShapeAccessor {
         copycats$callGetCoords(arg0: $Direction$Axis_): $DoubleList;
-        copycats$setShape(arg0: $DiscreteVoxelShape): void;
         copycats$getShape(): $DiscreteVoxelShape;
+        copycats$setShape(arg0: $DiscreteVoxelShape): void;
     }
 }

@@ -37,17 +37,17 @@ declare module "@package/com/simibubi/create/content/kinetics/crusher" {
     export class $CrushingWheelControllerBlockEntity extends $SmartBlockEntity implements $Clearable {
         clear(): void;
         write(arg0: $CompoundTag_, arg1: $HolderLookup$Provider, arg2: boolean): void;
-        handler$gkk000$sable$initSublevel(arg0: $CallbackInfo): void;
-        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
-        tickAudio(): void;
         clearContent(): void;
-        isOccupied(): boolean;
+        static registerCapabilities(arg0: $RegisterCapabilitiesEvent): void;
         startCrushing(arg0: $Entity): void;
-        hasEntity(): boolean;
+        tickAudio(): void;
+        isOccupied(): boolean;
         findRecipe(): ($RecipeHolder<$StandardProcessingRecipe<$RecipeWrapper>>) | undefined;
+        hasEntity(): boolean;
+        handler$gkk000$sable$initSublevel(arg0: $CallbackInfo): void;
+        wrapOperation$gkk000$sable$pushEntityLocalX(arg0: $Entity, arg1: $Operation_<any>): number;
         wrapOperation$gkk000$sable$pushEntityLocalAABB(arg0: $Entity, arg1: $Operation_<any>): $AABB;
         wrapOperation$gkk000$sable$pushEntityLocalY(arg0: $Entity, arg1: $Operation_<any>): number;
-        wrapOperation$gkk000$sable$pushEntityLocalX(arg0: $Entity, arg1: $Operation_<any>): number;
         wrapOperation$gkk000$sable$pushEntityLocalZ(arg0: $Entity, arg1: $Operation_<any>): number;
         worldPosition: $BlockPos;
         processingEntity: $Entity;
@@ -75,16 +75,16 @@ declare module "@package/com/simibubi/create/content/kinetics/crusher" {
         constructor(arg0: $BlockEntityType_<never>, arg1: $BlockPos_, arg2: $BlockState_);
     }
     export class $CrushingWheelBlock extends $RotatedPillarKineticBlock implements $IBE<$CrushingWheelBlockEntity> {
-        getBlockEntityType(): $BlockEntityType<$CrushingWheelBlockEntity>;
-        getBlockEntityClass(): $Class<$CrushingWheelBlockEntity>;
         updateControllers(arg0: $BlockState_, arg1: $Level_, arg2: $BlockPos_, arg3: $Direction_): void;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$CrushingWheelBlockEntity>): void;
+        getBlockEntityClass(): $Class<$CrushingWheelBlockEntity>;
+        getBlockEntityType(): $BlockEntityType<$CrushingWheelBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$CrushingWheelBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($CrushingWheelBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$CrushingWheelBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $CrushingWheelBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$CrushingWheelBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($CrushingWheelBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$CrushingWheelBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -115,24 +115,24 @@ declare module "@package/com/simibubi/create/content/kinetics/crusher" {
         hasCollision: boolean;
         static AXIS: $EnumProperty<$Direction$Axis>;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$CrushingWheelBlockEntity>;
         get blockEntityClass(): $Class<$CrushingWheelBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$CrushingWheelBlockEntity>;
     }
     export class $AbstractCrushingRecipe extends $StandardProcessingRecipe<$RecipeInput> {
         constructor(arg0: $IRecipeTypeInfo, arg1: $ProcessingRecipeParams);
     }
     export class $CrushingWheelControllerBlock extends $DirectionalBlock implements $IBE<$CrushingWheelControllerBlockEntity> {
-        checkEntityForProcessing(arg0: $Level_, arg1: $BlockPos_, arg2: $Entity): void;
-        getBlockEntityType(): $BlockEntityType<$CrushingWheelControllerBlockEntity>;
         updateSpeed(arg0: $BlockState_, arg1: $LevelAccessor, arg2: $BlockPos_): void;
+        checkEntityForProcessing(arg0: $Level_, arg1: $BlockPos_, arg2: $Entity): void;
         getBlockEntityClass(): $Class<$CrushingWheelControllerBlockEntity>;
-        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$CrushingWheelControllerBlockEntity>): void;
+        getBlockEntityType(): $BlockEntityType<$CrushingWheelControllerBlockEntity>;
         onBlockEntityUse(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$CrushingWheelControllerBlockEntity, $InteractionResult>): $InteractionResult;
-        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($CrushingWheelControllerBlockEntity) | undefined;
-        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$CrushingWheelControllerBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
+        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
         getBlockEntity(arg0: $BlockGetter, arg1: $BlockPos_): $CrushingWheelControllerBlockEntity;
         getTicker<S extends $BlockEntity>(arg0: $Level_, arg1: $BlockState_, arg2: $BlockEntityType_<S>): $BlockEntityTicker<S>;
-        newBlockEntity(arg0: $BlockPos_, arg1: $BlockState_): $BlockEntity;
+        withBlockEntityDo(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Consumer_<$CrushingWheelControllerBlockEntity>): void;
+        getBlockEntityOptional(arg0: $BlockGetter, arg1: $BlockPos_): ($CrushingWheelControllerBlockEntity) | undefined;
+        onBlockEntityUseItemOn(arg0: $BlockGetter, arg1: $BlockPos_, arg2: $Function_<$CrushingWheelControllerBlockEntity, $ItemInteractionResult>): $ItemInteractionResult;
         getListener<T extends $BlockEntity>(arg0: $ServerLevel, arg1: T): $GameEventListener;
         explosionResistance: number;
         static VALID: $BooleanProperty;
@@ -164,7 +164,7 @@ declare module "@package/com/simibubi/create/content/kinetics/crusher" {
         static FACING: $DirectionProperty;
         hasCollision: boolean;
         constructor(arg0: $BlockBehaviour$Properties);
-        get blockEntityType(): $BlockEntityType<$CrushingWheelControllerBlockEntity>;
         get blockEntityClass(): $Class<$CrushingWheelControllerBlockEntity>;
+        get blockEntityType(): $BlockEntityType<$CrushingWheelControllerBlockEntity>;
     }
 }

@@ -1,7 +1,8 @@
 import { $GoalSelector } from "@package/net/minecraft/world/entity/ai/goal";
 import { $JumpControl, $MoveControl, $LookControl } from "@package/net/minecraft/world/entity/ai/control";
 import { $SensorType, $Sensor } from "@package/net/minecraft/world/entity/ai/sensing";
-import { $EntityDimensions, $EntityType_, $Entity$RemovalReason, $Pose, $PortalProcessor, $AgeableMob, $WalkAnimationState, $MobSpawnType_ } from "@package/net/minecraft/world/entity";
+import { $CompoundTag } from "@package/net/minecraft/nbt";
+import { $EntityDimensions, $EntityType_, $Entity$RemovalReason, $Pose, $PortalProcessor, $WalkAnimationState, $MobSpawnType_ } from "@package/net/minecraft/world/entity";
 import { $FluidType } from "@package/net/neoforged/neoforge/fluids";
 import { $AttributeSupplier$Builder } from "@package/net/minecraft/world/entity/ai/attributes";
 import { $UUID, $Stack } from "@package/java/util";
@@ -10,9 +11,8 @@ import { $RandomSource } from "@package/net/minecraft/util";
 import { $InteractionHand } from "@package/net/minecraft/world";
 import { $Predicate } from "@package/java/util/function";
 import { $SoundEvent } from "@package/net/minecraft/sounds";
-import { $ServerLevel } from "@package/net/minecraft/server/level";
 import { $Object2DoubleMap } from "@package/it/unimi/dsi/fastutil/objects";
-import { $BlockPos, $BlockPos_ } from "@package/net/minecraft/core";
+import { $HolderLookup$Provider, $BlockPos, $BlockPos_ } from "@package/net/minecraft/core";
 import { $Brain } from "@package/net/minecraft/world/entity/ai";
 import { $PathNavigation } from "@package/net/minecraft/world/entity/ai/navigation";
 import { $Object } from "@package/java/lang";
@@ -32,9 +32,9 @@ import { $Vec3 } from "@package/net/minecraft/world/phys";
 
 declare module "@package/net/minecraft/world/entity/animal/goat" {
     export class $GoatAi {
-        static initMemories(goat: $Goat, random: $RandomSource): void;
         static updateActivity(brain: $Goat): void;
         static makeBrain(brain: $Brain<$Goat>): $Brain<never>;
+        static initMemories(goat: $Goat, random: $RandomSource): void;
         static getTemptations(): $Predicate<$ItemStack>;
         static MAX_LONG_JUMP_WIDTH: number;
         static RAM_PREPARE_TIME: number;
@@ -48,14 +48,17 @@ declare module "@package/net/minecraft/world/entity/animal/goat" {
         static get temptations(): $Predicate<$ItemStack>;
     }
     export class $Goat extends $Animal {
-        static createAttributes(): $AttributeSupplier$Builder;
-        getMilkingSound(): $SoundEvent;
-        setScreamingGoat(isScreamingGoat: boolean): void;
+        createHorn(): $ItemStack;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        addHorns(): void;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
          */
-        isScreamingGoat(): boolean;
+        dropHorn(): boolean;
+        getMilkingSound(): $SoundEvent;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
@@ -70,22 +73,19 @@ declare module "@package/net/minecraft/world/entity/animal/goat" {
          * Returns the amount of health added by the Absorption effect.
          */
         getRammingXHeadRot(): number;
-        /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
-         */
-        removeHorns(): void;
-        /**
-         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
-         */
-        addHorns(): void;
-        createHorn(): $ItemStack;
+        setScreamingGoat(isScreamingGoat: boolean): void;
         /**
          * If a rider of this entity can interact with this entity. Should return true on the
          * ridden entity if so.
          */
-        dropHorn(): boolean;
-        getBreedOffspring(level: $ServerLevel, otherParent: $AgeableMob): $Goat;
+        isScreamingGoat(): boolean;
+        /**
+         * Called every tick so the entity can update its state as required. For example, zombies and skeletons use this to react to sunlight and start to burn.
+         */
+        removeHorns(): void;
+        static createAttributes(): $AttributeSupplier$Builder;
         static checkGoatSpawnRules(goat: $EntityType_<$Animal>, level: $LevelAccessor, spawnType: $MobSpawnType_, pos: $BlockPos_, random: $RandomSource): boolean;
+        serializeNBT(arg0: $HolderLookup$Provider): $CompoundTag;
         static MAX_WEARING_ARMOR_CHANCE: number;
         lastHurtByPlayerTime: number;
         static PRESERVE_ITEM_DROP_CHANCE_THRESHOLD: number;

@@ -29,10 +29,10 @@ export * as girder from "@package/com/simibubi/create/content/decoration/girder"
 
 declare module "@package/com/simibubi/create/content/decoration" {
     export class $MetalLadderBlock extends $LadderBlock implements $IWrenchable {
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         static SOUTH_AABB: $VoxelShape;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -70,8 +70,8 @@ declare module "@package/com/simibubi/create/content/decoration" {
         constructor(arg0: $BlockBehaviour$Properties);
     }
     export class $RoofBlockCTBehaviour extends $ConnectedTextureBehaviour$Base {
-        isUprightStair(arg0: $BlockState_): boolean;
         getStairMapping(arg0: $BlockState_): $ConnectedTextureBehaviour$CTContext;
+        isUprightStair(arg0: $BlockState_): boolean;
         constructor(arg0: $CTSpriteShiftEntry);
     }
     export class $MetalScaffoldingBlockItem extends $ScaffoldingBlockItem {
@@ -89,10 +89,10 @@ declare module "@package/com/simibubi/create/content/decoration" {
         static isConnected(arg0: $BlockState_, arg1: $BlockState_, arg2: $Direction_): boolean;
         static glass(arg0: $BlockBehaviour$Properties): $TrainTrapdoorBlock;
         static metal(arg0: $BlockBehaviour$Properties): $TrainTrapdoorBlock;
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         explosionResistance: number;
         static NORTH_OPEN_AABB: $VoxelShape;
         static UPDATE_SHAPE_ORDER: $Direction[];
@@ -146,10 +146,10 @@ declare module "@package/com/simibubi/create/content/decoration" {
         constructor(arg0: $CTSpriteShiftEntry, arg1: $CTSpriteShiftEntry, arg2: $CTSpriteShiftEntry);
     }
     export class $MetalScaffoldingBlock extends $ScaffoldingBlock implements $IWrenchable {
-        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
         getRotatedBlockState(arg0: $BlockState_, arg1: $Direction_): $BlockState;
-        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         onWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
+        updateAfterWrenched(arg0: $BlockState_, arg1: $UseOnContext): $BlockState;
+        onSneakWrenched(arg0: $BlockState_, arg1: $UseOnContext): $InteractionResult;
         explosionResistance: number;
         static UPDATE_SHAPE_ORDER: $Direction[];
         static OCCLUSION_CACHE: $ThreadLocal<$Object2ByteLinkedOpenHashMap<$Block$BlockStatePairKey>>;
@@ -185,10 +185,10 @@ declare module "@package/com/simibubi/create/content/decoration" {
     }
     export class $MetalLadderBlock$PlacementHelper implements $IPlacementHelper {
         getOffset(arg0: $Player, arg1: $Level_, arg2: $BlockState_, arg3: $BlockPos_, arg4: $BlockHitResult, arg5: $ItemStack_): $PlacementOffset;
-        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
-        matchesState(arg0: $BlockState_): boolean;
-        displayGhost(arg0: $PlacementOffset): void;
         matchesItem(arg0: $ItemStack_): boolean;
+        matchesState(arg0: $BlockState_): boolean;
+        renderAt(arg0: $BlockPos_, arg1: $BlockState_, arg2: $BlockHitResult, arg3: $PlacementOffset): void;
+        displayGhost(arg0: $PlacementOffset): void;
     }
     export class $CardboardBlock extends $Block {
         explosionResistance: number;

@@ -20,14 +20,16 @@ export * as common from "@package/xaero/hud/minimap/common";
 
 declare module "@package/xaero/hud/minimap" {
     export class $Minimap {
+        getInfoDisplays(): $InfoDisplays;
         setCrashedWith(arg0: $Throwable): void;
         usingFBO(): boolean;
         getModMain(): $HudMod;
-        getInfoDisplays(): $InfoDisplays;
-        checkCrashes(): void;
-        getCompassRenderer(): $CompassRenderer;
-        getCrashedWith(): $Throwable;
         getWaypointWorldRenderer(): $WaypointWorldRenderer;
+        /**
+         * @deprecated
+         */
+        getWaypointsGuiRenderer(): $WaypointsGuiRenderer;
+        getMinimapFBORenderer(): $MinimapFBORenderer;
         /**
          * @deprecated
          */
@@ -35,28 +37,26 @@ declare module "@package/xaero/hud/minimap" {
         /**
          * @deprecated
          */
-        getWaypointsGuiRenderer(): $WaypointsGuiRenderer;
-        /**
-         * @deprecated
-         */
         getWaypointsIngameRenderer(): $WaypointsIngameRenderer;
-        getWaypointMapRenderer(): $WaypointMapRenderer;
         getMinimapSafeModeRenderer(): $MinimapSafeModeRenderer;
-        getMinimapFBORenderer(): $MinimapFBORenderer;
-        getWorldRendererHandler(): $MinimapElementWorldRendererHandler;
+        getWaypointMapRenderer(): $WaypointMapRenderer;
         getOverMapRendererHandler(): $MinimapElementOverMapRendererHandler;
+        getWorldRendererHandler(): $MinimapElementWorldRendererHandler;
+        getCompassRenderer(): $CompassRenderer;
+        getCrashedWith(): $Throwable;
+        checkCrashes(): void;
         constructor(arg0: $HudMod);
-        get modMain(): $HudMod;
         get infoDisplays(): $InfoDisplays;
-        get compassRenderer(): $CompassRenderer;
+        get modMain(): $HudMod;
         get waypointWorldRenderer(): $WaypointWorldRenderer;
-        get waypointGuiRenderer(): $WaypointsGuiRenderer$1;
         get waypointsGuiRenderer(): $WaypointsGuiRenderer;
-        get waypointsIngameRenderer(): $WaypointsIngameRenderer;
-        get waypointMapRenderer(): $WaypointMapRenderer;
-        get minimapSafeModeRenderer(): $MinimapSafeModeRenderer;
         get minimapFBORenderer(): $MinimapFBORenderer;
-        get worldRendererHandler(): $MinimapElementWorldRendererHandler;
+        get waypointGuiRenderer(): $WaypointsGuiRenderer$1;
+        get waypointsIngameRenderer(): $WaypointsIngameRenderer;
+        get minimapSafeModeRenderer(): $MinimapSafeModeRenderer;
+        get waypointMapRenderer(): $WaypointMapRenderer;
         get overMapRendererHandler(): $MinimapElementOverMapRendererHandler;
+        get worldRendererHandler(): $MinimapElementWorldRendererHandler;
+        get compassRenderer(): $CompassRenderer;
     }
 }

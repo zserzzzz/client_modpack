@@ -5,7 +5,7 @@ import { $ClientPacketListener } from "@package/net/minecraft/client/multiplayer
 import { $RadarSession } from "@package/xaero/hud/minimap/radar";
 import { $MinimapWorldManagerIO } from "@package/xaero/hud/minimap/world/io";
 import { $HudMod } from "@package/xaero/common";
-import { $ModuleSession, $HudModule } from "@package/xaero/hud/module";
+import { $HudModule, $ModuleSession } from "@package/xaero/hud/module";
 import { $Minecraft } from "@package/net/minecraft/client";
 import { $MultiTextureRenderTypeRendererProvider } from "@package/xaero/common/graphics/renderer/multitexture";
 import { $MinimapWorldState, $MinimapWorldStateUpdater } from "@package/xaero/hud/minimap/world/state";
@@ -13,31 +13,31 @@ import { $MinimapWorldState, $MinimapWorldStateUpdater } from "@package/xaero/hu
 declare module "@package/xaero/hud/minimap/module" {
     export class $MinimapSession extends $ModuleSession<$MinimapSession> {
         getProcessor(): $MinimapProcessor;
-        getMultiTextureRenderTypeRenderers(): $MultiTextureRenderTypeRendererProvider;
+        getMc(): $Minecraft;
         getWorldStateUpdater(): $MinimapWorldStateUpdater;
-        getWaypointSession(): $WaypointSession;
+        getWorldState(): $MinimapWorldState;
+        getWorldManagerIO(): $MinimapWorldManagerIO;
+        getDimensionHelper(): $MinimapDimensionHelper;
         getHideMinimapUnderScreen(): boolean;
         getHideMinimapUnderF3(): boolean;
         getWorldManager(): $MinimapWorldManager;
         getRadarSession(): $RadarSession;
-        getMc(): $Minecraft;
+        getMultiTextureRenderTypeRenderers(): $MultiTextureRenderTypeRendererProvider;
+        getWaypointSession(): $WaypointSession;
         getConfiguredWidth(): number;
-        getWorldManagerIO(): $MinimapWorldManagerIO;
-        getWorldState(): $MinimapWorldState;
-        getDimensionHelper(): $MinimapDimensionHelper;
         constructor(arg0: $HudMod, arg1: $HudModule<$MinimapSession>, arg2: $ClientPacketListener);
         get processor(): $MinimapProcessor;
-        get multiTextureRenderTypeRenderers(): $MultiTextureRenderTypeRendererProvider;
+        get mc(): $Minecraft;
         get worldStateUpdater(): $MinimapWorldStateUpdater;
-        get waypointSession(): $WaypointSession;
+        get worldState(): $MinimapWorldState;
+        get worldManagerIO(): $MinimapWorldManagerIO;
+        get dimensionHelper(): $MinimapDimensionHelper;
         get hideMinimapUnderScreen(): boolean;
         get hideMinimapUnderF3(): boolean;
         get worldManager(): $MinimapWorldManager;
         get radarSession(): $RadarSession;
-        get mc(): $Minecraft;
+        get multiTextureRenderTypeRenderers(): $MultiTextureRenderTypeRendererProvider;
+        get waypointSession(): $WaypointSession;
         get configuredWidth(): number;
-        get worldManagerIO(): $MinimapWorldManagerIO;
-        get worldState(): $MinimapWorldState;
-        get dimensionHelper(): $MinimapDimensionHelper;
     }
 }

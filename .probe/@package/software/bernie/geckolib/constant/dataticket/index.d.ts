@@ -7,11 +7,11 @@ import { $StreamCodec } from "@package/net/minecraft/network/codec";
 declare module "@package/software/bernie/geckolib/constant/dataticket" {
     export class $SerializableDataTicket<D> extends $DataTicket<D> {
         streamCodec(): $StreamCodec<$RegistryFriendlyByteBuf, D>;
+        static ofString(arg0: $ResourceLocation_): $SerializableDataTicket<string>;
         static ofEnum<E extends $Enum<E>>(arg0: $ResourceLocation_, arg1: $Class<E>): $SerializableDataTicket<E>;
-        static ofDouble(arg0: $ResourceLocation_): $SerializableDataTicket<number>;
         static ofInt(arg0: $ResourceLocation_): $SerializableDataTicket<number>;
         static ofFloat(arg0: $ResourceLocation_): $SerializableDataTicket<number>;
-        static ofString(arg0: $ResourceLocation_): $SerializableDataTicket<string>;
+        static ofDouble(arg0: $ResourceLocation_): $SerializableDataTicket<number>;
         static ofBoolean(arg0: $ResourceLocation_): $SerializableDataTicket<boolean>;
         static STREAM_CODEC: $StreamCodec<$RegistryFriendlyByteBuf, $SerializableDataTicket<never>>;
         constructor(arg0: string, arg1: $Class<D>);

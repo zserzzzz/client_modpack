@@ -1,16 +1,12 @@
 import { $TabOrderedElement } from "@package/net/minecraft/client/gui/components";
 import { $ScreenRectangle, $FocusNavigationEvent_ } from "@package/net/minecraft/client/gui/navigation";
-import { $List } from "@package/java/util";
 import { $ComponentPath } from "@package/net/minecraft/client/gui";
+import { $List } from "@package/java/util";
 
 declare module "@package/net/minecraft/client/gui/components/events" {
     export class $ContainerEventHandler {
     }
     export interface $ContainerEventHandler extends $GuiEventListener {
-        /**
-         * @return the current focus path as a ComponentPath, or `null`
-         */
-        getCurrentFocusPath(): $ComponentPath;
         /**
          * @return a List containing all GUI element children of this GUI element
          */
@@ -28,34 +24,17 @@ declare module "@package/net/minecraft/client/gui/components/events" {
          */
         mouseClicked(mouseX: number, arg1: number, mouseY: number): boolean;
         /**
-         * Retrieves the next focus path based on the given focus navigation event.
-         * 
-         * @return The next focus path as a ComponentPath, or `null` if there is no next focus path.
+         * @return `true` if the GUI element is dragging, `false` otherwise
          */
-        nextFocusPath(event: $FocusNavigationEvent_): $ComponentPath;
+        isFocused(): boolean;
         /**
-         * Called when the mouse is dragged within the GUI element.
-         * 
-         * @return `true` if the event is consumed, `false` otherwise.
+         * Gets the focused GUI element.
          */
-        mouseDragged(mouseX: number, arg1: number, mouseY: number, arg3: number, button: number): boolean;
-        mouseScrolled(mouseX: number, arg1: number, mouseY: number, arg3: number): boolean;
+        getFocused(): $GuiEventListener;
         /**
-         * Sets if the GUI element is dragging or not.
+         * @return `true` if the GUI element is dragging, `false` otherwise
          */
-        setDragging(isDragging: boolean): void;
-        /**
-         * Called when a mouse button is clicked within the GUI element.
-         * 
-         * @return `true` if the event is consumed, `false` otherwise.
-         */
-        mouseReleased(mouseX: number, arg1: number, mouseY: number): boolean;
-        /**
-         * Called when a keyboard key is pressed within the GUI element.
-         * 
-         * @return `true` if the event is consumed, `false` otherwise.
-         */
-        keyReleased(keyCode: number, scanCode: number, modifiers: number): boolean;
+        isDragging(): boolean;
         /**
          * Returns the first event listener that intersects with the mouse coordinates.
          */
@@ -67,10 +46,6 @@ declare module "@package/net/minecraft/client/gui/components/events" {
          */
         charTyped(codePoint: string, modifiers: number): boolean;
         /**
-         * @return `true` if the GUI element is dragging, `false` otherwise
-         */
-        isDragging(): boolean;
-        /**
          * Sets if the GUI element is dragging or not.
          */
         setFocused(isDragging: boolean): void;
@@ -79,13 +54,38 @@ declare module "@package/net/minecraft/client/gui/components/events" {
          */
         setFocused(focused: $GuiEventListener | null): void;
         /**
-         * Gets the focused GUI element.
+         * Retrieves the next focus path based on the given focus navigation event.
+         * 
+         * @return The next focus path as a ComponentPath, or `null` if there is no next focus path.
          */
-        getFocused(): $GuiEventListener;
+        nextFocusPath(event: $FocusNavigationEvent_): $ComponentPath;
         /**
-         * @return `true` if the GUI element is dragging, `false` otherwise
+         * @return the current focus path as a ComponentPath, or `null`
          */
-        isFocused(): boolean;
+        getCurrentFocusPath(): $ComponentPath;
+        mouseScrolled(mouseX: number, arg1: number, mouseY: number, arg3: number): boolean;
+        /**
+         * Called when a keyboard key is pressed within the GUI element.
+         * 
+         * @return `true` if the event is consumed, `false` otherwise.
+         */
+        keyReleased(keyCode: number, scanCode: number, modifiers: number): boolean;
+        /**
+         * Sets if the GUI element is dragging or not.
+         */
+        setDragging(isDragging: boolean): void;
+        /**
+         * Called when the mouse is dragged within the GUI element.
+         * 
+         * @return `true` if the event is consumed, `false` otherwise.
+         */
+        mouseDragged(mouseX: number, arg1: number, mouseY: number, arg3: number, button: number): boolean;
+        /**
+         * Called when a mouse button is clicked within the GUI element.
+         * 
+         * @return `true` if the event is consumed, `false` otherwise.
+         */
+        mouseReleased(mouseX: number, arg1: number, mouseY: number): boolean;
         get currentFocusPath(): $ComponentPath;
     }
     /**
@@ -98,10 +98,6 @@ declare module "@package/net/minecraft/client/gui/components/events" {
     }
     export interface $GuiEventListener extends $TabOrderedElement {
         /**
-         * @return the current focus path as a ComponentPath, or `null` if there is no current focus path.
-         */
-        getCurrentFocusPath(): $ComponentPath;
-        /**
          * Called when a keyboard key is pressed within the GUI element.
          * 
          * @return `true` if the event is consumed, `false` otherwise.
@@ -114,44 +110,9 @@ declare module "@package/net/minecraft/client/gui/components/events" {
          */
         mouseClicked(mouseX: number, arg1: number, mouseY: number): boolean;
         /**
-         * Retrieves the next focus path based on the given focus navigation event.
-         * 
-         * @return the next focus path as a ComponentPath, or `null` if there is no next focus path.
+         * @return `true` if the GUI element is focused, `false` otherwise
          */
-        nextFocusPath(event: $FocusNavigationEvent_): $ComponentPath;
-        /**
-         * Checks if the given mouse coordinates are over the GUI element.
-         * 
-         * @return `true` if the mouse is over the GUI element, `false` otherwise.
-         */
-        isMouseOver(mouseX: number, arg1: number): boolean;
-        /**
-         * @return the `ScreenRectangle` occupied by the GUI element
-         */
-        getRectangle(): $ScreenRectangle;
-        /**
-         * Called when the mouse is dragged within the GUI element.
-         * 
-         * @return `true` if the event is consumed, `false` otherwise.
-         */
-        mouseDragged(mouseX: number, arg1: number, mouseY: number, arg3: number, button: number): boolean;
-        mouseScrolled(mouseX: number, arg1: number, mouseY: number, arg3: number): boolean;
-        /**
-         * Called when a mouse button is clicked within the GUI element.
-         * 
-         * @return `true` if the event is consumed, `false` otherwise.
-         */
-        mouseReleased(mouseX: number, arg1: number, mouseY: number): boolean;
-        /**
-         * Called when a keyboard key is pressed within the GUI element.
-         * 
-         * @return `true` if the event is consumed, `false` otherwise.
-         */
-        keyReleased(keyCode: number, scanCode: number, modifiers: number): boolean;
-        /**
-         * Called when the mouse is moved within the GUI element.
-         */
-        mouseMoved(mouseX: number, arg1: number): void;
+        isFocused(): boolean;
         /**
          * Called when a character is typed within the GUI element.
          * 
@@ -163,17 +124,56 @@ declare module "@package/net/minecraft/client/gui/components/events" {
          */
         setFocused(focused: boolean): void;
         /**
-         * @return `true` if the GUI element is focused, `false` otherwise
+         * Called when the mouse is moved within the GUI element.
          */
-        isFocused(): boolean;
-        get currentFocusPath(): $ComponentPath;
+        mouseMoved(mouseX: number, arg1: number): void;
+        /**
+         * Retrieves the next focus path based on the given focus navigation event.
+         * 
+         * @return the next focus path as a ComponentPath, or `null` if there is no next focus path.
+         */
+        nextFocusPath(event: $FocusNavigationEvent_): $ComponentPath;
+        /**
+         * @return the `ScreenRectangle` occupied by the GUI element
+         */
+        getRectangle(): $ScreenRectangle;
+        /**
+         * Checks if the given mouse coordinates are over the GUI element.
+         * 
+         * @return `true` if the mouse is over the GUI element, `false` otherwise.
+         */
+        isMouseOver(mouseX: number, arg1: number): boolean;
+        /**
+         * @return the current focus path as a ComponentPath, or `null` if there is no current focus path.
+         */
+        getCurrentFocusPath(): $ComponentPath;
+        mouseScrolled(mouseX: number, arg1: number, mouseY: number, arg3: number): boolean;
+        /**
+         * Called when a keyboard key is pressed within the GUI element.
+         * 
+         * @return `true` if the event is consumed, `false` otherwise.
+         */
+        keyReleased(keyCode: number, scanCode: number, modifiers: number): boolean;
+        /**
+         * Called when the mouse is dragged within the GUI element.
+         * 
+         * @return `true` if the event is consumed, `false` otherwise.
+         */
+        mouseDragged(mouseX: number, arg1: number, mouseY: number, arg3: number, button: number): boolean;
+        /**
+         * Called when a mouse button is clicked within the GUI element.
+         * 
+         * @return `true` if the event is consumed, `false` otherwise.
+         */
+        mouseReleased(mouseX: number, arg1: number, mouseY: number): boolean;
         get rectangle(): $ScreenRectangle;
+        get currentFocusPath(): $ComponentPath;
     }
     export class $AbstractContainerEventHandler implements $ContainerEventHandler {
         /**
-         * Sets if the GUI element is dragging or not.
+         * Gets the focused GUI element.
          */
-        setDragging(dragging: boolean): void;
+        getFocused(): $GuiEventListener;
         /**
          * @return `true` if the GUI element is dragging, `false` otherwise
          */
@@ -183,13 +183,9 @@ declare module "@package/net/minecraft/client/gui/components/events" {
          */
         setFocused(listener: $GuiEventListener | null): void;
         /**
-         * Gets the focused GUI element.
+         * Sets if the GUI element is dragging or not.
          */
-        getFocused(): $GuiEventListener;
-        /**
-         * @return the current focus path as a ComponentPath, or `null`
-         */
-        getCurrentFocusPath(): $ComponentPath;
+        setDragging(dragging: boolean): void;
         /**
          * Called when a keyboard key is pressed within the GUI element.
          * 
@@ -203,30 +199,9 @@ declare module "@package/net/minecraft/client/gui/components/events" {
          */
         mouseClicked(mouseX: number, arg1: number, mouseY: number): boolean;
         /**
-         * Retrieves the next focus path based on the given focus navigation event.
-         * 
-         * @return The next focus path as a ComponentPath, or `null` if there is no next focus path.
+         * @return `true` if the GUI element is dragging, `false` otherwise
          */
-        nextFocusPath(event: $FocusNavigationEvent_): $ComponentPath;
-        /**
-         * Called when the mouse is dragged within the GUI element.
-         * 
-         * @return `true` if the event is consumed, `false` otherwise.
-         */
-        mouseDragged(mouseX: number, arg1: number, mouseY: number, arg3: number, button: number): boolean;
-        mouseScrolled(mouseX: number, arg1: number, mouseY: number, arg3: number): boolean;
-        /**
-         * Called when a mouse button is released within the GUI element.
-         * 
-         * @return `true` if the event is consumed, `false` otherwise.
-         */
-        mouseReleased(mouseX: number, arg1: number, mouseY: number): boolean;
-        /**
-         * Called when a keyboard key is pressed within the GUI element.
-         * 
-         * @return `true` if the event is consumed, `false` otherwise.
-         */
-        keyReleased(keyCode: number, scanCode: number, modifiers: number): boolean;
+        isFocused(): boolean;
         /**
          * Returns the first event listener that intersects with the mouse coordinates.
          */
@@ -242,23 +217,48 @@ declare module "@package/net/minecraft/client/gui/components/events" {
          */
         setFocused(dragging: boolean): void;
         /**
-         * @return `true` if the GUI element is dragging, `false` otherwise
+         * Retrieves the next focus path based on the given focus navigation event.
+         * 
+         * @return The next focus path as a ComponentPath, or `null` if there is no next focus path.
          */
-        isFocused(): boolean;
+        nextFocusPath(event: $FocusNavigationEvent_): $ComponentPath;
+        /**
+         * @return the current focus path as a ComponentPath, or `null`
+         */
+        getCurrentFocusPath(): $ComponentPath;
+        mouseScrolled(mouseX: number, arg1: number, mouseY: number, arg3: number): boolean;
+        /**
+         * Called when a keyboard key is pressed within the GUI element.
+         * 
+         * @return `true` if the event is consumed, `false` otherwise.
+         */
+        keyReleased(keyCode: number, scanCode: number, modifiers: number): boolean;
+        /**
+         * Called when the mouse is dragged within the GUI element.
+         * 
+         * @return `true` if the event is consumed, `false` otherwise.
+         */
+        mouseDragged(mouseX: number, arg1: number, mouseY: number, arg3: number, button: number): boolean;
+        /**
+         * Called when a mouse button is released within the GUI element.
+         * 
+         * @return `true` if the event is consumed, `false` otherwise.
+         */
+        mouseReleased(mouseX: number, arg1: number, mouseY: number): boolean;
+        /**
+         * Called when the mouse is moved within the GUI element.
+         */
+        mouseMoved(mouseX: number, arg1: number): void;
+        /**
+         * @return the `ScreenRectangle` occupied by the GUI element
+         */
+        getRectangle(): $ScreenRectangle;
         /**
          * Checks if the given mouse coordinates are over the GUI element.
          * 
          * @return `true` if the mouse is over the GUI element, `false` otherwise.
          */
         isMouseOver(mouseX: number, arg1: number): boolean;
-        /**
-         * @return the `ScreenRectangle` occupied by the GUI element
-         */
-        getRectangle(): $ScreenRectangle;
-        /**
-         * Called when the mouse is moved within the GUI element.
-         */
-        mouseMoved(mouseX: number, arg1: number): void;
         /**
          * Returns the tab order group of the GUI component.
          * Tab order group determines the order in which the components are traversed when using keyboard navigation.

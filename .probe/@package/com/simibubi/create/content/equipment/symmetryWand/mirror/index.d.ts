@@ -5,8 +5,8 @@ import { $Component } from "@package/net/minecraft/network/chat";
 import { $PoseStack } from "@package/com/mojang/blaze3d/vertex";
 import { $Enum } from "@package/java/lang";
 import { $ByteBuf } from "@package/io/netty/buffer";
-import { $PartialModel } from "@package/dev/engine_room/flywheel/lib/model/baked";
 import { $List, $Map_, $Map } from "@package/java/util";
+import { $PartialModel } from "@package/dev/engine_room/flywheel/lib/model/baked";
 import { $Vec3_, $Vec3 } from "@package/net/minecraft/world/phys";
 import { $StringRepresentable } from "@package/net/minecraft/util";
 import { $StreamCodec } from "@package/net/minecraft/network/codec";
@@ -64,19 +64,19 @@ declare module "@package/com/simibubi/create/content/equipment/symmetryWand/mirr
         constructor(arg0: $Vec3_);
     }
     export class $SymmetryMirror {
+        getModel(): $PartialModel;
         getPosition(): $Vec3;
         typeName(): string;
         rotate(arg0: boolean): void;
         process(arg0: $Map_<$BlockPos_, $BlockState_>): void;
         process(arg0: $BlockPos_, arg1: $BlockState_): $Map<$BlockPos, $BlockState>;
-        getModel(): $PartialModel;
-        getOrientation(): $StringRepresentable;
         setOrientation(arg0: number): void;
+        getOrientation(): $StringRepresentable;
         setPosition(arg0: $Vec3_): void;
-        static getMirrors(): $List<$Component>;
+        getAlignToolTips(): $List<$Component>;
         applyModelTransform(arg0: $PoseStack): void;
         getOrientationIndex(): number;
-        getAlignToolTips(): $List<$Component>;
+        static getMirrors(): $List<$Component>;
         static CROSS_PLANE: string;
         static CODEC: $Codec<$SymmetryMirror>;
         static TRIPLE_PLANE: string;
@@ -86,9 +86,9 @@ declare module "@package/com/simibubi/create/content/equipment/symmetryWand/mirr
         static STREAM_CODEC: $StreamCodec<$ByteBuf, $SymmetryMirror>;
         constructor(arg0: $Vec3_);
         get model(): $PartialModel;
-        static get mirrors(): $List<$Component>;
-        get orientationIndex(): number;
         get alignToolTips(): $List<$Component>;
+        get orientationIndex(): number;
+        static get mirrors(): $List<$Component>;
     }
     export class $CrossPlaneMirror extends $SymmetryMirror {
         static CROSS_PLANE: string;

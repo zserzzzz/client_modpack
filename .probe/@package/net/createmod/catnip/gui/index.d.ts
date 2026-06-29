@@ -51,10 +51,10 @@ declare module "@package/net/createmod/catnip/gui" {
     }
     export class $NavigatableSimiScreen extends $AbstractSimiScreen {
         isEquivalentTo(arg0: $NavigatableSimiScreen): boolean;
-        centerScalingOnMouse(): void;
-        static isCurrentlyRenderingPreviousScreen(): boolean;
-        centerScalingOn(arg0: number, arg1: number): void;
         shareContextWith(arg0: $NavigatableSimiScreen): void;
+        centerScalingOn(arg0: number, arg1: number): void;
+        static isCurrentlyRenderingPreviousScreen(): boolean;
+        centerScalingOnMouse(): void;
         static MENU_BACKGROUND: $ResourceLocation;
         minecraft: $Minecraft;
         static INWORLD_FOOTER_SEPARATOR: $ResourceLocation;
@@ -80,12 +80,12 @@ declare module "@package/net/createmod/catnip/gui" {
     export class $TextureSheetSegment {
     }
     export interface $TextureSheetSegment extends $BindableTexture {
-        getHeight(): number;
         getWidth(): number;
+        getHeight(): number;
         getStartY(): number;
         getStartX(): number;
-        get height(): number;
         get width(): number;
+        get height(): number;
         get startY(): number;
         get startX(): number;
     }

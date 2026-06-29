@@ -1,27 +1,30 @@
+import { $WailaClientRegistrationEventJS } from "@package/pie/ilikepiefoo/compat/jade";
+import { $EntityType } from "@package/net/minecraft/world/entity";
+import { $HighlightKubeEvent } from "@package/dev/latvian/mods/kubejs/client/highlight";
+import { $FluidStack_ } from "@package/net/neoforged/neoforge/fluids";
+import { $ProxyEventJS } from "@package/pie/ilikepiefoo/events";
+import { $ExplosionKubeEvent$After, $ExplosionKubeEvent$Before, $SimpleLevelKubeEvent } from "@package/dev/latvian/mods/kubejs/level";
+import { $NetworkKubeEvent } from "@package/dev/latvian/mods/kubejs/net";
+import { $InventoryChangedKubeEvent, $ChestKubeEvent, $StageChangedEvent, $SimplePlayerKubeEvent, $InventoryKubeEvent } from "@package/dev/latvian/mods/kubejs/player";
+import { $DynamicItemTooltipsKubeEvent, $ItemPredicate_, $ItemCraftedKubeEvent, $ItemDestroyedKubeEvent, $ModifyItemTooltipsKubeEvent, $ItemPickedUpKubeEvent, $FoodEatenKubeEvent, $ItemSmeltedKubeEvent, $ItemEntityInteractedKubeEvent, $ItemDroppedKubeEvent, $ItemClickedKubeEvent } from "@package/dev/latvian/mods/kubejs/item";
+import { $FluidIngredient_ } from "@package/net/neoforged/neoforge/fluids/crafting";
+import { $RegisterRecipesEventJS, $RegisterVanillaCategoryExtensionsEventJS, $RegisterFluidSubtypeEventJS, $RegisterRecipeTransferHandlersEventJS, $RegisterAdvancedEventJS, $RegisterItemSubtypeEventJS, $RegisterGUIHandlersEventJS, $RegisterRecipeCatalystsEventJS, $OnRuntimeAvailableEventJS, $RegisterIngredientsEventJS, $RegisterCategoriesEventJS } from "@package/pie/ilikepiefoo/compat/jei/events";
+import { $MenuType } from "@package/net/minecraft/world/inventory";
 import { $Level } from "@package/net/minecraft/world/level";
 import { $BlockEntityTickKubeEvent } from "@package/dev/latvian/mods/kubejs/block/entity";
-import { $BlockLeftClickedKubeEvent, $BlockStoppedFallingKubeEvent, $BlockBrokenKubeEvent, $BlockStartedFallingKubeEvent, $DetectorBlockKubeEvent, $BlockPlacedKubeEvent, $BlockRightClickedKubeEvent, $FarmlandTrampledKubeEvent, $BlockPickedKubeEvent } from "@package/dev/latvian/mods/kubejs/block";
+import { $BlockBrokenKubeEvent, $BlockLeftClickedKubeEvent, $BlockStoppedFallingKubeEvent, $BlockStartedFallingKubeEvent, $DetectorBlockKubeEvent, $BlockPlacedKubeEvent, $BlockRightClickedKubeEvent, $FarmlandTrampledKubeEvent, $BlockPickedKubeEvent } from "@package/dev/latvian/mods/kubejs/block";
 import { $PonderRegistryEventJS, $PonderItemTagEventJS } from "@package/com/almostreliable/ponderjs";
 import { $Item, $ItemStack_ } from "@package/net/minecraft/world/item";
 import { $KubeAssetGenerator } from "@package/dev/latvian/mods/kubejs/generator";
 import { $ParticleProviderRegistryKubeEvent, $KubeJSKeybinds$TickingKeyEvent, $DebugInfoKubeEvent, $LangKubeEvent, $KubeJSKeybinds$KeyEvent, $AtlasSpriteRegistryKubeEvent, $ClientPlayerKubeEvent } from "@package/dev/latvian/mods/kubejs/client";
 import { $LighterSkinsEventJS } from "@package/com/jesz/createdieselgenerators/compat/kubejs";
-import { $EntityType } from "@package/net/minecraft/world/entity";
-import { $HighlightKubeEvent } from "@package/dev/latvian/mods/kubejs/client/highlight";
-import { $FluidStack_ } from "@package/net/neoforged/neoforge/fluids";
-import { $ExplosionKubeEvent$After, $ExplosionKubeEvent$Before, $SimpleLevelKubeEvent } from "@package/dev/latvian/mods/kubejs/level";
-import { $NetworkKubeEvent } from "@package/dev/latvian/mods/kubejs/net";
-import { $InventoryChangedKubeEvent, $ChestKubeEvent, $StageChangedEvent, $SimplePlayerKubeEvent, $InventoryKubeEvent } from "@package/dev/latvian/mods/kubejs/player";
-import { $DynamicItemTooltipsKubeEvent, $ItemPredicate_, $ItemCraftedKubeEvent, $ItemDestroyedKubeEvent, $ModifyItemTooltipsKubeEvent, $ItemPickedUpKubeEvent, $FoodEatenKubeEvent, $ItemSmeltedKubeEvent, $ItemEntityInteractedKubeEvent, $ItemClickedKubeEvent, $ItemDroppedKubeEvent } from "@package/dev/latvian/mods/kubejs/item";
 import { $LivingEntityDropsKubeEvent, $EntitySpawnedKubeEvent, $AfterLivingEntityHurtKubeEvent, $LivingEntityDeathKubeEvent, $BeforeLivingEntityHurtKubeEvent, $CheckLivingEntitySpawnKubeEvent } from "@package/dev/latvian/mods/kubejs/entity";
 import { $GeneratedDataStage_ } from "@package/dev/latvian/mods/kubejs/script/data";
-import { $FluidIngredient_ } from "@package/net/neoforged/neoforge/fluids/crafting";
 import { $ModifyEntityInFrameExtraDataEventJS } from "@package/io/github/mortuusars/exposure/neoforge/integration/kubejs/event";
 import { $RemoveRecipesKubeEvent, $GroupEntriesKubeEvent, $RemoveEntriesKubeEvent, $AddEntriesKubeEvent, $AddInformationKubeEvent, $RegisterSubtypesKubeEvent } from "@package/dev/latvian/mods/kubejs/recipe/viewer";
 import { $ResourceLocation_, $ResourceKey_ } from "@package/net/minecraft/resources";
 import { $Block } from "@package/net/minecraft/world/level/block";
 import { $SDRPKubeJSIntegration$ClientDimensionChangeEvent } from "@package/com/sunekaer/sdrp/neoforge/kubejs";
-import { $MenuType } from "@package/net/minecraft/world/inventory";
 
 declare module "@side-only/client/events" {
 }
@@ -44,6 +47,19 @@ declare global {
         function removeEntries(extra: "fluid", handler: ((event: $RemoveEntriesKubeEvent<$FluidIngredient_>) => void)): void;
         function removeEntriesCompletely(extra: "fluid", handler: ((event: $RemoveEntriesKubeEvent<$FluidIngredient_>) => void)): void;
         function removeRecipes(extra: "fluid", handler: ((event: $RemoveRecipesKubeEvent) => void)): void;
+    }
+    namespace JEIAddedEvents {
+        function registerRecipeCatalysts(handler: ((event: $RegisterRecipeCatalystsEventJS) => void)): void;
+        function registerRecipes(handler: ((event: $RegisterRecipesEventJS) => void)): void;
+        function registerVanillaCategoryExtensions(handler: ((event: $RegisterVanillaCategoryExtensionsEventJS) => void)): void;
+        function registerIngredients(handler: ((event: $RegisterIngredientsEventJS) => void)): void;
+        function onRuntimeAvailable(handler: ((event: $OnRuntimeAvailableEventJS) => void)): void;
+        function registerGUIHandlers(handler: ((event: $RegisterGUIHandlersEventJS) => void)): void;
+        function registerItemSubtypes(handler: ((event: $RegisterItemSubtypeEventJS) => void)): void;
+        function registerAdvanced(handler: ((event: $RegisterAdvancedEventJS) => void)): void;
+        function registerFluidSubtypes(handler: ((event: $RegisterFluidSubtypeEventJS) => void)): void;
+        function registerCategories(handler: ((event: $RegisterCategoriesEventJS) => void)): void;
+        function registerRecipeTransferHandlers(handler: ((event: $RegisterRecipeTransferHandlersEventJS) => void)): void;
     }
     namespace ItemEvents {
         /**
@@ -220,6 +236,9 @@ declare global {
         function registry(handler: ((event: $PonderRegistryEventJS) => void)): void;
         function tags(handler: ((event: $PonderItemTagEventJS) => void)): void;
     }
+    namespace ArchEvents {
+        function handleClient(extra: string, handler: ((event: $ProxyEventJS) => void)): void;
+    }
     namespace ClientEvents {
         /**
          * Invoked when the debug info is rendered.
@@ -372,6 +391,9 @@ declare global {
     }
     namespace CDGEvents {
         function lighterSkins(handler: ((event: $LighterSkinsEventJS) => void)): void;
+    }
+    namespace JadeEvents {
+        function onClientRegistration(handler: ((event: $WailaClientRegistrationEventJS) => void)): void;
     }
     namespace PlayerEvents {
         /**

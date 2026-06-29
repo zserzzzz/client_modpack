@@ -36,20 +36,20 @@ declare module "@package/com/simibubi/create/api/behaviour/spouting" {
      */
     export type $BlockSpoutingBehaviour_ = ((arg0: $Level, arg1: $BlockPos, arg2: $SpoutBlockEntity, arg3: $FluidStack, arg4: boolean) => number);
     export class $StateChangingBehavior extends $Record implements $BlockSpoutingBehaviour {
-        static setTo(arg0: number, arg1: $Predicate_<$Fluid>, arg2: $BlockState_): $BlockSpoutingBehaviour;
-        static setTo(arg0: number, arg1: $Predicate_<$Fluid>, arg2: $Block_): $BlockSpoutingBehaviour;
         amount(): number;
-        fillFunction(): $UnaryOperator<$BlockState>;
-        static incrementingState(arg0: number, arg1: $Predicate_<$Fluid>, arg2: $IntegerProperty): $BlockSpoutingBehaviour;
+        fluidTest(): $Predicate<$Fluid>;
+        static setTo(arg0: number, arg1: $Predicate_<$Fluid>, arg2: $Block_): $BlockSpoutingBehaviour;
+        static setTo(arg0: number, arg1: $Predicate_<$Fluid>, arg2: $BlockState_): $BlockSpoutingBehaviour;
         canFill(): $Predicate<$BlockState>;
         fillBlock(arg0: $Level_, arg1: $BlockPos_, arg2: $SpoutBlockEntity, arg3: $FluidStack_, arg4: boolean): number;
-        fluidTest(): $Predicate<$Fluid>;
+        static incrementingState(arg0: number, arg1: $Predicate_<$Fluid>, arg2: $IntegerProperty): $BlockSpoutingBehaviour;
+        fillFunction(): $UnaryOperator<$BlockState>;
         constructor(amount: number, fluidTest: $Predicate_<$Fluid>, canFill: $Predicate_<$BlockState>, fillFunction: $UnaryOperator_<$BlockState>);
     }
     /**
      * Values that may be interpreted as {@link $StateChangingBehavior}.
      */
-    export type $StateChangingBehavior_ = { amount?: number, canFill?: $Predicate_<$BlockState>, fluidTest?: $Predicate_<$Fluid>, fillFunction?: $UnaryOperator_<$BlockState>,  } | [amount?: number, canFill?: $Predicate_<$BlockState>, fluidTest?: $Predicate_<$Fluid>, fillFunction?: $UnaryOperator_<$BlockState>, ];
+    export type $StateChangingBehavior_ = { fluidTest?: $Predicate_<$Fluid>, fillFunction?: $UnaryOperator_<$BlockState>, amount?: number, canFill?: $Predicate_<$BlockState>,  } | [fluidTest?: $Predicate_<$Fluid>, fillFunction?: $UnaryOperator_<$BlockState>, amount?: number, canFill?: $Predicate_<$BlockState>, ];
     export class $CauldronSpoutingBehavior$CauldronInfo extends $Record {
         amount(): number;
         cauldron(): $BlockState;

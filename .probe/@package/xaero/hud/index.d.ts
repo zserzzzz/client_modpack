@@ -24,41 +24,41 @@ export * as compat from "@package/xaero/hud/compat";
 
 declare module "@package/xaero/hud" {
     export class $Hud {
-        getSessionHandler(): $ModuleSessionHandler;
-        getPresetManager(): $HudPresetManager;
+        getOldSystemCompatibility(): $OldSystemCompatibility;
+        getEventHandler(): $HudEventHandler;
         getPushboxManager(): $PushboxManager;
         getModuleManager(): $ModuleManager;
-        getEventHandler(): $HudEventHandler;
-        getOldSystemCompatibility(): $OldSystemCompatibility;
+        getPresetManager(): $HudPresetManager;
+        getSessionHandler(): $ModuleSessionHandler;
         constructor(arg0: $ModuleManager, arg1: $PushboxManager, arg2: $HudPresetManager, arg3: $HudEventHandler, arg4: $ModuleSessionHandler, arg5: $OldSystemCompatibility);
-        get sessionHandler(): $ModuleSessionHandler;
-        get presetManager(): $HudPresetManager;
+        get oldSystemCompatibility(): $OldSystemCompatibility;
+        get eventHandler(): $HudEventHandler;
         get pushboxManager(): $PushboxManager;
         get moduleManager(): $ModuleManager;
-        get eventHandler(): $HudEventHandler;
-        get oldSystemCompatibility(): $OldSystemCompatibility;
+        get presetManager(): $HudPresetManager;
+        get sessionHandler(): $ModuleSessionHandler;
     }
     export class $HudSession {
         init(arg0: $ClientPacketListener): void;
-        /**
-         * @deprecated
-         */
-        getControls(): $ControlsHandler;
-        getHudMod(): $HudMod;
-        tryCleanup(): void;
         getSession<MS extends $ModuleSession<MS>>(arg0: $HudModule<MS>): MS;
         /**
          * @deprecated
          */
-        getMultiTextureRenderTypeRenderers(): $MultiTextureRenderTypeRendererProvider;
+        getControls(): $ControlsHandler;
         static getCurrentSession(): $HudSession;
+        getHudMod(): $HudMod;
+        tryCleanup(): void;
         getKeyMappingTickHandler(): $KeyMappingTickHandler;
+        /**
+         * @deprecated
+         */
+        getMultiTextureRenderTypeRenderers(): $MultiTextureRenderTypeRendererProvider;
         static getForPlayer(arg0: $LocalPlayer): $HudSession;
         constructor(arg0: $HudMod);
         get controls(): $ControlsHandler;
-        get hudMod(): $HudMod;
-        get multiTextureRenderTypeRenderers(): $MultiTextureRenderTypeRendererProvider;
         static get currentSession(): $HudSession;
+        get hudMod(): $HudMod;
         get keyMappingTickHandler(): $KeyMappingTickHandler;
+        get multiTextureRenderTypeRenderers(): $MultiTextureRenderTypeRendererProvider;
     }
 }
