@@ -3721,3 +3721,20 @@ for a smoother experience.
 [29Jun2026 18:36:05.151] [Render thread/WARN] [ModernFix/]: Game took 71.848 seconds to start
 [29Jun2026 18:36:05.704] [Render thread/INFO] [com.mojang.blaze3d.platform.GlDebug/]: OpenGL debug message: id=1281, source=API, type=ERROR, severity=HIGH, message='GL_INVALID_VALUE error generated. <length> cannot be larger than GL_MAX_DEBUG_MESSAGE_LENGTH'
 [29Jun2026 18:36:05.706] [Render thread/INFO] [de.keksuccino.fancymenu.util.rendering.text.smooth.SmoothFontAtlas/]: [FANCYMENU] Smooth font atlas initialized: file='noto_sans.ttf', source=0, size=36px, style=plain, sizePx=1024x1024.
+[29Jun2026 18:36:06.649] [Render thread/INFO] [com.mojang.blaze3d.platform.GlDebug/]: OpenGL debug message: id=1281, source=API, type=ERROR, severity=HIGH, message='GL_INVALID_VALUE error generated. <length> cannot be larger than GL_MAX_DEBUG_MESSAGE_LENGTH'
+[29Jun2026 18:36:06.650] [Render thread/INFO] [de.keksuccino.fancymenu.util.rendering.text.smooth.SmoothFontAtlas/]: [FANCYMENU] Smooth font atlas initialized: file='noto_sans.ttf', source=0, size=28px, style=plain, sizePx=512x512.
+[29Jun2026 18:36:12.935] [Render thread/INFO] [com.mojang.blaze3d.platform.GlDebug/]: OpenGL debug message: id=1281, source=API, type=ERROR, severity=HIGH, message='GL_INVALID_VALUE error generated. <length> cannot be larger than GL_MAX_DEBUG_MESSAGE_LENGTH'
+[29Jun2026 18:36:12.935] [Render thread/INFO] [de.keksuccino.fancymenu.util.rendering.text.smooth.SmoothFontAtlas/]: [FANCYMENU] Smooth font atlas initialized: file='noto_sans.ttf', source=0, size=56px, style=plain, sizePx=1024x1024.
+[29Jun2026 18:37:12.142] [Render thread/INFO] [com.mojang.blaze3d.platform.GlDebug/]: OpenGL debug message: id=1281, source=API, type=ERROR, severity=HIGH, message='GL_INVALID_VALUE error generated. <length> cannot be larger than GL_MAX_DEBUG_MESSAGE_LENGTH'
+[29Jun2026 18:37:12.142] [Render thread/INFO] [de.keksuccino.fancymenu.util.rendering.text.smooth.SmoothFontAtlas/]: [FANCYMENU] Smooth font atlas initialized: file='noto_sans.ttf', source=0, size=36px, style=bold, sizePx=1024x1024.
+[29Jun2026 18:37:14.414] [Render thread/INFO] [com.mojang.blaze3d.platform.GlDebug/]: OpenGL debug message: id=1281, source=API, type=ERROR, severity=HIGH, message='GL_INVALID_VALUE error generated. <length> cannot be larger than GL_MAX_DEBUG_MESSAGE_LENGTH'
+[29Jun2026 18:37:14.414] [Render thread/INFO] [de.keksuccino.fancymenu.util.rendering.text.smooth.SmoothFontAtlas/]: [FANCYMENU] Smooth font atlas initialized: file='noto_sans.ttf', source=0, size=44px, style=plain, sizePx=1024x1024.
+[29Jun2026 18:37:34.544] [Render thread/INFO] [de.keksuccino.fancymenu.customization.layer.ScreenCustomizationLayerHandler/]: [FANCYMENU] ScreenCustomizationLayer registered: generic_dirt_message_screen
+[29Jun2026 18:37:52.439] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Stopping!
+[29Jun2026 18:37:52.441] [CullThread/INFO] [STDOUT/]: [dev.tr7zw.entityculling.CullTask:run:89]: Shutting down culling task!
+[29Jun2026 18:37:52.448] [Render thread/INFO] [Vista/]: Restored 0 cached videos from disk
+[29Jun2026 18:37:52.448] [Render thread/INFO] [Vista/]: Media Cache initialized at C:\Users\gam3r\AppData\Roaming\ModrinthApp\profiles\Aero SMP 1.0.02\vista_web_content_cache, max size = 512 MB
+[29Jun2026 18:37:52.457] [Render thread/INFO] [com.palm1.analogaudio.AnalogAudio/]: Force-stop triggered by LOGOUT. Deactivated: true. Active streams: 0
+[29Jun2026 18:37:52.458] [Render thread/INFO] [com.palm1.analogaudio.AnalogAudio/]: Audio clean successful.
+[29Jun2026 18:37:52.458] [Render thread/INFO] [de.keksuccino.fancymenu.customization.layer.ScreenCustomizationLayerHandler/]: [FANCYMENU] ScreenCustomizationLayer registered: progress_screen
+[29Jun2026 18:37:52.656] [Ixeris Event Polling Thread/INFO] [me.decce.ixeris.core.Ixeris/]: Exiting event polling thread.

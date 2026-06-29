@@ -7,8 +7,8 @@ B:play_vanilla_menu_music = 'true';
 
 ##[customization]
 
-B:modpack_mode = 'false';
-B:show_customization_overlay = 'true';
+B:modpack_mode = 'true';
+B:show_customization_overlay = 'false';
 B:advanced_customization_mode = 'false';
 
 
@@ -18,7 +18,7 @@ B:game_intro_fade_out = 'true';
 S:game_intro_sound_channel = 'master';
 S:preload_resources = '';
 B:allow_game_intro_skip = 'true';
-S:game_intro_animation_name = '[source:location]vista:textures/cassette_tape/mc_98.gif';
+S:game_intro_animation_name = '';
 F:game_intro_volume = '1.0';
 S:custom_game_intro_skip_text = '';
 

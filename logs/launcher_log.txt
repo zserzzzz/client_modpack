@@ -762,3 +762,5 @@
 [18:35:34] [Worker-ResourceReload-6/INFO] [voicechat/]: [voicechat] Compatibility version 20
 [18:35:34] [Worker-ResourceReload-7/INFO] [xa.li.XaeroLib/]: Loading XaeroLib common 1/2!
 [18:35:34] [NeoForge Version Check/INFO] [ne.ne.fm.VersionChecker/]: [searchables] Starting version check at https://updates.blamejared.com/get?n=searchables
+
+# Process exited with status: exit code: 0

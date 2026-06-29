@@ -146,3 +146,29 @@ C:\Users\<USER>\AppData\Roaming\ModrinthApp\meta\libraries\com\machinezoo\noexce
 [2026-06-29 18:35:01.817] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: CrashAssistantApp started successfully. Waiting for PID 7000 to stop.
 [2026-06-29 18:35:34.632] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: Minecraft is running on renderer:
 NVIDIA GeForce RTX 3050 Laptop GPU/PCIe/SSE2
+[2026-06-29 18:37:53.454] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: PID "7000" is not alive or reused by another process. Minecraft JVM appears to have stopped.
+[2026-06-29 18:37:53.457] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: System used RAM after Minecraft process finish moment: 8.9g
+[2026-06-29 18:37:53.604] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: System used Swap Space after Minecraft process finish moment: 1.9g
+[2026-06-29 18:37:53.607] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: System free Disk (C:\) Space after Minecraft process finish moment: 56.1g
+[2026-06-29 18:37:53.635] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: Adding latest.log from C:\Users\gam3r\AppData\Roaming\ModrinthApp\profiles\Aero SMP 1.0.02\logs\latest.log
+[2026-06-29 18:37:53.638] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: Adding debug.log from C:\Users\gam3r\AppData\Roaming\ModrinthApp\profiles\Aero SMP 1.0.02\logs\debug.log
+[2026-06-29 18:37:53.642] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: stderr_stream.log size: 385 bytes
+[2026-06-29 18:37:53.644] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: Adding launcher_log.txt from C:\Users\gam3r\AppData\Roaming\ModrinthApp\profiles\Aero SMP 1.0.02\logs\launcher_log.txt
+[2026-06-29 18:37:53.667] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: Adding session_20260629_135006.log from C:\Users\gam3r\AppData\Roaming\ModrinthApp\profiles\Aero SMP 1.0.02\..\..\launcher_logs\session_20260629_135006.log
+[2026-06-29 18:37:53.691] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: Adding KubeJS: client.log from C:\Users\gam3r\AppData\Roaming\ModrinthApp\profiles\Aero SMP 1.0.02\logs\kubejs\client.log
+[2026-06-29 18:37:53.695] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: Adding KubeJS: startup.log from C:\Users\gam3r\AppData\Roaming\ModrinthApp\profiles\Aero SMP 1.0.02\logs\kubejs\startup.log
+[2026-06-29 18:37:53.699] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: startup_scripts.log has no errors, logging its contents into crash_assistant_app.log instead of attaching it as a separate log.
+[2026-06-29 18:37:53.699] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: startup_scripts.log contents:
+[2026-06-29 18:34:58.062] [INFO] [StartupScripts]: Running script: startup/example.jexl
+[2026-06-29 18:37:53.702] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: Adding crash_assistant_app.log from C:\Users\gam3r\AppData\Roaming\ModrinthApp\profiles\Aero SMP 1.0.02\logs\crash_assistant\crash_assistant_app.log
+[2026-06-29 18:37:53.703] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: Reached first tick of TitleScreen: true
+[2026-06-29 18:37:53.703] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: Joined world successfully: false
+[2026-06-29 18:37:53.703] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: Prevent Crash Assistant Window: false
+[2026-06-29 18:37:53.704] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: stop() function of Minecraft fired: true
+[2026-06-29 18:37:53.704] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: close() function of Minecraft failed: false
+[2026-06-29 18:37:53.704] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: emergencySave() function of Minecraft fired: false
+[2026-06-29 18:37:53.710] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: isModpackCreator: false
+[2026-06-29 18:37:53.715] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: isHelpLinkDefault: false
+[2026-06-29 18:37:53.719] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: helpLink: https://discord.gg/PaD6htAxBX
+[2026-06-29 18:37:53.720] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: Seems like Minecraft finished normally. Trying to locate terminated processes and Exiting Crash Assistant app.
+[2026-06-29 18:37:54.096] [INFO] [dev.kostromdan.mods.crash_assistant.app.CrashAssistantApp]: UUID(5913d1339b2241aa89ad995dd1729d35) verification result: LICENSED
