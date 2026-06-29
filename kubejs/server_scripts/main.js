@@ -23,5 +23,6 @@ ServerEvents.recipes(event => {
     event.recipes.create.filling(Item.of("create:brass_ingot",1),['create:zinc_ingot',Fluid.of('kubejs:molten_brass',500)])
     event.recipes.create.crushing(Item.of('kubejs:andesite_powder',5),'minecraft:andesite')
     event.recipes.create.compacting(Item.of('minecraft:tuff',2),[Item.of('kubejs:andesite_powder',10),Item.of('minecraft:diorite',2)])
+    event.shapeless(Item.of('minecraft:diorite',2),[Item.of('minecraft:cobblestone',2), Item.of('minecraft:iron_nugget')])
 })
  

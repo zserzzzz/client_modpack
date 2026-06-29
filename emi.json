@@ -1,10 +1,22 @@
 {
   "favorites": [],
   "lookup_history": [
+    "item:minecraft:diorite",
+    "item:minecraft:gravel",
     "item:kubejs:andesite_powder",
+    "item:create:andesite_casing",
+    {
+      "type": "fluid",
+      "id": "aeronautics:levitite_blend",
+      "amount": 0
+    },
+    {
+      "type": "item",
+      "id": "minecraft:tuff",
+      "amount": 2
+    },
     "item:createdieselgenerators:mold{\"createdieselgenerators:mold_type\":\"createdieselgenerators:chain\"}",
     "item:create:basin",
-    "item:minecraft:tuff",
     "#item:create:stone_types/tuff",
     "item:aeronautics:end_stone_powder",
     "item:create:smart_fluid_pipe",

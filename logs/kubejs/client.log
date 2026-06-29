@@ -1,17 +1,17 @@
-[16:14:59] [INIT] KubeJS 2101.7.2-build.368; MC 2101 NeoForge
-[16:14:59] [INIT] Loaded plugins:
-[16:14:59] [INIT] - dev.latvian.mods.kubejs.plugin.builtin.BuiltinKubeJSPlugin
-[16:14:59] [INIT] - dev.latvian.mods.kubejs.plugin.builtin.BuiltinKubeJSClientPlugin
-[16:14:59] [INIT] - dev.latvian.mods.kubejs.integration.architectury.ArchitecturyIntegration
-[16:14:59] [INIT] - com.jesz.createdieselgenerators.compat.kubejs.CDGKubeJSPlugin
-[16:14:59] [INIT] - io.github.mortuusars.exposure.neoforge.integration.kubejs.ExposureKubeJSPlugin
-[16:14:59] [INIT] - net.liopyu.entityjs.EntityJSPlugin
-[16:14:59] [INIT] - com.sunekaer.sdrp.neoforge.kubejs.SDRPKubeJSIntegration
-[16:14:59] [INIT] - moe.wolfgirl.probejs.plugin.ProbeJSKJSPlugin
-[16:14:59] [INIT] - com.almostreliable.ponderjs.KubePlugin
-[16:14:59] [INIT] - dev.latvian.mods.kubejs.create.KubeJSCreatePlugin
-[16:14:59] [INIT] - pie.ilikepiefoo.AdditionsPlugin
-[16:14:59] [INFO] client_scripts:main.js#2: Hello, World! (Loaded client example script)
-[16:14:59] [INFO] Loaded script client_scripts:main.js in 0.001 s
-[16:14:59] [INFO] Loaded 1/1 KubeJS client scripts in 0.064 s with 0 errors and 0 warnings
-[16:15:06] [INFO] Client resource reload complete!
+[18:35:27] [INIT] KubeJS 2101.7.2-build.368; MC 2101 NeoForge
+[18:35:27] [INIT] Loaded plugins:
+[18:35:27] [INIT] - dev.latvian.mods.kubejs.plugin.builtin.BuiltinKubeJSPlugin
+[18:35:27] [INIT] - dev.latvian.mods.kubejs.plugin.builtin.BuiltinKubeJSClientPlugin
+[18:35:27] [INIT] - dev.latvian.mods.kubejs.integration.architectury.ArchitecturyIntegration
+[18:35:27] [INIT] - com.jesz.createdieselgenerators.compat.kubejs.CDGKubeJSPlugin
+[18:35:27] [INIT] - io.github.mortuusars.exposure.neoforge.integration.kubejs.ExposureKubeJSPlugin
+[18:35:27] [INIT] - net.liopyu.entityjs.EntityJSPlugin
+[18:35:27] [INIT] - com.sunekaer.sdrp.neoforge.kubejs.SDRPKubeJSIntegration
+[18:35:27] [INIT] - moe.wolfgirl.probejs.plugin.ProbeJSKJSPlugin
+[18:35:27] [INIT] - com.almostreliable.ponderjs.KubePlugin
+[18:35:27] [INIT] - dev.latvian.mods.kubejs.create.KubeJSCreatePlugin
+[18:35:27] [INIT] - pie.ilikepiefoo.AdditionsPlugin
+[18:35:27] [INFO] client_scripts:main.js#2: Hello, World! (Loaded client example script)
+[18:35:27] [INFO] Loaded script client_scripts:main.js in 0.0 s
+[18:35:27] [INFO] Loaded 1/1 KubeJS client scripts in 0.07 s with 0 errors and 0 warnings
+[18:35:34] [INFO] Client resource reload complete!

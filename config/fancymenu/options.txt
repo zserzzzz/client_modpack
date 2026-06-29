@@ -1,13 +1,13 @@
 ##[general]
 
 I:default_gui_scale = '-1';
-B:force_fullscreen = 'false';
+B:force_fullscreen = 'true';
 B:play_vanilla_menu_music = 'true';
 
 
 ##[customization]
 
-B:modpack_mode = 'true';
+B:modpack_mode = 'false';
 B:show_customization_overlay = 'true';
 B:advanced_customization_mode = 'false';
 
@@ -18,17 +18,17 @@ B:game_intro_fade_out = 'true';
 S:game_intro_sound_channel = 'master';
 S:preload_resources = '';
 B:allow_game_intro_skip = 'true';
-S:game_intro_animation_name = '';
+S:game_intro_animation_name = '[source:location]vista:textures/cassette_tape/mc_98.gif';
 F:game_intro_volume = '1.0';
 S:custom_game_intro_skip_text = '';
 
 
 ##[window]
 
-B:show_custom_window_icon = 'true';
+B:show_custom_window_icon = 'false';
 S:custom_window_icon_macos = '/config/fancymenu/assets/icon.icns';
-S:custom_window_icon_32 = '/config/fancymenu/assets/favicon-32x32.png';
-S:custom_window_title = 'Aero smp';
+S:custom_window_icon_32 = '/config/fancymenu/assets/favicon-32z32.png';
+S:custom_window_title = 'Aero BR';
 S:custom_window_icon_16 = '/config/fancymenu/assets/favicon-16x16.png';
 
 
@@ -72,7 +72,7 @@ B:seamless_world_loading = 'false';
 B:global_slider_background_transparent = 'false';
 S:global_slider_handle_normal = '';
 I:global_slider_background_nine_slice_border_right = '5';
-S:global_background_panorama = 'pano_new';
+S:global_background_panorama = '';
 I:global_slider_handle_nine_slice_border_left = '5';
 S:global_menu_background_texture = '';
 

@@ -1,7 +1,7 @@
 type = last_world
 
 last_world {
-  is_server = false
-  world = C:/Users/gam3r/AppData/Roaming/ModrinthApp/profiles/Aero SMP 1.0.02/saves/New World
+  is_server = true
+  world = aero.justaprinter.me:25565
 }
 

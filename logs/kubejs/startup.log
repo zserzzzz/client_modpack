@@ -1,18 +1,18 @@
-[16:14:58] [INIT] KubeJS 2101.7.2-build.368; MC 2101 NeoForge
-[16:14:58] [INIT] Loaded plugins:
-[16:14:58] [INIT] - dev.latvian.mods.kubejs.plugin.builtin.BuiltinKubeJSPlugin
-[16:14:58] [INIT] - dev.latvian.mods.kubejs.plugin.builtin.BuiltinKubeJSClientPlugin
-[16:14:58] [INIT] - dev.latvian.mods.kubejs.integration.architectury.ArchitecturyIntegration
-[16:14:58] [INIT] - com.jesz.createdieselgenerators.compat.kubejs.CDGKubeJSPlugin
-[16:14:58] [INIT] - io.github.mortuusars.exposure.neoforge.integration.kubejs.ExposureKubeJSPlugin
-[16:14:58] [INIT] - net.liopyu.entityjs.EntityJSPlugin
-[16:14:58] [INIT] - com.sunekaer.sdrp.neoforge.kubejs.SDRPKubeJSIntegration
-[16:14:58] [INIT] - moe.wolfgirl.probejs.plugin.ProbeJSKJSPlugin
-[16:14:58] [INIT] - com.almostreliable.ponderjs.KubePlugin
-[16:14:58] [INIT] - dev.latvian.mods.kubejs.create.KubeJSCreatePlugin
-[16:14:58] [INIT] - pie.ilikepiefoo.AdditionsPlugin
-[16:14:59] [INFO] startup_scripts:main.js#4: Hello, World! (Loaded startup example script)
-[16:14:59] [INFO] Loaded script startup_scripts:main.js in 0.055 s
-[16:14:59] [INFO] Loaded 1/1 KubeJS startup scripts in 1.525 s with 0 errors and 0 warnings
-[16:14:59] [INFO] Validated 7 files in kubejs/assets/ in 5ms
-[16:14:59] [INFO] Validated 0 files in kubejs/data/ in 0ms
+[18:35:25] [INIT] KubeJS 2101.7.2-build.368; MC 2101 NeoForge
+[18:35:25] [INIT] Loaded plugins:
+[18:35:25] [INIT] - dev.latvian.mods.kubejs.plugin.builtin.BuiltinKubeJSPlugin
+[18:35:25] [INIT] - dev.latvian.mods.kubejs.plugin.builtin.BuiltinKubeJSClientPlugin
+[18:35:25] [INIT] - dev.latvian.mods.kubejs.integration.architectury.ArchitecturyIntegration
+[18:35:25] [INIT] - com.jesz.createdieselgenerators.compat.kubejs.CDGKubeJSPlugin
+[18:35:25] [INIT] - io.github.mortuusars.exposure.neoforge.integration.kubejs.ExposureKubeJSPlugin
+[18:35:25] [INIT] - net.liopyu.entityjs.EntityJSPlugin
+[18:35:25] [INIT] - com.sunekaer.sdrp.neoforge.kubejs.SDRPKubeJSIntegration
+[18:35:25] [INIT] - moe.wolfgirl.probejs.plugin.ProbeJSKJSPlugin
+[18:35:25] [INIT] - com.almostreliable.ponderjs.KubePlugin
+[18:35:25] [INIT] - dev.latvian.mods.kubejs.create.KubeJSCreatePlugin
+[18:35:25] [INIT] - pie.ilikepiefoo.AdditionsPlugin
+[18:35:27] [INFO] startup_scripts:main.js#4: Hello, World! (Loaded startup example script)
+[18:35:27] [INFO] Loaded script startup_scripts:main.js in 0.065 s
+[18:35:27] [INFO] Loaded 1/1 KubeJS startup scripts in 1.333 s with 0 errors and 0 warnings
+[18:35:27] [INFO] Validated 7 files in kubejs/assets/ in 4ms
+[18:35:27] [INFO] Validated 0 files in kubejs/data/ in 0ms
